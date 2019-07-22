@@ -1,10 +1,12 @@
-# -*- coding: utf-8 -*-
+# -*- coding: windows-1252 -*-
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import xml.etree.ElementTree as Et
 from mechanize import Browser
 from bs4 import BeautifulSoup
+import json
 
 browser = Browser()
 browser.set_handle_robots(False)
@@ -17,5 +19,16 @@ browser["alder0"] = ['50']
 browser["inntekt"] = '350000'
 br_response = browser.submit()
 
-soup = BeautifulSoup(br_response, "html.parser")
-print(soup.prettify())
+soup = BeautifulSoup(br_response, "xml").prettify()
+root = Et.fromstring(soup)
+
+expenses = {}
+for child in root:
+    expenses.update({child.tag: child.text.strip().replace(".", "")})
+
+print(expenses)
+
+js = json.dumps(expenses, indent=3, separators=(',', ': '), ensure_ascii=False)
+print(js)
+with open('expenses.json', 'w') as f:
+    f.write(js)

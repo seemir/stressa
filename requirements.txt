@@ -4,3 +4,4 @@
 #### ESSENTIAL LIBRARIES FOR MAIN FUNCTIONALITY ####
 
 mechanize>=0.4.0
+beautifulsoup4>=4.7.0
