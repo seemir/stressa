@@ -3,6 +3,8 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from source.exception.instantiation import BaseClassCannotBeInstantiated
+from source.util.evaluator import Evaluator
 from bisect import bisect_left
 
 
@@ -15,7 +17,7 @@ class Person:
     @staticmethod
     def set_age(age):
         """
-        Converts age int to SIFO compatible str
+        Converts age into SIFO compatible str
 
         Parameters
         ----------
@@ -28,25 +30,9 @@ class Person:
                   SIFO compatible age str
         """
         age_str = [0.41, 0.91, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75]
-        return str(age_str[bisect_left(age_str, age)])
+        return str(age_str[bisect_left(age_str, age)]) if int(age) <= 75 else 75
 
-    @staticmethod
-    def evaluate_data_type(arg_dict):
-        """
-        Method that evaluates the type of objects in dictionary of {objects: types}. Raises
-        TypeError if not match.
-
-        Parameters
-        ----------
-        arg_dict    : dictionary
-                      dict of arg: type to be evaluated
-        """
-        for arg, t in arg_dict.items():
-            if not isinstance(arg, t):
-                raise TypeError(
-                    "expected type '{}', got '{}' instead".format(t.__name__, type(arg).__name__))
-
-    def __init__(self, sex='m', age=0, income=0, kinder_garden=False, sfo=False):
+    def __init__(self, sex='m', age=0, income=0, kinder_garden='0', sfo='0'):
         """
         Constructor / Instantiate the class
 
@@ -59,17 +45,23 @@ class Person:
         income          : int, float
                           gross yearly income
         kinder_garden   : str
-                          kids in kinder garden, true or false
+                          kids in kinder garden, '1' true or '0' false
         sfo             : str
-                          After school programme, true or false
+                          After school programme, '1' true or '0' false
 
         """
+        if type(self) == Person:
+            raise BaseClassCannotBeInstantiated(
+                "base class '{}' cannot be instantiated".format(self.__class__.__name__))
 
-        self.evaluate_data_type(
+        Evaluator.evaluate_data_type(
             {sex: str, age: (float, int), kinder_garden: str, sfo: str, income: (int, float)})
+        Evaluator.evaluate_possible_arguments(
+            {sex: ['sex:', ('m', 'f')], kinder_garden: ['kinder_garden:', ('0', '1')],
+             sfo: ['sfo:', ('0', '1')]})
 
         self.sex = sex
         self.age = self.set_age(age)
-        self.kinder_garden = '1' if kinder_garden else '0'
-        self.sfo = sfo if sfo else '0'
+        self.kinder_garden = kinder_garden
+        self.sfo = sfo
         self.income = str(income)
