@@ -43,3 +43,21 @@ class Evaluator:
             if arg not in possible:
                 raise ValueError(
                     "only possible values for '{}' are {}".format(name, possible))
+
+    @staticmethod
+    def evaluate_two_boolean(bool_1, bool_2, text):
+        """
+        Evaluate two boolean expressions with logical AND raise ValueError with text if False
+        
+        Parameters
+        ----------
+        bool_1    : bool
+                      first boolean expression
+        bool_2    : bool
+                      second boolean expression
+        text        : str
+                      text to outputted in ValueError exception
+
+        """
+        if bool_1 and bool_2:
+            raise ValueError(text)
