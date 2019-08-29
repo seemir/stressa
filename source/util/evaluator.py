@@ -20,6 +20,7 @@ class Evaluator:
         ----------
         dtype_dict    : dictionary
                         dict of object: type(s) to be evaluated
+
         """
         for obj, t in dtype_dict.items():
             if not isinstance(obj, t):
@@ -27,18 +28,18 @@ class Evaluator:
                     "expected type '{}', got '{}' instead".format(t, type(obj).__name__))
 
     @staticmethod
-    def evaluate_possible_arguments(arg_list):
+    def evaluate_arguments(arg_dict):
         """
         Method that evaluates the object in dictionary of {object: [name, possible]} to see if
         object is in possibility. Raises ValueError if not match.
 
         Parameters
         ----------
-        arg_list    : dictionary
+        arg_dict    : dictionary
                       dict of {object: [name, possible]} to be evaluated
 
         """
-        for arg, ls in arg_list.items():
+        for arg, ls in arg_dict.items():
             name, possible = ls[0], ls[1]
             if arg not in possible:
                 raise ValueError(
@@ -52,11 +53,11 @@ class Evaluator:
         Parameters
         ----------
         bool_1    : bool
-                      first boolean expression
+                    first boolean expression
         bool_2    : bool
-                      second boolean expression
-        text        : str
-                      text to outputted in ValueError exception
+                    second boolean expression
+        text      : str
+                    text to outputted in ValueError exception
 
         """
         if bool_1 and bool_2:

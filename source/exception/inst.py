@@ -7,6 +7,7 @@ __email__ = 'samir.adrik@gmail.com'
 class BaseClassCannotBeInstantiated(Exception):
     """
     Exception thrown when base class is attempted to be instantiated
+
     """
 
     def __init__(self, msg):

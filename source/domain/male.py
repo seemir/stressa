@@ -12,7 +12,7 @@ class Male(Person):
 
     """
 
-    def __init__(self, age=0, income=0, kinder_garden='0', sfo='0'):
+    def __init__(self, age=0, kinder_garden='0', sfo='0'):
         """
         Constructor / Instantiate the class
 
@@ -20,17 +20,14 @@ class Male(Person):
         ----------
         age             : int, float, str
                           age of person
-        income          : int, float
-                          gross yearly income
         kinder_garden   : str
                           kids in kinder garden, '1' true or '0' false
         sfo             : str
                           After school programme, '1' true or '0' false
 
         """
-        super().__init__(sex='m', age=age, income=income, kinder_garden=kinder_garden, sfo=sfo)
+        super().__init__(sex='m', age=age, kinder_garden=kinder_garden, sfo=sfo)
 
-        self.age = self.set_age(age)
-        self.income = str(income)
-        self.kinder_garden = kinder_garden
+        self.alder = self.set_age(age)
+        self.barnehage = kinder_garden
         self.sfo = sfo

@@ -32,7 +32,7 @@ class Person:
         age_str = [0.41, 0.91, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75]
         return str(age_str[bisect_left(age_str, int(age))]) if int(age) <= 75 else 75
 
-    def __init__(self, sex='m', age=0, income=0, kinder_garden='0', sfo='0'):
+    def __init__(self, sex='m', age=0, kinder_garden='0', sfo='0'):
         """
         Constructor / Instantiate the class
 
@@ -42,12 +42,10 @@ class Person:
                           sex of the person, male ('m') or female ('f')
         age             : int, float, str
                           age of person
-        income          : int, float
-                          gross yearly income
         kinder_garden   : str
                           kids in kinder_garden, '1' true or '0' false
         sfo             : str
-                          After school programme, '1' true or '0' false
+                          after school programme, '1' true or '0' false
 
         """
         if type(self) == Person:
@@ -55,21 +53,32 @@ class Person:
                 "base class '{}' cannot be instantiated".format(self.__class__.__name__))
 
         Evaluator.evaluate_data_type(
-            {sex: str, age: (float, int, str), income: (int, float), kinder_garden: str, sfo: str})
+            {sex: str, age: (float, int, str), kinder_garden: str, sfo: str})
 
-        Evaluator.evaluate_possible_arguments({sex: ['sex:', ('m', 'f')],
-                                               kinder_garden: ['kinder_garden:', ('0', '1')],
-                                               sfo: ['sfo:', ('0', '1')]})
+        Evaluator.evaluate_arguments({sex: ['sex:', ('m', 'k')],
+                                      kinder_garden: ['kinder_garden:', ('0', '1')],
+                                      sfo: ['sfo:', ('0', '1')]})
 
         Evaluator.evaluate_two_boolean(self.set_age(age) not in ('1', '2', '3', '5'),
                                        kinder_garden == '1',
                                        "only persons between 1-5 years can attend kinder_garden")
 
-        Evaluator.evaluate_two_boolean(self.set_age(age) not in ('9', '13'), kinder_garden == '1',
+        Evaluator.evaluate_two_boolean(self.set_age(age) not in ('9', '13'), sfo == '1',
                                        "only persons between 6-13 years can attend sfo")
 
-        self.sex = sex
-        self.age = self.set_age(age)
-        self.kinder_garden = kinder_garden
+        self.kjonn = sex
+        self.alder = self.set_age(age)
+        self.barnehage = kinder_garden
         self.sfo = sfo
-        self.income = str(income)
+
+    def get_properties(self):
+        """
+        return all active properties and values in a dictionary
+
+        Returns
+        -------
+        Out     : dict
+                  dictionary of all active properties
+
+        """
+        return self.__dict__
