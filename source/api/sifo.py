@@ -6,8 +6,8 @@ __email__ = 'samir.adrik@gmail.com'
 from source.secrets.secrets import api_link, api_form
 from source.util.evaluator import Evaluator
 from source.domain.family import Family
+from mechanize import Browser, URLError
 import xml.etree.ElementTree as Et
-from mechanize import Browser
 from bs4 import BeautifulSoup
 import datetime
 import json
@@ -32,7 +32,12 @@ class Sifo:
         self.browser = Browser()
         self.browser.set_handle_robots(False)
         self.browser.set_handle_refresh(False)
-        self.browser.open(api_link)
+
+        try:
+            self.browser.open(api_link)
+        except Exception as e:
+            raise URLError("connection failed to open with '{}'".format(e))
+
         self.browser.select_form(api_form)
 
         Evaluator.evaluate_data_type({family: Family})
@@ -40,7 +45,7 @@ class Sifo:
 
     def get_response(self):
         """
-        Submits and get response for SIFO request
+        Submits and gets response for SIFO request
 
         Returns
         -------
@@ -75,6 +80,7 @@ class Sifo:
 
     def to_json(self, file_dir="expenses/json"):
         """
+        save expenses report to JSON
 
         Parameters
         ----------
@@ -90,8 +96,8 @@ class Sifo:
         except Exception as e:
             raise OSError("creation of dir " + file_dir + " failed with: " + str(e))
 
-        js = json.dumps(self.get_expenses(), indent=3, separators=(',', ': '), ensure_ascii=False)
+        js = json.dumps(self.get_expenses(), indent=2, separators=(',', ': '), ensure_ascii=False)
         local_time = datetime.datetime.now().isoformat().replace(":", "-").replace(".", "-")
-        file = open(os.path.join(file_dir, "SifoExpenditureReport_" + local_time + ".json"), "w")
+        file = open(os.path.join(file_dir, "SifoReport_" + local_time + ".json"), "w")
         file.write(js)
         file.close()
