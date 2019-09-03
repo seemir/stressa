@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception.inst import BaseClassCannotBeInstantiated
+from source.exception.base_class_cannot_be_instantiated import BaseClassCannotBeInstantiated
 from source.util.evaluator import Evaluator
 from bisect import bisect_left
 

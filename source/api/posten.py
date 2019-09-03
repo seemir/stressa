@@ -1,51 +1,51 @@
-# -*- coding: windows-1252 -*-
+# -*- coding: utf-8 -*-
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.secrets.secrets import sifo_link, sifo_form
+from source.exception.invalid_zip_code import InvalidZipCode
+from source.secrets.secrets import posten_link, posten_form
 from source.util.evaluator import Evaluator
-from source.domain.family import Family
 from mechanize import Browser, URLError
-import xml.etree.ElementTree as Et
 from bs4 import BeautifulSoup
 import datetime
 import json
 import os
 
 
-class Sifo:
+class Posten:
     """
-    class that produces SIFO expenses given family information
+    Zip code finder using Posten.no postboks search
 
     """
 
-    def __init__(self, family):
+    def __init__(self, zip_code):
         """
         Constructor / Instantiate the class
 
         Parameters
         ----------
-        family      : Family
-                      object with family information
+        zip_code    : str
+                      Zip code to be searched
+
         """
         self.browser = Browser()
         self.browser.set_handle_robots(False)
         self.browser.set_handle_refresh(False)
 
+        Evaluator.evaluate_data_type({zip_code: str})
+        self.zip_code = zip_code
+
         try:
-            self.browser.open(sifo_link)
+            self.browser.open(posten_link)
         except Exception as e:
             raise URLError("connection failed to open with '{}'".format(e))
 
-        self.browser.select_form(sifo_form)
-
-        Evaluator.evaluate_data_type({family: Family})
-        self.family = family
+        self.browser.select_form(nr=0)
 
     def get_response(self):
         """
-        Submits and gets response for SIFO request
+        Submits and gets response for posten request
 
         Returns
         -------
@@ -53,34 +53,33 @@ class Sifo:
                       response with expenses information
 
         """
-        for prop, value in self.family.get_properties().items():
-            if prop == 'inntekt':
-                self.browser[prop] = value
-            else:
-                self.browser[prop] = [value]
+        self.browser[posten_form] = self.zip_code
         return self.browser.submit()
 
-    def get_expenses(self):
+    def get_zip_code_info(self):
         """
-        get SIFO expenses given the family information
+        gets Zip code information
 
         Returns
         -------
         out         : dict
-                      dictionary with SIFO expenses
+                      dictionary with Zip code informtion
 
         """
-        soup = BeautifulSoup(self.get_response(), "xml").prettify()
-        root = Et.fromstring(soup)
+        soup = BeautifulSoup(self.get_response(), "html.parser")
+        rows = soup.find_all('tr')
+        header = [head.text.strip() for head in soup.find_all('th')]
 
-        expenses = {}
-        for child in root:
-            expenses.update({child.tag: child.text.strip().replace(".", "")})
-        return expenses
+        try:
+            values = [value.text.strip() for value in rows[1].find_all('td')]
+        except Exception:
+            raise InvalidZipCode("ZIP code not found!")
 
-    def to_json(self, file_dir="report/json/expenses"):
+        return dict(zip(header, values))
+
+    def to_json(self, file_dir="report/json/zip_code"):
         """
-        save expenses report to JSON
+        save Zip code information to JSON
 
         Parameters
         ----------
@@ -96,8 +95,9 @@ class Sifo:
         except Exception as e:
             raise OSError("creation of dir " + file_dir + " failed with: " + str(e))
 
-        js = json.dumps(self.get_expenses(), indent=2, separators=(',', ': '), ensure_ascii=False)
+        js = json.dumps(self.get_zip_code_info(), indent=2, separators=(',', ': '),
+                        ensure_ascii=False)
         local_time = datetime.datetime.now().isoformat().replace(":", "-").replace(".", "-")
-        file = open(os.path.join(file_dir, "SifoExpenses_" + local_time + ".json"), "w")
+        file = open(os.path.join(file_dir, "ZipCodeInfo_" + local_time + ".json"), "w")
         file.write(js)
         file.close()

@@ -6,6 +6,7 @@ __email__ = 'samir.adrik@gmail.com'
 from source.domain.female import Female
 from source.domain.family import Family
 from source.domain.male import Male
+from source.api.posten import Posten
 from source.api.sifo import Sifo
 
 father = Male(age=45)
@@ -17,3 +18,6 @@ family = Family([father, mother, girl, boy], income=850000, cars=2)
 
 sifo = Sifo(family)
 sifo.to_json()
+
+posten = Posten('6239')
+posten.to_json()
