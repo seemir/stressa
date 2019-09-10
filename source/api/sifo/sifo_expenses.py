@@ -5,6 +5,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.secrets.secrets import sifo_link, sifo_form
 from source.util.evaluator import Evaluator
+from source.api.api_query import ApiQuery
 from source.domain.family import Family
 from mechanize import Browser, URLError
 import xml.etree.ElementTree as Et
@@ -14,7 +15,7 @@ import json
 import os
 
 
-class SifoExpenses:
+class SifoExpenses(ApiQuery):
     """
     class that produces SIFO expenses given family information
 
@@ -88,16 +89,4 @@ class SifoExpenses:
                       file directory to save JSON files
 
         """
-        Evaluator.evaluate_data_type({file_dir: str})
-
-        try:
-            if not os.path.exists(file_dir):
-                os.makedirs(file_dir)
-        except Exception as e:
-            raise OSError("creation of dir " + file_dir + " failed with: " + str(e))
-
-        js = json.dumps(self.get_expenses(), indent=2, separators=(',', ': '), ensure_ascii=False)
-        local_time = datetime.datetime.now().isoformat().replace(":", "-").replace(".", "-")
-        file = open(os.path.join(file_dir, "SifoExpenses_" + local_time + ".json"), "w")
-        file.write(js)
-        file.close()
+        self._to_json(self.get_expenses(), file_dir=file_dir, file_title="SifoExpenses_")

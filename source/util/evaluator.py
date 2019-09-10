@@ -3,6 +3,8 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from source.exception.base_class_cannot_be_instantiated import BaseClassCannotBeInstantiated
+
 
 class Evaluator:
     """
@@ -62,3 +64,12 @@ class Evaluator:
         """
         if bool_1 and bool_2:
             raise ValueError(text)
+
+    def __init__(self):
+        """
+        Abstract class, so class cannot be instantiated
+
+        """
+        if type(self) == Evaluator:
+            raise BaseClassCannotBeInstantiated(
+                "base class '{}' cannot be instantiated".format(self.__class__.__name__))

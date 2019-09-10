@@ -6,13 +6,11 @@ __email__ = 'samir.adrik@gmail.com'
 from source.api.ssb.ssb_payload import SsbPayload
 from source.secrets.secrets import ssb_link
 from source.util.evaluator import Evaluator
-import datetime
+from source.api.api_query import ApiQuery
 import requests
-import json
-import os
 
 
-class SsbInterestRates:
+class SsbInterestRates(ApiQuery):
     """
     Interest rates from SSB table nr. 10748
 
@@ -29,6 +27,7 @@ class SsbInterestRates:
 
         """
         Evaluator.evaluate_data_type({payload: SsbPayload})
+        super().__init__()
         self.payload = payload
 
     def get_response(self):
@@ -69,17 +68,4 @@ class SsbInterestRates:
                       file directory to save JSON files
 
         """
-        Evaluator.evaluate_data_type({file_dir: str})
-
-        try:
-            if not os.path.exists(file_dir):
-                os.makedirs(file_dir)
-        except Exception as e:
-            raise OSError("creation of dir " + file_dir + " failed with: " + str(e))
-
-        js = json.dumps(self.get_interest_rates(), indent=2, separators=(',', ': '),
-                        ensure_ascii=False)
-        local_time = datetime.datetime.now().isoformat().replace(":", "-").replace(".", "-")
-        file = open(os.path.join(file_dir, "InterestRatesInfo_" + local_time + ".json"), "w")
-        file.write(js)
-        file.close()
+        self._to_json(self.get_interest_rates(), file_dir=file_dir, file_title="SsbInterestRates_")
