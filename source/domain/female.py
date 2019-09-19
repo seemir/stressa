@@ -4,7 +4,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.domain.person import Person
-from source.util.evaluator import Evaluator
+from source.util.assertor import Assertor
 
 
 class Female(Person):
@@ -29,16 +29,35 @@ class Female(Person):
                           Pregnant female, '1' true or '0' false
 
         """
-        Evaluator.evaluate_data_type({pregnant: str})
-
-        Evaluator.evaluate_arguments({pregnant: ['pregnant', ('0', '1')]})
-
-        Evaluator.evaluate_two_boolean(self.set_age(age) not in ('19', '50'), pregnant == '1',
-                                       "pregnancy at this age is not possible")
-
         super().__init__(sex='k', age=age, kinder_garden=kinder_garden, sfo=sfo)
+        self._gravid = pregnant
 
-        self.alder = self.set_age(age)
-        self.barnehage = kinder_garden
-        self.sfo = sfo
-        self.gravid = pregnant
+    @property
+    def gravid(self):
+        """
+        pregnancy status getter
+
+        Returns
+        -------
+        Out     : str
+                  pregnancy str
+
+        """
+        return self._gravid
+
+    @gravid.setter
+    def gravid(self, pregnant):
+        """
+        pregnancy setter
+
+        Parameters
+        ----------
+        pregnant     : float, int, str
+                       new pregnancy str to be set
+
+        """
+        Assertor.assert_date_type({pregnant: str})
+        Assertor.assert_arguments({pregnant: ['pregnant', ('0', '1')]})
+        Assertor.assert_two_boolean(self.alder not in ('19', '50'), pregnant == '1',
+                                       "pregnancy at this age is not possible")
+        self._gravid = pregnant

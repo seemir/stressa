@@ -3,16 +3,13 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.secrets.secrets import sifo_link, sifo_form
-from source.util.evaluator import Evaluator
+from source.settings import sifo_link, sifo_form
+from source.util.assertor import Assertor
 from source.api.api_query import ApiQuery
 from source.domain.family import Family
 from mechanize import Browser, URLError
 import xml.etree.ElementTree as Et
 from bs4 import BeautifulSoup
-import datetime
-import json
-import os
 
 
 class SifoExpenses(ApiQuery):
@@ -30,6 +27,9 @@ class SifoExpenses(ApiQuery):
         family      : Family
                       object with family information
         """
+        Assertor.assert_date_type({family: Family})
+        super().__init__()
+
         self.browser = Browser()
         self.browser.set_handle_robots(False)
         self.browser.set_handle_refresh(False)
@@ -40,8 +40,6 @@ class SifoExpenses(ApiQuery):
             raise URLError("connection failed to open with '{}'".format(e))
 
         self.browser.select_form(sifo_form)
-
-        Evaluator.evaluate_data_type({family: Family})
         self.family = family
 
     def get_response(self):

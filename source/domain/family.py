@@ -3,16 +3,49 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util.evaluator import Evaluator
+from source.util.assertor import Assertor
 from source.domain.female import Female
 from source.domain.male import Male
 
 
 class Family:
-    """
-    Family class, i.e. list of Male and Female instances
 
-    """
+    @staticmethod
+    def assert_guardianship(family):
+        """
+        Assert that guardianship is present in family object, raises ValueError if not present.
+
+        Parameters
+        ----------
+        family      : list
+                      list of Person (Male or Female) instances
+
+        """
+        if not len(family) > 2:
+            for family_member in family:
+                if family_member.alder < '18':
+                    raise ValueError("family not possible without guardianship, i.e. family must "
+                                     "have atleast one person older than 18.")
+
+    @staticmethod
+    def assert_family_type(family):
+        """
+        Assert that argument is a list of person object. Raises TypeError if family is not a list
+        of person (Male, Female) objects or ValueError if family has no guardianship.
+
+        Parameters
+        ----------
+        family      : list
+                      list of person objects
+
+        """
+        if not isinstance(family, list):
+            raise TypeError(
+                "expected type '{}', got '{}' instead".format(list.__name__,
+                                                              type(family).__name__))
+        for family_member in family:
+            Assertor.assert_date_type({family_member: (Male, Female)})
+        Family.assert_guardianship(family)
 
     def __init__(self, family_members, income=0, cars=0):
         """
@@ -22,24 +55,47 @@ class Family:
         ----------
         family_members  : list
                           list of Person (Male or Female) instances
-        income          : int, float
+        income          : int, float, str
                           gross yearly income
+        cars            : int, str
+                          number of cars in the family
+
         """
-        if not isinstance(family_members, list):
-            raise TypeError(
-                "expected type '{}', got '{}' instead".format(list.__name__,
-                                                              type(family_members).__name__))
-        Evaluator.evaluate_data_type({income: (int, float), cars: int})
+        self.assert_family_type(family_members)
+        Assertor.assert_date_type({income: (int, float, str), cars: (int, str)})
+        for arg in [income, cars]:
+            Assertor.assert_non_negative(arg)
 
-        for family_member in family_members:
-            if not isinstance(family_member, (Male, Female)):
-                raise TypeError(
-                    "family_member can only be of instance 'Male' or 'Female', got {}".format(
-                        family_member.__class__))
+        self._family_members = family_members
+        self._inntekt = str(income)
+        self._antall_biler = str(cars)
 
-        self.family_members = family_members
-        self.inntekt = str(income)
-        self.antall_biler = str(cars)
+    @property
+    def family_members(self):
+        """
+        family_members getter
+
+        Returns
+        -------
+        out         : list
+                      all active family_members
+
+        """
+        return self._family_members
+
+    @family_members.setter
+    def family_members(self, members):
+        """
+        family_members setter
+
+        Parameters
+        ----------
+        members     : list of person (Male or Female) objects
+                      a list of family_members to append to family
+
+        """
+        self.assert_family_type(members)
+        self._family_members = members
 
     def add_family_member(self, family_member):
         """
@@ -51,8 +107,64 @@ class Family:
                         family member to be appended
 
         """
-        Evaluator.evaluate_data_type({family_member: (Male, Female)})
-        self.family_members.append(family_member)
+        Assertor.assert_date_type({family_member: (Male, Female)})
+        self._family_members.append(family_member)
+
+    @property
+    def inntekt(self):
+        """
+        income getter
+
+        Returns
+        -------
+        out         : int, float
+                      current gross yearly income
+
+        """
+        return self._inntekt
+
+    @inntekt.setter
+    def inntekt(self, income):
+        """
+        income setter
+
+        Parameters
+        ----------
+        income      : int, float, str
+                      new gross yearly income
+
+        """
+        Assertor.assert_date_type({income: (int, float, str)})
+        Assertor.assert_non_negative(income)
+        self._inntekt = income
+
+    @property
+    def antall_biler(self):
+        """
+        cars setter
+
+        Returns
+        -------
+        out     : str
+                  number of cars in the family
+
+        """
+        return self._antall_biler
+
+    @antall_biler.setter
+    def antall_biler(self, cars):
+        """
+        cars setter
+
+        Parameters
+        ----------
+        cars    : int, str
+                  new number of cars to set in family
+
+        """
+        Assertor.assert_date_type({cars: (int, str)})
+        Assertor.assert_non_negative(cars)
+        self._antall_biler = cars
 
     def get_properties(self):
         """
@@ -68,5 +180,5 @@ class Family:
         for i, family_member in enumerate(self.family_members):
             properties.update(
                 {fam_member + str(i): prop_value for fam_member, prop_value in
-                 family_member.get_properties().items()})
+                 family_member.__dict__.items()})
         return properties

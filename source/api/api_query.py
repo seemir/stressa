@@ -4,7 +4,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.exception.base_class_cannot_be_instantiated import BaseClassCannotBeInstantiated
-from source.util.evaluator import Evaluator
+from source.util.assertor import Assertor
 import datetime
 import json
 import os
@@ -31,7 +31,7 @@ class ApiQuery:
                       title of file
 
         """
-        Evaluator.evaluate_data_type({file_dir: str, file_title: str})
+        Assertor.assert_date_type({file_dir: str, file_title: str})
 
         try:
             if not os.path.exists(file_dir):

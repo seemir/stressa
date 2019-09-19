@@ -4,8 +4,8 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.exception.invalid_zip_code import InvalidZipCode
-from source.secrets.secrets import posten_link, posten_form
-from source.util.evaluator import Evaluator
+from source.settings import posten_link, posten_form
+from source.util.assertor import Assertor
 from source.api.api_query import ApiQuery
 from mechanize import Browser, URLError
 from bs4 import BeautifulSoup
@@ -27,12 +27,12 @@ class ZipCodeFinder(ApiQuery):
                       Zip code to be searched
 
         """
+        Assertor.assert_date_type({zip_code: str})
+        super().__init__()
+
         self.browser = Browser()
         self.browser.set_handle_robots(False)
         self.browser.set_handle_refresh(False)
-
-        Evaluator.evaluate_data_type({zip_code: str})
-        self.zip_code = zip_code
 
         try:
             self.browser.open(posten_link)
@@ -40,6 +40,7 @@ class ZipCodeFinder(ApiQuery):
             raise URLError("connection failed to open with '{}'".format(e))
 
         self.browser.select_form(nr=0)
+        self.zip_code = zip_code
 
     def get_response(self):
         """

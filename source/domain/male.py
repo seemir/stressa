@@ -27,7 +27,3 @@ class Male(Person):
 
         """
         super().__init__(sex='m', age=age, kinder_garden=kinder_garden, sfo=sfo)
-
-        self.alder = self.set_age(age)
-        self.barnehage = kinder_garden
-        self.sfo = sfo

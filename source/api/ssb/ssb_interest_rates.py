@@ -4,8 +4,8 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.api.ssb.ssb_payload import SsbPayload
-from source.secrets.secrets import ssb_link
-from source.util.evaluator import Evaluator
+from source.settings import ssb_link
+from source.util.assertor import Assertor
 from source.api.api_query import ApiQuery
 import requests
 
@@ -26,7 +26,7 @@ class SsbInterestRates(ApiQuery):
                       SSB compatible JSON dictionary
 
         """
-        Evaluator.evaluate_data_type({payload: SsbPayload})
+        Assertor.assert_date_type({payload: SsbPayload})
         super().__init__()
         self.payload = payload
 

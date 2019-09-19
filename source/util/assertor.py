@@ -6,14 +6,14 @@ __email__ = 'samir.adrik@gmail.com'
 from source.exception.base_class_cannot_be_instantiated import BaseClassCannotBeInstantiated
 
 
-class Evaluator:
+class Assertor:
     """
-    Class for evaluating Python objects
+    Class for asserting Python objects
 
     """
 
     @staticmethod
-    def evaluate_data_type(dtype_dict):
+    def assert_date_type(dtype_dict):
         """
         Method that evaluates the type of objects in dictionary of {object: type}. Raises
         TypeError if not match.
@@ -30,7 +30,7 @@ class Evaluator:
                     "expected type '{}', got '{}' instead".format(t, type(obj).__name__))
 
     @staticmethod
-    def evaluate_arguments(arg_dict):
+    def assert_arguments(arg_dict):
         """
         Method that evaluates the object in dictionary of {object: [name, possible]} to see if
         object is in possibility. Raises ValueError if not match.
@@ -48,7 +48,7 @@ class Evaluator:
                     "only possible values for '{}' are {}".format(name, possible))
 
     @staticmethod
-    def evaluate_two_boolean(bool_1, bool_2, text):
+    def assert_two_boolean(bool_1, bool_2, text):
         """
         Evaluate two boolean expressions with logical AND raise ValueError with text if False
         
@@ -65,11 +65,25 @@ class Evaluator:
         if bool_1 and bool_2:
             raise ValueError(text)
 
+    @staticmethod
+    def assert_non_negative(num):
+        """
+        Evaluate a non-negative numeric (int, float). Raise ValueError if negative
+
+        Parameters
+        ----------
+        num     : int, float, str, list
+                  number(s) to be evaluated
+
+        """
+        if not float(num) >= 0:
+            raise ValueError("only non-negative numbers accepted, got '{}'".format(num))
+
     def __init__(self):
         """
         Abstract class, so class cannot be instantiated
 
         """
-        if type(self) == Evaluator:
+        if type(self) == Assertor:
             raise BaseClassCannotBeInstantiated(
                 "base class '{}' cannot be instantiated".format(self.__class__.__name__))
