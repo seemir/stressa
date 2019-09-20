@@ -136,7 +136,7 @@ class Family:
         """
         Assertor.assert_date_type({income: (int, float, str)})
         Assertor.assert_non_negative(income)
-        self._inntekt = income
+        self._inntekt = str(income)
 
     @property
     def antall_biler(self):
@@ -164,7 +164,7 @@ class Family:
         """
         Assertor.assert_date_type({cars: (int, str)})
         Assertor.assert_non_negative(cars)
-        self._antall_biler = cars
+        self._antall_biler = str(cars)
 
     def get_properties(self):
         """
