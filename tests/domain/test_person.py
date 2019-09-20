@@ -10,6 +10,14 @@ import pytest as pt
 
 class TestPerson:
 
+    def test_base_class_cannot_be_instantiated(self):
+        """
+        Test that the base-class Person cannot be instantiated
+
+        """
+        with pt.raises(BaseClassCannotBeInstantiated):
+            Person()
+
     @pt.mark.parametrize('age', [18])
     @pt.mark.parametrize('sifo_age', ['19'])
     def test_can_access_static_set_age(self, age, sifo_age):
