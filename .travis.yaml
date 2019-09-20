@@ -1,3 +1,7 @@
+# only push requests to master
+if:
+  type = push
+
 # what language the build will be configured for
 language: python
 
