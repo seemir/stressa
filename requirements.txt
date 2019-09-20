@@ -6,4 +6,5 @@
 mechanize>=0.4.0
 beautifulsoup4>=4.7.0
 requests>=2.21.0
+pytest-cov>=2.7.1
 pytest>=4.5.0
