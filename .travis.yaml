@@ -10,11 +10,6 @@ language: python
 python:
   - 3.7
 
-# what branches should be evaluated
-branches:
-  only:
-    - master
-
 # list of commands to run to setup the environment
 install:
   - pip install coverage
@@ -22,8 +17,12 @@ install:
   - pip install -r requirements.txt
 
 # the actual commands to run
-script:
-  - pytest --cov=source/ tests/
+test:
+  provider: script
+  script:
+    - pytest --cov=source/ tests/
+  on:
+    branch: master
 
 # generate a coverage report to send to back to user
 after_success:
