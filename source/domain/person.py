@@ -39,6 +39,47 @@ class Person:
         sifo_yrs = [0.42, 0.92, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75]
         return str(sifo_yrs[bisect_left(sifo_yrs, age)]) if age <= 75 else str(75)
 
+    @staticmethod
+    def assert_kinder_garden(age, kinder_garden):
+        """
+        Assert that kinder_garden argument is str with only possible values ('0' or '1') and that only
+        persons between 1-5 years can attend kinder_garden. TypeError is thrown if type is not str
+        and ValueError otherwise.
+
+        Parameters
+        ----------
+        age             : int, float, str
+                          age of person
+        kinder_garden   : str
+                          kinder_garden argument
+
+        """
+        Assertor.assert_date_type({age: (float, int, str), kinder_garden: str})
+        Assertor.assert_arguments({kinder_garden: ['kinder_garden:', ('0', '1')]})
+        Assertor.assert_two_boolean(Person.set_age(age) not in ('1', '2', '3', '5'),
+                                    kinder_garden == '1',
+                                    "only persons between 1-5 years can attend kinder_garden")
+
+    @staticmethod
+    def assert_sfo(age, sfo):
+        """
+        Assert that sfo argument is str with only possible values ('0', '1' or '2') and that only
+        persons between 6-13 years can attend sfo. TypeError is thrown if type is not str and
+        ValueError otherwise.
+
+        Parameters
+        ----------
+        age             : int, float, str
+                          age of person
+        sfo             : str
+                          sfo argument
+
+        """
+        Assertor.assert_date_type({age: (float, int, str), sfo: str})
+        Assertor.assert_arguments({sfo: ['sfo:', ('0', '1', '2')]})
+        Assertor.assert_two_boolean(Person.set_age(age) not in ('9', '13'), sfo == '1',
+                                    "only persons between 6-13 years can attend sfo")
+
     def __init__(self, sex='m', age=0, kinder_garden='0', sfo='0'):
         """
         Constructor / Instantiate the class
@@ -59,19 +100,8 @@ class Person:
             raise BaseClassCannotBeInstantiated(
                 "base class '{}' cannot be instantiated".format(self.__class__.__name__))
 
-        Assertor.assert_date_type(
-            {sex: str, age: (float, int, str), kinder_garden: str, sfo: str})
-
-        Assertor.assert_arguments({sex: ['sex:', ('m', 'k')],
-                                   kinder_garden: ['kinder_garden:', ('0', '1')],
-                                   sfo: ['sfo:', ('0', '1')]})
-
-        Assertor.assert_two_boolean(self.set_age(age) not in ('1', '2', '3', '5'),
-                                    kinder_garden == '1',
-                                       "only persons between 1-5 years can attend kinder_garden")
-
-        Assertor.assert_two_boolean(self.set_age(age) not in ('9', '13'), sfo == '1',
-                                       "only persons between 6-13 years can attend sfo")
+        self.assert_kinder_garden(age, kinder_garden)
+        self.assert_sfo(age, sfo)
 
         self._kjonn = sex
         self._alder = self.set_age(age)
@@ -142,11 +172,7 @@ class Person:
                           new kinder_garden str
 
         """
-        Assertor.assert_date_type({kinder_garden: str})
-        Assertor.assert_arguments({kinder_garden: ['kinder_garden:', ('0', '1')]})
-        Assertor.assert_two_boolean(self.set_age(self.alder) not in ('1', '2', '3', '5'),
-                                    kinder_garden == '1',
-                                       "only persons between 1-5 years can attend kinder_garden")
+        self.assert_kinder_garden(self.alder, kinder_garden)
         self._barnehage = kinder_garden
 
     @property
@@ -173,8 +199,5 @@ class Person:
                   new after-school/sfo str
 
         """
-        Assertor.assert_date_type({s: str})
-        Assertor.assert_arguments({s: ['sfo:', ('0', '1')]})
-        Assertor.assert_two_boolean(self.set_age(self.alder) not in ('9', '13'), s == '1',
-                                       "only persons between 6-13 years can attend sfo")
+        self.assert_sfo(self.alder, s)
         self._sfo = s

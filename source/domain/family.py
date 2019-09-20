@@ -28,10 +28,10 @@ class Family:
                                      "have atleast one person older than 18.")
 
     @staticmethod
-    def assert_family_type(family):
+    def assert_family(family):
         """
-        Assert that argument is a list of person object. Raises TypeError if family is not a list
-        of person (Male, Female) objects or ValueError if family has no guardianship.
+        Assert that family argument is a list of person object. Raises TypeError if family is not a
+        list of person (Male, Female) objects or ValueError if family has no guardianship.
 
         Parameters
         ----------
@@ -61,7 +61,7 @@ class Family:
                           number of cars in the family
 
         """
-        self.assert_family_type(family_members)
+        self.assert_family(family_members)
         Assertor.assert_date_type({income: (int, float, str), cars: (int, str)})
         for arg in [income, cars]:
             Assertor.assert_non_negative(arg)
@@ -94,7 +94,7 @@ class Family:
                       a list of family_members to append to family
 
         """
-        self.assert_family_type(members)
+        self.assert_family(members)
         self._family_members = members
 
     def add_family_member(self, family_member):

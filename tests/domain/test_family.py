@@ -99,6 +99,10 @@ class TestFamily:
     @pt.mark.parametrize('inntekt', [594400, 594400, '594400', '594400'])
     @pt.mark.parametrize('antall_biler', [0, '0'])
     def test_arguments_gets_set_in_family_object_via_setter(self, inntekt, antall_biler):
+        """
+        Test that valid arguments gets set into object when passed through setter
+
+        """
         new_family = [Male(25), Female(24)]
         self.family.family_members = new_family
         self.family.inntekt = inntekt

@@ -13,6 +13,24 @@ class Female(Person):
 
     """
 
+    @staticmethod
+    def assert_pregnancy(pregnant):
+        """
+        Assert that pregnant argument is str with only possible values '0' or '1' and that only
+        females between 19-50 years can have pregnancy. TypeError is thrown if type is not str and
+        ValueError otherwise.
+
+        Parameters
+        ----------
+        pregnant        : str
+                          pregnancy argument
+
+        """
+        Assertor.assert_date_type({pregnant: str})
+        Assertor.assert_arguments({pregnant: ['pregnant', ('0', '1')]})
+        Assertor.assert_two_boolean(Female.alder not in ('19', '50'), pregnant == '1',
+                                    "pregnancy at this age is not possible")
+
     def __init__(self, age=0, kinder_garden='0', sfo='0', pregnant='0'):
         """
         Constructor / Instantiate the class
@@ -30,6 +48,7 @@ class Female(Person):
 
         """
         super().__init__(sex='k', age=age, kinder_garden=kinder_garden, sfo=sfo)
+        self.assert_pregnancy(pregnant)
         self._gravid = pregnant
 
     @property
@@ -52,12 +71,9 @@ class Female(Person):
 
         Parameters
         ----------
-        pregnant     : float, int, str
+        pregnant     : str
                        new pregnancy str to be set
 
         """
-        Assertor.assert_date_type({pregnant: str})
-        Assertor.assert_arguments({pregnant: ['pregnant', ('0', '1')]})
-        Assertor.assert_two_boolean(self.alder not in ('19', '50'), pregnant == '1',
-                                       "pregnancy at this age is not possible")
+        self.assert_pregnancy(self.alder)
         self._gravid = pregnant

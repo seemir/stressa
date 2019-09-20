@@ -18,14 +18,12 @@ class TestPerson:
         with pt.raises(BaseClassCannotBeInstantiated):
             Person()
 
-    @pt.mark.parametrize('age', [18])
-    @pt.mark.parametrize('sifo_age', ['19'])
-    def test_can_access_static_set_age(self, age, sifo_age):
+    def test_can_access_static_set_age(self):
         """
         Test that it is possible to access the static set_age() method
 
         """
-        assert Person.set_age(age) == sifo_age
+        assert Person.set_age(18) == '19'
 
     @pt.mark.parametrize('age', [18, 18.0, '18', '18.0', 'test', (), [], {}])
     def test_set_age_with_different_data_types(self, age):
