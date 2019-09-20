@@ -181,4 +181,4 @@ class Family:
             properties.update(
                 {fam_member + str(i): prop_value for fam_member, prop_value in
                  family_member.__dict__.items()})
-        return properties
+        return {name[1:]: value for name, value in properties.items()}

@@ -13,9 +13,14 @@ class SsbPayload:
     """
 
     @staticmethod
-    def date_str():
+    def date_str(n):
         """
-        date string 90 days back in time
+        date string n days back in time
+
+        Parameters
+        ----------
+        n       : int
+                  number of days back in time
 
         Returns
         -------
@@ -23,7 +28,21 @@ class SsbPayload:
                 date string 90 days back in time
 
         """
-        return [(dt.today() - timedelta(days=90)).strftime("%Y{}%m".format('M'))]
+        return [(dt.today() - timedelta(days=n)).strftime("%Y{}%m".format('M'))]
+
+    @staticmethod
+    def updated_table_date():
+        """
+        get SSB compatible str that insures that the newest data from table
+        nr. 10748 is retrieved
+
+        Returns
+        -------
+        out         : datetime
+                      correct date for table nr. 10748
+
+        """
+        return SsbPayload.date_str(90) if dt.today().day < 13 else SsbPayload.date_str(60)
 
     def __init__(self, utlanstype=None, sektor=None, rentebinding=None, tid=None):
         """
@@ -50,7 +69,7 @@ class SsbPayload:
         self.utlanstype = ["70"] if not utlanstype else utlanstype
         self.sektor = ["04b"] if not sektor else sektor
         self.rentebinding = ["08", "12", "10", "11", "06"] if not rentebinding else rentebinding
-        self.tid = self.date_str() if not tid else tid
+        self.tid = self.updated_table_date() if not tid else tid
 
     def get_payload(self):
         """
@@ -73,4 +92,3 @@ class SsbPayload:
                     {"code": "Tid", "selection": {"filter": "item", "values": self.tid}}],
                 "response": {"format": "json-stat2"}
             }
-
