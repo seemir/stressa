@@ -43,11 +43,14 @@ class Family:
             raise TypeError(
                 "expected type '{}', got '{}' instead".format(list.__name__,
                                                               type(family).__name__))
+        if not family:
+            raise ValueError("family_members cannot be empty, got '[]'")
+
         for family_member in family:
             Assertor.assert_date_type({family_member: (Male, Female)})
         Family.assert_guardianship(family)
 
-    def __init__(self, family_members, income=0, cars=0):
+    def __init__(self, family_members=None, income=0, cars=0):
         """
         Constructor / Instantiate the class
 
@@ -97,18 +100,22 @@ class Family:
         self.assert_family(members)
         self._family_members = members
 
-    def add_family_member(self, family_member):
+    def add_family_members(self, family_members):
         """
-        Append a Male or Female family_member to family_members
+        Append a list Male or Female family_member to family_members
 
         Parameters
         ----------
-        family_member : Male, Female
-                        family member to be appended
+        family_members : list of Female or Male instances
+                         family member to be appended
 
         """
-        Assertor.assert_date_type({family_member: (Male, Female)})
-        self._family_members.append(family_member)
+        if isinstance(family_members, list):
+            all(Assertor.assert_date_type({f: (Male, Female)}) for f in family_members)
+            self._family_members.extend(family_members)
+        else:
+            Assertor.assert_date_type({family_members: (Male, Female)})
+            self._family_members.extend([family_members])
 
     @property
     def inntekt(self):

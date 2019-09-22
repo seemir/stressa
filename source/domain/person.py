@@ -42,9 +42,9 @@ class Person:
     @staticmethod
     def assert_kinder_garden(age, kinder_garden):
         """
-        Assert that kinder_garden argument is str with only possible values ('0' or '1') and that only
-        persons between 1-5 years can attend kinder_garden. TypeError is thrown if type is not str
-        and ValueError otherwise.
+        Assert that kinder_garden argument is str with only possible values ('0' or '1') and that
+        only persons between 1-5 years can attend kinder_garden. TypeError is thrown if type is not
+        str and ValueError otherwise.
 
         Parameters
         ----------

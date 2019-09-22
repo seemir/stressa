@@ -35,7 +35,7 @@ class TestFamily:
         """
         assert isinstance(self.family, Family)
 
-    @pt.mark.parametrize('invalid_arg', [True, 'test', 90210, 90210.0, ('test', 'test'), {'test'}])
+    @pt.mark.parametrize('invalid_arg', [True, 'test', 90210, 90210.0, ('test', 'test'), {}])
     def test_family_members_type_are_list(self, invalid_arg):
         """
         Test that Family object raises TypeError if family_members argument are invalid
@@ -43,11 +43,15 @@ class TestFamily:
         """
         family = self.family
         with pt.raises(TypeError):
-            Family(invalid_arg)
-        with pt.raises(TypeError):
             family.family_members = invalid_arg
-        with pt.raises(TypeError):
-            family.family_members = list(invalid_arg)
+
+    def test_family_cannot_be_empty(self):
+        """
+        Test that family_members cannot be empty
+
+        """
+        with pt.raises(ValueError):
+            self.family.family_members = []
 
     @pt.mark.parametrize('invalid_arg', [(), {}])
     def test_income_and_cars_type_error_for_invalid_arguments(self, invalid_arg):
@@ -56,10 +60,6 @@ class TestFamily:
         through constructor or setter
 
         """
-        with pt.raises(TypeError):
-            Family(self.family_members, income=invalid_arg)
-        with pt.raises(TypeError):
-            Family(self.family_members, cars=invalid_arg)
         with pt.raises(TypeError):
             self.family.inntekt = invalid_arg
         with pt.raises(TypeError):
@@ -75,32 +75,15 @@ class TestFamily:
         """
         family = self.family
         with pt.raises(ValueError):
-            Family(family.family_members, income=negative_income)
-        with pt.raises(ValueError):
-            Family(family.family_members, cars=negative_cars)
-        with pt.raises(ValueError):
             family.inntekt = negative_income
         with pt.raises(ValueError):
             family.antall_biler = negative_cars
 
-    @pt.mark.parametrize('inntekt', [1094400, 1094400.0, '1094400', '1094400.0'])
-    @pt.mark.parametrize('antall_biler', [1, '1'])
-    def test_arguments_gets_set_in_family_object_via_constr(self, inntekt, antall_biler):
-        """
-        Test that valid arguments gets set into object when passed through constructor
-
-        """
-        family_members = self.family_members
-        family = Family(family_members, inntekt, antall_biler)
-        assert family.family_members == family_members
-        assert family.inntekt == str(inntekt)
-        assert family.antall_biler == str(antall_biler)
-
     @pt.mark.parametrize('inntekt', [594400, 594400, '594400', '594400'])
     @pt.mark.parametrize('antall_biler', [0, '0'])
-    def test_arguments_gets_set_in_family_object_via_setter(self, inntekt, antall_biler):
+    def test_arguments_gets_set_in_family_object(self, inntekt, antall_biler):
         """
-        Test that valid arguments gets set into object when passed through setter
+        Test that valid arguments gets set into object
 
         """
         new_family = [Male(25), Female(24)]
@@ -111,3 +94,42 @@ class TestFamily:
         assert self.family.family_members == new_family
         assert self.family.inntekt == str(inntekt)
         assert self.family.antall_biler == str(antall_biler)
+
+    @pt.mark.parametrize('invalid_family', [Male(17), Female(17), [Male(17), Female(17)]])
+    def test_family_cannot_exist_without_guardianship(self, invalid_family):
+        """
+        Test that Family object cannot exist without guardianship, i.e. must have atleast one
+        person over 18 years.
+
+        """
+        with pt.raises(ValueError):
+            Family(invalid_family) if isinstance(invalid_family, list) else Family([invalid_family])
+
+    def test_add_family_members_method(self):
+        """
+        Test the add_family_members method in Family class
+
+        """
+        family = self.family
+        children = [Male(age=12), Female(age=10)]
+        family.add_family_members(children)
+        assert len(family.family_members) == 4
+
+        child = Male(age=5)
+        family.add_family_members(child)
+        assert len(family.family_members) == 5
+
+    def test_get_properties_method(self):
+        """
+        Test get properties method in Family class
+
+        """
+        family = [Male(age=48), Female(age=45, pregnant='1'), Female(age=17), Male(age=13, sfo='1'),
+                  Female(age=5, kinder_garden='1')]
+        properties = {'inntekt': '1489000', 'antall_biler': '2'}
+        for i, member in enumerate(family):
+            for key, value in member.__dict__.items():
+                properties.update({key[1:] + str(i): value})
+
+        fam = Family(family, income=1489000, cars=2)
+        assert fam.get_properties() == properties
