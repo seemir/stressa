@@ -7,7 +7,7 @@ from source.exception.invalid_zip_code import InvalidZipCode
 from source.settings import posten_link, posten_form
 from source.util.assertor import Assertor
 from source.api.api_query import ApiQuery
-from mechanize import Browser, URLError
+from mechanize import URLError
 from bs4 import BeautifulSoup
 
 
@@ -29,10 +29,6 @@ class ZipCodeFinder(ApiQuery):
         """
         Assertor.assert_date_type({zip_code: str})
         super().__init__()
-
-        self.browser = Browser()
-        self.browser.set_handle_robots(False)
-        self.browser.set_handle_refresh(False)
 
         try:
             self.browser.open(posten_link)

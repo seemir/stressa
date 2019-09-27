@@ -5,6 +5,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.exception.base_class_cannot_be_instantiated import BaseClassCannotBeInstantiated
 from source.util.assertor import Assertor
+from mechanize import Browser
 import datetime
 import json
 import os
@@ -54,3 +55,7 @@ class ApiQuery:
         if type(self) == ApiQuery:
             raise BaseClassCannotBeInstantiated(
                 "base class '{}' cannot be instantiated".format(self.__class__.__name__))
+
+        self.browser = Browser()
+        self.browser.set_handle_robots(False)
+        self.browser.set_handle_refresh(False)

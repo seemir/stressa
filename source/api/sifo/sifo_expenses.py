@@ -7,7 +7,7 @@ from source.settings import sifo_link, sifo_form
 from source.util.assertor import Assertor
 from source.api.api_query import ApiQuery
 from source.domain.family import Family
-from mechanize import Browser, URLError
+from mechanize import URLError
 import xml.etree.ElementTree as Et
 from bs4 import BeautifulSoup
 
@@ -29,10 +29,6 @@ class SifoExpenses(ApiQuery):
         """
         Assertor.assert_date_type({family: Family})
         super().__init__()
-
-        self.browser = Browser()
-        self.browser.set_handle_robots(False)
-        self.browser.set_handle_refresh(False)
 
         try:
             self.browser.open(sifo_link)
