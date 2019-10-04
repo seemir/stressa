@@ -4,11 +4,12 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.util.assertor import Assertor
+from source.domain.entity import Entity
 from source.domain.female import Female
 from source.domain.male import Male
 
 
-class Family:
+class Family(Entity):
 
     @staticmethod
     def assert_guardianship(family):
@@ -64,6 +65,7 @@ class Family:
                           number of cars in the family
 
         """
+        super().__init__()
         self.assert_family(family_members)
         Assertor.assert_date_type({income: (int, float, str), cars: (int, str)})
         for arg in [income, cars]:

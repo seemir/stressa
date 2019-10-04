@@ -5,10 +5,11 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.exception.base_class_cannot_be_instantiated import BaseClassCannotBeInstantiated
 from source.util.assertor import Assertor
+from source.domain.entity import Entity
 from bisect import bisect_left
 
 
-class Person:
+class Person(Entity):
     """
     Superclass for which all person domain classes are subclassed.
 

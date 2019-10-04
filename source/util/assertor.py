@@ -13,14 +13,14 @@ class Assertor:
     """
 
     @staticmethod
-    def assert_date_type(dtype_dict):
+    def assert_date_type(dtype_dict: dict):
         """
         Method that evaluates the type of objects in dictionary of {object: type}. Raises
         TypeError if not match.
 
         Parameters
         ----------
-        dtype_dict    : dictionary
+        dtype_dict    : dict
                         dict of object: type(s) to be evaluated
 
         """
@@ -30,7 +30,7 @@ class Assertor:
                     "expected type '{}', got '{}' instead".format(t, type(obj).__name__))
 
     @staticmethod
-    def assert_arguments(arg_dict):
+    def assert_arguments(arg_dict: dict):
         """
         Method that evaluates the object in dictionary of {object: [name, possible]} to see if
         object is in possibility. Raises ValueError if not match.
@@ -48,7 +48,7 @@ class Assertor:
                     "only possible values for '{}' are {}".format(name, possible))
 
     @staticmethod
-    def assert_two_boolean(bool_1, bool_2, text):
+    def assert_two_boolean(bool_1: bool, bool_2: bool, text: str):
         """
         Evaluate two boolean expressions with logical AND raise ValueError with text if False
         
@@ -72,7 +72,7 @@ class Assertor:
 
         Parameters
         ----------
-        num     : int, float, str, list
+        num     : int, float, str
                   number(s) to be evaluated
 
         """

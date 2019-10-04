@@ -7,8 +7,8 @@ from source.settings import sifo_link, sifo_form
 from source.util.assertor import Assertor
 from source.api.api_query import ApiQuery
 from source.domain.family import Family
-from mechanize import URLError
 import xml.etree.ElementTree as Et
+from mechanize import URLError
 from bs4 import BeautifulSoup
 
 
