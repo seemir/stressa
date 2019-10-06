@@ -26,9 +26,7 @@ install:
 script:
   - pytest --cov=source/ tests/
 
-
 # generate a coverage report to send to back to user
-after_success::
-  - coverage report
+after_success:
   - coverage xml
   - codecov
