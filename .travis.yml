@@ -29,5 +29,6 @@ script:
 
 # generate a coverage report to send to back to user
 after_success::
+  - coverage report
   - coverage xml
   - codecov
