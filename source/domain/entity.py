@@ -18,4 +18,5 @@ class Entity(ABC):
         if type(self) == Entity:
             raise BaseClassCannotBeInstantiated(
                 "base class '{}' cannot be instantiated".format(self.__class__.__name__))
+
         self.id = str(uuid4())

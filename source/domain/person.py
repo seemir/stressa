@@ -97,6 +97,7 @@ class Person(Entity):
                           after school programme, '0' no, '1' half-day or '2' full-day
 
         """
+        super().__init__()
         if type(self) == Person:
             raise BaseClassCannotBeInstantiated(
                 "base class '{}' cannot be instantiated".format(self.__class__.__name__))
