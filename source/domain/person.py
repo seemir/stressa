@@ -16,7 +16,7 @@ class Person(Entity):
     """
 
     @staticmethod
-    def set_age(age):
+    def set_age(age: (int, float, str)):
         """
         Converts age into SIFO compatible str
 
@@ -41,7 +41,7 @@ class Person(Entity):
         return str(sifo_yrs[bisect_left(sifo_yrs, age)]) if age <= 75 else str(75)
 
     @staticmethod
-    def assert_kinder_garden(age, kinder_garden):
+    def assert_kinder_garden(age: (int, float, str), kinder_garden: str):
         """
         Assert that kinder_garden argument is str with only possible values ('0' or '1') and that
         only persons between 1-5 years can attend kinder_garden. TypeError is thrown if type is not
@@ -62,7 +62,7 @@ class Person(Entity):
                                     "only persons between 1-5 years can attend kinder_garden")
 
     @staticmethod
-    def assert_sfo(age, sfo):
+    def assert_sfo(age: (int, float, str), sfo: str):
         """
         Assert that sfo argument is str with only possible values ('0', '1' or '2') and that only
         persons between 6-13 years can attend sfo. TypeError is thrown if type is not str and
@@ -81,7 +81,8 @@ class Person(Entity):
         Assertor.assert_two_boolean(Person.set_age(age) not in ('9', '13'), sfo == '1',
                                     "only persons between 6-13 years can attend sfo")
 
-    def __init__(self, sex='m', age=0, kinder_garden='0', sfo='0'):
+    def __init__(self, sex: str = 'm', age: (int, float, str) = 0, kinder_garden: str = '0',
+                 sfo: str = '0'):
         """
         Constructor / Instantiate the class
 
@@ -137,13 +138,13 @@ class Person(Entity):
         return self._alder
 
     @alder.setter
-    def alder(self, age):
+    def alder(self, age: (int, float, str)):
         """
         age setter
 
         Parameters
         ----------
-        age     : float, int, str
+        age     : int, float, str
                   new age to be set
 
         """
@@ -164,7 +165,7 @@ class Person(Entity):
         return self._barnehage
 
     @barnehage.setter
-    def barnehage(self, kinder_garden):
+    def barnehage(self, kinder_garden: str):
         """
         kinder_garden status setter
 
@@ -191,7 +192,7 @@ class Person(Entity):
         return self._sfo
 
     @sfo.setter
-    def sfo(self, s):
+    def sfo(self, s: str):
         """
         after-school/sfo program setter
 

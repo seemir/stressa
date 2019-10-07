@@ -14,7 +14,7 @@ class Female(Person):
     """
 
     @staticmethod
-    def assert_pregnancy(age, pregnant):
+    def assert_pregnancy(age: (int, float, str), pregnant: str):
         """
         Assert that pregnant argument is str with only possible values '0' or '1' and that only
         females between 19-50 years can have pregnancy. TypeError is thrown if type is not str and
@@ -33,7 +33,8 @@ class Female(Person):
         Assertor.assert_two_boolean(Person.set_age(age) not in ('19', '50'), pregnant == '1',
                                     "pregnancy at this age is not possible")
 
-    def __init__(self, age=0, kinder_garden='0', sfo='0', pregnant='0'):
+    def __init__(self, age: (int, float, str) = 0, kinder_garden: str = '0', sfo: str = '0',
+                 pregnant: str = '0'):
         """
         Constructor / Instantiate the class
 
@@ -67,7 +68,7 @@ class Female(Person):
         return self._gravid
 
     @gravid.setter
-    def gravid(self, pregnant):
+    def gravid(self, pregnant: str):
         """
         pregnancy setter
 

@@ -18,7 +18,7 @@ class SifoExpenses(ApiQuery):
 
     """
 
-    def __init__(self, family):
+    def __init__(self, family: Family):
         """
         Constructor / Instantiate the class
 
@@ -73,7 +73,7 @@ class SifoExpenses(ApiQuery):
             expenses.update({child.tag: child.text.strip().replace(".", "")})
         return expenses
 
-    def to_json(self, file_dir="report/json/expenses"):
+    def to_json(self, file_dir: str = "report/json/expenses"):
         """
         save expenses report to JSON
 

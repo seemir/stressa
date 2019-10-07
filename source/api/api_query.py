@@ -18,13 +18,13 @@ class ApiQuery:
     """
 
     @staticmethod
-    def _to_json(obj, file_dir="report/json", file_title="Info"):
+    def _to_json(file_dict: dict, file_dir="report/json", file_title="Info"):
         """
         save information in object to JSON file
 
         Parameters
         ----------
-        obj         : object
+        file_dict   : dict
                       retrieve information from this object and save to file
         file_dir    : str
                       file directory to save JSON files
@@ -32,7 +32,7 @@ class ApiQuery:
                       title of file
 
         """
-        Assertor.assert_date_type({file_dir: str, file_title: str})
+        Assertor.assert_date_type({file_dict: dict, file_dir: str, file_title: str})
 
         try:
             if not os.path.exists(file_dir):
@@ -40,7 +40,7 @@ class ApiQuery:
         except Exception as e:
             raise OSError("creation of dir " + file_dir + " failed with: " + str(e))
 
-        js = json.dumps(obj, indent=2, separators=(',', ': '),
+        js = json.dumps(file_dict, indent=2, separators=(',', ': '),
                         ensure_ascii=False)
         local_time = datetime.datetime.now().isoformat().replace(":", "-").replace(".", "-")
         file = open(os.path.join(file_dir, file_title + local_time + ".json"), "w")

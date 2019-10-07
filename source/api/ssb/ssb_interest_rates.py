@@ -4,9 +4,9 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.api.ssb.ssb_payload import SsbPayload
-from source.settings import ssb_link
 from source.util.assertor import Assertor
 from source.api.api_query import ApiQuery
+from source.settings import ssb_link
 import requests
 
 
@@ -16,7 +16,7 @@ class SsbInterestRates(ApiQuery):
 
     """
 
-    def __init__(self, payload):
+    def __init__(self, payload: SsbPayload):
         """
         Constructor / Instantiate the class
 
@@ -58,7 +58,7 @@ class SsbInterestRates(ApiQuery):
         values = response["value"]
         return dict(zip(keys, values))
 
-    def to_json(self, file_dir="report/json/interest_rates"):
+    def to_json(self, file_dir: str = "report/json/interest_rates"):
         """
         save Zip code information to JSON
 

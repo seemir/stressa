@@ -17,7 +17,7 @@ class ZipCodeFinder(ApiQuery):
 
     """
 
-    def __init__(self, zip_code):
+    def __init__(self, zip_code: str):
         """
         Constructor / Instantiate the class
 
@@ -72,7 +72,7 @@ class ZipCodeFinder(ApiQuery):
 
         return dict(zip(header, values))
 
-    def to_json(self, file_dir="report/json/zip_code"):
+    def to_json(self, file_dir: str = "report/json/zip_code"):
         """
         save Zip code information to JSON
 

@@ -12,7 +12,7 @@ class Male(Person):
 
     """
 
-    def __init__(self, age=0, kinder_garden='0', sfo='0'):
+    def __init__(self, age: (int, float, str) = 0, kinder_garden: str = '0', sfo: str = '0'):
         """
         Constructor / Instantiate the class
 

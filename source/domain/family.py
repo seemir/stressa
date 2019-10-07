@@ -6,13 +6,14 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util.assertor import Assertor
 from source.domain.entity import Entity
 from source.domain.female import Female
+from source.domain.person import Person
 from source.domain.male import Male
 
 
 class Family(Entity):
 
     @staticmethod
-    def assert_guardianship(family):
+    def assert_guardianship(family: list):
         """
         Assert that guardianship is present in family object, raises ValueError if not present.
 
@@ -29,7 +30,7 @@ class Family(Entity):
                                      "have atleast one person older than 18.")
 
     @staticmethod
-    def assert_family(family):
+    def assert_family(family: list):
         """
         Assert that family argument is a list of person object. Raises TypeError if family is not a
         list of person (Male, Female) objects or ValueError if family has no guardianship.
@@ -51,7 +52,8 @@ class Family(Entity):
             Assertor.assert_date_type({family_member: (Male, Female)})
         Family.assert_guardianship(family)
 
-    def __init__(self, family_members=None, income=0, cars=0):
+    def __init__(self, family_members: list = None, income: (int, float, str) = 0,
+                 cars: (int, str) = 0):
         """
         Constructor / Instantiate the class
 
@@ -89,20 +91,21 @@ class Family(Entity):
         return self._family_members
 
     @family_members.setter
-    def family_members(self, members):
+    def family_members(self, members: list):
         """
         family_members setter
 
         Parameters
         ----------
-        members     : list of person (Male or Female) objects
-                      a list of family_members to append to family
+        members     : list
+                      a list of family_members, i.e. of person (Male or Female) objects to append
+                      to family
 
         """
         self.assert_family(members)
         self._family_members = members
 
-    def add_family_members(self, family_members):
+    def add_family_members(self, family_members: (list, Person)):
         """
         Append a list Male or Female family_member to family_members
 
@@ -133,7 +136,7 @@ class Family(Entity):
         return self._inntekt
 
     @inntekt.setter
-    def inntekt(self, income):
+    def inntekt(self, income: (int, float, str)):
         """
         income setter
 
@@ -161,7 +164,7 @@ class Family(Entity):
         return self._antall_biler
 
     @antall_biler.setter
-    def antall_biler(self, cars):
+    def antall_biler(self, cars: (int, str)):
         """
         cars setter
 

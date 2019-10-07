@@ -13,7 +13,7 @@ class SsbPayload:
     """
 
     @staticmethod
-    def date_str(n):
+    def date_str(n: int):
         """
         date string n days back in time
 
@@ -25,7 +25,7 @@ class SsbPayload:
         Returns
         -------
         out     list
-                date string 90 days back in time
+                date string n days back in time
 
         """
         return [(dt.today() - timedelta(days=n)).strftime("%Y{}%m".format('M'))]
@@ -44,7 +44,8 @@ class SsbPayload:
         """
         return SsbPayload.date_str(90) if dt.today().day < 13 else SsbPayload.date_str(60)
 
-    def __init__(self, utlanstype=None, sektor=None, rentebinding=None, tid=None):
+    def __init__(self, utlanstype: list = None, sektor: list = None, rentebinding: list = None,
+                 tid: list = None):
         """
         Constructor / Instantiate the class
 
