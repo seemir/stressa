@@ -48,13 +48,13 @@ class Assertor:
                     "only possible values for '{}' are {}".format(name, possible))
 
     @staticmethod
-    def assert_two_boolean(bool_1: bool, bool_2: bool, text: str):
+    def assert_two_boolean(bool_a: bool, bool_2: bool, text: str):
         """
         Evaluate two boolean expressions with logical AND raise ValueError with text if False
         
         Parameters
         ----------
-        bool_1    : bool
+        bool_a    : bool
                     first boolean expression
         bool_2    : bool
                     second boolean expression
@@ -62,7 +62,7 @@ class Assertor:
                     text to outputted in ValueError exception
 
         """
-        if bool_1 and bool_2:
+        if bool_a and bool_2:
             raise ValueError(text)
 
     @staticmethod

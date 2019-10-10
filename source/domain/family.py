@@ -178,9 +178,9 @@ class Family(Entity):
         Assertor.assert_non_negative(cars)
         self._antall_biler = str(cars)
 
-    def get_properties(self):
+    def sifo_properties(self):
         """
-        return all active properties and values in a dictionary
+        return all active sifo compatible properties and values in a dictionary
 
         Returns
         -------
@@ -190,7 +190,7 @@ class Family(Entity):
         """
         properties = dict(list(self.__dict__.items())[-2:])
         for i, family_member in enumerate(self.family_members):
-            properties.update(
-                {fam_member + str(i): prop_value for fam_member, prop_value in
-                 family_member.__dict__.items()})
+            for name, prop in family_member.__dict__.items():
+                if "id" not in name:
+                    properties.update({name + str(i): prop})
         return {name[1:]: value for name, value in properties.items()}

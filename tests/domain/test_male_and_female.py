@@ -3,22 +3,27 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from source.domain.entity import Entity
 from source.domain.person import Person
 from source.domain.female import Female
 from source.domain.male import Male
+from uuid import UUID
 import pytest as pt
+from abc import ABC
 
 
 class TestMaleAndFemale:
 
-    def test_male_and_female_are_instances_and_subclasses_of_person(self):
+    def test_male_and_female_are_instances_and_subclasses_of_person_entity_and_abc_class(self):
         """
-        Test that all Male and Female instances are subclass and instance of Person superclass
+        Test that all Male and Female instances are subclass and instance of Person, Entity and
+        ABC classes
 
         """
         for person in [Male(), Female()]:
-            assert isinstance(person, Person)
-            assert issubclass(person.__class__, Person)
+            for parents in [Person, Entity, ABC]:
+                assert isinstance(person, parents)
+                assert issubclass(person.__class__, parents)
 
     def test_male_and_female_have_correct_gender(self):
         """
@@ -88,3 +93,11 @@ class TestMaleAndFemale:
         else:
             with pt.raises(ValueError):
                 female.__class__(age, pregnant='1')
+
+    def test_male_and_female_id_are_uuid4(self):
+        """
+        Test that Male and Female entity class ids are uuid4 compatible
+
+        """
+        for person in [Male(), Female()]:
+            assert UUID(str(person.id))

@@ -3,9 +3,12 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.domain.female import Female
 from source.domain.family import Family
+from source.domain.female import Female
+from source.domain.entity import Entity
 from source.domain.male import Male
+from uuid import UUID
+from abc import ABC
 import pytest as pt
 
 
@@ -33,7 +36,9 @@ class TestFamily:
         Test that all family objects are instances of Family class
 
         """
-        assert isinstance(self.family, Family)
+        for parents in [Entity, ABC]:
+            isinstance(self.family, parents)
+            issubclass(self.family.__class__, parents)
 
     @pt.mark.parametrize('invalid_arg', [True, 'test', 90210, 90210.0, ('test', 'test'), {}])
     def test_family_members_type_are_list(self, invalid_arg):
@@ -41,9 +46,8 @@ class TestFamily:
         Test that Family object raises TypeError if family_members argument are invalid
 
         """
-        family = self.family
         with pt.raises(TypeError):
-            family.family_members = invalid_arg
+            self.family.family_members = invalid_arg
 
     def test_family_cannot_be_empty(self):
         """
@@ -73,11 +77,10 @@ class TestFamily:
         Family class through constructor or setter
 
         """
-        family = self.family
         with pt.raises(ValueError):
-            family.inntekt = negative_income
+            self.family.inntekt = negative_income
         with pt.raises(ValueError):
-            family.antall_biler = negative_cars
+            self.family.antall_biler = negative_cars
 
     @pt.mark.parametrize('inntekt', [594400, 594400, '594400', '594400'])
     @pt.mark.parametrize('antall_biler', [0, '0'])
@@ -86,14 +89,16 @@ class TestFamily:
         Test that valid arguments gets set into object
 
         """
+        family = self.family
         new_family = [Male(25), Female(24)]
-        self.family.family_members = new_family
-        self.family.inntekt = inntekt
-        self.family.antall_biler = antall_biler
 
-        assert self.family.family_members == new_family
-        assert self.family.inntekt == str(inntekt)
-        assert self.family.antall_biler == str(antall_biler)
+        family.family_members = new_family
+        family.inntekt = inntekt
+        family.antall_biler = antall_biler
+
+        assert family.family_members == new_family
+        assert family.inntekt == str(inntekt)
+        assert family.antall_biler == str(antall_biler)
 
     @pt.mark.parametrize('invalid_family', [Male(17), Female(17), [Male(17), Female(17)]])
     def test_family_cannot_exist_without_guardianship(self, invalid_family):
@@ -129,7 +134,23 @@ class TestFamily:
         properties = {'inntekt': '1489000', 'antall_biler': '2'}
         for i, member in enumerate(family):
             for key, value in member.__dict__.items():
-                properties.update({key[1:] + str(i): value})
+                if "id" not in key:
+                    properties.update({key[1:] + str(i): value})
 
         fam = Family(family, income=1489000, cars=2)
-        assert fam.get_properties() == properties
+        assert fam.sifo_properties() == properties
+
+    def test_that_id_not_in_sifo_properties(self):
+        """
+        Test that sifo_properties() does not include entity id's
+
+        """
+        prop = self.family.sifo_properties()
+        assert 'id' not in prop.keys()
+
+    def test_family_object_id_are_uuid4(self):
+        """
+        Test that all entity ids are uuid4 compatible
+
+        """
+        assert UUID(str(self.family.id))

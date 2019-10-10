@@ -15,8 +15,20 @@ class Entity(ABC):
     """
 
     def __init__(self):
+        """
+        Constructor / Instantiate the class.
+        Only one property, i.e. id given by uuid4
+
+        """
         if type(self) == Entity:
             raise BaseClassCannotBeInstantiated(
                 "base class '{}' cannot be instantiated".format(self.__class__.__name__))
+        self._id = str(uuid4())
 
-        self.id = str(uuid4())
+    @property
+    def id(self):
+        """
+        Id getter
+
+        """
+        return self._id

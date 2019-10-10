@@ -48,7 +48,7 @@ class SifoExpenses(ApiQuery):
                       response with expenses information
 
         """
-        for prop, value in self.family.get_properties().items():
+        for prop, value in self.family.sifo_properties().items():
             if prop == 'inntekt':
                 self.browser[prop] = value
             else:

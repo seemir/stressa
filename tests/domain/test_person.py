@@ -6,11 +6,21 @@ __email__ = 'samir.adrik@gmail.com'
 from source.exception.base_class_cannot_be_instantiated import BaseClassCannotBeInstantiated
 from source.domain.person import Person
 import pytest as pt
+from abc import ABC
 
 
 class TestPerson:
 
-    def test_base_class_cannot_be_instantiated(self):
+    def test_person_is_instance_of_entity_and_abc(self):
+        """
+        Test that Person class is instance and subclass of entity and ABC
+
+        """
+        for parents in [Person, ABC]:
+            isinstance(Person, parents)
+            issubclass(Person.__class__, parents)
+
+    def test_person_cannot_be_instantiated(self):
         """
         Test that the base-class Person cannot be instantiated
 

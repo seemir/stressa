@@ -32,7 +32,7 @@ class ApiQuery:
                       title of file
 
         """
-        Assertor.assert_date_type({file_dict: dict, file_dir: str, file_title: str})
+        Assertor.assert_date_type({file_dir: str, file_title: str})
 
         try:
             if not os.path.exists(file_dir):
