@@ -3,8 +3,8 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception.base_class_cannot_be_instantiated import BaseClassCannotBeInstantiated
-from source.util.assertor import Assertor
+from source.exception import BaseClassCannotBeInstantiated
+from source.util import Assertor
 from mechanize import Browser
 import datetime
 import json

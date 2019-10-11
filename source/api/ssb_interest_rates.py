@@ -3,10 +3,10 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.api.ssb.ssb_payload import SsbPayload
-from source.util.assertor import Assertor
-from source.api.api_query import ApiQuery
 from source.settings import ssb_link
+from .ssb_payload import SsbPayload
+from source.util import Assertor
+from .api_query import ApiQuery
 import requests
 
 

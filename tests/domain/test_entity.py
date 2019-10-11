@@ -3,8 +3,8 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception.base_class_cannot_be_instantiated import BaseClassCannotBeInstantiated
-from source.domain.entity import Entity
+from source.exception import BaseClassCannotBeInstantiated
+from source.domain import Entity
 from abc import ABC
 import pytest as pt
 

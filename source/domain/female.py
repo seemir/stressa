@@ -3,8 +3,8 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.domain.person import Person
-from source.util.assertor import Assertor
+from source.util import Assertor
+from .person import Person
 
 
 class Female(Person):

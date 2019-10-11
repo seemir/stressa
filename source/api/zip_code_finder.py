@@ -3,10 +3,10 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception.invalid_zip_code import InvalidZipCode
 from source.settings import posten_link, posten_form
-from source.util.assertor import Assertor
-from source.api.api_query import ApiQuery
+from source.exception import InvalidZipCode
+from source.util import Assertor
+from .api_query import ApiQuery
 from mechanize import URLError
 from bs4 import BeautifulSoup
 

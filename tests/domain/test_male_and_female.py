@@ -3,13 +3,10 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.domain.entity import Entity
-from source.domain.person import Person
-from source.domain.female import Female
-from source.domain.male import Male
+from source.domain import Entity, Person, Female, Male
 from uuid import UUID
-import pytest as pt
 from abc import ABC
+import pytest as pt
 
 
 class TestMaleAndFemale:

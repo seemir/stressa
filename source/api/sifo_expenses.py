@@ -4,10 +4,10 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.settings import sifo_link, sifo_form
-from source.util.assertor import Assertor
-from source.api.api_query import ApiQuery
-from source.domain.family import Family
 import xml.etree.ElementTree as Et
+from source.domain import Family
+from source.util import Assertor
+from .api_query import ApiQuery
 from mechanize import URLError
 from bs4 import BeautifulSoup
 

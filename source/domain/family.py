@@ -3,11 +3,11 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util.assertor import Assertor
-from source.domain.entity import Entity
-from source.domain.female import Female
-from source.domain.person import Person
-from source.domain.male import Male
+from source.util import Assertor
+from .entity import Entity
+from .female import Female
+from .person import Person
+from .male import Male
 
 
 class Family(Entity):

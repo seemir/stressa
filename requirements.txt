@@ -10,6 +10,8 @@ DateTime==4.3
 html5lib==1.0.1
 idna==2.8
 importlib-metadata==0.23
+loguru==0.3.2
+lxml==4.4.1
 mechanize==0.4.3
 more-itertools==7.2.0
 numpy==1.17.2
@@ -26,5 +28,6 @@ soupsieve==1.9.4
 urllib3==1.25.6
 wcwidth==0.1.7
 webencodings==0.5.1
+win32-setctime==1.0.1
 zipp==0.6.0
 zope.interface==4.6.0
