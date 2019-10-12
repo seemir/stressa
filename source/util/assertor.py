@@ -48,36 +48,24 @@ class Assertor:
                     "only possible values for '{}' are {}".format(name, possible))
 
     @staticmethod
-    def assert_two_boolean(bool_a: bool, bool_2: bool, text: str):
-        """
-        Evaluate two boolean expressions with logical AND raise ValueError with text if False
-        
-        Parameters
-        ----------
-        bool_a    : bool
-                    first boolean expression
-        bool_2    : bool
-                    second boolean expression
-        text      : str
-                    text to outputted in ValueError exception
-
-        """
-        if bool_a and bool_2:
-            raise ValueError(text)
-
-    @staticmethod
-    def assert_non_negative(num):
+    def assert_non_negative(numbers):
         """
         Evaluate a non-negative numeric (int, float). Raise ValueError if negative
 
         Parameters
         ----------
-        num     : int, float, str
+        numbers : list, str, int, float
                   number(s) to be evaluated
 
         """
-        if not float(num) >= 0:
-            raise ValueError("only non-negative numbers accepted, got '{}'".format(num))
+        msg = "only non-negative numbers accepted"
+        if isinstance(numbers, list):
+            for number in numbers:
+                if not float(number) >= 0:
+                    raise ValueError(msg)
+        else:
+            if not float(numbers) >= 0:
+                raise ValueError(msg)
 
     def __init__(self):
         """

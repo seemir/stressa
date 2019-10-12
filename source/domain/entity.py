@@ -11,22 +11,28 @@ from abc import ABC
 
 class Entity(ABC):
     """
-    Base entity class
+    abstract base entity class
 
     """
 
     def __init__(self):
         """
-        Constructor / Instantiate the class.
-        Only one property, i.e. id given by uuid4
+        Constructor / Instantiate the class. Only one property, i.e. id given by uuid4
 
         """
-        if type(self) == Entity:
-            raise BaseClassCannotBeInstantiated(
-                "base class '{}' cannot be instantiated".format(self.__class__.__name__))
-        self._id = str(uuid4())
         logger.info(
-            "Created Entity, '{}', with id: '{}'".format(self.__class__.__name__, self.id))
+            "trying to create entity: '{}'".format(self.__class__.__name__))
+
+        if type(self) == Entity:
+            try:
+                raise BaseClassCannotBeInstantiated(
+                    "abstract base class '{}' cannot be instantiated".format(
+                        self.__class__.__name__))
+            except Exception as exp:
+                logger.exception(exp)
+                raise exp
+
+        self._id = str(uuid4())
 
     @property
     def id(self):

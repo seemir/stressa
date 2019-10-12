@@ -4,6 +4,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor
+from source.log import logger
 from .person import Person
 
 
@@ -12,26 +13,6 @@ class Female(Person):
     Female class, i.e. second of only two gender classes
 
     """
-
-    @staticmethod
-    def assert_pregnancy(age: (int, float, str), pregnant: str):
-        """
-        Assert that pregnant argument is str with only possible values '0' or '1' and that only
-        females between 19-50 years can have pregnancy. TypeError is thrown if type is not str and
-        ValueError otherwise.
-
-        Parameters
-        ----------
-        age             : int, float, str
-                          age of female
-        pregnant        : str
-                          pregnancy argument
-
-        """
-        Assertor.assert_date_type({age: (float, int, str), pregnant: str})
-        Assertor.assert_arguments({pregnant: ['pregnant', ('0', '1')]})
-        Assertor.assert_two_boolean(Person.set_age(age) not in ('19', '50'), pregnant == '1',
-                                    "pregnancy at this age is not possible")
 
     def __init__(self, age: (int, float, str) = 0, kinder_garden: str = '0', sfo: str = '0',
                  pregnant: str = '0'):
@@ -50,9 +31,17 @@ class Female(Person):
                           Pregnant female, '1' true or '0' false
 
         """
-        super().__init__(sex='k', age=age, kinder_garden=kinder_garden, sfo=sfo)
-        self.assert_pregnancy(age, pregnant)
+        super().__init__('k', age, kinder_garden, sfo)
+
+        Assertor.assert_date_type({age: (float, int, str), pregnant: str})
+
+        Assertor.assert_arguments({pregnant: ['pregnant', ('0', '1')]})
+
+        if Person._sifo_age(age) not in ('19', '50') and pregnant == '1':
+            raise ValueError("pregnancy at this age is not possible")
+
         self._gravid = pregnant
+        logger.success("created entity: '{}', with id: {}".format(self.__class__.__name__, self.id))
 
     @property
     def gravid(self):
@@ -78,5 +67,4 @@ class Female(Person):
                        new pregnancy str to be set
 
         """
-        self.assert_pregnancy(self.alder, pregnant)
         self._gravid = pregnant

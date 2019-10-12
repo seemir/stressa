@@ -33,7 +33,7 @@ class TestPerson:
         Test that it is possible to access the static set_age() method
 
         """
-        assert Person.set_age(18) == '19'
+        assert Person._sifo_age(18) == '19'
 
     @pt.mark.parametrize('age', [18, 18.0, '18', '18.0', 'test', (), [], {}])
     def test_set_age_with_different_data_types(self, age):
@@ -42,10 +42,10 @@ class TestPerson:
 
         """
         try:
-            assert Person.set_age(age) == '19'
+            assert Person._sifo_age(age) == '19'
         except TypeError:
             with pt.raises(TypeError):
-                Person.set_age(age)
+                Person._sifo_age(age)
 
     @pt.mark.parametrize('negative_age', [-18, -18.0, '-18', '-18.0'])
     def test_only_non_negative_numbers_accepted(self, negative_age):
@@ -54,7 +54,7 @@ class TestPerson:
 
         """
         with pt.raises(ValueError):
-            Person.set_age(negative_age)
+            Person._sifo_age(negative_age)
 
     @pt.mark.parametrize('yrs', [0.42, 0.92, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75])
     def test_sifo_age_corner_cases(self, yrs):
@@ -63,4 +63,4 @@ class TestPerson:
 
         """
         for limit in [yrs - 0.05, yrs]:
-            assert Person.set_age(limit) == str(yrs)
+            assert Person._sifo_age(limit) == str(yrs)

@@ -3,6 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from source.log import logger
 from .person import Person
 
 
@@ -26,4 +27,5 @@ class Male(Person):
                           After school programme, '1' true or '0' false
 
         """
-        super().__init__(sex='m', age=age, kinder_garden=kinder_garden, sfo=sfo)
+        super().__init__('m', age, kinder_garden, sfo)
+        logger.success("created entity: '{}', with id: {}".format(self.__class__.__name__, self.id))

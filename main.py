@@ -11,7 +11,7 @@ mother = Female(age=40)
 girl = Female(age=13, sfo='1')
 boy = Male(age=10, sfo='1')
 
-family = Family([father, mother, girl, boy], income=850000, cars=2)
+family = Family([father, mother], income=850000, cars=2)
 
 family.sifo_properties()
 

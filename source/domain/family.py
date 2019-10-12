@@ -4,53 +4,43 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor
+from source.log import logger
 from .entity import Entity
 from .female import Female
-from .person import Person
 from .male import Male
 
 
 class Family(Entity):
 
     @staticmethod
-    def assert_guardianship(family: list):
+    def _assert_family_members(family_members: list):
         """
-        Assert that guardianship is present in family object, raises ValueError if not present.
+        Checking the family_members object. In this implementation a Family has the following
+        characteristics:
+
+        - Needs to be a list
+        - Cannot be an empty list
+        - All objects in the list must be either of class Male or Female
+        - A family must have guardianship, i.e. have at least one person older than 17
 
         Parameters
         ----------
-        family      : list
-                      list of Person (Male or Female) instances
+        family_members  : list
+                          list of Male or Female objects
 
         """
-        if not len(family) > 2:
-            for family_member in family:
-                if family_member.alder < '18':
-                    raise ValueError("family not possible without guardianship, i.e. family must "
-                                     "have atleast one person older than 18.")
-
-    @staticmethod
-    def assert_family(family: list):
-        """
-        Assert that family argument is a list of person object. Raises TypeError if family is not a
-        list of person (Male, Female) objects or ValueError if family has no guardianship.
-
-        Parameters
-        ----------
-        family      : list
-                      list of person objects
-
-        """
-        if not isinstance(family, list):
-            raise TypeError(
-                "expected type '{}', got '{}' instead".format(list.__name__,
-                                                              type(family).__name__))
-        if not family:
+        if not isinstance(family_members, list):
+            raise TypeError("expected type '{}', got '{}' "
+                            "instead".format(list.__name__, type(family_members).__name__))
+        if not family_members:
             raise ValueError("family_members cannot be empty, got '[]'")
 
-        for family_member in family:
+        for family_member in family_members:
             Assertor.assert_date_type({family_member: (Male, Female)})
-        Family.assert_guardianship(family)
+
+        if all(int(family_member.alder) < 18 for family_member in family_members):
+            raise ValueError("family not possible without guardianship, i.e. family must "
+                             "have at least one person older than 17.")
 
     def __init__(self, family_members: list = None, income: (int, float, str) = 0,
                  cars: (int, str) = 0):
@@ -68,14 +58,19 @@ class Family(Entity):
 
         """
         super().__init__()
-        self.assert_family(family_members)
-        Assertor.assert_date_type({income: (int, float, str), cars: (int, str)})
-        for arg in [income, cars]:
-            Assertor.assert_non_negative(arg)
+        try:
+            self._assert_family_members(family_members)
+            Assertor.assert_date_type({income: (int, float, str), cars: (int, str)})
+            Assertor.assert_non_negative([income, cars])
+        except Exception as exp:
+            logger.exception(exp)
+            raise exp
 
         self._family_members = family_members
         self._inntekt = str(income)
         self._antall_biler = str(cars)
+
+        logger.success("created entity: '{}', with id: {}".format(self.__class__.__name__, self.id))
 
     @property
     def family_members(self):
@@ -102,10 +97,10 @@ class Family(Entity):
                       to family
 
         """
-        self.assert_family(members)
+        self._assert_family_members(members)
         self._family_members = members
 
-    def add_family_members(self, family_members: (list, Person)):
+    def add_family_members(self, family_members: (list, Male, Female)):
         """
         Append a list Male or Female family_member to family_members
 
@@ -116,7 +111,7 @@ class Family(Entity):
 
         """
         if isinstance(family_members, list):
-            all(Assertor.assert_date_type({f: (Male, Female)}) for f in family_members)
+            all(Assertor.assert_date_type({member: (Male, Female)}) for member in family_members)
             self._family_members.extend(family_members)
         else:
             Assertor.assert_date_type({family_members: (Male, Female)})
