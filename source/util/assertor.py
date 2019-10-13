@@ -13,7 +13,7 @@ class Assertor:
     """
 
     @staticmethod
-    def assert_date_type(dtype_dict: dict):
+    def assert_data_type(dtype_dict: dict):
         """
         Method that evaluates the type of objects in dictionary of {object: type}. Raises
         TypeError if not match.

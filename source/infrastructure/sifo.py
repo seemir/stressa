@@ -7,12 +7,12 @@ from source.settings import sifo_link, sifo_form
 import xml.etree.ElementTree as Et
 from source.domain import Family
 from source.util import Assertor
-from .api_query import ApiQuery
-from mechanize import URLError
+from source.log import logger
 from bs4 import BeautifulSoup
+from .crawler import Crawler
 
 
-class SifoExpenses(ApiQuery):
+class Sifo(Crawler):
     """
     class that produces SIFO expenses given family information
 
@@ -27,18 +27,19 @@ class SifoExpenses(ApiQuery):
         family      : Family
                       object with family information
         """
-        Assertor.assert_date_type({family: Family})
         super().__init__()
-
         try:
+            Assertor.assert_data_type({family: Family})
             self.browser.open(sifo_link)
-        except Exception as e:
-            raise URLError("connection failed to open with '{}'".format(e))
-
-        self.browser.select_form(sifo_form)
+            self.browser.select_form(sifo_form)
+        except Exception as exp:
+            logger.exception(exp)
+            raise exp
         self.family = family
+        logger.success(
+            "created crawler: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
-    def get_response(self):
+    def response(self):
         """
         Submits and gets response for SIFO request
 
@@ -55,7 +56,7 @@ class SifoExpenses(ApiQuery):
                 self.browser[prop] = [value]
         return self.browser.submit()
 
-    def get_expenses(self):
+    def sifo_expenses(self):
         """
         get SIFO expenses given the family information
 
@@ -65,12 +66,15 @@ class SifoExpenses(ApiQuery):
                       dictionary with SIFO expenses
 
         """
-        soup = BeautifulSoup(self.get_response(), "xml").prettify()
-        root = Et.fromstring(soup)
-
-        expenses = {}
-        for child in root:
-            expenses.update({child.tag: child.text.strip().replace(".", "")})
+        try:
+            soup = BeautifulSoup(self.response(), "xml").prettify()
+            root = Et.fromstring(soup)
+            expenses = {}
+            for child in root:
+                expenses.update({child.tag: child.text.strip().replace(".", "")})
+        except Exception as exp:
+            logger.exception(Exception)
+            raise exp
         return expenses
 
     def to_json(self, file_dir: str = "report/json/expenses"):
@@ -83,4 +87,4 @@ class SifoExpenses(ApiQuery):
                       file directory to save JSON files
 
         """
-        self._to_json(self.get_expenses(), file_dir=file_dir, file_title="SifoExpenses_")
+        self._to_json(self.sifo_expenses(), file_dir=file_dir, file_title="SifoExpenses_")

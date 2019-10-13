@@ -3,20 +3,21 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from source.infrastructure.payload import SsbPayload
 from source.settings import ssb_link
-from .ssb_payload import SsbPayload
 from source.util import Assertor
-from .api_query import ApiQuery
+from source.log import logger
+from .crawler import Crawler
 import requests
 
 
-class SsbInterestRates(ApiQuery):
+class Ssb(Crawler):
     """
     Interest rates from SSB table nr. 10748
 
     """
 
-    def __init__(self, payload: SsbPayload):
+    def __init__(self, payload: SsbPayload = None):
         """
         Constructor / Instantiate the class
 
@@ -26,11 +27,17 @@ class SsbInterestRates(ApiQuery):
                       SSB compatible JSON dictionary
 
         """
-        Assertor.assert_date_type({payload: SsbPayload})
-        super().__init__()
-        self.payload = payload
+        try:
+            Assertor.assert_data_type({payload: (type(None), SsbPayload)})
+            super().__init__()
+            self.payload = SsbPayload() if not payload else payload
+            logger.success(
+                "created crawler: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+        except Exception as exp:
+            logger.exception(exp)
+            raise exp
 
-    def get_response(self):
+    def response(self):
         """
         Submits and gets response for SSB request
 
@@ -40,10 +47,10 @@ class SsbInterestRates(ApiQuery):
                   response with interest rate information
 
         """
-        payload = self.payload.get_payload()
+        payload = self.payload.payload()
         return requests.post(url=ssb_link, json=payload)
 
-    def get_interest_rates(self):
+    def ssb_interest_rates(self):
         """
         gets the interest information from SSB table nr. 10748
 
@@ -53,10 +60,14 @@ class SsbInterestRates(ApiQuery):
                   interest rate information from SSB
 
         """
-        response = self.get_response().json()
-        keys = response["dimension"]["Rentebinding"]["category"]["label"].values()
-        values = response["value"]
-        return dict(zip(keys, values))
+        try:
+            response = self.response().json()
+            keys = response["dimension"]["Rentebinding"]["category"]["label"].values()
+            values = response["value"]
+        except Exception as exp:
+            logger.exception(exp)
+            raise exp
+        return {key.lower(): str(val) for key, val in dict(zip(keys, values)).items()}
 
     def to_json(self, file_dir: str = "report/json/interest_rates"):
         """
@@ -68,4 +79,4 @@ class SsbInterestRates(ApiQuery):
                       file directory to save JSON files
 
         """
-        self._to_json(self.get_interest_rates(), file_dir=file_dir, file_title="SsbInterestRates_")
+        self._to_json(self.ssb_interest_rates(), file_dir=file_dir, file_title="SsbInterestRates_")

@@ -13,7 +13,7 @@ class SsbPayload:
     """
 
     @staticmethod
-    def date_str(n: int):
+    def _date_str(n: int):
         """
         date string n days back in time
 
@@ -31,7 +31,7 @@ class SsbPayload:
         return [(dt.today() - timedelta(days=n)).strftime("%Y{}%m".format('M'))]
 
     @staticmethod
-    def updated_table_date():
+    def _updated_table_date():
         """
         get SSB compatible str that insures that the newest data from table
         nr. 10748 is retrieved
@@ -42,7 +42,7 @@ class SsbPayload:
                       correct date for table nr. 10748
 
         """
-        return SsbPayload.date_str(90) if dt.today().day < 13 else SsbPayload.date_str(60)
+        return SsbPayload._date_str(90) if dt.today().day < 13 else SsbPayload._date_str(60)
 
     def __init__(self, utlanstype: list = None, sektor: list = None, rentebinding: list = None,
                  tid: list = None):
@@ -70,9 +70,9 @@ class SsbPayload:
         self.utlanstype = ["70"] if not utlanstype else utlanstype
         self.sektor = ["04b"] if not sektor else sektor
         self.rentebinding = ["08", "12", "10", "11", "06"] if not rentebinding else rentebinding
-        self.tid = self.updated_table_date() if not tid else tid
+        self.tid = self._updated_table_date() if not tid else tid
 
-    def get_payload(self):
+    def payload(self):
         """
         method for getting the SSB compatible payload
 

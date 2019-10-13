@@ -11,6 +11,10 @@ from .male import Male
 
 
 class Family(Entity):
+    """
+    Family entity class
+
+    """
 
     @staticmethod
     def _assert_family_members(family_members: list):
@@ -36,7 +40,7 @@ class Family(Entity):
             raise ValueError("family_members cannot be empty, got '[]'")
 
         for family_member in family_members:
-            Assertor.assert_date_type({family_member: (Male, Female)})
+            Assertor.assert_data_type({family_member: (Male, Female)})
 
         if all(int(family_member.alder) < 18 for family_member in family_members):
             raise ValueError("family not possible without guardianship, i.e. family must "
@@ -60,7 +64,7 @@ class Family(Entity):
         super().__init__()
         try:
             self._assert_family_members(family_members)
-            Assertor.assert_date_type({income: (int, float, str), cars: (int, str)})
+            Assertor.assert_data_type({income: (int, float, str), cars: (int, str)})
             Assertor.assert_non_negative([income, cars])
         except Exception as exp:
             logger.exception(exp)
@@ -70,7 +74,7 @@ class Family(Entity):
         self._inntekt = str(income)
         self._antall_biler = str(cars)
 
-        logger.success("created entity: '{}', with id: {}".format(self.__class__.__name__, self.id))
+        logger.success("created entity: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
     def family_members(self):
@@ -111,10 +115,10 @@ class Family(Entity):
 
         """
         if isinstance(family_members, list):
-            all(Assertor.assert_date_type({member: (Male, Female)}) for member in family_members)
+            all(Assertor.assert_data_type({member: (Male, Female)}) for member in family_members)
             self._family_members.extend(family_members)
         else:
-            Assertor.assert_date_type({family_members: (Male, Female)})
+            Assertor.assert_data_type({family_members: (Male, Female)})
             self._family_members.extend([family_members])
 
     @property
@@ -141,7 +145,7 @@ class Family(Entity):
                       new gross yearly income
 
         """
-        Assertor.assert_date_type({income: (int, float, str)})
+        Assertor.assert_data_type({income: (int, float, str)})
         Assertor.assert_non_negative(income)
         self._inntekt = str(income)
 
@@ -169,7 +173,7 @@ class Family(Entity):
                   new number of cars to set in family
 
         """
-        Assertor.assert_date_type({cars: (int, str)})
+        Assertor.assert_data_type({cars: (int, str)})
         Assertor.assert_non_negative(cars)
         self._antall_biler = str(cars)
 

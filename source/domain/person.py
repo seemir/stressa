@@ -63,7 +63,7 @@ class Person(Entity):
                 raise BaseClassCannotBeInstantiated(
                     "base class '{}' cannot be instantiated".format(self.__class__.__name__))
 
-            Assertor.assert_date_type(
+            Assertor.assert_data_type(
                 {sex: str, age: (int, float, str), kinder_garden: str, sfo: str})
 
             Assertor.assert_arguments({kinder_garden: ['kinder_garden:', ('0', '1')],
@@ -121,7 +121,7 @@ class Person(Entity):
                   new age to be set
 
         """
-        Assertor.assert_date_type({age: (float, int, str)})
+        Assertor.assert_data_type({age: (float, int, str)})
         self._alder = self._sifo_age(age)
 
     @property
@@ -148,7 +148,7 @@ class Person(Entity):
                           new kinder_garden str
 
         """
-        Assertor.assert_date_type({kinder_garden: str})
+        Assertor.assert_data_type({kinder_garden: str})
         Assertor.assert_arguments({kinder_garden: ['kinder_garden:', ('0', '1')]})
         self._barnehage = kinder_garden
 
@@ -176,6 +176,6 @@ class Person(Entity):
                   new after-school/sfo str
 
         """
-        Assertor.assert_date_type({s: str})
+        Assertor.assert_data_type({s: str})
         Assertor.assert_arguments({s: ['kinder_garden:', ('0', '1')]})
         self._sfo = s
