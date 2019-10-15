@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import BaseClassCannotBeInstantiated, InvalidZipCode
+from source.exception import InstantiationError, DomainError
 
 
 class TestExceptions:
@@ -15,6 +15,6 @@ class TestExceptions:
         in-line with recommendation from PEP 352 -- Required Superclass for Exceptions.
 
         """
-        for exception in [BaseClassCannotBeInstantiated, InvalidZipCode]:
+        for exception in [InstantiationError, DomainError]:
             assert isinstance(exception('test'), Exception)
             assert issubclass(exception, Exception)

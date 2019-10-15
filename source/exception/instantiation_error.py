@@ -4,9 +4,9 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 
-class InvalidZipCode(Exception):
+class InstantiationError(Exception):
     """
-    Exception when zip-code not found
+    Exception thrown when base class is attempted to be instantiated
 
     """
 

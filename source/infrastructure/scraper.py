@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import BaseClassCannotBeInstantiated
+from source.exception import InstantiationError
 from source.util import Assertor
 from mechanize import Browser
 from source.log import logger
@@ -13,9 +13,9 @@ import json
 import os
 
 
-class Crawler:
+class Scraper:
     """
-    Crawler superclass
+    Scraper superclass
 
     """
 
@@ -34,12 +34,16 @@ class Crawler:
                       title of file
 
         """
-        Assertor.assert_data_type({file_dir: str, file_title: str})
         try:
-            if not os.path.exists(file_dir):
-                os.makedirs(file_dir)
-        except Exception as e:
-            raise OSError("creation of dir " + file_dir + " failed with: " + str(e))
+            Assertor.assert_data_type({file_dir: str, file_title: str})
+            try:
+                if not os.path.exists(file_dir):
+                    os.makedirs(file_dir)
+            except Exception as e:
+                raise OSError("creation of dir " + file_dir + " failed with: " + str(e))
+        except Exception as exp:
+            logger.exception(exp)
+            raise exp
         js = json.dumps(file_dict, indent=2, separators=(',', ': '),
                         ensure_ascii=False)
         local_time = datetime.datetime.now().isoformat().replace(":", "-").replace(".", "-")
@@ -54,8 +58,8 @@ class Crawler:
         """
         logger.info("trying to create crawler: {}".format(self.__class__.__name__))
         try:
-            if type(self) == Crawler:
-                raise BaseClassCannotBeInstantiated(
+            if type(self) == Scraper:
+                raise InstantiationError(
                     "base class '{}' cannot be instantiated".format(self.__class__.__name__))
         except Exception as exp:
             logger.exception(exp)

@@ -7,4 +7,4 @@ from .ssb import *
 from .posten import *
 from .sifo import *
 from .payload import *
-from .crawler import *
+from .scraper import *

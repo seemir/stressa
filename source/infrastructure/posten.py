@@ -4,16 +4,16 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.settings import posten_link, posten_form
-from source.exception import InvalidZipCode
+from source.exception import DomainError
 from source.util import Assertor
 from source.log import logger
 from bs4 import BeautifulSoup
-from .crawler import Crawler
+from .scraper import Scraper
 
 
-class Posten(Crawler):
+class Posten(Scraper):
     """
-    Posten.no postboks search crawler
+    Posten.no postboks search scraper
 
     """
 
@@ -65,11 +65,11 @@ class Posten(Crawler):
         try:
             soup = BeautifulSoup(self.response(), "html.parser")
             rows = soup.find_all('tr')
-            try:
+            if len(rows) == 2:
                 header = [head.text.strip().lower() for head in soup.find_all('th')]
                 values = [value.text.strip().lower() for value in rows[1].find_all('td')]
-            except Exception:
-                raise InvalidZipCode("str: '{}' is an invalid zip code".format(self.zip_code))
+            else:
+                raise DomainError("str '{}' is an invalid ZIP code".format(self.zip_code))
         except Exception as exp:
             logger.exception(exp)
             raise exp

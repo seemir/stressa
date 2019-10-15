@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import BaseClassCannotBeInstantiated
+from source.exception import InstantiationError
 from source.domain import Person
 from abc import ABC
 import pytest as pt
@@ -25,7 +25,7 @@ class TestPerson:
         Test that the base-class Person cannot be instantiated
 
         """
-        with pt.raises(BaseClassCannotBeInstantiated):
+        with pt.raises(InstantiationError):
             Person()
 
     def test_can_access_static_set_age(self):

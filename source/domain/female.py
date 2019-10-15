@@ -43,7 +43,8 @@ class Female(Person):
             raise exp
 
         self._gravid = pregnant
-        logger.success("created entity: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+        logger.success(
+            "created entity: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
     def gravid(self):

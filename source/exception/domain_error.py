@@ -4,9 +4,9 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 
-class BaseClassCannotBeInstantiated(Exception):
+class DomainError(Exception):
     """
-    Exception thrown when base class is attempted to be instantiated
+    Exception thrown when breach of logic in domain object
 
     """
 

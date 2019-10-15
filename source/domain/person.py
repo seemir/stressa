@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import BaseClassCannotBeInstantiated
+from source.exception import InstantiationError
 from source.util import Assertor
 from bisect import bisect_left
 from source.log import logger
@@ -60,7 +60,7 @@ class Person(Entity):
         super().__init__()
         try:
             if type(self) == Person:
-                raise BaseClassCannotBeInstantiated(
+                raise InstantiationError(
                     "base class '{}' cannot be instantiated".format(self.__class__.__name__))
 
             Assertor.assert_data_type(

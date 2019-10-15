@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import BaseClassCannotBeInstantiated
+from source.exception import InstantiationError
 
 
 class Assertor:
@@ -73,5 +73,5 @@ class Assertor:
 
         """
         if type(self) == Assertor:
-            raise BaseClassCannotBeInstantiated(
+            raise InstantiationError(
                 "base class '{}' cannot be instantiated".format(self.__class__.__name__))

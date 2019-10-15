@@ -9,10 +9,10 @@ from source.domain import Family
 from source.util import Assertor
 from source.log import logger
 from bs4 import BeautifulSoup
-from .crawler import Crawler
+from .scraper import Scraper
 
 
-class Sifo(Crawler):
+class Sifo(Scraper):
     """
     class that produces SIFO expenses given family information
 

@@ -3,6 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from source.exception import DomainError
 from source.util import Assertor
 from source.log import logger
 from .entity import Entity
@@ -43,8 +44,8 @@ class Family(Entity):
             Assertor.assert_data_type({family_member: (Male, Female)})
 
         if all(int(family_member.alder) < 18 for family_member in family_members):
-            raise ValueError("family not possible without guardianship, i.e. family must "
-                             "have at least one person older than 17.")
+            raise DomainError("no guardianship found, i.e. family must have at least "
+                              "one person older than 17 years.")
 
     def __init__(self, family_members: list = None, income: (int, float, str) = 0,
                  cars: (int, str) = 0):
@@ -74,7 +75,8 @@ class Family(Entity):
         self._inntekt = str(income)
         self._antall_biler = str(cars)
 
-        logger.success("created entity: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+        logger.success(
+            "created entity: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
     def family_members(self):

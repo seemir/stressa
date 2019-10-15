@@ -4,6 +4,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.domain import Family, Female, Entity, Male
+from source.exception import DomainError
 from uuid import UUID
 from abc import ABC
 import pytest as pt
@@ -104,7 +105,7 @@ class TestFamily:
         person over 18 years.
 
         """
-        with pt.raises(ValueError):
+        with pt.raises(DomainError):
             Family(invalid_family) if isinstance(invalid_family, list) else Family([invalid_family])
 
     def test_add_family_members_method(self):

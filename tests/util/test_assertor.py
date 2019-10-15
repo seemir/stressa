@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import BaseClassCannotBeInstantiated
+from source.exception import InstantiationError
 from source.util import Assertor
 import pytest as pt
 
@@ -15,7 +15,7 @@ class TestAssertor:
         Test that the base-class Assertor cannot be instantiated
 
         """
-        with pt.raises(BaseClassCannotBeInstantiated):
+        with pt.raises(InstantiationError):
             Assertor()
 
     @pt.mark.parametrize('correct_argument', ['0', '1', ['0', '1']])

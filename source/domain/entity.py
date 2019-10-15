@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import BaseClassCannotBeInstantiated
+from source.exception import InstantiationError
 from source.log import logger
 from uuid import uuid4
 from abc import ABC
@@ -21,11 +21,11 @@ class Entity(ABC):
 
         """
         logger.info(
-            "trying to create entity: '{}'".format(self.__class__.__name__))
+            "trying to create entity: '{}'".format(type(self)))
 
         if type(self) == Entity:
             try:
-                raise BaseClassCannotBeInstantiated(
+                raise InstantiationError(
                     "abstract base class '{}' cannot be instantiated".format(
                         self.__class__.__name__))
             except Exception as exp:

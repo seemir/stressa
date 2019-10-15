@@ -7,11 +7,11 @@ from source.infrastructure.payload import SsbPayload
 from source.settings import ssb_link
 from source.util import Assertor
 from source.log import logger
-from .crawler import Crawler
+from .scraper import Scraper
 import requests
 
 
-class Ssb(Crawler):
+class Ssb(Scraper):
     """
     Interest rates from SSB table nr. 10748
 

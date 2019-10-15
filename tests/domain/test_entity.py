@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import BaseClassCannotBeInstantiated
+from source.exception import InstantiationError
 from source.domain import Entity
 from abc import ABC
 import pytest as pt
@@ -24,5 +24,5 @@ class TestEntity:
         Test that Entity class cannot be instantiated because its an abstract base class
 
         """
-        with pt.raises(BaseClassCannotBeInstantiated):
+        with pt.raises(InstantiationError):
             Entity()
