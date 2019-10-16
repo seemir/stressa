@@ -7,7 +7,7 @@ from loguru import logger
 import os
 
 
-def loggr(file=__file__):
+def loggr(file=None):
     """
     loguru logger method that produces one logger per. call to method
 
@@ -23,7 +23,8 @@ def loggr(file=__file__):
 
     """
     try:
-        log_dir = os.path.dirname(file) + "/logs"
+        f = __file__ if not file else file
+        log_dir = os.path.dirname(f) + "/logs"
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
         logger.add(log_dir + "/application.log")
