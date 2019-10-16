@@ -29,7 +29,8 @@ def loggr(file=__file__):
         logger.add(log_dir + "/application.log")
     except Exception as e:
         raise OSError("an error occurred with: {}".format(e))
-    return logger
+    else:
+        return logger
 
 
 main_logger = loggr()
