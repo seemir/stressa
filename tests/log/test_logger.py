@@ -17,6 +17,7 @@ class TestLoggr:
         """
         assert isinstance(loggr(), logger.__class__)
 
+    @pt.mark.skip
     def test_loggr_throws_os_error_for_invalid_file(self):
         """
         Test that logr throws OSError for invalid file names
