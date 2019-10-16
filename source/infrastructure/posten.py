@@ -5,8 +5,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.settings import posten_link, posten_form
 from source.exception import DomainError
+from source.log import main_logger
 from source.util import Assertor
-from source.log import logger
 from bs4 import BeautifulSoup
 from .scraper import Scraper
 
@@ -33,11 +33,11 @@ class Posten(Scraper):
             self.browser.open(posten_link)
             self.browser.select_form(nr=0)
         except Exception as exp:
-            logger.exception(exp)
+            main_logger.exception(exp)
             raise exp
         self.zip_code = zip_code
-        logger.success(
-            "created crawler: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+        main_logger.success(
+            "created scraper: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     def response(self):
         """
@@ -71,7 +71,7 @@ class Posten(Scraper):
             else:
                 raise DomainError("str '{}' is an invalid ZIP code".format(self.zip_code))
         except Exception as exp:
-            logger.exception(exp)
+            main_logger.exception(exp)
             raise exp
         return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
 

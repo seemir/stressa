@@ -4,10 +4,10 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.settings import sifo_link, sifo_form
+from source.log import main_logger
 import xml.etree.ElementTree as Et
 from source.domain import Family
 from source.util import Assertor
-from source.log import logger
 from bs4 import BeautifulSoup
 from .scraper import Scraper
 
@@ -33,11 +33,11 @@ class Sifo(Scraper):
             self.browser.open(sifo_link)
             self.browser.select_form(sifo_form)
         except Exception as exp:
-            logger.exception(exp)
+            main_logger.exception(exp)
             raise exp
         self.family = family
-        logger.success(
-            "created crawler: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+        main_logger.success(
+            "created scraper: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     def response(self):
         """
@@ -73,7 +73,7 @@ class Sifo(Scraper):
             for child in root:
                 expenses.update({child.tag: child.text.strip().replace(".", "")})
         except Exception as exp:
-            logger.exception(Exception)
+            main_logger.exception(Exception)
             raise exp
         return expenses
 

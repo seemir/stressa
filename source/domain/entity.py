@@ -4,7 +4,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.exception import InstantiationError
-from source.log import logger
+from source.log import main_logger
 from uuid import uuid4
 from abc import ABC
 
@@ -20,8 +20,8 @@ class Entity(ABC):
         Constructor / Instantiate the class. Only one property, i.e. id given by uuid4
 
         """
-        logger.info(
-            "trying to create entity: '{}'".format(type(self)))
+        main_logger.info(
+            "trying to create entity: '{}'".format(self.__class__.__name__))
 
         if type(self) == Entity:
             try:
@@ -29,7 +29,7 @@ class Entity(ABC):
                     "abstract base class '{}' cannot be instantiated".format(
                         self.__class__.__name__))
             except Exception as exp:
-                logger.exception(exp)
+                main_logger.exception(exp)
                 raise exp
 
         self._id = str(uuid4())

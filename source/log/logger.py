@@ -6,10 +6,30 @@ __email__ = 'samir.adrik@gmail.com'
 from loguru import logger
 import os
 
-try:
-    log_dir = os.path.dirname(__file__) + "/logs"
-    if not os.path.exists(log_dir):
-        os.makedirs(log_dir)
-    logger.add(log_dir + "/application.log")
-except Exception as e:
-    raise OSError("an error occurred with: {}".format(e))
+
+def loggr(file=__file__):
+    """
+    loguru logger method that produces one logger per. call to method
+
+    Parameters
+    ----------
+    file    : str
+              file path to store all .log files, default is __file__, i.e.
+              directory  from which the call to the method was invoked
+
+    Returns
+    -------
+    out     : loguru._logger.Logger
+
+    """
+    try:
+        log_dir = os.path.dirname(file) + "/logs"
+        if not os.path.exists(log_dir):
+            os.makedirs(log_dir)
+        logger.add(log_dir + "/application.log")
+    except Exception as e:
+        raise OSError("an error occurred with: {}".format(e))
+    return logger
+
+
+main_logger = loggr()

@@ -4,9 +4,9 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.exception import InstantiationError
+from source.log import main_logger
 from source.util import Assertor
 from mechanize import Browser
-from source.log import logger
 from uuid import uuid4
 import datetime
 import json
@@ -42,7 +42,7 @@ class Scraper:
             except Exception as e:
                 raise OSError("creation of dir " + file_dir + " failed with: " + str(e))
         except Exception as exp:
-            logger.exception(exp)
+            main_logger.exception(exp)
             raise exp
         js = json.dumps(file_dict, indent=2, separators=(',', ': '),
                         ensure_ascii=False)
@@ -56,13 +56,13 @@ class Scraper:
         Abstract class, so class cannot be instantiated
 
         """
-        logger.info("trying to create scraper: {}".format(self.__class__.__name__))
+        main_logger.info("trying to create scraper: '{}'".format(self.__class__.__name__))
         try:
             if type(self) == Scraper:
                 raise InstantiationError(
                     "base class '{}' cannot be instantiated".format(self.__class__.__name__))
         except Exception as exp:
-            logger.exception(exp)
+            main_logger.exception(exp)
             raise exp
 
         super().__init__()

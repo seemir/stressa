@@ -4,8 +4,8 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.exception import DomainError
+from source.log import main_logger
 from source.util import Assertor
-from source.log import logger
 from .entity import Entity
 from .female import Female
 from .male import Male
@@ -68,14 +68,14 @@ class Family(Entity):
             Assertor.assert_data_type({income: (int, float, str), cars: (int, str)})
             Assertor.assert_non_negative([income, cars])
         except Exception as exp:
-            logger.exception(exp)
+            main_logger.exception(exp)
             raise exp
 
         self._family_members = family_members
         self._inntekt = str(income)
         self._antall_biler = str(cars)
 
-        logger.success(
+        main_logger.success(
             "created entity: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property

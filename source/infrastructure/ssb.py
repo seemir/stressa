@@ -5,8 +5,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.infrastructure.payload import SsbPayload
 from source.settings import ssb_link
+from source.log import main_logger
 from source.util import Assertor
-from source.log import logger
 from .scraper import Scraper
 import requests
 
@@ -31,10 +31,10 @@ class Ssb(Scraper):
             Assertor.assert_data_type({payload: (type(None), SsbPayload)})
             super().__init__()
             self.payload = SsbPayload() if not payload else payload
-            logger.success(
-                "created crawler: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+            main_logger.success(
+                "created scraper: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as exp:
-            logger.exception(exp)
+            main_logger().exception(exp)
             raise exp
 
     def response(self):
@@ -65,7 +65,7 @@ class Ssb(Scraper):
             keys = response["dimension"]["Rentebinding"]["category"]["label"].values()
             values = response["value"]
         except Exception as exp:
-            logger.exception(exp)
+            main_logger.exception(exp)
             raise exp
         return {key.lower(): str(val) for key, val in dict(zip(keys, values)).items()}
 

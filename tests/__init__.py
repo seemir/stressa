@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.log import logger
+from source.log import main_logger
 
 # disable logging whe running tests
-logger.remove()
+main_logger.remove()
