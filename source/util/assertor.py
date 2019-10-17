@@ -27,7 +27,7 @@ class Assertor:
         for obj, t in dtype_dict.items():
             if not isinstance(obj, t):
                 raise TypeError(
-                    "expected type '{}', got '{}' instead".format(t, type(obj).__name__))
+                    "expected type '{}', got '{}' instead".format(t, obj.__class__.__name__))
 
     @staticmethod
     def assert_arguments(arg_dict: dict):

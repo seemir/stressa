@@ -4,7 +4,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.infrastructure.payload import SsbPayload
-from source.settings import ssb_link
+from source.settings import ssb_url
 from source.log import main_logger
 from source.util import Assertor
 from .scraper import Scraper
@@ -39,7 +39,7 @@ class Ssb(Scraper):
 
     def response(self):
         """
-        Submits and gets response for SSB request
+        submits and gets response for SSB request
 
         Returns
         -------
@@ -48,7 +48,7 @@ class Ssb(Scraper):
 
         """
         payload = self.payload.payload()
-        return requests.post(url=ssb_link, json=payload)
+        return requests.post(url=ssb_url, json=payload)
 
     def ssb_interest_rates(self):
         """

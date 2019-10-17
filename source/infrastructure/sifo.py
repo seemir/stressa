@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.settings import sifo_link, sifo_form
+from source.settings import sifo_url, sifo_form
 from source.log import main_logger
 import xml.etree.ElementTree as Et
 from source.domain import Family
@@ -14,7 +14,7 @@ from .scraper import Scraper
 
 class Sifo(Scraper):
     """
-    class that produces SIFO expenses given family information
+    Class that produces SIFO expenses given family information
 
     """
 
@@ -30,14 +30,37 @@ class Sifo(Scraper):
         super().__init__()
         try:
             Assertor.assert_data_type({family: Family})
-            self.browser.open(sifo_link)
+            self.browser.open(sifo_url)
             self.browser.select_form(sifo_form)
+            self._family = family
         except Exception as exp:
             main_logger.exception(exp)
             raise exp
-        self.family = family
+
         main_logger.success(
             "created scraper: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+
+    @property
+    def family(self):
+        """
+        family getter
+
+        Returns
+        -------
+        out     : Family
+                  active family object instantiated
+
+        """
+        return self._family
+
+    @family.setter
+    def family(self, fam: Family):
+        """
+        family setter
+
+        """
+        Assertor.assert_data_type({fam: Family})
+        self._family = fam
 
     def response(self):
         """

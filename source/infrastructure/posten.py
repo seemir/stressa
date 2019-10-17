@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.settings import posten_link, posten_form
+from source.settings import posten_url, posten_form
 from source.exception import DomainError
 from source.log import main_logger
 from source.util import Assertor
@@ -30,14 +30,42 @@ class Posten(Scraper):
         super().__init__()
         try:
             Assertor.assert_data_type({zip_code: str})
-            self.browser.open(posten_link)
+            self.browser.open(posten_url)
             self.browser.select_form(nr=0)
         except Exception as exp:
             main_logger.exception(exp)
             raise exp
-        self.zip_code = zip_code
+
+        self._zip_code = zip_code
         main_logger.success(
             "created scraper: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+
+    @property
+    def zip_code(self):
+        """
+        ZIP code getter
+
+        Returns
+        -------
+        out     : str
+                  active ZIP code attribute
+
+        """
+        return self._zip_code
+
+    @zip_code.setter
+    def zip_code(self, code):
+        """
+        ZIP code setter
+
+        Parameters
+        ----------
+        code    : str
+                  Zip code to be searched
+
+        """
+        Assertor.assert_data_type({code: str})
+        self._zip_code = code
 
     def response(self):
         """
@@ -63,7 +91,7 @@ class Posten(Scraper):
 
         """
         try:
-            soup = BeautifulSoup(self.response(), "html.parser")
+            soup = BeautifulSoup(self.response(), "lxml")
             rows = soup.find_all('tr')
             if len(rows) == 2:
                 header = [head.text.strip().lower() for head in soup.find_all('th')]

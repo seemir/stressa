@@ -5,19 +5,10 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.exception import InstantiationError
 from source.domain import Entity
-from abc import ABC
 import pytest as pt
 
 
 class TestEntity:
-
-    def test_entity_is_instances_of_abc_entity(self):
-        """
-        Test Entity class is an instance of python Abstract Base Class
-
-        """
-        assert isinstance(Entity, ABC.__class__)
-        assert issubclass(Entity.__class__, ABC.__class__)
 
     def test_entity_cannot_be_instantiated(self):
         """

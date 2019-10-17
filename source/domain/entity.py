@@ -6,10 +6,9 @@ __email__ = 'samir.adrik@gmail.com'
 from source.exception import InstantiationError
 from source.log import main_logger
 from uuid import uuid4
-from abc import ABC
 
 
-class Entity(ABC):
+class Entity:
     """
     abstract base entity class
 

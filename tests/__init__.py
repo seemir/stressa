@@ -5,5 +5,5 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.log import main_logger
 
-# disable logging whe running tests
+# remove main logger when running tests
 main_logger.remove()

@@ -3,10 +3,15 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-sifo_link = 'http://kalkulator.referansebudsjett.no/php/blank_template.php'
-sifo_form = 'budsjett'
+import os
 
-posten_link = 'https://adressesok.posten.no/en/postal_codes/search'
-posten_form = 'q'
+sifo_url = "http://kalkulator.referansebudsjett.no/php/blank_template.php"
+sifo_form = "budsjett"
 
-ssb_link = 'https://data.ssb.no/api/v0/no/table/10748'
+posten_url = "https://adressesok.posten.no/en/postal_codes/search"
+posten_form = "q"
+
+ssb_url = "https://data.ssb.no/api/v0/no/table/10748"
+
+portalen_url = "https://www.finansportalen.no/feed/v3/bank/boliglan.atom"
+portalen_cred = tuple(os.environ.get(cred) for cred in ["PORTALEN_USERNAME", "PORTALEN_PASSWORD"])

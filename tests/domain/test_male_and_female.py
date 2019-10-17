@@ -5,20 +5,19 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.domain import Entity, Person, Female, Male
 from uuid import UUID
-from abc import ABC
 import pytest as pt
 
 
 class TestMaleAndFemale:
 
-    def test_male_and_female_are_instances_and_subclasses_of_person_entity_and_abc_class(self):
+    def test_male_and_female_are_instances_and_subclasses_of_person_entity(self):
         """
-        Test that all Male and Female instances are subclass and instance of Person, Entity and
-        ABC classes
+        Test that all Male and Female instances are subclass and instance of
+        Person and Entity classes
 
         """
         for person in [Male(), Female()]:
-            for parents in [Person, Entity, ABC]:
+            for parents in [Person, Entity]:
                 assert isinstance(person, parents)
                 assert issubclass(person.__class__, parents)
 

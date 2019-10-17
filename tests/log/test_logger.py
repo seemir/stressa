@@ -10,7 +10,7 @@ import pytest as pt
 
 class TestLoggr:
 
-    def test_logr_produces_loguru_logger(self):
+    def test_loggr_produces_loguru_logger(self):
         """
         Test that all loggr outputs are instances of loguru logger
 
