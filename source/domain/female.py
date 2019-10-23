@@ -44,7 +44,7 @@ class Female(Person):
 
         self._gravid = pregnant
         main_logger.success(
-            "created entity: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
     def gravid(self):

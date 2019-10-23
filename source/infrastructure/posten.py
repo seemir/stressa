@@ -37,7 +37,7 @@ class Posten(Scraper):
             raise exp
         self._zip_code = zip_code
         main_logger.success(
-            "created scraper: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
     def zip_code(self):
@@ -77,7 +77,10 @@ class Posten(Scraper):
 
         """
         self.browser[posten_form] = self.zip_code
-        return self.browser.submit()
+        response = self.browser.submit()
+        main_logger.info(
+            "HTTP status code -> [{}]".format(response.info().values()[12].replace(" ", ": ")))
+        return response
 
     def zip_code_info(self):
         """
@@ -89,6 +92,7 @@ class Posten(Scraper):
                       dictionary with Zip code informtion
 
         """
+        main_logger.info("trying to retrieve '{}'".format(self.zip_code_info.__name__))
         try:
             soup = BeautifulSoup(self.response(), "lxml")
             rows = soup.find_all('tr')
@@ -100,6 +104,7 @@ class Posten(Scraper):
         except Exception as exp:
             main_logger.exception(exp)
             raise exp
+        main_logger.success("'{}' successfully retrieved".format(self.zip_code_info.__name__))
         return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
 
     def to_json(self, file_dir: str = "report/json/zip_code"):
@@ -113,3 +118,6 @@ class Posten(Scraper):
 
         """
         self._to_json(self.zip_code_info(), file_dir=file_dir, file_title="ZipCode_")
+        main_logger.success(
+            "'{}' successfully parsed to JSON at '{}'".format(self.zip_code_info.__name__,
+                                                              file_dir))

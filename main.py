@@ -13,7 +13,6 @@ boy = Male(age=10, sfo='1')
 
 family_members = [father, mother, girl, boy]
 family = Family(family_members, income=850000, cars=2)
-family.sifo_properties()
 
 sifo = Sifo(family)
 sifo.to_json()

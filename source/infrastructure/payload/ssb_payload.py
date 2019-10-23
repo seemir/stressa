@@ -4,6 +4,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from datetime import datetime as dt, timedelta
+from source.log import main_logger
 
 
 class SsbPayload:
@@ -61,16 +62,21 @@ class SsbPayload:
                           time frame
 
         """
-        for prop in [utlanstype, sektor, rentebinding, tid]:
-            if not isinstance(prop, (list, type(None))):
-                raise TypeError(
-                    "expected type '{}', got '{}' instead".format(list.__name__,
-                                                                  type(prop).__name__))
-
+        main_logger.info("trying to create ssb payload: '{}'".format(self.__class__.__name__))
+        try:
+            for prop in [utlanstype, sektor, rentebinding, tid]:
+                if not isinstance(prop, (list, type(None))):
+                    raise TypeError(
+                        "expected type '{}', got '{}' instead".format(list.__name__,
+                                                                      type(prop).__name__))
+        except Exception as exp:
+            main_logger.exception(exp)
+            raise exp
         self.utlanstype = ["70"] if not utlanstype else utlanstype
         self.sektor = ["04b"] if not sektor else sektor
         self.rentebinding = ["08", "12", "10", "11", "06"] if not rentebinding else rentebinding
         self.tid = self._updated_table_date() if not tid else tid
+        main_logger.success("created ssb payload")
 
     def payload(self):
         """

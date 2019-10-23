@@ -20,7 +20,7 @@ class Entity:
 
         """
         main_logger.info(
-            "trying to create entity: '{}'".format(self.__class__.__name__))
+            "trying to create '{}'".format(self.__class__.__name__))
 
         if type(self) == Entity:
             try:

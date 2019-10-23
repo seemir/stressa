@@ -29,4 +29,4 @@ class Male(Person):
         """
         super().__init__('m', age, kinder_garden, sfo)
         main_logger.success(
-            "created entity: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))

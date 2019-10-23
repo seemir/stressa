@@ -32,7 +32,7 @@ class Ssb(Scraper):
             super().__init__()
             self.payload = SsbPayload() if not payload else payload
             main_logger.success(
-                "created scraper: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as exp:
             main_logger().exception(exp)
             raise exp
@@ -48,7 +48,10 @@ class Ssb(Scraper):
 
         """
         payload = self.payload.payload()
-        return requests.post(url=ssb_url, json=payload)
+        response = requests.post(url=ssb_url, json=payload)
+        main_logger.info(
+            "HTTP status code -> [{}: {}]".format(response.status_code, response.reason))
+        return response
 
     def ssb_interest_rates(self):
         """
@@ -60,6 +63,7 @@ class Ssb(Scraper):
                   interest rate information from SSB
 
         """
+        main_logger.info("trying to retrieve '{}'".format(self.ssb_interest_rates.__name__))
         try:
             response = self.response().json()
             keys = response["dimension"]["Rentebinding"]["category"]["label"].values()
@@ -67,6 +71,8 @@ class Ssb(Scraper):
         except Exception as exp:
             main_logger.exception(exp)
             raise exp
+        main_logger.success(
+            "'{}' successfully retrieved".format(self.ssb_interest_rates.__name__))
         return {key.lower(): str(val) for key, val in dict(zip(keys, values)).items()}
 
     def to_json(self, file_dir: str = "report/json/interest_rates"):
@@ -80,3 +86,6 @@ class Ssb(Scraper):
 
         """
         self._to_json(self.ssb_interest_rates(), file_dir=file_dir, file_title="SsbInterestRates_")
+        main_logger.success(
+            "'{}' successfully parsed to JSON at '{}'".format(self.ssb_interest_rates.__name__,
+                                                              file_dir))

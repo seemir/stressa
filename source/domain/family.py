@@ -76,7 +76,7 @@ class Family(Entity):
         self._antall_biler = str(cars)
 
         main_logger.success(
-            "created entity: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
     def family_members(self):

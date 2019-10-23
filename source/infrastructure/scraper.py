@@ -56,7 +56,7 @@ class Scraper:
         Abstract class, so class cannot be instantiated
 
         """
-        main_logger.info("trying to create scraper: '{}'".format(self.__class__.__name__))
+        main_logger.info("trying to create '{}'".format(self.__class__.__name__))
         try:
             if type(self) == Scraper:
                 raise InstantiationError(

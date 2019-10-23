@@ -6,6 +6,7 @@ __email__ = 'samir.adrik@gmail.com'
 from source.settings import sifo_url, sifo_form
 from source.log import main_logger
 import xml.etree.ElementTree as Et
+from http.client import responses
 from source.domain import Family
 from source.util import Assertor
 from bs4 import BeautifulSoup
@@ -37,7 +38,7 @@ class Sifo(Scraper):
             main_logger.exception(exp)
             raise exp
         main_logger.success(
-            "created scraper: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
     def family(self):
@@ -76,7 +77,10 @@ class Sifo(Scraper):
                 self.browser[prop] = value
             else:
                 self.browser[prop] = [value]
-        return self.browser.submit()
+        response = self.browser.submit()
+        main_logger.info(
+            "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
+        return response
 
     def sifo_expenses(self):
         """
@@ -88,6 +92,7 @@ class Sifo(Scraper):
                       dictionary with SIFO expenses
 
         """
+        main_logger.info("trying to retrieve '{}'".format(self.sifo_expenses.__name__))
         try:
             soup = BeautifulSoup(self.response(), "xml")
             root = Et.fromstring(soup.prettify())
@@ -97,6 +102,7 @@ class Sifo(Scraper):
         except Exception as exp:
             main_logger.exception(Exception)
             raise exp
+        main_logger.success("'{}' successfully retrieved".format(self.sifo_expenses.__name__))
         return expenses
 
     def to_json(self, file_dir: str = "report/json/expenses"):
@@ -110,3 +116,6 @@ class Sifo(Scraper):
 
         """
         self._to_json(self.sifo_expenses(), file_dir=file_dir, file_title="SifoExpenses_")
+        main_logger.success(
+            "'{}' successfully parsed to JSON at '{}'".format(self.sifo_expenses.__name__,
+                                                              file_dir))
