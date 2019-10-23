@@ -64,7 +64,6 @@ class Scraper:
         except Exception as exp:
             main_logger.exception(exp)
             raise exp
-
         super().__init__()
         self.browser = Browser()
         self.browser.set_handle_robots(False)

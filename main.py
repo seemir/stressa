@@ -16,13 +16,13 @@ family = Family(family_members, income=850000, cars=2)
 family.sifo_properties()
 
 sifo = Sifo(family)
-sifo.sifo_expenses()
+sifo.to_json()
 
-posten = Posten('1275')
-posten.zip_code_info()
+posten = Posten('1430')
+posten.to_json()
 
 ssb = Ssb()
-ssb.ssb_interest_rates()
+ssb.to_json()
 
 portalen = Portalen()
-portalen.mortgage_offers()
+portalen.to_json()

@@ -3,12 +3,13 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.settings import portalen_url, portalen_cred
+from source.settings import portalen_url, portalen_cred, portalen_entry
+import xml.etree.ElementTree as Et
 from source.log import main_logger
 from bs4 import BeautifulSoup
 from .scraper import Scraper
 import requests
-import os
+import re
 
 
 class Portalen(Scraper):
@@ -29,6 +30,8 @@ class Portalen(Scraper):
         except Exception as exp:
             main_logger.exception(exp)
             raise exp
+        main_logger.success(
+            "created scraper: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     def response(self):
         """
@@ -48,12 +51,22 @@ class Portalen(Scraper):
 
         """
         try:
-            soup = BeautifulSoup(self.response().content, "lxml")
-            file_dir = os.path.dirname(__file__) + "/xml"
-            if not os.path.exists(file_dir):
-                os.makedirs(file_dir)
-            with open(file_dir + '/portalen_data.xml', 'w') as f:
-                f.write(soup.prettify())
+            offers = {}
+            soup = BeautifulSoup(self.response().content.decode("windows-1252"), "xml")
+            root = Et.fromstring(soup.prettify())
+            remove_url_re = '{[^>]+}'
+            for i, children in enumerate(root.findall(portalen_entry)):
+                offers.update(
+                    {i + 1: {re.sub(remove_url_re, '', child.tag): child.text.strip() for child in
+                             children if child.text}})
         except Exception as exp:
             main_logger.exception(exp)
             raise exp
+        return offers
+
+    def to_json(self, file_dir: str = "report/json/mortgage_offers"):
+        """
+        save mortgage offers information to JSON file
+
+        """
+        self._to_json(self.mortgage_offers(), file_dir, file_title="MortgageOffers_")

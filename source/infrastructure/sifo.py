@@ -36,7 +36,6 @@ class Sifo(Scraper):
         except Exception as exp:
             main_logger.exception(exp)
             raise exp
-
         main_logger.success(
             "created scraper: '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
@@ -90,8 +89,8 @@ class Sifo(Scraper):
 
         """
         try:
-            soup = BeautifulSoup(self.response(), "xml").prettify()
-            root = Et.fromstring(soup)
+            soup = BeautifulSoup(self.response(), "xml")
+            root = Et.fromstring(soup.prettify())
             expenses = {}
             for child in root:
                 expenses.update({child.tag: child.text.strip().replace(".", "")})
@@ -102,7 +101,7 @@ class Sifo(Scraper):
 
     def to_json(self, file_dir: str = "report/json/expenses"):
         """
-        save expenses report to JSON
+        save sifo expenses to JSON
 
         Parameters
         ----------

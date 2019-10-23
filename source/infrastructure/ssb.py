@@ -71,7 +71,7 @@ class Ssb(Scraper):
 
     def to_json(self, file_dir: str = "report/json/interest_rates"):
         """
-        save Zip code information to JSON
+        save ssb interest rate information to JSON
 
         Parameters
         ----------

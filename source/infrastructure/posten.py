@@ -35,7 +35,6 @@ class Posten(Scraper):
         except Exception as exp:
             main_logger.exception(exp)
             raise exp
-
         self._zip_code = zip_code
         main_logger.success(
             "created scraper: '{}', with id: [{}]".format(self.__class__.__name__, self.id))

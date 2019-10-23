@@ -7,6 +7,7 @@ chardet==3.0.4
 colorama==0.4.1
 coverage==4.5.4
 DateTime==4.3
+dnspython==1.16.0
 html5lib==1.0.1
 idna==2.8
 importlib-metadata==0.23
@@ -18,9 +19,11 @@ numpy==1.17.2
 packaging==19.2
 pluggy==0.13.0
 py==1.8.0
+pymongo==3.9.0
 pyparsing==2.4.2
 pytest==5.2.1
 pytest-cov==2.8.1
+python-dateutil==2.8.0
 pytz==2019.3
 requests==2.22.0
 six==1.12.0
