@@ -3,4 +3,4 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from .logger import *
+from .logging import *

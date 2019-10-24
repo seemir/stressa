@@ -4,9 +4,9 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.exception import InstantiationError
-from source.log import main_logger
 from source.util import Assertor
 from bisect import bisect_left
+from source.log import logger
 from .entity import Entity
 
 
@@ -76,7 +76,7 @@ class Person(Entity):
                 raise ValueError("only persons between 6-13 years can attend sfo")
 
         except Exception as exp:
-            main_logger.exception(exp)
+            logger.exception(exp)
             raise exp
 
         self._kjonn = sex

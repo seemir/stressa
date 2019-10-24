@@ -3,10 +3,10 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.infrastructure.payload import SsbPayload
+from source.infrastructure.web.payload import SsbPayload
 from source.settings import ssb_url
-from source.log import main_logger
 from source.util import Assertor
+from source.log import logger
 from .scraper import Scraper
 import requests
 
@@ -31,10 +31,10 @@ class Ssb(Scraper):
             Assertor.assert_data_type({payload: (type(None), SsbPayload)})
             super().__init__()
             self.payload = SsbPayload() if not payload else payload
-            main_logger.success(
+            logger.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as exp:
-            main_logger().exception(exp)
+            logger().exception(exp)
             raise exp
 
     def response(self):
@@ -49,7 +49,7 @@ class Ssb(Scraper):
         """
         payload = self.payload.payload()
         response = requests.post(url=ssb_url, json=payload)
-        main_logger.info(
+        logger.info(
             "HTTP status code -> [{}: {}]".format(response.status_code, response.reason))
         return response
 
@@ -63,15 +63,15 @@ class Ssb(Scraper):
                   interest rate information from SSB
 
         """
-        main_logger.info("trying to retrieve '{}'".format(self.ssb_interest_rates.__name__))
+        logger.info("trying to retrieve '{}'".format(self.ssb_interest_rates.__name__))
         try:
             response = self.response().json()
             keys = response["dimension"]["Rentebinding"]["category"]["label"].values()
             values = response["value"]
         except Exception as exp:
-            main_logger.exception(exp)
+            logger.exception(exp)
             raise exp
-        main_logger.success(
+        logger.success(
             "'{}' successfully retrieved".format(self.ssb_interest_rates.__name__))
         return {key.lower(): str(val) for key, val in dict(zip(keys, values)).items()}
 
@@ -86,6 +86,6 @@ class Ssb(Scraper):
 
         """
         self._to_json(self.ssb_interest_rates(), file_dir=file_dir, file_title="SsbInterestRates_")
-        main_logger.success(
+        logger.success(
             "'{}' successfully parsed to JSON at '{}'".format(self.ssb_interest_rates.__name__,
                                                               file_dir))

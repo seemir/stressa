@@ -5,7 +5,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.settings import portalen_url, portalen_cred, portalen_entry
 import xml.etree.ElementTree as Et
-from source.log import main_logger
+from source.log import logger
 from bs4 import BeautifulSoup
 from .scraper import Scraper
 import requests
@@ -28,9 +28,9 @@ class Portalen(Scraper):
         try:
             self.browser = requests.post(portalen_url, auth=portalen_cred)
         except Exception as exp:
-            main_logger.exception(exp)
+            logger.exception(exp)
             raise exp
-        main_logger.success(
+        logger.success(
             "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     def response(self):
@@ -44,7 +44,7 @@ class Portalen(Scraper):
 
         """
         response = self.browser
-        main_logger.info("HTTP status code -> [{}: {}]".format(response.status_code, response.reason))
+        logger.info("HTTP status code -> [{}: {}]".format(response.status_code, response.reason))
         return response
 
     def mortgage_offers(self):
@@ -52,7 +52,7 @@ class Portalen(Scraper):
         Retrieve finansportalen.no's boliglån grunndata xml and stores it locally directory
 
         """
-        main_logger.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
+        logger.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
         try:
             offers = {}
             soup = BeautifulSoup(self.response().content.decode("windows-1252"), "xml")
@@ -63,9 +63,9 @@ class Portalen(Scraper):
                     {i + 1: {re.sub(remove_url_re, '', child.tag): child.text.strip() for child in
                              children if child.text}})
         except Exception as exp:
-            main_logger.exception(exp)
+            logger.exception(exp)
             raise exp
-        main_logger.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
+        logger.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
         return offers
 
     def to_json(self, file_dir: str = "report/json/mortgage_offers"):
@@ -74,6 +74,6 @@ class Portalen(Scraper):
 
         """
         self._to_json(self.mortgage_offers(), file_dir, file_title="MortgageOffers_")
-        main_logger.success(
+        logger.success(
             "'{}' successfully parsed to JSON at '{}'".format(self.mortgage_offers.__name__,
                                                               file_dir))

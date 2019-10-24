@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.log import main_logger
+from source.log import logger
 from .person import Person
 
 
@@ -28,5 +28,5 @@ class Male(Person):
 
         """
         super().__init__('m', age, kinder_garden, sfo)
-        main_logger.success(
+        logger.success(
             "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))

@@ -5,8 +5,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.settings import posten_url, posten_form
 from source.exception import DomainError
-from source.log import main_logger
 from source.util import Assertor
+from source.log import logger
 from bs4 import BeautifulSoup
 from .scraper import Scraper
 
@@ -31,12 +31,11 @@ class Posten(Scraper):
         try:
             Assertor.assert_data_type({zip_code: str})
             self.browser.open(posten_url)
-            self.browser.select_form(nr=0)
         except Exception as exp:
-            main_logger.exception(exp)
+            logger.exception(exp)
             raise exp
         self._zip_code = zip_code
-        main_logger.success(
+        logger.success(
             "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
@@ -76,9 +75,10 @@ class Posten(Scraper):
                       response with expenses information
 
         """
+        self.browser.select_form(nr=0)
         self.browser[posten_form] = self.zip_code
         response = self.browser.submit()
-        main_logger.info(
+        logger.info(
             "HTTP status code -> [{}]".format(response.info().values()[12].replace(" ", ": ")))
         return response
 
@@ -92,7 +92,7 @@ class Posten(Scraper):
                       dictionary with Zip code informtion
 
         """
-        main_logger.info("trying to retrieve '{}'".format(self.zip_code_info.__name__))
+        logger.info("trying to retrieve '{}'".format(self.zip_code_info.__name__))
         try:
             soup = BeautifulSoup(self.response(), "lxml")
             rows = soup.find_all('tr')
@@ -102,9 +102,9 @@ class Posten(Scraper):
             else:
                 raise DomainError("str '{}' is an invalid ZIP code".format(self.zip_code))
         except Exception as exp:
-            main_logger.exception(exp)
+            logger.exception(exp)
             raise exp
-        main_logger.success("'{}' successfully retrieved".format(self.zip_code_info.__name__))
+        logger.success("'{}' successfully retrieved".format(self.zip_code_info.__name__))
         return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
 
     def to_json(self, file_dir: str = "report/json/zip_code"):
@@ -118,6 +118,6 @@ class Posten(Scraper):
 
         """
         self._to_json(self.zip_code_info(), file_dir=file_dir, file_title="ZipCode_")
-        main_logger.success(
+        logger.success(
             "'{}' successfully parsed to JSON at '{}'".format(self.zip_code_info.__name__,
                                                               file_dir))

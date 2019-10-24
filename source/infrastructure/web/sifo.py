@@ -4,12 +4,12 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.settings import sifo_url, sifo_form
-from source.log import main_logger
 import xml.etree.ElementTree as Et
 from http.client import responses
 from source.domain import Family
 from source.util import Assertor
 from bs4 import BeautifulSoup
+from source.log import logger
 from .scraper import Scraper
 
 
@@ -32,12 +32,11 @@ class Sifo(Scraper):
         try:
             Assertor.assert_data_type({family: Family})
             self.browser.open(sifo_url)
-            self.browser.select_form(sifo_form)
             self._family = family
         except Exception as exp:
-            main_logger.exception(exp)
+            logger.exception(exp)
             raise exp
-        main_logger.success(
+        logger.success(
             "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
@@ -72,13 +71,14 @@ class Sifo(Scraper):
                       response with expenses information
 
         """
+        self.browser.select_form(sifo_form)
         for prop, value in self.family.sifo_properties().items():
             if prop == 'inntekt':
                 self.browser[prop] = value
             else:
                 self.browser[prop] = [value]
         response = self.browser.submit()
-        main_logger.info(
+        logger.info(
             "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
         return response
 
@@ -92,7 +92,7 @@ class Sifo(Scraper):
                       dictionary with SIFO expenses
 
         """
-        main_logger.info("trying to retrieve '{}'".format(self.sifo_expenses.__name__))
+        logger.info("trying to retrieve '{}'".format(self.sifo_expenses.__name__))
         try:
             soup = BeautifulSoup(self.response(), "xml")
             root = Et.fromstring(soup.prettify())
@@ -100,9 +100,9 @@ class Sifo(Scraper):
             for child in root:
                 expenses.update({child.tag: child.text.strip().replace(".", "")})
         except Exception as exp:
-            main_logger.exception(Exception)
+            logger.exception(Exception)
             raise exp
-        main_logger.success("'{}' successfully retrieved".format(self.sifo_expenses.__name__))
+        logger.success("'{}' successfully retrieved".format(self.sifo_expenses.__name__))
         return expenses
 
     def to_json(self, file_dir: str = "report/json/expenses"):
@@ -116,6 +116,6 @@ class Sifo(Scraper):
 
         """
         self._to_json(self.sifo_expenses(), file_dir=file_dir, file_title="SifoExpenses_")
-        main_logger.success(
+        logger.success(
             "'{}' successfully parsed to JSON at '{}'".format(self.sifo_expenses.__name__,
                                                               file_dir))

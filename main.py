@@ -14,14 +14,14 @@ boy = Male(age=10, sfo='1')
 family_members = [father, mother, girl, boy]
 family = Family(family_members, income=850000, cars=2)
 
-sifo = Sifo(family)
-sifo.to_json()
-
-posten = Posten('1430')
-posten.to_json()
-
 ssb = Ssb()
 ssb.to_json()
 
+sifo = Sifo(family)
+sifo.to_json()
+
 portalen = Portalen()
 portalen.to_json()
+
+posten = Posten('0010')
+posten.to_json()

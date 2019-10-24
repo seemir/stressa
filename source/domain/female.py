@@ -3,8 +3,8 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.log import main_logger
 from source.util import Assertor
+from source.log import logger
 from .person import Person
 
 
@@ -39,11 +39,11 @@ class Female(Person):
             if Person._sifo_age(age) not in ('19', '50') and pregnant == '1':
                 raise ValueError("pregnancy at this age is not possible")
         except Exception as exp:
-            main_logger.exception(exp)
+            logger.exception(exp)
             raise exp
 
         self._gravid = pregnant
-        main_logger.success(
+        logger.success(
             "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
