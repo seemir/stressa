@@ -20,7 +20,7 @@ class Scraper:
     """
 
     @staticmethod
-    def _to_json(file_dict: dict, file_dir="report/json", file_title="Info"):
+    def _to_json(file_dict: dict, file_dir: str = "report/json", file_title: str = "Info"):
         """
         save information in object to JSON file
 

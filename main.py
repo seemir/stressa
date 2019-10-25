@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.infrastructure import Ssb, Posten, Sifo, Portalen
+from source.infrastructure import Ssb, Posten, Sifo, Portalen, Dao
 from source.domain import Female, Family, Male
 
 father = Male(age=45)
@@ -14,14 +14,8 @@ boy = Male(age=10, sfo='1')
 family_members = [father, mother, girl, boy]
 family = Family(family_members, income=850000, cars=2)
 
-ssb = Ssb()
-ssb.to_json()
-
 sifo = Sifo(family)
-sifo.to_json()
+expenses = sifo.sifo_expenses()
 
 portalen = Portalen()
 portalen.to_json()
-
-posten = Posten('0010')
-posten.to_json()

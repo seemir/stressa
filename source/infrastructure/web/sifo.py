@@ -96,7 +96,7 @@ class Sifo(Scraper):
         try:
             soup = BeautifulSoup(self.response(), "xml")
             root = Et.fromstring(soup.prettify())
-            expenses = {}
+            expenses = {'_id': self.family.id}
             for child in root:
                 expenses.update({child.tag: child.text.strip().replace(".", "")})
         except Exception as exp:
