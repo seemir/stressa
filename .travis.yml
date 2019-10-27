@@ -24,7 +24,7 @@ install:
 # the actual commands to run
 
 script:
-  - pytest --cov=source/ tests/
+  - pytest --cov=source/ tests/ -p no:warnings
 
 # generate a coverage report to send to back to user
 after_success:

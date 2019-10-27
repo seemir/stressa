@@ -6,7 +6,6 @@ __email__ = 'samir.adrik@gmail.com'
 from source.exception import InstantiationError
 from source.util import Assertor
 from bisect import bisect_left
-from source.log import logger
 from .entity import Entity
 
 
@@ -35,8 +34,8 @@ class Person(Entity):
             age = float(age)
         except Exception as e:
             raise TypeError("invalid numeric str, got '{}'".format(e))
-        Assertor.assert_non_negative([age])
 
+        Assertor.assert_non_negative([age])
         sifo_yrs = [0.42, 0.92, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75]
         return str(sifo_yrs[bisect_left(sifo_yrs, age)]) if age <= 75 else str(75)
 
@@ -58,26 +57,21 @@ class Person(Entity):
 
         """
         super().__init__()
-        try:
-            if type(self) == Person:
-                raise InstantiationError(
-                    "base class '{}' cannot be instantiated".format(self.__class__.__name__))
 
-            Assertor.assert_data_type(
-                {sex: str, age: (int, float, str), kinder_garden: str, sfo: str})
+        if type(self) == Person:
+            raise InstantiationError(
+                "base class '{}' cannot be instantiated".format(self.__class__.__name__))
 
-            Assertor.assert_arguments({kinder_garden: ['kinder_garden:', ('0', '1')],
-                                       sfo: ['sfo:', ('0', '1', '2')]})
+        Assertor.assert_data_types([sex, age, kinder_garden, sfo],
+                                   [str, (int, float, str), str, str])
+        Assertor.assert_arguments({kinder_garden: ['kinder_garden:', ('0', '1')],
+                                   sfo: ['sfo:', ('0', '1', '2')]})
 
-            if self._sifo_age(age) not in ('1', '2', '3', '5') and kinder_garden == '1':
-                raise ValueError("only persons between 1-5 years can attend kinder_garden")
+        if self._sifo_age(age) not in ('1', '2', '3', '5') and kinder_garden == '1':
+            raise ValueError("only persons between 1-5 years can attend kinder_garden")
 
-            if self._sifo_age(age) not in ('9', '13') and sfo == '1':
-                raise ValueError("only persons between 6-13 years can attend sfo")
-
-        except Exception as exp:
-            logger.exception(exp)
-            raise exp
+        if self._sifo_age(age) not in ('9', '13') and sfo == '1':
+            raise ValueError("only persons between 6-13 years can attend sfo")
 
         self._kjonn = sex
         self._alder = self._sifo_age(age)
@@ -121,7 +115,7 @@ class Person(Entity):
                   new age to be set
 
         """
-        Assertor.assert_data_type({age: (float, int, str)})
+        Assertor.assert_data_types([age], [(float, int, str)])
         self._alder = self._sifo_age(age)
 
     @property
@@ -148,7 +142,7 @@ class Person(Entity):
                           new kinder_garden str
 
         """
-        Assertor.assert_data_type({kinder_garden: str})
+        Assertor.assert_data_types([kinder_garden], [str])
         Assertor.assert_arguments({kinder_garden: ['kinder_garden:', ('0', '1')]})
         self._barnehage = kinder_garden
 
@@ -176,6 +170,6 @@ class Person(Entity):
                   new after-school/sfo str
 
         """
-        Assertor.assert_data_type({s: str})
+        Assertor.assert_data_types([s], [str])
         Assertor.assert_arguments({s: ['kinder_garden:', ('0', '1')]})
         self._sfo = s

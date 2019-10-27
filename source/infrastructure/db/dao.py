@@ -24,17 +24,17 @@ class Dao:
         the MongoDB cloud database cluster.
 
         """
-        logger.info("trying to create '{}'".format(self.__class__.__name__))
         try:
+            logger.info("trying to create '{}'".format(self.__class__.__name__))
             self._id = str(uuid4())
             self._client = MongoClient(db_string)
             self._db = None
             self._collection = None
+            logger.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as exp:
             logger.exception(exp)
             raise exp
-        logger.success(
-            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
     def id(self):
@@ -71,7 +71,7 @@ class Dao:
                   all active collections names
 
         """
-        Assertor.assert_data_type({db_name: str})
+        Assertor.assert_data_types([db_name], [str])
         return self._client[db_name.lower()].list_collection_names()
 
     def create(self, db_name: str, col_name: str, document: (dict, list)):
@@ -88,23 +88,31 @@ class Dao:
                       record(s) to insert
 
         """
-        logger.info("trying to '{}'".format(self.create.__name__))
         try:
-            Assertor.assert_data_type({db_name: str, col_name: str})
+            logger.info(
+                "trying to '{}' document(s) in collection: '{}' in db: '{}'".format(
+                    self.create.__name__, col_name, db_name))
+            Assertor.assert_data_types([db_name, col_name, document], [str, str, (dict, list)])
+
             if not isinstance(document, (dict, list)):
                 raise TypeError("expected type '{}', got '{}' "
                                 "instead".format((dict.__name__, list.__name__),
                                                  type(document).__name__))
+
+            count = len(document) if isinstance(document, list) else len([document])
+
             if not self._db:
                 self._db = self._client[db_name.lower()]
                 self._collection = self._db[col_name.lower()]
             else:
                 self._collection = self._db[col_name.lower()]
+
             self._collection.insert(document)
+            logger.success("'{}' successfully completed - '{}' document(s)".format(
+                self.create.__name__, count))
         except Exception as exp:
             logger.exception(exp)
             raise exp
-        logger.success("'{}' successfully completed".format(self.create.__name__))
 
     def read(self, db_name: str, col_name: str):
         """
@@ -124,11 +132,47 @@ class Dao:
 
         """
         try:
-            Assertor.assert_data_type({db_name: str, col_name: str})
+            logger.info(
+                "trying to '{}' all documents in collection: '{}' from db: '{}'".format(
+                    self.read.__name__, col_name, db_name))
+            Assertor.assert_data_types([db_name, col_name], [str, str])
+
             documents = []
-            for document in getattr(self._client[db_name], col_name).find():
+            for document in getattr(self._client[db_name.lower()], col_name.lower()).find():
                 documents.append(document)
+
+            logger.success("'{}' successfully completed - '{}' document(s) found".format(
+                self.read.__name__, len(documents)))
             return documents
+        except Exception as exp:
+            logger.exception(exp)
+            raise exp
+
+    def update(self, db_name: str, col_name: str, query: dict, new_value: dict):
+        """
+        method for updating document(s) in a collection
+
+        Parameters
+        ----------
+        db_name     : str
+                      db name to look for collection
+        col_name    : str
+                      collection name to apply update
+        query       : dict
+                      document to query
+        new_value   : dict
+                      new values to apply in document
+
+        """
+        try:
+            logger.info("trying to '{}' document '{}' with value '{}'".format(
+                self.update.__name__, query, new_value))
+            Assertor.assert_data_types([db_name, col_name], [str, str])
+
+            collection = getattr(self._client, db_name.lower())[col_name.lower()]
+            collection.update_many(query, new_value)
+
+            logger.success("'{}' successfully completed".format(self.update.__name__))
         except Exception as exp:
             logger.exception(exp)
             raise exp
@@ -146,7 +190,16 @@ class Dao:
 
         """
         try:
-            getattr(self._client, db_name)[col_name].drop()
+            logger.info("trying to '{}' all documents from collection: '{}' in db: '{}'".format(
+                self.delete.__name__, col_name, db_name))
+            Assertor.assert_data_types([db_name, col_name], [str, str])
+
+            collection = getattr(self._client, db_name)[col_name]
+            count = collection.count()
+            collection.drop()
+
+            logger.success("'{}' successfully completed - '{}' document(s) deleted".format(
+                self.delete.__name__, count))
         except Exception as exp:
             logger.exception(exp)
             raise exp

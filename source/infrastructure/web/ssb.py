@@ -28,7 +28,7 @@ class Ssb(Scraper):
 
         """
         try:
-            Assertor.assert_data_type({payload: (type(None), SsbPayload)})
+            Assertor.assert_data_types([payload], [(type(None), SsbPayload)])
             super().__init__()
             self.payload = SsbPayload() if not payload else payload
             logger.success(
@@ -63,17 +63,18 @@ class Ssb(Scraper):
                   interest rate information from SSB
 
         """
-        logger.info("trying to retrieve '{}'".format(self.ssb_interest_rates.__name__))
+
         try:
+            logger.info("trying to retrieve '{}'".format(self.ssb_interest_rates.__name__))
             response = self.response().json()
             keys = response["dimension"]["Rentebinding"]["category"]["label"].values()
             values = response["value"]
+            logger.success(
+                "'{}' successfully retrieved".format(self.ssb_interest_rates.__name__))
+            return {key.lower(): str(val) for key, val in dict(zip(keys, values)).items()}
         except Exception as exp:
             logger.exception(exp)
             raise exp
-        logger.success(
-            "'{}' successfully retrieved".format(self.ssb_interest_rates.__name__))
-        return {key.lower(): str(val) for key, val in dict(zip(keys, values)).items()}
 
     def to_json(self, file_dir: str = "report/json/interest_rates"):
         """

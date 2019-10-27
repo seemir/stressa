@@ -29,14 +29,14 @@ class Posten(Scraper):
         """
         super().__init__()
         try:
-            Assertor.assert_data_type({zip_code: str})
+            Assertor.assert_data_types([zip_code], [str])
             self.browser.open(posten_url)
+            self._zip_code = zip_code
+            logger.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as exp:
             logger.exception(exp)
             raise exp
-        self._zip_code = zip_code
-        logger.success(
-            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
     def zip_code(self):
@@ -62,7 +62,7 @@ class Posten(Scraper):
                   Zip code to be searched
 
         """
-        Assertor.assert_data_type({code: str})
+        Assertor.assert_data_types([code], [str])
         self._zip_code = code
 
     def response(self):
@@ -92,8 +92,8 @@ class Posten(Scraper):
                       dictionary with Zip code informtion
 
         """
-        logger.info("trying to retrieve '{}'".format(self.zip_code_info.__name__))
         try:
+            logger.info("trying to retrieve '{}'".format(self.zip_code_info.__name__))
             soup = BeautifulSoup(self.response(), "lxml")
             rows = soup.find_all('tr')
             if len(rows) == 2:
@@ -101,11 +101,11 @@ class Posten(Scraper):
                 values = [value.text.strip().lower() for value in rows[1].find_all('td')]
             else:
                 raise DomainError("str '{}' is an invalid ZIP code".format(self.zip_code))
+            logger.success("'{}' successfully retrieved".format(self.zip_code_info.__name__))
+            return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
         except Exception as exp:
             logger.exception(exp)
             raise exp
-        logger.success("'{}' successfully retrieved".format(self.zip_code_info.__name__))
-        return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
 
     def to_json(self, file_dir: str = "report/json/zip_code"):
         """

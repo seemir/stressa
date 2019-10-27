@@ -26,7 +26,7 @@ def logging(file_path=None, file_name="application.log"):
 
     """
     try:
-        Assertor.assert_data_type({file_path: (type(None), str), file_name: str})
+        Assertor.assert_data_types([file_path, file_name], [(type(None), str), str])
         f = __file__ if not file_path else file_path
         log_dir = os.path.dirname(f) + "/logs"
         if not os.path.exists(log_dir):

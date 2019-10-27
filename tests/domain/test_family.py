@@ -55,7 +55,7 @@ class TestFamily:
         with pt.raises(ValueError):
             self.family.family_members = []
 
-    @pt.mark.parametrize('invalid_arg', [(), {}])
+    @pt.mark.parametrize('invalid_arg', [(), {}, []])
     def test_income_and_cars_type_error_for_invalid_arguments(self, invalid_arg):
         """
         TypeError raised when invalid income and cars argument types passed into Family class

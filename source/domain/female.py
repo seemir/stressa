@@ -31,20 +31,20 @@ class Female(Person):
                           Pregnant female, '1' true or '0' false
 
         """
-        super().__init__('k', age, kinder_garden, sfo)
-
         try:
-            Assertor.assert_data_type({age: (float, int, str), pregnant: str})
+            super().__init__('k', age, kinder_garden, sfo)
+            Assertor.assert_data_types([age, kinder_garden, sfo], [(float, int, str), str, str])
             Assertor.assert_arguments({pregnant: ['pregnant', ('0', '1')]})
+
             if Person._sifo_age(age) not in ('19', '50') and pregnant == '1':
                 raise ValueError("pregnancy at this age is not possible")
+
+            self._gravid = pregnant
+            logger.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as exp:
             logger.exception(exp)
             raise exp
-
-        self._gravid = pregnant
-        logger.success(
-            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
     def gravid(self):
@@ -70,6 +70,6 @@ class Female(Person):
                        new pregnancy str to be set
 
         """
-        Assertor.assert_data_type({pregnant: str})
+        Assertor.assert_data_types([pregnant], [str])
         Assertor.assert_arguments({pregnant: ['pregnant', ('0', '1')]})
         self._gravid = pregnant

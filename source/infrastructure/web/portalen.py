@@ -27,11 +27,11 @@ class Portalen(Scraper):
         super().__init__()
         try:
             self.browser = requests.post(portalen_url, auth=portalen_cred)
+            logger.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as exp:
             logger.exception(exp)
             raise exp
-        logger.success(
-            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     def response(self):
         """
@@ -52,8 +52,8 @@ class Portalen(Scraper):
         Retrieve finansportalen.no's boliglån grunndata xml and stores it locally directory
 
         """
-        logger.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
         try:
+            logger.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
             offers = {}
             soup = BeautifulSoup(self.response().content.decode("windows-1252"), "xml")
             root = Et.fromstring(soup.prettify())
@@ -62,11 +62,11 @@ class Portalen(Scraper):
                 offers.update(
                     {i + 1: {re.sub(remove_url_re, '', child.tag): child.text.strip() for child in
                              children if child.text}})
+            logger.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
+            return offers
         except Exception as exp:
             logger.exception(exp)
             raise exp
-        logger.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
-        return offers
 
     def to_json(self, file_dir: str = "report/json/mortgage_offers"):
         """

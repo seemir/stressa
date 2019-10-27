@@ -13,9 +13,3 @@ boy = Male(age=10, sfo='1')
 
 family_members = [father, mother, girl, boy]
 family = Family(family_members, income=850000, cars=2)
-
-sifo = Sifo(family)
-expenses = sifo.sifo_expenses()
-
-portalen = Portalen()
-portalen.to_json()

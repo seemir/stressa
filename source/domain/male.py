@@ -27,6 +27,10 @@ class Male(Person):
                           After school programme, '1' true or '0' false
 
         """
-        super().__init__('m', age, kinder_garden, sfo)
-        logger.success(
-            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+        try:
+            super().__init__('m', age, kinder_garden, sfo)
+            logger.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+        except Exception as exp:
+            logger.exception(exp)
+            raise exp

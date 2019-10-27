@@ -13,21 +13,30 @@ class Assertor:
     """
 
     @staticmethod
-    def assert_data_type(dtype_dict: dict):
+    def assert_data_types(arg_list: list, dtype_list: list):
         """
-        Method that evaluates the type of objects in dictionary of {object: type}. Raises
+        Method that evaluates the type of objects in 'arg_list' against 'dtype_list'. Raises
         TypeError if not match.
 
         Parameters
         ----------
-        dtype_dict    : dict
-                        dict of object: type(s) to be evaluated
+        arg_list    : list
+                      arguments to be evaluated
+        dtype_list  : list
+                      types of corresponding arguments
 
         """
-        for obj, t in dtype_dict.items():
-            if not isinstance(obj, t):
-                raise TypeError(
-                    "expected type '{}', got '{}' instead".format(t, obj.__class__.__name__))
+        for i, arg in enumerate(arg_list):
+            dtype = dtype_list[i]
+            if not isinstance(arg, dtype):
+                try:
+                    raise TypeError(
+                        "expected type '{}', got '{}' instead".format(dtype.__name__,
+                                                                      arg.__class__.__name__))
+                except AttributeError:
+                    raise TypeError(
+                        "expected type '{}', got '{}' instead".format(
+                            " or ".join(dt.__name__ for dt in dtype), arg.__class__.__name__))
 
     @staticmethod
     def assert_arguments(arg_dict: dict):

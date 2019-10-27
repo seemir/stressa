@@ -30,14 +30,14 @@ class Sifo(Scraper):
         """
         super().__init__()
         try:
-            Assertor.assert_data_type({family: Family})
+            Assertor.assert_data_types([family], [Family])
             self.browser.open(sifo_url)
             self._family = family
+            logger.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as exp:
             logger.exception(exp)
             raise exp
-        logger.success(
-            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
 
     @property
     def family(self):
@@ -58,7 +58,7 @@ class Sifo(Scraper):
         family setter
 
         """
-        Assertor.assert_data_type({fam: Family})
+        Assertor.assert_data_types([fam], [Family])
         self._family = fam
 
     def response(self):
@@ -92,18 +92,19 @@ class Sifo(Scraper):
                       dictionary with SIFO expenses
 
         """
-        logger.info("trying to retrieve '{}'".format(self.sifo_expenses.__name__))
+
         try:
+            logger.info("trying to retrieve '{}'".format(self.sifo_expenses.__name__))
             soup = BeautifulSoup(self.response(), "xml")
             root = Et.fromstring(soup.prettify())
             expenses = {'_id': self.family.id}
             for child in root:
                 expenses.update({child.tag: child.text.strip().replace(".", "")})
+            logger.success("'{}' successfully retrieved".format(self.sifo_expenses.__name__))
+            return expenses
         except Exception as exp:
             logger.exception(Exception)
             raise exp
-        logger.success("'{}' successfully retrieved".format(self.sifo_expenses.__name__))
-        return expenses
 
     def to_json(self, file_dir: str = "report/json/expenses"):
         """
