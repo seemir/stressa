@@ -9,4 +9,3 @@ from .web.scraper import *
 from .web.posten import *
 from .web.sifo import *
 from .web.ssb import *
-from .db import *
