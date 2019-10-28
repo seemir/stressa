@@ -3,8 +3,8 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.infrastructure import Scraper
 from source.exception import InstantiationError
+from source.infrastructure import Scraper
 import pytest as pt
 import shutil
 import json
