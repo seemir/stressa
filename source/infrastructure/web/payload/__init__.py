@@ -3,4 +3,4 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from .ssb_payload import *
+from .ssb_payload import SsbPayload

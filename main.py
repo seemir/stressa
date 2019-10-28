@@ -3,7 +3,6 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.infrastructure import Ssb, Posten, Sifo, Portalen, Dao
 from source.domain import Female, Family, Male
 
 father = Male(age=45)
