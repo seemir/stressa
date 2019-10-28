@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
 
+"""
+Implementation of logging functionality for the application
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor
-from loguru import logger as log
 import os
+
+from loguru import logger as log
+
+from source.util import Assertor
 
 
 def logging(file_path=None, file_name="application.log"):
@@ -27,14 +34,14 @@ def logging(file_path=None, file_name="application.log"):
     """
     try:
         Assertor.assert_data_types([file_path, file_name], [(type(None), str), str])
-        f = __file__ if not file_path else file_path
-        log_dir = os.path.dirname(f) + "/logs"
+        file = __file__ if not file_path else file_path
+        log_dir = os.path.dirname(file) + "/logs"
         if not os.path.exists(log_dir):
             os.makedirs(log_dir)
         log.add(log_dir + "/application.log")
         return log
-    except Exception as e:
-        raise OSError("an error occurred with: {}".format(e))
+    except Exception as log_exception:
+        raise OSError("an error occurred with: {}".format(log_exception))
 
 
-logger = logging()
+LOGGER = logging()

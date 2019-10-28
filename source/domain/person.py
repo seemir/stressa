@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
 
+"""
+Male entity base class implementation
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import InstantiationError
-from source.util import Assertor
+from typing import Union
 from bisect import bisect_left
+from abc import abstractmethod
+
+from source.util import Assertor
 from .entity import Entity
 
 
@@ -32,14 +39,15 @@ class Person(Entity):
         """
         try:
             age = float(age)
-        except Exception as e:
-            raise TypeError("invalid numeric str, got '{}'".format(e))
+        except Exception as exp:
+            raise TypeError("invalid numeric str, got '{}'".format(exp))
 
         Assertor.assert_non_negative([age])
         sifo_yrs = [0.42, 0.92, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75]
         return str(sifo_yrs[bisect_left(sifo_yrs, age)]) if age <= 75 else str(75)
 
-    def __init__(self, sex: str = 'm', age: (int, float, str) = 0, kinder_garden: str = '0',
+    @abstractmethod
+    def __init__(self, sex: str = 'm', age: Union[int, float, str] = 0, kinder_garden: str = '0',
                  sfo: str = '0'):
         """
         Constructor / Instantiate the class
@@ -57,10 +65,6 @@ class Person(Entity):
 
         """
         super().__init__()
-
-        if type(self) == Person:
-            raise InstantiationError(
-                "base class '{}' cannot be instantiated".format(self.__class__.__name__))
 
         Assertor.assert_data_types([sex, age, kinder_garden, sfo],
                                    [str, (int, float, str), str, str])
@@ -160,7 +164,7 @@ class Person(Entity):
         return self._sfo
 
     @sfo.setter
-    def sfo(self, s: str):
+    def sfo(self, _sfo: str):
         """
         after-school/sfo program setter
 
@@ -170,6 +174,6 @@ class Person(Entity):
                   new after-school/sfo str
 
         """
-        Assertor.assert_data_types([s], [str])
-        Assertor.assert_arguments({s: ['kinder_garden:', ('0', '1')]})
-        self._sfo = s
+        Assertor.assert_data_types([_sfo], [str])
+        Assertor.assert_arguments({_sfo: ['kinder_garden:', ('0', '1')]})
+        self._sfo = _sfo

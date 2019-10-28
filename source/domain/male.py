@@ -1,9 +1,16 @@
 # -*- coding: utf-8 -*-
 
+"""
+Male entity class implementation
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.log import logger
+from typing import Union
+
+from source.log import LOGGER
 from .person import Person
 
 
@@ -13,7 +20,7 @@ class Male(Person):
 
     """
 
-    def __init__(self, age: (int, float, str) = 0, kinder_garden: str = '0', sfo: str = '0'):
+    def __init__(self, age: Union[int, float, str] = 0, kinder_garden: str = '0', sfo: str = '0'):
         """
         Constructor / Instantiate the class
 
@@ -29,8 +36,8 @@ class Male(Person):
         """
         try:
             super().__init__('m', age, kinder_garden, sfo)
-            logger.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
-        except Exception as exp:
-            logger.exception(exp)
-            raise exp
+            LOGGER.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+        except Exception as male_exception:
+            LOGGER.exception(male_exception)
+            raise male_exception

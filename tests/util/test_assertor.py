@@ -3,7 +3,6 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import InstantiationError
 from source.util import Assertor
 import pytest as pt
 
@@ -15,7 +14,7 @@ class TestAssertor:
         Test that the base-class Assertor cannot be instantiated
 
         """
-        with pt.raises(InstantiationError):
+        with pt.raises(TypeError):
             Assertor()
 
     @pt.mark.parametrize('correct_data_types', [str, float, bool, tuple, list, dict, (list, dict)])

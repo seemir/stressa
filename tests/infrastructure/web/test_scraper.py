@@ -3,7 +3,6 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import InstantiationError
 from source.infrastructure import Scraper
 import pytest as pt
 import shutil
@@ -18,7 +17,7 @@ class TestScraper:
         Test that scraper base class cannot be instantiated
 
         """
-        with pt.raises(InstantiationError):
+        with pt.raises(TypeError):
             Scraper()
 
     @pt.mark.parametrize("file_dir", ["report"])

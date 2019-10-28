@@ -1,14 +1,20 @@
 # -*- coding: utf-8 -*-
 
+"""
+Implementation of scaper against ssb market interest rates for mortgage applications
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.infrastructure.web.payload import SsbPayload
-from source.settings import ssb_url
-from source.util import Assertor
-from source.log import logger
-from .scraper import Scraper
 import requests
+
+from source.infrastructure.web.payload import SsbPayload
+from source.settings import SSB_URL
+from source.util import Assertor
+from source.log import LOGGER
+from .scraper import Scraper
 
 
 class Ssb(Scraper):
@@ -30,12 +36,12 @@ class Ssb(Scraper):
         try:
             Assertor.assert_data_types([payload], [(type(None), SsbPayload)])
             super().__init__()
-            self.payload = SsbPayload() if not payload else payload
-            logger.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
-        except Exception as exp:
-            logger().exception(exp)
-            raise exp
+            self._payload = SsbPayload() if not payload else payload
+            LOGGER.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+        except Exception as ssb_exception:
+            LOGGER.exception(ssb_exception)
+            raise ssb_exception
 
     def response(self):
         """
@@ -47,9 +53,9 @@ class Ssb(Scraper):
                   response with interest rate information
 
         """
-        payload = self.payload.payload()
-        response = requests.post(url=ssb_url, json=payload)
-        logger.info(
+        payload = self._payload.payload()
+        response = requests.post(url=SSB_URL, json=payload)
+        LOGGER.info(
             "HTTP status code -> [{}: {}]".format(response.status_code, response.reason))
         return response
 
@@ -65,16 +71,16 @@ class Ssb(Scraper):
         """
 
         try:
-            logger.info("trying to retrieve '{}'".format(self.ssb_interest_rates.__name__))
+            LOGGER.info("trying to retrieve '{}'".format(self.ssb_interest_rates.__name__))
             response = self.response().json()
             keys = response["dimension"]["Rentebinding"]["category"]["label"].values()
             values = response["value"]
-            logger.success(
+            LOGGER.success(
                 "'{}' successfully retrieved".format(self.ssb_interest_rates.__name__))
             return {key.lower(): str(val) for key, val in dict(zip(keys, values)).items()}
-        except Exception as exp:
-            logger.exception(exp)
-            raise exp
+        except Exception as ssb_interest_rates_exception:
+            LOGGER.exception(ssb_interest_rates_exception)
+            raise ssb_interest_rates_exception
 
     def to_json(self, file_dir: str = "report/json/interest_rates"):
         """
@@ -86,7 +92,7 @@ class Ssb(Scraper):
                       file directory to save JSON files
 
         """
-        self._to_json(self.ssb_interest_rates(), file_dir=file_dir, file_title="SsbInterestRates_")
-        logger.success(
+        self._to_json(self.ssb_interest_rates(), file_dir=file_dir, file_prefix="SsbInterestRates_")
+        LOGGER.success(
             "'{}' successfully parsed to JSON at '{}'".format(self.ssb_interest_rates.__name__,
                                                               file_dir))

@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 
+"""
+Utility class that acts like a static-type checker of python objects
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import InstantiationError
+from abc import ABC, abstractmethod
 
 
-class Assertor:
+class Assertor(ABC):
     """
     Class for asserting Python objects
 
@@ -50,8 +55,8 @@ class Assertor:
                       dict of {object: [name, possible]} to be evaluated
 
         """
-        for arg, ls in arg_dict.items():
-            name, possible = ls[0], ls[1]
+        for arg, arg_list in arg_dict.items():
+            name, possible = arg_list[0], arg_list[1]
             if arg not in possible:
                 raise ValueError(
                     "only possible values for '{}' are {}".format(name, possible))
@@ -70,17 +75,15 @@ class Assertor:
         msg = "only non-negative numbers accepted"
         if isinstance(numbers, list):
             for number in numbers:
-                if not float(number) >= 0:
+                if float(number) < 0:
                     raise ValueError(msg)
         else:
-            if not float(numbers) >= 0:
+            if float(numbers) < 0:
                 raise ValueError(msg)
 
+    @abstractmethod
     def __init__(self):
         """
         Abstract class, so class cannot be instantiated
 
         """
-        if type(self) == Assertor:
-            raise InstantiationError(
-                "base class '{}' cannot be instantiated".format(self.__class__.__name__))

@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 
+"""
+Implementation of scaper against posten.no zip code search
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.settings import posten_url, posten_form
+from bs4 import BeautifulSoup
+from source.settings import POSTEN_URL, POSTEN_FORM
 from source.exception import DomainError
 from source.util import Assertor
-from source.log import logger
-from bs4 import BeautifulSoup
+from source.log import LOGGER
 from .scraper import Scraper
 
 
@@ -30,13 +35,13 @@ class Posten(Scraper):
         super().__init__()
         try:
             Assertor.assert_data_types([zip_code], [str])
-            self.browser.open(posten_url)
+            self._browser.open(POSTEN_URL)
             self._zip_code = zip_code
-            logger.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
-        except Exception as exp:
-            logger.exception(exp)
-            raise exp
+            LOGGER.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+        except Exception as posten_exception:
+            LOGGER.exception(posten_exception)
+            raise posten_exception
 
     @property
     def zip_code(self):
@@ -75,10 +80,10 @@ class Posten(Scraper):
                       response with expenses information
 
         """
-        self.browser.select_form(nr=0)
-        self.browser[posten_form] = self.zip_code
-        response = self.browser.submit()
-        logger.info(
+        self._browser.select_form(nr=0)
+        self._browser[POSTEN_FORM] = self.zip_code
+        response = self._browser.submit()
+        LOGGER.info(
             "HTTP status code -> [{}]".format(response.info().values()[12].replace(" ", ": ")))
         return response
 
@@ -93,7 +98,7 @@ class Posten(Scraper):
 
         """
         try:
-            logger.info("trying to retrieve '{}'".format(self.zip_code_info.__name__))
+            LOGGER.info("trying to retrieve '{}'".format(self.zip_code_info.__name__))
             soup = BeautifulSoup(self.response(), "lxml")
             rows = soup.find_all('tr')
             if len(rows) == 2:
@@ -101,11 +106,11 @@ class Posten(Scraper):
                 values = [value.text.strip().lower() for value in rows[1].find_all('td')]
             else:
                 raise DomainError("str '{}' is an invalid ZIP code".format(self.zip_code))
-            logger.success("'{}' successfully retrieved".format(self.zip_code_info.__name__))
+            LOGGER.success("'{}' successfully retrieved".format(self.zip_code_info.__name__))
             return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
-        except Exception as exp:
-            logger.exception(exp)
-            raise exp
+        except Exception as zip_code_exception:
+            LOGGER.exception(zip_code_exception)
+            raise zip_code_exception
 
     def to_json(self, file_dir: str = "report/json/zip_code"):
         """
@@ -117,7 +122,7 @@ class Posten(Scraper):
                       file directory to save JSON files
 
         """
-        self._to_json(self.zip_code_info(), file_dir=file_dir, file_title="ZipCode_")
-        logger.success(
+        self._to_json(self.zip_code_info(), file_dir=file_dir, file_prefix="ZipCode_")
+        LOGGER.success(
             "'{}' successfully parsed to JSON at '{}'".format(self.zip_code_info.__name__,
                                                               file_dir))

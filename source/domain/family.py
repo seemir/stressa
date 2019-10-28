@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
 
+"""
+Family entity class implementation
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from typing import Union
+
 from source.exception import DomainError
 from source.util import Assertor
-from source.log import logger
+from source.log import LOGGER
 from .entity import Entity
 from .female import Female
 from .male import Male
@@ -46,8 +53,8 @@ class Family(Entity):
             raise DomainError("no guardianship found, i.e. family must have at least "
                               "one person older than 17 years.")
 
-    def __init__(self, family_members: list = None, income: (int, float, str) = 0,
-                 cars: (int, str) = 0):
+    def __init__(self, family_members: list = None, income: Union[int, float, str] = 0,
+                 cars: Union[int, str] = 0):
         """
         Constructor / Instantiate the class
 
@@ -70,11 +77,11 @@ class Family(Entity):
             self._family_members = family_members
             self._inntekt = str(income)
             self._antall_biler = str(cars)
-            logger.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
-        except Exception as exp:
-            logger.exception(exp)
-            raise exp
+            LOGGER.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+        except Exception as family_exception:
+            LOGGER.exception(family_exception)
+            raise family_exception
 
     @property
     def family_members(self):

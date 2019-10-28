@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
 
+"""
+Female entity class implementation
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from typing import Union
+
 from source.util import Assertor
-from source.log import logger
+from source.log import LOGGER
 from .person import Person
 
 
@@ -14,7 +21,7 @@ class Female(Person):
 
     """
 
-    def __init__(self, age: (int, float, str) = 0, kinder_garden: str = '0', sfo: str = '0',
+    def __init__(self, age: Union[int, float, str] = 0, kinder_garden: str = '0', sfo: str = '0',
                  pregnant: str = '0'):
         """
         Constructor / Instantiate the class
@@ -40,11 +47,11 @@ class Female(Person):
                 raise ValueError("pregnancy at this age is not possible")
 
             self._gravid = pregnant
-            logger.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
-        except Exception as exp:
-            logger.exception(exp)
-            raise exp
+            LOGGER.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+        except Exception as female_exception:
+            LOGGER.exception(female_exception)
+            raise female_exception
 
     @property
     def gravid(self):

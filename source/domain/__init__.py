@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+"""
+Domain model implementation
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 

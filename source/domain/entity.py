@@ -1,42 +1,40 @@
 # -*- coding: utf-8 -*-
 
+"""
+Abstract base class implementation
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.exception import InstantiationError
-from source.log import logger
 from uuid import uuid4
 
+from abc import ABC, abstractmethod
 
-class Entity:
+from source.log import LOGGER
+
+
+class Entity(ABC):
     """
     abstract base entity class
 
     """
 
+    @abstractmethod
     def __init__(self):
         """
         Constructor / Instantiate the class. Only one property, i.e. id given by uuid4
 
         """
-        logger.info(
+        LOGGER.info(
             "trying to create '{}'".format(self.__class__.__name__))
-
-        if type(self) == Entity:
-            try:
-                raise InstantiationError(
-                    "abstract base class '{}' cannot be instantiated".format(
-                        self.__class__.__name__))
-            except Exception as exp:
-                logger.exception(exp)
-                raise exp
-
-        self._id = str(uuid4())
+        self._id_str = str(uuid4())
 
     @property
-    def id(self):
+    def id_str(self):
         """
         Id getter
 
         """
-        return self._id
+        return self._id_str

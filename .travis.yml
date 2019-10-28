@@ -24,7 +24,8 @@ install:
 # the actual commands to run
 
 script:
-  - pytest --cov=source/ tests/ -p no:warnings
+  - pytest --cov=source/ tests/
+  - pylint source/
 
 # generate a coverage report to send to back to user
 after_success:
