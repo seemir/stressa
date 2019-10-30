@@ -1,16 +1,27 @@
 # -*- coding: utf-8 -*-
 
+"""
+Test module for Sifo scraper class
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from uuid import UUID
+
+import pytest as pt
 from mechanize._response import response_seek_wrapper
+
 from source.infrastructure import Scraper, Sifo
 from source.domain import Female, Family, Male
-from uuid import UUID
-import pytest as pt
 
 
 class TestSifo:
+    """
+    Test cases for Sifo scraper
+
+    """
 
     @classmethod
     def setup(cls):
@@ -23,7 +34,8 @@ class TestSifo:
         cls.family = Family(family_members, income=850000, cars=2)
         cls.sifo = Sifo(cls.family)
 
-    def test_sifo_is_instance_of_scraper(self):
+    @staticmethod
+    def test_sifo_is_instance_of_scraper():
         """
         Test that Sifo scraper is instance and subclass of Scraper
 
@@ -31,8 +43,9 @@ class TestSifo:
         assert isinstance(Sifo, Scraper.__class__)
         assert issubclass(Sifo.__class__, Scraper.__class__)
 
+    @staticmethod
     @pt.mark.parametrize("invalid_family", [90210, 90210.0, True, [], (), {}])
-    def test_sifo_raises_type_error_if_family_instance_not_passed(self, invalid_family):
+    def test_sifo_raises_type_error_if_family_instance_not_passed(invalid_family):
         """
         TypeError thrown if Sifo does not get passed a Family instance
         through constructor

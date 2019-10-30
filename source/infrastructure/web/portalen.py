@@ -79,7 +79,7 @@ class Portalen(Scraper):
         save mortgage offers information to JSON file
 
         """
-        self._to_json(self.mortgage_offers(), file_dir, file_prefix="MortgageOffers_")
+        self.save_json(self.mortgage_offers(), file_dir, file_prefix="MortgageOffers_")
         LOGGER.success(
             "'{}' successfully parsed to JSON at '{}'".format(self.mortgage_offers.__name__,
                                                               file_dir))

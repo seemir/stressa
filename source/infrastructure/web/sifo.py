@@ -123,7 +123,7 @@ class Sifo(Scraper):
                       file directory to save JSON files
 
         """
-        self._to_json(self.sifo_expenses(), file_dir=file_dir, file_prefix="SifoExpenses_")
+        self.save_json(self.sifo_expenses(), file_dir=file_dir, file_prefix="SifoExpenses_")
         LOGGER.success(
             "'{}' successfully parsed to JSON at '{}'".format(self.sifo_expenses.__name__,
                                                               file_dir))

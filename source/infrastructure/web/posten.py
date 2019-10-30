@@ -107,7 +107,7 @@ class Posten(Scraper):
             else:
                 raise DomainError("str '{}' is an invalid ZIP code".format(self.zip_code))
             LOGGER.success("'{}' successfully retrieved".format(self.zip_code_info.__name__))
-            return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
+            return {hdr: val.upper() for hdr, val in dict(zip(header, values)).items() if val}
         except Exception as zip_code_exception:
             LOGGER.exception(zip_code_exception)
             raise zip_code_exception
@@ -122,7 +122,7 @@ class Posten(Scraper):
                       file directory to save JSON files
 
         """
-        self._to_json(self.zip_code_info(), file_dir=file_dir, file_prefix="ZipCode_")
+        self.save_json(self.zip_code_info(), file_dir=file_dir, file_prefix="ZipCode_")
         LOGGER.success(
             "'{}' successfully parsed to JSON at '{}'".format(self.zip_code_info.__name__,
                                                               file_dir))

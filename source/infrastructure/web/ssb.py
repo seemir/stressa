@@ -92,7 +92,8 @@ class Ssb(Scraper):
                       file directory to save JSON files
 
         """
-        self._to_json(self.ssb_interest_rates(), file_dir=file_dir, file_prefix="SsbInterestRates_")
+        self.save_json(self.ssb_interest_rates(), file_dir=file_dir,
+                       file_prefix="SsbInterestRates_")
         LOGGER.success(
             "'{}' successfully parsed to JSON at '{}'".format(self.ssb_interest_rates.__name__,
                                                               file_dir))

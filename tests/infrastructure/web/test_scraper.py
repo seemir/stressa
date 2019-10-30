@@ -1,18 +1,30 @@
 # -*- coding: utf-8 -*-
 
+"""
+Test module for all Scraper tests
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.infrastructure import Scraper
-import pytest as pt
 import shutil
 import json
 import os
 
+import pytest as pt
+
+from source.infrastructure import Scraper
+
 
 class TestScraper:
+    """
+    Test case for Scraper abstract base clas
 
-    def test_scraper_base_class_cannot_be_instantiated(self):
+    """
+
+    @staticmethod
+    def test_scraper_base_class_cannot_be_instantiated():
         """
         Test that scraper base class cannot be instantiated
 
@@ -20,25 +32,27 @@ class TestScraper:
         with pt.raises(TypeError):
             Scraper()
 
-    @pt.mark.parametrize("file_dir", ["report"])
+    @staticmethod
     @pt.mark.parametrize("file_object", [{"foo": "bar"}, {"hello": "world"}])
-    def test_static_to_json_method(self, file_object, file_dir):
+    def test_static_to_json_method(file_object):
         """
         Test that staticmethod _to_json() produces json file with correct content
 
         """
-        Scraper._to_json(file_object, file_dir=file_dir)
-        with open(file_dir + '/' + os.listdir(file_dir)[-1]) as json_file:
+        file_dir = os.path.dirname(__file__) + "report/"
+        Scraper.save_json(file_object, file_dir=file_dir)
+        with open(file_dir + os.listdir(file_dir)[-1]) as json_file:
             data = json.load(json_file)
         assert data == file_object
         shutil.rmtree(file_dir, ignore_errors=True)
 
+    @staticmethod
     @pt.mark.parametrize("invalid_file_dir", ["////"])
     @pt.mark.parametrize("file_object", [{"foo": "bar"}, {"hello": "world"}])
-    def test_to_json_raises_os_error_for_invalid_dir(self, file_object, invalid_file_dir):
+    def test_to_json_raises_os_error_for_invalid_dir(file_object, invalid_file_dir):
         """
         Test that _to_json() throws OSError if file_dir is invalid
 
         """
         with pt.raises(OSError):
-            Scraper._to_json(file_object, file_dir=invalid_file_dir)
+            Scraper.save_json(file_object, file_dir=invalid_file_dir)

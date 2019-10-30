@@ -1,16 +1,27 @@
 # -*- coding: utf-8 -*-
 
+"""
+Tests for family entity class
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.domain import Family, Female, Entity, Male
-from source.exception import DomainError
 from uuid import UUID
 from abc import ABC
+
 import pytest as pt
+
+from source.domain import Family, Female, Entity, Male
+from source.exception import DomainError
 
 
 class TestFamily:
+    """
+    Test class for the entity Family()
+
+    """
 
     @classmethod
     def setup(cls):
@@ -98,15 +109,18 @@ class TestFamily:
         assert family.inntekt == str(inntekt)
         assert family.antall_biler == str(antall_biler)
 
+    @staticmethod
     @pt.mark.parametrize('invalid_family', [Male(17), Female(17), [Male(17), Female(17)]])
-    def test_family_cannot_exist_without_guardianship(self, invalid_family):
+    def test_family_cannot_exist_without_guardianship(invalid_family):
         """
         Test that Family object cannot exist without guardianship, i.e. must have atleast one
         person over 18 years.
 
         """
         with pt.raises(DomainError):
-            Family(invalid_family) if isinstance(invalid_family, list) else Family([invalid_family])
+            family = Family(invalid_family) if isinstance(invalid_family, list) else Family(
+                [invalid_family])
+            print(family)
 
     def test_add_family_members_method(self):
         """
@@ -122,7 +136,8 @@ class TestFamily:
         family.add_family_members(child)
         assert len(family.family_members) == 5
 
-    def test_get_properties_method(self):
+    @staticmethod
+    def test_get_properties_method():
         """
         Test get properties method in Family class
 

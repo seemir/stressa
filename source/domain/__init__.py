@@ -13,3 +13,4 @@ from .entity import Entity
 from .person import Person
 from .female import Female
 from .male import Male
+from .phone import Phone

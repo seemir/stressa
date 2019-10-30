@@ -23,7 +23,7 @@ class Person(Entity):
     """
 
     @staticmethod
-    def _sifo_age(age: (int, float, str)):
+    def sifo_age(age: (int, float, str)):
         """
         Converts age into SIFO compatible str
 
@@ -71,14 +71,14 @@ class Person(Entity):
         Assertor.assert_arguments({kinder_garden: ['kinder_garden:', ('0', '1')],
                                    sfo: ['sfo:', ('0', '1', '2')]})
 
-        if self._sifo_age(age) not in ('1', '2', '3', '5') and kinder_garden == '1':
+        if self.sifo_age(age) not in ('1', '2', '3', '5') and kinder_garden == '1':
             raise ValueError("only persons between 1-5 years can attend kinder_garden")
 
-        if self._sifo_age(age) not in ('9', '13') and sfo == '1':
+        if self.sifo_age(age) not in ('9', '13') and sfo == '1':
             raise ValueError("only persons between 6-13 years can attend sfo")
 
         self._kjonn = sex
-        self._alder = self._sifo_age(age)
+        self._alder = self.sifo_age(age)
         self._barnehage = kinder_garden
         self._sfo = sfo
 
@@ -120,7 +120,7 @@ class Person(Entity):
 
         """
         Assertor.assert_data_types([age], [(float, int, str)])
-        self._alder = self._sifo_age(age)
+        self._alder = self.sifo_age(age)
 
     @property
     def barnehage(self):

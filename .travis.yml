@@ -25,8 +25,8 @@ install:
 
 script:
   - pytest --cov=source/ tests/
-  - pylint source/
 
-# generate a coverage report to send to back to user
+# generate a coverage report and PyLint to send to back to user
 after_success:
+  - pylint source/ tests/
   - codecov
