@@ -8,9 +8,10 @@ Implementation of scaper against finansportalen.no xml feed
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import xml.etree.ElementTree as Et
 import re
+import xml.etree.ElementTree as Et
 import requests
+
 from bs4 import BeautifulSoup
 
 from source.settings import PORTALEN_URL, PORTALEN_CRED, PORTALEN_ENTRY
@@ -30,8 +31,8 @@ class Portalen(Scraper):
         Constructor / Instantiate the class
 
         """
-        super().__init__()
         try:
+            super().__init__()
             self._browser = requests.post(PORTALEN_URL, auth=PORTALEN_CRED)
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
@@ -55,7 +56,12 @@ class Portalen(Scraper):
 
     def mortgage_offers(self):
         """
-        Retrieve finansportalen.no's boliglån grunndata xml and stores it locally directory
+        Retrieve finansportalen.no's boliglån grunndata xml and returns dict for content
+
+        Returns
+        -------
+        out     : dict
+                  content from boliglån grunndata Xxml feed
 
         """
         try:

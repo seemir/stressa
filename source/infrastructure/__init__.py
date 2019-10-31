@@ -13,5 +13,6 @@ from .web.payload import SsbPayload
 from .web.scraper import Scraper
 from .web.posten import Posten
 from .web.sifo import Sifo
+from .web.finn import Finn
 from .web.ssb import Ssb
 from .db import Dao

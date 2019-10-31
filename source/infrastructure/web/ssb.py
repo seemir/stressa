@@ -34,8 +34,8 @@ class Ssb(Scraper):
 
         """
         try:
-            Assertor.assert_data_types([payload], [(type(None), SsbPayload)])
             super().__init__()
+            Assertor.assert_data_types([payload], [(type(None), SsbPayload)])
             self._payload = SsbPayload() if not payload else payload
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))

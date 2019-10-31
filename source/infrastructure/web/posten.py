@@ -9,6 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from bs4 import BeautifulSoup
+
 from source.settings import POSTEN_URL, POSTEN_FORM
 from source.exception import DomainError
 from source.util import Assertor
@@ -32,8 +33,8 @@ class Posten(Scraper):
                       Zip code to be searched
 
         """
-        super().__init__()
         try:
+            super().__init__()
             Assertor.assert_data_types([zip_code], [str])
             self._browser.open(POSTEN_URL)
             self._zip_code = zip_code

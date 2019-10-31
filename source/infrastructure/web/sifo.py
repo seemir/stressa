@@ -35,8 +35,8 @@ class Sifo(Scraper):
         family      : Family
                       object with family information
         """
-        super().__init__()
         try:
+            super().__init__()
             Assertor.assert_data_types([family], [Family])
             self._browser.open(SIFO_URL)
             self._family = family
