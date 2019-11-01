@@ -8,8 +8,8 @@ Phone entity class implementation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.log import LOGGER
-from source.util import Assertor
+from source.cross_cutting import Assertor, LOGGER
+
 from .entity import Entity
 
 

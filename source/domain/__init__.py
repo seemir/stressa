@@ -12,5 +12,5 @@ from .family import Family
 from .entity import Entity
 from .person import Person
 from .female import Female
-from .male import Male
 from .phone import Phone
+from .male import Male

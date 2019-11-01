@@ -10,7 +10,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 from typing import Union
 
-from source.log import LOGGER
+from source.cross_cutting import LOGGER
+
 from .person import Person
 
 

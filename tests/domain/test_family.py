@@ -14,7 +14,7 @@ from abc import ABC
 import pytest as pt
 
 from source.domain import Family, Female, Entity, Male
-from source.exception import DomainError
+from source.cross_cutting import DomainError
 
 
 class TestFamily:

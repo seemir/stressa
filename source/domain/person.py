@@ -12,7 +12,8 @@ from typing import Union
 from bisect import bisect_left
 from abc import abstractmethod
 
-from source.util import Assertor
+from source.cross_cutting import Assertor
+
 from .entity import Entity
 
 
@@ -23,7 +24,7 @@ class Person(Entity):
     """
 
     @staticmethod
-    def sifo_age(age: (int, float, str)):
+    def sifo_age(age: Union[int, float, str]):
         """
         Converts age into SIFO compatible str
 
@@ -109,7 +110,7 @@ class Person(Entity):
         return self._alder
 
     @alder.setter
-    def alder(self, age: (int, float, str)):
+    def alder(self, age: Union[int, float, str]):
         """
         age setter
 

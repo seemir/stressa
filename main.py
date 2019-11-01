@@ -7,7 +7,7 @@ import sys
 
 from PyQt5 import QtWidgets
 
-from source.ui.views import HomePage
+from source import HomePage
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
