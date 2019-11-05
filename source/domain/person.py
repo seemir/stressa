@@ -12,7 +12,7 @@ from typing import Union
 from bisect import bisect_left
 from abc import abstractmethod
 
-from source.cross_cutting import Assertor
+from source.util import Assertor
 
 from .entity import Entity
 

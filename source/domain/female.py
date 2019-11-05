@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from typing import Union
 
-from source.cross_cutting import Assertor, LOGGER
+from source.util import Assertor, LOGGER
 
 from .person import Person
 

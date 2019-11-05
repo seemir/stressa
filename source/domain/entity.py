@@ -12,7 +12,7 @@ from uuid import uuid4
 
 from abc import ABC, abstractmethod
 
-from source.cross_cutting import LOGGER
+from source.util import LOGGER
 
 
 class Entity(ABC):

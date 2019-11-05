@@ -14,7 +14,7 @@ from abc import ABC
 import pytest as pt
 
 from source.domain import Family, Female, Entity, Male
-from source.cross_cutting import DomainError
+from source.util import NotPossibleError
 
 
 class TestFamily:
@@ -117,7 +117,7 @@ class TestFamily:
         person over 18 years.
 
         """
-        with pt.raises(DomainError):
+        with pt.raises(NotPossibleError):
             family = Family(invalid_family) if isinstance(invalid_family, list) else Family(
                 [invalid_family])
             print(family)

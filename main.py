@@ -7,10 +7,10 @@ import sys
 
 from PyQt5 import QtWidgets
 
-from source import HomePage
+from source.ui import HomePage
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     application = HomePage()
     application.show()
-    sys.exit(app.exec())
+    sys.exit(app.exec_())
