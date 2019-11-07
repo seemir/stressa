@@ -12,7 +12,7 @@ from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
 
-class PopUpError(QDialog):
+class Error(QDialog):
 
     def __init__(self, parent, exception):
         super().__init__(parent)
@@ -43,8 +43,3 @@ class PopUpError(QDialog):
             log_str.append(line)
         logger.remove(error_log)
         return "".join(log_str)
-
-
-def pop_up_error(parent, exception):
-    error = PopUpError(parent, exception)
-    error.exec_()

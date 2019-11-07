@@ -11,3 +11,4 @@ __email__ = 'samir.adrik@gmail.com'
 from .logging import LOGGER, logging
 from .assertor import Assertor
 from .exceptions import *
+from .caching import cache

@@ -8,14 +8,17 @@ Implementation of scarper against Finn.no housing search
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import re
 import requests
 
 from bs4 import BeautifulSoup
 
-from source.util import Assertor, LOGGER
+from source.util import cache, Assertor, LOGGER, NotFoundError
 
 from ..settings import FINN_URL
 from .scraper import Scraper
+
+cache(__file__, "cache")
 
 
 class Finn(Scraper):
@@ -23,6 +26,21 @@ class Finn(Scraper):
     Scraper that scrapes housing information from Finn.no given a Finn-code
 
     """
+
+    @staticmethod
+    def validate_finn_code(finn_code: str):
+        """
+        static method for validating Finn.no code
+
+        Parameters
+        ----------
+        finn_code    : str
+                       Finn-code to be validated
+
+        """
+        valid_finn_code = re.compile("^1[0-9]{8}").search(finn_code)
+        if not valid_finn_code:
+            raise NotFoundError("'{}' is an invalid Finn code".format(finn_code))
 
     def __init__(self, finn_code: str):
         """
@@ -37,12 +55,27 @@ class Finn(Scraper):
         try:
             super().__init__()
             Assertor.assert_data_types([finn_code], [str])
-            self._browser = requests.post((FINN_URL + "{}").format(finn_code))
+            self.validate_finn_code(finn_code)
+            self._finn_code = finn_code
+            self._browser = requests.post((FINN_URL + "{}").format(self.finn_code))
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
         except Exception as finn_exception:
             LOGGER.exception(finn_exception)
             raise finn_exception
+
+    @property
+    def finn_code(self):
+        """
+        Finn-kode getter
+
+        Returns
+        -------
+        out     : str
+                  active finn-kode in object
+
+        """
+        return self._finn_code
 
     def response(self):
         """
@@ -69,15 +102,22 @@ class Finn(Scraper):
 
         """
         try:
-            LOGGER.info("trying to retrieve '{}'".format(self.housing_information.__name__))
+            LOGGER.info(
+                "trying to retrieve '{}' for -> '{}'".format(self.housing_information.__name__,
+                                                             self.finn_code))
             soup = BeautifulSoup(self.response().content, "lxml")
-            address = soup.find("p", attrs={"class": "u-caption"})
-            if not address:
-                return {}
-            info = {"Adresse": address.text}
-            keys, values = list(soup.find_all("dt")), list(soup.find_all("dd"))
-            info.update({key.text.strip(): val.text.strip().replace(u'\xa0', ' ') for key, val in
-                         zip(keys, values)})
+
+            address = soup.find("p", attrs={"class": "u-caption"}).text
+            price = "".join(price.text for price in soup.find_all("span", attrs={"class": "u-t3"})
+                            if " kr" in price.text).strip().replace(u"\xa0", " ")
+
+            info = {"finn_adresse": address, "prisantydning": price}
+
+            keys, values = list(soup.find_all(["th", "dt"])), list(soup.find_all(["td", "dd"]))
+            info.update(
+                {re.sub("[^a-z]+", "", key.text.lower()): val.text.strip().replace(u"\xa0", " ")
+                 for key, val in zip(keys, values)})
+
             LOGGER.success("'{}' successfully retrieved".format(self.housing_information.__name__))
             return info
         except Exception as housing_information_exception:

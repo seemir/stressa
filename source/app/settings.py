@@ -21,7 +21,7 @@ PORTALEN_ENTRY = "{http://www.w3.org/2005/Atom}entry"
 SIFO_URL = "http://kalkulator.referansebudsjett.no/php/blank_template.php"
 SIFO_FORM = "budsjett"
 
-POSTEN_URL = "https://adressesok.posten.no/en/postal_codes/search"
+POSTEN_URL = "https://adressesok.posten.no/nb/postal_codes/search"
 POSTEN_FORM = "q"
 
 SSB_URL = "https://data.ssb.no/api/v0/no/table/10748"

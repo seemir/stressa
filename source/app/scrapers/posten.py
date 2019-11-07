@@ -23,6 +23,23 @@ class Posten(Scraper):
 
     """
 
+    @staticmethod
+    def validate_zip_code(zip_code: str):
+        """
+        static method for validating Norwegian zip codes
+
+        Parameters
+        ----------
+        zip_code
+
+        Returns
+        -------
+
+        """
+        valid_zip = re.compile("[0-9]{3}").search(zip_code)
+        if not valid_zip:
+            raise NotFoundError("'{}' is an invalid zip code".format(zip_code))
+
     def __init__(self, zip_code: str):
         """
         Constructor / Instantiate the class
@@ -36,10 +53,7 @@ class Posten(Scraper):
         try:
             super().__init__()
             Assertor.assert_data_types([zip_code], [str])
-
-            valid_zip = re.compile("[0-9]{3}").search(zip_code)
-            if not valid_zip:
-                raise NotFoundError("'{}' is an invalid zip code".format(zip_code))
+            self.validate_zip_code(zip_code)
             self._browser.open(POSTEN_URL)
             self._zip_code = zip_code
             LOGGER.success(

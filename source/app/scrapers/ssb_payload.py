@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from datetime import datetime as dt, timedelta
 
-from source.util import LOGGER
+from source.util import LOGGER, Assertor
 
 
 class SsbPayload:
@@ -35,6 +35,7 @@ class SsbPayload:
                 date string n days back in time
 
         """
+        Assertor.assert_data_types([num], [int])
         return [(dt.today() - timedelta(days=num)).strftime("%Y{}%m".format('M'))]
 
     @staticmethod
@@ -70,15 +71,8 @@ class SsbPayload:
         """
         try:
             LOGGER.info("trying to create '{}'".format(self.__class__.__name__))
-            try:
-                for prop in [utlanstype, sektor, rentebinding, tid]:
-                    if not isinstance(prop, (list, type(None))):
-                        raise TypeError(
-                            "expected type '{}', got '{}' instead".format(list.__name__,
-                                                                          type(prop).__name__))
-            except Exception as exp:
-                LOGGER.exception(exp)
-                raise exp
+            Assertor.assert_data_types([utlanstype, sektor, rentebinding, tid],
+                                       [(type(None), list) for _ in range(3)])
             self.utlanstype = ["70"] if not utlanstype else utlanstype
             self.sektor = ["04b"] if not sektor else sektor
             self.rentebinding = ["08", "12", "10", "11", "06"] if not rentebinding else rentebinding
