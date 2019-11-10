@@ -3,7 +3,7 @@
 """
 Stressa settings file
 
-This file contains important constants, including url, db connection strings and credentials
+This file contains constants, including url and credentials
 
 """
 

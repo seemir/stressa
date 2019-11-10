@@ -41,7 +41,7 @@ class Female(Person):
         try:
             super().__init__('k', age, kinder_garden, sfo)
             Assertor.assert_data_types([age, kinder_garden, sfo], [(float, int, str), str, str])
-            Assertor.assert_arguments({pregnant: ['pregnant', ('0', '1')]})
+            Assertor.assert_arguments([pregnant], [{"pregnant": ('0', '1')}])
 
             if Person.sifo_age(age) not in ('19', '50') and pregnant == '1':
                 raise ValueError("pregnancy at this age is not possible")
@@ -78,5 +78,5 @@ class Female(Person):
 
         """
         Assertor.assert_data_types([pregnant], [str])
-        Assertor.assert_arguments({pregnant: ['pregnant', ('0', '1')]})
+        Assertor.assert_arguments([pregnant], [{"pregnant": ('0', '1')}])
         self._gravid = pregnant

@@ -19,6 +19,7 @@ loguru==0.3.2
 lxml==4.4.1
 mccabe==0.6.1
 mechanize==0.4.4
+mock==3.0.5
 more-itertools==7.2.0
 numpy==1.17.3
 packaging==19.2
@@ -37,9 +38,9 @@ python-dateutil==2.8.1
 python-dotenv==0.10.3
 pytz==2019.3
 requests==2.22.0
+requests-cache==0.5.2
 six==1.13.0
 soupsieve==1.9.5
-requests-cache==0.5.2
 typed-ast==1.4.0
 untangle==1.1.1
 urllib3==1.25.6

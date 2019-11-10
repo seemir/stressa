@@ -51,7 +51,7 @@ class TestAssertor:
         """
         invalid_argument = '2'
         with pt.raises(ValueError):
-            Assertor.assert_arguments({invalid_argument: ['invalid_argument', correct_argument]})
+            Assertor.assert_arguments([invalid_argument], [{'invalid_argument': correct_argument}])
 
     @staticmethod
     @pt.mark.parametrize('negative_values', [-90210, -90210.0, [90210, -90210]])

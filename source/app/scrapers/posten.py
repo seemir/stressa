@@ -9,6 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import re
+from http.client import responses
 
 from bs4 import BeautifulSoup
 
@@ -36,7 +37,7 @@ class Posten(Scraper):
         -------
 
         """
-        valid_zip = re.compile("[0-9]{3}").search(zip_code)
+        valid_zip = re.compile("[0-9]{4}").search(zip_code)
         if not valid_zip:
             raise NotFoundError("'{}' is an invalid zip code".format(zip_code))
 
@@ -87,6 +88,7 @@ class Posten(Scraper):
 
         """
         Assertor.assert_data_types([code], [str])
+        self.validate_zip_code(code)
         self._zip_code = code
 
     def response(self):
@@ -103,7 +105,7 @@ class Posten(Scraper):
         self._browser[POSTEN_FORM] = self.zip_code
         response = self._browser.submit()
         LOGGER.info(
-            "HTTP status code -> [{}]".format(response.info().values()[12].replace(" ", ": ")))
+            "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
         return response
 
     def zip_code_info(self):

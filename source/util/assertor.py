@@ -40,26 +40,29 @@ class Assertor(ABC):
                                                                       arg.__class__.__name__))
                 except AttributeError:
                     raise TypeError(
-                        "expected type '{}', got '{}' instead".format(
-                            " or ".join(dt.__name__ for dt in dtype), arg.__class__.__name__))
+                        "expected type 'Union[{}]', got '{}' instead".format(
+                            ", ".join(dt.__name__ for dt in dtype), arg.__class__.__name__))
 
     @staticmethod
-    def assert_arguments(arg_dict: dict):
+    def assert_arguments(obj_list: list, possible_list: list):
         """
-        Method that evaluates the object in dictionary of {object: [name, possible]} to see if
-        object is in possibility. Raises ValueError if not match.
+        Method that evaluates the object in list to see if object are in set of possible values.
+        Raises ValueError if not match.
 
         Parameters
         ----------
-        arg_dict    : dictionary
-                      dict of {object: [name, possible]} to be evaluated
+        obj_list       : list
+                         list of object to be evaluated
+        possible_list  : list of tuple
+
 
         """
-        for arg, arg_list in arg_dict.items():
-            name, possible = arg_list[0], arg_list[1]
-            if arg not in possible:
-                raise ValueError(
-                    "only possible values for '{}' are {}".format(name, possible))
+        for i, obj in enumerate(obj_list):
+            possible = possible_list[i]
+            for name, value in possible.items():
+                if obj and obj not in value:
+                    raise ValueError(
+                        "only possible values for '{}' are {}".format(name, value))
 
     @staticmethod
     def assert_non_negative(numbers):

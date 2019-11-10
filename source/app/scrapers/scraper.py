@@ -63,16 +63,12 @@ class Scraper(ABC):
         Abstract class, so class cannot be instantiated
 
         """
-        try:
-            LOGGER.info("trying to create '{}'".format(self.__class__.__name__))
-            super().__init__()
-            self._browser = Browser()
-            self._browser.set_handle_robots(False)
-            self._browser.set_handle_refresh(False)
-            self._id_str = str(uuid4())
-        except Exception as scraper_exception:
-            LOGGER.exception(scraper_exception)
-            raise scraper_exception
+        LOGGER.info("trying to create '{}'".format(self.__class__.__name__))
+        super().__init__()
+        self._browser = Browser()
+        self._browser.set_handle_robots(False)
+        self._browser.set_handle_refresh(False)
+        self._id_str = str(uuid4())
 
     @property
     def id_str(self):

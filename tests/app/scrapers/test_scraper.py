@@ -33,25 +33,26 @@ class TestScraper:
             Scraper()
 
     @staticmethod
-    @pt.mark.parametrize("file_object", [{"foo": "bar"}, {"hello": "world"}])
-    def test_static_to_json_method(file_object):
+    @pt.mark.parametrize("file_content", [{"foo": "bar"}])
+    def test_static_save_json_method(file_content):
         """
-        Test that staticmethod _to_json() produces json file with correct content
+        Test that staticmethod save_json() produces json file with correct content
 
         """
-        file_dir = os.path.dirname(__file__) + "report/"
-        Scraper.save_json(file_object, file_dir=file_dir)
-        with open(file_dir + os.listdir(file_dir)[-1]) as json_file:
+        current_dir = os.path.dirname(__file__)
+        file_dir = os.path.join(current_dir, "report", "json")
+        Scraper.save_json(file_content, file_dir=file_dir)
+        with open(os.path.join(file_dir, os.listdir(file_dir)[-1])) as json_file:
             data = json.load(json_file)
-        assert data == file_object
-        shutil.rmtree(file_dir, ignore_errors=True)
+        assert data == file_content
+        shutil.rmtree(os.path.join(current_dir, "report"), ignore_errors=True)
 
     @staticmethod
     @pt.mark.parametrize("invalid_file_dir", ["////"])
     @pt.mark.parametrize("file_object", [{"foo": "bar"}, {"hello": "world"}])
-    def test_to_json_raises_os_error_for_invalid_dir(file_object, invalid_file_dir):
+    def test_save_json_raises_os_error_for_invalid_dir(file_object, invalid_file_dir):
         """
-        Test that _to_json() throws OSError if file_dir is invalid
+        Test that save_json() throws OSError if file_dir is invalid
 
         """
         with pt.raises(OSError):

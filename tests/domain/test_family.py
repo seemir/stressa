@@ -40,14 +40,14 @@ class TestFamily:
         """
         cls.family = None
 
-    def test_family_object_is_instance_of_family(self):
+    def test_family_object_is_instance_of_family_and_abc(self):
         """
-        Test that all family objects are instances of Family class
+        Test that all family objects are instances of Family class and Abstract Base Class (ABC)
 
         """
-        for parents in [Entity, ABC]:
-            isinstance(self.family, parents)
-            issubclass(self.family.__class__, parents)
+        for parent in [Entity, ABC]:
+            isinstance(self.family, parent)
+            issubclass(self.family.__class__, parent)
 
     @pt.mark.parametrize('invalid_arg', [True, 'test', 90210, 90210.0, ('test', 'test'), {}])
     def test_family_members_type_are_list(self, invalid_arg):

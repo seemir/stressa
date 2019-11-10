@@ -20,7 +20,7 @@ class SsbPayload:
     """
 
     @staticmethod
-    def _date_str(num: int):
+    def date_str(num: int):
         """
         date string n days back in time
 
@@ -39,7 +39,7 @@ class SsbPayload:
         return [(dt.today() - timedelta(days=num)).strftime("%Y{}%m".format('M'))]
 
     @staticmethod
-    def _updated_table_date():
+    def updated_table_date():
         """
         get SSB compatible str that insures that the newest data from table
         nr. 10748 is retrieved
@@ -50,7 +50,25 @@ class SsbPayload:
                       correct date for table nr. 10748
 
         """
-        return SsbPayload._date_str(90) if dt.today().day < 13 else SsbPayload._date_str(60)
+        return SsbPayload.date_str(90) if dt.today().day < 13 else SsbPayload.date_str(60)
+
+    @staticmethod
+    def validate_date(dates: list):
+        """
+        method for validating the format of a string
+
+        Parameters
+        ----------
+        dates        : list
+                      data str to be validated
+
+        """
+        try:
+            if dates:
+                for date in dates:
+                    dt.strptime(date, "%Y{}%m".format('M'))
+        except ValueError as date_error:
+            raise date_error
 
     def __init__(self, utlanstype: list = None, sektor: list = None, rentebinding: list = None,
                  tid: list = None):
@@ -72,15 +90,113 @@ class SsbPayload:
         try:
             LOGGER.info("trying to create '{}'".format(self.__class__.__name__))
             Assertor.assert_data_types([utlanstype, sektor, rentebinding, tid],
-                                       [(type(None), list) for _ in range(3)])
-            self.utlanstype = ["70"] if not utlanstype else utlanstype
-            self.sektor = ["04b"] if not sektor else sektor
-            self.rentebinding = ["08", "12", "10", "11", "06"] if not rentebinding else rentebinding
-            self.tid = self._updated_table_date() if not tid else tid
+                                       [(type(None), list) for _ in range(4)])
+            Assertor.assert_arguments([utlanstype, sektor, rentebinding],
+                                      [{"utlanstype": (["04"], ["70"], ["30"])},
+                                       {"sektor": (["04b"], ["04a"])},
+                                       {"rentebinding": (
+                                           ["06"], ["08"], ["09"], ["10"], ["11"], ["12"],
+                                           ["99"])}])
+            self.validate_date(tid)
+
+            self._utlanstype = ["70"] if not utlanstype else utlanstype
+            self._sektor = ["04b"] if not sektor else sektor
+            self._rentebinding = ["08", "12", "10", "11",
+                                  "06"] if not rentebinding else rentebinding
+            self._tid = self.updated_table_date() if not tid else tid
             LOGGER.success("created {}".format(self.__class__.__name__))
         except Exception as ssb_payload_exception:
             LOGGER.exception(ssb_payload_exception)
             raise ssb_payload_exception
+
+    @property
+    def utlanstype(self):
+        """
+        utlanstype getter
+
+        """
+        return self._utlanstype
+
+    @utlanstype.setter
+    def utlanstype(self, utlans_type: list):
+        """
+        utlanstype setter
+
+        Parameters
+        ----------
+        utlans_type : list
+                      type of loan, default ["70"]
+
+
+        """
+        Assertor.assert_data_types([utlans_type], [list])
+        Assertor.assert_arguments([utlans_type], [{"utlanstype": (["04"], ["70"], ["30"])}])
+        self._utlanstype = utlans_type
+
+    @property
+    def sektor(self):
+        """
+        sektor getter
+
+        """
+        return self._sektor
+
+    @sektor.setter
+    def sektor(self, sekt: list):
+        """
+        sektor setter
+
+        """
+        Assertor.assert_data_types([sekt], [list])
+        Assertor.assert_arguments([sekt], [{"sektor": (["04b"], ["04a"])}])
+        self._sektor = sekt
+
+    @property
+    def rentebinding(self):
+        """
+        rentebinding getter
+
+        """
+        return self._rentebinding
+
+    @rentebinding.setter
+    def rentebinding(self, rente_binding: list):
+        """
+        rentebinding setter
+
+        Parameters
+        ----------
+        rente_binding   : list
+                          new rentebinding to set
+
+        """
+        Assertor.assert_data_types([rente_binding], [list])
+        Assertor.assert_arguments([rente_binding], [
+            {"rentebinding": (["06"], ["08"], ["09"], ["10"], ["11"], ["12"], ["99"])}])
+        self._rentebinding = rente_binding
+
+    @property
+    def tid(self):
+        """
+        tid getter
+
+        """
+        return self._tid
+
+    @tid.setter
+    def tid(self, tid_: list):
+        """
+        tid setter
+
+        Parameters
+        ----------
+        tid_        : list
+                      new tid to set in object
+
+        """
+        Assertor.assert_data_types([tid_], [list])
+        self.validate_date(tid_)
+        self._tid = tid_
 
     def payload(self):
         """

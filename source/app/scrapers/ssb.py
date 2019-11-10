@@ -43,6 +43,33 @@ class Ssb(Scraper):
             LOGGER.exception(ssb_exception)
             raise ssb_exception
 
+    @property
+    def payload(self):
+        """
+        Payload getter
+
+        Returns
+        -------
+        out     : SsbPayload
+                  active payload in object
+
+        """
+        return self._payload
+
+    @payload.setter
+    def payload(self, pay_load: SsbPayload = None):
+        """
+        Payload setter
+
+        Parameters
+        ----------
+        pay_load      : SsbPayload
+                        new payload to be set
+
+        """
+        Assertor.assert_data_types([pay_load], [(type(None), SsbPayload)])
+        self._payload = pay_load
+
     def response(self):
         """
         submits and gets response for SSB request

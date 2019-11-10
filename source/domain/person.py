@@ -69,8 +69,8 @@ class Person(Entity):
 
         Assertor.assert_data_types([sex, age, kinder_garden, sfo],
                                    [str, (int, float, str), str, str])
-        Assertor.assert_arguments({kinder_garden: ['kinder_garden:', ('0', '1')],
-                                   sfo: ['sfo:', ('0', '1', '2')]})
+        Assertor.assert_arguments([kinder_garden, sfo],
+                                  [{"kinder_garden": ('0', '1')}, {"sfo": ('0', '1', '2')}])
 
         if self.sifo_age(age) not in ('1', '2', '3', '5') and kinder_garden == '1':
             raise ValueError("only persons between 1-5 years can attend kinder_garden")
@@ -148,7 +148,7 @@ class Person(Entity):
 
         """
         Assertor.assert_data_types([kinder_garden], [str])
-        Assertor.assert_arguments({kinder_garden: ['kinder_garden:', ('0', '1')]})
+        Assertor.assert_arguments([kinder_garden], [{"kinder_garden": ('0', '1')}])
         self._barnehage = kinder_garden
 
     @property
@@ -171,10 +171,10 @@ class Person(Entity):
 
         Parameters
         ----------
-        s       : str
-                  new after-school/sfo str
+        _sfo       : str
+                     new after-school/sfo str
 
         """
         Assertor.assert_data_types([_sfo], [str])
-        Assertor.assert_arguments({_sfo: ['kinder_garden:', ('0', '1')]})
+        Assertor.assert_arguments([_sfo], [{"sfo": ('0', '1')}])
         self._sfo = _sfo

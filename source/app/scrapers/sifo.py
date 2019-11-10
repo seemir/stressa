@@ -89,7 +89,7 @@ class Sifo(Scraper):
             "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
         return response
 
-    def sifo_expenses(self):
+    def sifo_expenses(self, include_id: bool = False):
         """
         get SIFO expenses given the family information
 
@@ -104,7 +104,9 @@ class Sifo(Scraper):
             LOGGER.info("trying to retrieve '{}'".format(self.sifo_expenses.__name__))
             soup = BeautifulSoup(self.response(), "xml")
             root = Et.fromstring(soup.prettify())
-            expenses = {'_id': self.family.id_str}
+            expenses = {}
+            if include_id:
+                expenses.update({'_id': self.family.id_str})
             for child in root:
                 expenses.update({child.tag: child.text.strip().replace(".", "")})
             LOGGER.success("'{}' successfully retrieved".format(self.sifo_expenses.__name__))
@@ -113,7 +115,7 @@ class Sifo(Scraper):
             LOGGER.exception(sifo_expenses_exception)
             raise sifo_expenses_exception
 
-    def to_json(self, file_dir: str = "report/json/expenses"):
+    def to_json(self, file_dir: str):
         """
         save sifo expenses to JSON
 
