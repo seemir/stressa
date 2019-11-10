@@ -21,12 +21,15 @@ install:
   - pip install codecov
   - pip install -r requirements.txt
 
-# the actual commands to run
+# the actual staging scripts to run
+jobs:
+  include:
+    - stage: "Tests"
+      script: pytest --cov=source/ tests/
 
-script:
-  - pytest --cov=source/ tests/
+    - stage: "Lint"
+      script: pylint source/ tests/
 
-# generate a coverage report and PyLint to send to back to user
+# generate a coverage report to send to back to user
 after_success:
-  - pylint source/ tests/
   - codecov

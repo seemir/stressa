@@ -19,7 +19,7 @@ from source.app import Scraper
 
 class TestScraper:
     """
-    Test case for Scraper abstract base clas
+    Test case for Scraper abstract base class
 
     """
 
