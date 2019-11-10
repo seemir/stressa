@@ -19,12 +19,15 @@ branches:
 install:
   - pip install -r requirements.txt
 
-# scripts to run for build
-script:
-  - pytest --cov=source/ tests/
-  - pylint source/ tests/
+# the actual staging scripts to run
+jobs:
+  include:
+    - stage: "Test"
+      script: pytest --cov=source/ tests/
+      after_script: codecov
 
-# generate a coverage report to send to back to user
-after_success:
-  - codecov
+    - stage: "Lint"
+      install: skip
+      script: pylint source/ tests/
+
 
