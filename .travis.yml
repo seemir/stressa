@@ -15,18 +15,16 @@ branches:
   only:
     - master
 
-# the actual staging scripts to run
-jobs:
-  include:
-    - stage: "Setup"
-      script: pip install -r requirements.txt
+# install dependencies
+install:
+  - pip install -r requirements.txt
 
-    - stage: "Test"
-      script: pytest --cov=source/ tests/
-
-    - stage: "Lint"
-      script: pylint source/ tests/
+# scripts to run for build
+script:
+  - pytest --cov=source/ tests/
+  - pylint source/ tests/
 
 # generate a coverage report to send to back to user
 after_success:
   - codecov
+
