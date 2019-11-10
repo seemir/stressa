@@ -6,6 +6,7 @@ bs4==0.0.1
 certifi==2019.9.11
 chardet==3.0.4
 Click==7.0
+codecov==2.0.15
 colorama==0.4.1
 coverage==4.5.4
 DateTime==4.3

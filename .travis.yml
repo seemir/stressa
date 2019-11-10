@@ -19,10 +19,7 @@ branches:
 jobs:
   include:
     - stage: "Setup"
-      install:
-        - pip install coverage
-        - pip install codecov
-        - pip install -r requirements.txt
+      script: pip install -r requirements.txt
 
     - stage: "Test"
       script: pytest --cov=source/ tests/
