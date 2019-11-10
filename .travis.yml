@@ -15,16 +15,16 @@ branches:
   only:
     - master
 
-# list of commands to run to setup the environment
-install:
-  - pip install coverage
-  - pip install codecov
-  - pip install -r requirements.txt
-
 # the actual staging scripts to run
 jobs:
   include:
-    - stage: "Tests"
+    - stage: "Setup"
+      install:
+        - pip install coverage
+        - pip install codecov
+        - pip install -r requirements.txt
+
+    - stage: "Test"
       script: pytest --cov=source/ tests/
 
     - stage: "Lint"
