@@ -83,6 +83,15 @@ class TestPosten:
         with pt.raises(NotFoundError):
             self.posten.validate_zip_code(invalid_zip_code)
 
+    @mock.patch("source.app.scrapers.posten.POSTEN_URL", mock.MagicMock(return_value=None))
+    def test_posten_exception_for_invalid_url(self):
+        """
+        Test that posten raises TypeError if POSTEN_URL if None
+
+        """
+        with pt.raises(TypeError):
+            self.posten.response()
+
     def test_posten_response_method(self):
         """
         Test that response method returns HTTP code 200: OK
@@ -108,6 +117,7 @@ class TestPosten:
         with pt.raises(NotFoundError):
             self.posten.zip_code_info()
 
+    @mock.patch("source.app.scrapers.posten.Posten.zip_code_info", mock.MagicMock(return_value=""))
     def test_to_json(self):
         """
         Test that staticmethod _to_json() produces json file with correct content
@@ -118,5 +128,5 @@ class TestPosten:
         self.posten.to_json(file_dir=file_dir)
         with open(os.path.join(file_dir, os.listdir(file_dir)[-1])) as json_file:
             data = json.load(json_file)
-        assert data == self.correct_content
+        assert data == ""
         shutil.rmtree(os.path.join(current_dir, "report"), ignore_errors=True)

@@ -55,7 +55,6 @@ class Posten(Scraper):
             super().__init__()
             Assertor.assert_data_types([zip_code], [str])
             self.validate_zip_code(zip_code)
-            self._browser.open(POSTEN_URL)
             self._zip_code = zip_code
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
@@ -101,6 +100,7 @@ class Posten(Scraper):
                       response with expenses information
 
         """
+        self._browser.open(POSTEN_URL)
         self._browser.select_form(nr=0)
         self._browser[POSTEN_FORM] = self.zip_code
         response = self._browser.submit()
@@ -147,6 +147,4 @@ class Posten(Scraper):
 
         """
         self.save_json(self.zip_code_info(), file_dir=file_dir, file_prefix="ZipCode_")
-        LOGGER.success(
-            "'{}' successfully parsed to JSON at '{}'".format(self.zip_code_info.__name__,
-                                                              file_dir))
+        LOGGER.success("'zip_code_info' successfully parsed to JSON at '{}'".format(file_dir))

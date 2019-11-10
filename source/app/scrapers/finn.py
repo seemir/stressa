@@ -57,7 +57,7 @@ class Finn(Scraper):
             Assertor.assert_data_types([finn_code], [str])
             self.validate_finn_code(finn_code)
             self._finn_code = finn_code
-            self._browser = requests.post((FINN_URL + "{}").format(self.finn_code))
+            self._browser = None
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
         except Exception as finn_exception:
@@ -87,7 +87,7 @@ class Finn(Scraper):
                   response with mortgage information
 
         """
-        response = self._browser
+        response = requests.post((FINN_URL + "{}").format(self.finn_code))
         LOGGER.info("HTTP status code -> [{}: {}]".format(response.status_code, response.reason))
         return response
 
@@ -131,5 +131,4 @@ class Finn(Scraper):
         """
         self.save_json(self.housing_information(), file_dir, file_prefix="HousingInfo_")
         LOGGER.success(
-            "'{}' successfully parsed to JSON at '{}'".format(self.housing_information().__name__,
-                                                              file_dir))
+            "'housing_information' successfully parsed to JSON at '{}'".format(file_dir))

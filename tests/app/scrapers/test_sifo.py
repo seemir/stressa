@@ -83,6 +83,15 @@ class TestSifo:
         self.sifo.family = new_family
         assert self.sifo.family == new_family
 
+    @mock.patch("source.app.scrapers.sifo.SIFO_URL", mock.MagicMock(return_value=None))
+    def test_sifo_exception_for_invalid_url(self):
+        """
+        Test that sifo raises TypeError if SIFO_URL if None
+
+        """
+        with pt.raises(TypeError):
+            self.sifo.response()
+
     def test_sifo_response_received(self):
         """
         Test HTTP response 200 is received and of correct type, i.e. response_seek_wrapper
@@ -101,6 +110,7 @@ class TestSifo:
         assert sifo_expenses == self.correct_content
         assert "_id" not in sifo_expenses.keys()
 
+    @mock.patch("source.app.scrapers.sifo.Sifo.sifo_expenses", mock.MagicMock(return_value=""))
     def test_to_json(self):
         """
         Test that staticmethod _to_json() produces json file with correct content
@@ -111,7 +121,7 @@ class TestSifo:
         self.sifo.to_json(file_dir=file_dir)
         with open(os.path.join(file_dir, os.listdir(file_dir)[-1])) as json_file:
             data = json.load(json_file)
-        assert data == self.correct_content
+        assert data == ""
         shutil.rmtree(os.path.join(current_dir, "report"), ignore_errors=True)
 
     @mock.patch("source.app.scrapers.sifo.Sifo.response", mock.MagicMock(return_value=""))

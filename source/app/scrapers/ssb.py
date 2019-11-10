@@ -37,6 +37,7 @@ class Ssb(Scraper):
             super().__init__()
             Assertor.assert_data_types([payload], [(type(None), SsbPayload)])
             self._payload = SsbPayload() if not payload else payload
+            self._browser = None
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
         except Exception as ssb_exception:
@@ -80,8 +81,7 @@ class Ssb(Scraper):
                   response with interest rate information
 
         """
-        payload = self._payload.payload()
-        response = requests.post(url=SSB_URL, json=payload)
+        response = requests.post(url=SSB_URL, json=self._payload.payload())
         LOGGER.info(
             "HTTP status code -> [{}: {}]".format(response.status_code, response.reason))
         return response
@@ -121,6 +121,4 @@ class Ssb(Scraper):
         """
         self.save_json(self.ssb_interest_rates(), file_dir=file_dir,
                        file_prefix="SsbInterestRates_")
-        LOGGER.success(
-            "'{}' successfully parsed to JSON at '{}'".format(self.ssb_interest_rates.__name__,
-                                                              file_dir))
+        LOGGER.success("'ssb_interest_rates' successfully parsed to JSON at '{}'".format(file_dir))

@@ -38,7 +38,6 @@ class Sifo(Scraper):
         try:
             super().__init__()
             Assertor.assert_data_types([family], [Family])
-            self._browser.open(SIFO_URL)
             self._family = family
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
@@ -78,6 +77,7 @@ class Sifo(Scraper):
                       response with expenses information
 
         """
+        self._browser.open(SIFO_URL)
         self._browser.select_form(SIFO_FORM)
         for prop, value in self.family.sifo_properties().items():
             if prop == 'inntekt':
@@ -126,6 +126,4 @@ class Sifo(Scraper):
 
         """
         self.save_json(self.sifo_expenses(), file_dir=file_dir, file_prefix="SifoExpenses_")
-        LOGGER.success(
-            "'{}' successfully parsed to JSON at '{}'".format(self.sifo_expenses.__name__,
-                                                              file_dir))
+        LOGGER.success("'sifo_expenses' successfully parsed to JSON at '{}'".format(file_dir))

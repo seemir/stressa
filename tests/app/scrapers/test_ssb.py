@@ -32,8 +32,8 @@ class TestSsb:
         Executed before all tests
 
         """
-
-        cls.ssb = Ssb(SsbPayload(tid=["2019M08"]))
+        cls.payload = SsbPayload(tid=["2019M08"])
+        cls.ssb = Ssb(cls.payload)
         cls.correct_content = {'inntil 3 måneder (flytende rente)': '2.85',
                                'over 3 måneder (fast rente)': '2.8', '1 år - 3 år': '2.7',
                                '3 år - 5 år': '2.8', 'over 5 år': '2.9'}
@@ -73,6 +73,15 @@ class TestSsb:
         self.ssb.payload = payload
         assert self.ssb.payload == payload
 
+    @mock.patch("source.app.scrapers.ssb.SSB_URL", mock.MagicMock(return_value=None))
+    def test_ssb_exception_for_invalid_url(self):
+        """
+        Test that Ssb raises TypeError exception if SSB_URL if None
+
+        """
+        with pt.raises(TypeError):
+            self.ssb.response()
+
     def test_ssb_response_method(self):
         """
         Test that response method returns HTTP code 200: OK
@@ -99,6 +108,7 @@ class TestSsb:
         with pt.raises(Exception):
             self.ssb.ssb_interest_rates()
 
+    @mock.patch("source.app.scrapers.ssb.Ssb.ssb_interest_rates", mock.MagicMock(return_value=""))
     def test_to_json(self):
         """
         Test that staticmethod _to_json() produces json file with correct content
@@ -109,5 +119,5 @@ class TestSsb:
         self.ssb.to_json(file_dir=file_dir)
         with open(os.path.join(file_dir, os.listdir(file_dir)[-1])) as json_file:
             data = json.load(json_file)
-        assert data == self.correct_content
+        assert data == ""
         shutil.rmtree(os.path.join(current_dir, "report"), ignore_errors=True)
