@@ -76,10 +76,10 @@ class TestSsb:
     @mock.patch("source.app.scrapers.ssb.SSB_URL", mock.MagicMock(return_value=None))
     def test_ssb_exception_for_invalid_url(self):
         """
-        Test that Ssb raises TypeError exception if SSB_URL if None
+        Test that Ssb raises exception if SSB_URL if None
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(Exception):
             self.ssb.response()
 
     def test_ssb_response_method(self):
