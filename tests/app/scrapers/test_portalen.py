@@ -72,10 +72,10 @@ class TestPortalen:
     def test_portalen_mortgage_offers_method(self):
         """
         Test the mortgage_offers in the Portalen scraper by confirming that the
-        number of PORTALEN_ENTRIES are 727
+        number of PORTALEN_ENTRIES are greater than 700
 
         """
-        assert list(self.portalen.mortgage_offers().keys())[-1] == 727
+        assert list(self.portalen.mortgage_offers().keys())[-1] >= 700
 
     @staticmethod
     @mock.patch("source.app.scrapers.portalen.Portalen.response", mock.MagicMock(return_value=None))
