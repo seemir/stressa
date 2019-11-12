@@ -34,8 +34,6 @@ class TestPosten:
 
         """
         cls.posten = Posten("0010")
-        cls.correct_content = {'postnr': '0010', 'poststed': 'OSLO',
-                               'kommune': 'OSLO', 'fylke': 'OSLO'}
 
     def test_posten_is_instance_of_scraper(self):
         """
@@ -105,7 +103,9 @@ class TestPosten:
         Test that zip_code_info method return correct content
 
         """
-        assert self.posten.zip_code_info() == self.correct_content
+        correct_content = {'postnr': '0010', 'poststed': 'OSLO',
+                           'kommune': 'OSLO', 'fylke': 'OSLO'}
+        assert self.posten.zip_code_info() == correct_content
 
     @mock.patch("source.app.scrapers.posten.Posten.response", mock.MagicMock(return_value=""))
     def test_zip_code_info_throws_not_found_error(self):
@@ -120,7 +120,7 @@ class TestPosten:
     @mock.patch("source.app.scrapers.posten.Posten.zip_code_info", mock.MagicMock(return_value=""))
     def test_to_json(self):
         """
-        Test that staticmethod _to_json() produces json file with correct content
+        Test that staticmethod to_json() produces json file with correct content
 
         """
         current_dir = os.path.dirname(__file__)

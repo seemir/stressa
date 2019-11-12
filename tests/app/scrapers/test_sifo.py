@@ -36,15 +36,6 @@ class TestSifo:
         family_members = [Male(age=45), Female(age=40)]
         cls.family = Family(family_members, income=850000, cars=1)
         cls.sifo = Sifo(cls.family)
-        cls.correct_content = {'antall_personer': '2', 'person0': 'Mann 20 til 50 år',
-                               'kjonn0': 'm', 'alder0': '50', 'barnehage0': '0', 'sfo0': '0',
-                               'gravid0': '0', 'person1': 'Kvinne 20 til 50 år', 'kjonn1': 'k',
-                               'alder1': '50', 'barnehage1': '0', 'sfo1': '0', 'gravid1': '0',
-                               'mat': '5290', 'klar': '1590', 'helse': '1320', 'fritid': '2480',
-                               'kollektivt': '1500', 'spedbarn': '0', 'stordriftsfordel': '1',
-                               'sumindivid': '12180', 'dagligvarer': '340', 'husholdsart': '400',
-                               'mobler': '400', 'medier': '2240', 'biler': '2420', 'barnehage': '0',
-                               'sfo': '0', 'sumhusholdning': '5800', 'totalt': '17980'}
 
     def test_sifo_is_instance_of_scraper(self):
         """
@@ -106,14 +97,23 @@ class TestSifo:
         Test that sifo_expenses method returns correct content
 
         """
+        correct_content = {'antall_personer': '2', 'person0': 'Mann 20 til 50 år',
+                           'kjonn0': 'm', 'alder0': '50', 'barnehage0': '0', 'sfo0': '0',
+                           'gravid0': '0', 'person1': 'Kvinne 20 til 50 år', 'kjonn1': 'k',
+                           'alder1': '50', 'barnehage1': '0', 'sfo1': '0', 'gravid1': '0',
+                           'mat': '5290', 'klar': '1590', 'helse': '1320', 'fritid': '2480',
+                           'kollektivt': '1500', 'spedbarn': '0', 'stordriftsfordel': '1',
+                           'sumindivid': '12180', 'dagligvarer': '340', 'husholdsart': '400',
+                           'mobler': '400', 'medier': '2240', 'biler': '2420', 'barnehage': '0',
+                           'sfo': '0', 'sumhusholdning': '5800', 'totalt': '17980'}
         sifo_expenses = self.sifo.sifo_expenses()
-        assert sifo_expenses == self.correct_content
+        assert sifo_expenses == correct_content
         assert "_id" not in sifo_expenses.keys()
 
     @mock.patch("source.app.scrapers.sifo.Sifo.sifo_expenses", mock.MagicMock(return_value=""))
     def test_to_json(self):
         """
-        Test that staticmethod _to_json() produces json file with correct content
+        Test that staticmethod to_json() produces json file with correct content
 
         """
         current_dir = os.path.dirname(__file__)

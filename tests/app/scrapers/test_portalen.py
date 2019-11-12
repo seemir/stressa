@@ -45,7 +45,7 @@ class TestPortalen:
         assert issubclass(self.portalen.__class__, Scraper)
 
     @mock.patch("source.app.scrapers.portalen.PORTALEN_URL", mock.MagicMock(return_value=None))
-    def test_portalen_exception_for_invalid_browser(self):
+    def test_portalen_exception_for_invalid_url(self):
         """
         Test that Portalen raises MissingSchema exception if PORTALEN_URL if None
 
@@ -92,7 +92,7 @@ class TestPortalen:
                 mock.MagicMock(return_value=""))
     def test_to_json(self):
         """
-        Test that staticmethod _to_json() produces json file with correct content
+        Test that staticmethod to_json() produces json file with correct content
 
         """
         current_dir = os.path.dirname(__file__)

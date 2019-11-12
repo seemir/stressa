@@ -34,9 +34,6 @@ class TestSsb:
         """
         cls.payload = SsbPayload(tid=["2019M08"])
         cls.ssb = Ssb(cls.payload)
-        cls.correct_content = {'inntil 3 måneder (flytende rente)': '2.85',
-                               'over 3 måneder (fast rente)': '2.8', '1 år - 3 år': '2.7',
-                               '3 år - 5 år': '2.8', 'over 5 år': '2.9'}
 
     def test_ssb_is_instance_of_scraper(self):
         """
@@ -96,7 +93,10 @@ class TestSsb:
         Test that ssb_interest_rates method return correct content
 
         """
-        assert self.ssb.ssb_interest_rates() == self.correct_content
+        correct_content = {'inntil 3 måneder (flytende rente)': '2.85',
+                           'over 3 måneder (fast rente)': '2.8', '1 år - 3 år': '2.7',
+                           '3 år - 5 år': '2.8', 'over 5 år': '2.9'}
+        assert self.ssb.ssb_interest_rates() == correct_content
 
     @mock.patch("source.app.scrapers.ssb.Ssb.response", mock.MagicMock(return_value=""))
     def test_ssb_interest_rates_throws_exception(self):
@@ -111,7 +111,7 @@ class TestSsb:
     @mock.patch("source.app.scrapers.ssb.Ssb.ssb_interest_rates", mock.MagicMock(return_value=""))
     def test_to_json(self):
         """
-        Test that staticmethod _to_json() produces json file with correct content
+        Test that staticmethod to_json() produces json file with correct content
 
         """
         current_dir = os.path.dirname(__file__)

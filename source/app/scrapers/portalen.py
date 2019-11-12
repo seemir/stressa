@@ -69,7 +69,7 @@ class Portalen(Scraper):
             LOGGER.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
 
             offers = {}
-            soup = BeautifulSoup(self.response().content.decode("windows-1252"), "xml")
+            soup = BeautifulSoup(self.response().content.decode("windows-1252"), "lxml-xml")
             tree = Et.fromstring(soup.prettify()).findall(PORTALEN_ENTRY)
 
             for i, entries in enumerate(tree):
