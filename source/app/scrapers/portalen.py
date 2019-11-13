@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import gc
 import re
-import xml.etree.cElementTree as Et
+import xml.etree.ElementTree as Et
 import requests
 
 from bs4 import BeautifulSoup
@@ -69,7 +69,7 @@ class Portalen(Scraper):
             LOGGER.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
 
             offers = {}
-            soup = BeautifulSoup(self.response().content.decode("windows-1252"), "lxml-xml")
+            soup = BeautifulSoup(self.response().content.decode("windows-1252"), "xml")
             tree = Et.fromstring(soup.prettify()).findall(PORTALEN_ENTRY)
 
             for i, entries in enumerate(tree):

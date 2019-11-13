@@ -16,30 +16,24 @@ class Error(QDialog):
 
     def __init__(self, parent, exception):
         super().__init__(parent)
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "error.ui"), self)
+        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/error.ui"), self)
         self.ui.label_error_text.setText(str(exception))
         self.ui.plain_text_edit_traceback.setPlainText(traceback.format_exc())
-        self.ui.plain_text_edit_log.setPlainText(self._read_log(exception))
+        self.ui.plain_text_edit_log.setPlainText(self.read_log(exception))
 
-    def _read_log(self, exception):
-        cd = os.path.dirname(__file__)
-        log_dir = os.path.join(cd, "logs")
-        if os.path.exists(log_dir):
-            shutil.rmtree(log_dir)
-            entry = self._create_log(log_dir, exception)
-        else:
-            entry = self._create_log(log_dir, exception)
-        return entry
+    def read_log(self, exception):
+        log_dir = os.path.join(os.path.dirname(__file__), "logs")
+        return self.extract_log(log_dir, exception)
 
     @staticmethod
-    def _create_log(file_dir, exp):
+    def extract_log(file_dir, exp):
         log_str = []
         file_name = "ui.log"
         error_log = logger.add(os.path.join(file_dir, file_name))
         logger.exception(exp)
         with open(os.path.join(file_dir, file_name)) as log_file:
-            log_file = log_file.readlines()
-        for line in log_file:
-            log_str.append(line)
+            for lines in log_file.readlines():
+                log_str.append(lines)
         logger.remove(error_log)
+        shutil.rmtree(file_dir)
         return "".join(log_str)

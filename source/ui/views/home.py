@@ -18,8 +18,7 @@ LINE_EDITS = {"zip_code": ["postnr",
                            "poststed",
                            "kommune",
                            "fylke"],
-              "finn_code": ["finn_kode",
-                            "sistendret",
+              "finn_code": ["sistendret",
                             "referanse",
                             "finn_adresse",
                             "prisantydning",
@@ -41,16 +40,25 @@ LINE_EDITS = {"zip_code": ["postnr",
                             "energimerking",
                             "tomteareal"]}
 
+FIELDS = {"kjønn": ["", "Mann", "Kvinne"],
+          "lånetype": ["", "Sammenligning", "Annuitetslån", "Serielån"],
+          "låneperiode": [""] + [str(yr) + " år" for yr in range(1, 31)],
+          "betalingsinterval": ["", "Ukentlig", "Annenhver uke",
+                                "Månedlig", "Annenhver måned", "Kvartalsvis", "Årlig"]}
+
 
 class HomePage(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "home.ui"), self)
-        self.ui.combo_box_kjonn.addItems(["", "Mann", "Kvinne"])
+        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/home.ui"), self)
+        self.ui.combo_box_kjonn.addItems(FIELDS["kjønn"])
 
         self.ui.line_edit_postnr.editingFinished.connect(self.update_post_code_info)
-        self.ui.line_edit_finn_kode.editingFinished.connect(self.update_finn_info)
+
+        self.ui.line_edit_finn_kode_1.editingFinished.connect(lambda: self.update_finn_info("1"))
+        self.ui.line_edit_finn_kode_2.editingFinished.connect(lambda: self.update_finn_info("2"))
+        self.ui.line_edit_finn_kode_3.editingFinished.connect(lambda: self.update_finn_info("3"))
 
         self.ui.line_edit_mobil_tlf.editingFinished.connect(
             lambda: self.format_phone_number("mobil_tlf"))
@@ -59,6 +67,10 @@ class HomePage(QMainWindow):
         self.ui.line_edit_jobb_tlf.editingFinished.connect(
             lambda: self.format_phone_number("jobb_tlf"))
 
+        self.ui.combo_box_lanetype.addItems(FIELDS["lånetype"])
+        self.ui.combo_box_laneperiode.addItems(FIELDS["låneperiode"])
+        self.ui.combo_box_betalingsinterval.addItems(FIELDS["betalingsinterval"])
+
     def update_post_code_info(self):
         line_edits = LINE_EDITS["zip_code"]
         zip_code = self.ui.line_edit_postnr.text().strip()
@@ -66,27 +78,34 @@ class HomePage(QMainWindow):
             if zip_code:
                 posten = Posten(zip_code)
                 zip_code_info = posten.zip_code_info()
-                self.set_line_edit_content(line_edits[1:], zip_code_info)
+                for line_edit in line_edits:
+                    getattr(self.ui, "line_edit_" + line_edit).setText(zip_code_info[line_edit])
             else:
-                self.set_line_edit_content(line_edits)
+                for line_edit in line_edits:
+                    getattr(self.ui, "line_edit_" + line_edit).setText("")
         except Exception as post_error:
             pop_up = Error(self, post_error)
-            self.set_line_edit_content(line_edits)
+            for line_edit in line_edits:
+                getattr(self.ui, "line_edit_" + line_edit).setText("")
             pop_up.exec_()
 
-    def update_finn_info(self):
+    def update_finn_info(self, index):
         line_edits = LINE_EDITS["finn_code"]
-        finn_code = self.ui.line_edit_finn_kode.text().strip()
+        finn_code = getattr(self.ui, "line_edit_finn_kode_" + index).text().strip()
         try:
             if finn_code:
                 finn = Finn(finn_code)
                 finn_info = finn.housing_information()
-                self.set_line_edit_content(line_edits, finn_info)
+                for line_edit in line_edits:
+                    getattr(self.ui, "line_edit_" + line_edit + "_" + index).setText(
+                        finn_info[line_edit] if line_edit in finn_info.keys() else "")
             else:
-                self.set_line_edit_content(line_edits)
+                for line_edit in line_edits:
+                    getattr(self.ui, "line_edit_" + line_edit + "_" + index).setText("")
         except Exception as finn_error:
             pop_up = Error(self, finn_error)
-            self.set_line_edit_content(line_edits)
+            for line_edit in line_edits:
+                getattr(self.ui, "line_edit_" + line_edit + "_" + index).setText("")
             pop_up.exec_()
 
     def format_phone_number(self, name: str):
@@ -102,11 +121,3 @@ class HomePage(QMainWindow):
             pop_up = Error(self, phone_error)
             line_edit.clear()
             pop_up.exec_()
-
-    def set_line_edit_content(self, line_edits, content=None):
-        for line_edit in line_edits:
-            try:
-                getattr(self.ui, "line_edit_" + line_edit).setText(
-                    content[line_edit] if content else "")
-            except Exception:
-                continue

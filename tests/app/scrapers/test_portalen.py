@@ -75,7 +75,7 @@ class TestPortalen:
         number of PORTALEN_ENTRIES are greater than 700
 
         """
-        assert list(self.portalen.mortgage_offers().keys())[-1] >= 700
+        assert self.portalen.mortgage_offers().keys().__len__() >= 700
 
     @staticmethod
     @mock.patch("source.app.scrapers.portalen.Portalen.response", mock.MagicMock(return_value=None))
@@ -100,5 +100,5 @@ class TestPortalen:
         self.portalen.to_json(file_dir=file_dir)
         with open(os.path.join(file_dir, os.listdir(file_dir)[-1])) as json_file:
             data = json.load(json_file)
-        assert data == ""
+            assert data == ""
         shutil.rmtree(os.path.join(current_dir, "report"), ignore_errors=True)

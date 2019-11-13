@@ -72,7 +72,7 @@ class TestFinn:
         """
         assert UUID(str(self.finn.id_str))
 
-    def test_portalen_response_method(self):
+    def test_finn_response_method(self):
         """
         Test that response method returns HTTP code 200: OK
 
@@ -129,5 +129,5 @@ class TestFinn:
         self.finn.to_json(file_dir=file_dir)
         with open(os.path.join(file_dir, os.listdir(file_dir)[-1])) as json_file:
             data = json.load(json_file)
-        assert data == ""
+            assert data == ""
         shutil.rmtree(os.path.join(current_dir, "report"), ignore_errors=True)

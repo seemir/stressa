@@ -48,7 +48,7 @@ class TestSsb:
     @pt.mark.parametrize("invalid_payload_type", [90210, 90210.0, True, [], (), {}])
     def test_ssb_raises_type_error_if_invalid_payload(invalid_payload_type):
         """
-        TypeError thrown if Sssb gets passed an invalid payload type
+        TypeError thrown if Ssb gets passed an invalid payload type
 
         """
         with pt.raises(TypeError):
@@ -64,7 +64,7 @@ class TestSsb:
     @pt.mark.parametrize("payload", [SsbPayload(rentebinding=["08"])])
     def test_payload_gets_set(self, payload):
         """
-        Test that zip code gets set in Posten scraper object
+        Test that payload gets set in Ssb scraper object
 
         """
         self.ssb.payload = payload
@@ -119,5 +119,5 @@ class TestSsb:
         self.ssb.to_json(file_dir=file_dir)
         with open(os.path.join(file_dir, os.listdir(file_dir)[-1])) as json_file:
             data = json.load(json_file)
-        assert data == ""
+            assert data == ""
         shutil.rmtree(os.path.join(current_dir, "report"), ignore_errors=True)
