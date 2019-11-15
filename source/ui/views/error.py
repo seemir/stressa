@@ -8,6 +8,7 @@ import shutil
 import traceback
 
 from loguru import logger
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
@@ -21,6 +22,7 @@ class Error(QDialog):
         self.ui.plain_text_edit_traceback.setPlainText(traceback.format_exc())
         self.ui.plain_text_edit_log.setPlainText(self.read_log(exception))
 
+    @pyqtSlot()
     def read_log(self, exception):
         log_dir = os.path.join(os.path.dirname(__file__), "logs")
         return self.extract_log(log_dir, exception)

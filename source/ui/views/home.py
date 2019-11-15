@@ -4,47 +4,18 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import os
+import webbrowser
 
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
 
 from source.app import Posten, Finn
 from source.domain import Phone
 
+from .settings import FINN_URL, FIELDS, LINE_EDITS
 from .error import Error
 from . import resources
-
-LINE_EDITS = {"zip_code": ["postnr",
-                           "poststed",
-                           "kommune",
-                           "fylke"],
-              "finn_code": ["sistendret",
-                            "referanse",
-                            "finn_adresse",
-                            "prisantydning",
-                            "formuesverdi",
-                            "fellesgjeld",
-                            "felleskostmnd",
-                            "omkostninger",
-                            "kommunaleavg",
-                            "totalpris",
-                            "fellesformue",
-                            "boligtype",
-                            "eieform",
-                            "etasje",
-                            "bygger",
-                            "soverom",
-                            "rom",
-                            "primrrom",
-                            "bruttoareal",
-                            "energimerking",
-                            "tomteareal"]}
-
-FIELDS = {"kjønn": ["", "Mann", "Kvinne"],
-          "lånetype": ["", "Sammenligning", "Annuitetslån", "Serielån"],
-          "låneperiode": [""] + [str(yr) + " år" for yr in range(1, 31)],
-          "betalingsinterval": ["", "Ukentlig", "Annenhver uke",
-                                "Månedlig", "Annenhver måned", "Kvartalsvis", "Årlig"]}
 
 
 class HomePage(QMainWindow):
@@ -71,6 +42,11 @@ class HomePage(QMainWindow):
         self.ui.combo_box_laneperiode.addItems(FIELDS["låneperiode"])
         self.ui.combo_box_betalingsinterval.addItems(FIELDS["betalingsinterval"])
 
+        self.ui.push_button_finn_1.clicked.connect(self.open_finn_url)
+        self.ui.push_button_finn_2.clicked.connect(self.open_finn_url)
+        self.ui.push_button_finn_3.clicked.connect(self.open_finn_url)
+
+    @pyqtSlot()
     def update_post_code_info(self):
         line_edits = LINE_EDITS["zip_code"]
         zip_code = self.ui.line_edit_postnr.text().strip()
@@ -89,6 +65,22 @@ class HomePage(QMainWindow):
                 getattr(self.ui, "line_edit_" + line_edit).setText("")
             pop_up.exec_()
 
+    @pyqtSlot()
+    def format_phone_number(self, line_edit_name: str):
+        line_edit = getattr(self.ui, "line_edit_" + line_edit_name)
+        line_edit_str = line_edit.text().strip()
+        try:
+            if line_edit_str:
+                phone = Phone(line_edit_str)
+                line_edit.setText(phone.format_number())
+            else:
+                line_edit.clear()
+        except Exception as phone_error:
+            pop_up = Error(self, phone_error)
+            line_edit.clear()
+            pop_up.exec_()
+
+    @pyqtSlot()
     def update_finn_info(self, index):
         line_edits = LINE_EDITS["finn_code"]
         finn_code = getattr(self.ui, "line_edit_finn_kode_" + index).text().strip()
@@ -104,20 +96,11 @@ class HomePage(QMainWindow):
                     getattr(self.ui, "line_edit_" + line_edit + "_" + index).setText("")
         except Exception as finn_error:
             pop_up = Error(self, finn_error)
-            for line_edit in line_edits:
+            for line_edit in ["finn_kode"] + line_edits:
                 getattr(self.ui, "line_edit_" + line_edit + "_" + index).setText("")
+
             pop_up.exec_()
 
-    def format_phone_number(self, name: str):
-        line_edit = getattr(self.ui, "line_edit_" + name)
-        line_edit_str = line_edit.text().strip()
-        try:
-            if line_edit_str:
-                phone = Phone(line_edit_str)
-                line_edit.setText(phone.format_number())
-            else:
-                line_edit.clear()
-        except Exception as phone_error:
-            pop_up = Error(self, phone_error)
-            line_edit.clear()
-            pop_up.exec_()
+    @pyqtSlot()
+    def open_finn_url(self):
+        webbrowser.open(FINN_URL)
