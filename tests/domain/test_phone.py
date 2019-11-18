@@ -8,11 +8,9 @@ Test module for Phone entity
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from uuid import UUID
-
 import pytest as pt
 
-from source.domain import Phone, Entity
+from source.domain import Phone, Value
 from source.util import NotPossibleError
 
 
@@ -38,12 +36,12 @@ class TestPhone:
         """
         cls.phone = None
 
-    def test_phone_instance_of_entity(self):
+    def test_phone_instance_of_value(self):
         """
-        Test that all phone objects are instances of Phone and Entity class
+        Test that all phone objects are instances of Phone and Value class
 
         """
-        for parent in [Phone, Entity]:
+        for parent in [Phone, Value]:
             isinstance(self.phone, parent)
             issubclass(self.phone.__class__, parent)
 
@@ -95,10 +93,3 @@ class TestPhone:
 
         """
         assert self.phone.remove_prefix(numbers) == "91515915"
-
-    def test_phone_object_id_is_uuid4(self):
-        """
-        Test that phone id is uuid4 compatible
-
-        """
-        assert UUID(str(self.phone.id_str))

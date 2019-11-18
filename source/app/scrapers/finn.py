@@ -9,8 +9,9 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import re
-import requests
+from http.client import responses
 
+import requests
 from bs4 import BeautifulSoup
 
 from source.util import cache, Assertor, LOGGER, NotFoundError
@@ -88,7 +89,8 @@ class Finn(Scraper):
 
         """
         response = requests.post((FINN_URL + "{}").format(self.finn_code))
-        LOGGER.info("HTTP status code -> [{}: {}]".format(response.status_code, response.reason))
+        status_code = response.status_code
+        LOGGER.info("HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
         return response
 
     def housing_information(self):

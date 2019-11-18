@@ -10,9 +10,10 @@ __email__ = 'samir.adrik@gmail.com'
 
 import gc
 import re
+from http.client import responses
 import xml.etree.ElementTree as Et
-import requests
 
+import requests
 from bs4 import BeautifulSoup
 
 from source.util import LOGGER, cache
@@ -52,7 +53,8 @@ class Portalen(Scraper):
 
         """
         response = requests.post(PORTALEN_URL, auth=PORTALEN_CRED)
-        LOGGER.info("HTTP status code -> [{}: {}]".format(response.status_code, response.reason))
+        status_code = response.status_code
+        LOGGER.info("HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
         return response
 
     def mortgage_offers(self):

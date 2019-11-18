@@ -8,8 +8,9 @@ Implementation of scaper against ssb market interest rates for mortgage applicat
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import requests
+from http.client import responses
 
+import requests
 from source.util import Assertor, LOGGER
 
 from ..settings import SSB_URL
@@ -82,8 +83,9 @@ class Ssb(Scraper):
 
         """
         response = requests.post(url=SSB_URL, json=self._payload.payload())
+        status_code = response.status_code
         LOGGER.info(
-            "HTTP status code -> [{}: {}]".format(response.status_code, response.reason))
+            "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
         return response
 
     def ssb_interest_rates(self):

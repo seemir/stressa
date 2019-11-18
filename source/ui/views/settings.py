@@ -10,8 +10,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 FINN_URL = 'https://www.finn.no/realestate/browse.html'
 
-LINE_EDITS = {"zip_code": ["postnr", "poststed", "kommune", "fylke"],
-              "finn_code": ["sistendret", "referanse", "finn_adresse", "prisantydning",
+LINE_EDITS = {"postnr": ["postnr", "poststed", "kommune", "fylke"],
+              "finn_kode": ["sistendret", "referanse", "finn_adresse", "prisantydning",
                             "formuesverdi", "fellesgjeld", "felleskostmnd", "omkostninger",
                             "kommunaleavg", "totalpris", "fellesformue", "boligtype", "eieform",
                             "etasje", "bygger", "soverom", "rom", "primrrom", "bruttoareal",

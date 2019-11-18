@@ -12,10 +12,10 @@ import re
 
 from source.util import Assertor, LOGGER, NotPossibleError
 
-from .entity import Entity
+from .value import Value
 
 
-class Phone(Entity):
+class Phone(Value):
     """
     logic to validate a phone number
 
@@ -75,7 +75,7 @@ class Phone(Entity):
             self.validate_number(number)
             self._number = number
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+                "created '{}'".format(self.__class__.__name__))
         except Exception as phone_exception:
             LOGGER.exception(phone_exception)
             raise phone_exception

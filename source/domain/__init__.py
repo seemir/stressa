@@ -12,5 +12,7 @@ from .family import Family
 from .entity import Entity
 from .person import Person
 from .female import Female
+from .value import Value
 from .phone import Phone
 from .male import Male
+from .name import Name
