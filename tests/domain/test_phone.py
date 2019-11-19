@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 import pytest as pt
 
 from source.domain import Phone, Value
-from source.util import NotPossibleError
+from source.util import InvalidPhoneNumberError
 
 
 class TestPhone:
@@ -82,7 +82,7 @@ class TestPhone:
         Test validate number method, i.e. NotPossibleError thrown for invalid numbers
 
         """
-        with pt.raises(NotPossibleError):
+        with pt.raises(InvalidPhoneNumberError):
             self.phone.validate_number(invalid_numbers)
 
     @pt.mark.parametrize("numbers", ["+4791515915", "004791515915", "+47 91 51 59 15",

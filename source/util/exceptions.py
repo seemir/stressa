@@ -20,9 +20,64 @@ class NotFoundError(Exception):
         self.msg = msg
 
 
-class NotPossibleError(Exception):
+class MissingGuardianshipError(Exception):
     """
     Exception thrown when breach of logic in domain object
+
+    """
+
+    def __init__(self, msg: str):
+        super().__init__(msg)
+        self.msg = msg
+
+
+class InvalidNameError(Exception):
+    """
+    Exception thrown for invalid name
+
+    """
+
+    def __init__(self, msg: str):
+        super().__init__(msg)
+        self.msg = msg
+
+
+class InvalidAddressError(Exception):
+    """
+    Exception thrown for invalid address
+
+    """
+
+    def __init__(self, msg: str):
+        super().__init__(msg)
+        self.msg = msg
+
+
+class InvalidEmailError(Exception):
+    """
+    Exception thrown for invalid email address
+
+    """
+
+    def __init__(self, msg: str):
+        super().__init__(msg)
+        self.msg = msg
+
+
+class InvalidPhoneNumberError(Exception):
+    """
+    Exception thrown for invalid phone number
+
+    """
+
+    def __init__(self, msg: str):
+        super().__init__(msg)
+        self.msg = msg
+
+
+class InvalidMobilePhoneNumberError(InvalidPhoneNumberError):
+    """
+    Exception thrown for invalid mobile phone number
 
     """
 

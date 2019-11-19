@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 from typing import Union
 
 from source.util import Assertor, LOGGER
-from source.util import NotPossibleError
+from source.util import MissingGuardianshipError
 
 from .entity import Entity
 from .female import Female
@@ -50,8 +50,8 @@ class Family(Entity):
             Assertor.assert_data_types([family_member], [(Male, Female)])
 
         if all(int(family_member.alder) < 18 for family_member in family_members):
-            raise NotPossibleError("no guardianship found, i.e. family must have at least "
-                                   "one person older than 17 years.")
+            raise MissingGuardianshipError("no guardianship found, i.e. family must have at least "
+                                           "one person older than 17 years.")
 
     def __init__(self, family_members: list = None, income: Union[int, float, str] = 0,
                  cars: Union[int, str] = 0):

@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import NotPossibleError, LOGGER, Assertor
+from source.util import InvalidNameError, LOGGER, Assertor
 
 from .value import Value
 
@@ -34,7 +34,7 @@ class Name(Value):
         """
         valid_name = re.compile("[-a-zA-Z]$").search(name)
         if not valid_name:
-            raise NotPossibleError("'{}' is an invalid name".format(name))
+            raise InvalidNameError("'{}' is an invalid name".format(name))
 
     def __init__(self, name: str):
         """
@@ -94,7 +94,7 @@ class Name(Value):
                   formatted name
 
         """
-        name = self._name
-        form = name.capitalize()
-        LOGGER.info("format name '{}' to -> '{}'".format(name, form))
-        return form
+        name = self.name
+        formatted = name.capitalize()
+        LOGGER.info("format name '{}' to -> '{}'".format(name, formatted))
+        return formatted

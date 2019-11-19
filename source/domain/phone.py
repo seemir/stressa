@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Phone entity class implementation
+Phone value object class implementation
 
 """
 
@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import Assertor, LOGGER, NotPossibleError
+from source.util import Assertor, LOGGER, InvalidPhoneNumberError
 
 from .value import Value
 
@@ -38,14 +38,12 @@ class Phone(Value):
 
         """
         prefixes = ["0047", "+47"]
-        only_numeric = "[^0-9]"
         for prefix in prefixes:
             if number.startswith(prefix):
-                return re.sub(only_numeric, "", number.replace(prefix, ""))
-        return re.sub(only_numeric, "", number)
+                return number.replace(prefix, "").replace(" ", "")
+        return number.replace(" ", "")
 
-    @staticmethod
-    def validate_number(number: str):
+    def validate_number(self, number: str):
         """
         method for validating a phone number
 
@@ -55,10 +53,10 @@ class Phone(Value):
                       number to be validated
 
         """
-        number = Phone.remove_prefix(number)
+        number = self.remove_prefix(number)
         valid_number = re.compile("^\\+?[0-9]{8,20}$").search(number)
         if not valid_number:
-            raise NotPossibleError("'{}' is an invalid phone number".format(number))
+            raise InvalidPhoneNumberError("'{}' is an invalid phone number".format(number))
 
     def __init__(self, number: str):
         """

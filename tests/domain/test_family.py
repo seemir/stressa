@@ -14,7 +14,7 @@ from abc import ABC
 import pytest as pt
 
 from source.domain import Family, Female, Entity, Male
-from source.util import NotPossibleError
+from source.util import MissingGuardianshipError
 
 
 class TestFamily:
@@ -117,7 +117,7 @@ class TestFamily:
         person over 18 years.
 
         """
-        with pt.raises(NotPossibleError):
+        with pt.raises(MissingGuardianshipError):
             family = Family(invalid_family) if isinstance(invalid_family, list) else Family(
                 [invalid_family])
             print(family)
