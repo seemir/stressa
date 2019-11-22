@@ -70,19 +70,19 @@ class Name(Value):
         return self._name
 
     @name.setter
-    def name(self, name_):
+    def name(self, new_name):
         """
         name setter
 
         Parameters
         ----------
-        name_  : str
-                 new name to be set
+        new_name  : str
+                    new name to be set
 
         """
-        Assertor.assert_data_types([name_], [str])
-        self.validate_name(name_)
-        self._name = name_
+        Assertor.assert_data_types([new_name], [str])
+        self.validate_name(new_name)
+        self._name = new_name
 
     def format_name(self):
         """

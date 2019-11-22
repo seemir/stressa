@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Male entity base class implementation
+Person entity base class implementation
 
 """
 

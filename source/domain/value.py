@@ -8,12 +8,12 @@ Value object module in accordance with DDD
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 from source.util import LOGGER
 
 
-class Value:
+class Value(ABC):
     """
     Value object implementation in the Domain model
 
@@ -27,6 +27,14 @@ class Value:
         """
         LOGGER.info(
             "trying to create '{}'".format(self.__class__.__name__))
+
+    @property
+    def hash(self):
+        """
+        Hash getter
+
+        """
+        return hash(repr(self))
 
     def __eq__(self, other):
         """
@@ -50,11 +58,3 @@ class Value:
 
         """
         return repr(self)
-
-    @property
-    def hash(self):
-        """
-        Hash getter
-
-        """
-        return hash(repr(self))

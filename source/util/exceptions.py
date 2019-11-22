@@ -84,3 +84,25 @@ class InvalidMobilePhoneNumberError(InvalidPhoneNumberError):
     def __init__(self, msg: str):
         super().__init__(msg)
         self.msg = msg
+
+
+class InvalidAmountError(Exception):
+    """
+    Exception thrown for invalid amount
+
+    """
+
+    def __init__(self, msg: str):
+        super().__init__(msg)
+        self.msg = msg
+
+
+class InvalidCurrencyError(Exception):
+    """
+    Exception thrown for invalid curreny
+
+    """
+
+    def __init__(self, msg: str):
+        super().__init__(msg)
+        self.msg = msg

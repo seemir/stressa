@@ -35,8 +35,6 @@ class Mobile(Phone):
             super(Mobile, self).__init__(number)
             self.validate_mobile_number(number)
             self._number = number
-            LOGGER.success(
-                "created '{}'".format(self.__class__.__name__))
         except Exception as mobile_phone_error:
             LOGGER.exception(mobile_phone_error)
             raise mobile_phone_error

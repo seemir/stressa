@@ -70,19 +70,19 @@ class Address(Value):
         return self._address
 
     @address.setter
-    def address(self, address_):
+    def address(self, new_address):
         """
         address setter
 
         Parameters
         ----------
-        address_  : str
-                    new address to be set
+        new_address  : str
+                       new address to be set
 
         """
-        Assertor.assert_data_types([address_], [str])
-        self.validate_address(address_)
-        self._address = address_
+        Assertor.assert_data_types([new_address], [str])
+        self.validate_address(new_address)
+        self._address = new_address
 
     def format_address(self):
         """

@@ -25,9 +25,9 @@ class Family(Entity):
     """
 
     @staticmethod
-    def _assert_family_members(family_members: list):
+    def validate_family_members(family_members: list):
         """
-        Checking the family_members object. In this implementation a Family has the following
+        Validate the family_members object. In this implementation a Family has the following
         characteristics:
 
         - Needs to be a list
@@ -70,7 +70,7 @@ class Family(Entity):
         """
         super().__init__()
         try:
-            self._assert_family_members(family_members)
+            self.validate_family_members(family_members)
             Assertor.assert_data_types([income, cars], [(int, float, str), (int, str)])
             Assertor.assert_non_negative([income, cars])
 
@@ -97,19 +97,19 @@ class Family(Entity):
         return self._family_members
 
     @family_members.setter
-    def family_members(self, members: list):
+    def family_members(self, new_members: list):
         """
         family_members setter
 
         Parameters
         ----------
-        members     : list
+        new_members     : list
                       a list of family_members, i.e. of person (Male or Female) objects to append
                       to family
 
         """
-        self._assert_family_members(members)
-        self._family_members = members
+        self.validate_family_members(new_members)
+        self._family_members = new_members
 
     def add_family_members(self, family_members: (list, Male, Female)):
         """

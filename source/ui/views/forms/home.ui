@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1139</width>
-    <height>680</height>
+    <height>603</height>
    </rect>
   </property>
   <property name="palette">
@@ -435,7 +435,7 @@
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="central_widget">
    <layout class="QGridLayout" name="gridLayout_4">
     <item row="0" column="0">
      <widget class="QTabWidget" name="tab_widget_home">
@@ -1292,8 +1292,8 @@
         <string>Informasjon</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="0">
-         <widget class="QFrame" name="frame_personlig_info">
+        <item row="0" column="0" rowspan="2">
+         <widget class="QFrame" name="frame_kontakt_info">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
@@ -1734,84 +1734,7 @@
            <number>1</number>
           </property>
           <layout class="QGridLayout" name="gridLayout_5">
-           <item row="12" column="0">
-            <widget class="QFrame" name="frame_personlig_info_white_space">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="1" colspan="3">
-            <widget class="QLineEdit" name="line_edit_epost">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QComboBox" name="combo_box_kjonn">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="0">
-            <widget class="QLabel" name="label_jobb_tlf">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Jobb tlf.</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_jobb_tlf</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="2">
-            <widget class="QLabel" name="label_fylke">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Fylke</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_fylke</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1">
+           <item row="4" column="1">
             <widget class="QLineEdit" name="line_edit_kommune">
              <property name="enabled">
               <bool>false</bool>
@@ -1830,7 +1753,23 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="1" colspan="3">
+           <item row="4" column="2">
+            <widget class="QLabel" name="label_fylke">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Fylke</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_fylke</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1" colspan="3">
             <widget class="QLineEdit" name="line_edit_adresse">
              <property name="font">
               <font>
@@ -1846,23 +1785,7 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="1">
-            <widget class="QLineEdit" name="line_edit_postnr">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="1">
+           <item row="9" column="1">
             <widget class="QLineEdit" name="line_edit_mobil_tlf">
              <property name="enabled">
               <bool>true</bool>
@@ -1884,7 +1807,61 @@
              </property>
             </widget>
            </item>
-           <item row="10" column="2">
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="line_edit_postnr">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLineEdit" name="line_edit_fylke">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1" colspan="3">
+            <widget class="QLineEdit" name="line_edit_epost">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="2">
             <widget class="QLabel" name="label_privat_tlf">
              <property name="font">
               <font>
@@ -1900,8 +1877,8 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="label_fodselsdato">
+           <item row="10" column="0">
+            <widget class="QLabel" name="label_jobb_tlf">
              <property name="font">
               <font>
                <family>Segoe UI</family>
@@ -1909,15 +1886,25 @@
               </font>
              </property>
              <property name="text">
-              <string>Fødselsdato</string>
+              <string>Jobb tlf.</string>
              </property>
              <property name="buddy">
-              <cstring>date_edit_fodselsdato</cstring>
+              <cstring>line_edit_jobb_tlf</cstring>
              </property>
             </widget>
            </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="label_epost">
+           <item row="1" column="1">
+            <widget class="QComboBox" name="combo_box_kjonn">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0">
+            <widget class="QLabel" name="label_mobil_tlf">
              <property name="font">
               <font>
                <family>Segoe UI</family>
@@ -1925,18 +1912,50 @@
               </font>
              </property>
              <property name="text">
-              <string>E-post</string>
+              <string>Mobil tlf.</string>
              </property>
              <property name="buddy">
-              <cstring>line_edit_epost</cstring>
+              <cstring>line_edit_mobil_tlf</cstring>
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_postnummer">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Postnummer</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_postnr</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="2">
+            <widget class="QLabel" name="label_fax">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Fax</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_fax</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
             <widget class="QLabel" name="label_etternavn">
              <property name="minimumSize">
               <size>
-               <width>90</width>
+               <width>100</width>
                <height>0</height>
               </size>
              </property>
@@ -1954,8 +1973,20 @@
              </property>
             </widget>
            </item>
-           <item row="11" column="2">
-            <widget class="QLabel" name="label_fax">
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_fornavn">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Segoe UI</family>
@@ -1963,30 +1994,80 @@
               </font>
              </property>
              <property name="text">
-              <string>Fax</string>
+              <string>Fornavn                </string>
              </property>
              <property name="buddy">
-              <cstring>line_edit_fax</cstring>
+              <cstring>line_edit_fornavn</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QDateEdit" name="date_edit_fodselsdato">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="displayFormat">
+              <string comment="1">dd.MM.yyyy</string>
+             </property>
+             <property name="calendarPopup">
+              <bool>true</bool>
+             </property>
+             <property name="timeSpec">
+              <enum>Qt::LocalTime</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLineEdit" name="line_edit_etternavn">
+             <property name="minimumSize">
+              <size>
+               <width>140</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="label_fodselsdato">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Fødselsdato</string>
+             </property>
+             <property name="buddy">
+              <cstring>date_edit_fodselsdato</cstring>
              </property>
             </widget>
            </item>
            <item row="4" column="0">
-            <widget class="QLabel" name="label_postnummer">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Postnummer</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_postnr</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="0">
             <widget class="QLabel" name="label_kommune">
              <property name="font">
               <font>
@@ -2002,8 +2083,27 @@
              </property>
             </widget>
            </item>
-           <item row="4" column="2">
-            <widget class="QLabel" name="label_poststed">
+           <item row="3" column="3">
+            <widget class="QLineEdit" name="line_edit_poststed">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_adresse">
              <property name="font">
               <font>
                <family>Segoe UI</family>
@@ -2011,61 +2111,14 @@
               </font>
              </property>
              <property name="text">
-              <string>Poststed</string>
+              <string>Adresse</string>
              </property>
              <property name="buddy">
-              <cstring>line_edit_poststed</cstring>
+              <cstring>line_edit_adresse</cstring>
              </property>
             </widget>
            </item>
-           <item row="1" column="3">
-            <widget class="QLineEdit" name="line_edit_etternavn">
-             <property name="minimumSize">
-              <size>
-               <width>150</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="line_edit_fornavn">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>150</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="3">
+           <item row="10" column="3">
             <widget class="QLineEdit" name="line_edit_fax">
              <property name="enabled">
               <bool>true</bool>
@@ -2087,8 +2140,33 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_adresse">
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="line_edit_fornavn">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>140</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_epost">
              <property name="font">
               <font>
                <family>Segoe UI</family>
@@ -2096,14 +2174,36 @@
               </font>
              </property>
              <property name="text">
-              <string>Adresse</string>
+              <string>E-post</string>
              </property>
              <property name="buddy">
-              <cstring>line_edit_adresse</cstring>
+              <cstring>line_edit_epost</cstring>
              </property>
             </widget>
            </item>
-           <item row="11" column="1">
+           <item row="9" column="3">
+            <widget class="QLineEdit" name="line_edit_privat_tlf">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="readOnly">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="1">
             <widget class="QLineEdit" name="line_edit_jobb_tlf">
              <property name="enabled">
               <bool>true</bool>
@@ -2125,48 +2225,7 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="3">
-            <widget class="QDateEdit" name="date_edit_fodselsdato">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="displayFormat">
-              <string comment="1">dd.MM.yyyy</string>
-             </property>
-             <property name="calendarPopup">
-              <bool>true</bool>
-             </property>
-             <property name="timeSpec">
-              <enum>Qt::LocalTime</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="3">
-            <widget class="QLineEdit" name="line_edit_fylke">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
+           <item row="1" column="0">
             <widget class="QLabel" name="label_kjonn">
              <property name="font">
               <font>
@@ -2182,14 +2241,8 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_fornavn">
-             <property name="minimumSize">
-              <size>
-               <width>90</width>
-               <height>0</height>
-              </size>
-             </property>
+           <item row="3" column="2">
+            <widget class="QLabel" name="label_poststed">
              <property name="font">
               <font>
                <family>Segoe UI</family>
@@ -2197,67 +2250,26 @@
               </font>
              </property>
              <property name="text">
-              <string>Fornavn                </string>
+              <string>Poststed</string>
              </property>
              <property name="buddy">
-              <cstring>line_edit_fornavn</cstring>
+              <cstring>line_edit_poststed</cstring>
              </property>
             </widget>
            </item>
-           <item row="4" column="3">
-            <widget class="QLineEdit" name="line_edit_poststed">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
+           <item row="11" column="0">
+            <widget class="QFrame" name="frame_personlig_info_white_space">
              <property name="font">
               <font>
                <family>Segoe UI</family>
                <pointsize>8</pointsize>
               </font>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
              </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="0">
-            <widget class="QLabel" name="label_mobil_tlf">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Mobil tlf.</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_mobil_tlf</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="3">
-            <widget class="QLineEdit" name="line_edit_privat_tlf">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
              </property>
             </widget>
            </item>
@@ -2293,7 +2305,7 @@
           <zorder>label_adresse</zorder>
          </widget>
         </item>
-        <item row="1" column="0">
+        <item row="3" column="1">
          <widget class="QFrame" name="frame_lane_info">
           <property name="palette">
            <palette>
@@ -2726,11 +2738,39 @@
            <enum>QFrame::Plain</enum>
           </property>
           <layout class="QGridLayout" name="gridLayout">
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_lanetype">
+           <item row="0" column="1">
+            <widget class="QComboBox" name="combo_box_lanetype">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
-               <width>90</width>
+               <width>140</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_lanetype">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
                <height>0</height>
               </size>
              </property>
@@ -2748,30 +2788,14 @@
              </property>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QComboBox" name="combo_box_lanetype">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_laneperiod">
              <property name="minimumSize">
               <size>
-               <width>150</width>
+               <width>0</width>
                <height>0</height>
               </size>
              </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_laneperiod">
              <property name="font">
               <font>
                <family>Segoe UI</family>
@@ -2783,6 +2807,28 @@
              </property>
              <property name="buddy">
               <cstring>combo_box_laneperiode</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QComboBox" name="combo_box_interval">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>140</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
              </property>
             </widget>
            </item>
@@ -2802,11 +2848,11 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="label_betalingsintervall">
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="line_edit_egenkapital">
              <property name="minimumSize">
               <size>
-               <width>90</width>
+               <width>0</width>
                <height>0</height>
               </size>
              </property>
@@ -2816,27 +2862,11 @@
                <pointsize>8</pointsize>
               </font>
              </property>
-             <property name="text">
-              <string>Betalingsintervall</string>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
-             <property name="buddy">
-              <cstring>combo_box_betalingsinterval</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
-            <widget class="QComboBox" name="combo_box_betalingsinterval">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -2862,28 +2892,6 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="line_edit_egenkapital">
-             <property name="minimumSize">
-              <size>
-               <width>150</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="2" column="2">
             <widget class="QLabel" name="label_start_dato">
              <property name="font">
@@ -2902,6 +2910,12 @@
            </item>
            <item row="2" column="3">
             <widget class="QDateEdit" name="date_edit_start_dato">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="font">
               <font>
                <family>Segoe UI</family>
@@ -2911,6 +2925,16 @@
              <property name="alignment">
               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
              </property>
+             <property name="dateTime">
+              <datetime>
+               <hour>0</hour>
+               <minute>0</minute>
+               <second>0</second>
+               <year>2020</year>
+               <month>1</month>
+               <day>1</day>
+              </datetime>
+             </property>
              <property name="displayFormat">
               <string>dd.MM.yyyy</string>
              </property>
@@ -2919,8 +2943,30 @@
              </property>
             </widget>
            </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="label_intervall">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Intervall</string>
+             </property>
+             <property name="buddy">
+              <cstring>combo_box_interval</cstring>
+             </property>
+            </widget>
+           </item>
            <item row="3" column="0">
-            <widget class="QFrame" name="frame_annonse_white_space_4">
+            <widget class="QFrame" name="frame_lane_info_white_space">
              <property name="font">
               <font>
                <family>Segoe UI</family>
@@ -2938,8 +2984,8 @@
           </layout>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QFrame" name="frame_budsjett">
+        <item row="2" column="0" rowspan="2">
+         <widget class="QFrame" name="frame_budsjett_info">
           <property name="palette">
            <palette>
             <active>
@@ -3370,6 +3416,282 @@
           <property name="frameShadow">
            <enum>QFrame::Plain</enum>
           </property>
+          <layout class="QGridLayout" name="gridLayout_3">
+           <item row="13" column="2">
+            <widget class="QLabel" name="label_totale_utgifter">
+             <property name="text">
+              <string>Totale utgifter</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_totale_utgifter</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_trygde_inntekt">
+             <property name="text">
+              <string>Trygde inntekt</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_trygde_inntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="line_edit_trygde_inntekt">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="1">
+            <widget class="QLineEdit" name="line_edit_total_netto">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="3">
+            <widget class="QLineEdit" name="line_edit_totale_utgifter">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="1">
+            <widget class="QLineEdit" name="line_edit_total_skatt">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="3">
+            <widget class="QLineEdit" name="line_edit_sifo_utgifter">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="line_edit_brutto_inntekt">
+             <property name="minimumSize">
+              <size>
+               <width>140</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_brutto_inntekter">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Brutto inntekt</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_brutto_inntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLabel" name="label_student_lan">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Student lån</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_student_lan</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="2">
+            <widget class="QLabel" name="label_likviditetsgrad">
+             <property name="text">
+              <string>Likviditetsgrad</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_likviditetsgrad</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLineEdit" name="line_edit_student_lan">
+             <property name="minimumSize">
+              <size>
+               <width>140</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="3">
+            <widget class="QLineEdit" name="line_edit_likviditetsgrad">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="0">
+            <widget class="QLabel" name="label_netto_likviditet">
+             <property name="text">
+              <string>Netto likviditet</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_netto_likviditet</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLabel" name="label_kreditt_gjeld">
+             <property name="text">
+              <string>Kreditt gjeld</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_kreditt_gjeld</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="0">
+            <widget class="QLabel" name="label_total_netto">
+             <property name="text">
+              <string>Total netto</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_total_netto</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLineEdit" name="line_edit_kreditt_gjeld">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLineEdit" name="line_edit_strom">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="1">
+            <widget class="QLineEdit" name="line_edit_netto_likviditet">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="label_strom">
+             <property name="text">
+              <string>Strøm</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_strom</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="15" column="0">
+            <widget class="QFrame" name="frame_budsjett_white_space">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLineEdit" name="line_edit_andre_utgifter">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLabel" name="label_andre_utgifter">
+             <property name="text">
+              <string>Andre utgifter</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_andre_utgifter</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QRadioButton" name="radio_button_skattefrie_inntekt">
+             <property name="text">
+              <string>Skattefri leieinntekt</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_leieinntekt">
+             <property name="text">
+              <string>Leieinntekt</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_leieinntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="line_edit_leieinntekt">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="0">
+            <widget class="QPushButton" name="push_button_skatt">
+             <property name="text">
+              <string>Beregn skatt</string>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="2">
+            <widget class="QPushButton" name="push_button_sifo_utgifter">
+             <property name="text">
+              <string>Sifo utgifter</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
         <item row="0" column="1" rowspan="3">
@@ -3821,55 +4143,8 @@
             <string>Annonse 1</string>
            </attribute>
            <layout class="QGridLayout" name="gridLayout_8">
-            <item row="14" column="0">
-             <widget class="QFrame" name="frame_annonse_white_space_1">
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="frameShape">
-               <enum>QFrame::StyledPanel</enum>
-              </property>
-              <property name="frameShadow">
-               <enum>QFrame::Raised</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="line_edit_finn_kode_1">
-              <property name="minimumSize">
-               <size>
-                <width>150</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-              <property name="clearButtonEnabled">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_finn_kode_1">
-              <property name="minimumSize">
-               <size>
-                <width>90</width>
-                <height>0</height>
-               </size>
-              </property>
+            <item row="5" column="2">
+             <widget class="QLabel" name="label_formuesverdi_1">
               <property name="font">
                <font>
                 <family>Segoe UI</family>
@@ -3877,10 +4152,26 @@
                </font>
               </property>
               <property name="text">
-               <string>FINN kode            </string>
+               <string>Formuesverdi</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_finn_kode</cstring>
+               <cstring>line_edit_formuesverdi_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="label_omkostninger_1">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Omkostninger</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_omkostninger_1</cstring>
               </property>
              </widget>
             </item>
@@ -3896,28 +4187,12 @@
                <string>Kommunale avg</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_kommunaleavg</cstring>
+               <cstring>line_edit_kommunaleavg_1</cstring>
               </property>
              </widget>
             </item>
-            <item row="7" column="1">
-             <widget class="QLineEdit" name="line_edit_omkostninger_1">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="2">
-             <widget class="QLabel" name="label_fellesformue_1">
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_prisantydning_1">
               <property name="font">
                <font>
                 <family>Segoe UI</family>
@@ -3925,10 +4200,10 @@
                </font>
               </property>
               <property name="text">
-               <string>Fellesformue</string>
+               <string>Prisantydning</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_fellesformue</cstring>
+               <cstring>line_edit_prisantydning_1</cstring>
               </property>
              </widget>
             </item>
@@ -3951,24 +4226,8 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_sist_endret_1">
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Sist endret</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_sistendret</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="1">
-             <widget class="QLineEdit" name="line_edit_totalpris_1">
+            <item row="7" column="1">
+             <widget class="QLineEdit" name="line_edit_omkostninger_1">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -3983,8 +4242,14 @@
               </property>
              </widget>
             </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="label_prisantydning_1">
+            <item row="3" column="2">
+             <widget class="QLabel" name="label_referanse_1">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>Segoe UI</family>
@@ -3992,15 +4257,15 @@
                </font>
               </property>
               <property name="text">
-               <string>Prisantydning</string>
+               <string>Referanse</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_prisantydning</cstring>
+               <cstring>line_edit_referanse_1</cstring>
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="label_finn_adresse_1">
+            <item row="9" column="0">
+             <widget class="QLabel" name="label_boligtype_1">
               <property name="font">
                <font>
                 <family>Segoe UI</family>
@@ -4008,10 +4273,39 @@
                </font>
               </property>
               <property name="text">
-               <string>Adresse</string>
+               <string>Boligtype</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_finn_adresse</cstring>
+               <cstring>line_edit_boligtype_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_sist_endret_1">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Sist endret</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_sistendret_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="3">
+             <widget class="QLineEdit" name="line_edit_kommunaleavg_1">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
               </property>
              </widget>
             </item>
@@ -4031,83 +4325,10 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="2">
-             <widget class="QLabel" name="label_referanse_1">
-              <property name="minimumSize">
-               <size>
-                <width>90</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Referanse</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_referanse</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="3">
-             <widget class="QLineEdit" name="line_edit_kommunaleavg_1">
+            <item row="4" column="1" colspan="3">
+             <widget class="QLineEdit" name="line_edit_finn_adresse_1">
               <property name="enabled">
                <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="2">
-             <widget class="QLabel" name="label_formuesverdi_1">
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Formuesverdi</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_formuesverdi</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="0">
-             <widget class="QLabel" name="label_omkostninger_1">
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Omkostninger</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_omkostninger</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="3">
-             <widget class="QLineEdit" name="line_edit_referanse_1">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>150</width>
-                <height>0</height>
-               </size>
               </property>
               <property name="font">
                <font>
@@ -4117,9 +4338,6 @@
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -4135,12 +4353,44 @@
                <string>Totalpris</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_totalpris</cstring>
+               <cstring>line_edit_totalpris_1</cstring>
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
-             <widget class="QLineEdit" name="line_edit_sistendret_1">
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_fellesgjeld_1">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Fellesgjeld</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_fellesgjeld_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="2">
+             <widget class="QLabel" name="label_rom_1">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Rom</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_rom_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="1">
+             <widget class="QLineEdit" name="line_edit_soverom_1">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -4158,10 +4408,16 @@
               </property>
              </widget>
             </item>
-            <item row="8" column="3">
-             <widget class="QLineEdit" name="line_edit_fellesformue_1">
+            <item row="3" column="3">
+             <widget class="QLineEdit" name="line_edit_referanse_1">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>140</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -4173,7 +4429,121 @@
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
               <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="line_edit_finn_kode_1">
+              <property name="minimumSize">
+               <size>
+                <width>140</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+              <property name="clearButtonEnabled">
                <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="2">
+             <widget class="QLabel" name="label_felleskost_mnd_1">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Felleskost/mnd</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_felleskostmnd_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1">
+             <widget class="QLineEdit" name="line_edit_totalpris_1">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="13" column="2">
+             <widget class="QLabel" name="label_tomteareal_1">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Tomteareal</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_tomteareal_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_finn_kode_1">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>FINN kode            </string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_finn_kode_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="1">
+             <widget class="QLineEdit" name="line_edit_etasje_1">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -4189,12 +4559,19 @@
                <string>Energimerking</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_energimerking</cstring>
+               <cstring>line_edit_energimerking_1</cstring>
               </property>
              </widget>
             </item>
-            <item row="9" column="0">
-             <widget class="QLabel" name="label_boligtype_1">
+            <item row="2" column="0">
+             <widget class="Line" name="line_annons_1">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="0">
+             <widget class="QLabel" name="label_soverom_1">
               <property name="font">
                <font>
                 <family>Segoe UI</family>
@@ -4202,10 +4579,10 @@
                </font>
               </property>
               <property name="text">
-               <string>Boligtype</string>
+               <string>Soverom</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_boligtype</cstring>
+               <cstring>line_edit_soverom_1</cstring>
               </property>
              </widget>
             </item>
@@ -4228,8 +4605,78 @@
               </property>
              </widget>
             </item>
-            <item row="13" column="1">
-             <widget class="QLineEdit" name="line_edit_energimerking_1">
+            <item row="9" column="2">
+             <widget class="QLabel" name="label_eieform_1">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Eieform</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_eieform_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="3">
+             <widget class="QLineEdit" name="line_edit_fellesformue_1">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="3">
+             <widget class="QLineEdit" name="line_edit_felleskostmnd_1">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="2">
+             <widget class="QLabel" name="label_fellesformue_1">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Fellesformue</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_fellesformue_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="13" column="3">
+             <widget class="QLineEdit" name="line_edit_tomteareal_1">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -4250,8 +4697,8 @@
               </property>
              </widget>
             </item>
-            <item row="9" column="2">
-             <widget class="QLabel" name="label_eieform_1">
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_finn_adresse_1">
               <property name="font">
                <font>
                 <family>Segoe UI</family>
@@ -4259,31 +4706,85 @@
                </font>
               </property>
               <property name="text">
-               <string>Eieform</string>
+               <string>Adresse</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_eieform</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="2">
-             <widget class="QLabel" name="label_felleskost_mnd_1">
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Felleskost/mnd</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_felleskostmnd</cstring>
+               <cstring>line_edit_finn_adresse_1</cstring>
               </property>
              </widget>
             </item>
             <item row="9" column="3">
              <widget class="QLineEdit" name="line_edit_eieform_1">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="line_edit_sistendret_1">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="2">
+             <widget class="QLabel" name="label_bruttoareal_1">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Bruttoareal</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_bruttoareal_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="0">
+             <widget class="QLabel" name="label_etasje_1">
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Etasje</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_etasje_1</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="3">
+             <widget class="QLineEdit" name="line_edit_bruttoareal_1">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -4320,8 +4821,8 @@
               </property>
              </widget>
             </item>
-            <item row="11" column="2">
-             <widget class="QLabel" name="label_rom_1">
+            <item row="12" column="0">
+             <widget class="QLabel" name="label_primarrom_1">
               <property name="font">
                <font>
                 <family>Segoe UI</family>
@@ -4329,15 +4830,15 @@
                </font>
               </property>
               <property name="text">
-               <string>Rom</string>
+               <string>Primærrom</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_rom</cstring>
+               <cstring>line_edit_primrrom_1</cstring>
               </property>
              </widget>
             </item>
-            <item row="13" column="2">
-             <widget class="QLabel" name="label_tomteareal_1">
+            <item row="10" column="2">
+             <widget class="QLabel" name="label_byggear_1">
               <property name="font">
                <font>
                 <family>Segoe UI</family>
@@ -4345,31 +4846,15 @@
                </font>
               </property>
               <property name="text">
-               <string>Tomteareal</string>
+               <string>Byggeår</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_tomteareal</cstring>
+               <cstring>line_edit_bygger_1</cstring>
               </property>
              </widget>
             </item>
-            <item row="10" column="0">
-             <widget class="QLabel" name="label_etasje_1">
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Etasje</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_etasje</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="12" column="3">
-             <widget class="QLineEdit" name="line_edit_bruttoareal_1">
+            <item row="6" column="1">
+             <widget class="QLineEdit" name="line_edit_fellesgjeld_1">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -4382,8 +4867,34 @@
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
+             </widget>
+            </item>
+            <item row="13" column="1">
+             <widget class="QLineEdit" name="line_edit_energimerking_1">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <family>Segoe UI</family>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
               <property name="readOnly">
                <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="push_button_finn_1">
+              <property name="text">
+               <string>Åpne Finn.no</string>
               </property>
              </widget>
             </item>
@@ -4425,208 +4936,19 @@
               </property>
              </widget>
             </item>
-            <item row="4" column="1" colspan="3">
-             <widget class="QLineEdit" name="line_edit_finn_adresse_1">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
+            <item row="14" column="0">
+             <widget class="QFrame" name="frame_annonse_white_space_1">
               <property name="font">
                <font>
                 <family>Segoe UI</family>
                 <pointsize>8</pointsize>
                </font>
               </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
               </property>
-             </widget>
-            </item>
-            <item row="11" column="0">
-             <widget class="QLabel" name="label_soverom_1">
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Soverom</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_soverom</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="12" column="0">
-             <widget class="QLabel" name="label_primarrom_1">
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Primærrom</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_primrrom</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="11" column="1">
-             <widget class="QLineEdit" name="line_edit_soverom_1">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="10" column="1">
-             <widget class="QLineEdit" name="line_edit_etasje_1">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="10" column="2">
-             <widget class="QLabel" name="label_byggear_1">
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Byggeår</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_bygger</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="13" column="3">
-             <widget class="QLineEdit" name="line_edit_tomteareal_1">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="3">
-             <widget class="QLineEdit" name="line_edit_felleskostmnd_1">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="12" column="2">
-             <widget class="QLabel" name="label_bruttoareal_1">
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Bruttoareal</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_bruttoareal</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="label_fellesgjeld_1">
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Fellesgjeld</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_fellesgjeld</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QLineEdit" name="line_edit_fellesgjeld_1">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <family>Segoe UI</family>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QPushButton" name="push_button_finn_1">
-              <property name="text">
-               <string>Åpne Finn.no</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="Line" name="line_annons_1">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
               </property>
              </widget>
             </item>
@@ -4654,7 +4976,7 @@
              <widget class="QLabel" name="label_finn_kode_2">
               <property name="minimumSize">
                <size>
-                <width>90</width>
+                <width>100</width>
                 <height>0</height>
                </size>
               </property>
@@ -4667,51 +4989,12 @@
                <string>FINN kode            </string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_finn_kode</cstring>
+               <cstring>line_edit_finn_kode_2</cstring>
               </property>
              </widget>
             </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="line_edit_finn_kode_2">
-              <property name="minimumSize">
-               <size>
-                <width>150</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-              <property name="clearButtonEnabled">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QLabel" name="label_sist_endret_2">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Sist endret</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_sistendret</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QLineEdit" name="line_edit_sistendret_2">
+            <item row="12" column="1">
+             <widget class="QLineEdit" name="line_edit_primrrom_2">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -4728,11 +5011,26 @@
               </property>
              </widget>
             </item>
+            <item row="5" column="0">
+             <widget class="QLabel" name="label_prisantydning_2">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Prisantydning</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_prisantydning_2</cstring>
+              </property>
+             </widget>
+            </item>
             <item row="3" column="2">
              <widget class="QLabel" name="label_referanse_2">
               <property name="minimumSize">
                <size>
-                <width>90</width>
+                <width>100</width>
                 <height>0</height>
                </size>
               </property>
@@ -4745,22 +5043,7 @@
                <string>Referanse</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_referanse</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="2">
-             <widget class="QLabel" name="label_fellesformue_2">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Fellesformue</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_fellesformue</cstring>
+               <cstring>line_edit_referanse_2</cstring>
               </property>
              </widget>
             </item>
@@ -4775,7 +5058,7 @@
                <string>Formuesverdi</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_formuesverdi</cstring>
+               <cstring>line_edit_formuesverdi_2</cstring>
               </property>
              </widget>
             </item>
@@ -4791,102 +5074,6 @@
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="10" column="1">
-             <widget class="QLineEdit" name="line_edit_etasje_2">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QLineEdit" name="line_edit_fellesgjeld_2">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="11" column="0">
-             <widget class="QLabel" name="label_soverom_2">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Soverom</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_soverom</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="11" column="2">
-             <widget class="QLabel" name="label_rom_2">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Rom</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_rom</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="9" column="3">
-             <widget class="QLineEdit" name="line_edit_eieform_2">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="10" column="2">
-             <widget class="QLabel" name="label_byggear_2">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Byggeår</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_bygger</cstring>
               </property>
              </widget>
             </item>
@@ -4908,10 +5095,21 @@
               </property>
              </widget>
             </item>
-            <item row="7" column="3">
-             <widget class="QLineEdit" name="line_edit_kommunaleavg_2">
+            <item row="8" column="3">
+             <widget class="QLineEdit" name="line_edit_fellesformue_2">
               <property name="enabled">
                <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -4926,12 +5124,12 @@
                <string>Etasje</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_etasje</cstring>
+               <cstring>line_edit_etasje_2</cstring>
               </property>
              </widget>
             </item>
-            <item row="9" column="1">
-             <widget class="QLineEdit" name="line_edit_boligtype_2">
+            <item row="11" column="3">
+             <widget class="QLineEdit" name="line_edit_rom_2">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -4959,43 +5157,7 @@
                <string>Primærrom</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_primrrom</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="12" column="1">
-             <widget class="QLineEdit" name="line_edit_primrrom_2">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="11" column="3">
-             <widget class="QLineEdit" name="line_edit_rom_2">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
+               <cstring>line_edit_primrrom_2</cstring>
               </property>
              </widget>
             </item>
@@ -5017,71 +5179,62 @@
               </property>
              </widget>
             </item>
-            <item row="9" column="2">
-             <widget class="QLabel" name="label_eieform_2">
+            <item row="11" column="2">
+             <widget class="QLabel" name="label_rom_2">
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
                </font>
               </property>
               <property name="text">
-               <string>Eieform</string>
+               <string>Rom</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_eieform</cstring>
+               <cstring>line_edit_rom_2</cstring>
               </property>
              </widget>
             </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="label_fellesgjeld_2">
+            <item row="10" column="2">
+             <widget class="QLabel" name="label_byggear_2">
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
                </font>
               </property>
               <property name="text">
-               <string>Fellesgjeld</string>
+               <string>Byggeår</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_fellesgjeld</cstring>
+               <cstring>line_edit_bygger_2</cstring>
               </property>
              </widget>
             </item>
-            <item row="5" column="0">
-             <widget class="QLabel" name="label_prisantydning_2">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Prisantydning</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_prisantydning</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="5" column="3">
-             <widget class="QLineEdit" name="line_edit_formuesverdi_2">
-              <property name="enabled">
-               <bool>false</bool>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="line_edit_finn_kode_2">
+              <property name="minimumSize">
+               <size>
+                <width>140</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
                </font>
-              </property>
-              <property name="text">
-               <string/>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
-            <item row="8" column="3">
-             <widget class="QLineEdit" name="line_edit_fellesformue_2">
+            <item row="10" column="1">
+             <widget class="QLineEdit" name="line_edit_etasje_2">
               <property name="enabled">
                <bool>false</bool>
               </property>
@@ -5094,7 +5247,47 @@
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
               <property name="readOnly">
-               <bool>true</bool>
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="0">
+             <widget class="QLabel" name="label_soverom_2">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Soverom</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_soverom_2</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="1">
+             <widget class="QLineEdit" name="line_edit_boligtype_2">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="3">
+             <widget class="QLineEdit" name="line_edit_kommunaleavg_2">
+              <property name="enabled">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -5109,7 +5302,22 @@
                <string>Boligtype</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_boligtype</cstring>
+               <cstring>line_edit_boligtype_2</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="2">
+             <widget class="QLabel" name="label_fellesformue_2">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Fellesformue</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_fellesformue_2</cstring>
               </property>
              </widget>
             </item>
@@ -5137,7 +5345,55 @@
                <string>Kommunale avg</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_kommunaleavg</cstring>
+               <cstring>line_edit_kommunaleavg_2</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLineEdit" name="line_edit_fellesgjeld_2">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="line_edit_sistendret_2">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_fellesgjeld_2">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Fellesgjeld</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_fellesgjeld_2</cstring>
               </property>
              </widget>
             </item>
@@ -5171,6 +5427,57 @@
               </property>
              </widget>
             </item>
+            <item row="9" column="2">
+             <widget class="QLabel" name="label_eieform_2">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Eieform</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_eieform_2</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="5" column="3">
+             <widget class="QLineEdit" name="line_edit_formuesverdi_2">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="9" column="3">
+             <widget class="QLineEdit" name="line_edit_eieform_2">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
             <item row="7" column="0">
              <widget class="QLabel" name="label_omkostninger_2">
               <property name="font">
@@ -5182,7 +5489,22 @@
                <string>Omkostninger</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_omkostninger</cstring>
+               <cstring>line_edit_omkostninger_2</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="0">
+             <widget class="QLabel" name="label_sist_endret_2">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Sist endret</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_sistendret_2</cstring>
               </property>
              </widget>
             </item>
@@ -5193,7 +5515,7 @@
               </property>
               <property name="minimumSize">
                <size>
-                <width>150</width>
+                <width>140</width>
                 <height>0</height>
                </size>
               </property>
@@ -5210,51 +5532,6 @@
               </property>
              </widget>
             </item>
-            <item row="6" column="2">
-             <widget class="QLabel" name="label_felleskost_mnd_2">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Felleskost/mnd</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_felleskostmnd</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="label_finn_adresse_2">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Adresse</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_finn_adresse</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="0">
-             <widget class="QLabel" name="label_totalpris_2">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Totalpris</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_totalpris</cstring>
-              </property>
-             </widget>
-            </item>
             <item row="12" column="2">
              <widget class="QLabel" name="label_bruttoareal_2">
               <property name="font">
@@ -5266,46 +5543,7 @@
                <string>Bruttoareal</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_bruttoareal</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="13" column="1">
-             <widget class="QLineEdit" name="line_edit_energimerking_2">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="12" column="3">
-             <widget class="QLineEdit" name="line_edit_bruttoareal_2">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
+               <cstring>line_edit_bruttoareal_2</cstring>
               </property>
              </widget>
             </item>
@@ -5324,18 +5562,18 @@
               </property>
              </widget>
             </item>
-            <item row="13" column="2">
-             <widget class="QLabel" name="label_tomteareal_2">
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_finn_adresse_2">
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
                </font>
               </property>
               <property name="text">
-               <string>Tomteareal</string>
+               <string>Adresse</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_tomteareal</cstring>
+               <cstring>line_edit_finn_adresse_2</cstring>
               </property>
              </widget>
             </item>
@@ -5360,6 +5598,54 @@
               </property>
              </widget>
             </item>
+            <item row="6" column="2">
+             <widget class="QLabel" name="label_felleskost_mnd_2">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Felleskost/mnd</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_felleskostmnd_2</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="label_totalpris_2">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Totalpris</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_totalpris_2</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="3">
+             <widget class="QLineEdit" name="line_edit_bruttoareal_2">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
             <item row="13" column="0">
              <widget class="QLabel" name="label_energimerking_2">
               <property name="font">
@@ -5371,14 +5657,7 @@
                <string>Energimerking</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_energimerking</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QPushButton" name="push_button_finn_2">
-              <property name="text">
-               <string>Åpne Finn.no</string>
+               <cstring>line_edit_energimerking_2</cstring>
               </property>
              </widget>
             </item>
@@ -5386,6 +5665,49 @@
              <widget class="Line" name="line_annonse_2">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="13" column="1">
+             <widget class="QLineEdit" name="line_edit_energimerking_2">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="13" column="2">
+             <widget class="QLabel" name="label_tomteareal_2">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Tomteareal</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_tomteareal_2</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="push_button_finn_2">
+              <property name="text">
+               <string>Åpne Finn.no</string>
               </property>
              </widget>
             </item>
@@ -5409,46 +5731,10 @@
               </property>
              </widget>
             </item>
-            <item row="3" column="1">
-             <widget class="QLineEdit" name="line_edit_sistendret_3">
+            <item row="7" column="3">
+             <widget class="QLineEdit" name="line_edit_kommunaleavg_3">
               <property name="enabled">
                <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="1">
-             <widget class="QLineEdit" name="line_edit_omkostninger_3">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="2">
-             <widget class="QLabel" name="label_kommunale_avg_3">
-              <property name="text">
-               <string>Kommunale avg</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_kommunaleavg</cstring>
               </property>
              </widget>
             </item>
@@ -5470,36 +5756,6 @@
               </property>
              </widget>
             </item>
-            <item row="6" column="2">
-             <widget class="QLabel" name="label_felleskost_mnd_3">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Felleskost/mnd</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_felleskostmnd</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="2">
-             <widget class="QLabel" name="label_fellesformue_3">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Fellesformue</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_fellesformue</cstring>
-              </property>
-             </widget>
-            </item>
             <item row="5" column="2">
              <widget class="QLabel" name="label_formuesverdi_3">
               <property name="font">
@@ -5511,7 +5767,82 @@
                <string>Formuesverdi</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_formuesverdi</cstring>
+               <cstring>line_edit_formuesverdi_3</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="0">
+             <widget class="QLabel" name="label_totalpris_3">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Totalpris</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_totalpris_3</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="3">
+             <widget class="QLineEdit" name="line_edit_referanse_3">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>140</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QLabel" name="label_finn_adresse_3">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Adresse</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_finn_adresse_3</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_finn_kode_3">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>FINN kode            </string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_finn_kode_3</cstring>
               </property>
              </widget>
             </item>
@@ -5526,7 +5857,7 @@
                <string>Sist endret</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_sistendret</cstring>
+               <cstring>line_edit_sistendret_3</cstring>
               </property>
              </widget>
             </item>
@@ -5559,7 +5890,100 @@
                <string>Prisantydning</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_prisantydning</cstring>
+               <cstring>line_edit_prisantydning_3</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="2">
+             <widget class="QLabel" name="label_fellesformue_3">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Fellesformue</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_fellesformue_3</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="2">
+             <widget class="QLabel" name="label_felleskost_mnd_3">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Felleskost/mnd</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_felleskostmnd_3</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="3" column="1">
+             <widget class="QLineEdit" name="line_edit_sistendret_3">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <widget class="QLabel" name="label_omkostninger_3">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Omkostninger</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_omkostninger_3</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QLineEdit" name="line_edit_fellesgjeld_3">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QLineEdit" name="line_edit_omkostninger_3">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
               </property>
              </widget>
             </item>
@@ -5581,73 +6005,43 @@
               </property>
              </widget>
             </item>
-            <item row="7" column="0">
-             <widget class="QLabel" name="label_omkostninger_3">
+            <item row="7" column="2">
+             <widget class="QLabel" name="label_kommunale_avg_3">
+              <property name="text">
+               <string>Kommunale avg</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_kommunaleavg_3</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="2">
+             <widget class="QLabel" name="label_rom_3">
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
                </font>
               </property>
               <property name="text">
-               <string>Omkostninger</string>
+               <string>Rom</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_omkostninger</cstring>
+               <cstring>line_edit_rom_3</cstring>
               </property>
              </widget>
             </item>
-            <item row="6" column="1">
-             <widget class="QLineEdit" name="line_edit_fellesgjeld_3">
+            <item row="13" column="3">
+             <widget class="QLineEdit" name="line_edit_tomteareal_3">
               <property name="enabled">
                <bool>false</bool>
               </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="7" column="3">
-             <widget class="QLineEdit" name="line_edit_kommunaleavg_3">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="0">
-             <widget class="QLabel" name="label_totalpris_3">
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
                </font>
               </property>
               <property name="text">
-               <string>Totalpris</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_totalpris</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="3">
-             <widget class="QLineEdit" name="line_edit_referanse_3">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>150</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
+               <string/>
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -5657,93 +6051,33 @@
               </property>
              </widget>
             </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="label_finn_adresse_3">
+            <item row="11" column="0">
+             <widget class="QLabel" name="label_soverom_3">
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
                </font>
               </property>
               <property name="text">
-               <string>Adresse</string>
+               <string>Soverom</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_finn_adresse</cstring>
+               <cstring>line_edit_soverom_3</cstring>
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_finn_kode_3">
-              <property name="minimumSize">
-               <size>
-                <width>90</width>
-                <height>0</height>
-               </size>
-              </property>
+            <item row="10" column="0">
+             <widget class="QLabel" name="label_etasje_3">
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
                </font>
               </property>
               <property name="text">
-               <string>FINN kode            </string>
+               <string>Etasje</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_finn_kode</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="8" column="1">
-             <widget class="QLineEdit" name="line_edit_totalpris_3">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="0">
-             <widget class="QLabel" name="label_fellesgjeld_3">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Fellesgjeld</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_fellesgjeld</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="line_edit_finn_kode_3">
-              <property name="minimumSize">
-               <size>
-                <width>150</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-              <property name="clearButtonEnabled">
-               <bool>true</bool>
+               <cstring>line_edit_etasje_3</cstring>
               </property>
              </widget>
             </item>
@@ -5751,7 +6085,7 @@
              <widget class="QLabel" name="label_referanse_3">
               <property name="minimumSize">
                <size>
-                <width>90</width>
+                <width>100</width>
                 <height>0</height>
                </size>
               </property>
@@ -5764,7 +6098,40 @@
                <string>Referanse</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_referanse</cstring>
+               <cstring>line_edit_referanse_3</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1" colspan="3">
+             <widget class="QLineEdit" name="line_edit_finn_adresse_3">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="12" column="3">
+             <widget class="QLineEdit" name="line_edit_bruttoareal_3">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
               </property>
              </widget>
             </item>
@@ -5794,25 +6161,7 @@
                <string>Bruttoareal</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_bruttoareal</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="12" column="3">
-             <widget class="QLineEdit" name="line_edit_bruttoareal_3">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
+               <cstring>line_edit_bruttoareal_3</cstring>
               </property>
              </widget>
             </item>
@@ -5827,22 +6176,22 @@
                <string>Energimerking</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_energimerking</cstring>
+               <cstring>line_edit_energimerking_3</cstring>
               </property>
              </widget>
             </item>
-            <item row="10" column="0">
-             <widget class="QLabel" name="label_etasje_3">
+            <item row="6" column="0">
+             <widget class="QLabel" name="label_fellesgjeld_3">
               <property name="font">
                <font>
                 <pointsize>8</pointsize>
                </font>
               </property>
               <property name="text">
-               <string>Etasje</string>
+               <string>Fellesgjeld</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_etasje</cstring>
+               <cstring>line_edit_fellesgjeld_3</cstring>
               </property>
              </widget>
             </item>
@@ -5857,22 +6206,7 @@
                <string>Boligtype</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_boligtype</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="11" column="0">
-             <widget class="QLabel" name="label_soverom_3">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Soverom</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_soverom</cstring>
+               <cstring>line_edit_boligtype_3</cstring>
               </property>
              </widget>
             </item>
@@ -5930,24 +6264,6 @@
               </property>
              </widget>
             </item>
-            <item row="11" column="3">
-             <widget class="QLineEdit" name="line_edit_rom_3">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
-              </property>
-             </widget>
-            </item>
             <item row="9" column="2">
              <widget class="QLabel" name="label_eieform_3">
               <property name="font">
@@ -5959,25 +6275,7 @@
                <string>Eieform</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_eieform</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="10" column="1">
-             <widget class="QLineEdit" name="line_edit_etasje_3">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
+               <cstring>line_edit_eieform_3</cstring>
               </property>
              </widget>
             </item>
@@ -5999,21 +6297,6 @@
               </property>
              </widget>
             </item>
-            <item row="10" column="2">
-             <widget class="QLabel" name="label_byggear_3">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Byggeår</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_bygger</cstring>
-              </property>
-             </widget>
-            </item>
             <item row="12" column="1">
              <widget class="QLineEdit" name="line_edit_primrrom_3">
               <property name="enabled">
@@ -6032,10 +6315,13 @@
               </property>
              </widget>
             </item>
-            <item row="4" column="1" colspan="3">
-             <widget class="QLineEdit" name="line_edit_finn_adresse_3">
-              <property name="enabled">
-               <bool>false</bool>
+            <item row="0" column="1">
+             <widget class="QLineEdit" name="line_edit_finn_kode_3">
+              <property name="minimumSize">
+               <size>
+                <width>140</width>
+                <height>0</height>
+               </size>
               </property>
               <property name="font">
                <font>
@@ -6044,6 +6330,12 @@
               </property>
               <property name="alignment">
                <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -6079,28 +6371,7 @@
                <string>Tomteareal</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_tomteareal</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="13" column="3">
-             <widget class="QLineEdit" name="line_edit_tomteareal_3">
-              <property name="enabled">
-               <bool>false</bool>
-              </property>
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-              </property>
-              <property name="readOnly">
-               <bool>false</bool>
+               <cstring>line_edit_tomteareal_3</cstring>
               </property>
              </widget>
             </item>
@@ -6115,29 +6386,7 @@
                <string>Primærrom</string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_primrrom</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="11" column="2">
-             <widget class="QLabel" name="label_rom_3">
-              <property name="font">
-               <font>
-                <pointsize>8</pointsize>
-               </font>
-              </property>
-              <property name="text">
-               <string>Rom</string>
-              </property>
-              <property name="buddy">
-               <cstring>line_edit_rom</cstring>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QPushButton" name="push_button_finn_3">
-              <property name="text">
-               <string>Åpne Finn.no</string>
+               <cstring>line_edit_primrrom_3</cstring>
               </property>
              </widget>
             </item>
@@ -6145,6 +6394,79 @@
              <widget class="Line" name="line_annonse_3">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
+              </property>
+             </widget>
+            </item>
+            <item row="8" column="1">
+             <widget class="QLineEdit" name="line_edit_totalpris_3">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="1">
+             <widget class="QLineEdit" name="line_edit_etasje_3">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="10" column="2">
+             <widget class="QLabel" name="label_byggear_3">
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="text">
+               <string>Byggeår</string>
+              </property>
+              <property name="buddy">
+               <cstring>line_edit_bygger_3</cstring>
+              </property>
+             </widget>
+            </item>
+            <item row="11" column="3">
+             <widget class="QLineEdit" name="line_edit_rom_3">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
+              <property name="font">
+               <font>
+                <pointsize>8</pointsize>
+               </font>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+              </property>
+              <property name="readOnly">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QPushButton" name="push_button_finn_3">
+              <property name="text">
+               <string>Åpne Finn.no</string>
               </property>
              </widget>
             </item>
@@ -6577,6 +6899,852 @@
         <string>Analyse</string>
        </attribute>
       </widget>
+      <widget class="QWidget" name="tab_marked">
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Light">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Midlight">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Dark">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>147</red>
+             <green>154</green>
+             <blue>162</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="BrightText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Shadow">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="AlternateBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>220</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Light">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Midlight">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Dark">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>147</red>
+             <green>154</green>
+             <blue>162</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="BrightText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Shadow">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="AlternateBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>220</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Light">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Midlight">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Dark">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>147</red>
+             <green>154</green>
+             <blue>162</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="BrightText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Shadow">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="AlternateBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>220</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
+       <attribute name="title">
+        <string>Marked</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_rapport">
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Light">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Midlight">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Dark">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>147</red>
+             <green>154</green>
+             <blue>162</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="BrightText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Shadow">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="AlternateBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>220</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Light">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Midlight">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Dark">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>147</red>
+             <green>154</green>
+             <blue>162</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="BrightText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Shadow">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="AlternateBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>220</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Light">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Midlight">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Dark">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>147</red>
+             <green>154</green>
+             <blue>162</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="BrightText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Shadow">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="AlternateBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>220</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
+       <attribute name="title">
+        <string>Rapport</string>
+       </attribute>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -6590,60 +7758,54 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_file">
+   <widget class="QMenu" name="menu_fil">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>176</y>
-      <width>173</width>
-      <height>306</height>
+      <x>284</x>
+      <y>146</y>
+      <width>143</width>
+      <height>209</height>
      </rect>
     </property>
     <property name="title">
-     <string>File </string>
+     <string>Fil</string>
     </property>
-    <addaction name="action_new"/>
-    <addaction name="action_open"/>
-    <addaction name="action_recent_applications"/>
+    <addaction name="action_ny"/>
+    <addaction name="action_apne"/>
     <addaction name="separator"/>
-    <addaction name="action_save"/>
-    <addaction name="action_save_as"/>
-    <addaction name="action_save_all"/>
-    <addaction name="action_save_as_template"/>
+    <addaction name="action_lagre"/>
+    <addaction name="action_lagre_som"/>
     <addaction name="separator"/>
-    <addaction name="action_print"/>
+    <addaction name="action_skriv_ut"/>
     <addaction name="separator"/>
-    <addaction name="action_close"/>
-    <addaction name="separator"/>
-    <addaction name="action_quit"/>
+    <addaction name="action_avslutt"/>
    </widget>
-   <widget class="QMenu" name="menu_edit">
+   <widget class="QMenu" name="menu_rediger">
     <property name="title">
-     <string>Edit</string>
+     <string>Rediger</string>
     </property>
-    <addaction name="action_undo"/>
-    <addaction name="action_redo"/>
+    <addaction name="action_angre"/>
+    <addaction name="action_gjenta"/>
     <addaction name="separator"/>
-    <addaction name="action_cut"/>
-    <addaction name="action_copy"/>
-    <addaction name="action_paste"/>
-    <addaction name="action_delete"/>
-    <addaction name="action_select_all"/>
+    <addaction name="action_klipp_ut"/>
+    <addaction name="action_kopier"/>
+    <addaction name="action_lim_inn"/>
+    <addaction name="action_slett"/>
    </widget>
-   <widget class="QMenu" name="menu_settings">
+   <widget class="QMenu" name="menu_innstillinger">
     <property name="title">
-     <string>Settings</string>
+     <string>Innstillinger</string>
     </property>
    </widget>
-   <widget class="QMenu" name="menu_help">
+   <widget class="QMenu" name="menu_hjelp">
     <property name="title">
-     <string>Help</string>
+     <string>Hjelp</string>
     </property>
    </widget>
-   <addaction name="menu_file"/>
-   <addaction name="menu_edit"/>
-   <addaction name="menu_settings"/>
-   <addaction name="menu_help"/>
+   <addaction name="menu_fil"/>
+   <addaction name="menu_rediger"/>
+   <addaction name="menu_innstillinger"/>
+   <addaction name="menu_hjelp"/>
   </widget>
   <widget class="QToolBar" name="tool_bar">
    <property name="palette">
@@ -7082,166 +8244,145 @@
    <addaction name="action_logo"/>
    <addaction name="separator"/>
   </widget>
-  <action name="action_new">
+  <action name="action_ny">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
      <normaloff>:/img/new.png</normaloff>:/img/new.png</iconset>
    </property>
    <property name="text">
-    <string>New...</string>
+    <string>Ny...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
    </property>
   </action>
-  <action name="action_open">
+  <action name="action_apne">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
      <normaloff>:/img/open.png</normaloff>:/img/open.png</iconset>
    </property>
    <property name="text">
-    <string>Open... </string>
+    <string>Åpne... </string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
    </property>
   </action>
-  <action name="action_recent_applications">
+  <action name="action_nylige_lan">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
      <normaloff>:/img/recent.png</normaloff>:/img/recent.png</iconset>
    </property>
    <property name="text">
-    <string>Recent Mortgages </string>
+    <string>Nylige lån</string>
    </property>
   </action>
-  <action name="action_save">
+  <action name="action_lagre">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
      <normaloff>:/img/save.png</normaloff>:/img/save.png</iconset>
    </property>
    <property name="text">
-    <string>Save </string>
+    <string>Large</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
    </property>
   </action>
-  <action name="action_save_as">
+  <action name="action_lagre_som">
    <property name="text">
-    <string>Save As... </string>
+    <string>Largre som... </string>
    </property>
   </action>
-  <action name="action_save_all">
-   <property name="text">
-    <string>Save All... </string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+Shift+S</string>
-   </property>
-  </action>
-  <action name="action_save_as_template">
-   <property name="text">
-    <string>Save As Template... </string>
-   </property>
-  </action>
-  <action name="action_print">
+  <action name="action_skriv_ut">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
      <normaloff>:/img/print.png</normaloff>:/img/print.png</iconset>
    </property>
    <property name="text">
-    <string>Print...</string>
+    <string>Skriv ut...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
    </property>
   </action>
-  <action name="action_close">
-   <property name="text">
-    <string>Close</string>
-   </property>
-   <property name="shortcut">
-    <string>Ctrl+F4</string>
-   </property>
-  </action>
-  <action name="action_quit">
+  <action name="action_avslutt">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
      <normaloff>:/img/quit.png</normaloff>:/img/quit.png</iconset>
    </property>
    <property name="text">
-    <string>Quit</string>
+    <string>Avslutt</string>
    </property>
   </action>
-  <action name="action_undo">
+  <action name="action_angre">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
      <normaloff>:/img/undo.png</normaloff>:/img/undo.png</iconset>
    </property>
    <property name="text">
-    <string>Undo</string>
+    <string>Angre</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Z</string>
    </property>
   </action>
-  <action name="action_redo">
+  <action name="action_gjenta">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
      <normaloff>:/img/redo.png</normaloff>:/img/redo.png</iconset>
    </property>
    <property name="text">
-    <string>Redo</string>
+    <string>Gjenta</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Y</string>
    </property>
   </action>
-  <action name="action_cut">
+  <action name="action_klipp_ut">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
      <normaloff>:/img/cut.png</normaloff>:/img/cut.png</iconset>
    </property>
    <property name="text">
-    <string>Cut</string>
+    <string>Klipp ut</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+X</string>
    </property>
   </action>
-  <action name="action_copy">
+  <action name="action_kopier">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
      <normaloff>:/img/copy.png</normaloff>:/img/copy.png</iconset>
    </property>
    <property name="text">
-    <string>Copy</string>
+    <string>Kopier</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+C</string>
    </property>
   </action>
-  <action name="action_paste">
+  <action name="action_lim_inn">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
      <normaloff>:/img/paste.png</normaloff>:/img/paste.png</iconset>
    </property>
    <property name="text">
-    <string>Paste</string>
+    <string>Lim inn</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+V</string>
    </property>
   </action>
-  <action name="action_delete">
+  <action name="action_slett">
    <property name="text">
-    <string>Delete</string>
+    <string>Slett</string>
    </property>
   </action>
-  <action name="action_select_all">
+  <action name="action_merk_alt">
    <property name="text">
-    <string>Select All</string>
+    <string>Merk alt</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+A</string>
@@ -7278,36 +8419,51 @@
   <tabstop>line_edit_privat_tlf</tabstop>
   <tabstop>line_edit_jobb_tlf</tabstop>
   <tabstop>line_edit_fax</tabstop>
-  <tabstop>combo_box_lanetype</tabstop>
-  <tabstop>combo_box_laneperiode</tabstop>
-  <tabstop>combo_box_betalingsinterval</tabstop>
-  <tabstop>line_edit_egenkapital</tabstop>
-  <tabstop>date_edit_start_dato</tabstop>
+  <tabstop>line_edit_brutto_inntekt</tabstop>
+  <tabstop>line_edit_trygde_inntekt</tabstop>
+  <tabstop>line_edit_leieinntekt</tabstop>
+  <tabstop>radio_button_skattefrie_inntekt</tabstop>
+  <tabstop>line_edit_student_lan</tabstop>
+  <tabstop>line_edit_kreditt_gjeld</tabstop>
+  <tabstop>line_edit_strom</tabstop>
+  <tabstop>line_edit_andre_utgifter</tabstop>
+  <tabstop>push_button_skatt</tabstop>
+  <tabstop>line_edit_total_skatt</tabstop>
+  <tabstop>push_button_sifo_utgifter</tabstop>
+  <tabstop>line_edit_sifo_utgifter</tabstop>
+  <tabstop>line_edit_total_netto</tabstop>
+  <tabstop>line_edit_totale_utgifter</tabstop>
+  <tabstop>line_edit_netto_likviditet</tabstop>
+  <tabstop>line_edit_likviditetsgrad</tabstop>
   <tabstop>tab_widget_annoser</tabstop>
   <tabstop>line_edit_finn_kode_1</tabstop>
-  <tabstop>line_edit_finn_kode_2</tabstop>
-  <tabstop>line_edit_finn_kode_3</tabstop>
-  <tabstop>tab_widget_home</tabstop>
+  <tabstop>push_button_finn_1</tabstop>
+  <tabstop>line_edit_sistendret_1</tabstop>
+  <tabstop>line_edit_referanse_1</tabstop>
+  <tabstop>line_edit_finn_adresse_1</tabstop>
+  <tabstop>line_edit_prisantydning_1</tabstop>
   <tabstop>line_edit_formuesverdi_1</tabstop>
-  <tabstop>line_edit_totalpris_1</tabstop>
-  <tabstop>line_edit_fellesformue_1</tabstop>
-  <tabstop>line_edit_kommunaleavg_1</tabstop>
   <tabstop>line_edit_fellesgjeld_1</tabstop>
   <tabstop>line_edit_felleskostmnd_1</tabstop>
-  <tabstop>line_edit_rom_1</tabstop>
-  <tabstop>line_edit_bruttoareal_1</tabstop>
-  <tabstop>line_edit_energimerking_1</tabstop>
-  <tabstop>line_edit_tomteareal_1</tabstop>
+  <tabstop>line_edit_omkostninger_1</tabstop>
+  <tabstop>line_edit_kommunaleavg_1</tabstop>
+  <tabstop>line_edit_totalpris_1</tabstop>
+  <tabstop>line_edit_fellesformue_1</tabstop>
+  <tabstop>line_edit_boligtype_1</tabstop>
   <tabstop>line_edit_eieform_1</tabstop>
-  <tabstop>line_edit_primrrom_1</tabstop>
-  <tabstop>line_edit_finn_adresse_1</tabstop>
   <tabstop>line_edit_etasje_1</tabstop>
   <tabstop>line_edit_bygger_1</tabstop>
   <tabstop>line_edit_soverom_1</tabstop>
-  <tabstop>line_edit_boligtype_1</tabstop>
-  <tabstop>line_edit_referanse_1</tabstop>
+  <tabstop>line_edit_rom_1</tabstop>
+  <tabstop>line_edit_primrrom_1</tabstop>
+  <tabstop>line_edit_bruttoareal_1</tabstop>
+  <tabstop>line_edit_energimerking_1</tabstop>
+  <tabstop>line_edit_tomteareal_1</tabstop>
+  <tabstop>line_edit_finn_kode_2</tabstop>
+  <tabstop>push_button_finn_2</tabstop>
   <tabstop>line_edit_sistendret_2</tabstop>
   <tabstop>line_edit_referanse_2</tabstop>
+  <tabstop>line_edit_finn_adresse_2</tabstop>
   <tabstop>line_edit_prisantydning_2</tabstop>
   <tabstop>line_edit_formuesverdi_2</tabstop>
   <tabstop>line_edit_fellesgjeld_2</tabstop>
@@ -7326,10 +8482,11 @@
   <tabstop>line_edit_bruttoareal_2</tabstop>
   <tabstop>line_edit_energimerking_2</tabstop>
   <tabstop>line_edit_tomteareal_2</tabstop>
-  <tabstop>line_edit_finn_adresse_2</tabstop>
-  <tabstop>line_edit_omkostninger_1</tabstop>
+  <tabstop>line_edit_finn_kode_3</tabstop>
+  <tabstop>push_button_finn_3</tabstop>
   <tabstop>line_edit_sistendret_3</tabstop>
   <tabstop>line_edit_referanse_3</tabstop>
+  <tabstop>line_edit_finn_adresse_3</tabstop>
   <tabstop>line_edit_prisantydning_3</tabstop>
   <tabstop>line_edit_formuesverdi_3</tabstop>
   <tabstop>line_edit_fellesgjeld_3</tabstop>
@@ -7348,9 +8505,12 @@
   <tabstop>line_edit_bruttoareal_3</tabstop>
   <tabstop>line_edit_energimerking_3</tabstop>
   <tabstop>line_edit_tomteareal_3</tabstop>
-  <tabstop>line_edit_finn_adresse_3</tabstop>
-  <tabstop>line_edit_prisantydning_1</tabstop>
-  <tabstop>line_edit_sistendret_1</tabstop>
+  <tabstop>combo_box_lanetype</tabstop>
+  <tabstop>combo_box_laneperiode</tabstop>
+  <tabstop>combo_box_interval</tabstop>
+  <tabstop>line_edit_egenkapital</tabstop>
+  <tabstop>date_edit_start_dato</tabstop>
+  <tabstop>tab_widget_home</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

@@ -71,19 +71,19 @@ class Email(Value):
         return self._email
 
     @email.setter
-    def email(self, email_):
+    def email(self, new_email):
         """
         email setter
 
         Parameters
         ----------
-        email_  : str
-                  new email to be set
+        new_email  : str
+                     new email to be set
 
         """
-        Assertor.assert_data_types([email_], [str])
-        self.validate_email(email_)
-        self._email = email_
+        Assertor.assert_data_types([new_email], [str])
+        self.validate_email(new_email)
+        self._email = new_email
 
     def format_email(self):
         """

@@ -43,21 +43,6 @@ class Phone(Value):
                 return number.replace(prefix, "").replace(" ", "")
         return number.replace(" ", "")
 
-    def validate_number(self, number: str):
-        """
-        method for validating a phone number
-
-        Parameters
-        ----------
-        number      : str
-                      number to be validated
-
-        """
-        number = self.remove_prefix(number)
-        valid_number = re.compile("^\\+?[0-9]{8,20}$").search(number)
-        if not valid_number:
-            raise InvalidPhoneNumberError("'{}' is an invalid phone number".format(number))
-
     def __init__(self, number: str):
         """
         Constructor / Instantiate the class
@@ -105,6 +90,21 @@ class Phone(Value):
         Assertor.assert_data_types([num], [str])
         self.validate_number(num)
         self._number = num
+
+    def validate_number(self, number: str):
+        """
+        method for validating a phone number
+
+        Parameters
+        ----------
+        number      : str
+                      number to be validated
+
+        """
+        number = self.remove_prefix(number)
+        valid_number = re.compile("^\\+?[0-9]{8,20}$").search(number)
+        if not valid_number:
+            raise InvalidPhoneNumberError("'{}' is an invalid phone number".format(number))
 
     def format_number(self):
         """
