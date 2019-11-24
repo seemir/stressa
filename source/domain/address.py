@@ -32,7 +32,7 @@ class Address(Value):
                      string to be validated
 
         """
-        valid_address = re.compile("[-a-zA-Z0-9]$").search(address)
+        valid_address = re.compile("[a-z0-9]$").search(address.lower())
         if not valid_address:
             raise InvalidAddressError("'{}' is an invalid address".format(address))
 

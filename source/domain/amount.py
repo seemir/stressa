@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Module for the Amount value object
+Module for the Amount Value object
 
 """
 
@@ -9,6 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import re
+from decimal import Decimal, InvalidOperation
 
 from source.util import Assertor, InvalidAmountError, LOGGER
 
@@ -51,12 +52,12 @@ class Amount(Value):
                       formatted amount with thousand separator
 
         """
-        amount = "".join(re.findall(r'\d+', amount))
         try:
-            amount = int(amount)
-        except ValueError:
-            amount = float(amount)
-        return '{:,}'.format(amount).replace(',', ' ')
+            amount = Decimal(amount)
+            return '{:,}'.format(amount).replace(',', ' ')
+        except InvalidOperation as format_error:
+            raise InvalidAmountError(
+                "'{}' is an invalid amount, exited with '{}'".format(amount, format_error))
 
     def __init__(self, amount: str):
         """
@@ -87,7 +88,7 @@ class Amount(Value):
         Returns
         -------
         out         : str
-                  active amount in object
+                      active amount in object
 
         """
         return self._amount
@@ -106,3 +107,41 @@ class Amount(Value):
         Assertor.assert_data_types([new_amount], [str])
         self.validate_amount(new_amount)
         self._amount = self.format_amount(new_amount)
+
+    def __add__(self, other):
+        """
+        addition helper method
+
+        Parameters
+        ----------
+        other       : Amount
+                      other Amount object
+
+        Returns
+        -------
+        out         : str
+                      sum of amount in object and amount in other object
+
+        """
+        Assertor.assert_data_types([other], [type(self)])
+        return self.format_amount(
+            str(Decimal(self.amount.replace(" ", "")) + Decimal(other.amount.replace(" ", ""))))
+
+    def __sub__(self, other):
+        """
+        subtraction helper method
+
+        Parameters
+        ----------
+        other   : Amount
+                  other Amount object
+
+        Returns
+        -------
+        out     : str
+                  amount in object subtracted from amount in other object
+
+        """
+        Assertor.assert_data_types([other], [type(self)])
+        return self.format_amount(
+            str(Decimal(self.amount.replace(" ", "")) - Decimal(other.amount.replace(" ", ""))))

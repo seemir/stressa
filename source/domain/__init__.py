@@ -8,6 +8,7 @@ Domain model implementation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from .currency import Currency
 from .address import Address
 from .family import Family
 from .entity import Entity

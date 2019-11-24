@@ -23,7 +23,6 @@ class HomePage(QMainWindow):
     def __init__(self):
         super().__init__()
         self._ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/home.ui"), self)
-        self._ui.combo_box_kjonn.addItems(FIELDS["kjønn"])
 
         self._ui.line_edit_fornavn.editingFinished.connect(
             lambda: self.format_line_edit("fornavn", Name, "format_name"))
@@ -31,6 +30,7 @@ class HomePage(QMainWindow):
             lambda: self.format_line_edit("etternavn", Name, "format_name"))
         self._ui.line_edit_adresse.editingFinished.connect(
             lambda: self.format_line_edit("adresse", Address, "format_address"))
+        self._ui.combo_box_kjonn.addItems(FIELDS["kjønn"])
         self._ui.line_edit_postnr.editingFinished.connect(
             lambda: self.update_line_edits("postnr", Posten, "zip_code_info"))
         self._ui.line_edit_epost.editingFinished.connect(

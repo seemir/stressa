@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Module with currency value object
+Module with logic for currency value object
 
 """
 
@@ -45,7 +45,8 @@ class Currency(Value):
         """
         try:
             super().__init__()
-            Assertor.assert_data_types([currency.lower()], [str])
+            Assertor.assert_data_types([currency], [str])
+            self.validate_currency(currency)
             self._currency = currency.lower()
             LOGGER.success(
                 "created '{}'".format(self.__class__.__name__))
@@ -77,5 +78,6 @@ class Currency(Value):
                           new currency to be set
 
         """
-        Assertor.assert_data_types([new_currency.lower()], [str])
+        Assertor.assert_data_types([new_currency], [str])
+        self.validate_currency(new_currency)
         self._currency = new_currency.lower()

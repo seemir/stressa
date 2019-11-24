@@ -93,3 +93,39 @@ class Money(Value):
 
         """
         return self.amount + " " + self.currency
+
+    def __add__(self, other):
+        """
+        addition helper method
+
+        Parameters
+        ----------
+        other       : Money
+                      other money object
+
+        Returns
+        -------
+        out         : str
+                      sum of amount in object and amount in other object
+
+        """
+        Assertor.assert_data_types([other], [type(self)])
+        return self._amount + other._amount + " " + self.currency
+
+    def __sub__(self, other):
+        """
+        subtraction helper method
+
+        Parameters
+        ----------
+        other   : Money
+                  other Money object
+
+        Returns
+        -------
+        out     : str
+                  amount in object subtracted from amount in other object
+
+        """
+        Assertor.assert_data_types([other], [type(self)])
+        return self._amount + other._amount + " " + self.currency

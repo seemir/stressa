@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1139</width>
-    <height>603</height>
+    <height>609</height>
    </rect>
   </property>
   <property name="palette">
@@ -3417,103 +3417,7 @@
            <enum>QFrame::Plain</enum>
           </property>
           <layout class="QGridLayout" name="gridLayout_3">
-           <item row="13" column="2">
-            <widget class="QLabel" name="label_totale_utgifter">
-             <property name="text">
-              <string>Totale utgifter</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_totale_utgifter</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_trygde_inntekt">
-             <property name="text">
-              <string>Trygde inntekt</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_trygde_inntekt</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QLineEdit" name="line_edit_trygde_inntekt">
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="1">
-            <widget class="QLineEdit" name="line_edit_total_netto">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="3">
-            <widget class="QLineEdit" name="line_edit_totale_utgifter">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="1">
-            <widget class="QLineEdit" name="line_edit_total_skatt">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="3">
-            <widget class="QLineEdit" name="line_edit_sifo_utgifter">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="1">
-            <widget class="QLineEdit" name="line_edit_brutto_inntekt">
-             <property name="minimumSize">
-              <size>
-               <width>140</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="label_brutto_inntekter">
-             <property name="minimumSize">
-              <size>
-               <width>100</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Brutto inntekt</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_brutto_inntekt</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
+           <item row="1" column="2">
             <widget class="QLabel" name="label_student_lan">
              <property name="minimumSize">
               <size>
@@ -3530,16 +3434,66 @@
             </widget>
            </item>
            <item row="14" column="2">
-            <widget class="QLabel" name="label_likviditetsgrad">
+            <widget class="QLabel" name="label_totale_utgifter">
              <property name="text">
-              <string>Likviditetsgrad</string>
+              <string>Totale utgifter</string>
              </property>
              <property name="buddy">
-              <cstring>line_edit_likviditetsgrad</cstring>
+              <cstring>line_edit_totale_utgifter</cstring>
              </property>
             </widget>
            </item>
-           <item row="0" column="3">
+           <item row="14" column="1">
+            <widget class="QLineEdit" name="line_edit_total_netto">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="3">
+            <widget class="QLineEdit" name="line_edit_totale_utgifter">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="3">
+            <widget class="QLineEdit" name="line_edit_sifo_utgifter">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_trygde_inntekt">
+             <property name="text">
+              <string>Trygd</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_trygde_inntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="15" column="0">
+            <widget class="QLabel" name="label_netto_likviditet">
+             <property name="text">
+              <string>Netto likviditet</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_netto_likviditet</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
             <widget class="QLineEdit" name="line_edit_student_lan">
              <property name="minimumSize">
               <size>
@@ -3552,7 +3506,7 @@
              </property>
             </widget>
            </item>
-           <item row="14" column="3">
+           <item row="15" column="3">
             <widget class="QLineEdit" name="line_edit_likviditetsgrad">
              <property name="enabled">
               <bool>false</bool>
@@ -3560,26 +3514,6 @@
             </widget>
            </item>
            <item row="14" column="0">
-            <widget class="QLabel" name="label_netto_likviditet">
-             <property name="text">
-              <string>Netto likviditet</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_netto_likviditet</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="QLabel" name="label_kreditt_gjeld">
-             <property name="text">
-              <string>Kreditt gjeld</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_kreditt_gjeld</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="0">
             <widget class="QLabel" name="label_total_netto">
              <property name="text">
               <string>Total netto</string>
@@ -3592,22 +3526,15 @@
              </property>
             </widget>
            </item>
-           <item row="1" column="3">
+           <item row="2" column="3">
             <widget class="QLineEdit" name="line_edit_kreditt_gjeld">
              <property name="clearButtonEnabled">
               <bool>true</bool>
              </property>
             </widget>
            </item>
-           <item row="2" column="3">
-            <widget class="QLineEdit" name="line_edit_strom">
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="1">
-            <widget class="QLineEdit" name="line_edit_netto_likviditet">
+           <item row="12" column="1">
+            <widget class="QLineEdit" name="line_edit_total_skatt">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -3616,34 +3543,70 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="2">
-            <widget class="QLabel" name="label_strom">
-             <property name="text">
-              <string>Strøm</string>
+           <item row="1" column="1">
+            <widget class="QLineEdit" name="line_edit_brutto_inntekt">
+             <property name="minimumSize">
+              <size>
+               <width>140</width>
+               <height>0</height>
+              </size>
              </property>
-             <property name="buddy">
-              <cstring>line_edit_strom</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="0">
-            <widget class="QFrame" name="frame_budsjett_white_space">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="3">
-            <widget class="QLineEdit" name="line_edit_andre_utgifter">
              <property name="clearButtonEnabled">
               <bool>true</bool>
              </property>
             </widget>
            </item>
-           <item row="3" column="2">
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_brutto_inntekter">
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Brutto</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_brutto_inntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="15" column="2">
+            <widget class="QLabel" name="label_likviditetsgrad">
+             <property name="text">
+              <string>Likviditetsgrad</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_likviditetsgrad</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLabel" name="label_kreditt_gjeld">
+             <property name="text">
+              <string>Kreditt gjeld</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_kreditt_gjeld</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLineEdit" name="line_edit_trygde_inntekt">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLineEdit" name="line_edit_strom">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
             <widget class="QLabel" name="label_andre_utgifter">
              <property name="text">
               <string>Andre utgifter</string>
@@ -3653,41 +3616,104 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="1">
-            <widget class="QRadioButton" name="radio_button_skattefrie_inntekt">
-             <property name="text">
-              <string>Skattefri leieinntekt</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_leieinntekt">
-             <property name="text">
-              <string>Leieinntekt</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_leieinntekt</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QLineEdit" name="line_edit_leieinntekt">
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="0">
+           <item row="12" column="0">
             <widget class="QPushButton" name="push_button_skatt">
              <property name="text">
               <string>Beregn skatt</string>
              </property>
             </widget>
            </item>
-           <item row="11" column="2">
+           <item row="3" column="2">
+            <widget class="QLabel" name="label_strom">
+             <property name="text">
+              <string>Strøm</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_strom</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLineEdit" name="line_edit_andre_utgifter">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_leieinntekt">
+             <property name="text">
+              <string>Leie</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_leieinntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLineEdit" name="line_edit_leieinntekt">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="2">
             <widget class="QPushButton" name="push_button_sifo_utgifter">
              <property name="text">
               <string>Sifo utgifter</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QRadioButton" name="radio_button_skattefrie_inntekt">
+             <property name="text">
+              <string>Skattefri leieinntekt</string>
+             </property>
+            </widget>
+           </item>
+           <item row="15" column="1">
+            <widget class="QLineEdit" name="line_edit_netto_likviditet">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="16" column="0">
+            <widget class="QFrame" name="frame_budsjett_white_space">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_manedlige_inntekter">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Månedlige inntekter</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLabel" name="label_manedlige_utgifter">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Månedlige utgifter</string>
              </property>
             </widget>
            </item>
@@ -8270,7 +8296,7 @@
   </action>
   <action name="action_nylige_lan">
    <property name="icon">
-    <iconset resource="../../images/img.qrc">
+    <iconset>
      <normaloff>:/img/recent.png</normaloff>:/img/recent.png</iconset>
    </property>
    <property name="text">
@@ -8405,6 +8431,7 @@
   </action>
  </widget>
  <tabstops>
+  <tabstop>tab_widget_home</tabstop>
   <tabstop>line_edit_fornavn</tabstop>
   <tabstop>line_edit_etternavn</tabstop>
   <tabstop>combo_box_kjonn</tabstop>
@@ -8423,15 +8450,15 @@
   <tabstop>line_edit_trygde_inntekt</tabstop>
   <tabstop>line_edit_leieinntekt</tabstop>
   <tabstop>radio_button_skattefrie_inntekt</tabstop>
+  <tabstop>push_button_skatt</tabstop>
+  <tabstop>line_edit_total_skatt</tabstop>
+  <tabstop>line_edit_total_netto</tabstop>
   <tabstop>line_edit_student_lan</tabstop>
   <tabstop>line_edit_kreditt_gjeld</tabstop>
   <tabstop>line_edit_strom</tabstop>
   <tabstop>line_edit_andre_utgifter</tabstop>
-  <tabstop>push_button_skatt</tabstop>
-  <tabstop>line_edit_total_skatt</tabstop>
   <tabstop>push_button_sifo_utgifter</tabstop>
   <tabstop>line_edit_sifo_utgifter</tabstop>
-  <tabstop>line_edit_total_netto</tabstop>
   <tabstop>line_edit_totale_utgifter</tabstop>
   <tabstop>line_edit_netto_likviditet</tabstop>
   <tabstop>line_edit_likviditetsgrad</tabstop>
@@ -8510,7 +8537,6 @@
   <tabstop>combo_box_interval</tabstop>
   <tabstop>line_edit_egenkapital</tabstop>
   <tabstop>date_edit_start_dato</tabstop>
-  <tabstop>tab_widget_home</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>
