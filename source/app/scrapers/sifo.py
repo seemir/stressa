@@ -11,8 +11,6 @@ __email__ = 'samir.adrik@gmail.com'
 import xml.etree.ElementTree as Et
 from http.client import responses
 
-from bs4 import BeautifulSoup
-
 from source.domain import Family
 from source.util import Assertor, LOGGER
 
@@ -102,8 +100,8 @@ class Sifo(Scraper):
 
         try:
             LOGGER.info("trying to retrieve '{}'".format(self.sifo_expenses.__name__))
-            soup = BeautifulSoup(self.response(), "xml")
-            root = Et.fromstring(soup.prettify())
+            root = Et.fromstring(self.response().read())
+
             expenses = {}
             if include_id:
                 expenses.update({'_id': self.family.id_str})

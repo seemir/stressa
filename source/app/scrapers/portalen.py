@@ -14,7 +14,6 @@ from http.client import responses
 import xml.etree.ElementTree as Et
 
 import requests
-from bs4 import BeautifulSoup
 
 from source.util import LOGGER, cache
 
@@ -70,12 +69,13 @@ class Portalen(Scraper):
         try:
             LOGGER.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
 
-            soup = BeautifulSoup(self.response().content.decode("windows-1252"), "xml")
-            tree = Et.fromstring(soup.prettify()).findall(PORTALEN_ENTRY)
+            response = self.response().content.decode("windows-1252")
+            tree = Et.fromstring(response).findall(PORTALEN_ENTRY)
 
-            gc.collect()
             offers = {}
             count = 0
+            gc.collect()
+
             for entries in tree:
                 count += 1
                 offers.update(
