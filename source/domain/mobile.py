@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import InvalidMobilePhoneNumberError, LOGGER
+from source.util import InvalidMobilePhoneNumberError, LOGGER, Assertor
 
 from .phone import Phone
 
@@ -38,6 +38,34 @@ class Mobile(Phone):
         except Exception as mobile_phone_error:
             LOGGER.exception(mobile_phone_error)
             raise mobile_phone_error
+
+    @property
+    def number(self):
+        """
+        number getter
+
+        Returns
+        -------
+        out     : str
+                  active number in object
+
+        """
+        return self._number
+
+    @number.setter
+    def number(self, new_number):
+        """
+        number setter
+
+        Parameters
+        ----------
+        new_number     : str
+                         number to be set
+
+        """
+        Assertor.assert_data_types([new_number], [str])
+        self.validate_mobile_number(new_number)
+        self._number = new_number
 
     def validate_mobile_number(self, number: str):
         """

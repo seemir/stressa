@@ -30,7 +30,7 @@ class TestAmount:
         """
         cls.amount = Amount("90210")
 
-    def test_amount_is_instance_of_value_and_address(self):
+    def test_amount_is_instance_of_value_and_amount(self):
         """
         Test that all amount objects are instances and subclasses of Amount and Value
 

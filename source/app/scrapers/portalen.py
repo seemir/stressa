@@ -70,13 +70,17 @@ class Portalen(Scraper):
         try:
             LOGGER.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
 
-            offers = {}
             soup = BeautifulSoup(self.response().content.decode("windows-1252"), "xml")
             tree = Et.fromstring(soup.prettify()).findall(PORTALEN_ENTRY)
 
-            for i, entries in enumerate(tree):
-                offers[i + 1] = {re.sub("{[^>]+}", "", entry.tag): entry.text.strip() for entry in
-                                 entries if entry.text}
+            gc.collect()
+            offers = {}
+            count = 0
+            for entries in tree:
+                count += 1
+                offers.update(
+                    {count: {re.sub("{[^>]+}", "", entry.tag): entry.text.strip() for entry in
+                             entries if entry.text}})
             gc.collect()
 
             LOGGER.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))

@@ -128,4 +128,4 @@ class Money(Value):
 
         """
         Assertor.assert_data_types([other], [type(self)])
-        return self._amount + other._amount + " " + self.currency
+        return self._amount - other._amount + " " + self.currency

@@ -77,19 +77,19 @@ class Phone(Value):
         return self._number
 
     @number.setter
-    def number(self, num):
+    def number(self, new_number):
         """
         number setter
 
         Parameters
         ----------
-        num     : str
-                  number to be set
+        new_number     : str
+                         number to be set
 
         """
-        Assertor.assert_data_types([num], [str])
-        self.validate_number(num)
-        self._number = num
+        Assertor.assert_data_types([new_number], [str])
+        self.validate_number(new_number)
+        self._number = new_number
 
     def validate_number(self, number: str):
         """
