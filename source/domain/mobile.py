@@ -53,19 +53,19 @@ class Mobile(Phone):
         return self._number
 
     @number.setter
-    def number(self, new_number):
+    def number(self, new_mobile_number):
         """
         number setter
 
         Parameters
         ----------
-        new_number     : str
-                         number to be set
+        new_mobile_number     : str
+                                number to be set
 
         """
-        Assertor.assert_data_types([new_number], [str])
-        self.validate_mobile_number(new_number)
-        self._number = new_number
+        Assertor.assert_data_types([new_mobile_number], [str])
+        self.validate_mobile_number(new_mobile_number)
+        self._number = new_mobile_number
 
     def validate_mobile_number(self, number: str):
         """
