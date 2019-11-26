@@ -28,21 +28,11 @@ class Value(ABC):
         LOGGER.info(
             "trying to create '{}'".format(self.__class__.__name__))
 
-    @property
-    def hash(self):
-        """
-        Hash getter
-
-        """
-        return hash(repr(self))
-
     def __eq__(self, other):
         """
         Method for asserting that value objects are equal
 
         """
-        if other is None:
-            return False
         return self.__dict__ == other.__dict__
 
     def __ne__(self, other):
@@ -51,10 +41,3 @@ class Value(ABC):
 
         """
         return self.__dict__ != other.__dict__
-
-    def __str__(self):
-        """
-        String representation
-
-        """
-        return repr(self)

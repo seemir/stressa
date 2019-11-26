@@ -79,3 +79,17 @@ class TestEmail:
         """
         email = Email(valid_email)
         assert email.format_email() == valid_email
+
+    def test_email_value_object_equal(self):
+        """
+        Testing that two Email Value objects are equal when all properties are equal
+
+        """
+        assert self.email == Email("ola.nordmann@gmail.com")
+
+    def test_email_value_object_not_equal(self):
+        """
+        Testing that two Email Value objects are not equal when some properties are not equal
+
+        """
+        assert self.email != Email("kari.nordmann@gmail.com")

@@ -67,3 +67,17 @@ class TestMobile:
             self.mobile.number = invalid_mobile_number
         with pt.raises(InvalidMobilePhoneNumberError):
             self.mobile.validate_mobile_number(invalid_mobile_number)
+
+    def test_mobile_value_object_equal(self):
+        """
+        Testing that two Mobile Value objects are equal when all properties are equal
+
+        """
+        assert self.mobile == Mobile("98989898")
+
+    def test_mobile_value_object_not_equal(self):
+        """
+        Testing that two Mobile Value objects are not equal when some properties are equal
+
+        """
+        assert self.mobile != Mobile("98989897")

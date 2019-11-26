@@ -69,3 +69,10 @@ class TestCurrency:
             self.currency.currency = invalid_currency
         with pt.raises(InvalidCurrencyError):
             self.currency.validate_currency(invalid_currency)
+
+    def test_currency_value_object_equal(self):
+        """
+        Testing that two Currency Value objects are equal when some properties are equal
+
+        """
+        assert self.currency == Currency()

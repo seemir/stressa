@@ -75,3 +75,17 @@ class TestMoney:
         """
         correct_sum = str(Decimal(self.money.amount.replace(" ", "")) - Decimal(amount)) + "kr"
         assert str(self.money - Money(amount)).replace(" ", "") == correct_sum
+
+    def test_money_value_object_equal(self):
+        """
+        Testing that two Money Value objects are equal when all properties are equal
+
+        """
+        assert self.money == Money("90210")
+
+    def test_money_value_object_not_equal(self):
+        """
+        Testing that two Money Value objects are not equal when all properties are not equal
+
+        """
+        assert self.money != Money("90211")

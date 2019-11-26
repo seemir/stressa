@@ -98,3 +98,17 @@ class TestAmount:
         """
         correct_sub = str(Decimal(self.amount.amount.replace(" ", "")) - Decimal(amount))
         assert (self.amount - Amount(amount)).replace(" ", "") == correct_sub
+
+    def test_amount_value_object_equal(self):
+        """
+        Testing that two Amount Value objects are equal when all properties are equal
+
+        """
+        assert self.amount == Amount("90210")
+
+    def test_amount_value_object_not_equal(self):
+        """
+        Testing that two Amount Value objects are equal when some properties are not equal
+
+        """
+        assert self.amount != Amount("90211")

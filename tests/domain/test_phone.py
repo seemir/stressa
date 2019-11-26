@@ -93,3 +93,17 @@ class TestPhone:
 
         """
         assert self.phone.remove_prefix(numbers) == "91515915"
+
+    def test_phone_value_object_equal(self):
+        """
+        Testing that two Phone Value objects are equal when all properties are equal
+
+        """
+        assert self.phone == Phone("91515915")
+
+    def test_phone_value_object_not_equal(self):
+        """
+        Testing that two Phone Value objects are not equal when some properties are equal
+
+        """
+        assert self.phone != Phone("91515919")

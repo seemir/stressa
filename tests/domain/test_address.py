@@ -79,3 +79,17 @@ class TestAddress:
         """
         address = Address(valid_address)
         assert address.format_address() == valid_address.capitalize()
+
+    def test_address_value_object_equal(self):
+        """
+        Testing that two Address Value objects are equal when all properties are equal
+
+        """
+        assert self.address == Address("Slottsplassen 1, 0010 Oslo")
+
+    def test_address_value_object_not_equal(self):
+        """
+        Testing that two Address Value objects are not equal when some properties are not equal
+
+        """
+        assert self.address != Address("Slottsplassen 2, 0010 Oslo")
