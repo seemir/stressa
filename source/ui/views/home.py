@@ -21,7 +21,9 @@ class HomePage(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/home.ui"), self)
-        self._formatting = Formatting(self, Error).format_contact_info()
+        self._formatting = Formatting(self, Error)
+
+        self._formatting.format_contact_info()
 
     @pyqtSlot()
     def open_sifo_calculator(self):

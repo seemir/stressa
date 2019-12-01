@@ -20,4 +20,6 @@ class SifoCalc(QDialog):
         super().__init__(parent=parent)
         self.parent = parent
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/sifo_calc.ui"), self)
-        self._formatting = Formatting(self, Error).format_sifo_info(self.parent)
+        self._formatting = Formatting(self, Error)
+
+        self._formatting.format_sifo_info(self.parent)
