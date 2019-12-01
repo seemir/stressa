@@ -102,7 +102,7 @@ class TestFinn:
                            'primrrom': '656 m²', 'bruksareal': '831 m²', 'bygger': '1918',
                            'energimerking': 'G - mørkegrønn', 'tomteareal': '1135 m² (eiet)',
                            'bruttoareal': '947 m²', 'formuesverdi': '9 283 581 kr',
-                           'finnkode': '144857770', 'sistendret': '29. nov 2019 08:21',
+                           'finnkode': '144857770', 'sistendret': '1. des 2019 02:14',
                            'referanse': '3180364'}
         assert self.finn.housing_information() == correct_content
 
