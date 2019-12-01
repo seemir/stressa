@@ -129,3 +129,21 @@ class Money(Value):
         """
         Assertor.assert_data_types([other], [type(self)])
         return self._amount - other._amount + " " + self.currency
+
+    def __mul__(self, other):
+        """
+        multiplication helper method
+
+        Parameters
+        ----------
+        other   : Money
+                  other Money object
+
+        Returns
+        -------
+        out     : str
+                  amount in object multiplication with amount in other object
+
+        """
+        Assertor.assert_data_types([other], [type(self)])
+        return self._amount * other._amount + " " + self.currency

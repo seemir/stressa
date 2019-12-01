@@ -33,7 +33,7 @@ class Amount(Value):
                       amount to be validated
 
         """
-        valid_amount = re.compile(r"[0-9]").search(amount.lower())
+        valid_amount = re.compile(r"[0-9kr]").search(amount.lower())
         if not valid_amount:
             raise InvalidAmountError("'{}' is an invalid amount".format(amount))
 
@@ -53,7 +53,7 @@ class Amount(Value):
 
         """
         try:
-            amount = Decimal(amount)
+            amount = Decimal(amount.replace("kr", ""))
             return '{:,}'.format(amount).replace(',', ' ')
         except InvalidOperation as format_error:
             raise InvalidAmountError(
@@ -145,3 +145,22 @@ class Amount(Value):
         Assertor.assert_data_types([other], [type(self)])
         return self.format_amount(
             str(Decimal(self.amount.replace(" ", "")) - Decimal(other.amount.replace(" ", ""))))
+
+    def __mul__(self, other):
+        """
+        multiplication helper method
+
+        Parameters
+        ----------
+        other   : Amount
+                  other Amount object
+
+        Returns
+        -------
+        out     : str
+                  amount in object multiplication with amount in other object
+
+        """
+        Assertor.assert_data_types([other], [type(self)])
+        return self.format_amount(
+            str(Decimal(self.amount.replace(" ", "")) * Decimal(other.amount.replace(" ", ""))))

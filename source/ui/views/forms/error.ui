@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>dialog_error</class>
+ <widget class="QDialog" name="dialog_error">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -447,7 +447,7 @@
    <string>Error</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../images/img.qrc">
+   <iconset resource="../../images/img.qrc">
     <normaloff>:/img/logo_no_text.png</normaloff>:/img/logo_no_text.png</iconset>
   </property>
   <property name="whatsThis">
@@ -1804,8 +1804,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>545</width>
-             <height>245</height>
+             <width>98</width>
+             <height>28</height>
             </rect>
            </property>
            <widget class="QPlainTextEdit" name="plain_text_edit_log">
@@ -2317,7 +2317,7 @@
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="../images/img.qrc">:/img/error.png</pixmap>
+          <pixmap resource="../../images/img.qrc">:/img/error.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -2331,6 +2331,7 @@
   </layout>
  </widget>
  <resources>
+  <include location="../../images/img.qrc"/>
   <include location="../images/img.qrc"/>
  </resources>
  <connections/>

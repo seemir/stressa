@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="img">
+    <file>sifo.png</file>
     <file>paste.png</file>
     <file>error.png</file>
     <file>copy.png</file>
@@ -9,7 +10,6 @@
     <file>quit.png</file>
     <file>print.png</file>
     <file>save.png</file>
-    <file>recent.png</file>
     <file>new.png</file>
     <file>open.png</file>
     <file>logo_no_text.png</file>

@@ -59,7 +59,7 @@ class TestAmount:
         self.amount.amount = valid_amount
         assert self.amount.amount.replace(" ", "") == valid_amount
 
-    @pt.mark.parametrize("invalid_amount", ["one", "ten_", "one-hundred", "one_thousand"])
+    @pt.mark.parametrize("invalid_amount", ["one", "ten_", "one_thousand", "ten_thousands"])
     def test_validate_amount_method(self, invalid_amount):
         """
         Test the static method validate_amount method
@@ -72,7 +72,7 @@ class TestAmount:
         with pt.raises(InvalidAmountError):
             self.amount.validate_amount(invalid_amount)
 
-    @pt.mark.parametrize("invalid_amount", ["one", "ten_", "one-hundred", "one_thousand"])
+    @pt.mark.parametrize("invalid_amount", ["one", "ten_", "one_thousand", "ten-thousand"])
     def test_format_amount_method_thrown_exception(self, invalid_amount):
         """
         Test that the format_amount method throws InvalidAmountError for invalid amounts

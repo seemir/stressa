@@ -96,14 +96,14 @@ class TestFinn:
 
         """
         correct_content = {'finn_adresse': 'Sigyns gate 3, 0260 Oslo',
-                           'prisantydning': '80 000 000 kr', 'omkostninger': '2 015 122 kr',
-                           'totalpris': '82 015 122 kr', 'kommunaleavg': '12 716 kr per år',
-                           'boligtype': 'Enebolig', 'eieform': 'Eier (Selveier)',
-                           'soverom': '7', 'primrrom': '656 m²', 'bruksareal': '831 m²',
-                           'bygger': '1918', 'energimerking': 'G - mørkegrønn',
-                           'tomteareal': '1135 m² (eiet)', 'bruttoareal': '947 m²',
-                           'formuesverdi': '9 283 581 kr', 'finnkode': '144857770',
-                           'sistendret': '22. sep 2019 03:49', 'referanse': '3180364'}
+                           'prisantydning': '70 000 000 kr', 'omkostninger': '1 765 122 kr',
+                           'totalpris': '71 765 122 kr', 'kommunaleavg': '12 716 kr per år',
+                           'boligtype': 'Enebolig', 'eieform': 'Eier (Selveier)', 'soverom': '7',
+                           'primrrom': '656 m²', 'bruksareal': '831 m²', 'bygger': '1918',
+                           'energimerking': 'G - mørkegrønn', 'tomteareal': '1135 m² (eiet)',
+                           'bruttoareal': '947 m²', 'formuesverdi': '9 283 581 kr',
+                           'finnkode': '144857770', 'sistendret': '29. nov 2019 08:21',
+                           'referanse': '3180364'}
         assert self.finn.housing_information() == correct_content
 
     @staticmethod

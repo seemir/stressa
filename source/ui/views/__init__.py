@@ -9,4 +9,5 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from .home import HomePage
+from .error import Error
 from .resources import *

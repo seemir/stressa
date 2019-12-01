@@ -13,10 +13,10 @@ import os
 import shutil
 import traceback
 
-from loguru import logger
-from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QDialog, QWidget
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.uic import loadUi
+from loguru import logger
 
 
 class Error(QDialog):
