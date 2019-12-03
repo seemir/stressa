@@ -3,4 +3,6 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from .formatting import Formatting
+from .contact_model import ContactModel
+from .budget_model import BudgetModel
+from .finn_model import FinnModel

@@ -58,6 +58,20 @@ class TestMoney:
         self.money.amount = valid_amount
         assert self.money.amount.replace(" ", "") == valid_amount
 
+    def test_money_value_object_equal(self):
+        """
+        Testing that two Money Value objects are equal when all properties are equal
+
+        """
+        assert self.money == Money("90210")
+
+    def test_money_value_object_not_equal(self):
+        """
+        Testing that two Money Value objects are not equal when all properties are not equal
+
+        """
+        assert self.money != Money("90211")
+
     @pt.mark.parametrize("amount", ["1", "1.5", "100", "1000.45"])
     def test_money_adding_method(self, amount):
         """
@@ -76,16 +90,28 @@ class TestMoney:
         correct_sum = str(Decimal(self.money.amount.replace(" ", "")) - Decimal(amount)) + "kr"
         assert str(self.money - Money(amount)).replace(" ", "") == correct_sum
 
-    def test_money_value_object_equal(self):
+    @pt.mark.parametrize("amount", ["1", "1.5", "100", "1000.45"])
+    def test_money_multiplication_method(self, amount):
         """
-        Testing that two Money Value objects are equal when all properties are equal
+        Test the multiplication method of Money object
 
         """
-        assert self.money == Money("90210")
+        correct_mul = str(Decimal(self.money.amount.replace(" ", "")) * Decimal(amount)) + "kr"
+        assert (self.money * Money(amount)).replace(" ", "") == correct_mul
 
-    def test_money_value_object_not_equal(self):
+    @pt.mark.parametrize("amount", ["1", "1.5", "100", "1000.45"])
+    def test_money_true_division_method(self, amount):
         """
-        Testing that two Money Value objects are not equal when all properties are not equal
+        Test the division method of Money object
 
         """
-        assert self.money != Money("90211")
+        correct_mul = str(Decimal(self.money.amount.replace(" ", "")) / Decimal(amount)) + "kr"
+        assert (self.money / Money(amount)).replace(" ", "") == correct_mul
+
+    def test_money_division_by_zero(self):
+        """
+        Test that dividing Money object by zero throws ZeroDivisionError exception
+
+        """
+        with pt.raises(ZeroDivisionError):
+            assert self.money / Money("0")

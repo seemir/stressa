@@ -13,7 +13,7 @@ from .sifo_calc import SifoCalc
 from .error import Error
 from . import resources
 
-from ..models import Formatting
+from ..models import ContactModel, BudgetModel, FinnModel
 
 
 class HomePage(QMainWindow):
@@ -21,9 +21,14 @@ class HomePage(QMainWindow):
     def __init__(self):
         super().__init__()
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/home.ui"), self)
-        self._formatting = Formatting(self, Error)
 
-        self._formatting.format_contact_info()
+        self._contact_model = ContactModel(self, Error)
+        self._budget_model = BudgetModel(self, Error)
+        self._finn_model = FinnModel(self, Error)
+
+        self._contact_model.contact_info()
+        self._budget_model.budget_info()
+        self._finn_model.finn_info()
 
     @pyqtSlot()
     def open_sifo_calculator(self):

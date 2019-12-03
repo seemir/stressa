@@ -32,7 +32,7 @@ class Name(Value):
                   string to be validated
 
         """
-        valid_name = re.compile("[-a-zA-Z]$").search(name)
+        valid_name = re.compile("^[a-zA-Z]+$").search(name)
         if not valid_name:
             raise InvalidNameError("'{}' is an invalid name".format(name))
 

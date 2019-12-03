@@ -34,8 +34,8 @@ class Money(Value):
         try:
             super().__init__()
             Assertor.assert_data_types([amount], [str])
-            self._amount = Amount(amount)
             self._currency = Currency()
+            self._amount = Amount(amount.replace(self._currency.currency, "").replace(" ", ""))
             LOGGER.success(
                 "created '{}' -> {}".format(self.__class__.__name__, self.value()))
         except Exception as amount_error:
@@ -67,7 +67,7 @@ class Money(Value):
 
         """
         Assertor.assert_data_types([new_amount], [str])
-        self._amount.amount = new_amount
+        self._amount.amount = new_amount.replace(self.currency, "").replace(" ", "")
 
     @property
     def currency(self):
@@ -147,3 +147,21 @@ class Money(Value):
         """
         Assertor.assert_data_types([other], [type(self)])
         return self._amount * other._amount + " " + self.currency
+
+    def __truediv__(self, other):
+        """
+        division helper method
+
+        Parameters
+        ----------
+        other   : Money
+                  other Money object
+
+        Returns
+        -------
+        out     : str
+                  amount in object division with amount in other object
+
+        """
+        Assertor.assert_data_types([other], [type(self)])
+        return self._amount / other._amount + " " + self.currency

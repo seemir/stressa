@@ -81,6 +81,20 @@ class TestAmount:
         with pt.raises(InvalidAmountError):
             self.amount.format_amount(invalid_amount)
 
+    def test_amount_value_object_equal(self):
+        """
+        Testing that two Amount Value objects are equal when all properties are equal
+
+        """
+        assert self.amount == Amount("90210")
+
+    def test_amount_value_object_not_equal(self):
+        """
+        Testing that two Amount Value objects are equal when some properties are not equal
+
+        """
+        assert self.amount != Amount("90211")
+
     @pt.mark.parametrize("amount", ["1", "1.5", "100", "1000.45"])
     def test_adding_method(self, amount):
         """
@@ -99,16 +113,28 @@ class TestAmount:
         correct_sub = str(Decimal(self.amount.amount.replace(" ", "")) - Decimal(amount))
         assert (self.amount - Amount(amount)).replace(" ", "") == correct_sub
 
-    def test_amount_value_object_equal(self):
+    @pt.mark.parametrize("amount", ["1", "1.5", "100", "1000.45"])
+    def test_multiplication_method(self, amount):
         """
-        Testing that two Amount Value objects are equal when all properties are equal
+        Test the multiplication method of Amount object
 
         """
-        assert self.amount == Amount("90210")
+        correct_mul = str(Decimal(self.amount.amount.replace(" ", "")) * Decimal(amount))
+        assert (self.amount * Amount(amount)).replace(" ", "") == correct_mul
 
-    def test_amount_value_object_not_equal(self):
+    @pt.mark.parametrize("amount", ["1", "1.5", "100", "1000.45"])
+    def test_true_division_method(self, amount):
         """
-        Testing that two Amount Value objects are equal when some properties are not equal
+        Test the division method of Amount object
 
         """
-        assert self.amount != Amount("90211")
+        correct_mul = str(Decimal(self.amount.amount.replace(" ", "")) / Decimal(amount))
+        assert (self.amount / Amount(amount)).replace(" ", "") == correct_mul
+
+    def test_division_by_zero(self):
+        """
+        Test that dividing Amount object by zero throws ZeroDivisionError exception
+
+        """
+        with pt.raises(ZeroDivisionError):
+            assert self.amount / Amount("0")
