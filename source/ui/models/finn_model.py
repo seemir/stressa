@@ -12,19 +12,26 @@ from .model import Model
 
 
 class FinnModel(Model):
+    _finn_kode = ["finnkode", "sistendret", "referanse", "finn_adresse", "prisantydning",
+                  "formuesverdi", "fellesgjeld", "felleskostmnd", "omkostninger",
+                  "kommunaleavg", "totalpris", "fellesformue", "boligtype", "eieform",
+                  "etasje", "bygger", "soverom", "rom", "primrrom", "bruttoareal",
+                  "energimerking", "tomteareal"]
 
     def __init__(self, parent, error):
         super(FinnModel, self).__init__(parent, error)
-        self._parent = parent
-        self._error = error
-
-    @property
-    def data(self):
-        return self._data
 
     def finn_info(self):
+        self._parent.ui.line_edit_finnkode_1.editingFinished.connect(
+            lambda: self.update_line_edits("finnkode_1", self._finn_kode, Finn,
+                                           "housing_information", "1"))
+        self._parent.ui.line_edit_finnkode_2.editingFinished.connect(
+            lambda: self.update_line_edits("finnkode_2", self._finn_kode, Finn,
+                                           "housing_information", "2"))
+        self._parent.ui.line_edit_finnkode_3.editingFinished.connect(
+            lambda: self.update_line_edits("finnkode_3", self._finn_kode, Finn,
+                                           "housing_information", "3"))
         self._parent.ui.push_button_finn_1.clicked.connect(self.open_finn_url)
-        self.update_line_edits("finn_kode", self.data.keys(), Finn, "housing_information", 1)
 
     @staticmethod
     def open_finn_url():

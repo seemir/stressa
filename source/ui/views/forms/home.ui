@@ -3532,7 +3532,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="line_edit_finn_kode_1">
+             <widget class="QLineEdit" name="line_edit_finnkode_1">
               <property name="minimumSize">
                <size>
                 <width>140</width>
@@ -3574,7 +3574,7 @@
                <string>FINN kode            </string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_finn_kode_1</cstring>
+               <cstring>line_edit_finnkode_1</cstring>
               </property>
              </widget>
             </item>
@@ -3621,7 +3621,7 @@
                <string>FINN kode            </string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_finn_kode_2</cstring>
+               <cstring>line_edit_finnkode_2</cstring>
               </property>
              </widget>
             </item>
@@ -3677,7 +3677,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="line_edit_finn_kode_2">
+             <widget class="QLineEdit" name="line_edit_finnkode_2">
               <property name="minimumSize">
                <size>
                 <width>140</width>
@@ -4445,7 +4445,7 @@
                <string>FINN kode            </string>
               </property>
               <property name="buddy">
-               <cstring>line_edit_finn_kode_3</cstring>
+               <cstring>line_edit_finnkode_3</cstring>
               </property>
              </widget>
             </item>
@@ -4944,7 +4944,7 @@
              </widget>
             </item>
             <item row="0" column="1">
-             <widget class="QLineEdit" name="line_edit_finn_kode_3">
+             <widget class="QLineEdit" name="line_edit_finnkode_3">
               <property name="minimumSize">
                <size>
                 <width>140</width>
@@ -5576,7 +5576,7 @@
             </widget>
            </item>
            <item row="1" column="3">
-            <widget class="QComboBox" name="combo_box_interval">
+            <widget class="QComboBox" name="combo_box_intervall">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -5675,7 +5675,7 @@
               <string>Start dato</string>
              </property>
              <property name="buddy">
-              <cstring>date_edit_start_dato</cstring>
+              <cstring>date_edit_startdato</cstring>
              </property>
             </widget>
            </item>
@@ -5697,7 +5697,7 @@
               <string>Intervall</string>
              </property>
              <property name="buddy">
-              <cstring>combo_box_interval</cstring>
+              <cstring>combo_box_intervall</cstring>
              </property>
             </widget>
            </item>
@@ -5746,7 +5746,7 @@
             </widget>
            </item>
            <item row="2" column="3">
-            <widget class="QDateEdit" name="date_edit_start_dato">
+            <widget class="QDateEdit" name="date_edit_startdato">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -8514,7 +8514,7 @@
   <tabstop>line_edit_netto_likviditet</tabstop>
   <tabstop>line_edit_likviditetsgrad</tabstop>
   <tabstop>tab_widget_annoser</tabstop>
-  <tabstop>line_edit_finn_kode_1</tabstop>
+  <tabstop>line_edit_finnkode_1</tabstop>
   <tabstop>push_button_finn_1</tabstop>
   <tabstop>line_edit_sistendret_1</tabstop>
   <tabstop>line_edit_referanse_1</tabstop>
@@ -8537,7 +8537,7 @@
   <tabstop>line_edit_bruttoareal_1</tabstop>
   <tabstop>line_edit_energimerking_1</tabstop>
   <tabstop>line_edit_tomteareal_1</tabstop>
-  <tabstop>line_edit_finn_kode_2</tabstop>
+  <tabstop>line_edit_finnkode_2</tabstop>
   <tabstop>push_button_finn_2</tabstop>
   <tabstop>line_edit_sistendret_2</tabstop>
   <tabstop>line_edit_referanse_2</tabstop>
@@ -8560,7 +8560,7 @@
   <tabstop>line_edit_bruttoareal_2</tabstop>
   <tabstop>line_edit_energimerking_2</tabstop>
   <tabstop>line_edit_tomteareal_2</tabstop>
-  <tabstop>line_edit_finn_kode_3</tabstop>
+  <tabstop>line_edit_finnkode_3</tabstop>
   <tabstop>push_button_finn_3</tabstop>
   <tabstop>line_edit_sistendret_3</tabstop>
   <tabstop>line_edit_referanse_3</tabstop>
@@ -8585,9 +8585,9 @@
   <tabstop>line_edit_tomteareal_3</tabstop>
   <tabstop>combo_box_lanetype</tabstop>
   <tabstop>combo_box_laneperiode</tabstop>
-  <tabstop>combo_box_interval</tabstop>
+  <tabstop>combo_box_intervall</tabstop>
   <tabstop>line_edit_egenkapital</tabstop>
-  <tabstop>date_edit_start_dato</tabstop>
+  <tabstop>date_edit_startdato</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

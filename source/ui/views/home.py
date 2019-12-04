@@ -13,7 +13,7 @@ from .sifo_calc import SifoCalc
 from .error import Error
 from . import resources
 
-from ..models import ContactModel, BudgetModel, FinnModel
+from ..models import ContactModel, BudgetModel, FinnModel, MortgageModel
 
 
 class HomePage(QMainWindow):
@@ -25,10 +25,12 @@ class HomePage(QMainWindow):
         self._contact_model = ContactModel(self, Error)
         self._budget_model = BudgetModel(self, Error)
         self._finn_model = FinnModel(self, Error)
+        self._mortgage_model = MortgageModel(self, Error)
 
         self._contact_model.contact_info()
         self._budget_model.budget_info()
         self._finn_model.finn_info()
+        self._mortgage_model.mortgage_information()
 
     @pyqtSlot()
     def open_sifo_calculator(self):
