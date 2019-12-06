@@ -19,13 +19,13 @@ from PyQt5.uic import loadUi
 from loguru import logger
 
 
-class Error(QDialog):
+class ErrorView(QDialog):
     """
     Error dialog window
 
     """
 
-    def __init__(self, parent: QWidget, exception: Exception):
+    def __init__(self, parent: QWidget):
         """
         Constructor / Instantiate the class
 
@@ -33,12 +33,21 @@ class Error(QDialog):
         ----------
         parent      : QWidget
                       parent class for which this dialog window is part
-        exception   : Exception
-                      an exception that has occurred
 
         """
         super().__init__(parent)
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/error.ui"), self)
+        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/error_form.ui"), self)
+
+    def show_error(self, exception):
+        """
+        method for shows an error form with exception, traceback and log information
+
+        Parameters
+        ----------
+        exception   : Exception
+                      exception to be added to form
+
+        """
         self.ui.label_error_text.setText(str(exception))
         self.ui.plain_text_edit_traceback.setPlainText(traceback.format_exc())
         self.ui.plain_text_edit_log.setPlainText(self.read_log(exception))

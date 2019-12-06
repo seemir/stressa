@@ -22,16 +22,20 @@ class FinnModel(Model):
         super(FinnModel, self).__init__(parent, error)
 
     def finn_info(self):
-        self._parent.ui.line_edit_finnkode_1.editingFinished.connect(
+        self.parent.ui.line_edit_finnkode_1.editingFinished.connect(
             lambda: self.update_line_edits("finnkode_1", self._finn_kode, Finn,
                                            "housing_information", "1"))
-        self._parent.ui.line_edit_finnkode_2.editingFinished.connect(
+        self.parent.ui.push_button_finn_1.clicked.connect(self.open_finn_url)
+
+        self.parent.ui.line_edit_finnkode_2.editingFinished.connect(
             lambda: self.update_line_edits("finnkode_2", self._finn_kode, Finn,
                                            "housing_information", "2"))
-        self._parent.ui.line_edit_finnkode_3.editingFinished.connect(
+        self.parent.ui.push_button_finn_2.clicked.connect(self.open_finn_url)
+
+        self.parent.ui.line_edit_finnkode_3.editingFinished.connect(
             lambda: self.update_line_edits("finnkode_3", self._finn_kode, Finn,
                                            "housing_information", "3"))
-        self._parent.ui.push_button_finn_1.clicked.connect(self.open_finn_url)
+        self.parent.ui.push_button_finn_3.clicked.connect(self.open_finn_url)
 
     @staticmethod
     def open_finn_url():

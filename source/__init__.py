@@ -8,4 +8,4 @@ This app intends to supply a GUI for stress testing Norwegian mortgage applicati
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from .ui import HomePage
+from .ui import HomeView

@@ -10,8 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from typing import Union
 
-from source.util import Assertor, LOGGER
-from source.util import MissingGuardianshipError
+from source.util import Assertor, LOGGER, MissingGuardianshipError
 
 from .entity import Entity
 from .female import Female

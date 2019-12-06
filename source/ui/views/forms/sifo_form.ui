@@ -1808,29 +1808,13 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="line_edit_kollektivt">
-         <property name="enabled">
-          <bool>false</bool>
+       <item row="19" column="0">
+        <widget class="QLabel" name="label_biler">
+         <property name="text">
+          <string>Bil (drift og vedlikehold)</string>
          </property>
-         <property name="maximumSize">
-          <size>
-           <width>140</width>
-           <height>16777215</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="line_edit_klar">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>140</width>
-           <height>16777215</height>
-          </size>
+         <property name="buddy">
+          <cstring>line_edit_biler</cstring>
          </property>
         </widget>
        </item>
@@ -1847,81 +1831,28 @@
          </property>
         </widget>
        </item>
-       <item row="25" column="1">
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="line_edit_mat_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="20" column="1">
+        <widget class="QLineEdit" name="line_edit_barnehage">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="24" column="1">
         <widget class="QLineEdit" name="line_edit_totalt">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>140</width>
-           <height>16777215</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_kollektivt">
-         <property name="text">
-          <string>Reise (kollektivt)</string>
-         </property>
-         <property name="buddy">
-          <cstring>line_edit_kollektivt</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_helse">
-         <property name="text">
-          <string>Personlig pleie</string>
-         </property>
-         <property name="buddy">
-          <cstring>line_edit_helse</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="25" column="2">
-        <widget class="QLineEdit" name="line_edit_totalt_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_klar">
-         <property name="text">
-          <string>Klær og sko</string>
-         </property>
-         <property name="buddy">
-          <cstring>line_edit_klar</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_fritid">
-         <property name="text">
-          <string>Lek og mediebruk</string>
-         </property>
-         <property name="buddy">
-          <cstring>line_edit_fritid</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="line_edit_spedbarn">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>140</width>
-           <height>16777215</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="line_edit_fritid">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -1940,6 +1871,19 @@
          </property>
          <property name="buddy">
           <cstring>line_edit_spedbarn</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="line_edit_klar">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -1962,34 +1906,49 @@
          </property>
         </widget>
        </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_sumindivid">
+       <item row="6" column="1">
+        <widget class="QLineEdit" name="line_edit_kollektivt">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="21" column="0">
+        <widget class="QLabel" name="label_sfo">
          <property name="text">
-          <string>Sum</string>
+          <string>Aktivitetsskole (SFO)</string>
          </property>
          <property name="buddy">
-          <cstring>line_edit_sumindivid</cstring>
+          <cstring>line_edit_sfo</cstring>
          </property>
         </widget>
        </item>
-       <item row="8" column="0">
-        <widget class="Line" name="line_sum_individ">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+       <item row="19" column="1">
+        <widget class="QLineEdit" name="line_edit_biler">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
-       <item row="22" column="0">
-        <widget class="Line" name="line_sum_husholdning">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="27" column="1" colspan="2">
-        <widget class="QPushButton" name="pushbutton_exporter">
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_klar">
          <property name="text">
-          <string>Exporter</string>
+          <string>Klær og sko</string>
+         </property>
+         <property name="buddy">
+          <cstring>line_edit_klar</cstring>
          </property>
         </widget>
        </item>
@@ -2015,10 +1974,122 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QLineEdit" name="line_edit_mat_perc">
+       <item row="15" column="0">
+        <widget class="QLabel" name="label_dagligvarer">
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Andre dagligvarer</string>
+         </property>
+         <property name="buddy">
+          <cstring>line_edit_dagligvarer</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_kollektivt">
+         <property name="text">
+          <string>Reise (kollektivt)</string>
+         </property>
+         <property name="buddy">
+          <cstring>line_edit_kollektivt</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QLineEdit" name="line_edit_fritid">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>16777215</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="Line" name="line_sum_individ">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="20" column="0">
+        <widget class="QLabel" name="label_barnehage">
+         <property name="text">
+          <string>Barnehage</string>
+         </property>
+         <property name="buddy">
+          <cstring>line_edit_barnehage</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_fritid">
+         <property name="text">
+          <string>Lek og mediebruk</string>
+         </property>
+         <property name="buddy">
+          <cstring>line_edit_fritid</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="24" column="2">
+        <widget class="QLineEdit" name="line_edit_totalt_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="26" column="1" colspan="2">
+        <widget class="QPushButton" name="pushbutton_exporter">
+         <property name="text">
+          <string>Exporter</string>
+         </property>
+        </widget>
+       </item>
+       <item row="16" column="0">
+        <widget class="QLabel" name="label_husholdsart">
+         <property name="text">
+          <string>Husholdningsartikler</string>
+         </property>
+         <property name="buddy">
+          <cstring>line_edit_husholdsart</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_sumindivid">
+         <property name="text">
+          <string>Sum</string>
+         </property>
+         <property name="buddy">
+          <cstring>line_edit_sumindivid</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="1">
+        <widget class="QLineEdit" name="line_edit_dagligvarer">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>140</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>140</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -2044,39 +2115,6 @@
          </property>
         </widget>
        </item>
-       <item row="16" column="0">
-        <widget class="QLabel" name="label_husholdsart">
-         <property name="text">
-          <string>Husholdningsartikler</string>
-         </property>
-         <property name="buddy">
-          <cstring>line_edit_husholdsart</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="20" column="0">
-        <widget class="QLabel" name="label_barnehage">
-         <property name="text">
-          <string>Barnehage</string>
-         </property>
-         <property name="buddy">
-          <cstring>line_edit_barnehage</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="19" column="1">
-        <widget class="QLineEdit" name="line_edit_biler">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>140</width>
-           <height>16777215</height>
-          </size>
-         </property>
-        </widget>
-       </item>
        <item row="18" column="0">
         <widget class="QLabel" name="label_medier">
          <property name="text">
@@ -2087,22 +2125,23 @@
          </property>
         </widget>
        </item>
-       <item row="15" column="1">
-        <widget class="QLineEdit" name="line_edit_dagligvarer">
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="line_edit_spedbarn">
          <property name="enabled">
           <bool>false</bool>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>140</width>
-           <height>0</height>
-          </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>140</width>
            <height>16777215</height>
           </size>
+         </property>
+        </widget>
+       </item>
+       <item row="22" column="0">
+        <widget class="Line" name="line_sum_husholdning">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
@@ -2129,16 +2168,6 @@
          </property>
         </widget>
        </item>
-       <item row="21" column="0">
-        <widget class="QLabel" name="label_sfo">
-         <property name="text">
-          <string>Aktivitetsskole (SFO)</string>
-         </property>
-         <property name="buddy">
-          <cstring>line_edit_sfo</cstring>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_mat">
          <property name="minimumSize">
@@ -2155,34 +2184,46 @@
          </property>
         </widget>
        </item>
-       <item row="19" column="0">
-        <widget class="QLabel" name="label_biler">
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_helse">
          <property name="text">
-          <string>Bil (drift og vedlikehold)</string>
+          <string>Personlig pleie</string>
          </property>
          <property name="buddy">
-          <cstring>line_edit_biler</cstring>
+          <cstring>line_edit_helse</cstring>
          </property>
         </widget>
        </item>
-       <item row="15" column="0">
-        <widget class="QLabel" name="label_dagligvarer">
-         <property name="minimumSize">
-          <size>
-           <width>90</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Andre dagligvarer</string>
-         </property>
-         <property name="buddy">
-          <cstring>line_edit_dagligvarer</cstring>
+       <item row="19" column="2">
+        <widget class="QLineEdit" name="line_edit_biler_perc">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
-       <item row="20" column="1">
-        <widget class="QLineEdit" name="line_edit_barnehage">
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="line_edit_helse_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="23" column="2">
+        <widget class="QLineEdit" name="line_edit_sumhusholdning_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QLineEdit" name="line_edit_spedbarn_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="23" column="1">
+        <widget class="QLineEdit" name="line_edit_sumhusholdning">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -2191,6 +2232,58 @@
            <width>140</width>
            <height>16777215</height>
           </size>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="2">
+        <widget class="QLineEdit" name="line_edit_dagligvarer_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="18" column="2">
+        <widget class="QLineEdit" name="line_edit_medier_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QLineEdit" name="line_edit_kollektivt_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="2">
+        <widget class="QLineEdit" name="line_edit_fritid_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="24" column="0">
+        <widget class="QLabel" name="label_totalt">
+         <property name="text">
+          <string>Totalt månedlig forbruk</string>
+         </property>
+         <property name="buddy">
+          <cstring>line_edit_totalt</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLineEdit" name="line_edit_klar_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="2">
+        <widget class="QLineEdit" name="line_edit_sumindivid_perc">
+         <property name="enabled">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -2207,8 +2300,15 @@
          </property>
         </widget>
        </item>
-       <item row="21" column="1">
-        <widget class="QLineEdit" name="line_edit_sfo">
+       <item row="20" column="2">
+        <widget class="QLineEdit" name="line_edit_barnehage_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="16" column="1">
+        <widget class="QLineEdit" name="line_edit_husholdsart">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -2220,8 +2320,15 @@
          </property>
         </widget>
        </item>
-       <item row="23" column="1">
-        <widget class="QLineEdit" name="line_edit_sumhusholdning">
+       <item row="16" column="2">
+        <widget class="QLineEdit" name="line_edit_husholdsart_perc">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="21" column="1">
+        <widget class="QLineEdit" name="line_edit_sfo">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -2243,87 +2350,8 @@
          </property>
         </widget>
        </item>
-       <item row="16" column="1">
-        <widget class="QLineEdit" name="line_edit_husholdsart">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>140</width>
-           <height>16777215</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item row="25" column="0">
-        <widget class="QLabel" name="label_totalt">
-         <property name="text">
-          <string>Totalt månedlig forbruk</string>
-         </property>
-         <property name="buddy">
-          <cstring>line_edit_totalt</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QLineEdit" name="line_edit_klar_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QLineEdit" name="line_edit_fritid_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="15" column="2">
-        <widget class="QLineEdit" name="line_edit_dagligvarer_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QLineEdit" name="line_edit_kollektivt_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QLineEdit" name="line_edit_helse_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="2">
-        <widget class="QLineEdit" name="line_edit_sumindivid_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QLineEdit" name="line_edit_spedbarn_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
        <item row="17" column="2">
         <widget class="QLineEdit" name="line_edit_mobler_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="16" column="2">
-        <widget class="QLineEdit" name="line_edit_husholdsart_perc">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -2333,41 +2361,6 @@
         <widget class="QLineEdit" name="line_edit_sfo_perc">
          <property name="enabled">
           <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="18" column="2">
-        <widget class="QLineEdit" name="line_edit_medier_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="20" column="2">
-        <widget class="QLineEdit" name="line_edit_barnehage_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="19" column="2">
-        <widget class="QLineEdit" name="line_edit_biler_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="23" column="2">
-        <widget class="QLineEdit" name="line_edit_sumhusholdning_perc">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="24" column="0">
-        <widget class="Line" name="line_total">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>

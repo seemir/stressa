@@ -14,29 +14,29 @@ class BudgetModel(Model):
         super(BudgetModel, self).__init__(parent, error)
 
     def budget_info(self):
-        self._parent.ui.line_edit_brutto_inntekt.editingFinished.connect(
+        self.parent.ui.line_edit_brutto_inntekt.editingFinished.connect(
             lambda: self.set_line_edit("brutto_inntekt", Money, "value"))
-        self._parent.ui.line_edit_trygde_inntekt.editingFinished.connect(
+        self.parent.ui.line_edit_trygde_inntekt.editingFinished.connect(
             lambda: self.set_line_edit("trygde_inntekt", Money, "value"))
-        self._parent.ui.line_edit_leieinntekt.editingFinished.connect(
+        self.parent.ui.line_edit_leieinntekt.editingFinished.connect(
             lambda: self.set_line_edit("leieinntekt", Money, "value"))
-        self._parent.ui.line_edit_total_skatt.editingFinished.connect(
+        self.parent.ui.line_edit_total_skatt.editingFinished.connect(
             lambda: self.set_line_edit("total_skatt", Money, "value"))
-        self._parent.ui.line_edit_total_netto.editingFinished.connect(
+        self.parent.ui.line_edit_total_netto.editingFinished.connect(
             lambda: self.set_line_edit("total_netto", Money, "value"))
-        self._parent.ui.line_edit_netto_likviditet.editingFinished.connect(
+        self.parent.ui.line_edit_netto_likviditet.editingFinished.connect(
             lambda: self.set_line_edit("netto_likviditet", Money, "value"))
-        self._parent.ui.line_edit_student_lan.editingFinished.connect(
+        self.parent.ui.line_edit_student_lan.editingFinished.connect(
             lambda: self.set_line_edit("student_lan", Money, "value"))
-        self._parent.ui.line_edit_kreditt_gjeld.editingFinished.connect(
+        self.parent.ui.line_edit_kreditt_gjeld.editingFinished.connect(
             lambda: self.set_line_edit("kreditt_gjeld", Money, "value"))
-        self._parent.ui.line_edit_strom.editingFinished.connect(
+        self.parent.ui.line_edit_strom.editingFinished.connect(
             lambda: self.set_line_edit("strom", Money, "value"))
-        self._parent.ui.line_edit_andre_utgifter.editingFinished.connect(
+        self.parent.ui.line_edit_andre_utgifter.editingFinished.connect(
             lambda: self.set_line_edit("andre_utgifter", Money, "value"))
-        self._parent.ui.line_edit_sifo_utgifter.editingFinished.connect(
+        self.parent.ui.line_edit_sifo_utgifter.editingFinished.connect(
             lambda: self.set_line_edit("sifo_utgifter", Money, "value"))
-        self._parent.ui.line_edit_totale_utgifter.editingFinished.connect(
+        self.parent.ui.line_edit_totale_utgifter.editingFinished.connect(
             lambda: self.set_line_edit("totale_utgifter", Money, "value"))
-        self._parent.ui.line_edit_likviditetsgrad.editingFinished.connect(
+        self.parent.ui.line_edit_likviditetsgrad.editingFinished.connect(
             lambda: self.set_line_edit("likviditetsgrad", Money, "value"))
