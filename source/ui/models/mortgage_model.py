@@ -16,15 +16,15 @@ class MortgageModel(Model):
 
     def __init__(self, parent, error):
         super(MortgageModel, self).__init__(parent, error)
+        self.parent.ui.combo_box_lanetype.addItems(self._lanetype)
+        self.parent.ui.combo_box_laneperiode.addItems(self._laneperiode)
+        self.parent.ui.combo_box_intervall.addItems(self._intervall)
 
     def mortgage_info(self):
-        self.parent.ui.combo_box_lanetype.addItems(self._lanetype)
         self.parent.ui.combo_box_lanetype.activated.connect(
             lambda: self.set_combo_box("lanetype"))
-        self.parent.ui.combo_box_laneperiode.addItems(self._laneperiode)
         self.parent.ui.combo_box_laneperiode.activated.connect(
             lambda: self.set_combo_box("laneperiode"))
-        self.parent.ui.combo_box_intervall.addItems(self._intervall)
         self.parent.ui.combo_box_intervall.activated.connect(
             lambda: self.set_combo_box("intervall"))
         self.parent.ui.line_edit_egenkapital.editingFinished.connect(

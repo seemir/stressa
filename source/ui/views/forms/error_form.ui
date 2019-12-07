@@ -874,6 +874,7 @@
      <property name="font">
       <font>
        <family>Segoe UI</family>
+       <pointsize>8</pointsize>
       </font>
      </property>
      <property name="autoFillBackground">
@@ -897,6 +898,7 @@
       <property name="font">
        <font>
         <family>Segoe UI</family>
+        <pointsize>8</pointsize>
        </font>
       </property>
       <property name="autoFillBackground">
@@ -1336,6 +1338,7 @@
           <property name="font">
            <font>
             <family>Segoe UI</family>
+            <pointsize>8</pointsize>
            </font>
           </property>
           <property name="widgetResizable">
@@ -1358,6 +1361,11 @@
               <width>545</width>
               <height>245</height>
              </rect>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+             </font>
             </property>
             <property name="lineWrapMode">
              <enum>QPlainTextEdit::NoWrap</enum>
@@ -1804,8 +1812,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>98</width>
-             <height>28</height>
+             <width>545</width>
+             <height>245</height>
             </rect>
            </property>
            <widget class="QPlainTextEdit" name="plain_text_edit_log">
@@ -1838,6 +1846,11 @@
         <width>491</width>
         <height>80</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
       </property>
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
@@ -2266,6 +2279,7 @@
          <property name="font">
           <font>
            <family>Segoe UI</family>
+           <pointsize>8</pointsize>
           </font>
          </property>
          <property name="autoFillBackground">
@@ -2299,6 +2313,11 @@
         <height>81</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -2311,6 +2330,7 @@
          <property name="font">
           <font>
            <family>Segoe UI</family>
+           <pointsize>8</pointsize>
           </font>
          </property>
          <property name="text">
@@ -2332,7 +2352,7 @@
  </widget>
  <resources>
   <include location="../../images/img.qrc"/>
-  <include location="../images/img.qrc"/>
+  <include location="../../images/img.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1291</width>
-    <height>594</height>
+    <height>596</height>
    </rect>
   </property>
   <property name="palette">
@@ -424,6 +424,11 @@
      </colorrole>
     </disabled>
    </palette>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>8</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>Stressa</string>
@@ -3310,6 +3315,12 @@
             </item>
             <item row="1" column="1">
              <widget class="QPushButton" name="push_button_finn_1">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>25</height>
+               </size>
+              </property>
               <property name="text">
                <string>Åpne Finn.no</string>
               </property>
@@ -4232,6 +4243,12 @@
             </item>
             <item row="1" column="1">
              <widget class="QPushButton" name="push_button_finn_2">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>25</height>
+               </size>
+              </property>
               <property name="text">
                <string>Åpne Finn.no</string>
               </property>
@@ -5083,6 +5100,12 @@
             </item>
             <item row="1" column="1">
              <widget class="QPushButton" name="push_button_finn_3">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>25</height>
+               </size>
+              </property>
               <property name="text">
                <string>Åpne Finn.no</string>
               </property>
@@ -6437,6 +6460,12 @@
            </item>
            <item row="7" column="0">
             <widget class="QPushButton" name="push_button_skatt">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
              <property name="text">
               <string>Beregn skatt</string>
              </property>
@@ -6482,6 +6511,12 @@
            </item>
            <item row="7" column="2">
             <widget class="QPushButton" name="push_button_sifo_utgifter">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
              <property name="text">
               <string>Sifo utgifter</string>
              </property>

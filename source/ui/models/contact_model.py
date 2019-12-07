@@ -15,13 +15,13 @@ class ContactModel(Model):
 
     def __init__(self, parent, error):
         super(ContactModel, self).__init__(parent, error)
+        self.parent.ui.combo_box_kjonn.addItems(self._kjonn)
 
     def contact_info(self):
         self.parent.ui.line_edit_fornavn.editingFinished.connect(
             lambda: self.set_line_edit("fornavn", Name, "format_name"))
         self.parent.ui.line_edit_etternavn.editingFinished.connect(
             lambda: self.set_line_edit("etternavn", Name, "format_name"))
-        self.parent.ui.combo_box_kjonn.addItems(self._kjonn)
         self.parent.ui.combo_box_kjonn.activated.connect(
             lambda: self.set_combo_box("kjonn"))
         self.parent.ui.date_edit_fodselsdato.editingFinished.connect(
