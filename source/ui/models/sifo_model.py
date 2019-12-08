@@ -15,17 +15,49 @@ class SifoModel(Model):
     _alder = ["", "0-5 mnd", "6-11 mnd", "1", "2", "3", "4-5",
               "6-9", "10-13", "14-17", "18-19", "20-50", "51-60",
               "61-66", "eldre enn 66"]
-    _antall_biler = ["", "0", "1", "2", "3", "4"]
+    _antall_biler = ["", "1", "2", "3", "4"]
 
     def __init__(self, parent, error):
         super(SifoModel, self).__init__(parent, error)
 
         for combo_box in range(1, 8):
-            getattr(self.parent.ui, "combobox_kjonn_person_" + str(combo_box)).addItems(self._kjonn)
-            getattr(self.parent.ui, "combobox_alder_person_" + str(combo_box)).addItems(self._alder)
-        self.parent.ui.combobox_antall_biler.addItems(self._antall_biler)
+            getattr(self.parent.ui, "combo_box_kjonn_person_" + str(combo_box)).addItems(
+                self._kjonn)
+            getattr(self.parent.ui, "combo_box_alder_person_" + str(combo_box)).addItems(
+                self._alder)
+        self.parent.ui.combo_box_antall_biler.addItems(self._antall_biler)
 
     def sifo_info(self):
+        self.parent.ui.combo_box_kjonn_person_1.activated.connect(
+            lambda: self.set_combo_box("kjonn_person_1"))
+        self.parent.ui.combo_box_kjonn_person_2.activated.connect(
+            lambda: self.set_combo_box("kjonn_person_2"))
+        self.parent.ui.combo_box_kjonn_person_3.activated.connect(
+            lambda: self.set_combo_box("kjonn_person_3"))
+        self.parent.ui.combo_box_kjonn_person_4.activated.connect(
+            lambda: self.set_combo_box("kjonn_person_4"))
+        self.parent.ui.combo_box_kjonn_person_5.activated.connect(
+            lambda: self.set_combo_box("kjonn_person_5"))
+        self.parent.ui.combo_box_kjonn_person_6.activated.connect(
+            lambda: self.set_combo_box("kjonn_person_6"))
+        self.parent.ui.combo_box_kjonn_person_7.activated.connect(
+            lambda: self.set_combo_box("kjonn_person_7"))
+
+        self.parent.ui.combo_box_alder_person_1.activated.connect(
+            lambda: self.set_combo_box("alder_person_1"))
+        self.parent.ui.combo_box_alder_person_2.activated.connect(
+            lambda: self.set_combo_box("alder_person_2"))
+        self.parent.ui.combo_box_alder_person_3.activated.connect(
+            lambda: self.set_combo_box("alder_person_3"))
+        self.parent.ui.combo_box_alder_person_4.activated.connect(
+            lambda: self.set_combo_box("alder_person_4"))
+        self.parent.ui.combo_box_alder_person_5.activated.connect(
+            lambda: self.set_combo_box("alder_person_5"))
+        self.parent.ui.combo_box_alder_person_6.activated.connect(
+            lambda: self.set_combo_box("alder_person_6"))
+        self.parent.ui.combo_box_alder_person_7.activated.connect(
+            lambda: self.set_combo_box("alder_person_7"))
+
         self.parent.ui.line_edit_brutto_arsinntekt.setText(self.calculate_yearly_income(
             self.parent.parent.ui.line_edit_brutto_inntekt.text()))
         self.parent.ui.line_edit_brutto_arsinntekt.editingFinished.connect(
@@ -44,7 +76,7 @@ class SifoModel(Model):
 
     def clear_content(self):
         for combo_box in range(1, 8):
-            getattr(self.parent.ui, "combobox_kjonn_person_" + str(combo_box)).setCurrentIndex(0)
-            getattr(self.parent.ui, "combobox_alder_person_" + str(combo_box)).setCurrentIndex(0)
+            getattr(self.parent.ui, "combo_box_kjonn_person_" + str(combo_box)).setCurrentIndex(0)
+            getattr(self.parent.ui, "combo_box_alder_person_" + str(combo_box)).setCurrentIndex(0)
         self.parent.ui.line_edit_brutto_arsinntekt.clear()
-        self.parent.ui.combobox_antall_biler.setCurrentIndex(0)
+        self.parent.ui.combo_box_antall_biler.setCurrentIndex(0)

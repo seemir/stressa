@@ -1,5 +1,12 @@
 <RCC>
   <qresource prefix="img">
+    <file>export.png</file>
+    <file>show.png</file>
+    <file>web.png</file>
+    <file>help.png</file>
+    <file>erase.png</file>
+    <file>settings.png</file>
+    <file>analyze.png</file>
     <file>sifo.png</file>
     <file>paste.png</file>
     <file>error.png</file>

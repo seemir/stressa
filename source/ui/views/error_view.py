@@ -93,6 +93,8 @@ class ErrorView(QDialog):
         """
         log_str = []
         file_name = "ui.log"
+        if os.path.exists(file_dir):
+            shutil.rmtree(file_dir)
         error_log = logger.add(os.path.join(file_dir, file_name))
         logger.exception(exp)
         with open(os.path.join(file_dir, file_name)) as log_file:

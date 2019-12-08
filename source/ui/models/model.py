@@ -3,6 +3,8 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import time
+
 from abc import ABC, abstractmethod
 
 from PyQt5.QtCore import pyqtSlot
