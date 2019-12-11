@@ -69,7 +69,11 @@ class ErrorView(QDialog):
 
         """
         log_dir = os.path.join(os.path.dirname(__file__), "logs")
-        return self.extract_log(log_dir, exception)
+        try:
+            return self.extract_log(log_dir, exception)
+        finally:
+            if os.path.exists(log_dir):
+                shutil.rmtree(log_dir)
 
     @staticmethod
     def extract_log(file_dir: str, exp: Exception):
@@ -93,13 +97,11 @@ class ErrorView(QDialog):
         """
         log_str = []
         file_name = "ui.log"
-        if os.path.exists(file_dir):
-            shutil.rmtree(file_dir)
         error_log = logger.add(os.path.join(file_dir, file_name))
         logger.exception(exp)
         with open(os.path.join(file_dir, file_name)) as log_file:
             for lines in log_file.readlines():
                 log_str.append(lines)
-        logger.remove(error_log)
-        shutil.rmtree(file_dir)
+            logger.remove(error_log)
+            log_file.close()
         return "".join(log_str)

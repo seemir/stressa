@@ -32,7 +32,7 @@ class HomeView(QMainWindow):
         self._budget_model.budget_info()
         self._finn_model.finn_info()
         self._mortgage_model.mortgage_info()
-        self._sifo_calculator.sifo_calculation()
+        self._sifo_calculator.sifo_calculator()
 
     @property
     def error(self):

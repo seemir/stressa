@@ -16,14 +16,19 @@ from . import resources
 class SifoView(QDialog):
 
     def __init__(self, parent):
-        super().__init__(parent=parent)
+        super(SifoView, self).__init__(parent=parent)
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/sifo_form.ui"), self)
         self._parent = parent
         self._sifo_model = SifoModel(self, self._parent.error)
 
     @property
+    def sifo_model(self):
+        return self._sifo_model
+
+    @property
     def parent(self):
         return self._parent
 
-    def sifo_calculation(self):
-        self._parent.ui.push_button_sifo_utgifter.clicked.connect(self._sifo_model.sifo_info)
+    def sifo_calculator(self):
+        self._parent.ui.push_button_sifo_utgifter.clicked.connect(
+            self.sifo_model.show_sifo_calculator)
