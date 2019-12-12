@@ -12,7 +12,6 @@ from uuid import UUID
 import json
 import os
 import shutil
-from requests.exceptions import MissingSchema
 from requests.models import Response
 
 import mock

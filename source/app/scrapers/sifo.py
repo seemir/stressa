@@ -87,10 +87,10 @@ class Sifo(Scraper):
             LOGGER.info(
                 "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
             return response
-        except Exception as response_error:
+        except Exception as sifo_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure an active internet connection exists,\n"
-                "exited with '{}'".format(response_error))
+                "exited with '{}'".format(sifo_response_error))
 
     def sifo_expenses(self, include_id: bool = False):
         """

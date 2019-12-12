@@ -88,10 +88,10 @@ class Ssb(Scraper):
             LOGGER.info(
                 "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
             return response
-        except Exception as response_error:
+        except Exception as ssb_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure an active internet connection exists,\n"
-                "exited with '{}'".format(response_error))
+                "exited with '{}'".format(ssb_response_error))
 
     def ssb_interest_rates(self):
         """

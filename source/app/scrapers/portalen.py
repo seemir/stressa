@@ -56,10 +56,10 @@ class Portalen(Scraper):
             status_code = response.status_code
             LOGGER.info("HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
             return response
-        except Exception as response_error:
+        except Exception as portalen_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure an active internet connection exists,\n"
-                "exited with '{}'".format(response_error))
+                "exited with '{}'".format(portalen_response_error))
 
     def mortgage_offers(self):
         """

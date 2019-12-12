@@ -4,6 +4,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import os
+import sys
 import time
 
 from PyQt5.QtWidgets import QDialog
@@ -16,13 +17,16 @@ class SplashView(QDialog):
         super(SplashView, self).__init__()
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/splash_form.ui"), self)
         self.ui.progress_bar_splash.setStyleSheet(self.change_color())
+        self.app = app
 
         self.show()
         for i in range(1, self.ui.progress_bar_splash.maximum() + 1):
+            if not self.isVisible():
+                sys.exit(-1)
             self.ui.progress_bar_splash.setValue(i)
             t = time.time()
             while time.time() < t + 0.1:
-                app.processEvents()
+                self.app.processEvents()
         self.close()
 
     @staticmethod
