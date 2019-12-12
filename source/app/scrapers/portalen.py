@@ -58,7 +58,7 @@ class Portalen(Scraper):
             return response
         except Exception as portalen_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure an active internet connection exists,\n"
+                "Failed HTTP request - please insure that an active internet connection exists,\n"
                 "exited with '{}'".format(portalen_response_error))
 
     def mortgage_offers(self):

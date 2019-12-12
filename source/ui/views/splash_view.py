@@ -10,6 +10,8 @@ import time
 from PyQt5.QtWidgets import QDialog
 from PyQt5.uic import loadUi
 
+from source.util import __version__
+
 
 class SplashView(QDialog):
 
@@ -17,6 +19,7 @@ class SplashView(QDialog):
         super(SplashView, self).__init__()
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/splash_form.ui"), self)
         self.ui.progress_bar_splash.setStyleSheet(self.change_color())
+        self.ui.setWindowTitle("Stressa - version: {}".format(__version__))
         self.app = app
 
         self.show()

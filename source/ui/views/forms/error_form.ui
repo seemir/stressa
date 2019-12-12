@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>635</width>
-    <height>500</height>
+    <width>710</width>
+    <height>490</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,14 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>635</width>
-    <height>500</height>
+    <width>710</width>
+    <height>490</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>635</width>
-    <height>500</height>
+    <width>710</width>
+    <height>490</height>
    </size>
   </property>
   <property name="palette">
@@ -891,8 +891,8 @@
        <rect>
         <x>6</x>
         <y>95</y>
-        <width>604</width>
-        <height>380</height>
+        <width>679</width>
+        <height>370</height>
        </rect>
       </property>
       <property name="font">
@@ -1349,8 +1349,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>578</width>
-             <height>334</height>
+             <width>653</width>
+             <height>324</height>
             </rect>
            </property>
            <widget class="QPlainTextEdit" name="plain_text_edit_traceback">
@@ -1358,17 +1358,21 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>578</width>
-              <height>334</height>
+              <width>653</width>
+              <height>324</height>
              </rect>
             </property>
             <property name="font">
              <font>
+              <family>Consolas</family>
               <pointsize>8</pointsize>
              </font>
             </property>
             <property name="lineWrapMode">
              <enum>QPlainTextEdit::NoWrap</enum>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </widget>
@@ -1812,8 +1816,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>578</width>
-             <height>334</height>
+             <width>653</width>
+             <height>324</height>
             </rect>
            </property>
            <widget class="QPlainTextEdit" name="plain_text_edit_log">
@@ -1821,15 +1825,24 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>578</width>
-              <height>334</height>
+              <width>653</width>
+              <height>324</height>
              </rect>
+            </property>
+            <property name="font">
+             <font>
+              <family>Consolas</family>
+              <pointsize>8</pointsize>
+             </font>
             </property>
             <property name="sizeAdjustPolicy">
              <enum>QAbstractScrollArea::AdjustToContents</enum>
             </property>
             <property name="lineWrapMode">
              <enum>QPlainTextEdit::NoWrap</enum>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
             </property>
            </widget>
           </widget>
@@ -1843,7 +1856,7 @@
        <rect>
         <x>80</x>
         <y>0</y>
-        <width>521</width>
+        <width>591</width>
         <height>91</height>
        </rect>
       </property>
