@@ -18,6 +18,7 @@ import pytest as pt
 import mock
 
 from source.app import Ssb, SsbPayload, Scraper
+from source.util import NoConnectionError
 
 
 class TestSsb:
@@ -73,10 +74,10 @@ class TestSsb:
     @mock.patch("source.app.scrapers.ssb.SSB_URL", mock.MagicMock(return_value=None))
     def test_ssb_exception_for_invalid_url(self):
         """
-        Test that Ssb raises exception if SSB_URL if None
+        Test that Ssb raises NoConnectionError if SSB_URL if None
 
         """
-        with pt.raises(Exception):
+        with pt.raises(NoConnectionError):
             self.ssb.response()
 
     def test_ssb_response_method(self):

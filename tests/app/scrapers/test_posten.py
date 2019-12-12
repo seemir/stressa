@@ -17,8 +17,8 @@ import mock
 import pytest as pt
 from mechanize._response import response_seek_wrapper
 
+from source.util import NotFoundError, NoConnectionError
 from source.app import Posten, Scraper
-from source.util import NotFoundError
 
 
 class TestPosten:
@@ -84,10 +84,10 @@ class TestPosten:
     @mock.patch("source.app.scrapers.posten.POSTEN_URL", mock.MagicMock(return_value=None))
     def test_posten_exception_for_invalid_url(self):
         """
-        Test that posten raises TypeError if POSTEN_URL if None
+        Test that posten raises NoConnectionError if POSTEN_URL if None
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(NoConnectionError):
             self.posten.response()
 
     def test_posten_response_method(self):

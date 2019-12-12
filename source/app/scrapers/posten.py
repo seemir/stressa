@@ -13,7 +13,7 @@ from http.client import responses
 
 from bs4 import BeautifulSoup
 
-from source.util import Assertor, LOGGER, NotFoundError
+from source.util import Assertor, LOGGER, NotFoundError, NoConnectionError
 from ..settings import POSTEN_URL, POSTEN_FORM
 from .scraper import Scraper
 
@@ -100,13 +100,18 @@ class Posten(Scraper):
                       response with expenses information
 
         """
-        self._browser.open(POSTEN_URL)
-        self._browser.select_form(nr=0)
-        self._browser[POSTEN_FORM] = self.zip_code
-        response = self._browser.submit()
-        LOGGER.info(
-            "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
-        return response
+        try:
+            self._browser.open(POSTEN_URL)
+            self._browser.select_form(nr=0)
+            self._browser[POSTEN_FORM] = self.zip_code
+            response = self._browser.submit()
+            LOGGER.info(
+                "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
+            return response
+        except Exception as response_error:
+            raise NoConnectionError(
+                "Failed HTTP request - please insure an active internet connection exists,\n"
+                "exited with '{}'".format(response_error))
 
     def zip_code_info(self):
         """

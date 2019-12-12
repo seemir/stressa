@@ -18,6 +18,7 @@ import pytest as pt
 from mechanize._response import response_seek_wrapper
 
 from source.domain import Female, Family, Male
+from source.util import NoConnectionError
 from source.app import Scraper, Sifo
 
 
@@ -77,10 +78,10 @@ class TestSifo:
     @mock.patch("source.app.scrapers.sifo.SIFO_URL", mock.MagicMock(return_value=None))
     def test_sifo_exception_for_invalid_url(self):
         """
-        Test that sifo raises TypeError if SIFO_URL if None
+        Test that sifo raises NoConnectionError if SIFO_URL if None
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(NoConnectionError):
             self.sifo.response()
 
     def test_sifo_response_received(self):

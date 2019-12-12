@@ -18,7 +18,7 @@ import mock
 import pytest as pt
 
 from source.app import Finn
-from source.util import NotFoundError
+from source.util import NotFoundError, NoConnectionError
 
 
 class TestFinn:
@@ -84,10 +84,10 @@ class TestFinn:
     @mock.patch("source.app.scrapers.finn.FINN_URL", mock.MagicMock(return_value=None))
     def test_finn_exception_for_invalid_url(self):
         """
-        Test that Finn raises exception if FINN_URL if None
+        Test that Finn raises NoConnectionError exception if FINN_URL if None
 
         """
-        with pt.raises(Exception):
+        with pt.raises(NoConnectionError):
             self.finn.response()
 
     def test_housing_information_method(self):

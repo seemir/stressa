@@ -18,6 +18,7 @@ from requests.models import Response
 import mock
 import pytest as pt
 
+from source.util import NoConnectionError
 from source.app import Portalen, Scraper
 
 
@@ -50,7 +51,7 @@ class TestPortalen:
         Test that Portalen raises MissingSchema exception if PORTALEN_URL if None
 
         """
-        with pt.raises(MissingSchema):
+        with pt.raises(NoConnectionError):
             self.portalen.response()
 
     def test_portalen_has_uuid4_compatible_id(self):

@@ -7,10 +7,11 @@ import sys
 
 from PyQt5 import QtWidgets
 
-from source.ui import HomeView
+from source.ui import HomeView, SplashView
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication([])
+    app = QtWidgets.QApplication(sys.argv)
+    splash = SplashView(app)
     application = HomeView()
     application.show()
     sys.exit(app.exec_())

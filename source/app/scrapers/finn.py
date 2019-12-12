@@ -14,7 +14,7 @@ from http.client import responses
 import requests
 from bs4 import BeautifulSoup
 
-from source.util import cache, Assertor, LOGGER, NotFoundError
+from source.util import cache, Assertor, LOGGER, NotFoundError, NoConnectionError
 
 from ..settings import FINN_URL
 from .scraper import Scraper
@@ -88,10 +88,15 @@ class Finn(Scraper):
                   response with mortgage information
 
         """
-        response = requests.post((FINN_URL + "{}").format(self.finn_code))
-        status_code = response.status_code
-        LOGGER.info("HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
-        return response
+        try:
+            response = requests.post((FINN_URL + "{}").format(self.finn_code))
+            status_code = response.status_code
+            LOGGER.info("HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
+            return response
+        except Exception as response_error:
+            raise NoConnectionError(
+                "Failed HTTP request - please insure an active internet connection exists,\n"
+                "exited with '{}'".format(response_error))
 
     def housing_information(self):
         """

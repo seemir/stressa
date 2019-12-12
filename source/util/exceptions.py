@@ -99,7 +99,18 @@ class InvalidAmountError(Exception):
 
 class InvalidCurrencyError(Exception):
     """
-    Exception thrown for invalid curreny
+    Exception thrown for invalid currency
+
+    """
+
+    def __init__(self, msg: str):
+        super().__init__(msg)
+        self.msg = msg
+
+
+class NoConnectionError(Exception):
+    """
+    Exception thrown for No response
 
     """
 

@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 from http.client import responses
 
 import requests
-from source.util import Assertor, LOGGER
+from source.util import Assertor, LOGGER, NoConnectionError
 
 from ..settings import SSB_URL
 from .ssb_payload import SsbPayload
@@ -82,11 +82,16 @@ class Ssb(Scraper):
                   response with interest rate information
 
         """
-        response = requests.post(url=SSB_URL, json=self._payload.payload())
-        status_code = response.status_code
-        LOGGER.info(
-            "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
-        return response
+        try:
+            response = requests.post(url=SSB_URL, json=self._payload.payload())
+            status_code = response.status_code
+            LOGGER.info(
+                "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
+            return response
+        except Exception as response_error:
+            raise NoConnectionError(
+                "Failed HTTP request - please insure an active internet connection exists,\n"
+                "exited with '{}'".format(response_error))
 
     def ssb_interest_rates(self):
         """

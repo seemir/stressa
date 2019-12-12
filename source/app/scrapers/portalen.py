@@ -15,7 +15,7 @@ import xml.etree.ElementTree as Et
 
 import requests
 
-from source.util import LOGGER, cache
+from source.util import LOGGER, cache, NoConnectionError
 
 from ..settings import PORTALEN_URL, PORTALEN_CRED, PORTALEN_ENTRY
 from .scraper import Scraper
@@ -51,10 +51,15 @@ class Portalen(Scraper):
                   response with mortgage information
 
         """
-        response = requests.post(PORTALEN_URL, auth=PORTALEN_CRED)
-        status_code = response.status_code
-        LOGGER.info("HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
-        return response
+        try:
+            response = requests.post(PORTALEN_URL, auth=PORTALEN_CRED)
+            status_code = response.status_code
+            LOGGER.info("HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
+            return response
+        except Exception as response_error:
+            raise NoConnectionError(
+                "Failed HTTP request - please insure an active internet connection exists,\n"
+                "exited with '{}'".format(response_error))
 
     def mortgage_offers(self):
         """

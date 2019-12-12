@@ -922,99 +922,8 @@
      <string>Informasjon</string>
     </attribute>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_person_1">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>90</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Person 1</string>
-       </property>
-       <property name="buddy">
-        <cstring>combo_box_kjonn_1</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="combo_box_kjonn_1">
-       <property name="minimumSize">
-        <size>
-         <width>170</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>140</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QComboBox" name="combo_box_alder_1">
-       <property name="minimumSize">
-        <size>
-         <width>170</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>140</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_person_2">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Person 2</string>
-       </property>
-       <property name="buddy">
-        <cstring>combo_box_kjonn_2</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="combo_box_kjonn_2">
+     <item row="6" column="1">
+      <widget class="QComboBox" name="combo_box_kjonn_7">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -1029,136 +938,8 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
-      <widget class="QComboBox" name="combo_box_alder_2">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_person_3">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Person 3</string>
-       </property>
-       <property name="buddy">
-        <cstring>combo_box_kjonn_3</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QComboBox" name="combo_box_kjonn_3">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QComboBox" name="combo_box_alder_3">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_person_4">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Person 4</string>
-       </property>
-       <property name="buddy">
-        <cstring>combo_box_kjonn_4</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QComboBox" name="combo_box_kjonn_4">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
-      <widget class="QComboBox" name="combo_box_alder_4">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="label_person_5">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Person 5</string>
-       </property>
-       <property name="buddy">
-        <cstring>combo_box_kjonn_5</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QComboBox" name="combo_box_kjonn_5">
+     <item row="5" column="1">
+      <widget class="QComboBox" name="combo_box_kjonn_6">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -1175,38 +956,6 @@
      </item>
      <item row="4" column="2">
       <widget class="QComboBox" name="combo_box_alder_5">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_person_6">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Person 6</string>
-       </property>
-       <property name="buddy">
-        <cstring>combo_box_kjonn_6</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="QComboBox" name="combo_box_kjonn_6">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -1253,8 +1002,8 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
-      <widget class="QComboBox" name="combo_box_kjonn_7">
+     <item row="4" column="1">
+      <widget class="QComboBox" name="combo_box_kjonn_5">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -1269,19 +1018,19 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="2">
-      <widget class="QComboBox" name="combo_box_alder_7">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_person_6">
        <property name="font">
         <font>
          <family>Segoe UI</family>
          <pointsize>8</pointsize>
         </font>
+       </property>
+       <property name="text">
+        <string>Person 6</string>
+       </property>
+       <property name="buddy">
+        <cstring>combo_box_kjonn_6</cstring>
        </property>
       </widget>
      </item>
@@ -1329,6 +1078,29 @@
        </property>
       </widget>
      </item>
+     <item row="10" column="2">
+      <widget class="QPushButton" name="push_button_tom_skjema">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Tøm skjema</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../images/img.qrc">
+         <normaloff>:/img/erase.png</normaloff>:/img/erase.png</iconset>
+       </property>
+      </widget>
+     </item>
      <item row="8" column="1">
       <widget class="QLineEdit" name="line_edit_brutto_arsinntekt">
        <property name="font">
@@ -1342,24 +1114,8 @@
        </property>
       </widget>
      </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="label_antall_biler">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Antall biler</string>
-       </property>
-       <property name="buddy">
-        <cstring>combo_box_antall_biler</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="1">
-      <widget class="QComboBox" name="combo_box_antall_biler">
+     <item row="6" column="2">
+      <widget class="QComboBox" name="combo_box_alder_7">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -1397,14 +1153,8 @@
        </property>
       </widget>
      </item>
-     <item row="10" column="2">
-      <widget class="QPushButton" name="push_button_tom_skjema">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>25</height>
-        </size>
-       </property>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_antall_biler">
        <property name="font">
         <font>
          <family>Segoe UI</family>
@@ -1412,11 +1162,26 @@
         </font>
        </property>
        <property name="text">
-        <string>Tøm skjema</string>
+        <string>Antall biler</string>
        </property>
-       <property name="icon">
-        <iconset resource="../../images/img.qrc">
-         <normaloff>:/img/erase.png</normaloff>:/img/erase.png</iconset>
+       <property name="buddy">
+        <cstring>combo_box_antall_biler</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QComboBox" name="combo_box_antall_biler">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
        </property>
       </widget>
      </item>
@@ -1473,6 +1238,257 @@
        </layout>
       </widget>
      </item>
+     <item row="0" column="2">
+      <widget class="QComboBox" name="combo_box_alder_1">
+       <property name="minimumSize">
+        <size>
+         <width>170</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>140</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QComboBox" name="combo_box_alder_2">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="combo_box_kjonn_1">
+       <property name="minimumSize">
+        <size>
+         <width>170</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>140</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_person_2">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Person 2</string>
+       </property>
+       <property name="buddy">
+        <cstring>combo_box_kjonn_2</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="combo_box_kjonn_2">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_person_3">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Person 3</string>
+       </property>
+       <property name="buddy">
+        <cstring>combo_box_kjonn_3</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_person_1">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>90</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Person 1</string>
+       </property>
+       <property name="buddy">
+        <cstring>combo_box_kjonn_1</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QComboBox" name="combo_box_alder_3">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QComboBox" name="combo_box_kjonn_4">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
+      <widget class="QComboBox" name="combo_box_alder_4">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_person_4">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Person 4</string>
+       </property>
+       <property name="buddy">
+        <cstring>combo_box_kjonn_4</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_person_5">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Person 5</string>
+       </property>
+       <property name="buddy">
+        <cstring>combo_box_kjonn_5</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="combo_box_kjonn_3">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="0">
+      <widget class="QFrame" name="frame_whitespace_1">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+      </widget>
+     </item>
      <item row="11" column="1" colspan="2">
       <widget class="QFrame" name="frame_sifo_info">
        <property name="sizePolicy">
@@ -1480,6 +1496,12 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>90</height>
+        </size>
        </property>
        <property name="palette">
         <palette>
@@ -1915,12 +1937,16 @@
          <widget class="QLabel" name="label_sifo_info">
           <property name="font">
            <font>
+            <family>MS Shell Dlg 2</family>
             <pointsize>8</pointsize>
-            <italic>true</italic>
+            <italic>false</italic>
            </font>
           </property>
           <property name="text">
-           <string>SIFOs Referansebudsjett (tidligere standardbudsjettet) viser alminnelige forbruksutgifter for ulike typer hushold. Det kan settes sammen slik at det viser kostnadene ved å opprettholde et rimelig forbruksnivå for hushold av ulik størrelse og med forskjellig alders-  og kjønns sammensetning. </string>
+           <string>SIFOs Referansebudsjett (tidligere standardbudsjettet) viser almin- nelige forbruksutgifter for ulike typer hushold. Det kan settes sammen slik at det viser kostnadene ved å opprettholde et rimelig forbruksnivå for hushold av ulik størrelse og med forskjellig alders-  og kjønns sammensetning. </string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignJustify|Qt::AlignVCenter</set>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -1928,22 +1954,6 @@
          </widget>
         </item>
        </layout>
-      </widget>
-     </item>
-     <item row="12" column="0">
-      <widget class="QFrame" name="frame_whitespace_1">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
       </widget>
      </item>
     </layout>

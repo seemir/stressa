@@ -12,7 +12,7 @@ import xml.etree.ElementTree as Et
 from http.client import responses
 
 from source.domain import Family
-from source.util import Assertor, LOGGER
+from source.util import Assertor, LOGGER, NoConnectionError
 
 from ..settings import SIFO_URL, SIFO_FORM
 from .scraper import Scraper
@@ -75,17 +75,22 @@ class Sifo(Scraper):
                       response with expenses information
 
         """
-        self._browser.open(SIFO_URL)
-        self._browser.select_form(SIFO_FORM)
-        for prop, value in self.family.sifo_properties().items():
-            if prop == 'inntekt':
-                self._browser[prop] = value
-            else:
-                self._browser[prop] = [value]
-        response = self._browser.submit()
-        LOGGER.info(
-            "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
-        return response
+        try:
+            self._browser.open(SIFO_URL)
+            self._browser.select_form(SIFO_FORM)
+            for prop, value in self.family.sifo_properties().items():
+                if prop == 'inntekt':
+                    self._browser[prop] = value
+                else:
+                    self._browser[prop] = [value]
+            response = self._browser.submit()
+            LOGGER.info(
+                "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
+            return response
+        except Exception as response_error:
+            raise NoConnectionError(
+                "Failed HTTP request - please insure an active internet connection exists,\n"
+                "exited with '{}'".format(response_error))
 
     def sifo_expenses(self, include_id: bool = False):
         """

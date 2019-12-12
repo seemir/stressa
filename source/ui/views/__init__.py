@@ -10,4 +10,5 @@ __email__ = 'samir.adrik@gmail.com'
 
 from .home_view import HomeView
 from .error_view import ErrorView
+from .splash_view import SplashView
 from .resources import *

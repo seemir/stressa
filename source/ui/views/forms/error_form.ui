@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>635</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,14 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>600</width>
-    <height>400</height>
+    <width>635</width>
+    <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>600</width>
-    <height>400</height>
+    <width>635</width>
+    <height>500</height>
    </size>
   </property>
   <property name="palette">
@@ -890,9 +890,9 @@
       <property name="geometry">
        <rect>
         <x>6</x>
-        <y>85</y>
-        <width>571</width>
-        <height>291</height>
+        <y>95</y>
+        <width>604</width>
+        <height>380</height>
        </rect>
       </property>
       <property name="font">
@@ -1349,8 +1349,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>545</width>
-             <height>245</height>
+             <width>578</width>
+             <height>334</height>
             </rect>
            </property>
            <widget class="QPlainTextEdit" name="plain_text_edit_traceback">
@@ -1358,8 +1358,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>545</width>
-              <height>245</height>
+              <width>578</width>
+              <height>334</height>
              </rect>
             </property>
             <property name="font">
@@ -1812,8 +1812,8 @@
             <rect>
              <x>0</x>
              <y>0</y>
-             <width>545</width>
-             <height>245</height>
+             <width>578</width>
+             <height>334</height>
             </rect>
            </property>
            <widget class="QPlainTextEdit" name="plain_text_edit_log">
@@ -1821,8 +1821,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>545</width>
-              <height>245</height>
+              <width>578</width>
+              <height>334</height>
              </rect>
             </property>
             <property name="sizeAdjustPolicy">
@@ -1842,9 +1842,9 @@
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>6</y>
-        <width>491</width>
-        <height>80</height>
+        <y>0</y>
+        <width>521</width>
+        <height>91</height>
        </rect>
       </property>
       <property name="font">
@@ -2298,7 +2298,7 @@
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
          </property>
          <property name="wordWrap">
-          <bool>false</bool>
+          <bool>true</bool>
          </property>
         </widget>
        </item>
