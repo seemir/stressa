@@ -89,8 +89,8 @@ class Sifo(Scraper):
             return response
         except Exception as sifo_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that an active internet connection exists,\n"
-                "exited with '{}'".format(sifo_response_error))
+                "Failed HTTP request - please insure that internet access is provided to the "
+                "client,\nexited with '{}'".format(sifo_response_error))
 
     def sifo_expenses(self, include_id: bool = False):
         """

@@ -110,8 +110,8 @@ class Posten(Scraper):
             return response
         except Exception as posten_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that an active internet connection exists,\n"
-                "exited with '{}'".format(posten_response_error))
+                "Failed HTTP request - please insure that internet access is provided to the "
+                "client,\nexited with '{}'".format(posten_response_error))
 
     def zip_code_info(self):
         """

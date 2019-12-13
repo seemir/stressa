@@ -14,7 +14,7 @@ import shutil
 import traceback
 
 from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.uic import loadUi
 from loguru import logger
 
@@ -37,6 +37,8 @@ class ErrorView(QDialog):
         """
         super().__init__(parent)
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/error_form.ui"), self)
+        self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
+        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
 
     def show_error(self, exception):
         """

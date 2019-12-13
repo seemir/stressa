@@ -95,8 +95,8 @@ class Finn(Scraper):
             return response
         except Exception as finn_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that an active internet connection exists,\n"
-                "exited with '{}'".format(finn_response_error))
+                "Failed HTTP request - please insure that internet access is provided to the "
+                "client,\nexited with '{}'".format(finn_response_error))
 
     def housing_information(self):
         """

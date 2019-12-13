@@ -90,8 +90,8 @@ class Ssb(Scraper):
             return response
         except Exception as ssb_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that an active internet connection exists,\n"
-                "exited with '{}'".format(ssb_response_error))
+                "Failed HTTP request - please insure that internet access is provided to the "
+                "client,\nexited with '{}'".format(ssb_response_error))
 
     def ssb_interest_rates(self):
         """
