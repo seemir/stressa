@@ -5,6 +5,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from decimal import Decimal
 
+from source.app import SifoWorkFlow
 from source.domain import Money
 
 from .model import Model
@@ -87,7 +88,12 @@ class SifoModel(Model):
             return yearly_income
 
     def calculate_sifo_expenses(self):
-        print(self.data)
+        try:
+            sifo_workflow = SifoWorkFlow(self.data)
+            print(sifo_workflow.get_base_sifo_expenses())
+        except Exception as sifo_expenses_error:
+            self.error.show_error(sifo_expenses_error)
+            self.error.exec_()
 
     def clear_content(self):
         for combo_box in range(1, 8):

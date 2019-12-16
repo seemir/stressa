@@ -71,7 +71,7 @@ class TestPerson:
             Person.sifo_age(negative_age)
 
     @staticmethod
-    @pt.mark.parametrize('yrs', [0.42, 0.92, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75])
+    @pt.mark.parametrize('yrs', [0.41, 0.91, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75])
     def test_sifo_age_corner_cases(yrs):
         """
         Test all corner cases of set_age() method

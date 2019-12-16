@@ -60,7 +60,7 @@ class TestMaleAndFemale:
                 person.sfo = invalid_age
 
     @staticmethod
-    @pt.mark.parametrize('age', [0.42, 0.92, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75])
+    @pt.mark.parametrize('age', [0.41, 0.91, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75])
     def test_person_attending_kinder_garden_or_sfo(age):
         """
         Test that only person of age between 1-5 can attend kinder_garden and person between
@@ -88,7 +88,7 @@ class TestMaleAndFemale:
                     person.__class__(age, sfo='1')
 
     @staticmethod
-    @pt.mark.parametrize('age', [0.42, 0.92, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75])
+    @pt.mark.parametrize('age', [0.41, 0.91, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75])
     def test_female_pregnancy(age):
         """
         Test that females can be pregnant only at ages between 19-50 years
