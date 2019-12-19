@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Module with logic for the SifoExpenses entity
+Module with logic for the Expenses entity
 
 """
 
@@ -15,9 +15,9 @@ from .entity import Entity
 from .money import Money
 
 
-class SifoExpenses(Entity):
+class Expenses(Entity):
     """
-    Implementation of the SifoExpenses entity
+    Implementation of the Expenses entity
 
     """
 
@@ -38,8 +38,8 @@ class SifoExpenses(Entity):
 
         """
         LOGGER.info(
-            "'{}' for '{}'".format(SifoExpenses.extract_expenses_data_and_shares.__name__,
-                                   SifoExpenses.__name__))
+            "'{}' for '{}'".format(Expenses.extract_expenses_data_and_shares.__name__,
+                                   Expenses.__name__))
         LOGGER.disable("source.domain")
         keys = list(data.keys())[-17:]
         values = [Money(val) if val != "0" else Money("0") for val in list(data.values())[-17:]]
@@ -59,7 +59,7 @@ class SifoExpenses(Entity):
 
         """
         try:
-            super(SifoExpenses, self).__init__()
+            super(Expenses, self).__init__()
             Assertor.assert_data_types([data], [dict])
             self._expenses = self.extract_expenses_data_and_shares(data)
             self._expenses_values = self.expenses[0]

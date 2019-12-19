@@ -8,7 +8,7 @@ Workflow for analysing app
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.domain import Family, Male, Female, SifoExpenses
+from source.domain import Family, Male, Female, Expenses
 from source.util import Assertor
 
 from ..scrapers import Sifo
@@ -70,7 +70,7 @@ class SifoWorkFlow:
         self._data = data
         self._family = self.populate_family(self.data)
         self._sifo = Sifo(self.family) if self.family else None
-        self._base_expenses = SifoExpenses(
+        self._base_expenses = Expenses(
             self.sifo.sifo_base_expenses()) if self.sifo else None
         self._expenses_value = self.base_expenses.expenses_values if \
             self.base_expenses else None
@@ -123,7 +123,7 @@ class SifoWorkFlow:
 
         Returns
         -------
-        out     : SifoExpenses
+        out     : Expenses
                   active _sifo_base_expenses object
 
         """
