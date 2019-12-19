@@ -31,16 +31,12 @@ class Money(Value):
                   amount string
 
         """
-        try:
-            super().__init__()
-            Assertor.assert_data_types([amount], [str])
-            self._currency = Currency()
-            self._amount = Amount(amount.replace(self._currency.currency, "").replace(" ", ""))
-            LOGGER.success(
-                "created '{}' -> {}".format(self.__class__.__name__, self.value()))
-        except Exception as amount_error:
-            LOGGER.exception(amount_error)
-            raise amount_error
+        super().__init__()
+        Assertor.assert_data_types([amount], [str])
+        self._currency = Currency()
+        self._amount = Amount(amount.replace(self._currency.currency, "").replace(" ", ""))
+        LOGGER.success(
+            "created '{}' -> {}".format(self.__class__.__name__, self.value()))
 
     @property
     def amount(self):
@@ -146,7 +142,7 @@ class Money(Value):
 
         """
         Assertor.assert_data_types([other], [type(self)])
-        return self._amount * other._amount + " " + self.currency
+        return self._amount * other._amount
 
     def __truediv__(self, other):
         """
@@ -164,4 +160,4 @@ class Money(Value):
 
         """
         Assertor.assert_data_types([other], [type(self)])
-        return self._amount / other._amount + " " + self.currency
+        return self._amount / other._amount

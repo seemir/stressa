@@ -13,8 +13,8 @@ class ContactModel(Model):
     _kjonn = ["", "Mann", "Kvinne"]
     _post_code = ["postnr", "poststed", "kommune", "fylke"]
 
-    def __init__(self, parent, error):
-        super(ContactModel, self).__init__(parent, error)
+    def __init__(self, parent):
+        super(ContactModel, self).__init__(parent)
         self.parent.ui.combo_box_kjonn.addItems(self._kjonn)
 
     def contact_info(self):

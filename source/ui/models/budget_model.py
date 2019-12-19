@@ -10,8 +10,8 @@ from .model import Model
 
 class BudgetModel(Model):
 
-    def __init__(self, parent, error):
-        super(BudgetModel, self).__init__(parent, error)
+    def __init__(self, parent):
+        super(BudgetModel, self).__init__(parent)
 
     def budget_info(self):
         self.parent.ui.line_edit_brutto_inntekt.editingFinished.connect(

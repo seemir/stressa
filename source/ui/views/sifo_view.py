@@ -11,6 +11,8 @@ from PyQt5.uic import loadUi
 
 from source.ui.models import SifoModel
 
+from .meta_view import MetaView
+
 from . import resources
 
 
@@ -24,16 +26,26 @@ class SifoView(QDialog):
         self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
 
         self._parent = parent
-        self._sifo_model = SifoModel(self, self._parent.error)
+        self._sifo_model = SifoModel(self)
+        self._error = self._parent.error
+        self._meta_view = MetaView(self)
+        self.ui.push_button_metadata.clicked.connect(self.show_meta_data)
 
     @property
     def sifo_model(self):
         return self._sifo_model
 
     @property
+    def meta_view(self):
+        return self._meta_view
+
+    @property
     def parent(self):
         return self._parent
 
-    def sifo_calculator(self):
-        self._parent.ui.push_button_sifo_utgifter.clicked.connect(
-            self.sifo_model.show_sifo_calculator)
+    @property
+    def error(self):
+        return self._error
+
+    def show_meta_data(self):
+        self.meta_view.show_meta_data()

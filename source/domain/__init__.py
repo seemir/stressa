@@ -8,8 +8,10 @@ Domain model implementation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from .sifo_expenses import SifoExpenses
 from .currency import Currency
 from .address import Address
+from .percent import Percent
 from .family import Family
 from .entity import Entity
 from .person import Person

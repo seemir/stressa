@@ -107,11 +107,11 @@ class TestSifo:
                            'sumindivid': '12180', 'dagligvarer': '340', 'husholdsart': '400',
                            'mobler': '400', 'medier': '2240', 'biler': '2420', 'barnehage': '0',
                            'sfo': '0', 'sumhusholdning': '5800', 'totalt': '17980'}
-        sifo_expenses = self.sifo.sifo_expenses()
+        sifo_expenses = self.sifo.sifo_base_expenses()
         assert sifo_expenses == correct_content
         assert "_id" not in sifo_expenses.keys()
 
-    @mock.patch("source.app.scrapers.sifo.Sifo.sifo_expenses", mock.MagicMock(return_value=""))
+    @mock.patch("source.app.scrapers.sifo.Sifo.sifo_base_expenses", mock.MagicMock(return_value=""))
     def test_to_json(self):
         """
         Test that staticmethod to_json() produces json file with correct content
@@ -128,12 +128,12 @@ class TestSifo:
     @mock.patch("source.app.scrapers.sifo.Sifo.response", mock.MagicMock(return_value=""))
     def test_sifo_expenses_raises_exception(self):
         """
-        Test that sifo_expenses() method raises exception if no response received
+        Test that sifo_base_expenses() method raises exception if no response received
         from response() method.
 
         """
         with pt.raises(Exception):
-            self.sifo.sifo_expenses()
+            self.sifo.sifo_base_expenses()
 
     @mock.patch("xml.etree.ElementTree", mock.MagicMock(return_value={}))
     def test_include_id_in_sifo_expenses_method(self):
@@ -141,7 +141,7 @@ class TestSifo:
         Test that '_id' is included in output from sifo_expenses() method
 
         """
-        assert "_id" in self.sifo.sifo_expenses(include_id=True).keys()
+        assert "_id" in self.sifo.sifo_base_expenses(include_id=True).keys()
 
     def test_sifo_scraper_id_is_uuid4(self):
         """

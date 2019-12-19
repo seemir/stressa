@@ -1,5 +1,10 @@
 <RCC>
   <qresource prefix="img">
+    <file>back.png</file>
+    <file>cancel.png</file>
+    <file>tax.png</file>
+    <file>meta.png</file>
+    <file>expense.png</file>
     <file>export.png</file>
     <file>show.png</file>
     <file>web.png</file>

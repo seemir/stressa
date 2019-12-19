@@ -11,10 +11,9 @@ from PyQt5.QtCore import pyqtSlot
 class Model(ABC):
 
     @abstractmethod
-    def __init__(self, parent, error):
+    def __init__(self, parent):
         super().__init__()
         self._parent = parent
-        self._error = error
         self._data = {}
 
     @property
@@ -22,11 +21,8 @@ class Model(ABC):
         return self._parent
 
     @property
-    def error(self):
-        return self._error
-
-    @property
     def data(self):
+        self._data = dict(sorted(self._data.items()))
         return self._data
 
     @data.setter
@@ -42,8 +38,8 @@ class Model(ABC):
             else:
                 self.data.pop(date_edit_name) if date_edit_name in self.data.keys() else ""
         except Exception as set_date_edit_error:
-            self.error.show_error(set_date_edit_error)
-            self.error.exec_()
+            self.parent.error.show_error(set_date_edit_error)
+            self.parent.error.exec_()
 
     @pyqtSlot()
     def set_combo_box(self, combo_box_name):
@@ -55,8 +51,8 @@ class Model(ABC):
             else:
                 self.data.pop(combo_box_name) if combo_box_name in self.data.keys() else ""
         except Exception as set_combo_box_error:
-            self.error.show_error(set_combo_box_error)
-            self.error.exec_()
+            self.parent.error.show_error(set_combo_box_error)
+            self.parent.error.exec_()
 
     @pyqtSlot()
     def set_buddy_combo_box(self, combo_box_name, key_name):
@@ -72,8 +68,8 @@ class Model(ABC):
                 else:
                     self.data.update({key: val})
         except Exception as set_buddy_combo_box_error:
-            self.error.show_error(set_buddy_combo_box_error)
-            self.error.exec_()
+            self.parent.error.show_error(set_buddy_combo_box_error)
+            self.parent.error.exec_()
 
     @pyqtSlot()
     def set_line_edit(self, line_edit_name, model, method):
@@ -91,51 +87,64 @@ class Model(ABC):
                 self.data.pop(line_edit_name) if line_edit_name in self.data.keys() else ""
             getattr(self.parent.ui, "line_edit_" + line_edit_name).setText(output)
         except Exception as set_line_edit_error:
-            self.error.show_error(set_line_edit_error)
+            self.parent.error.show_error(set_line_edit_error)
             line_edit.clear()
             line_edit.setFocus()
-            self.error.exec_()
+            self.parent.error.exec_()
 
     @pyqtSlot()
-    def update_line_edits(self, line_edit_name, line_edits, model, method, index=None):
+    def update_line_edits(self, line_edit_name, line_edits, obj, method, index=None):
         postfix = "_" + str(index) if index else ""
         line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name)
         try:
             line_edit_text = line_edit.text()
             if line_edit_text and line_edit_text not in self.data.values():
-                self.set_line_edits(line_edit_text, line_edits, model, method, postfix)
+                self.set_line_edits(line_edit_text, line_edits, obj, method, postfix)
             elif line_edit_text and line_edit_text in self.data.values():
                 self.get_line_edits(line_edits, postfix)
             else:
                 self.clear_line_edits(line_edits, postfix)
         except Exception as update_error:
-            self.error.show_error(update_error)
+            self.parent.error.show_error(update_error)
             self.clear_line_edits(line_edits, postfix)
             line_edit.setFocus()
-            self.error.exec_()
+            self.parent.error.exec_()
 
     @pyqtSlot()
-    def clear_line_edits(self, line_edits, postfix=None):
+    def clear_line_edits(self, line_edits, index=None):
+        postfix = "_" + str(index) if index else ""
         for line_edit in line_edits:
-            line_edit = line_edit + postfix if postfix else line_edit
-            getattr(self.parent.ui, "line_edit_" + line_edit).clear()
+            line_edit = "line_edit_" + (line_edit + postfix if postfix else line_edit)
+            getattr(self.parent.ui, line_edit).clear()
             if line_edit in self.data.keys():
                 self._data.pop(line_edit)
 
     @pyqtSlot()
-    def set_line_edits(self, line_edit_text, line_edits, model, method, postfix=None):
-        model_info = getattr(model(line_edit_text), method)()
+    def line_edit_setter(self, line_edits, index=None, key=None):
+        postfix = "_" + str(index) if index else ""
+        if line_edits:
+            values = {}
+            for line_edit_name, line_edit_value in line_edits.items():
+                line_edit = "line_edit_" + (line_edit_name + postfix if postfix else line_edit_name)
+                if line_edit in self.parent.ui.__dict__.keys():
+                    getattr(self.parent.ui, line_edit).setText(line_edit_value)
+                    values.update({line_edit_name + postfix: line_edit_value})
+            self.data.update({key: values} if key else values)
+
+    @pyqtSlot()
+    def set_line_edits(self, line_edit_text, line_edits, obj, method, postfix=None):
+        model_info = getattr(obj(line_edit_text), method)()
         for line_edit in line_edits:
             if line_edit in model_info.keys():
                 info = model_info[line_edit]
-                line_edit = line_edit + postfix if postfix else line_edit
-                getattr(self.parent.ui, "line_edit_" + line_edit).setText(info)
+                line_edit = "line_edit_" + (line_edit + postfix if postfix else line_edit)
+                getattr(self.parent.ui, line_edit).setText(info)
                 self.data.update({line_edit: info})
 
     @pyqtSlot()
     def get_line_edits(self, line_edits, postfix=None):
         for line_edit in line_edits:
-            line_edit = line_edit + postfix if postfix else line_edit
+            line_edit = "line_edit_" + (line_edit + postfix if postfix else line_edit)
             if line_edit in self.data.keys():
-                getattr(self.parent.ui, "line_edit_" + line_edit).setText(
+                getattr(self.parent.ui, line_edit).setText(
                     self.data[line_edit])

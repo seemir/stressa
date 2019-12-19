@@ -96,7 +96,7 @@ class TestMoney:
         Test the multiplication method of Money object
 
         """
-        correct_mul = str(Decimal(self.money.amount.replace(" ", "")) * Decimal(amount)) + "kr"
+        correct_mul = str(Decimal(self.money.amount.replace(" ", "")) * Decimal(amount))
         assert (self.money * Money(amount)).replace(" ", "") == correct_mul
 
     @pt.mark.parametrize("amount", ["1", "1.5", "100", "1000.45"])
@@ -105,7 +105,7 @@ class TestMoney:
         Test the division method of Money object
 
         """
-        correct_mul = str(Decimal(self.money.amount.replace(" ", "")) / Decimal(amount)) + "kr"
+        correct_mul = str(Decimal(self.money.amount.replace(" ", "")) / Decimal(amount))
         assert (self.money / Money(amount)).replace(" ", "") == correct_mul
 
     def test_money_division_by_zero(self):

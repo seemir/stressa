@@ -92,9 +92,9 @@ class Sifo(Scraper):
                 "Failed HTTP request - please insure that internet access is provided to the "
                 "client,\nexited with '{}'".format(sifo_response_error))
 
-    def sifo_expenses(self, include_id: bool = False):
+    def sifo_base_expenses(self, include_id: bool = False):
         """
-        get SIFO expenses given the family information
+        get SIFO base expenses given the family information
 
         Returns
         -------
@@ -104,7 +104,7 @@ class Sifo(Scraper):
         """
 
         try:
-            LOGGER.info("trying to retrieve '{}'".format(self.sifo_expenses.__name__))
+            LOGGER.info("trying to retrieve '{}'".format(self.sifo_base_expenses.__name__))
             root = Et.fromstring(self.response().read())
 
             expenses = {}
@@ -112,7 +112,7 @@ class Sifo(Scraper):
                 expenses.update({'_id': self.family.id_str})
             for child in root:
                 expenses.update({child.tag: child.text.strip().replace(".", "")})
-            LOGGER.success("'{}' successfully retrieved".format(self.sifo_expenses.__name__))
+            LOGGER.success("'{}' successfully retrieved".format(self.sifo_base_expenses.__name__))
             return expenses
         except Exception as sifo_expenses_exception:
             LOGGER.exception(sifo_expenses_exception)
@@ -128,5 +128,5 @@ class Sifo(Scraper):
                       file directory to save JSON files
 
         """
-        self.save_json(self.sifo_expenses(), file_dir=file_dir, file_prefix="SifoExpenses_")
+        self.save_json(self.sifo_base_expenses(), file_dir=file_dir, file_prefix="SifoExpenses_")
         LOGGER.success("'sifo_expenses' successfully parsed to JSON at '{}'".format(file_dir))

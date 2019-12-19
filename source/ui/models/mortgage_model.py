@@ -14,8 +14,8 @@ class MortgageModel(Model):
     _intervall = ["", "Ukentlig", "Annenhver uke", "Månedlig", "Annenhver måned",
                   "Kvartalsvis", "Årlig"]
 
-    def __init__(self, parent, error):
-        super(MortgageModel, self).__init__(parent, error)
+    def __init__(self, parent):
+        super(MortgageModel, self).__init__(parent)
         self.parent.ui.combo_box_lanetype.addItems(self._lanetype)
         self.parent.ui.combo_box_laneperiode.addItems(self._laneperiode)
         self.parent.ui.combo_box_intervall.addItems(self._intervall)

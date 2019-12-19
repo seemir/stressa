@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1291</width>
-    <height>736</height>
+    <height>758</height>
    </rect>
   </property>
   <property name="palette">
@@ -3603,6 +3603,10 @@
              <property name="text">
               <string>Sifo utgifter</string>
              </property>
+             <property name="icon">
+              <iconset resource="../../images/img.qrc">
+               <normaloff>:/img/expense.png</normaloff>:/img/expense.png</iconset>
+             </property>
             </widget>
            </item>
            <item row="10" column="2">
@@ -3635,6 +3639,10 @@
              </property>
              <property name="text">
               <string>Beregn skatt</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../images/img.qrc">
+               <normaloff>:/img/tax.png</normaloff>:/img/tax.png</iconset>
              </property>
             </widget>
            </item>

@@ -18,8 +18,8 @@ class FinnModel(Model):
                   "etasje", "bygger", "soverom", "rom", "primrrom", "bruttoareal",
                   "energimerking", "tomteareal"]
 
-    def __init__(self, parent, error):
-        super(FinnModel, self).__init__(parent, error)
+    def __init__(self, parent):
+        super(FinnModel, self).__init__(parent)
 
     def finn_info(self):
         self.parent.ui.line_edit_finnkode_1.editingFinished.connect(
