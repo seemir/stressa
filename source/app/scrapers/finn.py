@@ -130,8 +130,7 @@ class Finn(Scraper):
                 LOGGER.success(
                     "'{}' successfully retrieved".format(self.housing_information.__name__))
                 return info
-            else:
-                raise NotFoundError("'{}' is an invalid Finn code".format(self.finn_code))
+            raise NotFoundError("'{}' is an invalid Finn code".format(self.finn_code))
         except Exception as housing_information_exception:
             LOGGER.exception(housing_information_exception)
             raise housing_information_exception
