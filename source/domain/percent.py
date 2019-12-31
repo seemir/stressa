@@ -34,7 +34,7 @@ class Percent(Value):
         try:
             super().__init__()
             Assertor.assert_data_types([percentage], [(Decimal, str)])
-            self._percentage = Decimal(percentage.replace("kr", "").replace(" ", ""))
+            self._percentage = Decimal(percentage)
             self._value = str(Decimal(self.percentage * 100).quantize(Decimal("0.01"))) + " %"
             LOGGER.success(
                 "created '{}' -> {}".format(self.__class__.__name__, self.value))

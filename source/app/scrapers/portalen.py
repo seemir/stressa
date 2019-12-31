@@ -8,10 +8,9 @@ Implementation of scaper against finansportalen.no xml feed
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import gc
 import re
 from http.client import responses
-import xml.etree.ElementTree as Et
+import xml.etree.cElementTree as Et
 
 import requests
 
@@ -79,14 +78,12 @@ class Portalen(Scraper):
 
             offers = {}
             count = 0
-            gc.collect()
 
             for entries in tree:
                 count += 1
                 offers.update(
                     {count: {re.sub("{[^>]+}", "", entry.tag): entry.text.strip() for entry in
                              entries if entry.text}})
-            gc.collect()
 
             LOGGER.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
             return offers
