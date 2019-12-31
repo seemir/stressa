@@ -22,7 +22,6 @@ class Model(ABC):
 
     @property
     def data(self):
-        self._data = dict(sorted(self._data.items()))
         return self._data
 
     @data.setter
@@ -32,9 +31,10 @@ class Model(ABC):
     @pyqtSlot()
     def set_date_edit(self, date_edit_name):
         try:
-            date_edit = getattr(self.parent.ui, "date_edit_" + date_edit_name).date()
-            if date_edit.year() != 0000:
-                self.data.update({date_edit_name: date_edit})
+            date_edit_text = getattr(self.parent.ui,
+                                     "date_edit_" + date_edit_name).date()
+            if date_edit_text.year() != 0000:
+                self.data.update({date_edit_name: date_edit_text.toString()})
             else:
                 self.data.pop(date_edit_name) if date_edit_name in self.data.keys() else ""
         except Exception as set_date_edit_error:
@@ -42,62 +42,39 @@ class Model(ABC):
             self.parent.error.exec_()
 
     @pyqtSlot()
-    def set_combo_box(self, combo_box_name):
+    def set_combo_box(self, combo_box_name, common_key=None):
         try:
-            combo_box = str(getattr(self.parent.ui, "combo_box_" + combo_box_name).currentText())
-            if combo_box and combo_box not in self.data.values() \
-                    or combo_box_name not in self.data.keys():
-                self.data.update({combo_box_name: combo_box})
-            else:
-                self.data.pop(combo_box_name) if combo_box_name in self.data.keys() else ""
-        except Exception as set_combo_box_error:
-            self.parent.error.show_error(set_combo_box_error)
-            self.parent.error.exec_()
+            combo_box_text = str(
+                getattr(self.parent.ui, "combo_box_" + combo_box_name).currentText())
+            values = {combo_box_name: combo_box_text}
 
-    @pyqtSlot()
-    def set_buddy_combo_box(self, combo_box_name, key_name):
-        try:
-            combo_box_text = getattr(self.parent.ui, "combo_box_" + combo_box_name).currentText()
-            if key_name not in self.data.keys():
-                self.data.update({key_name: {combo_box_name: combo_box_text}})
+            if common_key and combo_box_text and common_key not in self.data.keys():
+                self.data.update({common_key: values})
+            elif common_key and combo_box_text and common_key in self.data.keys():
+                self.data[common_key].update(values)
             else:
-                self.data[key_name].update({combo_box_name: combo_box_text})
+                self.data.pop(common_key) if common_key in self.data.keys() else ""
+                if combo_box_text and (combo_box_text not in self.data.values()
+                                       or combo_box_name not in self.data.keys()):
+                    self.data.update(values)
+                else:
+                    self.data.pop(combo_box_name) if combo_box_name in self.data.keys() else ""
+
             for key, val in self.data.items():
                 if isinstance(val, dict):
                     self.data.update({key: dict(sorted(val.items()))})
                 else:
                     self.data.update({key: val})
-        except Exception as set_buddy_combo_box_error:
-            self.parent.error.show_error(set_buddy_combo_box_error)
-            self.parent.error.exec_()
-
-    @pyqtSlot()
-    def set_line_edit(self, line_edit_name, model, method):
-        line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name)
-        try:
-            line_edit_text = line_edit.text()
-            if line_edit_text and line_edit_text not in self.data.values():
-                output = getattr(model(line_edit_text), method)()
-                self.data.update({line_edit_name: output})
-            elif line_edit_text and line_edit_text in self.data.values():
-                output = self.data[line_edit_name]
-                self.data.update({line_edit_name: output})
-            else:
-                output = ""
-                self.data.pop(line_edit_name) if line_edit_name in self.data.keys() else ""
-            getattr(self.parent.ui, "line_edit_" + line_edit_name).setText(output)
-        except Exception as set_line_edit_error:
-            self.parent.error.show_error(set_line_edit_error)
-            line_edit.clear()
-            line_edit.setFocus()
+        except Exception as set_combo_box_error:
+            self.parent.error.show_error(set_combo_box_error)
             self.parent.error.exec_()
 
     @pyqtSlot()
     def update_line_edits(self, line_edit_name, line_edits, obj, method, index=None):
         postfix = "_" + str(index) if index else ""
-        line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name)
+        line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name + postfix)
         try:
-            line_edit_text = line_edit.text()
+            line_edit_text = line_edit.text().strip()
             if line_edit_text and line_edit_text not in self.data.values():
                 self.set_line_edits(line_edit_text, line_edits, obj, method, postfix)
             elif line_edit_text and line_edit_text in self.data.values():
@@ -105,41 +82,47 @@ class Model(ABC):
             else:
                 self.clear_line_edits(line_edits, postfix)
         except Exception as update_error:
-            self.parent.error.show_error(update_error)
             self.clear_line_edits(line_edits, postfix)
+            self.parent.error.show_error(update_error, self.data)
+            self.parent.error.exec_()
             line_edit.setFocus()
+
+    @pyqtSlot()
+    def set_line_edits(self, line_edit_text, line_edits, obj=None, method=None, postfix=None,
+                       data=None):
+        model_info = getattr(obj(line_edit_text), method)() if obj and method else data
+        try:
+            for line_edit in line_edits:
+                if line_edit in model_info.keys():
+                    info = model_info[line_edit]
+                    line_edit_name = line_edit + postfix if postfix else line_edit
+                    self.set_line_edit(line_edit_name, data=info)
+        except Exception as set_line_edits_error:
+            self.clear_line_edits(line_edits, postfix)
+            self.parent.error.show_error(set_line_edits_error, self.data)
             self.parent.error.exec_()
 
     @pyqtSlot()
-    def clear_line_edits(self, line_edits, index=None):
-        postfix = "_" + str(index) if index else ""
-        for line_edit in line_edits:
-            line_edit = "line_edit_" + (line_edit + postfix if postfix else line_edit)
-            getattr(self.parent.ui, line_edit).clear()
-            if line_edit in self.data.keys():
-                self._data.pop(line_edit)
-
-    @pyqtSlot()
-    def line_edit_setter(self, line_edits, index=None, key=None):
-        postfix = "_" + str(index) if index else ""
-        if line_edits:
-            values = {}
-            for line_edit_name, line_edit_value in line_edits.items():
-                line_edit = "line_edit_" + (line_edit_name + postfix if postfix else line_edit_name)
-                if line_edit in self.parent.ui.__dict__.keys():
-                    getattr(self.parent.ui, line_edit).setText(line_edit_value)
-                    values.update({line_edit_name + postfix: line_edit_value})
-            self.data.update({key: values} if key else values)
-
-    @pyqtSlot()
-    def set_line_edits(self, line_edit_text, line_edits, obj, method, postfix=None):
-        model_info = getattr(obj(line_edit_text), method)()
-        for line_edit in line_edits:
-            if line_edit in model_info.keys():
-                info = model_info[line_edit]
-                line_edit = "line_edit_" + (line_edit + postfix if postfix else line_edit)
-                getattr(self.parent.ui, line_edit).setText(info)
-                self.data.update({line_edit: info})
+    def set_line_edit(self, line_edit_name, obj=None, method=None, data=None):
+        line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name)
+        try:
+            line_edit_text = line_edit.text() if not data else data
+            new_value = line_edit_text not in self.data.values()
+            if line_edit_text and new_value:
+                output = getattr(obj(line_edit_text), method)() if not data else data
+                self.data.update({line_edit_name: output})
+            elif line_edit_text and not new_value:
+                output = line_edit_text
+                self.data.update({line_edit_name: output})
+            else:
+                output = ""
+                self.data.pop(line_edit_name) if line_edit_name in self.data.keys() else ""
+            getattr(self.parent.ui, "line_edit_" + line_edit_name).setText(output)
+        except Exception as set_line_edit_error:
+            self.clear_line_edit(line_edit_name)
+            self.parent.error.show_error(set_line_edit_error, self.data)
+            self.parent.error.exec_()
+            line_edit.setFocus()
 
     @pyqtSlot()
     def get_line_edits(self, line_edits, postfix=None):
@@ -148,3 +131,18 @@ class Model(ABC):
             if line_edit in self.data.keys():
                 getattr(self.parent.ui, line_edit).setText(
                     self.data[line_edit])
+
+    @pyqtSlot()
+    def clear_line_edits(self, line_edits, index=None):
+        postfix = str(index) if index else ""
+        for line_edit in line_edits:
+            line_edit_name = line_edit + postfix if postfix else line_edit
+            self.clear_line_edit(line_edit_name)
+
+    @pyqtSlot()
+    def clear_line_edit(self, line_edit_name):
+        if line_edit_name in self.data.keys():
+            getattr(self.parent.ui, "line_edit_" + line_edit_name).clear()
+            self.data.pop(line_edit_name)
+        else:
+            getattr(self.parent.ui, "line_edit_" + line_edit_name).clear()

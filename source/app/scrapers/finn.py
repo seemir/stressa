@@ -114,19 +114,24 @@ class Finn(Scraper):
                                                              self.finn_code))
             soup = BeautifulSoup(self.response().content, "lxml")
 
-            address = soup.find("p", attrs={"class": "u-caption"}).text
-            price = "".join(price.text for price in soup.find_all("span", attrs={"class": "u-t3"})
-                            if " kr" in price.text).strip().replace(u"\xa0", " ")
+            address = soup.find("p", attrs={"class": "u-caption"})
+            if address:
+                price = "".join(
+                    price.text for price in soup.find_all("span", attrs={"class": "u-t3"})
+                    if " kr" in price.text).strip().replace(u"\xa0", " ")
 
-            info = {"finn_adresse": address, "prisantydning": price}
+                info = {"finn_adresse": address.text, "prisantydning": price}
+                keys, values = list(soup.find_all(["th", "dt"])), list(soup.find_all(["td", "dd"]))
 
-            keys, values = list(soup.find_all(["th", "dt"])), list(soup.find_all(["td", "dd"]))
-            info.update(
-                {re.sub("[^a-z]+", "", key.text.lower()): val.text.strip().replace(u"\xa0", " ")
-                 for key, val in zip(keys, values)})
+                info.update(
+                    {re.sub("[^a-z]+", "", key.text.lower()): val.text.strip().replace(u"\xa0", " ")
+                     for key, val in zip(keys, values)})
 
-            LOGGER.success("'{}' successfully retrieved".format(self.housing_information.__name__))
-            return info
+                LOGGER.success(
+                    "'{}' successfully retrieved".format(self.housing_information.__name__))
+                return info
+            else:
+                raise NotFoundError("'{}' is an invalid Finn code".format(self.finn_code))
         except Exception as housing_information_exception:
             LOGGER.exception(housing_information_exception)
             raise housing_information_exception

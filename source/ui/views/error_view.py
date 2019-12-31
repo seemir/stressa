@@ -12,6 +12,7 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 import shutil
 import traceback
+import json
 
 from PyQt5.QtWidgets import QDialog, QWidget
 from PyQt5.QtCore import pyqtSlot, Qt
@@ -40,7 +41,7 @@ class ErrorView(QDialog):
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
 
-    def show_error(self, exception):
+    def show_error(self, exception, meta):
         """
         method for shows an error form with exception, traceback and log information
 
@@ -48,11 +49,15 @@ class ErrorView(QDialog):
         ----------
         exception   : Exception
                       exception to be added to form
+        meta        : dict
+                      metadata
 
         """
+        self.ui.tab_widget_error.setCurrentIndex(0)
         self.ui.label_error_text.setText(str(exception))
         self.ui.plain_text_edit_traceback.setPlainText(traceback.format_exc())
         self.ui.plain_text_edit_log.setPlainText(self.read_log(exception))
+        self.ui.plain_text_edit_meta.setPlainText(json.dumps(meta, indent=2, ensure_ascii=False))
 
     @pyqtSlot()
     def read_log(self, exception: Exception):

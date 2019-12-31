@@ -108,6 +108,16 @@ class TestFinn:
         with pt.raises(AttributeError):
             finn.housing_information()
 
+    @staticmethod
+    def test_housing_information_throws_not_found_error():
+        """
+        Test that housing_information method throws NotFoundError for invalid FINN-code
+
+        """
+        finn = Finn("144857771")
+        with pt.raises(NotFoundError):
+            finn.housing_information()
+
     @mock.patch("source.app.scrapers.finn.Finn.housing_information",
                 mock.MagicMock(return_value=""))
     def test_to_json(self):

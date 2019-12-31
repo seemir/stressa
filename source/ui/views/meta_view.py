@@ -25,7 +25,7 @@ class MetaView(QDialog):
     def parent(self):
         return self._parent
 
-    def show_meta_data(self):
+    def show(self):
         try:
             metadata = self._parent.sifo_model
             self.ui.plain_text_edit_metadata.setPlainText(
