@@ -4,7 +4,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import os
-from ctypes import windll
+# import ctypes
 
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
@@ -15,8 +15,9 @@ from .sifo_view import SifoView
 from .error_view import ErrorView
 from . import resources
 
-myappid = 'mycompany.myproduct.subproduct.version'  # arbitrary string
-windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
+# myappid = 'mycompany.myproduct.subproduct.version'
+# ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 
 class HomeView(QMainWindow):
