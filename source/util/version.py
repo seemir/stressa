@@ -8,4 +8,4 @@ Version of application
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-__version__ = '0.0.52'
+__version__ = '0.0.55'
