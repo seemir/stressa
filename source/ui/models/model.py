@@ -48,23 +48,25 @@ class Model(ABC):
                 getattr(self.parent.ui, "combo_box_" + combo_box_name).currentText())
             values = {combo_box_name: combo_box_text}
 
-            if common_key and combo_box_text and common_key not in self.data.keys():
+            if common_key and common_key not in self.data.keys():
                 self.data.update({common_key: values})
-            elif common_key and combo_box_text and common_key in self.data.keys():
+            elif common_key and common_key in self.data.keys():
                 self.data[common_key].update(values)
             else:
-                self.data.pop(common_key) if common_key in self.data.keys() else ""
-                if combo_box_text and (combo_box_text not in self.data.values()
-                                       or combo_box_name not in self.data.keys()):
-                    self.data.update(values)
-                else:
-                    self.data.pop(combo_box_name) if combo_box_name in self.data.keys() else ""
+                self.data.update(values)
 
-            for key, val in self.data.items():
+            for key, val in self.data.copy().items():
                 if isinstance(val, dict):
                     self.data.update({key: dict(sorted(val.items()))})
-                else:
-                    self.data.update({key: val})
+
+            for key, val in self.data.copy().items():
+                if isinstance(val, dict):
+                    for k, v in val.copy().items():
+                        if not v:
+                            self.data[key].pop(k)
+                if not val:
+                    self.data.pop(key)
+
         except Exception as set_combo_box_error:
             self.parent.error.show_error(set_combo_box_error)
             self.parent.error.exec_()
@@ -106,7 +108,7 @@ class Model(ABC):
     def set_line_edit(self, line_edit_name, obj=None, method=None, data=None):
         line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name)
         try:
-            line_edit_text = line_edit.text() if not data else data
+            line_edit_text = line_edit.text().strip() if not data else data
             new_value = line_edit_text not in self.data.values()
             if line_edit_text and new_value:
                 output = getattr(obj(line_edit_text), method)() if not data else data
@@ -141,8 +143,9 @@ class Model(ABC):
 
     @pyqtSlot()
     def clear_line_edit(self, line_edit_name):
+        line_edit = "line_edit_" + line_edit_name
         if line_edit_name in self.data.keys():
-            getattr(self.parent.ui, "line_edit_" + line_edit_name).clear()
+            getattr(self.parent.ui, line_edit).clear()
             self.data.pop(line_edit_name)
         else:
-            getattr(self.parent.ui, "line_edit_" + line_edit_name).clear()
+            getattr(self.parent.ui, line_edit).clear()
