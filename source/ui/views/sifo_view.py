@@ -3,6 +3,11 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+"""
+SifoView which contains the GUI for the SIFO calculator
+
+"""
+
 import os
 
 from PyQt5.QtWidgets import QDialog
@@ -17,8 +22,21 @@ from . import resources
 
 
 class SifoView(QDialog):
+    """
+    Sifo Calculator view
+
+    """
 
     def __init__(self, parent):
+        """
+        Construtor / Instantiation of class
+
+        Parameters
+        ----------
+        parent  : QObject
+                  parent view for the SifoView
+
+        """
         super(SifoView, self).__init__(parent=parent)
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/sifo_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
@@ -33,17 +51,52 @@ class SifoView(QDialog):
 
     @property
     def sifo_model(self):
+        """
+        SifoModel getter
+
+        Returns
+        -------
+        out     : SifoModel
+                  Model containing all the logic of the Sifo calculations
+
+        """
         return self._sifo_model
 
     @property
     def meta_view(self):
+        """
+        MetaView getter
+
+        Returns
+        -------
+        out     : MetaView
+                  View with the metadata for the SifoView
+
+        """
         return self._meta_view
 
     @property
     def parent(self):
+        """
+        parent getter
+
+        Returns
+        -------
+        out     : QObject
+                  active parent view for the SifoView
+
+        """
         return self._parent
 
     @property
     def error(self):
-        return self._error
+        """
+        ErrorView getter
 
+        Returns
+        -------
+        out     : QObject
+                  active ErrorView in the SifoView
+
+        """
+        return self._error

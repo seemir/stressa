@@ -94,6 +94,8 @@ class Model(ABC):
                        data=None):
         model_info = getattr(obj(line_edit_text), method)() if obj and method else data
         try:
+            if not model_info:
+                return
             for line_edit in line_edits:
                 if line_edit in model_info.keys():
                     info = model_info[line_edit]
@@ -136,7 +138,7 @@ class Model(ABC):
 
     @pyqtSlot()
     def clear_line_edits(self, line_edits, index=None):
-        postfix = str(index) if index else ""
+        postfix = "_" + str(index) if index else ""
         for line_edit in line_edits:
             line_edit_name = line_edit + postfix if postfix else line_edit
             self.clear_line_edit(line_edit_name)

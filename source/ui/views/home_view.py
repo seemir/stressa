@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-
 
+"""
+The main HomeView of the Application, i.e. the first view that the viewer is meet with after
+the splash screen
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
@@ -21,8 +27,16 @@ from . import resources
 
 
 class HomeView(QMainWindow):
+    """
+    The HomeView which is the only QMainWindow in the application
+
+    """
 
     def __init__(self):
+        """
+        Constructor / instantiating the class
+
+        """
         super().__init__()
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/home_form.ui"), self)
 
@@ -38,4 +52,13 @@ class HomeView(QMainWindow):
 
     @property
     def error(self):
+        """
+        ErrorView getter
+
+        Returns
+        -------
+        out     : QObject
+                  active ErrorView class
+
+        """
         return self._error

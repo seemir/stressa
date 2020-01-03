@@ -2736,7 +2736,41 @@
        </property>
       </widget>
      </item>
+     <item row="31" column="1">
+      <widget class="QPushButton" name="push_button_tom_skjema_2">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Tøm skjema</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../images/img.qrc">
+         <normaloff>:/img/erase.png</normaloff>:/img/erase.png</iconset>
+       </property>
+      </widget>
+     </item>
      <item row="32" column="1">
+      <widget class="QPushButton" name="push_button_cancel_2">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Avbryt</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../images/img.qrc">
+         <normaloff>:/img/cancel.png</normaloff>:/img/cancel.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="31" column="2">
       <widget class="QPushButton" name="push_button_back">
        <property name="minimumSize">
         <size>
@@ -2754,40 +2788,6 @@
       </widget>
      </item>
      <item row="32" column="2">
-      <widget class="QPushButton" name="push_button_tom_skjema_2">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Tøm skjema</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../images/img.qrc">
-         <normaloff>:/img/erase.png</normaloff>:/img/erase.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="31" column="2">
-      <widget class="QPushButton" name="push_button_cancel_2">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Avbryt</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../images/img.qrc">
-         <normaloff>:/img/cancel.png</normaloff>:/img/cancel.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="31" column="1">
       <widget class="QPushButton" name="push_button_metadata">
        <property name="minimumSize">
         <size>
@@ -2861,6 +2861,11 @@
   <tabstop>line_edit_totalt_1</tabstop>
   <tabstop>line_edit_totalt_2</tabstop>
   <tabstop>push_button_exporter</tabstop>
+  <tabstop>push_button_tom_skjema_2</tabstop>
+  <tabstop>push_button_back</tabstop>
+  <tabstop>push_button_cancel_2</tabstop>
+  <tabstop>push_button_metadata</tabstop>
+  <tabstop>tabwidget_sifo</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

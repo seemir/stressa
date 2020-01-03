@@ -1,5 +1,10 @@
 # -*- coding: windows-1252 -*-
 
+"""
+Main entrance point of the application
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 """
-A dialog window that gets show whenever a error occurs. Information from the traceback
-and log gets populated in the window for the viewer to examine.
+A dialog window that gets show whenever an error occurs. Information from the traceback, log and
+metadata gets populated in the window for the viewer to examine.
 
 """
 
@@ -32,7 +32,7 @@ class ErrorView(QDialog):
 
         Parameters
         ----------
-        parent      : QWidget
+        parent      : QObject
                       parent class for which this dialog window is part
 
         """
@@ -83,9 +83,8 @@ class ErrorView(QDialog):
     @staticmethod
     def extract_log(file_dir: str, exp: Exception):
         """
-        static method for creating temp log file and extracting details from this file.
-        keep in mind that the log file gets deleted automatically ones the message has been
-        populated to the view. for details about content, see app.log
+        static method for creating temp log file and extracting details from this file,
+        for details about content, see app.log
 
         Parameters
         ----------

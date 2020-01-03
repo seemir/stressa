@@ -9,6 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from typing import Union
+from decimal import Decimal
 
 from source.util import Assertor, LOGGER, MissingGuardianshipError
 
@@ -48,9 +49,9 @@ class Family(Entity):
         for family_member in family_members:
             Assertor.assert_data_types([family_member], [(Male, Female)])
 
-        if all(int(family_member.alder) < 18 for family_member in family_members):
+        if all(Decimal(family_member.alder) < 18 for family_member in family_members):
             raise MissingGuardianshipError("no guardianship found, i.e. family must have at least "
-                                           "one person older than 17 years.")
+                                           "one person older than 18 years.")
 
     def __init__(self, family_members: list = None, income: Union[int, float, str] = 0,
                  cars: Union[int, str] = 0):

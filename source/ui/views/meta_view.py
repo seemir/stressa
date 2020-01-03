@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 
+"""
+Metadata Dialog which contains information of all relevant metadata
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
@@ -12,8 +17,21 @@ from PyQt5.uic import loadUi
 
 
 class MetaView(QDialog):
+    """
+    MetaView with metadata information, one of several QDialog views
+
+    """
 
     def __init__(self, parent):
+        """
+        Constructor / Instantiation of class
+
+        Parameters
+        ----------
+        parent  : QObject
+                  parent view of the metaview
+
+        """
         super().__init__(parent)
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/meta_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
