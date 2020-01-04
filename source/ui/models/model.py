@@ -1,36 +1,95 @@
 # -*- coding: utf-8 -*-
 
+"""
+Module for the Model abstract base class
+
+"""
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from abc import ABC, abstractmethod
 
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSlot, QObject
+
+from source.util import Assertor
 
 
 class Model(ABC):
+    """
+    Implementation of the Model Abstract Base Class
+
+    """
 
     @abstractmethod
-    def __init__(self, parent):
+    def __init__(self, parent: QObject):
+        """
+        Constructor / Instantiation
+
+        Parameters
+        ----------
+        parent  : QObject
+                  parent view for which the model resides
+
+        """
+        Assertor.assert_data_types([parent], [QObject])
         super().__init__()
         self._parent = parent
         self._data = {}
 
     @property
     def parent(self):
+        """
+        parent getter
+
+        Returns
+        -------
+        out     : OQbject
+                  active parent in model
+
+        """
         return self._parent
 
     @property
     def data(self):
+        """
+        data getter
+
+        Returns
+        -------
+        out     : dict
+                  active data that has been inputted in model
+
+        """
         return self._data
 
     @data.setter
-    def data(self, new_data):
+    def data(self, new_data: dict):
+        """
+        data setter
+
+        Parameters
+        ----------
+        new_data    : dict
+                      new data dict to be set in model
+
+        """
+        Assertor.assert_data_types([new_data], [dict])
         self._data = new_data
 
     @pyqtSlot()
-    def set_date_edit(self, date_edit_name):
+    def set_date_edit(self, date_edit_name: str):
+        """
+        method for setting value in a date_edit
+
+        Parameters
+        ----------
+        date_edit_name  : str
+                          name of date_edit
+
+        """
         try:
+            Assertor.assert_data_types([date_edit_name], [str])
             date_edit_text = getattr(self.parent.ui,
                                      "date_edit_" + date_edit_name).date()
             if date_edit_text.year() != 0000:
@@ -42,8 +101,20 @@ class Model(ABC):
             self.parent.error.exec_()
 
     @pyqtSlot()
-    def set_combo_box(self, combo_box_name, common_key=None):
+    def set_combo_box(self, combo_box_name: str, common_key: str = None):
+        """
+        method for setting value in single combo_box
+
+        Parameters
+        ----------
+        combo_box_name  : str
+                          name of combo_box
+        common_key      : str, None
+                          common data key to append all values
+
+        """
         try:
+            Assertor.assert_data_types([combo_box_name, common_key], [str, (type(None), str)])
             combo_box_text = str(
                 getattr(self.parent.ui, "combo_box_" + combo_box_name).currentText())
             values = {combo_box_name: combo_box_text}
@@ -72,10 +143,30 @@ class Model(ABC):
             self.parent.error.exec_()
 
     @pyqtSlot()
-    def update_line_edits(self, line_edit_name, line_edits, obj, method, index=None):
+    def update_line_edits(self, line_edit_name: str, line_edits: list, obj: object, method: str,
+                          index: str = None):
+        """
+        method for updating the value of multiple line_edits
+
+        Parameters
+        ----------
+        line_edit_name  : str
+                          name of line_edit to get values from
+        line_edits      : list
+                          all line_edits to update values for based on input, see line_edit_name
+        obj             : object
+                          name of object to get values to update line_edits
+        method          : str
+                          name of method in obj to use to get values to update line_edits
+        index           : str
+                          index if used in naming of line_edits
+
+        """
         postfix = "_" + str(index) if index else ""
         line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name + postfix)
         try:
+            Assertor.assert_data_types([line_edit_name, line_edits, obj, method, index],
+                                       [str, list, object, str, (type(None), str)])
             line_edit_text = line_edit.text().strip()
             if line_edit_text and line_edit_text not in self.data.values():
                 self.set_line_edits(line_edit_text, line_edits, obj, method, postfix)
@@ -90,10 +181,32 @@ class Model(ABC):
             line_edit.setFocus()
 
     @pyqtSlot()
-    def set_line_edits(self, line_edit_text, line_edits, obj=None, method=None, postfix=None,
-                       data=None):
+    def set_line_edits(self, line_edit_text: str, line_edits: list, obj: object = None,
+                       method: str = None, postfix: str = None, data: dict = None):
+        """
+        method for setting values of multiple line_edits
+
+        Parameters
+        ----------
+        line_edit_text  : str
+                          value of inputted line_edit
+        line_edits      : list
+                          list of line_edit names to update values
+        obj             : object
+                          object with method for extracting values to update line_edits
+        method          : str
+                          name of method to call in object
+        postfix         : str
+                          index if used in naming of line_edits
+        data            : dict
+                          dictionary with data to set if no object or method used
+
+        """
         model_info = getattr(obj(line_edit_text), method)() if obj and method else data
         try:
+            Assertor.assert_data_types([line_edit_text, line_edits, obj, method, postfix, data],
+                                       [str, list, (object, type(None)), (str, type(None)),
+                                        (str, type(None)), (dict, type(None))])
             if not model_info:
                 return
             for line_edit in line_edits:
@@ -107,9 +220,28 @@ class Model(ABC):
             self.parent.error.exec_()
 
     @pyqtSlot()
-    def set_line_edit(self, line_edit_name, obj=None, method=None, data=None):
+    def set_line_edit(self, line_edit_name: str, obj: object = None, method: str = None,
+                      data: str = None):
+        """
+        method for setting value of a single line_edit
+
+        Parameters
+        ----------
+        line_edit_name  : str
+                          name of line_edit to set value
+        obj             : object
+                          object to get values from
+        method          : str
+                          name of method to call in obj to get values
+        data            : str
+                          value to set if no obj or method used
+
+        """
         line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name)
         try:
+            Assertor.assert_data_types([line_edit_name, obj, method, data],
+                                       [str, (object, type(None)), (str, type(None)),
+                                        (str, type(None))])
             line_edit_text = line_edit.text().strip() if not data else data
             new_value = line_edit_text not in self.data.values()
             if line_edit_text and new_value:
@@ -120,7 +252,7 @@ class Model(ABC):
                 self.data.update({line_edit_name: output})
             else:
                 output = ""
-                self.data.pop(line_edit_name) if line_edit_name in self.data.keys() else ""
+                self.clear_line_edit(line_edit_name)
             getattr(self.parent.ui, "line_edit_" + line_edit_name).setText(output)
         except Exception as set_line_edit_error:
             self.clear_line_edit(line_edit_name)
@@ -129,7 +261,19 @@ class Model(ABC):
             line_edit.setFocus()
 
     @pyqtSlot()
-    def get_line_edits(self, line_edits, postfix=None):
+    def get_line_edits(self, line_edits: list, postfix: str = None):
+        """
+        method for getting values of multiple line_edits
+
+        Parameters
+        ----------
+        line_edits  : list
+                      names of line_edits to get
+        postfix     : str
+                      index if used in naming of line_edits
+
+        """
+        Assertor.assert_data_types([line_edits, postfix], [list, (str, type(None))])
         for line_edit in line_edits:
             line_edit = "line_edit_" + (line_edit + postfix if postfix else line_edit)
             if line_edit in self.data.keys():
@@ -137,14 +281,35 @@ class Model(ABC):
                     self.data[line_edit])
 
     @pyqtSlot()
-    def clear_line_edits(self, line_edits, index=None):
-        postfix = "_" + str(index) if index else ""
+    def clear_line_edits(self, line_edits: list, postfix: str = None):
+        """
+        method clearing the content of multiple line_edits
+
+        Parameters
+        ----------
+        line_edits  : list
+                      list of names of line_edits to clear content
+        postfix     : str
+                      index if used in naming of line_edits
+
+        """
+        Assertor.assert_data_types([line_edits, postfix], [list, (str, type(None))])
         for line_edit in line_edits:
             line_edit_name = line_edit + postfix if postfix else line_edit
             self.clear_line_edit(line_edit_name)
 
     @pyqtSlot()
-    def clear_line_edit(self, line_edit_name):
+    def clear_line_edit(self, line_edit_name: str):
+        """
+        method clearing content of a single line_edit
+
+        Parameters
+        ----------
+        line_edit_name  : str
+                          name of line_edit to clear the content
+
+        """
+        Assertor.assert_data_types([line_edit_name], [str])
         line_edit = "line_edit_" + line_edit_name
         if line_edit_name in self.data.keys():
             getattr(self.parent.ui, line_edit).clear()

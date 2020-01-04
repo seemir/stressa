@@ -12,11 +12,11 @@ import os
 import sys
 import time
 
-from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QDialog, QApplication
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt
 
-from source.util import __version__
+from source.util import __version__, Assertor
 
 
 class SplashView(QDialog):
@@ -25,16 +25,17 @@ class SplashView(QDialog):
 
     """
 
-    def __init__(self, app):
+    def __init__(self, app: QApplication):
         """
         Constructor / Instantiating of class
 
         Parameters
         ----------
-        app     : QObject
+        app     : QApplication
                   main app object for which the splash screen is to be displayed
 
         """
+        Assertor.assert_data_types([app], [QApplication])
         super(SplashView, self).__init__()
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/splash_form.ui"), self)
         self.ui.progress_bar_splash.setStyleSheet(self.change_color())

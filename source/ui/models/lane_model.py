@@ -8,8 +8,11 @@ Module for main mortgage model for the HomeView
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.domain import Name, Address, Email, Mobile, Phone, Money
+from PyQt5.QtCore import QObject
+
 from source.app import Posten
+from source.util import Assertor
+from source.domain import Name, Address, Email, Mobile, Phone, Money
 
 from .model import Model
 
@@ -27,7 +30,17 @@ class LaneModel(Model):
     _intervall = ["", "Ukentlig", "Annenhver uke", "Månedlig", "Annenhver måned",
                   "Kvartalsvis", "Årlig"]
 
-    def __init__(self, parent):
+    def __init__(self, parent: QObject):
+        """
+        Constructor / Instantiation of class
+
+        Parameters
+        ----------
+        parent  : QObject
+                  parent view for which the model resides
+
+        """
+        Assertor.assert_data_types([parent], [QObject])
         super(LaneModel, self).__init__(parent)
         self.parent.ui.combo_box_kjonn.addItems(self._kjonn)
         self.parent.ui.combo_box_lanetype.addItems(self._lanetype)
@@ -35,6 +48,10 @@ class LaneModel(Model):
         self.parent.ui.combo_box_intervall.addItems(self._intervall)
 
     def lane_info(self):
+        """
+        Method for retrieving and formatting all inputted mortgage information
+
+        """
         self.parent.ui.line_edit_fornavn.editingFinished.connect(
             lambda: self.set_line_edit("fornavn", Name, "format_name"))
         self.parent.ui.line_edit_etternavn.editingFinished.connect(

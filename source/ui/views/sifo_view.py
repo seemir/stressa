@@ -10,11 +10,12 @@ SifoView which contains the GUI for the SIFO calculator
 
 import os
 
-from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QDialog, QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 
 from source.ui.models import SifoModel
+from source.util import Assertor
 
 from .meta_view import MetaView
 
@@ -27,16 +28,17 @@ class SifoView(QDialog):
 
     """
 
-    def __init__(self, parent):
+    def __init__(self, parent: QWidget):
         """
-        Construtor / Instantiation of class
+        Constructor / Instantiation of class
 
         Parameters
         ----------
-        parent  : QObject
+        parent  : QWidget
                   parent view for the SifoView
 
         """
+        Assertor.assert_data_types([parent], [QWidget])
         super(SifoView, self).__init__(parent=parent)
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/sifo_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)

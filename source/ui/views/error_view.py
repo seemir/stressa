@@ -19,6 +19,8 @@ from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.uic import loadUi
 from loguru import logger
 
+from source.util import Assertor
+
 
 class ErrorView(QDialog):
     """
@@ -36,12 +38,13 @@ class ErrorView(QDialog):
                       parent class for which this dialog window is part
 
         """
+        Assertor.assert_data_types([parent], [QWidget])
         super().__init__(parent)
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/error_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
 
-    def show_error(self, exception, meta):
+    def show_error(self, exception: Exception, meta: dict):
         """
         method for shows an error form with exception, traceback and log information
 
@@ -53,6 +56,7 @@ class ErrorView(QDialog):
                       metadata
 
         """
+        Assertor.assert_data_types([exception, meta], [Exception, dict])
         self.ui.tab_widget_error.setCurrentIndex(0)
         self.ui.label_error_text.setText(str(exception))
         self.ui.plain_text_edit_traceback.setPlainText(traceback.format_exc())
@@ -75,6 +79,7 @@ class ErrorView(QDialog):
                       details about exception from log
 
         """
+        Assertor.assert_data_types([exception], [Exception])
         log_dir = os.path.join(os.path.dirname(__file__), "logs")
         if os.path.exists(log_dir):
             shutil.rmtree(log_dir)
@@ -99,6 +104,7 @@ class ErrorView(QDialog):
                       log details about exception
 
         """
+        Assertor.assert_data_types([file_dir, exp], [str, Exception])
         log_str = []
         file_name = "ui.log"
         error_log = logger.add(os.path.join(file_dir, file_name))

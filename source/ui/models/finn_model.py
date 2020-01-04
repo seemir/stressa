@@ -30,7 +30,7 @@ class FinnModel(Model):
                   "etasje", "bygger", "soverom", "rom", "primrrom", "bruttoareal",
                   "energimerking", "tomteareal"]
 
-    def __init__(self, parent):
+    def __init__(self, parent: QObject):
         """
         Constructor / Instantiation of class
 
@@ -63,7 +63,7 @@ class FinnModel(Model):
                                            "housing_information", "3"))
         self.parent.ui.push_button_finn_3.clicked.connect(lambda: self.open_finn_url("finnkode_3"))
 
-    def open_finn_url(self, line_edit):
+    def open_finn_url(self, line_edit: str):
         """
         method for opening Finn link
 
