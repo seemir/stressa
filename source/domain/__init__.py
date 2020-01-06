@@ -18,6 +18,7 @@ from .person import Person
 from .female import Female
 from .amount import Amount
 from .mobile import Mobile
+from .share import Share
 from .money import Money
 from .email import Email
 from .value import Value

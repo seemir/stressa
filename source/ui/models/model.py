@@ -144,7 +144,7 @@ class Model(ABC):
 
     @pyqtSlot()
     def update_line_edits(self, line_edit_name: str, line_edits: list, obj: object, method: str,
-                          index: str = None):
+                          postfix: str = None):
         """
         method for updating the value of multiple line_edits
 
@@ -158,14 +158,14 @@ class Model(ABC):
                           name of object to get values to update line_edits
         method          : str
                           name of method in obj to use to get values to update line_edits
-        index           : str
+        postfix         : str
                           index if used in naming of line_edits
 
         """
-        postfix = "_" + str(index) if index else ""
+        postfix = postfix if postfix else ""
         line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name + postfix)
         try:
-            Assertor.assert_data_types([line_edit_name, line_edits, obj, method, index],
+            Assertor.assert_data_types([line_edit_name, line_edits, obj, method, postfix],
                                        [str, list, object, str, (type(None), str)])
             line_edit_text = line_edit.text().strip()
             if line_edit_text and line_edit_text not in self.data.values():
@@ -221,7 +221,7 @@ class Model(ABC):
 
     @pyqtSlot()
     def set_line_edit(self, line_edit_name: str, obj: object = None, method: str = None,
-                      data: str = None):
+                      data: str = None, clearing: object = None):
         """
         method for setting value of a single line_edit
 
@@ -235,13 +235,15 @@ class Model(ABC):
                           name of method to call in obj to get values
         data            : str
                           value to set if no obj or method used
+        clearing        : object
+                          object for clearing data after exceptions
 
         """
         line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name)
         try:
-            Assertor.assert_data_types([line_edit_name, obj, method, data],
+            Assertor.assert_data_types([line_edit_name, obj, method, data, clearing],
                                        [str, (object, type(None)), (str, type(None)),
-                                        (str, type(None))])
+                                        (str, type(None)), (object, type(None))])
             line_edit_text = line_edit.text().strip() if not data else data
             new_value = line_edit_text not in self.data.values()
             if line_edit_text and new_value:
@@ -255,6 +257,8 @@ class Model(ABC):
                 self.clear_line_edit(line_edit_name)
             getattr(self.parent.ui, "line_edit_" + line_edit_name).setText(output)
         except Exception as set_line_edit_error:
+            if clearing:
+                clearing()
             self.clear_line_edit(line_edit_name)
             self.parent.error.show_error(set_line_edit_error, self.data)
             self.parent.error.exec_()

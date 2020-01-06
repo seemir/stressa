@@ -8,7 +8,7 @@ Module for main mortgage model for the HomeView
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject, pyqtSlot
 
 from source.app import Posten
 from source.util import Assertor
@@ -17,7 +17,7 @@ from source.domain import Name, Address, Email, Mobile, Phone, Money
 from .model import Model
 
 
-class LaneModel(Model):
+class MortgageModel(Model):
     """
     Implementation of the MortgageModel in the HomeView, i.e. contains logic / mortgage
     related data inputted in the HomeView
@@ -41,17 +41,19 @@ class LaneModel(Model):
 
         """
         Assertor.assert_data_types([parent], [QObject])
-        super(LaneModel, self).__init__(parent)
+        super(MortgageModel, self).__init__(parent)
         self.parent.ui.combo_box_kjonn.addItems(self._kjonn)
         self.parent.ui.combo_box_lanetype.addItems(self._lanetype)
         self.parent.ui.combo_box_laneperiode.addItems(self._laneperiode)
         self.parent.ui.combo_box_intervall.addItems(self._intervall)
 
-    def lane_info(self):
+    @pyqtSlot()
+    def mortgage_info(self):
         """
         Method for retrieving and formatting all inputted mortgage information
 
         """
+        # contact information
         self.parent.ui.line_edit_fornavn.editingFinished.connect(
             lambda: self.set_line_edit("fornavn", Name, "format_name"))
         self.parent.ui.line_edit_etternavn.editingFinished.connect(
@@ -75,6 +77,7 @@ class LaneModel(Model):
         self.parent.ui.line_edit_fax.editingFinished.connect(
             lambda: self.set_line_edit("fax", Phone, "format_number"))
 
+        # budget information
         self.parent.ui.line_edit_brutto_inntekt.editingFinished.connect(
             lambda: self.set_line_edit("brutto_inntekt", Money, "value"))
         self.parent.ui.line_edit_trygde_inntekt.editingFinished.connect(
@@ -102,6 +105,7 @@ class LaneModel(Model):
         self.parent.ui.line_edit_likviditetsgrad.editingFinished.connect(
             lambda: self.set_line_edit("likviditetsgrad", Money, "value"))
 
+        # mortgage structure information
         self.parent.ui.combo_box_lanetype.activated.connect(
             lambda: self.set_combo_box("lanetype"))
         self.parent.ui.combo_box_intervall.activated.connect(

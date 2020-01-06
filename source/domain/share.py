@@ -25,7 +25,7 @@ class Share(Value):
     """
 
     def __init__(self, numerator: Union[Decimal, Money],
-                 denominator: Union[Decimal, Money]):
+                 denominator: Union[Decimal, Money] = None):
         """
         Constructor / instantiation
 
@@ -39,11 +39,11 @@ class Share(Value):
         """
         try:
             Assertor.assert_data_types([numerator, denominator],
-                                       [(Decimal, Money), (Decimal, Money)])
+                                       [(Decimal, Money), (Decimal, Money, type(None))])
             super().__init__()
             self._numerator = numerator
             self._denominator = denominator
-            self._percent = Percent(numerator / denominator)
+            self._percent = Percent(numerator / denominator) if self.denominator else Percent("0")
             self._value = self._percent.value
             LOGGER.success(
                 "created '{}' -> {}".format(self.__class__.__name__, self.value))

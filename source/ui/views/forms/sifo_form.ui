@@ -922,7 +922,7 @@
      <string>Informasjon</string>
     </attribute>
     <layout class="QGridLayout" name="gridLayout_2">
-     <item row="12" column="0">
+     <item row="13" column="0">
       <widget class="QFrame" name="frame_logo">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -975,7 +975,7 @@
        </layout>
       </widget>
      </item>
-     <item row="12" column="1" colspan="2">
+     <item row="13" column="1" colspan="2">
       <widget class="QFrame" name="frame_sifo_info">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1442,7 +1442,7 @@
        </layout>
       </widget>
      </item>
-     <item row="14" column="0">
+     <item row="15" column="0">
       <widget class="QFrame" name="frame_whitespace_1">
        <property name="font">
         <font>
@@ -1458,7 +1458,7 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="6" column="1">
       <widget class="QComboBox" name="combo_box_kjonn_6">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -1480,7 +1480,7 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="2">
+     <item row="5" column="2">
       <widget class="QComboBox" name="combo_box_alder_5">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -1502,52 +1502,8 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
-      <widget class="QComboBox" name="combo_box_kjonn_7">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="2">
-      <widget class="QComboBox" name="combo_box_alder_6">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
      <item row="6" column="0">
-      <widget class="QLabel" name="label_person_7">
+      <widget class="QLabel" name="label_person_6">
        <property name="font">
         <font>
          <family>Segoe UI</family>
@@ -1555,14 +1511,27 @@
         </font>
        </property>
        <property name="text">
-        <string>Person 7</string>
+        <string>Person 6</string>
        </property>
        <property name="buddy">
-        <cstring>combo_box_kjonn_7</cstring>
+        <cstring>combo_box_kjonn_6</cstring>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item row="9" column="1">
+      <widget class="QLineEdit" name="line_edit_brutto_arsinntekt">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="clearButtonEnabled">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1">
       <widget class="QComboBox" name="combo_box_kjonn_5">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -1584,7 +1553,23 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item row="10" column="1">
+      <widget class="QComboBox" name="combo_box_antall_biler">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
       <widget class="QComboBox" name="combo_box_kjonn_1">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
@@ -1615,24 +1600,14 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_person_6">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
+     <item row="7" column="1">
+      <widget class="QComboBox" name="combo_box_kjonn_7">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
-       <property name="text">
-        <string>Person 6</string>
-       </property>
-       <property name="buddy">
-        <cstring>combo_box_kjonn_6</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="1">
-      <widget class="QComboBox" name="combo_box_antall_biler">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -1647,37 +1622,8 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="0">
-      <widget class="QLabel" name="label_brutto_arsinntekt">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Brutto årsinntekt:</string>
-       </property>
-       <property name="buddy">
-        <cstring>line_edit_brutto_arsinntekt</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="1">
-      <widget class="QLineEdit" name="line_edit_brutto_arsinntekt">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="clearButtonEnabled">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
      <item row="6" column="2">
-      <widget class="QComboBox" name="combo_box_alder_7">
+      <widget class="QComboBox" name="combo_box_alder_6">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -1699,7 +1645,7 @@
       </widget>
      </item>
      <item row="9" column="0">
-      <widget class="QLabel" name="label_antall_biler">
+      <widget class="QLabel" name="label_brutto_arsinntekt">
        <property name="font">
         <font>
          <family>Segoe UI</family>
@@ -1707,15 +1653,15 @@
         </font>
        </property>
        <property name="text">
-        <string>Antall biler</string>
+        <string>Brutto årsinntekt:</string>
        </property>
        <property name="buddy">
-        <cstring>combo_box_antall_biler</cstring>
+        <cstring>line_edit_brutto_arsinntekt</cstring>
        </property>
       </widget>
      </item>
-     <item row="0" column="2">
-      <widget class="QComboBox" name="combo_box_alder_1">
+     <item row="7" column="2">
+      <widget class="QComboBox" name="combo_box_alder_7">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -1728,10 +1674,42 @@
          <height>20</height>
         </size>
        </property>
-       <property name="maximumSize">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="7" column="0">
+      <widget class="QLabel" name="label_person_7">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Person 7</string>
+       </property>
+       <property name="buddy">
+        <cstring>combo_box_kjonn_7</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="combo_box_kjonn_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
         <size>
-         <width>16777215</width>
-         <height>16777215</height>
+         <width>0</width>
+         <height>20</height>
         </size>
        </property>
        <property name="font">
@@ -1742,7 +1720,29 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="1" colspan="2">
+     <item row="4" column="1">
+      <widget class="QComboBox" name="combo_box_kjonn_4">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1" colspan="2">
       <widget class="QLabel" name="label_informasjon">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -1770,67 +1770,7 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
-      <widget class="QComboBox" name="combo_box_alder_2">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QComboBox" name="combo_box_kjonn_3">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label_person_4">
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>Person 4</string>
-       </property>
-       <property name="buddy">
-        <cstring>combo_box_kjonn_4</cstring>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="2">
+     <item row="4" column="2">
       <widget class="QComboBox" name="combo_box_alder_4">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -1852,7 +1792,45 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
+     <item row="3" column="1">
+      <widget class="QComboBox" name="combo_box_kjonn_3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0">
+      <widget class="QLabel" name="label_antall_biler">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Antall biler</string>
+       </property>
+       <property name="buddy">
+        <cstring>combo_box_antall_biler</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
       <widget class="QLabel" name="label_person_2">
        <property name="font">
         <font>
@@ -1868,7 +1846,73 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
+     <item row="2" column="2">
+      <widget class="QComboBox" name="combo_box_alder_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="2">
+      <widget class="QComboBox" name="combo_box_alder_1">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="label_person_4">
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>8</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Person 4</string>
+       </property>
+       <property name="buddy">
+        <cstring>combo_box_kjonn_4</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="label_person_1">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -1896,51 +1940,23 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QComboBox" name="combo_box_kjonn_2">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label_person_3">
        <property name="font">
         <font>
          <family>Segoe UI</family>
          <pointsize>8</pointsize>
         </font>
        </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QComboBox" name="combo_box_kjonn_4">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
+       <property name="text">
+        <string>Person 3</string>
        </property>
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
+       <property name="buddy">
+        <cstring>combo_box_kjonn_3</cstring>
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
+     <item row="5" column="0">
       <widget class="QLabel" name="label_person_5">
        <property name="font">
         <font>
@@ -1956,7 +1972,24 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
+     <item row="12" column="2">
+      <widget class="QPushButton" name="push_button_avbryt_1">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>25</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Avbryt</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../images/img.qrc">
+         <normaloff>:/img/cancel.png</normaloff>:/img/cancel.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="2">
       <widget class="QComboBox" name="combo_box_alder_3">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -1978,8 +2011,14 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_person_3">
+     <item row="11" column="1" colspan="2">
+      <widget class="QPushButton" name="push_button_vis_resultatet">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>25</height>
+        </size>
+       </property>
        <property name="font">
         <font>
          <family>Segoe UI</family>
@@ -1987,14 +2026,15 @@
         </font>
        </property>
        <property name="text">
-        <string>Person 3</string>
+        <string>Vis resultatet</string>
        </property>
-       <property name="buddy">
-        <cstring>combo_box_kjonn_3</cstring>
+       <property name="icon">
+        <iconset resource="../../images/img.qrc">
+         <normaloff>:/img/show.png</normaloff>:/img/show.png</iconset>
        </property>
       </widget>
      </item>
-     <item row="11" column="1">
+     <item row="12" column="1">
       <widget class="QPushButton" name="push_button_tom_skjema_1">
        <property name="minimumSize">
         <size>
@@ -2017,43 +2057,23 @@
        </property>
       </widget>
      </item>
-     <item row="11" column="2">
-      <widget class="QPushButton" name="push_button_cancel_1">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>25</height>
-        </size>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_kjonn">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
        </property>
        <property name="text">
-        <string>Avbryt</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../images/img.qrc">
-         <normaloff>:/img/cancel.png</normaloff>:/img/cancel.png</iconset>
+        <string>Kjønn</string>
        </property>
       </widget>
      </item>
-     <item row="10" column="1" colspan="2">
-      <widget class="QPushButton" name="push_button_vis_resultatet">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>25</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <family>Segoe UI</family>
-         <pointsize>8</pointsize>
-        </font>
-       </property>
+     <item row="0" column="2">
+      <widget class="QLabel" name="label_alder">
        <property name="text">
-        <string>Vis resultatet</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../images/img.qrc">
-         <normaloff>:/img/show.png</normaloff>:/img/show.png</iconset>
+        <string>Alder</string>
        </property>
       </widget>
      </item>
@@ -2713,7 +2733,7 @@
       </widget>
      </item>
      <item row="26" column="1" colspan="2">
-      <widget class="QPushButton" name="push_button_exporter">
+      <widget class="QPushButton" name="push_button_eksporter">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -2721,7 +2741,7 @@
         </size>
        </property>
        <property name="text">
-        <string>Exporter</string>
+        <string>Eksporter</string>
        </property>
        <property name="icon">
         <iconset resource="../../images/img.qrc">
@@ -2754,7 +2774,7 @@
       </widget>
      </item>
      <item row="32" column="1">
-      <widget class="QPushButton" name="push_button_cancel_2">
+      <widget class="QPushButton" name="push_button_avbryt_2">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -2771,7 +2791,7 @@
       </widget>
      </item>
      <item row="31" column="2">
-      <widget class="QPushButton" name="push_button_back">
+      <widget class="QPushButton" name="push_button_tilbake">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -2827,7 +2847,7 @@
   <tabstop>combo_box_antall_biler</tabstop>
   <tabstop>push_button_vis_resultatet</tabstop>
   <tabstop>push_button_tom_skjema_1</tabstop>
-  <tabstop>push_button_cancel_1</tabstop>
+  <tabstop>push_button_avbryt_1</tabstop>
   <tabstop>line_edit_mat_1</tabstop>
   <tabstop>line_edit_mat_2</tabstop>
   <tabstop>line_edit_klar_1</tabstop>
@@ -2860,10 +2880,10 @@
   <tabstop>line_edit_sumhusholdning_2</tabstop>
   <tabstop>line_edit_totalt_1</tabstop>
   <tabstop>line_edit_totalt_2</tabstop>
-  <tabstop>push_button_exporter</tabstop>
+  <tabstop>push_button_eksporter</tabstop>
   <tabstop>push_button_tom_skjema_2</tabstop>
-  <tabstop>push_button_back</tabstop>
-  <tabstop>push_button_cancel_2</tabstop>
+  <tabstop>push_button_tilbake</tabstop>
+  <tabstop>push_button_avbryt_2</tabstop>
   <tabstop>push_button_metadata</tabstop>
   <tabstop>tabwidget_sifo</tabstop>
  </tabstops>

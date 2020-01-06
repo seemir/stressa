@@ -9,7 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import webbrowser
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject, pyqtSlot
 
 from source.app import Finn
 from source.util import Assertor
@@ -43,6 +43,7 @@ class FinnModel(Model):
         Assertor.assert_data_types([parent], [QObject])
         super(FinnModel, self).__init__(parent)
 
+    @pyqtSlot()
     def finn_info(self):
         """
         Method for retrieving Finn ad information
@@ -50,19 +51,20 @@ class FinnModel(Model):
         """
         self.parent.ui.line_edit_finnkode_1.editingFinished.connect(
             lambda: self.update_line_edits("finnkode", self._finn_kode, Finn,
-                                           "housing_information", "1"))
+                                           "housing_information", "_1"))
         self.parent.ui.push_button_finn_1.clicked.connect(lambda: self.open_finn_url("finnkode_1"))
 
         self.parent.ui.line_edit_finnkode_2.editingFinished.connect(
             lambda: self.update_line_edits("finnkode", self._finn_kode, Finn,
-                                           "housing_information", "2"))
+                                           "housing_information", "_2"))
         self.parent.ui.push_button_finn_2.clicked.connect(lambda: self.open_finn_url("finnkode_2"))
 
         self.parent.ui.line_edit_finnkode_3.editingFinished.connect(
             lambda: self.update_line_edits("finnkode", self._finn_kode, Finn,
-                                           "housing_information", "3"))
+                                           "housing_information", "_3"))
         self.parent.ui.push_button_finn_3.clicked.connect(lambda: self.open_finn_url("finnkode_3"))
 
+    @pyqtSlot()
     def open_finn_url(self, line_edit: str):
         """
         method for opening Finn link

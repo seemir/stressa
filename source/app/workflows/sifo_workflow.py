@@ -9,7 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.domain import Family, Male, Female, Expenses
-from source.util import Assertor
+from source.util import Assertor, LOGGER
 
 from ..scrapers import Sifo
 
@@ -31,6 +31,7 @@ class SifoWorkFlow:
                   Sifo compatible Family object with all necessary family information
 
         """
+        LOGGER.disable("source.domain")
         sifo_age = {"0-5 mnd": 0.41, "6-11 mnd": 0.91, "1": 1, "2": 2, "3": 3, "4-5": 5,
                     "6-9": 9, "10-13": 13, "14-17": 17, "18-19": 19, "20-50": 50, "51-60": 60,
                     "61-66": 66, "eldre enn 66": 75}
@@ -55,6 +56,7 @@ class SifoWorkFlow:
             family = Family(family_members, family_income, family_num_cars)
         else:
             family = None
+        LOGGER.enable("source.domain")
         return family
 
     def __init__(self, data: dict):

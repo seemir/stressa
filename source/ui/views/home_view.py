@@ -15,7 +15,7 @@ import os
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
 
-from source.ui.models import LaneModel, FinnModel
+from source.ui.models import MortgageModel, FinnModel
 
 from .sifo_view import SifoView
 from .error_view import ErrorView
@@ -41,14 +41,27 @@ class HomeView(QMainWindow):
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/home_form.ui"), self)
 
         self._error = ErrorView(self)
-        self._contact_model = LaneModel(self)
+        self._mortgage_model = MortgageModel(self)
         self._finn_model = FinnModel(self)
         self._sifo_view = SifoView(self)
 
-        self._contact_model.lane_info()
+        self._mortgage_model.mortgage_info()
         self._finn_model.finn_info()
 
         self.ui.push_button_sifo_utgifter.clicked.connect(self._sifo_view.sifo_model.show)
+
+    @property
+    def mortgage_model(self):
+        """
+        MortgageModel getter
+
+        Returns
+        -------
+        out     : MortgageModel
+                  active MortgageModel in HomeView
+
+        """
+        return self._mortgage_model
 
     @property
     def error(self):

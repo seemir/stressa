@@ -2312,13 +2312,16 @@
               <bool>false</bool>
              </property>
              <property name="clearButtonEnabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
            <item row="19" column="3">
             <widget class="QLineEdit" name="line_edit_likviditetsgrad">
              <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
               <bool>false</bool>
              </property>
             </widget>
@@ -2370,7 +2373,7 @@
               <bool>false</bool>
              </property>
              <property name="clearButtonEnabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -2479,7 +2482,7 @@
               <bool>false</bool>
              </property>
              <property name="clearButtonEnabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -2556,7 +2559,7 @@
               <bool>false</bool>
              </property>
              <property name="clearButtonEnabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -2610,7 +2613,7 @@
               <bool>false</bool>
              </property>
              <property name="clearButtonEnabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>

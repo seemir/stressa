@@ -8,9 +8,11 @@ Module with logic for the Expenses entity
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from decimal import Decimal
+
 from source.util import Assertor, LOGGER
 
-from .percent import Percent
+from .share import Share
 from .entity import Entity
 from .money import Money
 
@@ -43,7 +45,7 @@ class Expenses(Entity):
         LOGGER.disable("source.domain")
         keys = list(data.keys())[-17:]
         values = [Money(val) if val != "0" else Money("0") for val in list(data.values())[-17:]]
-        shares = [Percent(val / values[-1]).value if val != Money("0") else Percent("0").value for
+        shares = [Share(val, values[-1]).value if val != Money("0") else Share(Decimal(1)).value for
                   val in values]
         LOGGER.enable("source.domain")
         return dict(zip(keys, [val.value() for val in values])), dict(zip(keys, shares))
