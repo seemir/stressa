@@ -53,32 +53,6 @@ class SifoModel(Model):
         self.parent.ui.combo_box_antall_biler.addItems(self._antall_biler)
         self._sifo_workflow = None
 
-    @property
-    def sifo_workflow(self):
-        """
-        SifoWorkflow getter
-
-        Returns
-        -------
-        out     : SifoWorkFlow
-                  active SifoWorkflow in SifoModel
-
-        """
-        return self._sifo_workflow
-
-    @sifo_workflow.setter
-    def sifo_workflow(self, new_sifo_workflow):
-        """
-        SifoWorkflow setter
-
-        Parameters
-        ----------
-        new_sifo_workflow       : SifoWorkFlow
-                                  new SifoWorkFlow to be set in object
-
-        """
-        self._sifo_workflow = new_sifo_workflow
-
     @pyqtSlot()
     def sifo_info(self):
         """
@@ -193,12 +167,14 @@ class SifoModel(Model):
 
         """
         try:
+            if all(len(val) == 1 for val in self.data.values() if isinstance(val, dict)):
+                self.clear_results()
             self.parent.ui.tabwidget_sifo.setCurrentIndex(1)
-            self.sifo_workflow = SifoWorkFlow(self.data)
+            self._sifo_workflow = SifoWorkFlow(self.data)
             self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
-                                data=self.sifo_workflow.expenses_value)
+                                data=self._sifo_workflow.expenses_value)
             self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_2",
-                                data=self.sifo_workflow.expenses_share)
+                                data=self._sifo_workflow.expenses_share)
         except Exception as sifo_expenses_error:
             self.clear_results()
             self.parent.error.show_error(sifo_expenses_error, self.data)

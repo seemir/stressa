@@ -20,5 +20,5 @@ if __name__ == "__main__":
     # app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5()) # dark theme
     splash = SplashView(app)
     application = HomeView()
-    application.show()
+    application.showMaximized()
     sys.exit(app.exec_())

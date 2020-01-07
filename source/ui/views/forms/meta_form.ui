@@ -439,7 +439,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QFrame" name="frame">
+    <widget class="QFrame" name="frame_metadata">
      <property name="palette">
       <palette>
        <active>
@@ -866,7 +866,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
-       <widget class="QScrollArea" name="scrollArea">
+       <widget class="QScrollArea" name="scroll_area_metadata">
         <property name="palette">
          <palette>
           <active>
@@ -1285,7 +1285,7 @@
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
+        <widget class="QWidget" name="scroll_area_widget_contents_metadata">
          <property name="geometry">
           <rect>
            <x>0</x>

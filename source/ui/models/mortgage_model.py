@@ -94,6 +94,8 @@ class MortgageModel(Model):
             lambda: self.set_line_edit("student_lan", Money, "value"))
         self.parent.ui.line_edit_kreditt_gjeld.editingFinished.connect(
             lambda: self.set_line_edit("kreditt_gjeld", Money, "value"))
+        self.parent.ui.line_edit_husleie.editingFinished.connect(
+            lambda: self.set_line_edit("husleie", Money, "value"))
         self.parent.ui.line_edit_strom.editingFinished.connect(
             lambda: self.set_line_edit("strom", Money, "value"))
         self.parent.ui.line_edit_andre_utgifter.editingFinished.connect(

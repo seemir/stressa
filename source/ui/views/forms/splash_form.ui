@@ -6,14 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>535</width>
-    <height>460</height>
+    <width>518</width>
+    <height>469</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>535</width>
-    <height>460</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -1757,6 +1763,11 @@
            </colorrole>
           </disabled>
          </palette>
+        </property>
+        <property name="font">
+         <font>
+          <family>Consolas</family>
+         </font>
         </property>
         <property name="autoFillBackground">
          <bool>true</bool>

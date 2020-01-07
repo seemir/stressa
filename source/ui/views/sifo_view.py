@@ -42,12 +42,12 @@ class SifoView(QDialog):
         super(SifoView, self).__init__(parent=parent)
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/sifo_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, False)
+        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
 
         self._parent = parent
         self._sifo_model = SifoModel(self)
-        self._error = self._parent.error
+        self._error = self.parent.error
         self._meta_view = MetaView(self)
         self.ui.push_button_metadata.clicked.connect(self._meta_view.show)
 
