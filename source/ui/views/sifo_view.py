@@ -49,7 +49,17 @@ class SifoView(QDialog):
         self._sifo_model = SifoModel(self)
         self._error = self.parent.error
         self._meta_view = MetaView(self)
+
         self.ui.push_button_metadata.clicked.connect(self._meta_view.show)
+        self.ui.push_button_vis_resultatet.clicked.connect(self.sifo_model.calculate_sifo_expenses)
+        self.ui.push_button_tom_skjema_1.clicked.connect(self.sifo_model.clear_all)
+        self.ui.push_button_avbryt_1.clicked.connect(self.sifo_model.close)
+        self.ui.push_button_tom_skjema_2.clicked.connect(self.sifo_model.clear_all)
+        self.ui.push_button_avbryt_2.clicked.connect(self.sifo_model.close)
+        self.ui.push_button_tilbake.clicked.connect(self.sifo_model.back)
+        self.ui.push_button_eksporter.clicked.connect(self.sifo_model.export)
+
+        self.sifo_model.sifo_info()
 
     @property
     def sifo_model(self):
@@ -102,3 +112,11 @@ class SifoView(QDialog):
 
         """
         return self._error
+
+    def display(self):
+        """
+        method for showing the SifoView
+
+        """
+        self.sifo_model.sifo_info()
+        self.ui.show()

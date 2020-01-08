@@ -17,7 +17,7 @@ from source.ui import HomeView, SplashView
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    # app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5()) # dark theme
+    # app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())  # dark theme
     splash = SplashView(app)
     application = HomeView()
     application.showMaximized()

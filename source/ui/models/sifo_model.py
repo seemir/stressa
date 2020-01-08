@@ -53,24 +53,41 @@ class SifoModel(Model):
         self.parent.ui.combo_box_antall_biler.addItems(self._antall_biler)
         self._sifo_workflow = None
 
+    @property
+    def sifo_workflow(self):
+        """
+        SifoWorkflow getter
+        Returns
+        -------
+        out     : SifoWorkFlow
+                  active SifoWorkflow in SifoModel
+        """
+        return self._sifo_workflow
+
+    @sifo_workflow.setter
+    def sifo_workflow(self, new_sifo_workflow):
+        """
+        SifoWorkflow setter
+        Parameters
+        ----------
+        new_sifo_workflow       : SifoWorkFlow
+                                  new SifoWorkFlow to be set in object
+        """
+        self._sifo_workflow = new_sifo_workflow
+
     @pyqtSlot()
     def sifo_info(self):
         """
         method for running all SIFO logic
 
         """
+        self.parent.ui.tabwidget_sifo.setCurrentIndex(0)
+        self.parent.ui.combo_box_kjonn_1.setFocus()
         self.set_yearly_income()
         self.set_age()
         self.set_gender()
         self.set_cars()
         self.set_income()
-        self.parent.ui.push_button_vis_resultatet.clicked.connect(self.calculate_sifo_expenses)
-        self.parent.ui.push_button_tom_skjema_1.clicked.connect(self.clear_all)
-        self.parent.ui.push_button_avbryt_1.clicked.connect(self.close)
-        self.parent.ui.push_button_tom_skjema_2.clicked.connect(self.clear_all)
-        self.parent.ui.push_button_avbryt_2.clicked.connect(self.close)
-        self.parent.ui.push_button_tilbake.clicked.connect(self.back)
-        self.parent.ui.push_button_eksporter.clicked.connect(self.export)
 
     @pyqtSlot()
     def set_income(self):
@@ -170,25 +187,15 @@ class SifoModel(Model):
             if all(len(val) == 1 for val in self.data.values() if isinstance(val, dict)):
                 self.clear_results()
             self.parent.ui.tabwidget_sifo.setCurrentIndex(1)
-            self._sifo_workflow = SifoWorkFlow(self.data)
+            self.sifo_workflow = SifoWorkFlow(self.data)
             self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
-                                data=self._sifo_workflow.expenses_value)
+                                data=self.sifo_workflow.expenses_value)
             self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_2",
-                                data=self._sifo_workflow.expenses_share)
+                                data=self.sifo_workflow.expenses_share)
         except Exception as sifo_expenses_error:
             self.clear_results()
             self.parent.error.show_error(sifo_expenses_error, self.data)
             self.parent.error.exec_()
-
-    def show(self):
-        """
-        method for showing SIFO calculator
-
-        """
-        self.parent.ui.tabwidget_sifo.setCurrentIndex(0)
-        self.parent.ui.combo_box_kjonn_1.setFocus()
-        self.sifo_info()
-        self.parent.ui.show()
 
     def clear_results(self):
         """

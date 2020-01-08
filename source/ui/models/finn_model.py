@@ -52,17 +52,12 @@ class FinnModel(Model):
         self.parent.ui.line_edit_finnkode_1.editingFinished.connect(
             lambda: self.update_line_edits("finnkode", self._finn_kode, Finn,
                                            "housing_information", "_1"))
-        self.parent.ui.push_button_finn_1.clicked.connect(lambda: self.open_finn_url("finnkode_1"))
-
         self.parent.ui.line_edit_finnkode_2.editingFinished.connect(
             lambda: self.update_line_edits("finnkode", self._finn_kode, Finn,
                                            "housing_information", "_2"))
-        self.parent.ui.push_button_finn_2.clicked.connect(lambda: self.open_finn_url("finnkode_2"))
-
         self.parent.ui.line_edit_finnkode_3.editingFinished.connect(
             lambda: self.update_line_edits("finnkode", self._finn_kode, Finn,
                                            "housing_information", "_3"))
-        self.parent.ui.push_button_finn_3.clicked.connect(lambda: self.open_finn_url("finnkode_3"))
 
     @pyqtSlot()
     def open_finn_url(self, line_edit: str):

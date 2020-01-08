@@ -45,10 +45,16 @@ class HomeView(QMainWindow):
         self._finn_model = FinnModel(self)
         self._sifo_view = SifoView(self)
 
+        self.ui.push_button_sifo_utgifter.clicked.connect(self._sifo_view.display)
+        self.ui.push_button_finn_1.clicked.connect(
+            lambda: self.finn_model.open_finn_url("finnkode_1"))
+        self.ui.push_button_finn_2.clicked.connect(
+            lambda: self.finn_model.open_finn_url("finnkode_2"))
+        self.ui.push_button_finn_3.clicked.connect(
+            lambda: self.finn_model.open_finn_url("finnkode_3"))
+
         self._mortgage_model.mortgage_info()
         self._finn_model.finn_info()
-
-        self.ui.push_button_sifo_utgifter.clicked.connect(self._sifo_view.sifo_model.show)
 
     @property
     def mortgage_model(self):
@@ -62,6 +68,19 @@ class HomeView(QMainWindow):
 
         """
         return self._mortgage_model
+
+    @property
+    def finn_model(self):
+        """
+        FinnModel getter
+
+        Returns
+        -------
+        out     : FinnModel
+                  Active FinnModel in HomeView
+
+        """
+        return self._finn_model
 
     @property
     def error(self):

@@ -8,6 +8,8 @@ Workflow for analysing app
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import time
+
 from source.domain import Family, Male, Female, Expenses
 from source.util import Assertor, LOGGER
 
@@ -68,6 +70,8 @@ class SifoWorkFlow:
                   information about the family, i.e. arguments to be passed to Family object
 
         """
+        start = time.time()
+        LOGGER.info("starting '{}'".format(self.__class__.__name__))
         Assertor.assert_data_types([data], [dict])
         self._data = data
         self._family = self.populate_family(self.data)
@@ -78,6 +82,8 @@ class SifoWorkFlow:
             self.base_expenses else None
         self._expenses_share = self.base_expenses.expenses_shares if \
             self.base_expenses else None
+        LOGGER.success(
+            "ending '{}' - elapsed: {}".format(self.__class__.__name__, str(time.time() - start)))
 
     @property
     def data(self):
