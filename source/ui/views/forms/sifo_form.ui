@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>574</width>
+    <width>766</width>
     <height>682</height>
    </rect>
   </property>
@@ -1462,6 +1462,9 @@
            <pointsize>8</pointsize>
           </font>
          </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
        <item row="5" column="2">
@@ -1483,6 +1486,9 @@
            <family>Segoe UI</family>
            <pointsize>8</pointsize>
           </font>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -1521,8 +1527,8 @@
          </property>
         </widget>
        </item>
-       <item row="5" column="1">
-        <widget class="QComboBox" name="combo_box_kjonn_5">
+       <item row="7" column="1">
+        <widget class="QComboBox" name="combo_box_kjonn_7">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -1541,27 +1547,8 @@
            <pointsize>8</pointsize>
           </font>
          </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <widget class="QComboBox" name="combo_box_antall_biler">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>8</pointsize>
-          </font>
+         <property name="editable">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -1594,27 +1581,24 @@
          <property name="autoFillBackground">
           <bool>false</bool>
          </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="combo_box_kjonn_7">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_brutto_arsinntekt">
          <property name="font">
           <font>
            <family>Segoe UI</family>
            <pointsize>8</pointsize>
           </font>
+         </property>
+         <property name="text">
+          <string>Brutto årsinntekt:</string>
+         </property>
+         <property name="buddy">
+          <cstring>line_edit_brutto_arsinntekt</cstring>
          </property>
         </widget>
        </item>
@@ -1638,26 +1622,63 @@
            <pointsize>8</pointsize>
           </font>
          </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_brutto_arsinntekt">
+       <item row="5" column="1">
+        <widget class="QComboBox" name="combo_box_kjonn_5">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Segoe UI</family>
            <pointsize>8</pointsize>
           </font>
          </property>
-         <property name="text">
-          <string>Brutto årsinntekt:</string>
-         </property>
-         <property name="buddy">
-          <cstring>line_edit_brutto_arsinntekt</cstring>
+         <property name="editable">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
        <item row="7" column="2">
         <widget class="QComboBox" name="combo_box_alder_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QComboBox" name="combo_box_antall_biler">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -1694,25 +1715,35 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QComboBox" name="combo_box_kjonn_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_person_4">
          <property name="font">
           <font>
            <family>Segoe UI</family>
            <pointsize>8</pointsize>
           </font>
+         </property>
+         <property name="text">
+          <string>Person 4</string>
+         </property>
+         <property name="buddy">
+          <cstring>combo_box_kjonn_4</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_person_2">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Person 2</string>
+         </property>
+         <property name="buddy">
+          <cstring>combo_box_kjonn_2</cstring>
          </property>
         </widget>
        </item>
@@ -1736,33 +1767,8 @@
            <pointsize>8</pointsize>
           </font>
          </property>
-        </widget>
-       </item>
-       <item row="8" column="1" colspan="2">
-        <widget class="QLabel" name="label_informasjon">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Hvis du har barn i barnehage eller SFO, må også husholdets samlede brutto årsinntekt oppgis.</string>
-         </property>
-         <property name="wordWrap">
-          <bool>true</bool>
+         <property name="editable">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -1786,125 +1792,8 @@
            <pointsize>8</pointsize>
           </font>
          </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="combo_box_kjonn_3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="label_antall_biler">
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Antall biler</string>
-         </property>
-         <property name="buddy">
-          <cstring>combo_box_antall_biler</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_person_2">
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Person 2</string>
-         </property>
-         <property name="buddy">
-          <cstring>combo_box_kjonn_2</cstring>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QComboBox" name="combo_box_alder_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QComboBox" name="combo_box_alder_1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>207</width>
-           <height>20</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_person_4">
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Person 4</string>
-         </property>
-         <property name="buddy">
-          <cstring>combo_box_kjonn_4</cstring>
+         <property name="editable">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -1952,6 +1841,59 @@
          </property>
         </widget>
        </item>
+       <item row="2" column="2">
+        <widget class="QComboBox" name="combo_box_alder_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="1" colspan="2">
+        <widget class="QLabel" name="label_informasjon">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Hvis du har barn i barnehage eller SFO, må også husholdets samlede brutto årsinntekt oppgis.</string>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
        <item row="5" column="0">
         <widget class="QLabel" name="label_person_5">
          <property name="font">
@@ -1965,6 +1907,222 @@
          </property>
          <property name="buddy">
           <cstring>combo_box_kjonn_5</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QComboBox" name="combo_box_kjonn_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_antall_biler">
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Antall biler</string>
+         </property>
+         <property name="buddy">
+          <cstring>combo_box_antall_biler</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QComboBox" name="combo_box_kjonn_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QComboBox" name="combo_box_alder_1">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>207</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="palette">
+          <palette>
+           <active>
+            <colorrole role="Light">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </active>
+           <inactive>
+            <colorrole role="Light">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </inactive>
+           <disabled>
+            <colorrole role="Light">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>255</red>
+               <green>255</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+            <colorrole role="Base">
+             <brush brushstyle="SolidPattern">
+              <color alpha="255">
+               <red>231</red>
+               <green>243</green>
+               <blue>255</blue>
+              </color>
+             </brush>
+            </colorrole>
+           </disabled>
+          </palette>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="editable">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_alder">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Alder</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLabel" name="label_kjonn">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Kjønn</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1" colspan="2">
+        <widget class="QPushButton" name="push_button_vis_resultatet">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Vis resultatet</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../images/img.qrc">
+           <normaloff>:/img/show.png</normaloff>:/img/show.png</iconset>
          </property>
         </widget>
        </item>
@@ -2011,34 +2169,8 @@
            <pointsize>8</pointsize>
           </font>
          </property>
-        </widget>
-       </item>
-       <item row="11" column="1" colspan="2">
-        <widget class="QPushButton" name="push_button_vis_resultatet">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="text">
-          <string>Vis resultatet</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../../images/img.qrc">
-           <normaloff>:/img/show.png</normaloff>:/img/show.png</iconset>
+         <property name="editable">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -2071,29 +2203,19 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="label_kjonn">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
+       <item row="1" column="3">
+        <widget class="QLabel" name="label_tillegg_1">
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
          </property>
          <property name="text">
-          <string>Kjønn</string>
+          <string/>
          </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="label_alder">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Alder</string>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
         </widget>
        </item>
@@ -2116,6 +2238,163 @@
          </property>
          <property name="frameShadow">
           <enum>QFrame::Raised</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="4">
+        <widget class="QComboBox" name="combo_box_tillegg_1">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QLabel" name="label_tillegg_2">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QLabel" name="label_tillegg_3">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QLabel" name="label_tillegg_4">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="3">
+        <widget class="QLabel" name="label_tillegg_5">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="3">
+        <widget class="QLabel" name="label_tillegg_6">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="3">
+        <widget class="QLabel" name="label_tillegg_7">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="4">
+        <widget class="QComboBox" name="combo_box_tillegg_2">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="4">
+        <widget class="QComboBox" name="combo_box_tillegg_3">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="4">
+        <widget class="QComboBox" name="combo_box_tillegg_4">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="4">
+        <widget class="QComboBox" name="combo_box_tillegg_5">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="4">
+        <widget class="QComboBox" name="combo_box_tillegg_6">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="4">
+        <widget class="QComboBox" name="combo_box_tillegg_7">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
         </widget>
        </item>
@@ -2159,7 +2438,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2178,7 +2457,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2207,7 +2486,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2226,7 +2505,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2255,7 +2534,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2274,7 +2553,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2293,7 +2572,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2334,7 +2613,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2363,7 +2642,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2373,6 +2652,12 @@
         <widget class="QLineEdit" name="line_edit_barnehage_2">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -2399,7 +2684,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2458,7 +2743,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2468,6 +2753,12 @@
         <widget class="QLineEdit" name="line_edit_helse_2">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -2486,12 +2777,24 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="21" column="2">
         <widget class="QLineEdit" name="line_edit_sfo_2">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -2517,12 +2820,24 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="5" column="2">
         <widget class="QLineEdit" name="line_edit_fritid_2">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -2539,7 +2854,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2549,6 +2864,12 @@
         <widget class="QLineEdit" name="line_edit_dagligvarer_2">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -2565,7 +2886,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2637,6 +2958,12 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="17" column="0">
@@ -2654,6 +2981,12 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="24" column="2">
@@ -2661,12 +2994,24 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="3" column="2">
         <widget class="QLineEdit" name="line_edit_klar_2">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -2695,6 +3040,12 @@
           <size>
            <width>85</width>
            <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
           </size>
          </property>
         </widget>
@@ -2730,6 +3081,12 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="23" column="1">
@@ -2745,7 +3102,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2774,7 +3131,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2814,12 +3171,24 @@
          <property name="enabled">
           <bool>false</bool>
          </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
+         </property>
         </widget>
        </item>
        <item row="23" column="2">
         <widget class="QLineEdit" name="line_edit_sumhusholdning_2">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -2836,7 +3205,7 @@
          </property>
          <property name="maximumSize">
           <size>
-           <width>16777215</width>
+           <width>207</width>
            <height>16777215</height>
           </size>
          </property>
@@ -2863,6 +3232,12 @@
         <widget class="QLineEdit" name="line_edit_spedbarn_2">
          <property name="enabled">
           <bool>false</bool>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>207</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
@@ -2901,18 +3276,25 @@
  <tabstops>
   <tabstop>combo_box_kjonn_1</tabstop>
   <tabstop>combo_box_alder_1</tabstop>
+  <tabstop>combo_box_tillegg_1</tabstop>
   <tabstop>combo_box_kjonn_2</tabstop>
   <tabstop>combo_box_alder_2</tabstop>
+  <tabstop>combo_box_tillegg_2</tabstop>
   <tabstop>combo_box_kjonn_3</tabstop>
   <tabstop>combo_box_alder_3</tabstop>
+  <tabstop>combo_box_tillegg_3</tabstop>
   <tabstop>combo_box_kjonn_4</tabstop>
   <tabstop>combo_box_alder_4</tabstop>
+  <tabstop>combo_box_tillegg_4</tabstop>
   <tabstop>combo_box_kjonn_5</tabstop>
   <tabstop>combo_box_alder_5</tabstop>
+  <tabstop>combo_box_tillegg_5</tabstop>
   <tabstop>combo_box_kjonn_6</tabstop>
   <tabstop>combo_box_alder_6</tabstop>
+  <tabstop>combo_box_tillegg_6</tabstop>
   <tabstop>combo_box_kjonn_7</tabstop>
   <tabstop>combo_box_alder_7</tabstop>
+  <tabstop>combo_box_tillegg_7</tabstop>
   <tabstop>line_edit_brutto_arsinntekt</tabstop>
   <tabstop>combo_box_antall_biler</tabstop>
   <tabstop>push_button_vis_resultatet</tabstop>

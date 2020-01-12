@@ -41,7 +41,7 @@ class FinnModel(Model):
 
         """
         Assertor.assert_data_types([parent], [QObject])
-        super(FinnModel, self).__init__(parent)
+        super().__init__(parent)
 
     @pyqtSlot()
     def finn_info(self):

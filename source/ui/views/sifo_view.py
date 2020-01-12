@@ -39,7 +39,7 @@ class SifoView(QDialog):
 
         """
         Assertor.assert_data_types([parent], [QWidget])
-        super(SifoView, self).__init__(parent=parent)
+        super().__init__(parent=parent)
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/sifo_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
@@ -58,8 +58,6 @@ class SifoView(QDialog):
         self.ui.push_button_avbryt_2.clicked.connect(self.sifo_model.close)
         self.ui.push_button_tilbake.clicked.connect(self.sifo_model.back)
         self.ui.push_button_eksporter.clicked.connect(self.sifo_model.export)
-
-        self.sifo_model.sifo_info()
 
     @property
     def sifo_model(self):
@@ -114,9 +112,5 @@ class SifoView(QDialog):
         return self._error
 
     def display(self):
-        """
-        method for showing the SifoView
-
-        """
         self.sifo_model.sifo_info()
         self.ui.show()

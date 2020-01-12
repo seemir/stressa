@@ -36,7 +36,7 @@ class SplashView(QDialog):
 
         """
         Assertor.assert_data_types([app], [QApplication])
-        super(SplashView, self).__init__()
+        super().__init__()
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/splash_form.ui"), self)
         self.ui.progress_bar_splash.setStyleSheet(self.change_color())
         self.ui.setWindowTitle("Stressa - version: {}".format(__version__))

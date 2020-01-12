@@ -8,6 +8,8 @@ Module for the Model abstract base class
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import json
+
 from abc import ABC, abstractmethod
 
 from PyQt5.QtCore import pyqtSlot, QObject
@@ -101,7 +103,7 @@ class Model(ABC):
             self.parent.error.exec_()
 
     @pyqtSlot()
-    def set_combo_box(self, combo_box_name: str, common_key: str = None):
+    def set_combo_box(self, combo_box_name: str, common_key: str = None, key_name: str = None):
         """
         method for setting value in single combo_box
 
@@ -111,13 +113,16 @@ class Model(ABC):
                           name of combo_box
         common_key      : str, None
                           common data key to append all values
+        key_name        : str, None
+                          customized name of key
 
         """
         try:
-            Assertor.assert_data_types([combo_box_name, common_key], [str, (type(None), str)])
+            Assertor.assert_data_types([combo_box_name, common_key, key_name],
+                                       [str, (type(None), str), (type(None), str)])
             combo_box_text = str(
                 getattr(self.parent.ui, "combo_box_" + combo_box_name).currentText())
-            values = {combo_box_name: combo_box_text}
+            values = {key_name if key_name else combo_box_name: combo_box_text}
 
             if common_key and common_key not in self.data.keys():
                 self.data.update({common_key: values})
@@ -137,10 +142,10 @@ class Model(ABC):
                             self.data[key].pop(k)
                 if not val:
                     self.data.pop(key)
-
         except Exception as set_combo_box_error:
             self.parent.error.show_error(set_combo_box_error)
             self.parent.error.exec_()
+        print(json.dumps(self.data, indent=3))
 
     @pyqtSlot()
     def update_line_edits(self, line_edit_name: str, line_edits: list, obj: object, method: str,
@@ -320,3 +325,21 @@ class Model(ABC):
             self.data.pop(line_edit_name)
         else:
             getattr(self.parent.ui, line_edit).clear()
+
+    @pyqtSlot()
+    def clear_data(self, key_name: str, common_key: str):
+        """
+        method for clearing single data point from self.data
+
+        Parameters
+        ----------
+        key_name    : str
+                      key_name to pop
+        common_key  : str
+                      common_key if data point stored as common_key
+
+        """
+        for key, val in self.data.items():
+            if common_key == key and isinstance(val, dict):
+                if key_name in val.keys():
+                    val.pop(key_name)

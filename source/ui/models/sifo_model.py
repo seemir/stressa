@@ -28,6 +28,8 @@ class SifoModel(Model):
     _alder = ["", "0-5 mnd", "6-11 mnd", "1", "2", "3", "4-5",
               "6-9", "10-13", "14-17", "18-19", "20-50", "51-60",
               "61-66", "eldre enn 66"]
+    _barnehage = ["", "Nei", "Ja"]
+    _sfo = ["", "Nei", "Halvdag", "Heldag"]
     _antall_biler = ["", "1", "2", "3", "4"]
     _sifo_expenses = ['mat', 'klar', 'helse', 'fritid', 'kollektivt', 'spedbarn', 'sumindivid',
                       'dagligvarer', 'husholdsart', 'mobler', 'medier', 'biler', 'barnehage',
@@ -52,11 +54,13 @@ class SifoModel(Model):
                 self._alder)
         self.parent.ui.combo_box_antall_biler.addItems(self._antall_biler)
         self._sifo_workflow = None
+        self._extra_info = None
 
     @property
     def sifo_workflow(self):
         """
         SifoWorkflow getter
+
         Returns
         -------
         out     : SifoWorkFlow
@@ -68,26 +72,13 @@ class SifoModel(Model):
     def sifo_workflow(self, new_sifo_workflow):
         """
         SifoWorkflow setter
+
         Parameters
         ----------
         new_sifo_workflow       : SifoWorkFlow
                                   new SifoWorkFlow to be set in object
         """
         self._sifo_workflow = new_sifo_workflow
-
-    @pyqtSlot()
-    def sifo_info(self):
-        """
-        method for running all SIFO logic
-
-        """
-        self.parent.ui.tabwidget_sifo.setCurrentIndex(0)
-        self.parent.ui.combo_box_kjonn_1.setFocus()
-        self.set_yearly_income()
-        self.set_age()
-        self.set_gender()
-        self.set_cars()
-        self.set_income()
 
     @pyqtSlot()
     def set_income(self):
@@ -100,46 +91,120 @@ class SifoModel(Model):
                                        clearing=self.clear_results))
 
     @pyqtSlot()
-    def set_age(self):
-        """
-        method for setting / formatting age
-
-        """
-        self.parent.ui.combo_box_alder_1.activated.connect(
-            lambda: self.set_combo_box("alder_1", "person_1"))
-        self.parent.ui.combo_box_alder_2.activated.connect(
-            lambda: self.set_combo_box("alder_2", "person_2"))
-        self.parent.ui.combo_box_alder_3.activated.connect(
-            lambda: self.set_combo_box("alder_3", "person_3"))
-        self.parent.ui.combo_box_alder_4.activated.connect(
-            lambda: self.set_combo_box("alder_4", "person_4"))
-        self.parent.ui.combo_box_alder_5.activated.connect(
-            lambda: self.set_combo_box("alder_5", "person_5"))
-        self.parent.ui.combo_box_alder_6.activated.connect(
-            lambda: self.set_combo_box("alder_6", "person_6"))
-        self.parent.ui.combo_box_alder_7.activated.connect(
-            lambda: self.set_combo_box("alder_7", "person_7"))
-
-    @pyqtSlot()
     def set_gender(self):
         """
         method for setting / formatting gender
 
         """
         self.parent.ui.combo_box_kjonn_1.activated.connect(
-            lambda: self.set_combo_box("kjonn_1", "person_1"))
+            lambda: self.set_age_and_gender("_1"))
         self.parent.ui.combo_box_kjonn_2.activated.connect(
-            lambda: self.set_combo_box("kjonn_2", "person_2"))
+            lambda: self.set_age_and_gender("_2"))
         self.parent.ui.combo_box_kjonn_3.activated.connect(
-            lambda: self.set_combo_box("kjonn_3", "person_3"))
+            lambda: self.set_age_and_gender("_3"))
         self.parent.ui.combo_box_kjonn_4.activated.connect(
-            lambda: self.set_combo_box("kjonn_4", "person_4"))
+            lambda: self.set_age_and_gender("_4"))
         self.parent.ui.combo_box_kjonn_5.activated.connect(
-            lambda: self.set_combo_box("kjonn_5", "person_5"))
+            lambda: self.set_age_and_gender("_5"))
         self.parent.ui.combo_box_kjonn_6.activated.connect(
-            lambda: self.set_combo_box("kjonn_6", "person_6"))
+            lambda: self.set_age_and_gender("_6"))
         self.parent.ui.combo_box_kjonn_7.activated.connect(
-            lambda: self.set_combo_box("kjonn_7", "person_7"))
+            lambda: self.set_age_and_gender("_7"))
+
+    @pyqtSlot()
+    def set_age(self):
+        """
+        method for setting / formatting age
+
+        """
+        self.parent.ui.combo_box_alder_1.activated.connect(
+            lambda: self.set_age_and_gender("_1"))
+        self.parent.ui.combo_box_alder_2.activated.connect(
+            lambda: self.set_age_and_gender("_2"))
+        self.parent.ui.combo_box_alder_3.activated.connect(
+            lambda: self.set_age_and_gender("_3"))
+        self.parent.ui.combo_box_alder_4.activated.connect(
+            lambda: self.set_age_and_gender("_4"))
+        self.parent.ui.combo_box_alder_5.activated.connect(
+            lambda: self.set_age_and_gender("_5"))
+        self.parent.ui.combo_box_alder_6.activated.connect(
+            lambda: self.set_age_and_gender("_6"))
+        self.parent.ui.combo_box_alder_7.activated.connect(
+            lambda: self.set_age_and_gender("_7"))
+
+    @pyqtSlot()
+    def set_extra_info(self):
+        self.parent.ui.combo_box_tillegg_1.activated.connect(
+            lambda: self.get_extra_info("tillegg", "person", "_1"))
+        self.parent.ui.combo_box_tillegg_2.activated.connect(
+            lambda: self.get_extra_info("tillegg", "person", "_2"))
+        self.parent.ui.combo_box_tillegg_3.activated.connect(
+            lambda: self.get_extra_info("tillegg", "person", "_3"))
+        self.parent.ui.combo_box_tillegg_4.activated.connect(
+            lambda: self.get_extra_info("tillegg", "person", "_4"))
+        self.parent.ui.combo_box_tillegg_5.activated.connect(
+            lambda: self.get_extra_info("tillegg", "person", "_5"))
+        self.parent.ui.combo_box_tillegg_6.activated.connect(
+            lambda: self.get_extra_info("tillegg", "person", "_6"))
+        self.parent.ui.combo_box_tillegg_7.activated.connect(
+            lambda: self.get_extra_info("tillegg", "person", "_7"))
+
+    @pyqtSlot()
+    def set_age_and_gender(self, postfix):
+        self.check_extra_info(postfix, show_info=True)
+        self.set_combo_box("kjonn" + postfix, "person" + postfix)
+        self.set_combo_box("alder" + postfix, "person" + postfix)
+
+    @pyqtSlot()
+    def get_extra_info(self, name, common_key, postfix):
+        self.check_extra_info(postfix)
+        self.set_combo_box(name + postfix, common_key + postfix, self._extra_info)
+
+    @pyqtSlot()
+    def check_extra_info(self, postfix, show_info=False):
+        self.clear_extra_data(postfix)
+        ui = self.parent.ui
+        alder = getattr(ui, "combo_box_alder" + postfix).currentText()
+        kvinne = getattr(ui, "combo_box_kjonn" + postfix).currentText() == "Kvinne"
+
+        barnehage = (alder in ["1", "2", "3", "4-5"])
+        sfo = (alder in ["6-9", "10-13"])
+        gravid = (kvinne and (alder in ["14-17", "18-19", "20-50"]))
+
+        if barnehage:
+            self._extra_info = "barnehage" + postfix
+            self.show_extra_info(ui, "barnehage", postfix,
+                                 self._barnehage) if show_info else ""
+        elif sfo:
+            self._extra_info = "sfo" + postfix
+            self.show_extra_info(ui, "sfo", postfix, self._sfo) if show_info else ""
+        elif gravid:
+            self._extra_info = "barnehage" + postfix
+            self.show_extra_info(ui, "gravid", postfix,
+                                 self._barnehage) if show_info else ""
+        else:
+            self.clear_extra_info(ui, postfix)
+
+    @pyqtSlot()
+    def show_extra_info(self, ui, name, postfix, values):
+        getattr(ui, "label_tillegg" + postfix).setText(name.capitalize() + "?")
+        getattr(ui, "combo_box_tillegg" + postfix).setEnabled(True)
+        getattr(ui, "combo_box_tillegg" + postfix).clear()
+        getattr(ui, "combo_box_tillegg" + postfix).addItems(values)
+
+    @pyqtSlot()
+    def clear_extra_info(self, ui, postfix):
+        self._extra_info = None
+        getattr(ui, "label_tillegg" + postfix).setText("")
+        getattr(ui, "combo_box_tillegg" + postfix).setCurrentIndex(0)
+        getattr(ui, "combo_box_tillegg" + postfix).setEnabled(False)
+        self.clear_extra_data(postfix)
+
+    @pyqtSlot()
+    def clear_extra_data(self, postfix):
+        self.clear_data("barnehage" + postfix, "person" + postfix)
+        self.clear_data("sfo" + postfix, "person" + postfix)
+        self.clear_data("gravid" + postfix, "person" + postfix)
 
     @pyqtSlot()
     def set_cars(self):
@@ -159,6 +224,7 @@ class SifoModel(Model):
         self.parent.ui.line_edit_brutto_arsinntekt.setText(self.calculate_yearly_income(
             self.parent.parent.ui.line_edit_brutto_inntekt.text()))
 
+    @pyqtSlot()
     def calculate_yearly_income(self, monthly_income: str):
         """
         method for calculating / setting / formatting yearly gross income
@@ -184,8 +250,7 @@ class SifoModel(Model):
 
         """
         try:
-            if all(len(val) == 1 for val in self.data.values() if isinstance(val, dict)):
-                self.clear_results()
+            self.clear_results()
             self.parent.ui.tabwidget_sifo.setCurrentIndex(1)
             self.sifo_workflow = SifoWorkFlow(self.data)
             self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
@@ -197,6 +262,21 @@ class SifoModel(Model):
             self.parent.error.show_error(sifo_expenses_error, self.data)
             self.parent.error.exec_()
 
+    def sifo_info(self):
+        """
+        method for running all SIFO logic
+
+        """
+        self.parent.ui.tabwidget_sifo.setCurrentIndex(0)
+        self.parent.ui.combo_box_kjonn_1.setFocus()
+        self.set_income()
+        self.set_yearly_income()
+        self.set_gender()
+        self.set_age()
+        self.set_extra_info()
+        self.set_cars()
+
+    @pyqtSlot()
     def clear_results(self):
         """
         method for clearing results from SIFO dialog
@@ -215,6 +295,7 @@ class SifoModel(Model):
         for combo_box in range(1, 8):
             getattr(self.parent.ui, "combo_box_kjonn_" + str(combo_box)).setCurrentIndex(0)
             getattr(self.parent.ui, "combo_box_alder_" + str(combo_box)).setCurrentIndex(0)
+            self.clear_extra_info(self.parent.ui, "_" + str(combo_box))
         self.parent.ui.line_edit_brutto_arsinntekt.clear()
         self.parent.ui.combo_box_antall_biler.setCurrentIndex(0)
         self.clear_results()

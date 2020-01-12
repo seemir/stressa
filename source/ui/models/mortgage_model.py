@@ -41,7 +41,7 @@ class MortgageModel(Model):
 
         """
         Assertor.assert_data_types([parent], [QObject])
-        super(MortgageModel, self).__init__(parent)
+        super().__init__(parent)
         self.parent.ui.combo_box_kjonn.addItems(self._kjonn)
         self.parent.ui.combo_box_lanetype.addItems(self._lanetype)
         self.parent.ui.combo_box_laneperiode.addItems(self._laneperiode)
