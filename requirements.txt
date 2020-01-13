@@ -23,7 +23,7 @@ lxml==4.4.2
 mccabe==0.6.1
 mechanize==0.4.5
 mock==3.0.5
-more-itertools==8.0.2
+more-itertools==8.1.0
 numpy==1.18.1
 packaging==20.0
 pandas==0.25.3
