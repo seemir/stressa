@@ -159,7 +159,6 @@ class SifoWorkFlow:
                     elif "gravid" in prop:
                         arg.update({"pregnant": self.barnehage_arg[value]})
                 family_member = gender(**arg) if (gender and arg) else ""
-                print(family_member.__dict__)
                 family_members.append(family_member)
             elif "brutto_arsinntekt" in key:
                 income = val.replace(" kr", "").replace(" ", "")

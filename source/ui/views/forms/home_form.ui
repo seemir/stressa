@@ -8285,6 +8285,7 @@
     <property name="title">
      <string>Hjelp</string>
     </property>
+    <addaction name="action_hjelp"/>
    </widget>
    <addaction name="menu_fil"/>
    <addaction name="menu_rediger"/>
@@ -8885,6 +8886,15 @@
    </property>
    <property name="text">
     <string>logo</string>
+   </property>
+  </action>
+  <action name="action_hjelp">
+   <property name="icon">
+    <iconset resource="../../images/img.qrc">
+     <normaloff>:/img/help.png</normaloff>:/img/help.png</iconset>
+   </property>
+   <property name="text">
+    <string>Hjelp</string>
    </property>
   </action>
  </widget>
