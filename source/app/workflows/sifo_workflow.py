@@ -21,45 +21,11 @@ class SifoWorkFlow:
     Workflow for the calculation of the SIFO expenses with shares of total expenses
 
     """
-
-    @staticmethod
-    def populate_family(data: dict):
-        """
-        method for populating family information into Family object
-
-        Returns
-        -------
-        out     : Family
-                  Sifo compatible Family object with all necessary family information
-
-        """
-        LOGGER.disable("source.domain")
-        sifo_age = {"0-5 mnd": 0.41, "6-11 mnd": 0.91, "1": 1, "2": 2, "3": 3, "4-5": 5,
-                    "6-9": 9, "10-13": 13, "14-17": 17, "18-19": 19, "20-50": 50, "51-60": 60,
-                    "61-66": 66, "eldre enn 66": 75}
-
-        cars = None
-        income = None
-        family_members = []
-        for key, val in data.items():
-            if "person" in key and len(val.values()) == 2:
-                age, gender = sifo_age[list(val.values())[0]], list(val.values())[1]
-                family_member = Male(age) if gender == "Mann" else Female(age)
-                family_members.append(family_member)
-            elif "brutto_arsinntekt" in key:
-                income = val.replace(" kr", "").replace(" ", "")
-            elif "antall_biler" in key:
-                cars = val
-            else:
-                pass
-        if family_members:
-            family_income = income if income else 0
-            family_num_cars = cars if cars else 0
-            family = Family(family_members, family_income, family_num_cars)
-        else:
-            family = None
-        LOGGER.enable("source.domain")
-        return family
+    sifo_age = {"0-5 mnd": 0.41, "6-11 mnd": 0.91, "1": 1, "2": 2, "3": 3, "4-5": 5,
+                "6-9": 9, "10-13": 13, "14-17": 17, "18-19": 19, "20-50": 50, "51-60": 60,
+                "61-66": 66, "eldre enn 66": 75}
+    barnehage_arg = {"Nei": "0", "Ja": "1"}
+    sfo_arg = {"Nei": "0", "Halvdag": "1", "Heldag": "2"}
 
     def __init__(self, data: dict):
         """
@@ -162,3 +128,47 @@ class SifoWorkFlow:
 
         """
         return self._expenses_share
+
+    def populate_family(self, data: dict):
+        """
+        method for populating family information into Family object
+
+        Returns
+        -------
+        out     : Family
+                  Sifo compatible Family object with all necessary family information
+
+        """
+        LOGGER.disable("source.domain")
+        cars = None
+        income = None
+        family_members = []
+        for key, val in data.items():
+            if "person" in key:
+                arg = {}
+                gender = None
+                for prop, value in val.items():
+                    if "alder" in prop:
+                        arg.update({"age": self.sifo_age[value]})
+                    elif "kjonn" in prop:
+                        gender = Male if "Mann" in value else Female
+                    elif "barnehage" in prop:
+                        arg.update({"kinder_garden": self.barnehage_arg[value]})
+                    elif "sfo" in prop:
+                        arg.update({"sfo": self.sfo_arg[value]})
+                    elif "gravid" in prop:
+                        arg.update({"pregnant": self.barnehage_arg[value]})
+                family_member = gender(**arg) if (gender and arg) else ""
+                family_members.append(family_member)
+            elif "brutto_arsinntekt" in key:
+                income = val.replace(" kr", "").replace(" ", "")
+            elif "antall_biler" in key:
+                cars = val
+        if family_members:
+            family_income = income if income else 0
+            family_num_cars = cars if cars else 0
+            family = Family(family_members, family_income, family_num_cars)
+        else:
+            family = None
+        LOGGER.enable("source.domain")
+        return family

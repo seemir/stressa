@@ -145,7 +145,6 @@ class Model(ABC):
         except Exception as set_combo_box_error:
             self.parent.error.show_error(set_combo_box_error)
             self.parent.error.exec_()
-        print(json.dumps(self.data, indent=3))
 
     @pyqtSlot()
     def update_line_edits(self, line_edit_name: str, line_edits: list, obj: object, method: str,

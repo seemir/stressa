@@ -134,6 +134,10 @@ class SifoModel(Model):
 
     @pyqtSlot()
     def set_extra_info(self):
+        """
+        method for setting extra info, i.e. kindergarten, sfo or pregnant
+
+        """
         self.parent.ui.combo_box_tillegg_1.activated.connect(
             lambda: self.get_extra_info("tillegg", "person", "_1"))
         self.parent.ui.combo_box_tillegg_2.activated.connect(
@@ -150,20 +154,54 @@ class SifoModel(Model):
             lambda: self.get_extra_info("tillegg", "person", "_7"))
 
     @pyqtSlot()
-    def set_age_and_gender(self, postfix):
+    def set_age_and_gender(self, postfix: str):
+        """
+        method for setting / validating age and gender
+
+        Parameters
+        ----------
+        postfix : str
+                  postfix matching naming convention
+
+        """
         self.check_extra_info(postfix, show_info=True)
         self.set_combo_box("kjonn" + postfix, "person" + postfix)
         self.set_combo_box("alder" + postfix, "person" + postfix)
 
     @pyqtSlot()
-    def get_extra_info(self, name, common_key, postfix):
+    def get_extra_info(self, name: str, common_key: str, postfix: str):
+        """
+        method for getting the extra information if already supplied
+
+        Parameters
+        ----------
+        name        : str
+                      name of extra info, i.e. barnehage, sfo or gravid
+        common_key  : str
+                      common key data is stored under
+        postfix     : str
+                      postfix matching naming convention
+
+        """
         self.check_extra_info(postfix)
         self.set_combo_box(name + postfix, common_key + postfix, self._extra_info)
 
     @pyqtSlot()
-    def check_extra_info(self, postfix, show_info=False):
-        self.clear_extra_data(postfix)
+    def check_extra_info(self, postfix: str, show_info: bool = False):
+        """
+        method for checking if conditions are meet inorder to display additional info
+
+        Parameters
+        ----------
+        postfix     : str
+                      postfix matching naming convention
+        show_info   : bool
+                      argument indicating if one wants to show the extra info in the gui
+
+        """
         ui = self.parent.ui
+        self.clear_extra_data(postfix)
+
         alder = getattr(ui, "combo_box_alder" + postfix).currentText()
         kvinne = getattr(ui, "combo_box_kjonn" + postfix).currentText() == "Kvinne"
 
@@ -173,27 +211,49 @@ class SifoModel(Model):
 
         if barnehage:
             self._extra_info = "barnehage" + postfix
-            self.show_extra_info(ui, "barnehage", postfix,
-                                 self._barnehage) if show_info else ""
+            self.show_extra_info("barnehage", postfix, self._barnehage) if show_info else ""
         elif sfo:
             self._extra_info = "sfo" + postfix
-            self.show_extra_info(ui, "sfo", postfix, self._sfo) if show_info else ""
+            self.show_extra_info("sfo", postfix, self._sfo) if show_info else ""
         elif gravid:
-            self._extra_info = "barnehage" + postfix
-            self.show_extra_info(ui, "gravid", postfix,
-                                 self._barnehage) if show_info else ""
+            self._extra_info = "gravid" + postfix
+            self.show_extra_info("gravid", postfix, self._barnehage) if show_info else ""
         else:
-            self.clear_extra_info(ui, postfix)
+            self.clear_extra_info(postfix)
 
     @pyqtSlot()
-    def show_extra_info(self, ui, name, postfix, values):
+    def show_extra_info(self, name, postfix, values):
+        """
+        method for showing the extra info if chosen to be displayed
+
+        Parameters
+        ----------
+        name        : str
+                      name of extra info, i.e. barnehage, sfo or gravid
+        postfix     : str
+                      postfix matching naming convention
+        values      : list
+                      values for combobox dropdown
+
+        """
+        ui = self.parent.ui
         getattr(ui, "label_tillegg" + postfix).setText(name.capitalize() + "?")
         getattr(ui, "combo_box_tillegg" + postfix).setEnabled(True)
         getattr(ui, "combo_box_tillegg" + postfix).clear()
         getattr(ui, "combo_box_tillegg" + postfix).addItems(values)
 
     @pyqtSlot()
-    def clear_extra_info(self, ui, postfix):
+    def clear_extra_info(self, postfix):
+        """
+        method for clearing the combobox information
+
+        Parameters
+        ----------
+        postfix     : str
+                      postfix matching naming convention
+
+        """
+        ui = self.parent.ui
         self._extra_info = None
         getattr(ui, "label_tillegg" + postfix).setText("")
         getattr(ui, "combo_box_tillegg" + postfix).setCurrentIndex(0)
@@ -202,6 +262,15 @@ class SifoModel(Model):
 
     @pyqtSlot()
     def clear_extra_data(self, postfix):
+        """
+        method for clearing the combobox data
+
+        Parameters
+        ----------
+        postfix     : str
+                      postfix matching naming convention
+
+        """
         self.clear_data("barnehage" + postfix, "person" + postfix)
         self.clear_data("sfo" + postfix, "person" + postfix)
         self.clear_data("gravid" + postfix, "person" + postfix)
@@ -295,7 +364,7 @@ class SifoModel(Model):
         for combo_box in range(1, 8):
             getattr(self.parent.ui, "combo_box_kjonn_" + str(combo_box)).setCurrentIndex(0)
             getattr(self.parent.ui, "combo_box_alder_" + str(combo_box)).setCurrentIndex(0)
-            self.clear_extra_info(self.parent.ui, "_" + str(combo_box))
+            self.clear_extra_info("_" + str(combo_box))
         self.parent.ui.line_edit_brutto_arsinntekt.clear()
         self.parent.ui.combo_box_antall_biler.setCurrentIndex(0)
         self.clear_results()
