@@ -197,6 +197,6 @@ class Family(Entity):
         properties = dict(list(self.__dict__.items())[-2:])
         for i, family_member in enumerate(self.family_members):
             for name, prop in family_member.__dict__.items():
-                if "id" not in name:
+                if "_id_str" not in name:
                     properties.update({name + str(i): prop})
         return {name[1:]: value for name, value in properties.items()}

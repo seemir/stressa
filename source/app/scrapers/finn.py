@@ -119,8 +119,10 @@ class Finn(Scraper):
                 price = "".join(
                     price.text for price in soup.find_all("span", attrs={"class": "u-t3"})
                     if " kr" in price.text).strip().replace(u"\xa0", " ")
-
-                info = {"finn_adresse": address.text, "prisantydning": price}
+                status = soup.find("span",
+                                   attrs={"class": "u-capitalize status status--warning u-mb0"})
+                info = {"finn_adresse": address.text, "prisantydning": price,
+                        "status": status.text.capitalize() if status else "Ikke solgt"}
                 keys, values = list(soup.find_all(["th", "dt"])), list(soup.find_all(["td", "dd"]))
 
                 info.update(

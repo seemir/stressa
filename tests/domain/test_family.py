@@ -147,7 +147,7 @@ class TestFamily:
         properties = {'inntekt': '1489000', 'antall_biler': '2'}
         for i, member in enumerate(family):
             for key, value in member.__dict__.items():
-                if "id" not in key:
+                if "_id_str" not in key:
                     properties.update({key[1:] + str(i): value})
 
         fam = Family(family, income=1489000, cars=2)

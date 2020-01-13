@@ -2117,6 +2117,9 @@
            <pointsize>8</pointsize>
           </font>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="text">
           <string>Vis resultatet</string>
          </property>
@@ -2139,6 +2142,9 @@
            <width>0</width>
            <height>30</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
           <string>Avbryt</string>
@@ -2193,6 +2199,9 @@
            <family>Segoe UI</family>
            <pointsize>8</pointsize>
           </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="text">
           <string>Tøm skjema</string>

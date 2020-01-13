@@ -1933,8 +1933,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>98</width>
-               <height>87</height>
+               <width>676</width>
+               <height>324</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
@@ -2410,6 +2410,9 @@
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
+                </property>
+                <property name="readOnly">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>

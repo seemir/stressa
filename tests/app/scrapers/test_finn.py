@@ -95,7 +95,7 @@ class TestFinn:
         Test that the housing_information method returns correct information
 
         """
-        assert len(self.finn.housing_information().keys()) == 18
+        assert len(self.finn.housing_information().keys()) == 19
 
     @staticmethod
     @mock.patch("source.app.scrapers.finn.Finn.response", mock.MagicMock(return_value=None))

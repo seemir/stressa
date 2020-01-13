@@ -24,7 +24,7 @@ class FinnModel(Model):
     the Finn based logic is stored
 
     """
-    _finn_kode = ["finnkode", "sistendret", "referanse", "finn_adresse", "prisantydning",
+    _finn_kode = ["finnkode", "status", "sistendret", "referanse", "finn_adresse", "prisantydning",
                   "formuesverdi", "fellesgjeld", "felleskostmnd", "omkostninger",
                   "kommunaleavg", "totalpris", "fellesformue", "boligtype", "eieform",
                   "etasje", "bygger", "soverom", "rom", "primrrom", "bruttoareal",

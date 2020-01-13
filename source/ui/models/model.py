@@ -8,8 +8,6 @@ Module for the Model abstract base class
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import json
-
 from abc import ABC, abstractmethod
 
 from PyQt5.QtCore import pyqtSlot, QObject
