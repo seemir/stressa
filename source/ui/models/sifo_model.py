@@ -164,6 +164,7 @@ class SifoModel(Model):
                   postfix matching naming convention
 
         """
+        Assertor.assert_data_types([postfix], [str])
         self.check_extra_info(postfix, show_info=True)
         self.set_combo_box("kjonn" + postfix, "person" + postfix)
         self.set_combo_box("alder" + postfix, "person" + postfix)
@@ -183,6 +184,7 @@ class SifoModel(Model):
                       postfix matching naming convention
 
         """
+        Assertor.assert_data_types([name, common_key, postfix], [str, str, str])
         self.check_extra_info(postfix)
         self.set_combo_box(name + postfix, common_key + postfix, self._extra_info)
 
@@ -199,6 +201,7 @@ class SifoModel(Model):
                       argument indicating if one wants to show the extra info in the gui
 
         """
+        Assertor.assert_data_types([postfix, show_info], [str, bool])
         ui = self.parent.ui
         self.clear_extra_data(postfix)
 
@@ -222,7 +225,7 @@ class SifoModel(Model):
             self.clear_extra_info(postfix)
 
     @pyqtSlot()
-    def show_extra_info(self, name, postfix, values):
+    def show_extra_info(self, name: str, postfix: str, values: list):
         """
         method for showing the extra info if chosen to be displayed
 
@@ -236,6 +239,7 @@ class SifoModel(Model):
                       values for combobox dropdown
 
         """
+        Assertor.assert_data_types([name, postfix, values], [str, str, list])
         ui = self.parent.ui
         getattr(ui, "label_tillegg" + postfix).setText(name.capitalize() + "?")
         getattr(ui, "combo_box_tillegg" + postfix).setEnabled(True)
@@ -243,7 +247,7 @@ class SifoModel(Model):
         getattr(ui, "combo_box_tillegg" + postfix).addItems(values)
 
     @pyqtSlot()
-    def clear_extra_info(self, postfix):
+    def clear_extra_info(self, postfix: str):
         """
         method for clearing the combobox information
 
@@ -253,6 +257,7 @@ class SifoModel(Model):
                       postfix matching naming convention
 
         """
+        Assertor.assert_data_types([postfix], [str])
         ui = self.parent.ui
         self._extra_info = None
         getattr(ui, "label_tillegg" + postfix).setText("")
@@ -261,7 +266,7 @@ class SifoModel(Model):
         self.clear_extra_data(postfix)
 
     @pyqtSlot()
-    def clear_extra_data(self, postfix):
+    def clear_extra_data(self, postfix: str):
         """
         method for clearing the combobox data
 
@@ -271,6 +276,7 @@ class SifoModel(Model):
                       postfix matching naming convention
 
         """
+        Assertor.assert_data_types([postfix], [str])
         self.clear_data("barnehage" + postfix, "person" + postfix)
         self.clear_data("sfo" + postfix, "person" + postfix)
         self.clear_data("gravid" + postfix, "person" + postfix)

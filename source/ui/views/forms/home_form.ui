@@ -2783,7 +2783,7 @@
                <hour>0</hour>
                <minute>0</minute>
                <second>0</second>
-               <year>2020</year>
+               <year>2000</year>
                <month>1</month>
                <day>1</day>
               </datetime>
@@ -2793,6 +2793,13 @@
              </property>
              <property name="calendarPopup">
               <bool>true</bool>
+             </property>
+             <property name="date">
+              <date>
+               <year>2000</year>
+               <month>1</month>
+               <day>1</day>
+              </date>
              </property>
             </widget>
            </item>

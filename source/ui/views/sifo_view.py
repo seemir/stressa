@@ -112,5 +112,9 @@ class SifoView(QDialog):
         return self._error
 
     def display(self):
+        """
+        Method for displaying SifoView
+
+        """
         self.sifo_model.sifo_info()
-        self.ui.show()
+        self.exec_()

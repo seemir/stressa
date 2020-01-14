@@ -118,3 +118,20 @@ class MortgageModel(Model):
             lambda: self.set_date_edit("startdato"))
         self.parent.ui.line_edit_egenkapital.editingFinished.connect(
             lambda: self.set_line_edit("egenkapital", Money, "value"))
+
+    @pyqtSlot()
+    def clear_all(self):
+        """
+        method for clearing all line_edits and combo_boxes in model
+
+        """
+        self.clear_line_edits(["fornavn", "etternavn", "adresse", "postnr",
+                               "poststed", "kommune", "fylke", "epost", "mobil_tlf",
+                               "privat_tlf", "jobb_tlf", "fax", "brutto_inntekt",
+                               "trygde_inntekt", "leieinntekt", "total_skatt",
+                               "total_netto", "netto_likviditet", "student_lan",
+                               "kreditt_gjeld", "husleie", "strom", "andre_utgifter",
+                               "sifo_utgifter", "totale_utgifter", "likviditetsgrad",
+                               "egenkapital"])
+        self.clear_combo_boxes(["kjonn", "lanetype", "intervall", "laneperiode"])
+        self.clear_date_edits(["fodselsdato", "startdato"])

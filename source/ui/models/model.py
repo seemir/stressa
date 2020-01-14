@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from abc import ABC, abstractmethod
 
-from PyQt5.QtCore import pyqtSlot, QObject
+from PyQt5.QtCore import pyqtSlot, QObject, QDateTime
 
 from source.util import Assertor
 
@@ -90,15 +90,28 @@ class Model(ABC):
         """
         try:
             Assertor.assert_data_types([date_edit_name], [str])
-            date_edit_text = getattr(self.parent.ui,
-                                     "date_edit_" + date_edit_name).date()
-            if date_edit_text.year() != 0000:
-                self.data.update({date_edit_name: date_edit_text.toString()})
-            else:
-                self.data.pop(date_edit_name) if date_edit_name in self.data.keys() else ""
+            date_edit_text = getattr(self.parent.ui, "date_edit_" + date_edit_name).dateTime()
+            self.data.update({date_edit_name: date_edit_text.toString("dd.MM.yyyy")})
         except Exception as set_date_edit_error:
-            self.parent.error.show_error(set_date_edit_error)
+            self.parent.error.show_error(set_date_edit_error, self.data)
             self.parent.error.exec_()
+
+    @pyqtSlot()
+    def clear_date_edits(self, date_edits: list):
+        """
+        method for clearing content in date_edits
+
+        Parameters
+        ----------
+        date_edits  : list
+                      list of date_edits
+
+        """
+        Assertor.assert_data_types([date_edits], [list])
+        date = QDateTime.fromString("01.01.2000", "dd.MM.yyyy")
+        for date_edit in date_edits:
+            getattr(self.parent.ui, "date_edit_" + date_edit).setDateTime(date)
+            self.data.pop(date_edit) if date_edit in self.data.keys() else ""
 
     @pyqtSlot()
     def set_combo_box(self, combo_box_name: str, common_key: str = None, key_name: str = None):
@@ -143,6 +156,22 @@ class Model(ABC):
         except Exception as set_combo_box_error:
             self.parent.error.show_error(set_combo_box_error)
             self.parent.error.exec_()
+
+    @pyqtSlot()
+    def clear_combo_boxes(self, combo_boxes: list):
+        """
+        method for clearing content of combo_boxes
+
+        Parameters
+        ----------
+        combo_boxes     : list
+                          list of comboboxes
+
+        """
+        Assertor.assert_data_types([combo_boxes], [list])
+        for combo_box in combo_boxes:
+            getattr(self.parent.ui, "combo_box_" + combo_box).setCurrentIndex(0)
+            self.set_combo_box(combo_box)
 
     @pyqtSlot()
     def update_line_edits(self, line_edit_name: str, line_edits: list, obj: object, method: str,

@@ -15,10 +15,11 @@ import os
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
 
-from source.ui.models import MortgageModel, FinnModel
+from source.ui.models import MortgageModel, FinnModel, HomeModel
 
-from .sifo_view import SifoView
 from .error_view import ErrorView
+from .sifo_view import SifoView
+
 from . import resources
 
 
@@ -41,20 +42,23 @@ class HomeView(QMainWindow):
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/home_form.ui"), self)
 
         self._error = ErrorView(self)
-        self._mortgage_model = MortgageModel(self)
-        self._finn_model = FinnModel(self)
         self._sifo_view = SifoView(self)
 
-        self.ui.push_button_sifo_utgifter.clicked.connect(self._sifo_view.display)
+        self._mortgage_model = MortgageModel(self)
+        self._finn_model = FinnModel(self)
+        self._home_model = HomeModel(self)
+
+        self._mortgage_model.mortgage_info()
+        self._finn_model.finn_info()
+
+        self.ui.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
         self.ui.push_button_finn_1.clicked.connect(
             lambda: self.finn_model.open_finn_url("finnkode_1"))
         self.ui.push_button_finn_2.clicked.connect(
             lambda: self.finn_model.open_finn_url("finnkode_2"))
         self.ui.push_button_finn_3.clicked.connect(
             lambda: self.finn_model.open_finn_url("finnkode_3"))
-
-        self._mortgage_model.mortgage_info()
-        self._finn_model.finn_info()
+        self.ui.push_button_tom_skjema.clicked.connect(self.home_model.clear_all)
 
     @property
     def mortgage_model(self):
@@ -81,6 +85,32 @@ class HomeView(QMainWindow):
 
         """
         return self._finn_model
+
+    @property
+    def home_model(self):
+        """
+        HomeModel getter
+
+        Returns
+        -------
+        out     : HomeModel
+                  Active HomeModel in Homeview
+
+        """
+        return self._home_model
+
+    @property
+    def sifo_view(self):
+        """
+        SifoView getter
+
+        Returns
+        -------
+        out     : SifoView
+                  Active SifoView in the HomeView
+
+        """
+        return self._sifo_view
 
     @property
     def error(self):

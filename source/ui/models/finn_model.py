@@ -20,15 +20,14 @@ from .model import Model
 
 class FinnModel(Model):
     """
-    Implementation of the Finn model for which all
-    the Finn based logic is stored
+    Implementation of the Finn model for which all the Finn based logic is stored
 
     """
-    _finn_kode = ["finnkode", "status", "sistendret", "referanse", "finn_adresse", "prisantydning",
-                  "formuesverdi", "fellesgjeld", "felleskostmnd", "omkostninger",
-                  "kommunaleavg", "totalpris", "fellesformue", "boligtype", "eieform",
-                  "etasje", "bygger", "soverom", "rom", "primrrom", "bruttoareal",
-                  "energimerking", "tomteareal"]
+    _finn_kode = ["finnkode", "status", "sistendret", "referanse", "finn_adresse",
+                  "prisantydning", "formuesverdi", "fellesgjeld", "felleskostmnd",
+                  "omkostninger", "kommunaleavg", "totalpris", "fellesformue",
+                  "boligtype", "eieform", "etasje", "bygger", "soverom", "rom",
+                  "primrrom", "bruttoareal", "energimerking", "tomteareal"]
 
     def __init__(self, parent: QObject):
         """
@@ -76,3 +75,14 @@ class FinnModel(Model):
             webbrowser.open(FINN_URL[:FINN_URL.rfind("/")] + "/homes/ad.html?finnkode=" + finn_code)
         else:
             webbrowser.open(FINN_URL)
+
+    @pyqtSlot()
+    def clear_all(self):
+        """
+        method for clearing all line_edits and combo_boxes in model
+
+        """
+        self.clear_line_edits(["finnkode_1", "finnkode_2", "finnkode_3"])
+        self.clear_line_edits(self._finn_kode, "_1")
+        self.clear_line_edits(self._finn_kode, "_2")
+        self.clear_line_edits(self._finn_kode, "_3")
