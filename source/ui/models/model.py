@@ -289,7 +289,7 @@ class Model(ABC):
     @pyqtSlot()
     def clear_line_edits(self, line_edits: list, postfix: str = None):
         """
-        method clearing the content of multiple line_edits
+        method for clearing the content of multiple line_edits
 
         Parameters
         ----------
@@ -307,7 +307,7 @@ class Model(ABC):
     @pyqtSlot()
     def clear_line_edit(self, line_edit_name: str):
         """
-        method clearing content of a single line_edit
+        method for clearing content of a single line_edit
 
         Parameters
         ----------
