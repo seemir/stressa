@@ -259,12 +259,11 @@ class Model(ABC):
                 self.clear_line_edit(line_edit_name)
             getattr(self.parent.ui, "line_edit_" + line_edit_name).setText(output)
         except Exception as set_line_edit_error:
+            self.clear_line_edit(line_edit_name)
             if clearing:
                 clearing()
-            self.clear_line_edit(line_edit_name)
             self.parent.error.show_error(set_line_edit_error, self.data)
             self.parent.error.exec_()
-            line_edit.setFocus()
 
     @pyqtSlot()
     def get_line_edits(self, line_edits: list, postfix: str = None):

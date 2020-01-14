@@ -140,9 +140,10 @@ class SifoWorkFlow:
 
         """
         LOGGER.disable("source.domain")
+        family_members = []
         cars = None
         income = None
-        family_members = []
+        family = None
         for key, val in data.items():
             if "person" in key:
                 arg = {}
@@ -158,8 +159,9 @@ class SifoWorkFlow:
                         arg.update({"sfo": self.sfo_arg[value]})
                     elif "gravid" in prop:
                         arg.update({"pregnant": self.barnehage_arg[value]})
-                family_member = gender(**arg) if (gender and arg) else ""
-                family_members.append(family_member)
+                if gender and arg:
+                    family_member = gender(**arg)
+                    family_members.append(family_member)
             elif "brutto_arsinntekt" in key:
                 income = val.replace(" kr", "").replace(" ", "")
             elif "antall_biler" in key:
@@ -168,7 +170,5 @@ class SifoWorkFlow:
             family_income = income if income else 0
             family_num_cars = cars if cars else 0
             family = Family(family_members, family_income, family_num_cars)
-        else:
-            family = None
         LOGGER.enable("source.domain")
         return family

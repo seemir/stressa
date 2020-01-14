@@ -1697,6 +1697,9 @@
            <pointsize>8</pointsize>
           </font>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::WheelFocus</enum>
+         </property>
         </widget>
        </item>
        <item row="7" column="0">
