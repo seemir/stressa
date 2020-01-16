@@ -13,10 +13,11 @@ from http.client import responses
 import xml.etree.cElementTree as Et
 
 import requests
+from requests.exceptions import ReadTimeout, ConnectionError as ConnectError
 
-from source.util import LOGGER, cache, NoConnectionError
+from source.util import LOGGER, cache, NoConnectionError, TimeOutError, NotFoundError
 
-from ..settings import PORTALEN_URL, PORTALEN_CRED, PORTALEN_ENTRY
+from .settings import PORTALEN_URL, PORTALEN_CRED, PORTALEN_ENTRY, TIMEOUT
 from .scraper import Scraper
 
 cache(__file__, "cache")
@@ -51,14 +52,21 @@ class Portalen(Scraper):
 
         """
         try:
-            response = requests.post(PORTALEN_URL, auth=PORTALEN_CRED)
-            status_code = response.status_code
-            LOGGER.info("HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
-            return response
-        except Exception as portalen_response_error:
+            try:
+                response = requests.post(PORTALEN_URL, auth=PORTALEN_CRED, timeout=TIMEOUT)
+                status_code = response.status_code
+                LOGGER.info(
+                    "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
+                return response
+            except ReadTimeout as portalen_timeout_error:
+                raise TimeOutError(
+                    "Timeout occurred - please try again later or contact system administrator, "
+                    "\nexited with '{}'".format(portalen_timeout_error))
+        except ConnectError as portalen_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
-                "client,\nexited with '{}'".format(portalen_response_error))
+                "client or contact system administrator,\nexited with '{}'".format(
+                    portalen_response_error))
 
     def mortgage_offers(self):
         """
@@ -73,20 +81,23 @@ class Portalen(Scraper):
         try:
             LOGGER.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
 
-            response = self.response().content.decode("windows-1252")
-            tree = Et.fromstring(response).findall(PORTALEN_ENTRY)
+            response = self.response()
+            if response:
+                tree = Et.fromstring(response.content.decode("windows-1252")).findall(
+                    PORTALEN_ENTRY)
 
-            offers = {}
-            count = 0
+                offers = {}
+                count = 0
 
-            for entries in tree:
-                count += 1
-                offers.update(
-                    {count: {re.sub("{[^>]+}", "", entry.tag): entry.text.strip() for entry in
-                             entries if entry.text}})
+                for entries in tree:
+                    count += 1
+                    offers.update(
+                        {count: {re.sub("{[^>]+}", "", entry.tag): entry.text.strip() for entry in
+                                 entries if entry.text}})
 
-            LOGGER.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
-            return offers
+                LOGGER.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
+                return offers
+            raise NotFoundError("No 'mortgage_offers' received")
         except Exception as mortgage_offers_exception:
             LOGGER.exception(mortgage_offers_exception)
             raise mortgage_offers_exception

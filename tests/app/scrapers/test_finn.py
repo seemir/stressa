@@ -13,12 +13,13 @@ import shutil
 import os
 from uuid import UUID
 from requests.models import Response
+from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 import mock
 import pytest as pt
 
 from source.app import Finn
-from source.util import NotFoundError, NoConnectionError
+from source.util import NotFoundError, NoConnectionError, TimeOutError
 
 
 class TestFinn:
@@ -81,15 +82,6 @@ class TestFinn:
         assert response.status_code == 200
         assert isinstance(response, Response)
 
-    @mock.patch("source.app.scrapers.finn.FINN_URL", mock.MagicMock(return_value=None))
-    def test_finn_exception_for_invalid_url(self):
-        """
-        Test that Finn raises NoConnectionError exception if FINN_URL if None
-
-        """
-        with pt.raises(NoConnectionError):
-            self.finn.response()
-
     def test_housing_information_method(self):
         """
         Test that the housing_information method returns correct information
@@ -98,14 +90,36 @@ class TestFinn:
         assert len(self.finn.housing_information().keys()) == 19
 
     @staticmethod
-    @mock.patch("source.app.scrapers.finn.Finn.response", mock.MagicMock(return_value=None))
-    def test_housing_information_throws_attribute_error_for_none_response():
+    @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectError))
+    def test_response_throws_no_connection_error_for_connection_error():
         """
-        Test that housing_information method throws AttributeError if response is None
+        Test that response method throws NotConnectionError if requests.post throws ConnectionError
 
         """
         finn = Finn("144857770")
-        with pt.raises(AttributeError):
+        with pt.raises(NoConnectionError):
+            finn.response()
+
+    @staticmethod
+    @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectTimeout))
+    def test_response_throws_time_out_error_for_readtimeout():
+        """
+        Test that response method throws TimeOutError if requests.post throws ReadTimeout
+
+        """
+        finn = Finn("144857770")
+        with pt.raises(TimeOutError):
+            finn.response()
+
+    @staticmethod
+    @mock.patch("source.app.scrapers.finn.Finn.response", mock.MagicMock(return_value=None))
+    def test_housing_information_throws_not_found_error_for_none_response():
+        """
+        Test that housing_information method throws NotFoundError if response is None
+
+        """
+        finn = Finn("144857770")
+        with pt.raises(NotFoundError):
             finn.housing_information()
 
     @staticmethod

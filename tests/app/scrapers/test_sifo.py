@@ -12,13 +12,14 @@ import os
 import json
 import shutil
 from uuid import UUID
+from urllib.error import URLError
 
 import mock
 import pytest as pt
 from mechanize._response import response_seek_wrapper
 
 from source.domain import Female, Family, Male
-from source.util import NoConnectionError
+from source.util import NoConnectionError, TimeOutError
 from source.app import Scraper, Sifo
 
 
@@ -75,10 +76,19 @@ class TestSifo:
         self.sifo.family = new_family
         assert self.sifo.family == new_family
 
-    @mock.patch("source.app.scrapers.sifo.SIFO_URL", mock.MagicMock(return_value=None))
-    def test_sifo_exception_for_invalid_url(self):
+    @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("timed out")))
+    def test_response_throws_time_out_error_for_read_timeout(self):
         """
-        Test that sifo raises NoConnectionError if SIFO_URL if None
+        Test that response method throws TimeOutError
+
+        """
+        with pt.raises(TimeOutError):
+            self.sifo.response()
+
+    @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("")))
+    def test_response_throws_no_connection_error(self):
+        """
+        Test that response method throws NoConnectionError
 
         """
         with pt.raises(NoConnectionError):

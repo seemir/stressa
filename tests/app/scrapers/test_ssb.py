@@ -12,13 +12,15 @@ import os
 from uuid import UUID
 import json
 import shutil
+
 from requests.models import Response
+from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 import pytest as pt
 import mock
 
 from source.app import Ssb, SsbPayload, Scraper
-from source.util import NoConnectionError
+from source.util import NoConnectionError, TimeOutError
 
 
 class TestSsb:
@@ -71,13 +73,22 @@ class TestSsb:
         self.ssb.payload = payload
         assert self.ssb.payload == payload
 
-    @mock.patch("source.app.scrapers.ssb.SSB_URL", mock.MagicMock(return_value=None))
-    def test_ssb_exception_for_invalid_url(self):
+    @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectError))
+    def test_response_throws_no_connection_error_for_connection_error(self):
         """
-        Test that Ssb raises NoConnectionError if SSB_URL if None
+        Test that response method throws NotConnectionError if requests.post throws ConnectionError
 
         """
         with pt.raises(NoConnectionError):
+            self.ssb.response()
+
+    @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectTimeout))
+    def test_response_throws_time_out_error_for_readtimeout(self):
+        """
+        Test that response method throws TimeOutError if requests.post throws ReadTimeout
+
+        """
+        with pt.raises(TimeOutError):
             self.ssb.response()
 
     def test_ssb_response_method(self):

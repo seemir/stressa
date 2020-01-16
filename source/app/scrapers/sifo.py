@@ -10,11 +10,12 @@ __email__ = 'samir.adrik@gmail.com'
 
 import xml.etree.ElementTree as Et
 from http.client import responses
+from urllib.error import URLError
 
 from source.domain import Family
-from source.util import Assertor, LOGGER, NoConnectionError
+from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError
 
-from ..settings import SIFO_URL, SIFO_FORM
+from .settings import SIFO_URL, SIFO_FORM, TIMEOUT
 from .scraper import Scraper
 
 
@@ -76,7 +77,7 @@ class Sifo(Scraper):
 
         """
         try:
-            self._browser.open(SIFO_URL)
+            self._browser.open(SIFO_URL, timeout=TIMEOUT)
             self._browser.select_form(SIFO_FORM)
             for prop, value in self.family.sifo_properties().items():
                 if prop == 'inntekt':
@@ -87,10 +88,15 @@ class Sifo(Scraper):
             LOGGER.info(
                 "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
             return response
-        except Exception as sifo_response_error:
+        except URLError as sifo_response_error:
+            if str(sifo_response_error) == "<urlopen error timed out>":
+                raise TimeOutError(
+                    "Timeout occurred - please try again later or contact system administrator, "
+                    "\nexited with '{}'".format(sifo_response_error))
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
-                "client,\nexited with '{}'".format(sifo_response_error))
+                "client or contact system administrator,\nexited with '{}'".format(
+                    sifo_response_error))
 
     def sifo_base_expenses(self, include_id: bool = False):
         """

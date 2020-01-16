@@ -11,9 +11,11 @@ __email__ = 'samir.adrik@gmail.com'
 from http.client import responses
 
 import requests
-from source.util import Assertor, LOGGER, NoConnectionError
+from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
-from ..settings import SSB_URL
+from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError
+
+from .settings import SSB_URL, TIMEOUT
 from .ssb_payload import SsbPayload
 from .scraper import Scraper
 
@@ -83,15 +85,21 @@ class Ssb(Scraper):
 
         """
         try:
-            response = requests.post(url=SSB_URL, json=self._payload.payload())
-            status_code = response.status_code
-            LOGGER.info(
-                "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
-            return response
-        except Exception as ssb_response_error:
+            try:
+                response = requests.post(url=SSB_URL, json=self._payload.payload(), timeout=TIMEOUT)
+                status_code = response.status_code
+                LOGGER.info(
+                    "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
+                return response
+            except ConnectTimeout as ssb_timeout_error:
+                raise TimeOutError(
+                    "Timeout occurred - please try again later or contact system administrator, "
+                    "\nexited with '{}'".format(ssb_timeout_error))
+        except ConnectError as ssb_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
-                "client,\nexited with '{}'".format(ssb_response_error))
+                "client or contact system administrator,\nexited with '{}'".format(
+                    ssb_response_error))
 
     def ssb_interest_rates(self):
         """

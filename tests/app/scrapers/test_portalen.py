@@ -13,11 +13,12 @@ import json
 import os
 import shutil
 from requests.models import Response
+from requests.exceptions import ReadTimeout, ConnectionError as ConnectError
 
 import mock
 import pytest as pt
 
-from source.util import NoConnectionError
+from source.util import NoConnectionError, NotFoundError, TimeOutError
 from source.app import Portalen, Scraper
 
 
@@ -44,15 +45,6 @@ class TestPortalen:
         assert isinstance(self.portalen, Scraper)
         assert issubclass(self.portalen.__class__, Scraper)
 
-    @mock.patch("source.app.scrapers.portalen.PORTALEN_URL", mock.MagicMock(return_value=None))
-    def test_portalen_exception_for_invalid_url(self):
-        """
-        Test that Portalen raises MissingSchema exception if PORTALEN_URL if None
-
-        """
-        with pt.raises(NoConnectionError):
-            self.portalen.response()
-
     def test_portalen_has_uuid4_compatible_id(self):
         """
         Test Portalen scraper has uuid4 compatible ids
@@ -78,14 +70,36 @@ class TestPortalen:
         assert self.portalen.mortgage_offers().keys().__len__() >= 700
 
     @staticmethod
-    @mock.patch("source.app.scrapers.portalen.Portalen.response", mock.MagicMock(return_value=None))
-    def test_mortgage_offers_throws_attribute_error_for_none_response():
+    @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectError))
+    def test_response_throws_no_connection_error_for_connection_error():
         """
-        Test that mortgage offers method throws AttributeError as response is None
+        Test that response method throws NotConnectionError if requests.post throws ConnectionError
 
         """
         portalen = Portalen()
-        with pt.raises(AttributeError):
+        with pt.raises(NoConnectionError):
+            portalen.response()
+
+    @staticmethod
+    @mock.patch("requests.post", mock.MagicMock(side_effect=ReadTimeout))
+    def test_response_throws_time_out_error_for_read_timeout():
+        """
+        Test that response method throws TimeOutError if requests.post throws ReadTimeout
+
+        """
+        portalen = Portalen()
+        with pt.raises(TimeOutError):
+            portalen.response()
+
+    @staticmethod
+    @mock.patch("source.app.scrapers.portalen.Portalen.response", mock.MagicMock(return_value=None))
+    def test_mortgage_offers_throws_not_found_error_for_none_response():
+        """
+        Test that mortgage offers method throws NotFoundError if response is None
+
+        """
+        portalen = Portalen()
+        with pt.raises(NotFoundError):
             portalen.mortgage_offers()
 
     @mock.patch("source.app.scrapers.portalen.Portalen.mortgage_offers",

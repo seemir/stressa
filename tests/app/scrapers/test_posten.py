@@ -11,13 +11,14 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 import json
 from uuid import UUID
+from urllib.error import URLError
 import shutil
 
 import mock
 import pytest as pt
 from mechanize._response import response_seek_wrapper
 
-from source.util import NotFoundError, NoConnectionError
+from source.util import NotFoundError, NoConnectionError, TimeOutError
 from source.app import Posten, Scraper
 
 
@@ -81,15 +82,6 @@ class TestPosten:
         with pt.raises(NotFoundError):
             self.posten.validate_zip_code(invalid_zip_code)
 
-    @mock.patch("source.app.scrapers.posten.POSTEN_URL", mock.MagicMock(return_value=None))
-    def test_posten_exception_for_invalid_url(self):
-        """
-        Test that posten raises NoConnectionError if POSTEN_URL if None
-
-        """
-        with pt.raises(NoConnectionError):
-            self.posten.response()
-
     def test_posten_response_method(self):
         """
         Test that response method returns HTTP code 200: OK
@@ -107,11 +99,33 @@ class TestPosten:
                            'kommune': 'OSLO', 'fylke': 'OSLO'}
         assert self.posten.zip_code_info() == correct_content
 
+    @staticmethod
+    @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("timed out")))
+    def test_response_throws_time_out_error_for_read_timeout():
+        """
+        Test that response method throws TimeOutError
+
+        """
+        posten = Posten("0010")
+        with pt.raises(TimeOutError):
+            posten.response()
+
+    @staticmethod
+    @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("")))
+    def test_response_throws_no_connection_error():
+        """
+        Test that response method throws NoConnectionError
+
+        """
+        posten = Posten("0010")
+        with pt.raises(NoConnectionError):
+            posten.response()
+
     @mock.patch("source.app.scrapers.posten.Posten.response", mock.MagicMock(return_value=""))
     def test_zip_code_info_throws_not_found_error(self):
         """
         Patch that mocks Posten.response() method to return '' and accordingly
-        throws NotFoundError
+        throws NotFoundError when calling zip_code_info() method
 
         """
         with pt.raises(NotFoundError):

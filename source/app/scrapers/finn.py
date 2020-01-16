@@ -12,11 +12,12 @@ import re
 from http.client import responses
 
 import requests
+from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 from bs4 import BeautifulSoup
 
-from source.util import cache, Assertor, LOGGER, NotFoundError, NoConnectionError
+from source.util import cache, Assertor, LOGGER, NotFoundError, NoConnectionError, TimeOutError
 
-from ..settings import FINN_URL
+from .settings import FINN_URL, TIMEOUT
 from .scraper import Scraper
 
 cache(__file__, "cache")
@@ -89,14 +90,21 @@ class Finn(Scraper):
 
         """
         try:
-            response = requests.post((FINN_URL + "{}").format(self.finn_code))
-            status_code = response.status_code
-            LOGGER.info("HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
-            return response
-        except Exception as finn_response_error:
+            try:
+                response = requests.post((FINN_URL + "{}").format(self.finn_code), timeout=TIMEOUT)
+                status_code = response.status_code
+                LOGGER.info(
+                    "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
+                return response
+            except ConnectTimeout as finn_timeout_error:
+                raise TimeOutError(
+                    "Timeout occurred - please try again later or contact system administrator, "
+                    "\nexited with '{}'".format(finn_timeout_error))
+        except ConnectError as finn_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
-                "client,\nexited with '{}'".format(finn_response_error))
+                "client or contact system administrator,\nexited with '{}'".format(
+                    finn_response_error))
 
     def housing_information(self):
         """
@@ -112,10 +120,11 @@ class Finn(Scraper):
             LOGGER.info(
                 "trying to retrieve '{}' for -> '{}'".format(self.housing_information.__name__,
                                                              self.finn_code))
-            soup = BeautifulSoup(self.response().content, "lxml")
+            response = self.response()
+            if response:
+                soup = BeautifulSoup(response.content, "lxml")
 
-            address = soup.find("p", attrs={"class": "u-caption"})
-            if address:
+                address = soup.find("p", attrs={"class": "u-caption"})
                 price = "".join(
                     price.text for price in soup.find_all("span", attrs={"class": "u-t3"})
                     if " kr" in price.text).strip().replace(u"\xa0", " ")

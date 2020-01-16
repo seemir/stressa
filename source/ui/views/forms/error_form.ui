@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>740</width>
-    <height>495</height>
+    <width>800</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>740</width>
-    <height>495</height>
+    <width>800</width>
+    <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -986,7 +986,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>597</width>
+              <width>657</width>
               <height>63</height>
              </rect>
             </property>
@@ -1467,8 +1467,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>676</width>
-               <height>324</height>
+               <width>736</width>
+               <height>329</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_7">
@@ -1933,8 +1933,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>676</width>
-               <height>324</height>
+               <width>736</width>
+               <height>329</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
@@ -2396,8 +2396,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>676</width>
-               <height>324</height>
+               <width>736</width>
+               <height>329</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_10">

@@ -11,10 +11,11 @@ __email__ = 'samir.adrik@gmail.com'
 import re
 from http.client import responses
 
+from urllib.error import URLError
 from bs4 import BeautifulSoup
 
-from source.util import Assertor, LOGGER, NotFoundError, NoConnectionError
-from ..settings import POSTEN_URL, POSTEN_FORM
+from source.util import Assertor, LOGGER, NotFoundError, NoConnectionError, TimeOutError
+from .settings import POSTEN_URL, POSTEN_FORM, TIMEOUT
 from .scraper import Scraper
 
 
@@ -101,17 +102,22 @@ class Posten(Scraper):
 
         """
         try:
-            self._browser.open(POSTEN_URL)
+            self._browser.open(POSTEN_URL, timeout=TIMEOUT)
             self._browser.select_form(nr=0)
             self._browser[POSTEN_FORM] = self.zip_code
             response = self._browser.submit()
             LOGGER.info(
                 "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
             return response
-        except Exception as posten_response_error:
+        except URLError as posten_response_error:
+            if str(posten_response_error) == "<urlopen error timed out>":
+                raise TimeOutError(
+                    "Timeout occurred - please try again later or contact system administrator, "
+                    "\nexited with '{}'".format(posten_response_error))
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
-                "client,\nexited with '{}'".format(posten_response_error))
+                "client or contact system administrator,\nexited with '{}'".format(
+                    posten_response_error))
 
     def zip_code_info(self):
         """
@@ -133,10 +139,9 @@ class Posten(Scraper):
                 values = [value.text.strip().upper() if i != 4 else
                           value.text.strip().upper().rsplit(' ', 1)[0] for i, value in
                           enumerate(rows[1].find_all('td'))]
-            else:
-                raise NotFoundError("'{}' is an invalid zip code".format(self.zip_code))
-            LOGGER.success("'{}' successfully retrieved".format(self.zip_code_info.__name__))
-            return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
+                LOGGER.success("'{}' successfully retrieved".format(self.zip_code_info.__name__))
+                return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
+            raise NotFoundError("'{}' is an invalid zip code".format(self.zip_code))
         except Exception as zip_code_exception:
             LOGGER.exception(zip_code_exception)
             raise zip_code_exception
