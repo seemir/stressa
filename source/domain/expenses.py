@@ -67,7 +67,7 @@ class Expenses(Entity):
             self._expenses_values = self.expenses[0]
             self._expenses_shares = self.expenses[1]
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as sifo_expenses_error:
             LOGGER.exception(sifo_expenses_error)
             raise sifo_expenses_error

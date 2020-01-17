@@ -48,7 +48,7 @@ class Female(Person):
 
             self._gravid = pregnant
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as female_exception:
             LOGGER.exception(female_exception)
             raise female_exception

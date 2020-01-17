@@ -147,7 +147,7 @@ class TestFamily:
         properties = {'inntekt': '1489000', 'antall_biler': '2'}
         for i, member in enumerate(family):
             for key, value in member.__dict__.items():
-                if "_id_str" not in key:
+                if "_id" not in key:
                     properties.update({key[1:] + str(i): value})
 
         fam = Family(family, income=1489000, cars=2)
@@ -166,4 +166,4 @@ class TestFamily:
         Test that all entity ids are uuid4 compatible
 
         """
-        assert UUID(str(self.family.id_str))
+        assert UUID(str(self.family.id))

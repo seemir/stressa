@@ -29,12 +29,12 @@ class Entity(ABC):
         """
         LOGGER.info(
             "trying to create '{}'".format(self.__class__.__name__))
-        self._id_str = str(uuid4())
+        self._id = str(uuid4())
 
     @property
-    def id_str(self):
+    def id(self):
         """
         Id getter
 
         """
-        return self._id_str
+        return self._id

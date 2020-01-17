@@ -38,7 +38,7 @@ class Male(Person):
         try:
             super().__init__('m', age, kinder_garden, sfo)
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as male_exception:
             LOGGER.exception(male_exception)
             raise male_exception

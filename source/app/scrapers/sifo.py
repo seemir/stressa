@@ -115,7 +115,7 @@ class Sifo(Scraper):
 
             expenses = {}
             if include_id:
-                expenses.update({'_id': self.family.id_str})
+                expenses.update({'_id': self.family.id})
             for child in root:
                 expenses.update({child.tag: child.text.strip().replace(".", "")})
             LOGGER.success("'{}' successfully retrieved".format(self.sifo_base_expenses.__name__))

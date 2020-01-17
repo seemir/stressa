@@ -78,7 +78,7 @@ class Family(Entity):
             self._inntekt = str(income)
             self._antall_biler = str(cars)
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as family_exception:
             LOGGER.exception(family_exception)
             raise family_exception
@@ -197,6 +197,6 @@ class Family(Entity):
         properties = dict(list(self.__dict__.items())[-2:])
         for i, family_member in enumerate(self.family_members):
             for name, prop in family_member.__dict__.items():
-                if "_id_str" not in name:
+                if "_id" not in name:
                     properties.update({name + str(i): prop})
         return {name[1:]: value for name, value in properties.items()}
