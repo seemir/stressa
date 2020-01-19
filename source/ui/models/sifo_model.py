@@ -328,7 +328,6 @@ class SifoModel(Model):
             self.clear_results()
             self.parent.ui.tabwidget_sifo.setCurrentIndex(1)
             self.sifo_workflow = SifoWorkFlow(self.data)
-            self.sifo_workflow.write_pdf("sifo_graph.pdf")
             self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
                                 data=self.sifo_workflow.expenses_value)
             self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_2",

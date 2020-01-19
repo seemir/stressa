@@ -9,4 +9,4 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from .scrapers import *
-from .workflow import *
+from .workflows import *

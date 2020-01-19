@@ -13,10 +13,12 @@ import time
 from source.domain import Family, Male, Female, Expenses
 from source.util import Assertor, LOGGER
 
+from .engine import WorkFlow
+
 from ..scrapers import Sifo
 
 
-class SifoWorkFlow:
+class SifoWorkFlow(WorkFlow):
     """
     Workflow for the calculation of the SIFO expenses with shares of total expenses
 
@@ -36,6 +38,7 @@ class SifoWorkFlow:
                   information about the family, i.e. arguments to be passed to Family object
 
         """
+        super().__init__(name=self.__class__.__name__)
         start = time.time()
         LOGGER.info("starting '{}'".format(self.__class__.__name__))
         Assertor.assert_data_types([data], [dict])
