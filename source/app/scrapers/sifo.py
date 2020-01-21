@@ -114,12 +114,19 @@ class Sifo(Scraper):
             root = Et.fromstring(self.response().read())
 
             expenses = {}
-            if include_id:
-                expenses.update({'_id': self.family.id})
             for child in root:
                 expenses.update({child.tag: child.text.strip().replace(".", "")})
+
+            keys = list(expenses.keys())[-17:]
+            values = list(expenses.values())[-17:]
+
+            sifo_expenses = {}
+            if include_id:
+                sifo_expenses.update({'_id': self.family.id})
+            sifo_expenses.update(dict(zip(keys, values)))
+
             LOGGER.success("'{}' successfully retrieved".format(self.sifo_base_expenses.__name__))
-            return expenses
+            return sifo_expenses
         except Exception as sifo_expenses_exception:
             LOGGER.exception(sifo_expenses_exception)
             raise sifo_expenses_exception

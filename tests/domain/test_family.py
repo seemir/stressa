@@ -56,7 +56,7 @@ class TestFamily:
 
         """
         with pt.raises(TypeError):
-            self.family.family_members = invalid_arg
+            self.family.familie_medlemmer = invalid_arg
 
     def test_family_cannot_be_empty(self):
         """
@@ -64,7 +64,7 @@ class TestFamily:
 
         """
         with pt.raises(ValueError):
-            self.family.family_members = []
+            self.family.familie_medlemmer = []
 
     @pt.mark.parametrize('invalid_arg', [(), {}, []])
     def test_income_and_cars_type_error_for_invalid_arguments(self, invalid_arg):
@@ -101,11 +101,11 @@ class TestFamily:
         family = self.family
         new_family = [Male(25), Female(24)]
 
-        family.family_members = new_family
+        family.familie_medlemmer = new_family
         family.inntekt = inntekt
         family.antall_biler = antall_biler
 
-        assert family.family_members == new_family
+        assert family.familie_medlemmer == new_family
         assert family.inntekt == str(inntekt)
         assert family.antall_biler == str(antall_biler)
 
@@ -130,11 +130,11 @@ class TestFamily:
         family = self.family
         children = [Male(age=12), Female(age=10)]
         family.add_family_members(children)
-        assert len(family.family_members) == 4
+        assert len(family.familie_medlemmer) == 4
 
         child = Male(age=5)
         family.add_family_members(child)
-        assert len(family.family_members) == 5
+        assert len(family.familie_medlemmer) == 5
 
     @staticmethod
     def test_get_properties_method():

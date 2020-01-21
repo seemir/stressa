@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-All workflows logic is stored in this subpackage
+All workflow logic are stored in this subpackage
 
 """
 

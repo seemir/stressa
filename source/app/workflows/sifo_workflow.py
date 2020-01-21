@@ -10,12 +10,10 @@ __email__ = 'samir.adrik@gmail.com'
 
 import time
 
-from source.domain import Family, Male, Female, Expenses
+from source.domain import Family, Expenses
 from source.util import Assertor, LOGGER
 
-from .engine import WorkFlow
-
-from ..scrapers import Sifo
+from .engine import WorkFlow, Signal, PopulateFamily, ScrapeSifoBaseExpenses
 
 
 class SifoWorkFlow(WorkFlow):
@@ -23,14 +21,10 @@ class SifoWorkFlow(WorkFlow):
     Workflow for the calculation of the SIFO expenses with shares of total expenses
 
     """
-    sifo_age = {"0-5 mnd": 0.41, "6-11 mnd": 0.91, "1": 1, "2": 2, "3": 3, "4-5": 5,
-                "6-9": 9, "10-13": 13, "14-17": 17, "18-19": 19, "20-50": 50, "51-60": 60,
-                "61-66": 66, "eldre enn 66": 75}
-    barnehage_arg = {"Nei": "0", "Ja": "1"}
-    sfo_arg = {"Nei": "0", "Halvdag": "1", "Heldag": "2"}
 
     def __init__(self, data: dict):
         """
+        Constructor / Instantiate the class.
 
         Parameters
         ----------
@@ -42,30 +36,45 @@ class SifoWorkFlow(WorkFlow):
         start = time.time()
         LOGGER.info("starting '{}'".format(self.__class__.__name__))
         Assertor.assert_data_types([data], [dict])
-        self._data = data
-        self._family = self.populate_family(self.data)
-        self._sifo = Sifo(self.family) if self.family else None
+        self._family = self.populate_family(data)
         self._base_expenses = Expenses(
-            self.sifo.sifo_base_expenses()) if self.sifo else None
+            self.scrape_sifo_base_expenses(self.family)) if self.family else None
         self._expenses_value = self.base_expenses.expenses_values if \
             self.base_expenses else None
         self._expenses_share = self.base_expenses.expenses_shares if \
             self.base_expenses else None
+
+        self._signal = None
+
         LOGGER.success(
             "ending '{}' - elapsed: {}".format(self.__class__.__name__, str(time.time() - start)))
 
     @property
-    def data(self):
+    def signal(self):
         """
-        data getter
+        signal getter
 
         Returns
         -------
-        out     : dict
-                  active _data property
+        out      : Signal
+                   active _signal property
 
         """
-        return self._data
+        return self._signal
+
+    @signal.setter
+    def signal(self, new_signal):
+        """
+        signal setter
+
+        Parameters
+        ----------
+        new_signal  : Signal
+                      new signal to set in workflow
+
+        """
+        Assertor.assert_data_types([new_signal], [Signal])
+        self._signal = new_signal
 
     @property
     def family(self):
@@ -79,19 +88,6 @@ class SifoWorkFlow(WorkFlow):
 
         """
         return self._family
-
-    @property
-    def sifo(self):
-        """
-        sifo object getter
-
-        Returns
-        -------
-        out     : Sifo
-                  active _sifo object
-
-        """
-        return self._sifo
 
     @property
     def base_expenses(self):
@@ -136,42 +132,48 @@ class SifoWorkFlow(WorkFlow):
         """
         method for populating family information into Family object
 
+        Parameters
+        ----------
+        data    : dict
+                  Sifo compatible dictionary with input
+
         Returns
         -------
         out     : Family
                   Sifo compatible Family object with all necessary family information
 
         """
-        LOGGER.disable("source.domain")
-        family_members = []
-        cars = None
-        income = None
-        family = None
-        for key, val in data.items():
-            if "person" in key:
-                arg = {}
-                gender = None
-                for prop, value in val.items():
-                    if "alder" in prop:
-                        arg.update({"age": self.sifo_age[value]})
-                    elif "kjonn" in prop:
-                        gender = Male if "Mann" in value else Female
-                    elif "barnehage" in prop:
-                        arg.update({"kinder_garden": self.barnehage_arg[value]})
-                    elif "sfo" in prop:
-                        arg.update({"sfo": self.sfo_arg[value]})
-                    elif "gravid" in prop:
-                        arg.update({"pregnant": self.barnehage_arg[value]})
-                if gender and arg:
-                    family_member = gender(**arg)
-                    family_members.append(family_member)
-            elif "brutto_arsinntekt" in key:
-                income = val.replace(" kr", "").replace(" ", "")
-            elif "antall_biler" in key:
-                cars = val
-        if family_members:
-            family_income = income if income else 0
-            family_num_cars = cars if cars else 0
-            family = Family(family_members, family_income, family_num_cars)
-        LOGGER.enable("source.domain")
+        Assertor.assert_data_types([data], [dict])
+        populate_family = PopulateFamily(data)
+        family = populate_family.run()
+        self.add_node(populate_family)
+        self.signal = Signal(family, "Family")
+        self.add_node(self.signal)
+        self.add_transition(populate_family, self.signal)
         return family
+
+    def scrape_sifo_base_expenses(self, data: Family):
+        """
+        method for scraping SIFO base expenses
+
+        Parameters
+        ----------
+        data    : Family
+                  family object
+
+        Returns
+        -------
+        out     : dict
+                  dictionary with SIFO base expenses
+
+        """
+        Assertor.assert_data_types([data], [Family])
+        sifo_scraper = ScrapeSifoBaseExpenses(data)
+        self.add_node(sifo_scraper)
+        self.add_transition(self.signal, sifo_scraper)
+
+        sifo_base_expenses = sifo_scraper.run()
+        self.signal = Signal(sifo_base_expenses, "SIFO Base Expenses")
+        self.add_node(self.signal)
+        self.add_transition(sifo_scraper, self.signal)
+        return sifo_base_expenses

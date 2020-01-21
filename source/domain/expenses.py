@@ -43,8 +43,8 @@ class Expenses(Entity):
             "'{}' for '{}'".format(Expenses.extract_expenses_data_and_shares.__name__,
                                    Expenses.__name__))
         LOGGER.disable("source.domain")
-        keys = list(data.keys())[-17:]
-        values = [Money(val) if val != "0" else Money("0") for val in list(data.values())[-17:]]
+        keys = list(data.keys())
+        values = [Money(val) if val != "0" else Money("0") for val in list(data.values())]
         shares = [Share(val, values[-1]).value if val != Money("0") else Share(Decimal(1)).value for
                   val in values]
         LOGGER.enable("source.domain")

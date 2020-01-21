@@ -108,11 +108,7 @@ class TestSifo:
         Test that sifo_expenses method returns correct content
 
         """
-        correct_content = {'antall_personer': '2', 'person0': 'Mann 20 til 50 år',
-                           'kjonn0': 'm', 'alder0': '50', 'barnehage0': '0', 'sfo0': '0',
-                           'gravid0': '0', 'person1': 'Kvinne 20 til 50 år', 'kjonn1': 'k',
-                           'alder1': '50', 'barnehage1': '0', 'sfo1': '0', 'gravid1': '0',
-                           'mat': '5290', 'klar': '1590', 'helse': '1320', 'fritid': '2480',
+        correct_content = {'mat': '5290', 'klar': '1590', 'helse': '1320', 'fritid': '2480',
                            'kollektivt': '1500', 'spedbarn': '0', 'stordriftsfordel': '1',
                            'sumindivid': '12180', 'dagligvarer': '340', 'husholdsart': '400',
                            'mobler': '400', 'medier': '2240', 'biler': '2420', 'barnehage': '0',

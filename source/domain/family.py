@@ -74,7 +74,7 @@ class Family(Entity):
             Assertor.assert_data_types([income, cars], [(int, float, str), (int, str)])
             Assertor.assert_non_negative([income, cars])
 
-            self._family_members = family_members
+            self._familie_medlemmer = family_members
             self._inntekt = str(income)
             self._antall_biler = str(cars)
             LOGGER.success(
@@ -84,7 +84,7 @@ class Family(Entity):
             raise family_exception
 
     @property
-    def family_members(self):
+    def familie_medlemmer(self):
         """
         family_members getter
 
@@ -94,10 +94,10 @@ class Family(Entity):
                       all active family_members
 
         """
-        return self._family_members
+        return self._familie_medlemmer
 
-    @family_members.setter
-    def family_members(self, new_members: list):
+    @familie_medlemmer.setter
+    def familie_medlemmer(self, new_members: list):
         """
         family_members setter
 
@@ -109,7 +109,7 @@ class Family(Entity):
 
         """
         self.validate_family_members(new_members)
-        self._family_members = new_members
+        self._familie_medlemmer = new_members
 
     def add_family_members(self, family_members: (list, Male, Female)):
         """
@@ -123,10 +123,10 @@ class Family(Entity):
         """
         if isinstance(family_members, list):
             all(Assertor.assert_data_types([member], [Male, Female]) for member in family_members)
-            self._family_members.extend(family_members)
+            self._familie_medlemmer.extend(family_members)
         else:
             Assertor.assert_data_types([family_members], [Male, Female])
-            self._family_members.extend([family_members])
+            self._familie_medlemmer.extend([family_members])
 
     @property
     def inntekt(self):
@@ -195,7 +195,7 @@ class Family(Entity):
 
         """
         properties = dict(list(self.__dict__.items())[-2:])
-        for i, family_member in enumerate(self.family_members):
+        for i, family_member in enumerate(self.familie_medlemmer):
             for name, prop in family_member.__dict__.items():
                 if "_id" not in name:
                     properties.update({name + str(i): prop})
