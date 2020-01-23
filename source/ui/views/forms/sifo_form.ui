@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>766</width>
+    <width>816</width>
     <height>682</height>
    </rect>
   </property>
@@ -462,7 +462,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>732</width>
+       <width>782</width>
        <height>0</height>
       </size>
      </property>
@@ -919,14 +919,14 @@
        <item row="13" column="0">
         <widget class="QFrame" name="frame_logo">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>90</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
@@ -1514,7 +1514,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>90</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
@@ -1626,7 +1626,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>90</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
@@ -1754,7 +1754,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>90</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
@@ -1782,7 +1782,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>90</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
@@ -1810,7 +1810,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>90</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
@@ -1888,7 +1888,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>90</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
@@ -1916,7 +1916,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>90</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
@@ -1962,14 +1962,14 @@
        <item row="8" column="1" colspan="2">
         <widget class="QLabel" name="label_informasjon">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>420</width>
            <height>0</height>
           </size>
          </property>
@@ -1997,7 +1997,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>90</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
@@ -2050,7 +2050,7 @@
          </property>
          <property name="minimumSize">
           <size>
-           <width>90</width>
+           <width>120</width>
            <height>0</height>
           </size>
          </property>
@@ -2357,28 +2357,6 @@
          </property>
         </widget>
        </item>
-       <item row="15" column="0" colspan="3">
-        <widget class="QFrame" name="frame_whitespace_1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>8</pointsize>
-          </font>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="4">
         <widget class="QComboBox" name="combo_box_tillegg_1">
          <property name="enabled">
@@ -2533,6 +2511,28 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="0" colspan="5">
+        <widget class="QFrame" name="frame_whitespace_1">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="font">
+          <font>
+           <family>Segoe UI</family>
+           <pointsize>8</pointsize>
+          </font>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
         </widget>
        </item>
