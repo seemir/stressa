@@ -8,11 +8,13 @@ Module with the logic for SIFO calculation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from uuid import uuid4
+
 from decimal import Decimal
 
 from PyQt5.QtCore import pyqtSlot, QObject
 
-from source.app import SifoWorkFlow
+from source.app import SifoProcessing
 from source.util import Assertor
 from source.domain import Money
 
@@ -63,7 +65,7 @@ class SifoModel(Model):
 
         Returns
         -------
-        out     : SifoWorkFlow
+        out     : SifoProcessing
                   active SifoWorkflow in SifoModel
         """
         return self._sifo_workflow
@@ -75,7 +77,7 @@ class SifoModel(Model):
 
         Parameters
         ----------
-        new_sifo_workflow       : SifoWorkFlow
+        new_sifo_workflow       : SifoProcessing
                                   new SifoWorkFlow to be set in object
         """
         self._sifo_workflow = new_sifo_workflow
@@ -242,6 +244,7 @@ class SifoModel(Model):
         Assertor.assert_data_types([name, postfix, values], [str, str, list])
         ui = self.parent.ui
         getattr(ui, "label_tillegg" + postfix).setText(name.capitalize() + "?")
+        getattr(ui, "combo_box_tillegg" + postfix).show()
         getattr(ui, "combo_box_tillegg" + postfix).setEnabled(True)
         getattr(ui, "combo_box_tillegg" + postfix).clear()
         getattr(ui, "combo_box_tillegg" + postfix).addItems(values)
@@ -263,7 +266,24 @@ class SifoModel(Model):
         getattr(ui, "label_tillegg" + postfix).setText("")
         getattr(ui, "combo_box_tillegg" + postfix).setCurrentIndex(0)
         getattr(ui, "combo_box_tillegg" + postfix).setEnabled(False)
+        getattr(ui, "combo_box_tillegg" + postfix).hide()
         self.clear_extra_data(postfix)
+
+    @pyqtSlot()
+    def hide_unused_combo_box(self):
+        """
+        method for hiding unused combo boxes
+
+        """
+        ui = self.parent.ui
+        for i in range(1, 8):
+            postfix = "_" + str(i)
+            if not getattr(ui, "combo_box_tillegg" + postfix).isEnabled():
+                getattr(ui, "label_tillegg" + postfix).setText("")
+                getattr(ui, "combo_box_tillegg" + postfix).setCurrentIndex(0)
+                getattr(ui, "combo_box_tillegg" + postfix).setEnabled(False)
+                getattr(ui, "combo_box_tillegg" + postfix).hide()
+                self.clear_extra_data(postfix)
 
     @pyqtSlot()
     def clear_extra_data(self, postfix: str):
@@ -326,13 +346,14 @@ class SifoModel(Model):
         """
         try:
             self.clear_results()
-            self.parent.ui.tabwidget_sifo.setCurrentIndex(1)
-            self.sifo_workflow = SifoWorkFlow(self.data)
-            self.sifo_workflow.write_pdf("sifo_workflow.pdf")
-            self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
-                                data=self.sifo_workflow.base_expenses)
-            self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_2",
-                                data=self.sifo_workflow.expenses_shares)
+            if self.data and all(len(val) > 1 for key, val in self.data.items() if "person" in key):
+                self.parent.ui.tabwidget_sifo.setCurrentIndex(1)
+                self.sifo_workflow = SifoProcessing(self.data)
+                self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
+                                    data=self.sifo_workflow.base_expenses)
+                self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_2",
+                                    data=self.sifo_workflow.expenses_shares)
+                self.sifo_workflow.write_pdf("sifo-processing.pdf")
         except Exception as sifo_expenses_error:
             self.clear_results()
             self.parent.error.show_error(sifo_expenses_error, self.data)
@@ -343,6 +364,7 @@ class SifoModel(Model):
         method for running all SIFO logic
 
         """
+        self.hide_unused_combo_box()
         self.parent.ui.tabwidget_sifo.setCurrentIndex(0)
         self.parent.ui.combo_box_kjonn_1.setFocus()
         self.set_income()

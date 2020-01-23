@@ -20,17 +20,6 @@ class NotFoundError(Exception):
         self.msg = msg
 
 
-class MissingGuardianshipError(Exception):
-    """
-    Exception thrown when breach of logic in domain object
-
-    """
-
-    def __init__(self, msg: str):
-        super().__init__(msg)
-        self.msg = msg
-
-
 class InvalidNameError(Exception):
     """
     Exception thrown for invalid name

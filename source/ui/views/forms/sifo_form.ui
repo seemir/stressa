@@ -462,7 +462,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>732</width>
        <height>0</height>
       </size>
      </property>
@@ -924,6 +924,12 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <pointsize>8</pointsize>
@@ -938,6 +944,12 @@
          <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
            <widget class="QLabel" name="label_logo">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>70</width>
@@ -972,14 +984,14 @@
        <item row="13" column="1" colspan="2">
         <widget class="QFrame" name="frame_sifo_info">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>420</width>
            <height>0</height>
           </size>
          </property>
@@ -1445,14 +1457,14 @@
        <item row="6" column="1">
         <widget class="QComboBox" name="combo_box_kjonn_6">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1470,14 +1482,14 @@
        <item row="5" column="2">
         <widget class="QComboBox" name="combo_box_alder_5">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1494,6 +1506,18 @@
        </item>
        <item row="6" column="0">
         <widget class="QLabel" name="label_person_6">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Segoe UI</family>
@@ -1511,10 +1535,16 @@
        <item row="9" column="1">
         <widget class="QLineEdit" name="line_edit_brutto_arsinntekt">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>207</width>
+           <height>0</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -1530,14 +1560,14 @@
        <item row="7" column="1">
         <widget class="QComboBox" name="combo_box_kjonn_7">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1555,7 +1585,7 @@
        <item row="1" column="1">
         <widget class="QComboBox" name="combo_box_kjonn_1">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -1588,6 +1618,18 @@
        </item>
        <item row="9" column="0">
         <widget class="QLabel" name="label_brutto_arsinntekt">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Segoe UI</family>
@@ -1605,14 +1647,14 @@
        <item row="6" column="2">
         <widget class="QComboBox" name="combo_box_alder_6">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1630,14 +1672,14 @@
        <item row="5" column="1">
         <widget class="QComboBox" name="combo_box_kjonn_5">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1655,14 +1697,14 @@
        <item row="7" column="2">
         <widget class="QComboBox" name="combo_box_alder_7">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1680,14 +1722,14 @@
        <item row="10" column="1">
         <widget class="QComboBox" name="combo_box_antall_biler">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1704,6 +1746,18 @@
        </item>
        <item row="7" column="0">
         <widget class="QLabel" name="label_person_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Segoe UI</family>
@@ -1720,6 +1774,18 @@
        </item>
        <item row="4" column="0">
         <widget class="QLabel" name="label_person_4">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Segoe UI</family>
@@ -1736,6 +1802,18 @@
        </item>
        <item row="2" column="0">
         <widget class="QLabel" name="label_person_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Segoe UI</family>
@@ -1753,14 +1831,14 @@
        <item row="4" column="1">
         <widget class="QComboBox" name="combo_box_kjonn_4">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1778,14 +1856,14 @@
        <item row="4" column="2">
         <widget class="QComboBox" name="combo_box_alder_4">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1803,14 +1881,14 @@
        <item row="1" column="0">
         <widget class="QLabel" name="label_person_1">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>90</width>
            <height>0</height>
           </size>
          </property>
@@ -1830,6 +1908,18 @@
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_person_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Segoe UI</family>
@@ -1847,14 +1937,14 @@
        <item row="2" column="2">
         <widget class="QComboBox" name="combo_box_alder_2">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1899,6 +1989,18 @@
        </item>
        <item row="5" column="0">
         <widget class="QLabel" name="label_person_5">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Segoe UI</family>
@@ -1916,14 +2018,14 @@
        <item row="2" column="1">
         <widget class="QComboBox" name="combo_box_kjonn_2">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1940,6 +2042,18 @@
        </item>
        <item row="10" column="0">
         <widget class="QLabel" name="label_antall_biler">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>90</width>
+           <height>0</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>Segoe UI</family>
@@ -1957,14 +2071,14 @@
        <item row="3" column="1">
         <widget class="QComboBox" name="combo_box_kjonn_3">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -1982,7 +2096,7 @@
        <item row="1" column="2">
         <widget class="QComboBox" name="combo_box_alder_1">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -2077,10 +2191,16 @@
        <item row="0" column="2">
         <widget class="QLabel" name="label_alder">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>207</width>
+           <height>0</height>
+          </size>
          </property>
          <property name="text">
           <string>Alder</string>
@@ -2090,10 +2210,16 @@
        <item row="0" column="1">
         <widget class="QLabel" name="label_kjonn">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>207</width>
+           <height>0</height>
+          </size>
          </property>
          <property name="text">
           <string>Kjønn</string>
@@ -2103,14 +2229,14 @@
        <item row="11" column="1" colspan="2">
         <widget class="QPushButton" name="push_button_vis_resultatet">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>420</width>
            <height>30</height>
           </size>
          </property>
@@ -2135,14 +2261,14 @@
        <item row="12" column="2">
         <widget class="QPushButton" name="push_button_avbryt_1">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>30</height>
           </size>
          </property>
@@ -2161,14 +2287,14 @@
        <item row="3" column="2">
         <widget class="QComboBox" name="combo_box_alder_3">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>20</height>
           </size>
          </property>
@@ -2186,14 +2312,14 @@
        <item row="12" column="1">
         <widget class="QPushButton" name="push_button_tom_skjema_1">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>207</width>
            <height>30</height>
           </size>
          </property>

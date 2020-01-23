@@ -14,7 +14,6 @@ from abc import ABC
 import pytest as pt
 
 from source.domain import Family, Female, Entity, Male
-from source.util import MissingGuardianshipError
 
 
 class TestFamily:
@@ -58,14 +57,6 @@ class TestFamily:
         with pt.raises(TypeError):
             self.family.familie_medlemmer = invalid_arg
 
-    def test_family_cannot_be_empty(self):
-        """
-        Test that family_members cannot be empty
-
-        """
-        with pt.raises(ValueError):
-            self.family.familie_medlemmer = []
-
     @pt.mark.parametrize('invalid_arg', [(), {}, []])
     def test_income_and_cars_type_error_for_invalid_arguments(self, invalid_arg):
         """
@@ -108,19 +99,6 @@ class TestFamily:
         assert family.familie_medlemmer == new_family
         assert family.inntekt == str(inntekt)
         assert family.antall_biler == str(antall_biler)
-
-    @staticmethod
-    @pt.mark.parametrize('invalid_family', [Male(17), Female(17), [Male(17), Female(17)]])
-    def test_family_cannot_exist_without_guardianship(invalid_family):
-        """
-        Test that Family object cannot exist without guardianship, i.e. must have atleast one
-        person over 18 years.
-
-        """
-        with pt.raises(MissingGuardianshipError):
-            family = Family(invalid_family) if isinstance(invalid_family, list) else Family(
-                [invalid_family])
-            print(family)
 
     def test_add_family_members_method(self):
         """

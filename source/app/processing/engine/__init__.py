@@ -13,7 +13,7 @@ from .validate_family import ValidateFamily
 from .input_operation import InputOperation
 from .output_signal import OutputSignal
 from .operation import Operation
-from .workflow import WorkFlow
+from .process import Process
 from .extract import Extract
 from .signal import Signal
 from .divide import Divide

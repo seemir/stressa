@@ -1,27 +1,52 @@
 # -*- coding: utf-8 -*-
 
 """
-Module with logic for WorkFlow superclass
+Module with logic for Process superclass
 
 """
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from time import time
 from abc import ABC, abstractmethod
 
 from pydot import Dot, Edge
 
-from source.util import Assertor, __version__
+from source.util import Assertor, __version__, profiling_config, LOGGER
 
 from .signal import Signal
 
 
-class WorkFlow(Dot, ABC):
+class Process(Dot, ABC):
     """
-    Implementation of WorkFlow class, i.e. similar to a Dot graph
+    Implementation of Process class, i.e. similar to a Dot graph
 
     """
+    profiling = None
+    start = None
+
+    @classmethod
+    def start_process(cls):
+        """
+        method for starting logging and profiling of process
+
+        """
+        LOGGER.info("starting '{}'".format(cls.__name__))
+        cls.start = time()
+        cls.profiling = profiling_config()
+
+    @classmethod
+    def end_process(cls):
+        """
+        method for ending logging and profiling of process
+
+        """
+        cls.profiling.add_row(["---------", "", "", ""])
+        cls.profiling.add_row(["total", "", "", str(round((time() - cls.start) * 1000, 7)) + "ms"])
+        LOGGER.success("ending '{}'".format(cls.__name__))
+        LOGGER.info("reporting profiling results -> \n\n profiling: '{}' \n\n".format(
+            cls.__name__) + str(cls.profiling) + "\n")
 
     @abstractmethod
     def __init__(self, name: str):
@@ -38,6 +63,20 @@ class WorkFlow(Dot, ABC):
         super().__init__(name, graph_type="digraph", labelloc="t", labeljust="left",
                          label="{} - Stressa v.{}".format(name, __version__))
         self._signal = {}
+
+    @abstractmethod
+    def input_operation(self, data):
+        """
+        method that captures input behaviour
+
+        """
+
+    @abstractmethod
+    def output_operation(self):
+        """
+        method that captures output behaviour
+
+        """
 
     @property
     def signal(self):
@@ -65,20 +104,6 @@ class WorkFlow(Dot, ABC):
         """
         Assertor.assert_data_types([new_signal], [dict])
         self._signal = new_signal
-
-    @abstractmethod
-    def input_operation(self, data):
-        """
-        method that captures input behaviour
-
-        """
-
-    @abstractmethod
-    def output_operation(self):
-        """
-        method that captures output behaviour
-
-        """
 
     def add_signal(self, signal: Signal, key=str):
         """

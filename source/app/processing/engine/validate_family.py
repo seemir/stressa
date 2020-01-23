@@ -55,7 +55,6 @@ class ValidateFamily(Operation):
         family_members = []
         cars = None
         income = None
-        family = None
         for key, val in self.data.items():
             if "person" in key:
                 arg = {}
@@ -78,8 +77,7 @@ class ValidateFamily(Operation):
                 income = val.replace(" kr", "").replace(" ", "")
             elif "antall_biler" in key:
                 cars = val
-        if family_members:
-            family_income = income if income else 0
-            family_num_cars = cars if cars else 0
-            family = Family(family_members, family_income, family_num_cars)
+        family_income = income if income else 0
+        family_num_cars = cars if cars else 0
+        family = Family(family_members, family_income, family_num_cars)
         return family

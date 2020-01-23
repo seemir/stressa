@@ -9,9 +9,8 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from typing import Union
-from decimal import Decimal
 
-from source.util import Assertor, MissingGuardianshipError
+from source.util import Assertor
 
 from .entity import Entity
 from .female import Female
@@ -31,9 +30,7 @@ class Family(Entity):
         characteristics:
 
         - Needs to be a list
-        - Cannot be an empty list
         - All objects in the list must be either of class Male or Female
-        - A family must have guardianship, i.e. have at least one person older than 17
 
         Parameters
         ----------
@@ -43,15 +40,8 @@ class Family(Entity):
         """
         Assertor.assert_data_types([family_members], [list])
 
-        if not family_members:
-            raise ValueError("family_members cannot be empty, got '[]'")
-
         for family_member in family_members:
             Assertor.assert_data_types([family_member], [(Male, Female)])
-
-        if all(Decimal(family_member.alder) < 18 for family_member in family_members):
-            raise MissingGuardianshipError("no guardianship found, i.e. family must have at least "
-                                           "one person older than 18 years.")
 
     def __init__(self, family_members: list = None, income: Union[int, float, str] = 0,
                  cars: Union[int, str] = 0):
@@ -209,5 +199,5 @@ class Family(Entity):
                       all rules in entity
 
         """
-        return ["kindergarten_criteria", "sfo_criteria", "pregnant_criteria", "guardianship",
-                "non_empty_family", "non_negative_income", "non_negative_cars"]
+        return ["non_negative_income", "non_negative_cars", "kindergarten_criteria", "sfo_criteria",
+                "pregnant_criteria"]
