@@ -9,12 +9,12 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.domain import Family, Male, Female
-from source.util import LOGGER, Assertor
+from source.util import Assertor
 
 from .operation import Operation
 
 
-class PopulateFamily(Operation):
+class ValidateFamily(Operation):
     """
     Implementation of Populate Family Entity operation
 
@@ -37,7 +37,9 @@ class PopulateFamily(Operation):
         """
         Assertor.assert_data_types([data], [dict])
         self.name = self.__class__.__name__
-        super().__init__(name=self.name, desc="Populate Family Entity")
+        super().__init__(name=self.name,
+                         desc="rules: {} \\n id: Validate Family Information".format(
+                             Family.rules()))
         self.data = data
 
     def run(self):
@@ -50,7 +52,6 @@ class PopulateFamily(Operation):
                   Sifo compatible Family object with all necessary family information
 
         """
-        LOGGER.disable("source.domain")
         family_members = []
         cars = None
         income = None
@@ -81,5 +82,4 @@ class PopulateFamily(Operation):
             family_income = income if income else 0
             family_num_cars = cars if cars else 0
             family = Family(family_members, family_income, family_num_cars)
-        LOGGER.enable("source.domain")
         return family

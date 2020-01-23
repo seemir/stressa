@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from typing import Union
 
-from source.util import Assertor, LOGGER
+from source.util import Assertor
 
 from .person import Person
 
@@ -47,10 +47,7 @@ class Female(Person):
                 raise ValueError("pregnancy at this age is not possible")
 
             self._gravid = pregnant
-            LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as female_exception:
-            LOGGER.exception(female_exception)
             raise female_exception
 
     @property

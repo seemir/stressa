@@ -8,7 +8,7 @@ Module with logic for Money value object
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor, LOGGER
+from source.util import Assertor
 
 from .currency import Currency
 from .amount import Amount
@@ -35,8 +35,6 @@ class Money(Value):
         Assertor.assert_data_types([amount], [str])
         self._currency = Currency()
         self._amount = Amount(amount.replace(self._currency.currency, "").replace(" ", ""))
-        LOGGER.success(
-            "created '{}' -> {}".format(self.__class__.__name__, self.value()))
 
     @property
     def amount(self):

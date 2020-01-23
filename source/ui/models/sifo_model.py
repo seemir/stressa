@@ -328,11 +328,11 @@ class SifoModel(Model):
             self.clear_results()
             self.parent.ui.tabwidget_sifo.setCurrentIndex(1)
             self.sifo_workflow = SifoWorkFlow(self.data)
-            self.sifo_workflow.write_pdf("sifo_graph.pdf")
+            self.sifo_workflow.write_pdf("sifo_workflow.pdf")
             self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
-                                data=self.sifo_workflow.expenses_value)
+                                data=self.sifo_workflow.base_expenses)
             self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_2",
-                                data=self.sifo_workflow.expenses_share)
+                                data=self.sifo_workflow.expenses_shares)
         except Exception as sifo_expenses_error:
             self.clear_results()
             self.parent.error.show_error(sifo_expenses_error, self.data)

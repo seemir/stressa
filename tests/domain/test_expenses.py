@@ -48,12 +48,10 @@ class TestExpenses:
         with pt.raises(TypeError):
             Expenses(invalid_types)
 
-    def test_extract_expenses_method(self):
+    def test_make_expenses_method(self):
         """
-        Test the extract expenses method
+        Test the make expenses method
 
         """
-        expenses = self.expenses.extract_expenses_data_and_shares(self.data)
-        assert expenses == self.expenses.expenses
-        assert expenses[0] == self.expenses.expenses_values
-        assert expenses[1] == self.expenses.expenses_shares
+        expenses = self.expenses.cast_expenses(self.data)
+        assert expenses == self.expenses.verdi

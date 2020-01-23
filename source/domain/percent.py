@@ -8,10 +8,10 @@ Module for the Percent Value object
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from decimal import Decimal
 from typing import Union
+from decimal import Decimal
 
-from source.util import Assertor, LOGGER
+from source.util import Assertor
 
 from .value import Value
 
@@ -36,10 +36,7 @@ class Percent(Value):
             Assertor.assert_data_types([percentage], [(Decimal, str)])
             self._percentage = Decimal(percentage)
             self._value = str(Decimal(self.percentage * 100).quantize(Decimal("0.01"))) + " %"
-            LOGGER.success(
-                "created '{}' -> {}".format(self.__class__.__name__, self.value))
         except Exception as percent_error:
-            LOGGER.exception(percent_error)
             raise percent_error
 
     @property

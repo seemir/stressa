@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import InvalidEmailError, LOGGER, Assertor
+from source.util import InvalidEmailError, Assertor
 
 from .value import Value
 
@@ -52,10 +52,7 @@ class Email(Value):
             Assertor.assert_data_types([email], [str])
             self.validate_email(email)
             self._email = email
-            LOGGER.success(
-                "created '{}'".format(self.__class__.__name__))
         except Exception as email_error:
-            LOGGER.exception(email_error)
             raise email_error
 
     @property
@@ -97,5 +94,4 @@ class Email(Value):
         """
         email = self.email
         formatted = email.lower()
-        LOGGER.info("format email '{}' to -> '{}'".format(email, formatted))
         return formatted

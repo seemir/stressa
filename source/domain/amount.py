@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 import re
 from decimal import Decimal, InvalidOperation
 
-from source.util import Assertor, InvalidAmountError, LOGGER
+from source.util import Assertor, InvalidAmountError
 
 from .value import Value
 
@@ -74,10 +74,7 @@ class Amount(Value):
             Assertor.assert_data_types([amount], [str])
             self.validate_amount(amount)
             self._amount = self.format_amount(amount)
-            LOGGER.success(
-                "created '{}'".format(self.__class__.__name__))
         except Exception as amount_exception:
-            LOGGER.exception(amount_exception)
             raise amount_exception
 
     @property

@@ -10,8 +10,6 @@ __email__ = 'samir.adrik@gmail.com'
 
 from abc import ABC, abstractmethod
 
-from source.util import LOGGER
-
 
 class Value(ABC):
     """
@@ -25,8 +23,6 @@ class Value(ABC):
         Constructor / Instantiate the class. Cannot be instantiated as its an @abstractmethod
 
         """
-        LOGGER.info(
-            "trying to create '{}'".format(self.__class__.__name__))
 
     def __eq__(self, other):
         """

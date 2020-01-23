@@ -10,8 +10,6 @@ __email__ = 'samir.adrik@gmail.com'
 
 from typing import Union
 
-from source.util import LOGGER
-
 from .person import Person
 
 
@@ -37,8 +35,5 @@ class Male(Person):
         """
         try:
             super().__init__('m', age, kinder_garden, sfo)
-            LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as male_exception:
-            LOGGER.exception(male_exception)
             raise male_exception

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-
 """
-Version of application
+LOGO module
 
 """
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-__version__ = '0.0.62'
+import os
+
+LOGO_DIR = os.path.dirname(__file__)

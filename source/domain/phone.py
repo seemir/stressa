@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import Assertor, LOGGER, InvalidPhoneNumberError
+from source.util import Assertor, InvalidPhoneNumberError
 
 from .value import Value
 
@@ -57,10 +57,7 @@ class Phone(Value):
             Assertor.assert_data_types([number], [str])
             self.validate_number(number)
             self._number = number
-            LOGGER.success(
-                "created '{}'".format(self.__class__.__name__))
         except Exception as phone_exception:
-            LOGGER.exception(phone_exception)
             raise phone_exception
 
     @property
@@ -123,5 +120,4 @@ class Phone(Value):
         prefix, number = "+47", self.remove_prefix(self.number)
         phone_number = prefix + " " + " ".join(
             [number[i:i + 2] for i in range(0, len(number), 2)])
-        LOGGER.info("format number '{}' to -> '{}'".format(number, phone_number))
         return phone_number

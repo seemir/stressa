@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 from decimal import Decimal
 from typing import Union
 
-from source.util import LOGGER, Assertor
+from source.util import Assertor
 
 from .percent import Percent
 from .value import Value
@@ -45,10 +45,7 @@ class Share(Value):
             self._denominator = denominator
             self._percent = Percent(numerator / denominator) if self.denominator else Percent("0")
             self._value = self._percent.value
-            LOGGER.success(
-                "created '{}' -> {}".format(self.__class__.__name__, self.value))
         except Exception as share_error:
-            LOGGER.exception(share_error)
             raise share_error
 
     @property

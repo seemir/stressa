@@ -16,11 +16,11 @@ from pydot import Node
 
 class Signal(Node, ABC):
     """
-    Implementation of Signal abstract base class
+    Implementation of the Signal abstract base class
 
     """
 
-    def __init__(self, data, desc):
+    def __init__(self, data, desc, style="dotted", **attrs):
         """
         Constructor / Instantiating class
 
@@ -32,8 +32,15 @@ class Signal(Node, ABC):
                       description of operation
 
         """
-        self.data = data.__dict__.keys() if not isinstance(data, dict) else data.keys()
+        if hasattr(data, "__dict__"):
+            self.keys = data.__dict__.keys()
+        elif isinstance(data, dict):
+            self.keys = data.keys()
+        else:
+            self.keys = ""
         self.desc = desc
-        super().__init__(name=str(uuid4()), style="dotted", shape="record",
-                         label="keys\\<{}\\> \\n {}".format(
-                             str(list(self.data)).translate({39: None}), self.desc))
+        self.data = data
+        super().__init__(name=str(uuid4()), shape="record", style=style,
+                         label="keys\\<{}\\> \\n {} \\<type '{}'\\>".format(
+                             str(list(self.keys)).translate({39: None}), self.desc,
+                             data.__class__.__name__), **attrs)

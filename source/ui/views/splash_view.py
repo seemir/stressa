@@ -39,7 +39,7 @@ class SplashView(QDialog):
         super().__init__()
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/splash_form.ui"), self)
         self.ui.progress_bar_splash.setStyleSheet(self.change_color())
-        self.ui.setWindowTitle("Stressa - version: {}".format(__version__))
+        self.ui.setWindowTitle("Stressa - v.{}".format(__version__))
         self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self.app = app
 

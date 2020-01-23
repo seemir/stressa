@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-
 """
-Version of application
+Subpackage with images
 
 """
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-__version__ = '0.0.62'
+from .logo import LOGO_DIR

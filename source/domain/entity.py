@@ -12,8 +12,6 @@ from uuid import uuid4
 
 from abc import ABC, abstractmethod
 
-from source.util import LOGGER
-
 
 class Entity(ABC):
     """
@@ -27,8 +25,6 @@ class Entity(ABC):
         Constructor / Instantiate the class. Only one property, i.e. id given by uuid4
 
         """
-        LOGGER.info(
-            "trying to create '{}'".format(self.__class__.__name__))
         self._id = str(uuid4())
 
     @property

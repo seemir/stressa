@@ -39,7 +39,7 @@ class Operation(Node, ABC):
         self.name = name
         self.desc = desc
         super().__init__(name=str(uuid4()), style="filled", fillcolor="gray", shape="record",
-                         label="\\<{}\\> \\n id: {}".format(self.name, self.desc))
+                         label="\\<{}\\> \\n {}".format(self.name, self.desc))
 
     @abstractmethod
     def run(self):
@@ -47,4 +47,3 @@ class Operation(Node, ABC):
         abstract method for running an operation
 
         """
-        return

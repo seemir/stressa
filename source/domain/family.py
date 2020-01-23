@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 from typing import Union
 from decimal import Decimal
 
-from source.util import Assertor, LOGGER, MissingGuardianshipError
+from source.util import Assertor, MissingGuardianshipError
 
 from .entity import Entity
 from .female import Female
@@ -77,10 +77,7 @@ class Family(Entity):
             self._familie_medlemmer = family_members
             self._inntekt = str(income)
             self._antall_biler = str(cars)
-            LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as family_exception:
-            LOGGER.exception(family_exception)
             raise family_exception
 
     @property
@@ -104,8 +101,8 @@ class Family(Entity):
         Parameters
         ----------
         new_members     : list
-                      a list of family_members, i.e. of person (Male or Female) objects to append
-                      to family
+                          a list of family_members, i.e. of person (Male or Female) objects to
+                          append to family
 
         """
         self.validate_family_members(new_members)
@@ -200,3 +197,17 @@ class Family(Entity):
                 if "_id" not in name:
                     properties.update({name + str(i): prop})
         return {name[1:]: value for name, value in properties.items()}
+
+    @staticmethod
+    def rules():
+        """
+        list of all rules in this entity
+
+        Returns
+        -------
+        out         : list
+                      all rules in entity
+
+        """
+        return ["kindergarten_criteria", "sfo_criteria", "pregnant_criteria", "guardianship",
+                "non_empty_family", "non_negative_income", "non_negative_cars"]

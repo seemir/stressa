@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import InvalidAddressError, LOGGER, Assertor
+from source.util import InvalidAddressError, Assertor
 
 from .value import Value
 
@@ -51,10 +51,7 @@ class Address(Value):
             Assertor.assert_data_types([address], [str])
             self.validate_address(address)
             self._address = address
-            LOGGER.success(
-                "created '{}'".format(self.__class__.__name__))
         except Exception as address_error:
-            LOGGER.exception(address_error)
             raise address_error
 
     @property
@@ -96,5 +93,4 @@ class Address(Value):
         """
         address = self.address
         formatted = address.capitalize()
-        LOGGER.info("format name '{}' to -> '{}'".format(address, formatted))
         return formatted

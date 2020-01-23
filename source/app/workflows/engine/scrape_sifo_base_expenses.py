@@ -34,7 +34,7 @@ class ScrapeSifoBaseExpenses(Operation):
         Assertor.assert_data_types([data], [Family])
         self.name = self.__class__.__name__
         super().__init__(name=self.name,
-                         desc="Scrape SIFO Base Expenses \\n from: '{}'".format(SIFO_URL))
+                         desc="from: '{}' \\n id: Scrape SIFO Base Expenses".format(SIFO_URL))
         self.data = data
 
     def run(self):

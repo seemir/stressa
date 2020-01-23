@@ -8,7 +8,7 @@ Module with logic for currency value object
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import InvalidCurrencyError, Assertor, LOGGER
+from source.util import InvalidCurrencyError, Assertor
 
 from .value import Value
 
@@ -48,10 +48,7 @@ class Currency(Value):
             Assertor.assert_data_types([currency], [str])
             self.validate_currency(currency)
             self._currency = currency.lower()
-            LOGGER.success(
-                "created '{}'".format(self.__class__.__name__))
         except Exception as currency_exception:
-            LOGGER.exception(currency_exception)
             raise currency_exception
 
     @property

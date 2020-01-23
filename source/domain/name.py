@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import InvalidNameError, LOGGER, Assertor
+from source.util import InvalidNameError, Assertor
 
 from .value import Value
 
@@ -51,10 +51,7 @@ class Name(Value):
             Assertor.assert_data_types([name], [str])
             self.validate_name(name)
             self._name = name
-            LOGGER.success(
-                "created '{}'".format(self.__class__.__name__))
         except Exception as name_error:
-            LOGGER.exception(name_error)
             raise name_error
 
     @property
@@ -96,5 +93,4 @@ class Name(Value):
         """
         name = self.name
         formatted = " ".join(name.capitalize().split())
-        LOGGER.info("format name '{}' to -> '{}'".format(name, formatted))
         return formatted
