@@ -10,8 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import pytest as pt
 
-from source.domain import Expenses, Entity, Family, Male
-from source.app import Sifo
+from source.domain import Expenses, Entity
 
 
 class TestExpenses:
@@ -26,7 +25,11 @@ class TestExpenses:
         Executed before all tests
 
         """
-        cls.data = Sifo(Family([Male(31)], income=450000, cars=1)).sifo_base_expenses()
+        cls.data = {'mat': '5290', 'klar': '1590', 'helse': '1320', 'fritid': '2480',
+                    'kollektivt': '1500', 'spedbarn': '0', 'stordriftsfordel': '1',
+                    'sumindivid': '12180', 'dagligvarer': '340', 'husholdsart': '400',
+                    'mobler': '400', 'medier': '2240', 'biler': '2420', 'barnehage': '0',
+                    'sfo': '0', 'sumhusholdning': '5800', 'totalt': '17980'}
         cls.expenses = Expenses(cls.data)
 
     def test_expenses_is_instance_if_entity(self):
@@ -48,7 +51,7 @@ class TestExpenses:
         with pt.raises(TypeError):
             Expenses(invalid_types)
 
-    def test_make_expenses_method(self):
+    def test_cast_expenses_method(self):
         """
         Test the make expenses method
 

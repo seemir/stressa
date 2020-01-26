@@ -58,7 +58,7 @@ class Posten(Scraper):
             self.validate_zip_code(zip_code)
             self._zip_code = zip_code
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as posten_exception:
             LOGGER.exception(posten_exception)
             raise posten_exception

@@ -61,7 +61,7 @@ class Finn(Scraper):
             self._finn_code = finn_code
             self._browser = None
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as finn_exception:
             LOGGER.exception(finn_exception)
             raise finn_exception

@@ -8,6 +8,8 @@ Module with logic of output signal
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from source.util import Assertor
+
 from .signal import Signal
 
 
@@ -17,7 +19,7 @@ class OutputSignal(Signal):
 
     """
 
-    def __init__(self, data, desc):
+    def __init__(self, data: object, desc: str):
         """
         Constructor / Instantiating class
 
@@ -28,4 +30,5 @@ class OutputSignal(Signal):
         desc        : str
                       description of operation
         """
+        Assertor.assert_data_types([data, desc], [object, str])
         super().__init__(data=data, desc=desc, style="dashed", color="blue", penwidth=1.5)

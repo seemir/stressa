@@ -57,11 +57,21 @@ class TestFamily:
         with pt.raises(TypeError):
             self.family.familie_medlemmer = invalid_arg
 
+    @staticmethod
+    @pt.mark.parametrize('invalid_arg', [True, 'test', 90210, 90210.0, ('test', 'test'), {}])
+    def test_family_members_type_are_list_constructor(invalid_arg):
+        """
+        Test that Family object raises TypeError if family_members argument are invalid
+
+        """
+        with pt.raises(TypeError):
+            Family(invalid_arg, income=invalid_arg, cars=invalid_arg)
+
     @pt.mark.parametrize('invalid_arg', [(), {}, []])
     def test_income_and_cars_type_error_for_invalid_arguments(self, invalid_arg):
         """
         TypeError raised when invalid income and cars argument types passed into Family class
-        through constructor or setter
+        through setter
 
         """
         with pt.raises(TypeError):
@@ -95,6 +105,21 @@ class TestFamily:
         family.familie_medlemmer = new_family
         family.inntekt = inntekt
         family.antall_biler = antall_biler
+
+        assert family.familie_medlemmer == new_family
+        assert family.inntekt == str(inntekt)
+        assert family.antall_biler == str(antall_biler)
+
+    @staticmethod
+    @pt.mark.parametrize('inntekt', [594400, 594400, '594400', '594400'])
+    @pt.mark.parametrize('antall_biler', [0, '0'])
+    def test_arguments_gets_set_in_family_object_constructor(inntekt, antall_biler):
+        """
+        Test that valid arguments gets set into object through constructor
+
+        """
+        new_family = [Male(25), Female(24)]
+        family = Family(new_family, inntekt, antall_biler)
 
         assert family.familie_medlemmer == new_family
         assert family.inntekt == str(inntekt)
@@ -145,3 +170,13 @@ class TestFamily:
 
         """
         assert UUID(str(self.family.id))
+
+    def test_rules_in_family(self):
+        """
+        Test that rules are included in Family object
+
+        """
+        rules = ["non_negative_income", "non_negative_cars", "kindergarten_criteria",
+                 "sfo_criteria", "pregnant_criteria"]
+        assert Family.rules() == rules
+        assert self.family.rules() == rules

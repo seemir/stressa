@@ -64,7 +64,7 @@ class TestSifo:
         Test sifo scraper has uuid4 compatible ids
 
         """
-        assert UUID(str(self.sifo.id_str))
+        assert UUID(str(self.sifo.id))
 
     def test_that_family_gets_set(self):
         """
@@ -154,4 +154,4 @@ class TestSifo:
         Test that sifo id is uuid4 compatible
 
         """
-        assert UUID(str(self.sifo.id_str))
+        assert UUID(str(self.sifo.id))

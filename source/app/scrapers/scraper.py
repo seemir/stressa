@@ -68,12 +68,12 @@ class Scraper(ABC):
         self._browser = Browser()
         self._browser.set_handle_robots(False)
         self._browser.set_handle_refresh(False)
-        self._id_str = str(uuid4())
+        self._id = str(uuid4())
 
     @property
-    def id_str(self):
+    def id(self):
         """
         Id getter
 
         """
-        return self._id_str
+        return self._id

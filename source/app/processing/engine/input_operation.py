@@ -7,6 +7,8 @@ Module with logic for the output operation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from source.util import Assertor
+
 from .operation import Operation
 
 
@@ -17,21 +19,23 @@ class InputOperation(Operation):
 
     """
 
-    def __init__(self, decs: str):
+    def __init__(self, desc: str):
         """
-        Constructor / Instantiate the class.
+        Constructor / Instantiate of the InputOperation class
 
         Parameters
         ----------
-        decs        : str
+        desc        : str
                       description
 
         """
         self.name = self.__class__.__name__
-        super().__init__(name=self.name, desc=decs)
+        Assertor.assert_data_types([desc], [str])
+        super().__init__(name=self.name, desc=desc)
 
     def run(self):
         """
-        method for running the operation
+        method for running the InputOperation class returns None
 
         """
+        return

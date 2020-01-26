@@ -71,7 +71,7 @@ class TestFinn:
         Test Finn scraper has uuid4 compatible ids
 
         """
-        assert UUID(str(self.finn.id_str))
+        assert UUID(str(self.finn.id))
 
     def test_finn_response_method(self):
         """

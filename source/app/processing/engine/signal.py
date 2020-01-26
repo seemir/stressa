@@ -13,6 +13,8 @@ from uuid import uuid4
 
 from pydot import Node
 
+from source.util import Assertor
+
 
 class Signal(Node, ABC):
     """
@@ -20,7 +22,7 @@ class Signal(Node, ABC):
 
     """
 
-    def __init__(self, data, desc, style="dotted", **attrs):
+    def __init__(self, data: object, desc: str, style: str = "dotted", **attrs):
         """
         Constructor / Instantiating class
 
@@ -32,6 +34,7 @@ class Signal(Node, ABC):
                       description of operation
 
         """
+        Assertor.assert_data_types([data, desc, style], [object, str, str])
         if hasattr(data, "__dict__"):
             self.keys = data.__dict__.keys()
         elif isinstance(data, dict):

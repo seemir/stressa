@@ -39,7 +39,7 @@ class Sifo(Scraper):
             Assertor.assert_data_types([family], [Family])
             self._family = family
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
         except Exception as sifo_exception:
             LOGGER.exception(sifo_exception)
             raise sifo_exception

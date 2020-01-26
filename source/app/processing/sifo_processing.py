@@ -271,7 +271,7 @@ class SifoProcessing(Process):
 
         """
         output_operation = OutputOperation(
-            decs="id: SIFO Base Expenses and Shares of Total Monthly Expenses")
+            desc="id: SIFO Base Expenses and Shares of Total Monthly Expenses")
         self.add_node(output_operation)
 
         self.add_transition(self.get_signal("share_of_total"), output_operation)
