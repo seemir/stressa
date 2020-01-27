@@ -19,11 +19,11 @@ class ValidateFamily(Operation):
     Implementation of Populate Family Entity operation
 
     """
-    _sifo_age = {"0-5 mnd": 0.41, "6-11 mnd": 0.91, "1": 1, "2": 2, "3": 3, "4-5": 5,
-                 "6-9": 9, "10-13": 13, "14-17": 17, "18-19": 19, "20-50": 50, "51-60": 60,
-                 "61-66": 66, "eldre enn 66": 75}
-    _barnehage_arg = {"Nei": "0", "Ja": "1"}
-    _sfo_arg = {"Nei": "0", "Halvdag": "1", "Heldag": "2"}
+    sifo_arg = {"0-5 mnd": 0.41, "6-11 mnd": 0.91, "1": 1, "2": 2, "3": 3, "4-5": 5,
+                "6-9": 9, "10-13": 13, "14-17": 17, "18-19": 19, "20-50": 50, "51-60": 60,
+                "61-66": 66, "eldre enn 66": 75}
+    barnehage_arg = {"Nei": "0", "Ja": "1"}
+    sfo_arg = {"Nei": "0", "Halvdag": "1", "Heldag": "2"}
 
     def __init__(self, data: dict):
         """
@@ -61,15 +61,15 @@ class ValidateFamily(Operation):
                 gender = None
                 for prop, value in val.items():
                     if "alder" in prop:
-                        arg.update({"age": self._sifo_age[value]})
+                        arg.update({"age": self.sifo_arg[value]})
                     elif "kjonn" in prop:
                         gender = Male if "Mann" in value else Female
                     elif "barnehage" in prop:
-                        arg.update({"kinder_garden": self._barnehage_arg[value]})
+                        arg.update({"kinder_garden": self.barnehage_arg[value]})
                     elif "sfo" in prop:
-                        arg.update({"sfo": self._sfo_arg[value]})
+                        arg.update({"sfo": self.sfo_arg[value]})
                     elif "gravid" in prop:
-                        arg.update({"pregnant": self._barnehage_arg[value]})
+                        arg.update({"pregnant": self.barnehage_arg[value]})
                 if gender and arg:
                     family_member = gender(**arg)
                     family_members.append(family_member)

@@ -8,8 +8,6 @@ Module with the logic for SIFO calculation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from uuid import uuid4
-
 from decimal import Decimal
 
 from PyQt5.QtCore import pyqtSlot, QObject
@@ -353,7 +351,6 @@ class SifoModel(Model):
                                     data=self.sifo_workflow.base_expenses)
                 self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_2",
                                     data=self.sifo_workflow.expenses_shares)
-                self.sifo_workflow.write_pdf("sifo-processing.pdf")
         except Exception as sifo_expenses_error:
             self.clear_results()
             self.parent.error.show_error(sifo_expenses_error, self.data)

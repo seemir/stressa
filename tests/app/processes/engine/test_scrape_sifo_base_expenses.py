@@ -50,7 +50,7 @@ class TestScrapeSifoBaseExpenses:
 
     def test_arguments_gets_set_in_object(self):
         """
-        Test that arguments gets set in the Divide object
+        Test that arguments gets set in the ScrapeSifoBaseExpenses object
 
         """
         scraper = ScrapeSifoBaseExpenses(self.family)

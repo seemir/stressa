@@ -28,10 +28,18 @@ class Profiling:
         self.type = type_
 
     def __get__(self, obj, type_=None):
+        """
+        private get method
+
+        """
         func = self.func.__get__(obj, type_)
         return self.__class__(func, type_)
 
     def __call__(self, *args, **kwargs):
+        """
+        private call method
+
+        """
         start = time()
         function = self.func(*args, **kwargs)
         end = time()
