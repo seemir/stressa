@@ -53,32 +53,32 @@ class SifoModel(Model):
             getattr(self.parent.ui, "combo_box_alder_" + str(num)).addItems(
                 self._alder)
         self.parent.ui.combo_box_antall_biler.addItems(self._antall_biler)
-        self._sifo_workflow = None
+        self._sifo_process = None
         self._extra_info = None
 
     @property
-    def sifo_workflow(self):
+    def sifo_process(self):
         """
-        SifoWorkflow getter
+        Sifo process getter
 
         Returns
         -------
         out     : SifoProcessing
-                  active SifoWorkflow in SifoModel
+                  active SifoProcessing in SifoModel
         """
-        return self._sifo_workflow
+        return self._sifo_process
 
-    @sifo_workflow.setter
-    def sifo_workflow(self, new_sifo_workflow):
+    @sifo_process.setter
+    def sifo_process(self, new_sifo_process):
         """
-        SifoWorkflow setter
+        Sifo process setter
 
         Parameters
         ----------
-        new_sifo_workflow       : SifoProcessing
-                                  new SifoWorkFlow to be set in object
+        new_sifo_process       : SifoProcessing
+                                 new SifoProcessing to be set in object
         """
-        self._sifo_workflow = new_sifo_workflow
+        self._sifo_process = new_sifo_process
 
     @pyqtSlot()
     def set_income(self):
@@ -346,11 +346,11 @@ class SifoModel(Model):
             self.clear_results()
             if self.data and all(len(val) > 1 for key, val in self.data.items() if "person" in key):
                 self.parent.ui.tabwidget_sifo.setCurrentIndex(1)
-                self.sifo_workflow = SifoProcessing(self.data)
+                self.sifo_process = SifoProcessing(self.data)
                 self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
-                                    data=self.sifo_workflow.base_expenses)
+                                    data=self.sifo_process.base_expenses)
                 self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_2",
-                                    data=self.sifo_workflow.expenses_shares)
+                                    data=self.sifo_process.expenses_shares)
         except Exception as sifo_expenses_error:
             self.clear_results()
             self.parent.error.show_error(sifo_expenses_error, self.data)
