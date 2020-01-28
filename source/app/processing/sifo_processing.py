@@ -9,7 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.domain import Family, Expenses
-from source.util import Assertor, Profiling
+from source.util import Assertor, Profiling, LOGGER
 
 from .engine import Process, Signal, ValidateFamily, ScrapeSifoBaseExpenses, Extract, Divide, \
     OutputOperation, OutputSignal, InputOperation
@@ -31,16 +31,20 @@ class SifoProcessing(Process):
                   information about the family, i.e. arguments to be passed to Family object
 
         """
-        super().__init__(name=self.__class__.__name__)
-        self.start_process()
-        Assertor.assert_data_types([data], [dict])
-        self._data = self.input_operation({"data": data})
-        self._family = self.validate_family(self.data["data"])
-        self._base_expenses = self.scrape_sifo_base_expenses(self.family)
-        self._total = self.extract(self._base_expenses)
-        self._expenses_shares = self.divide(self.base_expenses)
-        self.output_operation()
-        self.end_process()
+        try:
+            super().__init__(name=self.__class__.__name__)
+            self.start_process()
+            Assertor.assert_data_types([data], [dict])
+            self._data = self.input_operation({"data": data})
+            self._family = self.validate_family(self.data["data"])
+            self._base_expenses = self.scrape_sifo_base_expenses(self.family)
+            self._total = self.extract(self.base_expenses)
+            self._expenses_shares = self.divide(self.base_expenses)
+            self.output_operation()
+            self.end_process()
+        except Exception as sifo_processing_error:
+            LOGGER.exception(sifo_processing_error)
+            raise sifo_processing_error
 
     @property
     def data(self):

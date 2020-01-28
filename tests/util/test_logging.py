@@ -14,7 +14,7 @@ import pytest as pt
 from source.util import logging
 
 
-class TestLogger:
+class TestLogging:
     """
     Test cases for logging function
 

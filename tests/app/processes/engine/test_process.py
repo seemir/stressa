@@ -23,7 +23,7 @@ class TestProcess:
     """
 
     @staticmethod
-    def test_process_is_instace_and_subclass_of_dot_and_abc():
+    def test_process_is_instance_and_subclass_of_dot_and_abc():
         """
         Test that Process is an instance and subclass of Process, Dot and ABC
 
@@ -58,3 +58,17 @@ class TestProcess:
         Process.start_process()
         assert isinstance(Process.start, float)
         assert isinstance(Process.profiling.__class__, PrettyTable.__class__)
+
+    @staticmethod
+    def test_end_process_class_method():
+        """
+        Test the Process end_process() method
+
+        """
+        Process.start_process()
+        start_profiling = str(Process.profiling)
+        Process.end_process()
+        end_profiling = str(Process.profiling)
+
+        assert "total" not in start_profiling
+        assert "total" in end_profiling
