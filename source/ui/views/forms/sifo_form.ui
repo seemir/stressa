@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>816</width>
+    <width>819</width>
     <height>682</height>
    </rect>
   </property>
@@ -462,7 +462,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>782</width>
+       <width>785</width>
        <height>0</height>
       </size>
      </property>
@@ -1437,11 +1437,11 @@
              <font>
               <family>Segoe UI</family>
               <pointsize>8</pointsize>
-              <italic>true</italic>
+              <italic>false</italic>
              </font>
             </property>
             <property name="text">
-             <string>SIFOs Referansebudsjett (tidligere standardbudsjettet) viser alminnelige forbruksutgifter for ulike typer hushold. Det kan settes sammen slik at det viser kostnadene ved å opprettholde et rimelig forbruksnivå for hushold av ulik størrelse og med forskjellig alders-  og kjønns sammensetning. </string>
+             <string>SIFOs Referansebudsjett (tidligere standardbudsjettet) viser alminnelige forbruksutgifter for ulike typer hushold. Det kan settes sammen slik at det viser kostnadene ved å opprettholde et rimelig forbruksnivå for hushold av ulik størrelse og med forskjellig alders-  og kjønns sammen- setning. </string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

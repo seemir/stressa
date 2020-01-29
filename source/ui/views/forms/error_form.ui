@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>500</height>
+    <width>890</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>800</width>
-    <height>500</height>
+    <width>890</width>
+    <height>600</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -986,7 +986,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>657</width>
+              <width>747</width>
               <height>63</height>
              </rect>
             </property>
@@ -1029,7 +1029,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="tab_traceback">
          <attribute name="title">
@@ -1467,8 +1467,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>736</width>
-               <height>329</height>
+               <width>826</width>
+               <height>429</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_7">
@@ -1933,8 +1933,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>736</width>
-               <height>329</height>
+               <width>826</width>
+               <height>429</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
@@ -2396,8 +2396,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>736</width>
-               <height>329</height>
+               <width>826</width>
+               <height>429</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_10">

@@ -1,5 +1,52 @@
-/* MenyBar */
+.QLabel{
+  font-family: "MS Shell Dlg 2";
+  font-size: 12px;
+  height: 20px;
+  width: 120px;
+}
 
+.QLineEdit{
+  font-family: "MS Shell Dlg 2";
+  font-size: 12px;
+  height: 20px;
+}
+
+.QDateEdit{
+  font-family: "MS Shell Dlg 2";
+  font-size: 12px;
+  height: 20px;
+}
+
+.QComboBox{
+  font-family: "MS Shell Dlg 2";
+  font-size: 12px;
+  height: 20px;
+}
+
+.QPushButton{
+  font-family: "MS Shell Dlg 2";
+  font-size: 12px;
+  height: 20px;
+  padding: 7px;
+}
+
+.QRadioButton{
+  font-family: "MS Shell Dlg 2";
+  font-size: 12px;
+  height: 20px;
+}
+
+.QTabWidget{
+  font-family: "MS Shell Dlg 2";
+  font-size: 12px;
+}
+
+.QPlainTextEdit{
+  font-family: "Consolas";
+  font-size: 12px;
+}
+
+/* MenyBar */
 .QMenuBar{
   background-color: #ffffff;
 }
