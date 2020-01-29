@@ -1441,7 +1441,7 @@
              </font>
             </property>
             <property name="text">
-             <string>SIFOs Referansebudsjett (tidligere standardbudsjettet) viser alminnelige forbruksutgifter for ulike typer hushold. Det kan settes sammen slik at det viser kostnadene ved å opprettholde et rimelig forbruksnivå for hushold av ulik størrelse og med forskjellig alders-  og kjønns sammen- setning. </string>
+             <string>SIFOs Referansebudsjett (tidligere standardbudsjettet) viser alminnelige forbruksutgifter for ulike typer hushold. Det kan settes sammen slik at det viser kostnadene ved å opprettholde et rimelig forbruksnivå for hushold av ulik størrelse og med forskjellig alders-  og kjønns sammensetning. </string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
