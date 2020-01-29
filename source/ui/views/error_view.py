@@ -61,7 +61,8 @@ class ErrorView(QDialog):
         self.ui.label_error_text.setText(str(exception))
         self.ui.plain_text_edit_traceback.setPlainText(traceback.format_exc())
         self.ui.plain_text_edit_log.setPlainText(self.read_log(exception))
-        self.ui.plain_text_edit_meta.setPlainText(json.dumps(meta, indent=2, ensure_ascii=False))
+        self.ui.plain_text_edit_error_meta_data.setPlainText(
+            json.dumps(meta, indent=2, ensure_ascii=False))
 
     @pyqtSlot()
     def read_log(self, exception: Exception):

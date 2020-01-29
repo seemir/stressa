@@ -16,14 +16,17 @@ from PyQt5.QtWidgets import QApplication
 from source.ui import HomeView, SplashView
 
 if __name__ == "__main__":
-    f = QFile("source/ui/dark_theme.qss")
+    f = QFile("source/ui/default_theme.qss")
     f.open(QFile.ReadOnly | QFile.Text)
     ts = QTextStream(f)
     qss = ts.readAll()
 
     app = QApplication(sys.argv)
-    # app.setStyleSheet(qss)
+    app.setStyle("Fusion")
+    app.setStyleSheet(qss)
+
     splash = SplashView(app)
-    application = HomeView()
-    application.showMaximized()
+    home = HomeView()
+    home.showMaximized()
+
     sys.exit(app.exec_())

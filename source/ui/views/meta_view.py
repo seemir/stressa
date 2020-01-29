@@ -62,7 +62,7 @@ class MetaView(QDialog):
         """
         try:
             metadata = self.parent.sifo_model
-            self.ui.plain_text_edit_metadata.setPlainText(
+            self.ui.plain_text_edit_meta_data.setPlainText(
                 json.dumps(metadata.data, indent=2) if metadata else None)
             self.exec_()
         except Exception as metadata_error:

@@ -894,7 +894,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_6">
       <item row="0" column="0">
-       <widget class="QFrame" name="frame_icon">
+       <widget class="QFrame" name="frame_error_icon">
         <property name="minimumSize">
          <size>
           <width>81</width>
@@ -1029,7 +1029,7 @@
          <enum>QTabWidget::Rounded</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tab_traceback">
          <attribute name="title">
@@ -1966,13 +1966,13 @@
           </item>
          </layout>
         </widget>
-        <widget class="QWidget" name="tab_meta">
+        <widget class="QWidget" name="tab_meta_error_meta_data">
          <attribute name="title">
           <string>Meta</string>
          </attribute>
          <layout class="QGridLayout" name="gridLayout_9">
           <item row="0" column="0">
-           <widget class="QScrollArea" name="scroll_area_meta">
+           <widget class="QScrollArea" name="scroll_area_error_meta_data">
             <property name="palette">
              <palette>
               <active>
@@ -2391,7 +2391,7 @@
             <property name="widgetResizable">
              <bool>true</bool>
             </property>
-            <widget class="QWidget" name="scroll_area_widget_contents_meta">
+            <widget class="QWidget" name="scroll_area_widget_contents_error_meta_data">
              <property name="geometry">
               <rect>
                <x>0</x>
@@ -2402,7 +2402,7 @@
              </property>
              <layout class="QGridLayout" name="gridLayout_10">
               <item row="0" column="0">
-               <widget class="QPlainTextEdit" name="plain_text_edit_meta">
+               <widget class="QPlainTextEdit" name="plain_text_edit_error_meta_data">
                 <property name="font">
                  <font>
                   <family>Consolas</family>

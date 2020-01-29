@@ -1285,7 +1285,7 @@
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scroll_area_widget_contents_metadata">
+        <widget class="QWidget" name="scroll_area_widget_contents_meta_data">
          <property name="geometry">
           <rect>
            <x>0</x>
@@ -1296,7 +1296,7 @@
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
           <item row="0" column="0">
-           <widget class="QPlainTextEdit" name="plain_text_edit_metadata">
+           <widget class="QPlainTextEdit" name="plain_text_edit_meta_data">
             <property name="font">
              <font>
               <family>Consolas</family>

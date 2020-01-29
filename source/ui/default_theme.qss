@@ -1,0 +1,112 @@
+/* MenyBar */
+
+.QMenuBar{
+  background-color: #ffffff;
+}
+
+/* HomeView */
+.QFrame[objectName="frame_white_space_1"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_white_space_2"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_personlig_info_white_space"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_analyse_white_space"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_buttons_and_logo"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_buttons"] {
+  border: none;
+}
+
+#tab_annonse_1{
+  background-color: #e7f3ff;
+}
+
+#tab_annonse_2{
+  background-color: #e7f3ff;
+}
+
+#tab_annonse_3{
+  background-color: #e7f3ff;
+}
+
+.QFrame[objectName="frame_annonse_white_space_1"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_annonse_white_space_2"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_annonse_white_space_3"] {
+  border: none;
+}
+
+/* SifoView */
+.QFrame[objectName="frame_sifo_logo"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_whitespace_sifo_1"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_whitespace_sifo_2"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_whitespace_sifo_3"] {
+  border: none;
+}
+
+#tab_sifo_informasjon{
+  background-color: #e7f3ff;
+}
+
+#tab_sifo_utgifter{
+  background-color: #e7f3ff;
+}
+
+/* ErrorView */
+.QFrame[objectName="frame_label_error"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_error_icon"] {
+  border: none;
+}
+
+.QTabWidget{
+  background-color: #e7f3ff;
+}
+
+#scroll_area_widget_contents_error{
+  background-color: #e7f3ff;
+}
+
+#scroll_area_widget_contents_traceback{
+  background-color: #ffffff;
+}
+
+#scroll_area_widget_contents_log{
+  background-color: #ffffff;
+}
+
+#scroll_area_widget_contents_error_meta_data{
+  background-color: #ffffff;
+}
+
+#scroll_area_widget_contents_meta_data{
+  background-color: #ffffff;
+}

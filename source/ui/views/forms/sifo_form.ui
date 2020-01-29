@@ -902,7 +902,7 @@
      <property name="documentMode">
       <bool>false</bool>
      </property>
-     <widget class="QWidget" name="tab_informasjon">
+     <widget class="QWidget" name="tab_sifo_informasjon">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
         <horstretch>0</horstretch>
@@ -917,7 +917,7 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="13" column="0">
-        <widget class="QFrame" name="frame_logo">
+        <widget class="QFrame" name="frame_sifo_logo">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -2515,7 +2515,7 @@
         </widget>
        </item>
        <item row="15" column="0" colspan="5">
-        <widget class="QFrame" name="frame_whitespace_1">
+        <widget class="QFrame" name="frame_whitespace_sifo_1">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -3380,7 +3380,7 @@
         </widget>
        </item>
        <item row="33" column="0" colspan="3">
-        <widget class="QFrame" name="frame">
+        <widget class="QFrame" name="frame_whitespace_sifo_3">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -3400,7 +3400,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QFrame" name="frame_2">
+    <widget class="QFrame" name="frame_whitespace_sifo_2">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>

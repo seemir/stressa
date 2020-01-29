@@ -2905,7 +2905,7 @@
            <item row="15" column="0">
             <widget class="QLabel" name="label_leieinntekt">
              <property name="text">
-              <string>Leie</string>
+              <string>Leieinntekter</string>
              </property>
              <property name="buddy">
               <cstring>line_edit_leieinntekt</cstring>
@@ -3585,7 +3585,7 @@
                   </widget>
                  </item>
                  <item row="2" column="1">
-                  <widget class="QPushButton" name="pushButton_4">
+                  <widget class="QPushButton" name="push_button_avslutt">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                      <horstretch>0</horstretch>
@@ -4545,102 +4545,6 @@
                <string>Annonse 1</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_8">
-               <item row="12" column="0">
-                <widget class="QLabel" name="label_etasje_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Etasje</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_etasje_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="13" column="2">
-                <widget class="QLabel" name="label_rom_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Rom</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_rom_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="15" column="2">
-                <widget class="QLabel" name="label_tomteareal_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Tomteareal</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_tomteareal_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="9" column="0">
-                <widget class="QLabel" name="label_omkostninger_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Omkostninger</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_omkostninger_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="2">
-                <widget class="QLabel" name="label_formuesverdi_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Formuesverdi</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_formuesverdi_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="13" column="0">
-                <widget class="QLabel" name="label_soverom_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Soverom</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_soverom_1</cstring>
-                 </property>
-                </widget>
-               </item>
                <item row="9" column="3">
                 <widget class="QLineEdit" name="line_edit_kommunaleavg_1">
                  <property name="enabled">
@@ -4651,22 +4555,6 @@
                    <family>Segoe UI</family>
                    <pointsize>8</pointsize>
                   </font>
-                 </property>
-                </widget>
-               </item>
-               <item row="12" column="2">
-                <widget class="QLabel" name="label_byggear_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Byggeår</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_bygger_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4741,92 +4629,6 @@
                  </property>
                 </widget>
                </item>
-               <item row="11" column="2">
-                <widget class="QLabel" name="label_eieform_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Eieform</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_eieform_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="2">
-                <widget class="QLabel" name="label_referanse_1">
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Referanse</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_referanse_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="15" column="0">
-                <widget class="QLabel" name="label_energimerking_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Energimerking</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_energimerking_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="8" column="2">
-                <widget class="QLabel" name="label_felleskost_mnd_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Felleskost/mnd</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_felleskostmnd_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="14" column="2">
-                <widget class="QLabel" name="label_bruttoareal_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Bruttoareal</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_bruttoareal_1</cstring>
-                 </property>
-                </widget>
-               </item>
                <item row="8" column="1">
                 <widget class="QLineEdit" name="line_edit_fellesgjeld_1">
                  <property name="enabled">
@@ -4894,38 +4696,6 @@
                  </property>
                  <property name="readOnly">
                   <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="0">
-                <widget class="QLabel" name="label_prisantydning_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Prisantydning</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_prisantydning_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="14" column="0">
-                <widget class="QLabel" name="label_primarrom_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Primærrom</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_primrrom_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5069,38 +4839,6 @@
                  </property>
                 </widget>
                </item>
-               <item row="10" column="2">
-                <widget class="QLabel" name="label_fellesformue_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Fellesformue</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_fellesformue_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="11" column="0">
-                <widget class="QLabel" name="label_boligtype_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Boligtype</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_boligtype_1</cstring>
-                 </property>
-                </widget>
-               </item>
                <item row="14" column="1">
                 <widget class="QLineEdit" name="line_edit_primrrom_1">
                  <property name="enabled">
@@ -5117,38 +4855,6 @@
                  </property>
                  <property name="readOnly">
                   <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0">
-                <widget class="QLabel" name="label_finn_adresse_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Adresse</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_finn_adresse_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="9" column="2">
-                <widget class="QLabel" name="label_kommunale_avg_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Kommunale avg</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_kommunaleavg_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5174,22 +4880,6 @@
                  </property>
                  <property name="clearButtonEnabled">
                   <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="10" column="0">
-                <widget class="QLabel" name="label_totalpris_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Totalpris</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_totalpris_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5250,44 +4940,6 @@
                  </property>
                 </widget>
                </item>
-               <item row="8" column="0">
-                <widget class="QLabel" name="label_fellesgjeld_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Fellesgjeld</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_fellesgjeld_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_finn_kode_1">
-                 <property name="minimumSize">
-                  <size>
-                   <width>100</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>FINN kode            </string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_finnkode_1</cstring>
-                 </property>
-                </widget>
-               </item>
                <item row="4" column="3">
                 <widget class="QLineEdit" name="line_edit_referanse_1">
                  <property name="enabled">
@@ -5340,28 +4992,15 @@
                  <property name="text">
                   <string>Status</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_status_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="4" column="1">
                 <widget class="QLineEdit" name="line_edit_status_1">
                  <property name="enabled">
                   <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_sist_endret_1">
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Sist endret</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_sistendret_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5381,6 +5020,175 @@
                  </property>
                  <property name="readOnly">
                   <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_sist_endret_1">
+                 <property name="text">
+                  <string>Sist endret</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_sistendret_1</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_finn_kode_1">
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>FINN kode</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="2">
+                <widget class="QLabel" name="label_referanse">
+                 <property name="minimumSize">
+                  <size>
+                   <width>100</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Referanse</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0">
+                <widget class="QLabel" name="label_adresse_1">
+                 <property name="text">
+                  <string>Adresse</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0">
+                <widget class="QLabel" name="label_prisantydning_1">
+                 <property name="text">
+                  <string>Prisantydning</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="2">
+                <widget class="QLabel" name="label_formuesverdi_1">
+                 <property name="text">
+                  <string>Formuesverdi</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="0">
+                <widget class="QLabel" name="label_fellesgjeld_1">
+                 <property name="text">
+                  <string>Fellesgjeld</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="2">
+                <widget class="QLabel" name="label_felleskost_mnd_1">
+                 <property name="text">
+                  <string>Felleskost/mnd</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="0">
+                <widget class="QLabel" name="label_omkostninger_1">
+                 <property name="text">
+                  <string>Omkostninger</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="2">
+                <widget class="QLabel" name="label_kommunale_avg_1">
+                 <property name="text">
+                  <string>Kommunale avg</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="0">
+                <widget class="QLabel" name="label_totalpris_1">
+                 <property name="text">
+                  <string>Totalpris</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="2">
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Fellesformue</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="11" column="0">
+                <widget class="QLabel" name="label_boligtype_1">
+                 <property name="text">
+                  <string>Boligtype</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="11" column="2">
+                <widget class="QLabel" name="label_eieform_1">
+                 <property name="text">
+                  <string>Eieform</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="12" column="0">
+                <widget class="QLabel" name="label_etasje_1">
+                 <property name="text">
+                  <string>Etasje</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="12" column="2">
+                <widget class="QLabel" name="label_byggear_1">
+                 <property name="text">
+                  <string>Byggeår</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="13" column="0">
+                <widget class="QLabel" name="label_soverom_1">
+                 <property name="text">
+                  <string>Soverom</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="13" column="2">
+                <widget class="QLabel" name="label_rom_1">
+                 <property name="text">
+                  <string>Rom</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="14" column="0">
+                <widget class="QLabel" name="label_primarrom_1">
+                 <property name="text">
+                  <string>Primærrom</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="14" column="2">
+                <widget class="QLabel" name="label_bruttoareal_1">
+                 <property name="text">
+                  <string>Bruttoareal</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="15" column="0">
+                <widget class="QLabel" name="label_energimerking_1">
+                 <property name="text">
+                  <string>Energimerking</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="15" column="2">
+                <widget class="QLabel" name="label_tomteareal_1">
+                 <property name="text">
+                  <string>Tomteareal</string>
                  </property>
                 </widget>
                </item>
@@ -6118,6 +5926,9 @@
                 <widget class="QLabel" name="label_status_2">
                  <property name="text">
                   <string>Status</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_status_2</cstring>
                  </property>
                 </widget>
                </item>
@@ -6907,6 +6718,9 @@
                 <widget class="QLabel" name="label_status_3">
                  <property name="text">
                   <string>Status</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_status_3</cstring>
                  </property>
                 </widget>
                </item>
@@ -8287,10 +8101,11 @@
     <addaction name="action_lim_inn"/>
     <addaction name="action_slett"/>
    </widget>
-   <widget class="QMenu" name="menu_innstillinger">
+   <widget class="QMenu" name="menu_verktoy">
     <property name="title">
-     <string>Innstillinger</string>
+     <string>Verktøy</string>
     </property>
+    <addaction name="action_instillinger"/>
    </widget>
    <widget class="QMenu" name="menu_hjelp">
     <property name="title">
@@ -8300,7 +8115,7 @@
    </widget>
    <addaction name="menu_fil"/>
    <addaction name="menu_rediger"/>
-   <addaction name="menu_innstillinger"/>
+   <addaction name="menu_verktoy"/>
    <addaction name="menu_hjelp"/>
   </widget>
   <widget class="QToolBar" name="tool_bar">
@@ -8908,6 +8723,15 @@
     <string>Hjelp</string>
    </property>
   </action>
+  <action name="action_instillinger">
+   <property name="icon">
+    <iconset resource="../../images/img.qrc">
+     <normaloff>:/img/settings.png</normaloff>:/img/settings.png</iconset>
+   </property>
+   <property name="text">
+    <string>Instillinger</string>
+   </property>
+  </action>
  </widget>
  <tabstops>
   <tabstop>tab_widget_home</tabstop>
@@ -9024,7 +8848,7 @@
   <tabstop>push_button_tom_skjema</tabstop>
   <tabstop>push_button_instillinger</tabstop>
   <tabstop>push_button_hjelp</tabstop>
-  <tabstop>pushButton_4</tabstop>
+  <tabstop>push_button_avslutt</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>
