@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1615</width>
-    <height>794</height>
+    <height>797</height>
    </rect>
   </property>
   <property name="palette">
@@ -9115,6 +9115,99 @@
   <tabstop>date_edit_startdato</tabstop>
   <tabstop>line_edit_egenkapital</tabstop>
   <tabstop>tab_widget_annoser</tabstop>
+  <tabstop>line_edit_finnkode_1</tabstop>
+  <tabstop>push_button_finn_1</tabstop>
+  <tabstop>line_edit_status_1</tabstop>
+  <tabstop>line_edit_referanse_1</tabstop>
+  <tabstop>line_edit_sistendret_1</tabstop>
+  <tabstop>line_edit_finn_adresse_1</tabstop>
+  <tabstop>line_edit_prisantydning_1</tabstop>
+  <tabstop>line_edit_formuesverdi_1</tabstop>
+  <tabstop>line_edit_fellesgjeld_1</tabstop>
+  <tabstop>line_edit_felleskostmnd_1</tabstop>
+  <tabstop>line_edit_omkostninger_1</tabstop>
+  <tabstop>line_edit_kommunaleavg_1</tabstop>
+  <tabstop>line_edit_totalpris_1</tabstop>
+  <tabstop>line_edit_fellesformue_1</tabstop>
+  <tabstop>line_edit_sq_price_1</tabstop>
+  <tabstop>line_edit_boligtype_1</tabstop>
+  <tabstop>line_edit_eieform_1</tabstop>
+  <tabstop>line_edit_etasje_1</tabstop>
+  <tabstop>line_edit_bygger_1</tabstop>
+  <tabstop>line_edit_soverom_1</tabstop>
+  <tabstop>line_edit_rom_1</tabstop>
+  <tabstop>line_edit_primrrom_1</tabstop>
+  <tabstop>line_edit_bruttoareal_1</tabstop>
+  <tabstop>line_edit_energimerking_1</tabstop>
+  <tabstop>line_edit_tomteareal_1</tabstop>
+  <tabstop>line_edit_views_1</tabstop>
+  <tabstop>line_edit_email_sent_1</tabstop>
+  <tabstop>line_edit_favorite_click_1</tabstop>
+  <tabstop>line_edit_add_to_calendar_1</tabstop>
+  <tabstop>line_edit_prospect_viewed_1</tabstop>
+  <tabstop>line_edit_prospect_ordered_1</tabstop>
+  <tabstop>line_edit_finnkode_2</tabstop>
+  <tabstop>push_button_finn_2</tabstop>
+  <tabstop>line_edit_status_2</tabstop>
+  <tabstop>line_edit_referanse_2</tabstop>
+  <tabstop>line_edit_sistendret_2</tabstop>
+  <tabstop>line_edit_finn_adresse_2</tabstop>
+  <tabstop>line_edit_prisantydning_2</tabstop>
+  <tabstop>line_edit_formuesverdi_2</tabstop>
+  <tabstop>line_edit_fellesgjeld_2</tabstop>
+  <tabstop>line_edit_felleskostmnd_2</tabstop>
+  <tabstop>line_edit_omkostninger_2</tabstop>
+  <tabstop>line_edit_kommunaleavg_2</tabstop>
+  <tabstop>line_edit_totalpris_2</tabstop>
+  <tabstop>line_edit_fellesformue_2</tabstop>
+  <tabstop>line_edit_sq_price_2</tabstop>
+  <tabstop>line_edit_boligtype_2</tabstop>
+  <tabstop>line_edit_eieform_2</tabstop>
+  <tabstop>line_edit_etasje_2</tabstop>
+  <tabstop>line_edit_bygger_2</tabstop>
+  <tabstop>line_edit_soverom_2</tabstop>
+  <tabstop>line_edit_rom_2</tabstop>
+  <tabstop>line_edit_primrrom_2</tabstop>
+  <tabstop>line_edit_bruttoareal_2</tabstop>
+  <tabstop>line_edit_energimerking_2</tabstop>
+  <tabstop>line_edit_tomteareal_2</tabstop>
+  <tabstop>line_edit_views_2</tabstop>
+  <tabstop>line_edit_email_sent_2</tabstop>
+  <tabstop>line_edit_favorite_click_2</tabstop>
+  <tabstop>line_edit_add_to_calendar_2</tabstop>
+  <tabstop>line_edit_prospect_viewed_2</tabstop>
+  <tabstop>line_edit_prospect_ordered_2</tabstop>
+  <tabstop>line_edit_finnkode_3</tabstop>
+  <tabstop>push_button_finn_3</tabstop>
+  <tabstop>line_edit_status_3</tabstop>
+  <tabstop>line_edit_referanse_3</tabstop>
+  <tabstop>line_edit_sistendret_3</tabstop>
+  <tabstop>line_edit_finn_adresse_3</tabstop>
+  <tabstop>line_edit_prisantydning_3</tabstop>
+  <tabstop>line_edit_formuesverdi_3</tabstop>
+  <tabstop>line_edit_fellesgjeld_3</tabstop>
+  <tabstop>line_edit_felleskostmnd_3</tabstop>
+  <tabstop>line_edit_omkostninger_3</tabstop>
+  <tabstop>line_edit_kommunaleavg_3</tabstop>
+  <tabstop>line_edit_totalpris_3</tabstop>
+  <tabstop>line_edit_fellesformue_3</tabstop>
+  <tabstop>line_edit_sq_price_3</tabstop>
+  <tabstop>line_edit_boligtype_3</tabstop>
+  <tabstop>line_edit_eieform_3</tabstop>
+  <tabstop>line_edit_etasje_3</tabstop>
+  <tabstop>line_edit_bygger_3</tabstop>
+  <tabstop>line_edit_soverom_3</tabstop>
+  <tabstop>line_edit_rom_3</tabstop>
+  <tabstop>line_edit_primrrom_3</tabstop>
+  <tabstop>line_edit_bruttoareal_3</tabstop>
+  <tabstop>line_edit_energimerking_3</tabstop>
+  <tabstop>line_edit_tomteareal_3</tabstop>
+  <tabstop>line_edit_views_3</tabstop>
+  <tabstop>line_edit_email_sent_3</tabstop>
+  <tabstop>line_edit_favorite_click_3</tabstop>
+  <tabstop>line_edit_add_to_calendar_3</tabstop>
+  <tabstop>line_edit_prospect_viewed_3</tabstop>
+  <tabstop>line_edit_prospect_ordered_3</tabstop>
   <tabstop>push_button_analyse</tabstop>
   <tabstop>push_button_tom_skjema</tabstop>
   <tabstop>push_button_instillinger</tabstop>
