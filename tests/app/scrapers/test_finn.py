@@ -78,16 +78,19 @@ class TestFinn:
         Test that response method returns HTTP code 200: OK
 
         """
-        response = self.finn.response()
-        assert response.status_code == 200
-        assert isinstance(response, Response)
+        ad_response, stat_response = self.finn.response()
+        assert ad_response.status_code == 200
+        assert isinstance(ad_response, Response)
+
+        assert stat_response.status_code == 200
+        assert isinstance(stat_response, Response)
 
     def test_housing_information_method(self):
         """
         Test that the housing_information method returns correct information
 
         """
-        assert len(self.finn.housing_information().keys()) == 19
+        assert len(self.finn.housing_information().keys()) == 26
 
     @staticmethod
     @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectError))
