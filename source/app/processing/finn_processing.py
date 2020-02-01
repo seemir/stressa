@@ -189,13 +189,15 @@ class FinnProcessing(Process):
         scrape_finn_ad_operation = ScrapeFinnAdInfo(self._validated_finn_code["finn_code"])
         self.add_node(scrape_finn_ad_operation)
 
-        self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_ad_operation)
+        self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_ad_operation,
+                            label="thread")
 
         finn_ad_info = scrape_finn_ad_operation.run()
         finn_ad_info_signal = Signal(finn_ad_info, "FINN AD Information", prettify_keys=True)
         self.add_signal(finn_ad_info_signal, "finn_ad_info")
 
-        self.add_transition(scrape_finn_ad_operation, finn_ad_info_signal)
+        self.add_transition(scrape_finn_ad_operation, finn_ad_info_signal,
+                            label="thread")
         self._finn_ad_info = finn_ad_info
 
     @Profiling
@@ -208,13 +210,15 @@ class FinnProcessing(Process):
             self._validated_finn_code["finn_code"])
         self.add_node(scrape_finn_owner_history)
 
-        self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_owner_history)
+        self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_owner_history,
+                            label="thread")
 
         finn_owner_history = scrape_finn_owner_history.run()
         finn_owner_history_signal = Signal(finn_owner_history, "FINN Owner History")
         self.add_signal(finn_owner_history_signal, "finn_owner_history")
 
-        self.add_transition(scrape_finn_owner_history, finn_owner_history_signal)
+        self.add_transition(scrape_finn_owner_history, finn_owner_history_signal,
+                            label="thread")
         self._finn_ownership_history = finn_owner_history
 
     @Profiling
@@ -227,13 +231,15 @@ class FinnProcessing(Process):
             self._validated_finn_code["finn_code"])
         self.add_node(scrape_finn_stat_operation)
 
-        self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_stat_operation)
+        self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_stat_operation,
+                            label="thread")
 
         finn_stat_info = scrape_finn_stat_operation.run()
         finn_stat_info_signal = Signal(finn_stat_info, "FINN Statistics Information")
         self.add_signal(finn_stat_info_signal, "finn_stat_info")
 
-        self.add_transition(scrape_finn_stat_operation, finn_stat_info_signal)
+        self.add_transition(scrape_finn_stat_operation, finn_stat_info_signal,
+                            label="thread")
         self._finn_statistics_info = finn_stat_info
 
     @Profiling

@@ -170,5 +170,6 @@ class Process(Dot, ABC):
                       label to be displayed
 
         """
-        transition = Edge(node_1, node_2, color="gray", label=label)
+        color = "gray" if label != "thread" else "blue"
+        transition = Edge(node_1, node_2, color=color, label=label)
         self.add_edge(transition)
