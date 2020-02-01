@@ -72,3 +72,15 @@ class Finn(Scraper):
 
         """
         return self._finn_code
+
+    @staticmethod
+    def rules():
+        """
+        list of all rules in this scraper
+
+        Returns
+        -------
+        out         : list
+                      all rules in scraper
+        """
+        return ["starts_with_one", "numeric_values", "max_len_eight (zero_based_indexing)"]
