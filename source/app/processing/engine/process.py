@@ -8,6 +8,8 @@ Module with logic for Process superclass
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from threading import Thread
+
 from time import time
 from abc import ABC, abstractmethod
 
@@ -47,6 +49,25 @@ class Process(Dot, ABC):
         LOGGER.success("ending '{}'".format(cls.__name__))
         LOGGER.info("reporting profiling results -> \n\n profiling: '{}' \n\n".format(
             cls.__name__) + str(cls.profiling) + "\n")
+
+    @staticmethod
+    def run_parallel(methods):
+        """
+        method for running multiple independent methods in parallel using multi threading
+
+        Parameters
+        ----------
+        methods     : list
+                      list of methods to run in parallel
+
+        """
+        threads = []
+        for method in methods:
+            thread = Thread(target=method)
+            thread.start()
+            threads.append(thread)
+        for thread in threads:
+            thread.join()
 
     @abstractmethod
     def __init__(self, name: str):
