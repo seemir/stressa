@@ -128,7 +128,7 @@ class SifoProcessing(Process):
     @Profiling
     def input_operation(self, data: dict):
         """
-        method for retrieving information from SIFO form and saving it to sifo workflow
+        method for retrieving information from SIFO form and saving it to sifo processing object
 
         Parameters
         ----------

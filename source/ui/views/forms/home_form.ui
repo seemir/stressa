@@ -4524,7 +4524,7 @@
                 </widget>
                </item>
                <item row="10" column="1">
-                <widget class="QLineEdit" name="line_edit_sq_price_1">
+                <widget class="QLineEdit" name="line_edit_sqm_price_1">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
@@ -5816,7 +5816,7 @@
                 </widget>
                </item>
                <item row="10" column="1">
-                <widget class="QLineEdit" name="line_edit_sq_price_2">
+                <widget class="QLineEdit" name="line_edit_sqm_price_2">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
@@ -6693,7 +6693,7 @@
                 </widget>
                </item>
                <item row="10" column="1">
-                <widget class="QLineEdit" name="line_edit_sq_price_3">
+                <widget class="QLineEdit" name="line_edit_sqm_price_3">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
@@ -9129,7 +9129,7 @@
   <tabstop>line_edit_kommunaleavg_1</tabstop>
   <tabstop>line_edit_totalpris_1</tabstop>
   <tabstop>line_edit_fellesformue_1</tabstop>
-  <tabstop>line_edit_sq_price_1</tabstop>
+  <tabstop>line_edit_sqm_price_1</tabstop>
   <tabstop>line_edit_boligtype_1</tabstop>
   <tabstop>line_edit_eieform_1</tabstop>
   <tabstop>line_edit_etasje_1</tabstop>
@@ -9160,7 +9160,7 @@
   <tabstop>line_edit_kommunaleavg_2</tabstop>
   <tabstop>line_edit_totalpris_2</tabstop>
   <tabstop>line_edit_fellesformue_2</tabstop>
-  <tabstop>line_edit_sq_price_2</tabstop>
+  <tabstop>line_edit_sqm_price_2</tabstop>
   <tabstop>line_edit_boligtype_2</tabstop>
   <tabstop>line_edit_eieform_2</tabstop>
   <tabstop>line_edit_etasje_2</tabstop>
@@ -9191,7 +9191,7 @@
   <tabstop>line_edit_kommunaleavg_3</tabstop>
   <tabstop>line_edit_totalpris_3</tabstop>
   <tabstop>line_edit_fellesformue_3</tabstop>
-  <tabstop>line_edit_sq_price_3</tabstop>
+  <tabstop>line_edit_sqm_price_3</tabstop>
   <tabstop>line_edit_boligtype_3</tabstop>
   <tabstop>line_edit_eieform_3</tabstop>
   <tabstop>line_edit_etasje_3</tabstop>

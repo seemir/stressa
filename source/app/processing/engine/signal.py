@@ -22,28 +22,56 @@ class Signal(Node, ABC):
 
     """
 
-    def __init__(self, data: object, desc: str, style: str = "dotted", **attrs):
+    @staticmethod
+    def prettify_dict_keys(dict_keys):
+        """
+        method for prettify the dictionary keys
+
+        Parameters
+        ----------
+        dict_keys   :
+                      keys to prettify
+
+        Returns
+        -------
+        out         : str
+                      str with dictionary
+
+        """
+        pretty_keys = []
+        for i, keys in enumerate(list(dict_keys)):
+            if i % 15 == 0 and i != 0:
+                pretty_keys.append("\n" + str(keys))
+            else:
+                pretty_keys.append(keys)
+        return str(list(pretty_keys)).translate({39: None})
+
+    def __init__(self, data: object, desc: str, style: str = "dotted", prettify_keys: bool = False,
+                 **attrs):
         """
         Constructor / Instantiating class
 
         Parameters
         ----------
-        data        : object
-                      data to pass in or out from operation
-        desc        : str
-                      description of operation
+        data            : object
+                          data to pass in or out from operation
+        desc            : str
+                          description of operation
+        prettify_keys   : bool
+                          True if one wants to prettify keys in data
 
         """
-        Assertor.assert_data_types([data, desc, style], [object, str, str])
+        Assertor.assert_data_types([data, desc, style, prettify_keys], [object, str, str, bool])
         if hasattr(data, "__dict__"):
-            self.keys = data.__dict__.keys()
+            keys = data.__dict__.keys()
+            self.keys = self.prettify_dict_keys(keys) if prettify_keys else keys
         elif isinstance(data, dict):
-            self.keys = data.keys()
+            keys = data.keys()
+            self.keys = self.prettify_dict_keys(keys) if prettify_keys else keys
         else:
             self.keys = ""
         self.desc = desc
         self.data = data
         super().__init__(name=str(uuid4()), shape="record", style=style,
                          label="keys\\<{}\\> \\n {} \\<type '{}'\\>".format(
-                             str(list(self.keys)).translate({39: None}), self.desc,
-                             data.__class__.__name__), **attrs)
+                             self.keys, self.desc, data.__class__.__name__), **attrs)

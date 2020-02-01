@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 import webbrowser
 from PyQt5.QtCore import QObject, pyqtSlot
 
-from source.app import Finn
+from source.app import FinnProcessing
 from source.util import Assertor
 
 from .settings import FINN_URL
@@ -23,11 +23,11 @@ class FinnModel(Model):
     Implementation of the Finn model for which all the Finn based logic is stored
 
     """
-    _finn_kode = ["finnkode", "status", "sistendret", "referanse", "finn_adresse",
+    _finn_keys = ["finnkode", "status", "sistendret", "referanse", "finn_adresse",
                   "prisantydning", "formuesverdi", "fellesgjeld", "felleskostmnd",
                   "omkostninger", "kommunaleavg", "totalpris", "fellesformue",
                   "boligtype", "eieform", "etasje", "bygger", "soverom", "rom",
-                  "primrrom", "bruttoareal", "energimerking", "tomteareal", "sq_price",
+                  "primrrom", "bruttoareal", "energimerking", "tomteareal", "sqm_price",
                   "views", "email_sent", "favorite_click", "prospect_viewed",
                   "prospect_ordered", "add_to_calendar"]
 
@@ -51,14 +51,14 @@ class FinnModel(Model):
 
         """
         self.parent.ui.line_edit_finnkode_1.editingFinished.connect(
-            lambda: self.update_line_edits("finnkode", self._finn_kode, Finn,
-                                           "housing_information", "_1"))
+            lambda: self.update_line_edits("finnkode", self._finn_keys, FinnProcessing,
+                                           "output_operation", "_1"))
         self.parent.ui.line_edit_finnkode_2.editingFinished.connect(
-            lambda: self.update_line_edits("finnkode", self._finn_kode, Finn,
-                                           "housing_information", "_2"))
+            lambda: self.update_line_edits("finnkode", self._finn_keys, FinnProcessing,
+                                           "output_operation", "_2"))
         self.parent.ui.line_edit_finnkode_3.editingFinished.connect(
-            lambda: self.update_line_edits("finnkode", self._finn_kode, Finn,
-                                           "housing_information", "_3"))
+            lambda: self.update_line_edits("finnkode", self._finn_keys, FinnProcessing,
+                                           "output_operation", "_3"))
 
     @pyqtSlot()
     def open_finn_url(self, line_edit: str):
@@ -85,6 +85,6 @@ class FinnModel(Model):
 
         """
         self.clear_line_edits(["finnkode_1", "finnkode_2", "finnkode_3"])
-        self.clear_line_edits(self._finn_kode, "_1")
-        self.clear_line_edits(self._finn_kode, "_2")
-        self.clear_line_edits(self._finn_kode, "_3")
+        self.clear_line_edits(self._finn_keys, "_1")
+        self.clear_line_edits(self._finn_keys, "_2")
+        self.clear_line_edits(self._finn_keys, "_3")

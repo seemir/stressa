@@ -65,7 +65,7 @@ class Process(Dot, ABC):
         self._signal = {}
 
     @abstractmethod
-    def input_operation(self, data):
+    def input_operation(self, data: object):
         """
         method that captures input behaviour
 

@@ -19,16 +19,20 @@ class OutputSignal(Signal):
 
     """
 
-    def __init__(self, data: object, desc: str):
+    def __init__(self, data: object, desc: str, prettify_keys: bool = False, ):
         """
         Constructor / Instantiating class
 
         Parameters
         ----------
-        data        : object
-                      data to pass in or out from operation
-        desc        : str
-                      description of operation
+        data            : object
+                          data to pass in or out from operation
+        desc            : str
+                          description of operation
+        prettify_keys   : bool
+                          True if one wants to prettify keys in data
+
         """
-        Assertor.assert_data_types([data, desc], [object, str])
-        super().__init__(data=data, desc=desc, style="dashed", color="blue", penwidth=1.5)
+        Assertor.assert_data_types([data, desc, prettify_keys], [object, str, bool])
+        super().__init__(data=data, desc=desc, prettify_keys=prettify_keys, style="dashed",
+                         color="blue", penwidth=1.5)
