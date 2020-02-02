@@ -33,7 +33,7 @@ class ScrapeFinnStatisticsInfo(Operation):
         super().__init__(name=self.name,
                          desc="from: '{}\\<[finn_code]\\>' \\n id: Scrape FINN Statistics "
                               "Info".format(FINN_STAT_URL))
-        self.finn_coe = finn_code
+        self.finn_code = finn_code
 
     def run(self):
         """
@@ -45,5 +45,5 @@ class ScrapeFinnStatisticsInfo(Operation):
                       dictionary with all finn statitics information
 
         """
-        finn_stat_info = FinnStat(self.finn_coe)
+        finn_stat_info = FinnStat(self.finn_code)
         return finn_stat_info.housing_stat_information()

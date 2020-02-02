@@ -92,10 +92,12 @@ class FinnStat(Finn):
             sq_price = json.loads(stat_soup.find("script", attrs={"id": "area-prices"}).text)[
                 "price"]
             info.update({"sqm_price": Amount.format_amount(sq_price) + " kr/m²"})
-            for stat in json.loads(
-                    stat_soup.find("script", attrs={"id": "ad-summary"}).text).values():
-                for prop, value in stat.items():
-                    info.update({prop.lower(): Amount.format_amount(value)})
+
+            statistics = json.loads(
+                stat_soup.find("script", attrs={"id": "ad-summary"}).text)[self.finn_code]
+
+            for prop, value in statistics.items():
+                info.update({prop.lower(): Amount.format_amount(value)})
 
             LOGGER.success(
                 "'{}' successfully retrieved".format(self.housing_stat_information.__name__))
