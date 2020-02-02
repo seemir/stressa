@@ -9,7 +9,6 @@ __email__ = 'samir.adrik@gmail.com'
 
 import json
 from http.client import responses
-import requests
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from bs4 import BeautifulSoup
@@ -51,8 +50,8 @@ class FinnStat(Finn):
         """
         try:
             try:
-                stat_response = requests.post(FINN_STAT_URL + "{}".format(self.finn_code),
-                                              timeout=TIMEOUT)
+                stat_response = self.browser.get(FINN_STAT_URL + "{}".format(self.finn_code),
+                                                 timeout=TIMEOUT)
                 stat_status_code = stat_response.status_code
                 LOGGER.info(
                     "HTTP status code -> STATISTICS: [{}: {}]".format(stat_status_code,

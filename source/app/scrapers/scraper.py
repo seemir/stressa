@@ -77,3 +77,11 @@ class Scraper(ABC):
 
         """
         return self._id
+
+    @property
+    def browser(self):
+        """
+        Browser getter
+
+        """
+        return self._browser

@@ -8,7 +8,6 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from http.client import responses
-import requests
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from bs4 import BeautifulSoup
@@ -50,8 +49,8 @@ class FinnOwnership(Finn):
         """
         try:
             try:
-                owner_response = requests.post(FINN_OWNER_URL + "{}".format(self.finn_code),
-                                               timeout=TIMEOUT)
+                owner_response = self.browser.get(FINN_OWNER_URL + "{}".format(self.finn_code),
+                                                  timeout=TIMEOUT)
                 if not owner_response:
                     raise NotFoundError("'{}' is an invalid Finn code".format(self.finn_code))
 
