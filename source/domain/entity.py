@@ -28,7 +28,7 @@ class Entity(ABC):
         self._id = str(uuid4())
 
     @property
-    def id(self):
+    def id_(self):
         """
         Id getter
 

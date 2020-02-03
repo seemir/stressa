@@ -62,7 +62,7 @@ class TestSsb:
         Test Ssb scraper has uuid4 compatible ids
 
         """
-        assert UUID(str(self.ssb.id))
+        assert UUID(str(self.ssb.id_))
 
     @pt.mark.parametrize("payload", [SsbPayload(rentebinding=["08"])])
     def test_payload_gets_set(self, payload):

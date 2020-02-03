@@ -9,6 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from threading import Thread
+from queue import Queue
 
 from time import time
 from abc import ABC, abstractmethod
@@ -50,8 +51,7 @@ class Process(Dot, ABC):
         LOGGER.info("reporting profiling results -> \n\n profiling: '{}' \n\n".format(
             cls.__name__) + str(cls.profiling) + "\n")
 
-    @staticmethod
-    def run_parallel(methods):
+    def run_parallel(self, methods):
         """
         method for running multiple independent methods in parallel using multi threading
 
@@ -69,6 +69,19 @@ class Process(Dot, ABC):
         for thread in threads:
             thread.join()
 
+        if self.threading_exception():
+            raise self.threading_exception()
+
+    def threading_exception(self):
+        """
+        Method for retrieving any exceptions caused by any parallel running threads
+
+        """
+        exception = None
+        if not self.exception_queue.empty():
+            exception = self.exception_queue.get()
+        return exception
+
     @abstractmethod
     def __init__(self, name: str):
         """
@@ -84,6 +97,7 @@ class Process(Dot, ABC):
         super().__init__(name, graph_type="digraph", labelloc="t", labeljust="left",
                          label="{} - Stressa v.{}".format(name, __version__))
         self._signal = {}
+        self._exception_queue = Queue()
 
     @abstractmethod
     def input_operation(self, data: object):
@@ -125,6 +139,19 @@ class Process(Dot, ABC):
         """
         Assertor.assert_data_types([new_signal], [dict])
         self._signal = new_signal
+
+    @property
+    def exception_queue(self):
+        """
+        exception_queue getter
+
+        Returns
+        -------
+        out         : Queue
+                      active exception_queue in object
+
+        """
+        return self._exception_queue
 
     def add_signal(self, signal: Signal, key=str):
         """
@@ -173,3 +200,16 @@ class Process(Dot, ABC):
         color = "gray" if label != "thread" else "blue"
         transition = Edge(node_1, node_2, color=color, label=label)
         self.add_edge(transition)
+
+    def print_pdf(self):
+        """
+        method for printing a pdf with the procedure graph
+
+        """
+        file_name = ""
+        for char in self.__class__.__name__:
+            if char.isupper():
+                file_name = file_name + "-" + char.lower()
+            else:
+                file_name = file_name + char
+        self.write_pdf(file_name[1:] + ".pdf")

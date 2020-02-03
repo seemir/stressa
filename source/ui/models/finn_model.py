@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 import webbrowser
 from PyQt5.QtCore import QObject, pyqtSlot
 
-from source.app import FinnProcessing
+from source.app import FinnAdvertProcessing
 from source.util import Assertor
 
 from .settings import FINN_URL
@@ -27,9 +27,9 @@ class FinnModel(Model):
                   "prisantydning", "formuesverdi", "fellesgjeld", "felleskostmnd",
                   "omkostninger", "kommunaleavg", "totalpris", "fellesformue",
                   "boligtype", "eieform", "etasje", "bygger", "soverom", "rom",
-                  "primrrom", "bruttoareal", "energimerking", "tomteareal", "sqm_price",
-                  "views", "email_sent", "favorite_click", "prospect_viewed",
-                  "prospect_ordered", "add_to_calendar"]
+                  "renovertr", "primrrom", "bruttoareal", "energimerking",
+                  "tomteareal", "sqm_price", "views", "email_sent", "favorite_click",
+                  "prospect_viewed", "prospect_ordered", "add_to_calendar"]
 
     def __init__(self, parent: QObject):
         """
@@ -51,14 +51,41 @@ class FinnModel(Model):
 
         """
         self.parent.ui.line_edit_finnkode_1.editingFinished.connect(
-            lambda: self.update_line_edits("finnkode", self._finn_keys, FinnProcessing,
-                                           "output_operation", "_1"))
+            lambda: self.add_finn_info("_1"))
         self.parent.ui.line_edit_finnkode_2.editingFinished.connect(
-            lambda: self.update_line_edits("finnkode", self._finn_keys, FinnProcessing,
-                                           "output_operation", "_2"))
+            lambda: self.add_finn_info("_2"))
         self.parent.ui.line_edit_finnkode_3.editingFinished.connect(
-            lambda: self.update_line_edits("finnkode", self._finn_keys, FinnProcessing,
-                                           "output_operation", "_3"))
+            lambda: self.add_finn_info("_3"))
+
+    @pyqtSlot()
+    def add_finn_info(self, postfix):
+        """
+        method for adding finn_info to line_edits
+
+        Parameters
+        ----------
+        postfix     : str
+                      index if used in naming of line_edits
+
+        """
+        try:
+            finn_code = getattr(self.parent.ui, "line_edit_finnkode" + postfix).text().strip()
+            if finn_code and finn_code not in self.data.values():
+                finn_processing = FinnAdvertProcessing(finn_code)
+                self.set_line_edits("finnkode", self._finn_keys, postfix=postfix,
+                                    data=finn_processing.multiplex_info)
+                finn_processing.print_pdf()
+            elif finn_code and finn_code in self.data.values():
+                pass
+            else:
+                self.clear_line_edits(["finnkode" + postfix])
+                self.clear_line_edits(self._finn_keys, postfix)
+        except Exception as finn_processing_error:
+            self.clear_line_edits(["finnkode" + postfix])
+            self.clear_line_edits(self._finn_keys, postfix)
+            self.parent.error.show_error(finn_processing_error, self.data)
+            self.parent.error.exec_()
+            getattr(self.parent.ui, "line_edit_finnkode" + postfix).setFocus()
 
     @pyqtSlot()
     def open_finn_url(self, line_edit: str):

@@ -169,7 +169,7 @@ class TestFamily:
         Test that all entity ids are uuid4 compatible
 
         """
-        assert UUID(str(self.family.id))
+        assert UUID(str(self.family.id_))
 
     def test_rules_in_family(self):
         """

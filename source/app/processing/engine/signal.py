@@ -23,7 +23,46 @@ class Signal(Node, ABC):
     """
 
     @staticmethod
-    def prettify_dict_keys(dict_keys):
+    def remove_quotation(strings: list):
+        """
+        method for removing quotation marks in list of strings
+
+        """
+        return str(list(strings)).translate({39: None})
+
+    def __init__(self, data: object, desc: str, style: str = "dotted", prettify_keys: bool = False,
+                 **attrs):
+        """
+        Constructor / Instantiating class
+
+        Parameters
+        ----------
+        data            : object
+                          data to pass in or out from operation
+        desc            : str
+                          description of operation
+        prettify_keys   : bool
+                          True if one wants to prettify keys in data
+
+        """
+        Assertor.assert_data_types([data, desc, style, prettify_keys], [object, str, str, bool])
+        if hasattr(data, "__dict__"):
+            keys = data.__dict__.keys()
+            self.keys = self.prettify_dict_keys(keys) if prettify_keys else self.remove_quotation(
+                list(keys))
+        elif isinstance(data, dict):
+            keys = data.keys()
+            self.keys = self.prettify_dict_keys(keys) if prettify_keys else self.remove_quotation(
+                list(keys))
+        else:
+            self.keys = ""
+        self.desc = desc
+        self.data = data
+        super().__init__(name=str(uuid4()), shape="record", style=style,
+                         label="keys\\<{}\\> \\n {} \\<type '{}'\\>".format(
+                             self.keys, self.desc, data.__class__.__name__), **attrs)
+
+    def prettify_dict_keys(self, dict_keys):
         """
         method for prettify the dictionary keys
 
@@ -44,34 +83,4 @@ class Signal(Node, ABC):
                 pretty_keys.append("\n" + str(keys))
             else:
                 pretty_keys.append(keys)
-        return str(list(pretty_keys)).translate({39: None})
-
-    def __init__(self, data: object, desc: str, style: str = "dotted", prettify_keys: bool = False,
-                 **attrs):
-        """
-        Constructor / Instantiating class
-
-        Parameters
-        ----------
-        data            : object
-                          data to pass in or out from operation
-        desc            : str
-                          description of operation
-        prettify_keys   : bool
-                          True if one wants to prettify keys in data
-
-        """
-        Assertor.assert_data_types([data, desc, style, prettify_keys], [object, str, str, bool])
-        if hasattr(data, "__dict__"):
-            keys = data.__dict__.keys()
-            self.keys = self.prettify_dict_keys(keys) if prettify_keys else keys
-        elif isinstance(data, dict):
-            keys = data.keys()
-            self.keys = self.prettify_dict_keys(keys) if prettify_keys else keys
-        else:
-            self.keys = ""
-        self.desc = desc
-        self.data = data
-        super().__init__(name=str(uuid4()), shape="record", style=style,
-                         label="keys\\<{}\\> \\n {} \\<type '{}'\\>".format(
-                             self.keys, self.desc, data.__class__.__name__), **attrs)
+        return self.remove_quotation(pretty_keys)

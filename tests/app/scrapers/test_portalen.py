@@ -50,7 +50,7 @@ class TestPortalen:
         Test Portalen scraper has uuid4 compatible ids
 
         """
-        assert UUID(str(self.portalen.id))
+        assert UUID(str(self.portalen.id_))
 
     def test_portalen_response_method(self):
         """

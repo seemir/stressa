@@ -2794,6 +2794,9 @@
              <property name="text">
               <string>Husleie</string>
              </property>
+             <property name="buddy">
+              <cstring>line_edit_husleie</cstring>
+             </property>
             </widget>
            </item>
            <item row="23" column="0">
@@ -4548,7 +4551,7 @@
                   <string>Totalpris</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_totalpris_2</cstring>
+                  <cstring>line_edit_totalpris_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4573,7 +4576,7 @@
                   <string>Kommunale avg</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_kommunaleavg_2</cstring>
+                  <cstring>line_edit_kommunaleavg_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4588,7 +4591,7 @@
                   <string>Fellesformue</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_fellesformue_2</cstring>
+                  <cstring>line_edit_fellesformue_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4603,7 +4606,7 @@
                   <string>Eieform</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_eieform_2</cstring>
+                  <cstring>line_edit_eieform_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4636,7 +4639,7 @@
                   <string>Boligtype</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_boligtype_2</cstring>
+                  <cstring>line_edit_boligtype_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4687,7 +4690,7 @@
                   <string>Byggeår</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_bygger_2</cstring>
+                  <cstring>line_edit_bygger_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4720,7 +4723,7 @@
                   <string>Etasje</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_etasje_2</cstring>
+                  <cstring>line_edit_etasje_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4735,7 +4738,7 @@
                   <string>Soverom</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_soverom_2</cstring>
+                  <cstring>line_edit_soverom_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4787,7 +4790,7 @@
                   <string>Status</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_status_2</cstring>
+                  <cstring>line_edit_status_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4825,7 +4828,7 @@
                   <string>FINN kode            </string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_finnkode_2</cstring>
+                  <cstring>line_edit_finnkode_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4846,7 +4849,7 @@
                   <string>Referanse</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_referanse_2</cstring>
+                  <cstring>line_edit_referanse_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4885,7 +4888,7 @@
                   <string>Sist endret</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_sistendret_2</cstring>
+                  <cstring>line_edit_sistendret_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4955,7 +4958,7 @@
                   <string>Adresse</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_finn_adresse_2</cstring>
+                  <cstring>line_edit_finn_adresse_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4970,7 +4973,7 @@
                   <string>Prisantydning</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_prisantydning_2</cstring>
+                  <cstring>line_edit_prisantydning_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5003,7 +5006,7 @@
                   <string>Fellesgjeld</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_fellesgjeld_2</cstring>
+                  <cstring>line_edit_fellesgjeld_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5018,7 +5021,7 @@
                   <string>Felleskost/mnd</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_felleskostmnd_2</cstring>
+                  <cstring>line_edit_felleskostmnd_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5048,7 +5051,7 @@
                   <string>Formuesverdi</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_formuesverdi_2</cstring>
+                  <cstring>line_edit_formuesverdi_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5081,7 +5084,7 @@
                   <string>Omkostninger</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_omkostninger_2</cstring>
+                  <cstring>line_edit_omkostninger_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5129,7 +5132,7 @@
                   <string>Primærrom</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_primrrom_2</cstring>
+                  <cstring>line_edit_primrrom_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5180,7 +5183,7 @@
                   <string>Rom</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_rom_2</cstring>
+                  <cstring>line_edit_rom_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5213,7 +5216,7 @@
                   <string>Energimerking</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_energimerking_2</cstring>
+                  <cstring>line_edit_energimerking_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5228,7 +5231,7 @@
                   <string>Bruttoareal</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_bruttoareal_2</cstring>
+                  <cstring>line_edit_bruttoareal_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5285,7 +5288,7 @@
                   <string>Tomteareal</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_tomteareal_2</cstring>
+                  <cstring>line_edit_tomteareal_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5308,12 +5311,18 @@
                  <property name="text">
                   <string>Kvadratmeterpris</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_sqm_price_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="16" column="2">
                 <widget class="QLabel" name="label_epost_sent_1">
                  <property name="text">
                   <string>E-post sent</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_email_sent_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5322,12 +5331,18 @@
                  <property name="text">
                   <string>Favorisert</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_favorite_click_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="18" column="2">
                 <widget class="QLabel" name="label_prospekt_bestilt_1">
                  <property name="text">
                   <string>Prospekt bestilt</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_prospect_ordered_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5336,6 +5351,9 @@
                  <property name="text">
                   <string>Visninger</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_views_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="18" column="0">
@@ -5343,12 +5361,18 @@
                  <property name="text">
                   <string>Prospekt sett</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_prospect_viewed_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="17" column="2">
                 <widget class="QLabel" name="label_kalender_1">
                  <property name="text">
                   <string>Lagt til kalender</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_add_to_calendar_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5362,6 +5386,23 @@
                  </property>
                  <property name="orientation">
                   <enum>Qt::Horizontal</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="2">
+                <widget class="QLabel" name="label_renovertr">
+                 <property name="text">
+                  <string>Renovert år</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_renovertr_1</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="3">
+                <widget class="QLineEdit" name="line_edit_renovertr_1">
+                 <property name="enabled">
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -5389,7 +5430,7 @@
                   <string>FINN kode            </string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_finnkode_2</cstring>
+                  <cstring>line_edit_finnkode_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5453,7 +5494,7 @@
                   <string>Status</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_status_2</cstring>
+                  <cstring>line_edit_status_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5481,7 +5522,7 @@
                   <string>Referanse</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_referanse_2</cstring>
+                  <cstring>line_edit_referanse_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5520,7 +5561,7 @@
                   <string>Sist endret</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_sistendret_2</cstring>
+                  <cstring>line_edit_sistendret_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5553,7 +5594,7 @@
                   <string>Adresse</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_finn_adresse_2</cstring>
+                  <cstring>line_edit_finn_adresse_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5583,7 +5624,7 @@
                   <string>Prisantydning</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_prisantydning_2</cstring>
+                  <cstring>line_edit_prisantydning_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5613,7 +5654,7 @@
                   <string>Formuesverdi</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_formuesverdi_2</cstring>
+                  <cstring>line_edit_formuesverdi_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5646,7 +5687,7 @@
                   <string>Fellesgjeld</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_fellesgjeld_2</cstring>
+                  <cstring>line_edit_fellesgjeld_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5676,7 +5717,7 @@
                   <string>Felleskost/mnd</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_felleskostmnd_2</cstring>
+                  <cstring>line_edit_felleskostmnd_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5709,7 +5750,7 @@
                   <string>Omkostninger</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_omkostninger_2</cstring>
+                  <cstring>line_edit_omkostninger_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5734,7 +5775,7 @@
                   <string>Kommunale avg</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_kommunaleavg_2</cstring>
+                  <cstring>line_edit_kommunaleavg_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5756,7 +5797,7 @@
                   <string>Totalpris</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_totalpris_2</cstring>
+                  <cstring>line_edit_totalpris_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5786,7 +5827,7 @@
                   <string>Fellesformue</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_fellesformue_2</cstring>
+                  <cstring>line_edit_fellesformue_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5813,10 +5854,30 @@
                  <property name="text">
                   <string>Kvadratmeterpris</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_sqm_price_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="10" column="1">
                 <widget class="QLineEdit" name="line_edit_sqm_price_2">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="2">
+                <widget class="QLabel" name="label_renovertr_2">
+                 <property name="text">
+                  <string>Renovert år</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_renovertr_1</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="3">
+                <widget class="QLineEdit" name="line_edit_renovertr_2">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
@@ -5833,7 +5894,7 @@
                   <string>Boligtype</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_boligtype_2</cstring>
+                  <cstring>line_edit_boligtype_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5866,7 +5927,7 @@
                   <string>Eieform</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_eieform_2</cstring>
+                  <cstring>line_edit_eieform_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5899,7 +5960,7 @@
                   <string>Etasje</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_etasje_2</cstring>
+                  <cstring>line_edit_etasje_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5932,7 +5993,7 @@
                   <string>Byggeår</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_bygger_2</cstring>
+                  <cstring>line_edit_bygger_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5965,7 +6026,7 @@
                   <string>Soverom</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_soverom_2</cstring>
+                  <cstring>line_edit_soverom_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -5998,7 +6059,7 @@
                   <string>Rom</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_rom_2</cstring>
+                  <cstring>line_edit_rom_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6031,7 +6092,7 @@
                   <string>Primærrom</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_primrrom_2</cstring>
+                  <cstring>line_edit_primrrom_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6064,7 +6125,7 @@
                   <string>Bruttoareal</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_bruttoareal_2</cstring>
+                  <cstring>line_edit_bruttoareal_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6097,7 +6158,7 @@
                   <string>Energimerking</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_energimerking_2</cstring>
+                  <cstring>line_edit_energimerking_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6133,7 +6194,7 @@
                   <string>Tomteareal</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_tomteareal_2</cstring>
+                  <cstring>line_edit_tomteareal_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6163,6 +6224,9 @@
                  <property name="text">
                   <string>Visninger</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_views_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="16" column="1">
@@ -6176,6 +6240,9 @@
                 <widget class="QLabel" name="label_epost_sent_2">
                  <property name="text">
                   <string>E-post sent</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_email_sent_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6191,6 +6258,9 @@
                  <property name="text">
                   <string>Favorisert</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_favorite_click_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="17" column="1">
@@ -6204,6 +6274,9 @@
                 <widget class="QLabel" name="label_kalender_2">
                  <property name="text">
                   <string>Lagt til kalender</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_add_to_calendar_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6219,6 +6292,9 @@
                  <property name="text">
                   <string>Prospekt sett</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_prospect_viewed_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="18" column="1">
@@ -6232,6 +6308,9 @@
                 <widget class="QLabel" name="label_prospekt_bestilt_2">
                  <property name="text">
                   <string>Prospekt bestilt</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_prospect_ordered_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6266,7 +6345,7 @@
                   <string>FINN kode            </string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_finnkode_2</cstring>
+                  <cstring>line_edit_finnkode_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6330,7 +6409,7 @@
                   <string>Status</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_status_2</cstring>
+                  <cstring>line_edit_status_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6358,7 +6437,7 @@
                   <string>Referanse</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_referanse_2</cstring>
+                  <cstring>line_edit_referanse_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6397,7 +6476,7 @@
                   <string>Sist endret</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_sistendret_2</cstring>
+                  <cstring>line_edit_sistendret_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6430,7 +6509,7 @@
                   <string>Adresse</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_finn_adresse_2</cstring>
+                  <cstring>line_edit_finn_adresse_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6460,7 +6539,7 @@
                   <string>Prisantydning</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_prisantydning_2</cstring>
+                  <cstring>line_edit_prisantydning_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6490,7 +6569,7 @@
                   <string>Formuesverdi</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_formuesverdi_2</cstring>
+                  <cstring>line_edit_formuesverdi_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6523,7 +6602,7 @@
                   <string>Fellesgjeld</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_fellesgjeld_2</cstring>
+                  <cstring>line_edit_fellesgjeld_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6553,7 +6632,7 @@
                   <string>Felleskost/mnd</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_felleskostmnd_2</cstring>
+                  <cstring>line_edit_felleskostmnd_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6586,7 +6665,7 @@
                   <string>Omkostninger</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_omkostninger_2</cstring>
+                  <cstring>line_edit_omkostninger_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6611,7 +6690,7 @@
                   <string>Kommunale avg</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_kommunaleavg_2</cstring>
+                  <cstring>line_edit_kommunaleavg_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6633,7 +6712,7 @@
                   <string>Totalpris</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_totalpris_2</cstring>
+                  <cstring>line_edit_totalpris_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6663,7 +6742,7 @@
                   <string>Fellesformue</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_fellesformue_2</cstring>
+                  <cstring>line_edit_fellesformue_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6690,10 +6769,30 @@
                  <property name="text">
                   <string>Kvadratmeterpris</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_sqm_price_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="10" column="1">
                 <widget class="QLineEdit" name="line_edit_sqm_price_3">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="2">
+                <widget class="QLabel" name="label_renovertr_3">
+                 <property name="text">
+                  <string>Renovert år</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_renovertr_1</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="10" column="3">
+                <widget class="QLineEdit" name="line_edit_renovertr_3">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
@@ -6710,7 +6809,7 @@
                   <string>Boligtype</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_boligtype_2</cstring>
+                  <cstring>line_edit_boligtype_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6743,7 +6842,7 @@
                   <string>Eieform</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_eieform_2</cstring>
+                  <cstring>line_edit_eieform_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6776,7 +6875,7 @@
                   <string>Etasje</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_etasje_2</cstring>
+                  <cstring>line_edit_etasje_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6809,7 +6908,7 @@
                   <string>Byggeår</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_bygger_2</cstring>
+                  <cstring>line_edit_bygger_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6842,7 +6941,7 @@
                   <string>Soverom</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_soverom_2</cstring>
+                  <cstring>line_edit_soverom_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6875,7 +6974,7 @@
                   <string>Rom</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_rom_2</cstring>
+                  <cstring>line_edit_rom_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6908,7 +7007,7 @@
                   <string>Primærrom</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_primrrom_2</cstring>
+                  <cstring>line_edit_primrrom_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6941,7 +7040,7 @@
                   <string>Bruttoareal</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_bruttoareal_2</cstring>
+                  <cstring>line_edit_bruttoareal_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -6974,7 +7073,7 @@
                   <string>Energimerking</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_energimerking_2</cstring>
+                  <cstring>line_edit_energimerking_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -7010,7 +7109,7 @@
                   <string>Tomteareal</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_tomteareal_2</cstring>
+                  <cstring>line_edit_tomteareal_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -7040,6 +7139,9 @@
                  <property name="text">
                   <string>Visninger</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_views_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="16" column="1">
@@ -7053,6 +7155,9 @@
                 <widget class="QLabel" name="label_epost_sent_3">
                  <property name="text">
                   <string>E-post sent</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_email_sent_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -7068,6 +7173,9 @@
                  <property name="text">
                   <string>Favorisert</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_favorite_click_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="17" column="1">
@@ -7081,6 +7189,9 @@
                 <widget class="QLabel" name="label_kalender_3">
                  <property name="text">
                   <string>Lagt til kalender</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_add_to_calendar_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -7096,6 +7207,9 @@
                  <property name="text">
                   <string>Prospekt sett</string>
                  </property>
+                 <property name="buddy">
+                  <cstring>line_edit_prospect_viewed_1</cstring>
+                 </property>
                 </widget>
                </item>
                <item row="18" column="1">
@@ -7109,6 +7223,9 @@
                 <widget class="QLabel" name="label_prospekt_bestilt_3">
                  <property name="text">
                   <string>Prospekt bestilt</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_prospect_ordered_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -9161,6 +9278,7 @@
   <tabstop>line_edit_totalpris_2</tabstop>
   <tabstop>line_edit_fellesformue_2</tabstop>
   <tabstop>line_edit_sqm_price_2</tabstop>
+  <tabstop>line_edit_renovertr_2</tabstop>
   <tabstop>line_edit_boligtype_2</tabstop>
   <tabstop>line_edit_eieform_2</tabstop>
   <tabstop>line_edit_etasje_2</tabstop>
@@ -9192,6 +9310,7 @@
   <tabstop>line_edit_totalpris_3</tabstop>
   <tabstop>line_edit_fellesformue_3</tabstop>
   <tabstop>line_edit_sqm_price_3</tabstop>
+  <tabstop>line_edit_renovertr_3</tabstop>
   <tabstop>line_edit_boligtype_3</tabstop>
   <tabstop>line_edit_eieform_3</tabstop>
   <tabstop>line_edit_etasje_3</tabstop>
@@ -9213,6 +9332,7 @@
   <tabstop>push_button_instillinger</tabstop>
   <tabstop>push_button_hjelp</tabstop>
   <tabstop>push_button_avslutt</tabstop>
+  <tabstop>line_edit_renovertr_1</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

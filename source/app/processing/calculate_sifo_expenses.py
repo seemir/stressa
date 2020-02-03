@@ -15,7 +15,7 @@ from .engine import Process, Signal, ValidateFamily, ScrapeSifoBaseExpenses, Ext
     OutputOperation, OutputSignal, InputOperation
 
 
-class SifoProcessing(Process):
+class CalculateSifoExpenses(Process):
     """
     Process for the calculation of the SIFO expenses with shares of total expenses
 
@@ -254,7 +254,7 @@ class SifoProcessing(Process):
 
         """
         Assertor.assert_data_types([data], [dict])
-        total_shares = Divide(data, self.total, "id: Calculate Shares of Total Monthly Expenses")
+        total_shares = Divide(data, self.total, "Calculate Shares of Total Monthly Expenses")
         self.add_node(total_shares)
 
         self.add_transition(self.get_signal("total_monthly_expenses"), total_shares,
@@ -275,7 +275,7 @@ class SifoProcessing(Process):
 
         """
         output_operation = OutputOperation(
-            desc="id: SIFO Base Expenses and Shares of Total Monthly Expenses")
+            desc="SIFO Base Expenses and Shares of Total Monthly Expenses")
         self.add_node(output_operation)
 
         self.add_transition(self.get_signal("share_of_total"), output_operation)

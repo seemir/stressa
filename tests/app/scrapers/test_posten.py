@@ -56,7 +56,7 @@ class TestPosten:
 
         """
         posten = Posten("0010")
-        assert UUID(str(posten.id))
+        assert UUID(str(posten.id_))
 
     @staticmethod
     @pt.mark.parametrize("zip_code", ["0010", "0018", "0021", "0026", "0027"])

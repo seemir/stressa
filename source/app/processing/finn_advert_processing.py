@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Module for the processing of Finn information
+Module for the processing of Finn advert information
 
 """
 
@@ -10,13 +10,14 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Profiling
 
-from .engine import Process, InputOperation, Signal, ScrapeFinnAdInfo, ScrapeFinnOwnershipHistory, \
+from .engine import Process, InputOperation, Signal, ScrapeFinnAdvertInfo, \
+    ScrapeFinnOwnershipHistory, \
     ScrapeFinnStatisticsInfo, Multiplex, OutputSignal, OutputOperation, ValidateFinnCode
 
 
-class FinnProcessing(Process):
+class FinnAdvertProcessing(Process):
     """
-    Process for getting Finn information
+    Process for processing Finn advert information
 
     """
 
@@ -27,7 +28,7 @@ class FinnProcessing(Process):
         Parameters
         ----------
         finn_code   : str
-                      Finn-code to be search finn-ad information
+                      Finn-code to be search finn-advert information
 
         """
         super().__init__(name=self.__class__.__name__)
@@ -36,14 +37,14 @@ class FinnProcessing(Process):
         self._finn_code = self.input_operation({"finn_code": finn_code})
         self._validated_finn_code = self.validate_finn_code(self.finn_code)
 
-        self._finn_ad_info = None
+        self._finn_advert_info = None
         self._finn_ownership_history = None
         self._finn_statistics_info = None
-        self.run_parallel([self.scrape_finn_ad_info, self.scrape_finn_statistics_info,
+        self.run_parallel([self.scrape_finn_advert_info, self.scrape_finn_statistics_info,
                            self.scrape_finn_ownership_history])
 
         self._multiplex_info = self.multiplex(
-            [self.finn_ad_info, self.finn_ownership_history, self.finn_statistics_info])
+            [self.finn_advert_info, self.finn_ownership_history, self.finn_statistics_info])
         self.output_operation()
         self.end_process()
 
@@ -74,22 +75,22 @@ class FinnProcessing(Process):
         return self._validated_finn_code
 
     @property
-    def finn_ad_info(self):
+    def finn_advert_info(self):
         """
-        finn ad info getter
+        finn advert info getter
 
         Returns
         -------
         out     : dict
-                  active finn ad info in object
+                  active finn advert info in object
 
         """
-        return self._finn_ad_info
+        return self._finn_advert_info
 
     @property
     def finn_ownership_history(self):
         """
-        finn ad info getter
+        finn advert info getter
 
         Returns
         -------
@@ -142,6 +143,7 @@ class FinnProcessing(Process):
 
         """
         Assertor.assert_data_types([data], [dict])
+
         input_operation = InputOperation("FINN Code")
         self.add_node(input_operation)
 
@@ -181,24 +183,29 @@ class FinnProcessing(Process):
         return validated_finn_code
 
     @Profiling
-    def scrape_finn_ad_info(self):
+    def scrape_finn_advert_info(self):
         """
-        method for scraping finn ad info in finn-processing
+        method for scraping finn advert info in finn-processing
 
         """
-        scrape_finn_ad_operation = ScrapeFinnAdInfo(self._validated_finn_code["finn_code"])
-        self.add_node(scrape_finn_ad_operation)
+        try:
+            scrape_finn_ad_operation = ScrapeFinnAdvertInfo(self._validated_finn_code["finn_code"])
+            self.add_node(scrape_finn_ad_operation)
 
-        self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_ad_operation,
-                            label="thread")
+            self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_ad_operation,
+                                label="thread")
 
-        finn_ad_info = scrape_finn_ad_operation.run()
-        finn_ad_info_signal = Signal(finn_ad_info, "FINN AD Information", prettify_keys=True)
-        self.add_signal(finn_ad_info_signal, "finn_ad_info")
+            finn_ad_info = scrape_finn_ad_operation.run()
+            finn_ad_info_signal = Signal(finn_ad_info, "FINN Advert Information",
+                                         prettify_keys=True)
+            self.add_signal(finn_ad_info_signal, "finn_ad_info")
 
-        self.add_transition(scrape_finn_ad_operation, finn_ad_info_signal,
-                            label="thread")
-        self._finn_ad_info = finn_ad_info
+            self.add_transition(scrape_finn_ad_operation, finn_ad_info_signal,
+                                label="thread")
+            self._finn_advert_info = finn_ad_info
+        except Exception as scrape_finn_ad_info_exception:
+            self.exception_queue.put(scrape_finn_ad_info_exception)
+            raise scrape_finn_ad_info_exception
 
     @Profiling
     def scrape_finn_ownership_history(self):
@@ -206,20 +213,24 @@ class FinnProcessing(Process):
         method for scraping finn ownership history in finn-processing
 
         """
-        scrape_finn_owner_history = ScrapeFinnOwnershipHistory(
-            self._validated_finn_code["finn_code"])
-        self.add_node(scrape_finn_owner_history)
+        try:
+            scrape_finn_owner_history = ScrapeFinnOwnershipHistory(
+                self._validated_finn_code["finn_code"])
+            self.add_node(scrape_finn_owner_history)
 
-        self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_owner_history,
-                            label="thread")
+            self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_owner_history,
+                                label="thread")
 
-        finn_owner_history = scrape_finn_owner_history.run()
-        finn_owner_history_signal = Signal(finn_owner_history, "FINN Owner History")
-        self.add_signal(finn_owner_history_signal, "finn_owner_history")
+            finn_owner_history = scrape_finn_owner_history.run()
+            finn_owner_history_signal = Signal(finn_owner_history, "FINN Owner History")
+            self.add_signal(finn_owner_history_signal, "finn_owner_history")
 
-        self.add_transition(scrape_finn_owner_history, finn_owner_history_signal,
-                            label="thread")
-        self._finn_ownership_history = finn_owner_history
+            self.add_transition(scrape_finn_owner_history, finn_owner_history_signal,
+                                label="thread")
+            self._finn_ownership_history = finn_owner_history
+        except Exception as scrape_finn_ownership_history_exception:
+            self.exception_queue.put(scrape_finn_ownership_history_exception)
+            raise scrape_finn_ownership_history_exception
 
     @Profiling
     def scrape_finn_statistics_info(self):
@@ -227,20 +238,24 @@ class FinnProcessing(Process):
         method for scraping finn statistics info in finn-processing
 
         """
-        scrape_finn_stat_operation = ScrapeFinnStatisticsInfo(
-            self._validated_finn_code["finn_code"])
-        self.add_node(scrape_finn_stat_operation)
+        try:
+            scrape_finn_stat_operation = ScrapeFinnStatisticsInfo(
+                self._validated_finn_code["finn_code"])
+            self.add_node(scrape_finn_stat_operation)
 
-        self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_stat_operation,
-                            label="thread")
+            self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_stat_operation,
+                                label="thread")
 
-        finn_stat_info = scrape_finn_stat_operation.run()
-        finn_stat_info_signal = Signal(finn_stat_info, "FINN Statistics Information")
-        self.add_signal(finn_stat_info_signal, "finn_stat_info")
+            finn_stat_info = scrape_finn_stat_operation.run()
+            finn_stat_info_signal = Signal(finn_stat_info, "FINN Statistics Information")
+            self.add_signal(finn_stat_info_signal, "finn_stat_info")
 
-        self.add_transition(scrape_finn_stat_operation, finn_stat_info_signal,
-                            label="thread")
-        self._finn_statistics_info = finn_stat_info
+            self.add_transition(scrape_finn_stat_operation, finn_stat_info_signal,
+                                label="thread")
+            self._finn_statistics_info = finn_stat_info
+        except Exception as scrape_finn_statistics_info_exception:
+            self.exception_queue.put(scrape_finn_statistics_info_exception)
+            raise scrape_finn_statistics_info_exception
 
     @Profiling
     def multiplex(self, signals: list):
@@ -279,7 +294,7 @@ class FinnProcessing(Process):
         final method call in process
 
         """
-        output_operation = OutputOperation(desc="id: Multiplexed Finn Information")
+        output_operation = OutputOperation(desc="Multiplexed Finn Information")
         self.add_node(output_operation)
         self.add_transition(self.get_signal("multiplexed_data"), output_operation)
 
@@ -287,4 +302,3 @@ class FinnProcessing(Process):
                                      prettify_keys=True)
         self.add_signal(output_signal, "output_multiplex_data")
         self.add_transition(output_operation, output_signal)
-        return self.multiplex_info

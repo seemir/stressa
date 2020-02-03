@@ -38,7 +38,7 @@ class Portalen(Scraper):
         super().__init__()
         self._browser = None
         LOGGER.success(
-            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
 
     @staticmethod
     def response():

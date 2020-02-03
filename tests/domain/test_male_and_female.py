@@ -112,4 +112,4 @@ class TestMaleAndFemale:
 
         """
         for person in [Male(), Female()]:
-            assert UUID(str(person.id))
+            assert UUID(str(person.id_))

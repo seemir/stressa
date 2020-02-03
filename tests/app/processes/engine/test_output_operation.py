@@ -52,7 +52,7 @@ class TestOutputOperation:
 
         """
         assert self.output.name == self.output.__class__.__name__
-        assert self.output.desc == self.desc
+        assert self.output.desc == "id: " + self.desc
 
     def test_output_run_method(self):
         """

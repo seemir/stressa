@@ -174,8 +174,8 @@ class Model(ABC):
             self.set_combo_box(combo_box)
 
     @pyqtSlot()
-    def update_line_edits(self, line_edit_name: str, line_edits: list, obj: object, method: str,
-                          postfix: str = None):
+    def update_line_edits(self, line_edit_name: str, line_edits: list, obj: object = None,
+                          method: str = None, postfix: str = None, data: dict = None):
         """
         method for updating the value of multiple line_edits
 
@@ -191,16 +191,19 @@ class Model(ABC):
                           name of method in obj to use to get values to update line_edits
         postfix         : str
                           index if used in naming of line_edits
+        data            : dict
+                          dictionary with data to set if no object or method used
 
         """
         postfix = postfix if postfix else ""
         line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name + postfix)
         try:
             Assertor.assert_data_types([line_edit_name, line_edits, obj, method, postfix],
-                                       [str, list, object, str, (type(None), str)])
+                                       [str, list, (type(None), object), (type(None), str),
+                                        (type(None), str), (type(None), str)])
             line_edit_text = line_edit.text().strip()
             if line_edit_text and line_edit_text not in self.data.values():
-                self.set_line_edits(line_edit_text, line_edits, obj, method, postfix)
+                self.set_line_edits(line_edit_text, line_edits, obj, method, postfix, data)
             elif line_edit_text and line_edit_text in self.data.values():
                 self.get_line_edits(line_edits, postfix)
             else:

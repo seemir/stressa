@@ -59,10 +59,10 @@ class TestSignal:
         """
         assert self.signal.data == self.data
         assert self.signal.desc == self.desc
-        assert self.signal.keys == self.data.keys()
+        assert self.signal.keys == Signal.remove_quotation(list(self.data.keys()))
 
         signal1 = Signal(self.signal, self.desc)
         signal2 = Signal(self.desc, self.desc)
 
-        assert signal1.keys == self.signal.__dict__.keys()
+        assert signal1.keys == Signal.remove_quotation(list(self.signal.__dict__.keys()))
         assert not signal2.keys

@@ -42,7 +42,7 @@ class Ssb(Scraper):
             self._payload = SsbPayload() if not payload else payload
             self._browser = None
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
         except Exception as ssb_exception:
             LOGGER.exception(ssb_exception)
             raise ssb_exception

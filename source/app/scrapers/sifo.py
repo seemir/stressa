@@ -39,7 +39,7 @@ class Sifo(Scraper):
             Assertor.assert_data_types([family], [Family])
             self._family = family
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id))
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
         except Exception as sifo_exception:
             LOGGER.exception(sifo_exception)
             raise sifo_exception
@@ -122,7 +122,7 @@ class Sifo(Scraper):
 
             sifo_expenses = {}
             if include_id:
-                sifo_expenses.update({'_id': self.family.id})
+                sifo_expenses.update({'_id': self.family.id_})
             sifo_expenses.update(dict(zip(keys, values)))
 
             LOGGER.success("'{}' successfully retrieved".format(self.sifo_base_expenses.__name__))

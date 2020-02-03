@@ -32,7 +32,7 @@ class Multiplex(Operation):
         """
         Assertor.assert_data_types([signals, desc], [list, str])
         self.name = self.__class__.__name__
-        super().__init__(name=self.name, desc=desc)
+        super().__init__(name=self.name, desc="id: {}".format(desc))
         self.signals = signals
 
     def run(self):
@@ -47,5 +47,6 @@ class Multiplex(Operation):
         """
         signals = {}
         for signal in self.signals:
-            signals.update(**signal)
+            if signal:
+                signals.update(signal)
         return signals

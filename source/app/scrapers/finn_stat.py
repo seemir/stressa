@@ -13,7 +13,7 @@ from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from bs4 import BeautifulSoup
 
-from source.util import LOGGER, TimeOutError, NoConnectionError, NotFoundError
+from source.util import LOGGER, TimeOutError, NoConnectionError
 from source.domain import Amount
 
 from .settings import FINN_STAT_URL, TIMEOUT
@@ -82,25 +82,27 @@ class FinnStat(Finn):
                 "trying to retrieve '{}' for -> '{}'".format(self.housing_stat_information.__name__,
                                                              self.finn_code))
             response = self.stat_response()
-            if not response:
-                raise NotFoundError("'{}' is an invalid Finn code".format(self.finn_code))
 
             stat_soup = BeautifulSoup(response.content, "lxml")
 
             info = {}
-            sq_price = json.loads(stat_soup.find("script", attrs={"id": "area-prices"}).text)[
-                "price"]
-            info.update({"sqm_price": Amount.format_amount(sq_price) + " kr/m²"})
+            try:
+                sq_price = json.loads(stat_soup.find("script", attrs={"id": "area-prices"}).text)[
+                    "price"]
+                info.update({"sqm_price": Amount.format_amount(sq_price) + " kr/m²"})
 
-            statistics = json.loads(
-                stat_soup.find("script", attrs={"id": "ad-summary"}).text)[self.finn_code]
+                statistics = json.loads(
+                    stat_soup.find("script", attrs={"id": "ad-summary"}).text)[self.finn_code]
 
-            for prop, value in statistics.items():
-                info.update({prop.lower(): Amount.format_amount(value)})
+                for prop, value in statistics.items():
+                    info.update({prop.lower(): Amount.format_amount(value)})
 
-            LOGGER.success(
-                "'{}' successfully retrieved".format(self.housing_stat_information.__name__))
-            return info
+                LOGGER.success(
+                    "'{}' successfully retrieved".format(self.housing_stat_information.__name__))
+                return info
+            except AttributeError as no_ownership_history_exception:
+                LOGGER.debug("No housing statistics found!, exited with {}".format(
+                    no_ownership_history_exception))
         except Exception as housing_stat_information_exception:
             LOGGER.exception(housing_stat_information_exception)
             raise housing_stat_information_exception

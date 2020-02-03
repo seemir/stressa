@@ -52,7 +52,7 @@ class TestInputOperation:
 
         """
         assert self.input.name == self.input.__class__.__name__
-        assert self.input.desc == self.desc
+        assert self.input.desc == "id: " + self.desc
 
     def test_input_run_method(self):
         """

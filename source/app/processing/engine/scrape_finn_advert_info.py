@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module with logic for the Scrape Finn Ad information
+Module with logic for the Scrape Finn advert information
 
 """
 
@@ -13,9 +13,9 @@ from source.util import Assertor
 from .operation import Operation
 
 
-class ScrapeFinnAdInfo(Operation):
+class ScrapeFinnAdvertInfo(Operation):
     """
-    Operation that scrapes Finn Ad information
+    Operation that scrapes Finn advert information
 
     """
 
@@ -26,13 +26,13 @@ class ScrapeFinnAdInfo(Operation):
         Parameters
         ----------
         finn_code       : str
-                          finn_code for ad to scrape information from
+                          finn_code for advert to scrape information from
 
         """
         Assertor.assert_data_types([finn_code], [str])
         self.name = self.__class__.__name__
         super().__init__(name=self.name,
-                         desc="from: '{}\\<[finn_code]\\>' \\n id: Scrape FINN Ad Info".format(
+                         desc="from: '{}\\<[finn_code]\\>' \\n id: Scrape FINN Advert Info".format(
                              FINN_AD_URL))
         self.finn_code = finn_code
 
@@ -43,7 +43,7 @@ class ScrapeFinnAdInfo(Operation):
         Returns
         -------
         dict        : dict
-                      dictionary with all finn ad information
+                      dictionary with all finn advert information
 
         """
         finn_ad_info = FinnAd(self.finn_code)

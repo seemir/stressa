@@ -61,7 +61,7 @@ class TestDivide:
         divide = Divide(self.numerator, self.denominator, self.desc)
         assert divide.numerator == self.numerator
         assert divide.denominator == self.denominator
-        assert divide.desc == self.desc
+        assert divide.desc == "id: " + self.desc
 
     def test_divide_run_method(self):
         """

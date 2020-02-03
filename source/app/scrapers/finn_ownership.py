@@ -86,36 +86,35 @@ class FinnOwnership(Finn):
             owner_soup = BeautifulSoup(self.ownership_response().content, "lxml")
             history_headers = None
             history_results = []
-            keys = ["adresse", "post_nr"]
+            keys = []
             values = []
-            for address_val in owner_soup.find_all("p", attrs={"class": "u-t3"}):
-                for add in address_val.text.split("\n"):
-                    if add:
-                        values.append(add.strip())
-
-            for geo_val in owner_soup.find_all("dl", attrs={"class": "definition-list u-mb32"}):
-                for i, val in enumerate(geo_val.text.split("\n")):
-                    if val:
-                        if i % 2 != 0:
+            try:
+                for geo_val in owner_soup.find_all("dl", attrs={"class": "definition-list u-mb32"}):
+                    for i, val in enumerate(geo_val.text.split("\n")):
+                        if i % 2 != 0 and val:
                             keys.append(val.strip().lower())
-                        else:
+                        elif val:
                             values.append(val.strip())
 
-            for table_row in owner_soup.find("table",
-                                             attrs={"class": "data-table u-mb32"}).find_all("tr"):
-                if not history_headers:
-                    history_headers = [head.text for head in table_row.find_all("th")]
-                row = [tab_row.text.strip() for tab_row in table_row.find_all("td") if
-                       tab_row.text.strip()]
-                if row:
-                    history_results.append(row)
+                for table_row in owner_soup.find(
+                        "table", attrs={"class": "data-table u-mb32"}).find_all("tr"):
+                    if not history_headers:
+                        history_headers = [head.text for head in table_row.find_all("th")]
+                    row = [tab_row.text.strip() for tab_row in table_row.find_all("td") if
+                           tab_row.text.strip()]
+                    if row:
+                        history_results.append(row)
 
-            info = dict(zip(keys, values))
-            info.update({"historikk": DataFrame(history_results, columns=history_headers)})
+                info = dict(zip(keys, values))
+                info.update({"historikk": DataFrame(history_results, columns=history_headers)})
 
-            LOGGER.success(
-                "'{}' successfully retrieved".format(self.housing_ownership_information.__name__))
-            return info
+                LOGGER.success(
+                    "'{}' successfully retrieved".format(
+                        self.housing_ownership_information.__name__))
+                return info
+            except AttributeError as no_ownership_history_exception:
+                LOGGER.debug("No ownership history found!, exited with {}".format(
+                    no_ownership_history_exception))
         except Exception as housing_owner_information_exception:
             LOGGER.exception(housing_owner_information_exception)
             raise housing_owner_information_exception

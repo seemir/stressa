@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Test module for the SifoProcessing process
+Test module for the CalculateSifoExpenses process
 
 """
 
@@ -11,12 +11,12 @@ import pytest as pt
 
 from prettytable import PrettyTable
 
-from source.app import SifoProcessing, Process, Signal
+from source.app import CalculateSifoExpenses, Process, Signal
 
 
-class TestSifoProcessing:
+class TestCalculateSifoExpenses:
     """
-    Test cases for the SifoProcessing Process
+    Test cases for the CalculateSifoExpenses Process
 
     """
 
@@ -29,15 +29,15 @@ class TestSifoProcessing:
         cls.data = {"person_1": {"alder_1": "20-50", "kjonn_1": "Mann"},
                     "person_2": {"alder_2": "20-50", "gravid_2": "Ja", "kjonn_2": "Kvinne"}}
 
-    def test_sifo_processing_is_instance_of_process(self):
+    def test_calculate_sifo_expenses_is_instance_of_process(self):
         """
-        Test that SifoProcessing is instance and subclass of SifoProcessing
+        Test that CalculateSifoExpenses is instance and subclass of SifoProcessing
 
         """
-        sifo_processing = SifoProcessing(self.data)
-        for parent in [SifoProcessing, Process]:
-            assert isinstance(sifo_processing, parent)
-            assert issubclass(sifo_processing.__class__, parent)
+        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
+        for parent in [CalculateSifoExpenses, Process]:
+            assert isinstance(calculate_sifo_expenses, parent)
+            assert issubclass(calculate_sifo_expenses.__class__, parent)
 
     @staticmethod
     def test_class_variables():
@@ -45,26 +45,26 @@ class TestSifoProcessing:
         Test that all the class variables are correct in the object
 
         """
-        assert isinstance(SifoProcessing.start, float)
-        assert isinstance(SifoProcessing.profiling.__class__, PrettyTable.__class__)
+        assert isinstance(CalculateSifoExpenses.start, float)
+        assert isinstance(CalculateSifoExpenses.profiling.__class__, PrettyTable.__class__)
 
     @staticmethod
     @pt.mark.parametrize('invalid_data', [True, 'test', 90210, 90210.0, ('test', 'test')])
     def test_invalid_args_raises_typeerror(invalid_data):
         """
-        Test that SifoProcessing object raises TypeError if data is invalid
+        Test that CalculateSifoExpenses object raises TypeError if data is invalid
 
         """
         with pt.raises(TypeError):
-            SifoProcessing(invalid_data)
+            CalculateSifoExpenses(invalid_data)
 
     def test_arguments_gets_set_in_object(self):
         """
-        Test that arguments gets set in the SifoProcessing object
+        Test that arguments gets set in the CalculateSifoExpenses object
 
         """
-        sifo_processing = SifoProcessing(self.data)
-        assert sifo_processing.data == {"data": self.data}
+        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
+        assert calculate_sifo_expenses.data == {"data": self.data}
 
     def test_set_signal_method(self):
         """
@@ -76,19 +76,19 @@ class TestSifoProcessing:
                     "person_3": {"alder_3": "6-9", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
                     "person_4": {"alder_4": "3", "barnehage_4": "Ja", "kjonn_4": "Mann"}}
         signal = Signal(new_data, "new_data")
-        sifo_processing = SifoProcessing(self.data)
-        sifo_processing.signal = {"new_data": signal}
-        assert sifo_processing.signal == {"new_data": signal}
+        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
+        calculate_sifo_expenses.signal = {"new_data": signal}
+        assert calculate_sifo_expenses.signal == {"new_data": signal}
 
     @pt.mark.parametrize('invalid_signal', [True, 'test', 90210, 90210.0, ('test', 'test')])
     def test_invalid_signals_raises_typeerror(self, invalid_signal):
         """
-        Test that SifoProcessing object raises TypeError if signal is invalid
+        Test that CalculateSifoExpenses object raises TypeError if signal is invalid
 
         """
-        sifo_processing = SifoProcessing(self.data)
+        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
         with pt.raises(TypeError):
-            sifo_processing.signal = invalid_signal
+            calculate_sifo_expenses.signal = invalid_signal
 
     def test_get_signal_method(self):
         """
@@ -100,20 +100,21 @@ class TestSifoProcessing:
                     "person_3": {"alder_3": "6-9", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
                     "person_4": {"alder_4": "3", "barnehage_4": "Ja", "kjonn_4": "Mann"}}
         signal = Signal(new_data, "new_data")
-        sifo_processing = SifoProcessing(self.data)
-        sifo_processing.signal = {"new_data": signal}
-        assert sifo_processing.get_signal("new_data") == signal
-        assert sifo_processing.get_signal("new_data").keys == new_data.keys()
+        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
+        calculate_sifo_expenses.signal = {"new_data": signal}
+        assert calculate_sifo_expenses.get_signal("new_data") == signal
+        assert calculate_sifo_expenses.get_signal("new_data").keys == Signal.remove_quotation(
+            list(new_data.keys()))
 
     @pt.mark.parametrize('invalid_base_expenses', [True, 'test', 90210, 90210.0, ('test', 'test')])
     def test_invalid_base_expenses_raises_typeerror(self, invalid_base_expenses):
         """
-        Test that SifoProcessing object raises TypeError if base_expenses is invalid
+        Test that CalculateSifoExpenses object raises TypeError if base_expenses is invalid
 
         """
-        sifo_processing = SifoProcessing(self.data)
+        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
         with pt.raises(TypeError):
-            sifo_processing.base_expenses = invalid_base_expenses
+            calculate_sifo_expenses.base_expenses = invalid_base_expenses
 
     @staticmethod
     def test_get_signal_method_with_none():
@@ -125,8 +126,8 @@ class TestSifoProcessing:
                     "person_2": {"alder_2": "20-50", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
                     "person_3": {"alder_3": "6-9", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
                     "person_4": {"alder_4": "3", "barnehage_4": "Ja", "kjonn_4": "Mann"}}
-        sifo_processing = SifoProcessing(new_data)
-        assert not sifo_processing.get_signal("new_data")
+        calculate_sifo_expenses = CalculateSifoExpenses(new_data)
+        assert not calculate_sifo_expenses.get_signal("new_data")
 
     def test_base_expenses_setter(self):
         """
@@ -139,9 +140,9 @@ class TestSifoProcessing:
                          "husholdsart_1": "370 kr", "mobler_1": "360 kr", "medier_1": "2 240 kr",
                          "biler_1": "0 kr", "barnehage_1": "0 kr", "sfo_1": "0 kr",
                          "sumhusholdning_1": "3 240 kr", "totalt_1": "9 510 kr", }
-        sifo_processing = SifoProcessing(self.data)
-        sifo_processing.base_expenses = base_expenses
-        assert sifo_processing.base_expenses == base_expenses
+        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
+        calculate_sifo_expenses.base_expenses = base_expenses
+        assert calculate_sifo_expenses.base_expenses == base_expenses
 
     @staticmethod
     def test_base_expenses_shares_getter():
@@ -157,5 +158,5 @@ class TestSifoProcessing:
                                 "husholdsart": "3.89 %", "mobler": "3.79 %", "medier": "23.55 %",
                                 "biler": "0.00 %", "barnehage": "0.00 %", "sfo": "0.00 %",
                                 "sumhusholdning": "34.07 %", "totalt": "100.00 %"}
-        sifo_processing = SifoProcessing(data)
-        assert sifo_processing.expenses_shares == base_expenses_shares
+        calculate_sifo_expenses = CalculateSifoExpenses(data)
+        assert calculate_sifo_expenses.expenses_shares == base_expenses_shares
