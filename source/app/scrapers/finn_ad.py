@@ -82,13 +82,11 @@ class FinnAd(Finn):
                                                              self.finn_code))
             response = self.ad_response()
             if not response:
-                raise NotFoundError("'{}' is an invalid Finn code".format(self.finn_code))
+                raise NotFoundError(
+                    "Not found! '{}' may be an invalid Finn code".format(self.finn_code))
 
             ad_soup = BeautifulSoup(response.content, "lxml")
-
             address = ad_soup.find("p", attrs={"class": "u-caption"})
-            if not address:
-                raise NotFoundError("'{}' is an invalid Finn code".format(self.finn_code))
 
             price = "".join(
                 price.text for price in ad_soup.find_all("span", attrs={"class": "u-t3"})

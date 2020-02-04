@@ -36,7 +36,7 @@ class Finn(Scraper):
                        Finn-code to be validated
 
         """
-        valid_finn_code = re.compile("^1[0-9]{8}").search(finn_code)
+        valid_finn_code = re.compile("^1[0-9]{7,8}$").search(finn_code)
         if not valid_finn_code:
             raise NotFoundError("'{}' is an invalid Finn code".format(finn_code))
 

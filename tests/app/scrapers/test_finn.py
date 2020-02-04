@@ -49,7 +49,7 @@ class TestFinn:
         with pt.raises(TypeError):
             Finn(invalid_finn_code_types)
 
-    @pt.mark.parametrize("invalid_finn_code", ["14485777", "244857770", "24485777a"])
+    @pt.mark.parametrize("invalid_finn_code", ["1448577", "2448577701", "24485777a"])
     def test_validate_finn_code_method(self, invalid_finn_code):
         """
         Test that invalid finn_code raises NotFoundError

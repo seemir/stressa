@@ -82,11 +82,9 @@ class FinnStat(Finn):
                 "trying to retrieve '{}' for -> '{}'".format(self.housing_stat_information.__name__,
                                                              self.finn_code))
             response = self.stat_response()
-
-            stat_soup = BeautifulSoup(response.content, "lxml")
-
             info = {}
             try:
+                stat_soup = BeautifulSoup(response.content, "lxml")
                 sq_price = json.loads(stat_soup.find("script", attrs={"id": "area-prices"}).text)[
                     "price"]
                 info.update({"sqm_price": Amount.format_amount(sq_price) + " kr/m²"})

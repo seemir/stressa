@@ -13,7 +13,7 @@ from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 from bs4 import BeautifulSoup
 from pandas import DataFrame
 
-from source.util import LOGGER, TimeOutError, NoConnectionError, NotFoundError
+from source.util import LOGGER, TimeOutError, NoConnectionError
 
 from .settings import FINN_OWNER_URL, TIMEOUT
 from .finn import Finn
@@ -51,9 +51,6 @@ class FinnOwnership(Finn):
             try:
                 owner_response = self.browser.get(FINN_OWNER_URL + "{}".format(self.finn_code),
                                                   timeout=TIMEOUT)
-                if not owner_response:
-                    raise NotFoundError("'{}' is an invalid Finn code".format(self.finn_code))
-
                 owner_status_code = owner_response.status_code
                 LOGGER.info(
                     "HTTP status code -> OWNERSHIP HISTORY: "
@@ -83,12 +80,12 @@ class FinnOwnership(Finn):
             LOGGER.info(
                 "trying to retrieve '{}' for -> '{}'".format(
                     self.housing_ownership_information.__name__, self.finn_code))
-            owner_soup = BeautifulSoup(self.ownership_response().content, "lxml")
             history_headers = None
             history_results = []
             keys = []
             values = []
             try:
+                owner_soup = BeautifulSoup(self.ownership_response().content, "lxml")
                 for geo_val in owner_soup.find_all("dl", attrs={"class": "definition-list u-mb32"}):
                     for i, val in enumerate(geo_val.text.split("\n")):
                         if i % 2 != 0 and val:

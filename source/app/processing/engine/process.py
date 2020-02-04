@@ -69,18 +69,15 @@ class Process(Dot, ABC):
         for thread in threads:
             thread.join()
 
-        if self.threading_exception():
-            raise self.threading_exception()
+        self.threading_exception()
 
     def threading_exception(self):
         """
         Method for retrieving any exceptions caused by any parallel running threads
 
         """
-        exception = None
         if not self.exception_queue.empty():
-            exception = self.exception_queue.get()
-        return exception
+            raise self.exception_queue.get()
 
     @abstractmethod
     def __init__(self, name: str):
