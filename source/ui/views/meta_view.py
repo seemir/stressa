@@ -61,10 +61,32 @@ class MetaView(QDialog):
 
         """
         try:
-            metadata = self.parent.sifo_model
+            meta_data = self.get_all_meta_data()
             self.ui.plain_text_edit_meta_data.setPlainText(
-                json.dumps(metadata.data, indent=2) if metadata else None)
+                json.dumps(meta_data if meta_data else {}, indent=2))
             self.exec_()
         except Exception as metadata_error:
             self.parent.error.show_error(metadata_error)
             self.parent.error.exec_()
+
+    def get_all_meta_data(self):
+        """
+        method for getting all the metadata in all models
+
+        Returns
+        -------
+        out     : dict
+                  dictionary with all metadata
+
+        """
+        models = {"_mortgage_model": "lane_informasjon", "_sifo_model": "sifo_informasjon",
+                  "_finn_model": "finn_informasjon"}
+        meta_data = {}
+        attr = [str(key) for key in list(self.parent.__dict__.keys())]
+        for model, name in models.items():
+            if model in attr:
+                if getattr(self.parent, model).data:
+                    meta_data.update({name: getattr(self.parent, model).data})
+        if "_home_model" in attr:
+            self.parent.home_model.data = meta_data
+        return meta_data

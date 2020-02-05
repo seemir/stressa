@@ -19,6 +19,7 @@ from source.ui.models import MortgageModel, FinnModel, HomeModel
 
 from .error_view import ErrorView
 from .sifo_view import SifoView
+from .meta_view import MetaView
 
 from . import resources
 
@@ -43,21 +44,25 @@ class HomeView(QMainWindow):
 
         self._error = ErrorView(self)
         self._sifo_view = SifoView(self)
+        self._meta_view = MetaView(self)
 
+        self._sifo_model = self.sifo_view.sifo_model
         self._mortgage_model = MortgageModel(self)
         self._finn_model = FinnModel(self)
-        self._home_model = HomeModel(self)
 
         self._mortgage_model.mortgage_info()
         self._finn_model.finn_info()
 
         self.ui.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
+
         self.ui.push_button_finn_1.clicked.connect(
             lambda: self.finn_model.open_finn_url("finnkode_1"))
-        self.ui.push_button_finn_2.clicked.connect(
-            lambda: self.finn_model.open_finn_url("finnkode_2"))
-        self.ui.push_button_finn_3.clicked.connect(
-            lambda: self.finn_model.open_finn_url("finnkode_3"))
+        self.ui.push_button_hent_finn_data_1.clicked.connect(
+            lambda: self.finn_model.add_finn_info("_1"))
+
+        self.ui.push_button_home_meta_data.clicked.connect(self._meta_view.show)
+
+        self._home_model = HomeModel(self)
         self.ui.push_button_tom_skjema.clicked.connect(self.home_model.clear_all)
 
     @property
@@ -113,6 +118,19 @@ class HomeView(QMainWindow):
         return self._sifo_view
 
     @property
+    def sifo_model(self):
+        """
+        SifoModel getter
+
+        Returns
+        -------
+        out     : SifoModel
+                  Active SifoModel in the SifoView
+
+        """
+        return self._sifo_model
+
+    @property
     def error(self):
         """
         ErrorView getter
@@ -120,7 +138,20 @@ class HomeView(QMainWindow):
         Returns
         -------
         out     : QObject
-                  active ErrorView class
+                  active ErrorView in class
 
         """
         return self._error
+
+    @property
+    def meta_view(self):
+        """
+        MetaView getter
+
+        Returns
+        -------
+        out     : QObject
+                  active MetaView class
+
+        """
+        return self._meta_view

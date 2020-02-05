@@ -24,6 +24,7 @@ class HomeModel(Model):
     def __init__(self, parent):
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QObject])
+        self.data = self.parent.meta_view.get_all_meta_data()
 
     def clear_all(self):
         """

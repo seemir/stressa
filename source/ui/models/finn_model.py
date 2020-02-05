@@ -51,11 +51,7 @@ class FinnModel(Model):
 
         """
         self.parent.ui.line_edit_finnkode_1.editingFinished.connect(
-            lambda: self.add_finn_info("_1"))
-        self.parent.ui.line_edit_finnkode_2.editingFinished.connect(
-            lambda: self.add_finn_info("_2"))
-        self.parent.ui.line_edit_finnkode_3.editingFinished.connect(
-            lambda: self.add_finn_info("_3"))
+            lambda: self.clear_finn_info("_1"))
 
     @pyqtSlot()
     def add_finn_info(self, postfix):
@@ -74,7 +70,7 @@ class FinnModel(Model):
                 finn_processing = FinnAdvertProcessing(finn_code)
                 self.set_line_edits("finnkode", self._finn_keys, postfix=postfix,
                                     data=finn_processing.multiplex_info)
-                finn_processing.print_pdf()
+                # finn_processing.print_pdf()
             elif finn_code and finn_code in self.data.values():
                 pass
             else:
@@ -86,6 +82,22 @@ class FinnModel(Model):
             self.parent.error.show_error(finn_processing_error, self.data)
             self.parent.error.exec_()
             getattr(self.parent.ui, "line_edit_finnkode" + postfix).setFocus()
+
+    @pyqtSlot()
+    def clear_finn_info(self, postfix):
+        """
+        method for clearing finn info
+
+        Parameters
+        ----------
+        postfix     : str
+                      index if used in naming of line_edits
+
+        """
+        finn_code = getattr(self.parent.ui, "line_edit_finnkode" + postfix).text().strip()
+        if not finn_code:
+            self.clear_line_edits(["finnkode" + postfix])
+            self.clear_line_edits(self._finn_keys, postfix)
 
     @pyqtSlot()
     def open_finn_url(self, line_edit: str):
@@ -111,7 +123,5 @@ class FinnModel(Model):
         method for clearing all line_edits and combo_boxes in model
 
         """
-        self.clear_line_edits(["finnkode_1", "finnkode_2", "finnkode_3"])
+        self.clear_line_edits(["finnkode_1"])
         self.clear_line_edits(self._finn_keys, "_1")
-        self.clear_line_edits(self._finn_keys, "_2")
-        self.clear_line_edits(self._finn_keys, "_3")

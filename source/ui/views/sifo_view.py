@@ -50,7 +50,7 @@ class SifoView(QDialog):
         self._error = self.parent.error
         self._meta_view = MetaView(self)
 
-        self.ui.push_button_metadata.clicked.connect(self._meta_view.show)
+        self.ui.push_button_sifo_meta_data.clicked.connect(self._meta_view.show)
         self.ui.push_button_vis_resultatet.clicked.connect(self.sifo_model.calculate_sifo_expenses)
         self.ui.push_button_tom_skjema_1.clicked.connect(self.sifo_model.clear_all)
         self.ui.push_button_avbryt_1.clicked.connect(self.sifo_model.close)

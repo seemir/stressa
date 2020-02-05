@@ -3065,7 +3065,7 @@
         </widget>
        </item>
        <item row="32" column="2">
-        <widget class="QPushButton" name="push_button_metadata">
+        <widget class="QPushButton" name="push_button_sifo_meta_data">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -3474,7 +3474,7 @@
   <tabstop>push_button_tom_skjema_2</tabstop>
   <tabstop>push_button_tilbake</tabstop>
   <tabstop>push_button_avbryt_2</tabstop>
-  <tabstop>push_button_metadata</tabstop>
+  <tabstop>push_button_sifo_meta_data</tabstop>
   <tabstop>tabwidget_sifo</tabstop>
  </tabstops>
  <resources>

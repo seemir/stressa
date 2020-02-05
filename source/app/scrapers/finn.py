@@ -85,4 +85,4 @@ class Finn(Scraper):
         out         : list
                       all rules in scraper
         """
-        return ["starts_with_one", "numeric_values", "max_len_eight (zero_based_indexing)"]
+        return ["starts_with_one", "numeric_values", "max_len_seven_or_eight (zero_based_indexing)"]

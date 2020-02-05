@@ -347,7 +347,7 @@ class SifoModel(Model):
             if self.data and all(len(val) > 1 for key, val in self.data.items() if "person" in key):
                 self.parent.ui.tabwidget_sifo.setCurrentIndex(1)
                 self.sifo_process = CalculateSifoExpenses(self.data)
-                self.sifo_process.print_pdf()
+                # self.sifo_process.print_pdf()
                 self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
                                     data=self.sifo_process.base_expenses)
                 self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_2",

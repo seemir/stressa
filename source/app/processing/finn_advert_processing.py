@@ -222,7 +222,7 @@ class FinnAdvertProcessing(Process):
                                 label="thread")
 
             finn_owner_history = scrape_finn_owner_history.run()
-            finn_owner_history_signal = Signal(finn_owner_history, "FINN Owner History")
+            finn_owner_history_signal = Signal(finn_owner_history, "FINN Ownership History")
             self.add_signal(finn_owner_history_signal, "finn_owner_history")
 
             self.add_transition(scrape_finn_owner_history, finn_owner_history_signal,

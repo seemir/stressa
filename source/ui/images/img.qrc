@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="img">
+    <file>history.png</file>
+    <file>fetch.png</file>
     <file>back.png</file>
     <file>cancel.png</file>
     <file>tax.png</file>
