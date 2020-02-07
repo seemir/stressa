@@ -1,3 +1,13 @@
+.QProgressBar::chunk {
+  background: #4c96d7;
+  width: 10px;
+  margin: 1px;
+}
+
+.QProgressBar{
+  height: 25px;
+}
+
 .QLabel{
   font-family: "MS Shell Dlg 2";
   font-size: 11px;

@@ -345,7 +345,7 @@ class SifoModel(Model):
         try:
             self.clear_results()
             if self.data and all(len(val) > 1 for key, val in self.data.items() if "person" in key):
-                self.parent.ui.tabwidget_sifo.setCurrentIndex(1)
+                self.parent.ui.tab_widget_sifo.setCurrentIndex(1)
                 self.sifo_process = CalculateSifoExpenses(self.data)
                 # self.sifo_process.print_pdf()
                 self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
@@ -363,7 +363,7 @@ class SifoModel(Model):
 
         """
         self.hide_unused_combo_box()
-        self.parent.ui.tabwidget_sifo.setCurrentIndex(0)
+        self.parent.ui.tab_widget_sifo.setCurrentIndex(0)
         self.parent.ui.combo_box_kjonn_1.setFocus()
         self.set_income()
         self.set_yearly_income()
@@ -380,7 +380,7 @@ class SifoModel(Model):
         """
         self.clear_line_edits(self._sifo_expenses, "_1")
         self.clear_line_edits(self._sifo_expenses, "_2")
-        self.parent.ui.tabwidget_sifo.setCurrentIndex(0)
+        self.parent.ui.tab_widget_sifo.setCurrentIndex(0)
 
     def clear_all(self):
         """
@@ -412,7 +412,7 @@ class SifoModel(Model):
         method for returning for results page to input page
 
         """
-        self.parent.ui.tabwidget_sifo.setCurrentIndex(0)
+        self.parent.ui.tab_widget_sifo.setCurrentIndex(0)
 
     def close(self):
         """

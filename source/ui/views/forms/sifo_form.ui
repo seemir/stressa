@@ -453,7 +453,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QTabWidget" name="tabwidget_sifo">
+    <widget class="QTabWidget" name="tab_widget_sifo">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -3475,7 +3475,7 @@
   <tabstop>push_button_tilbake</tabstop>
   <tabstop>push_button_avbryt_2</tabstop>
   <tabstop>push_button_sifo_meta_data</tabstop>
-  <tabstop>tabwidget_sifo</tabstop>
+  <tabstop>tab_widget_sifo</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

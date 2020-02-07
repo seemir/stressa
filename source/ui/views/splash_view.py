@@ -38,7 +38,6 @@ class SplashView(QDialog):
         Assertor.assert_data_types([app], [QApplication])
         super().__init__()
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/splash_form.ui"), self)
-        self.ui.progress_bar_splash.setStyleSheet(self.change_color())
         self.ui.setWindowTitle("Stressa - v.{}".format(__version__))
         self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self.app = app
@@ -52,16 +51,3 @@ class SplashView(QDialog):
             while time.time() < t + 0.1:
                 self.app.processEvents()
         self.close()
-
-    @staticmethod
-    def change_color():
-        """
-        Static method for changing color on progressbar
-
-        Returns
-        -------
-        out     : str
-                  styleSheet string
-
-        """
-        return """QProgressBar::chunk { background: #4c96d7; width: 10px; margin: 1px; }"""

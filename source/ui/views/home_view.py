@@ -13,9 +13,11 @@ import os
 # import ctypes
 
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.uic import loadUi
 
 from source.ui.models import MortgageModel, FinnModel, HomeModel
+from source.util import Assertor
 
 from .error_view import ErrorView
 from .sifo_view import SifoView
@@ -56,13 +58,18 @@ class HomeView(QMainWindow):
         self.ui.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
 
         self.ui.push_button_finn_1.clicked.connect(
-            lambda: self.finn_model.open_finn_url("finnkode_1"))
-        self.ui.push_button_hent_finn_data_1.clicked.connect(
-            lambda: self.finn_model.add_finn_info("_1"))
+            lambda: self.finn_model.open_finn_url("_1"))
+        self.ui.push_button_finn_2.clicked.connect(
+            lambda: self.finn_model.open_finn_url("_2"))
+        self.ui.push_button_finn_3.clicked.connect(
+            lambda: self.finn_model.open_finn_url("_3"))
 
-        self.ui.push_button_home_meta_data.clicked.connect(self._meta_view.show)
+        self.ui.push_button_hent_finn_data_1.clicked.connect(lambda: self.get_finn_info("_1"))
+        self.ui.push_button_hent_finn_data_2.clicked.connect(lambda: self.get_finn_info("_2"))
+        self.ui.push_button_hent_finn_data_3.clicked.connect(lambda: self.get_finn_info("_3"))
 
         self._home_model = HomeModel(self)
+        self.ui.push_button_home_meta_data.clicked.connect(self._meta_view.show)
         self.ui.push_button_tom_skjema.clicked.connect(self.home_model.clear_all)
 
     @property
@@ -155,3 +162,17 @@ class HomeView(QMainWindow):
 
         """
         return self._meta_view
+
+    @pyqtSlot()
+    def get_finn_info(self, postfix: str):
+        """
+        method for getting the finn info
+
+        Parameters
+        ----------
+        postfix     : str
+                      index if used in naming of line_edits
+
+        """
+        Assertor.assert_data_types([postfix], [str])
+        self.finn_model.add_finn_info(postfix)

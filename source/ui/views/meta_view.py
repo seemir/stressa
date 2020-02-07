@@ -12,8 +12,8 @@ import os
 import json
 
 from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
+from PyQt5.QtCore import Qt
 
 from source.util import Assertor
 

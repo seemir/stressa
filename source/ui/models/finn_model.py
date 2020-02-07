@@ -8,8 +8,10 @@ Module of the Finn model based on the MVC principle
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from random import randint
 import webbrowser
-from PyQt5.QtCore import QObject, pyqtSlot
+
+from PyQt5.QtCore import QObject, pyqtSlot, Qt
 
 from source.app import FinnAdvertProcessing
 from source.util import Assertor
@@ -52,9 +54,13 @@ class FinnModel(Model):
         """
         self.parent.ui.line_edit_finnkode_1.editingFinished.connect(
             lambda: self.clear_finn_info("_1"))
+        self.parent.ui.line_edit_finnkode_2.editingFinished.connect(
+            lambda: self.clear_finn_info("_2"))
+        self.parent.ui.line_edit_finnkode_3.editingFinished.connect(
+            lambda: self.clear_finn_info("_3"))
 
     @pyqtSlot()
-    def add_finn_info(self, postfix):
+    def add_finn_info(self, postfix: str):
         """
         method for adding finn_info to line_edits
 
@@ -65,26 +71,33 @@ class FinnModel(Model):
 
         """
         try:
+            Assertor.assert_data_types([postfix], [str])
             finn_code = getattr(self.parent.ui, "line_edit_finnkode" + postfix).text().strip()
             if finn_code and finn_code not in self.data.values():
+                getattr(self.parent.ui, "progress_bar" + postfix).setValue(randint(0, 30))
                 finn_processing = FinnAdvertProcessing(finn_code)
                 self.set_line_edits("finnkode", self._finn_keys, postfix=postfix,
                                     data=finn_processing.multiplex_info)
                 # finn_processing.print_pdf()
+                getattr(self.parent.ui, "progress_bar" + postfix).setValue(30)
             elif finn_code and finn_code in self.data.values():
-                pass
+                if ("finnkode" + postfix) not in self.data.keys():
+                    getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
+                    getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(True)
+                    getattr(self.parent.ui, "progress_bar" + postfix).setAlignment(Qt.AlignCenter)
+                    getattr(self.parent.ui, "progress_bar" + postfix).setFormat("Duplicate!")
             else:
-                self.clear_line_edits(["finnkode" + postfix])
-                self.clear_line_edits(self._finn_keys, postfix)
+                self.clear_finn_info(postfix)
         except Exception as finn_processing_error:
             self.clear_line_edits(["finnkode" + postfix])
             self.clear_line_edits(self._finn_keys, postfix)
             self.parent.error.show_error(finn_processing_error, self.data)
             self.parent.error.exec_()
+            getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
             getattr(self.parent.ui, "line_edit_finnkode" + postfix).setFocus()
 
     @pyqtSlot()
-    def clear_finn_info(self, postfix):
+    def clear_finn_info(self, postfix, force=False):
         """
         method for clearing finn info
 
@@ -92,26 +105,36 @@ class FinnModel(Model):
         ----------
         postfix     : str
                       index if used in naming of line_edits
+        force       : bool
+                      boolean to indicate if one wants to force a clear
 
         """
+        Assertor.assert_data_types([postfix, force], [str, bool])
         finn_code = getattr(self.parent.ui, "line_edit_finnkode" + postfix).text().strip()
         if not finn_code:
             self.clear_line_edits(["finnkode" + postfix])
             self.clear_line_edits(self._finn_keys, postfix)
+            getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(False)
+            getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
+        if force:
+            self.clear_line_edits(["finnkode" + postfix])
+            self.clear_line_edits(self._finn_keys, postfix)
+            getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(False)
+            getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
 
     @pyqtSlot()
-    def open_finn_url(self, line_edit: str):
+    def open_finn_url(self, postfix: str):
         """
         method for opening Finn link
 
         Parameters
         ----------
-        line_edit   : str
-                      name of the line_edit for which the Finn code is inputted
+        postfix     : str
+                      index if used in naming of line_edits
 
         """
-        Assertor.assert_data_types([line_edit], [str])
-        finn_code = getattr(self.parent.ui, "line_edit_" + line_edit).text()
+        Assertor.assert_data_types([postfix], [str])
+        finn_code = getattr(self.parent.ui, "line_edit_finnkode" + postfix).text()
         if finn_code:
             webbrowser.open(FINN_URL[:FINN_URL.rfind("/")] + "/homes/ad.html?finnkode=" + finn_code)
         else:
@@ -123,5 +146,7 @@ class FinnModel(Model):
         method for clearing all line_edits and combo_boxes in model
 
         """
-        self.clear_line_edits(["finnkode_1"])
-        self.clear_line_edits(self._finn_keys, "_1")
+        self.parent.ui.tab_widget_finn.setCurrentIndex(0)
+        self.clear_finn_info("_1", True)
+        self.clear_finn_info("_2", True)
+        self.clear_finn_info("_3", True)
