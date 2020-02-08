@@ -97,8 +97,8 @@ class FinnOwnership(Finn):
                         "table", attrs={"class": "data-table u-mb32"}).find_all("tr"):
                     if not history_headers:
                         history_headers = [head.text for head in table_row.find_all("th")]
-                    row = [tab_row.text.strip() for tab_row in table_row.find_all("td") if
-                           tab_row.text.strip()]
+                    row = [tab_row.text.strip().replace(",-", " kr") for tab_row in
+                           table_row.find_all("td") if tab_row.text.strip()]
                     if row:
                         history_results.append(row)
 

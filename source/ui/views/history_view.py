@@ -5,7 +5,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import os
 
-from PyQt5.QtWidgets import QDialog, QWidget
+from PyQt5.QtWidgets import QDialog, QWidget, QHeaderView
 from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.uic import loadUi
 
@@ -22,6 +22,7 @@ class HistoryView(QDialog):
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/history_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.ui.table_view_historikk.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self._history_model = HistoryModel(self)
 
     @property
