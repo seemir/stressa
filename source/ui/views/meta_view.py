@@ -87,6 +87,4 @@ class MetaView(QDialog):
             if model in attr:
                 if getattr(self.parent, model).data:
                     meta_data.update({name: getattr(self.parent, model).data})
-        if "_home_model" in attr:
-            self.parent.home_model.data = meta_data
         return meta_data

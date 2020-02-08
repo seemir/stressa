@@ -354,8 +354,8 @@ class SifoModel(Model):
                                     data=self.sifo_process.expenses_shares)
         except Exception as sifo_expenses_error:
             self.clear_results()
-            self.parent.error.show_error(sifo_expenses_error, self.data)
-            self.parent.error.exec_()
+            self.parent.error_view.show_error(sifo_expenses_error, self.data)
+            self.parent.error_view.exec_()
 
     def sifo_info(self):
         """

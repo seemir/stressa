@@ -47,7 +47,7 @@ class SifoView(QDialog):
 
         self._parent = parent
         self._sifo_model = SifoModel(self)
-        self._error = self.parent.error
+        self._error_view = self.parent.error_view
         self._meta_view = MetaView(self)
 
         self.ui.push_button_sifo_meta_data.clicked.connect(self._meta_view.show)
@@ -99,7 +99,7 @@ class SifoView(QDialog):
         return self._parent
 
     @property
-    def error(self):
+    def error_view(self):
         """
         ErrorView getter
 
@@ -109,7 +109,7 @@ class SifoView(QDialog):
                   active ErrorView in the SifoView
 
         """
-        return self._error
+        return self._error_view
 
     def display(self):
         """

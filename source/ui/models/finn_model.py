@@ -45,6 +45,7 @@ class FinnModel(Model):
         """
         Assertor.assert_data_types([parent], [QObject])
         super().__init__(parent)
+        self.finn_data = None
 
     @pyqtSlot()
     def finn_info(self):
@@ -73,26 +74,30 @@ class FinnModel(Model):
         try:
             Assertor.assert_data_types([postfix], [str])
             finn_code = getattr(self.parent.ui, "line_edit_finnkode" + postfix).text().strip()
-            if finn_code and finn_code not in self.data.values():
-                getattr(self.parent.ui, "progress_bar" + postfix).setValue(randint(0, 30))
-                finn_processing = FinnAdvertProcessing(finn_code)
-                self.set_line_edits("finnkode", self._finn_keys, postfix=postfix,
-                                    data=finn_processing.multiplex_info)
-                # finn_processing.print_pdf()
-                getattr(self.parent.ui, "progress_bar" + postfix).setValue(30)
-            elif finn_code and finn_code in self.data.values():
-                if ("finnkode" + postfix) not in self.data.keys():
-                    getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
-                    getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(True)
-                    getattr(self.parent.ui, "progress_bar" + postfix).setAlignment(Qt.AlignCenter)
-                    getattr(self.parent.ui, "progress_bar" + postfix).setFormat("Duplicate!")
-            else:
-                self.clear_finn_info(postfix)
+            if finn_code:
+                if finn_code not in self.data.values():
+                    getattr(self.parent.ui, "progress_bar" + postfix).setValue(randint(0, 30))
+                    finn_processing = FinnAdvertProcessing(finn_code)
+                    self.finn_data = {key + postfix: val for key, val in
+                                      finn_processing.multiplex_info.items()}
+                    self.set_line_edits("finnkode", self._finn_keys, postfix=postfix,
+                                        data=finn_processing.multiplex_info)
+                    self.parent.history_view.history_model.add_finn_history(postfix)
+                    self.data.update(self.parent.history_view.history_model.data)
+                    getattr(self.parent.ui, "progress_bar" + postfix).setValue(30)
+                elif finn_code in self.data.values():
+                    if ("finnkode" + postfix) not in self.data.keys():
+                        getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
+                        getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(True)
+                        getattr(self.parent.ui, "progress_bar" + postfix).setAlignment(
+                            Qt.AlignCenter)
+                        getattr(self.parent.ui, "progress_bar" + postfix).setFormat("Duplikat!")
+                else:
+                    self.clear_finn_info(postfix)
         except Exception as finn_processing_error:
-            self.clear_line_edits(["finnkode" + postfix])
-            self.clear_line_edits(self._finn_keys, postfix)
-            self.parent.error.show_error(finn_processing_error, self.data)
-            self.parent.error.exec_()
+            self.parent.error_view.show_error(finn_processing_error, self.data)
+            self.parent.error_view.exec_()
+            self.clear_finn_info(postfix, force=True)
             getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
             getattr(self.parent.ui, "line_edit_finnkode" + postfix).setFocus()
 
@@ -111,14 +116,10 @@ class FinnModel(Model):
         """
         Assertor.assert_data_types([postfix, force], [str, bool])
         finn_code = getattr(self.parent.ui, "line_edit_finnkode" + postfix).text().strip()
-        if not finn_code:
+        if not finn_code or force:
             self.clear_line_edits(["finnkode" + postfix])
             self.clear_line_edits(self._finn_keys, postfix)
-            getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(False)
-            getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
-        if force:
-            self.clear_line_edits(["finnkode" + postfix])
-            self.clear_line_edits(self._finn_keys, postfix)
+            self.parent.history_view.history_model.clear_finn_history(postfix)
             getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(False)
             getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
 
@@ -148,5 +149,10 @@ class FinnModel(Model):
         """
         self.parent.ui.tab_widget_finn.setCurrentIndex(0)
         self.clear_finn_info("_1", True)
+        self.parent.history_view.history_model.clear_finn_history("_1")
+
         self.clear_finn_info("_2", True)
+        self.parent.history_view.history_model.clear_finn_history("_2")
+
         self.clear_finn_info("_3", True)
+        self.parent.history_view.history_model.clear_finn_history("_3")

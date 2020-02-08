@@ -10,50 +10,50 @@
 
 .QLabel{
   font-family: "MS Shell Dlg 2";
-  font-size: 11px;
-  height: 17.5px;
+  font-size: 12px;
+  height: 20px;
   width: 120px;
 }
 
 .QLineEdit{
   font-family: "MS Shell Dlg 2";
-  font-size: 11px;
-  height: 17.5px;
+  font-size: 12px;
+  height: 20px;
 }
 
 .QDateEdit{
   font-family: "MS Shell Dlg 2";
-  font-size: 11px;
-  height: 17.5px;
+  font-size: 12px;
+  height: 20px;
 }
 
 .QComboBox{
   font-family: "MS Shell Dlg 2";
-  font-size: 11px;
-  height: 17.5px;
+  font-size: 12px;
+  height: 20px;
 }
 
 .QPushButton{
   font-family: "MS Shell Dlg 2";
-  font-size: 11px;
-  height: 17.5px;
+  font-size: 12px;
+  height: 20px;
   padding: 7px;
 }
 
 .QRadioButton{
   font-family: "MS Shell Dlg 2";
-  font-size: 11px;
-  height: 17.5px;
+  font-size: 12px;
+  height: 20px;
 }
 
 .QTabWidget{
   font-family: "MS Shell Dlg 2";
-  font-size: 11px;
+  font-size: 12px;
 }
 
 .QPlainTextEdit{
   font-family: "Consolas";
-  font-size: 11px;
+  font-size: 12px;
 }
 
 /* MenyBar */
@@ -75,10 +75,6 @@
 }
 
 .QFrame[objectName="frame_analyse_white_space"] {
-  border: none;
-}
-
-.QFrame[objectName="frame_buttons_and_logo"] {
   border: none;
 }
 

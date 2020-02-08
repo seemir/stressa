@@ -13,12 +13,11 @@ import os
 # import ctypes
 
 from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtCore import pyqtSlot
 from PyQt5.uic import loadUi
 
 from source.ui.models import MortgageModel, FinnModel, HomeModel
-from source.util import Assertor
 
+from .history_view import HistoryView
 from .error_view import ErrorView
 from .sifo_view import SifoView
 from .meta_view import MetaView
@@ -44,8 +43,9 @@ class HomeView(QMainWindow):
         super().__init__()
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/home_form.ui"), self)
 
-        self._error = ErrorView(self)
+        self._error_view = ErrorView(self)
         self._sifo_view = SifoView(self)
+        self._history_view = HistoryView(self)
         self._meta_view = MetaView(self)
 
         self._sifo_model = self.sifo_view.sifo_model
@@ -57,20 +57,82 @@ class HomeView(QMainWindow):
 
         self.ui.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
 
+        self.ui.push_button_hent_finn_data_1.clicked.connect(
+            lambda: self.finn_model.add_finn_info("_1"))
         self.ui.push_button_finn_1.clicked.connect(
             lambda: self.finn_model.open_finn_url("_1"))
+        self.ui.push_button_eierskifte_historikk_1.clicked.connect(
+            lambda: self._history_view.add_finn_history("_1"))
+
+        self.ui.push_button_hent_finn_data_2.clicked.connect(
+            lambda: self.finn_model.add_finn_info("_2"))
         self.ui.push_button_finn_2.clicked.connect(
             lambda: self.finn_model.open_finn_url("_2"))
+        self.ui.push_button_eierskifte_historikk_2.clicked.connect(
+            lambda: self._history_view.add_finn_history("_2"))
+
+        self.ui.push_button_hent_finn_data_3.clicked.connect(
+            lambda: self.finn_model.add_finn_info("_3"))
         self.ui.push_button_finn_3.clicked.connect(
             lambda: self.finn_model.open_finn_url("_3"))
-
-        self.ui.push_button_hent_finn_data_1.clicked.connect(lambda: self.get_finn_info("_1"))
-        self.ui.push_button_hent_finn_data_2.clicked.connect(lambda: self.get_finn_info("_2"))
-        self.ui.push_button_hent_finn_data_3.clicked.connect(lambda: self.get_finn_info("_3"))
+        self.ui.push_button_eierskifte_historikk_3.clicked.connect(
+            lambda: self._history_view.add_finn_history("_3"))
 
         self._home_model = HomeModel(self)
         self.ui.push_button_home_meta_data.clicked.connect(self._meta_view.show)
         self.ui.push_button_tom_skjema.clicked.connect(self.home_model.clear_all)
+
+    @property
+    def error_view(self):
+        """
+        ErrorView getter
+
+        Returns
+        -------
+        out     : QObject
+                  active ErrorView in class
+
+        """
+        return self._error_view
+
+    @property
+    def sifo_view(self):
+        """
+        SifoView getter
+
+        Returns
+        -------
+        out     : SifoView
+                  Active SifoView in the HomeView
+
+        """
+        return self._sifo_view
+
+    @property
+    def meta_view(self):
+        """
+        MetaView getter
+
+        Returns
+        -------
+        out     : QObject
+                  active MetaView class
+
+        """
+        return self._meta_view
+
+    @property
+    def history_view(self):
+        """
+        HistoryView getter
+
+        Returns
+        -------
+        out     : QObject
+                  active HistoryView class
+
+        """
+        return self._history_view
 
     @property
     def mortgage_model(self):
@@ -112,19 +174,6 @@ class HomeView(QMainWindow):
         return self._home_model
 
     @property
-    def sifo_view(self):
-        """
-        SifoView getter
-
-        Returns
-        -------
-        out     : SifoView
-                  Active SifoView in the HomeView
-
-        """
-        return self._sifo_view
-
-    @property
     def sifo_model(self):
         """
         SifoModel getter
@@ -136,43 +185,3 @@ class HomeView(QMainWindow):
 
         """
         return self._sifo_model
-
-    @property
-    def error(self):
-        """
-        ErrorView getter
-
-        Returns
-        -------
-        out     : QObject
-                  active ErrorView in class
-
-        """
-        return self._error
-
-    @property
-    def meta_view(self):
-        """
-        MetaView getter
-
-        Returns
-        -------
-        out     : QObject
-                  active MetaView class
-
-        """
-        return self._meta_view
-
-    @pyqtSlot()
-    def get_finn_info(self, postfix: str):
-        """
-        method for getting the finn info
-
-        Parameters
-        ----------
-        postfix     : str
-                      index if used in naming of line_edits
-
-        """
-        Assertor.assert_data_types([postfix], [str])
-        self.finn_model.add_finn_info(postfix)

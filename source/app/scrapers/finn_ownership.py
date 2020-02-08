@@ -89,7 +89,7 @@ class FinnOwnership(Finn):
                 for geo_val in owner_soup.find_all("dl", attrs={"class": "definition-list u-mb32"}):
                     for i, val in enumerate(geo_val.text.split("\n")):
                         if i % 2 != 0 and val:
-                            keys.append(val.strip().lower())
+                            keys.append(val.strip().lower().replace("å", "a"))
                         elif val:
                             values.append(val.strip())
 
