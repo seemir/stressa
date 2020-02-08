@@ -76,6 +76,7 @@ class FinnModel(Model):
             finn_code = getattr(self.parent.ui, "line_edit_finnkode" + postfix).text().strip()
             if finn_code and finn_code not in self.data.values():
                 getattr(self.parent.ui, "progress_bar" + postfix).setValue(randint(0, 30))
+                getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(False)
                 finn_processing = FinnAdvertProcessing(finn_code)
                 self.finn_data = {key + postfix: val for key, val in
                                   finn_processing.multiplex_info.items()}

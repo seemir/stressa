@@ -99,7 +99,7 @@ class FinnStat(Finn):
                     "'{}' successfully retrieved".format(self.housing_stat_information.__name__))
                 return info
             except AttributeError as no_ownership_history_exception:
-                LOGGER.debug("No housing statistics found!, exited with {}".format(
+                LOGGER.debug("No housing statistics found!, exited with '{}'".format(
                     no_ownership_history_exception))
         except Exception as housing_stat_information_exception:
             LOGGER.exception(housing_stat_information_exception)

@@ -80,9 +80,11 @@ class HistoryModel(Model):
             if key == "historikk":
                 if full_key in self.data.keys():
                     self.data.pop(full_key)
+                if full_key in grandparent.data.keys():
                     grandparent.data.pop(full_key)
+                if full_key in grandparent.finn_data.keys():
                     grandparent.finn_data.pop(full_key)
-                    self.parent.ui.table_view_historikk.setModel(None)
+                self.parent.ui.table_view_historikk.setModel(None)
             else:
                 if full_key in self.data.keys():
                     self.data.pop(full_key)

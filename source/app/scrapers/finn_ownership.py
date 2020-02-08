@@ -103,14 +103,15 @@ class FinnOwnership(Finn):
                         history_results.append(row)
 
                 info = dict(zip(keys, values))
-                info.update({"historikk": DataFrame(history_results, columns=history_headers)})
+                historic_df = DataFrame(history_results, columns=history_headers)
+                info.update({"historikk": self.price_change(historic_df)})
 
                 LOGGER.success(
                     "'{}' successfully retrieved".format(
                         self.housing_ownership_information.__name__))
                 return info
             except AttributeError as no_ownership_history_exception:
-                LOGGER.debug("No ownership history found!, exited with {}".format(
+                LOGGER.debug("No ownership history found!, exited with '{}'".format(
                     no_ownership_history_exception))
         except Exception as housing_owner_information_exception:
             LOGGER.exception(housing_owner_information_exception)
@@ -126,3 +127,18 @@ class FinnOwnership(Finn):
 
         LOGGER.success(
             "'housing_ownership_information' successfully parsed to JSON at '{}'".format(file_dir))
+
+    @staticmethod
+    def price_change(df_: DataFrame):
+        """
+        method for calculating change in price of dataframe
+
+        Parameters
+        ----------
+        df_      : DataFrame
+                  df to be applied
+
+        """
+        change = df_.iloc[:, -1].str.replace(u"\xa0", "").str.replace(
+            " kr", "").astype(float).pct_change(-1).mul(100).round(2).astype(str)
+        return df_.assign(Endring=(change + " %").replace("nan %", ""))

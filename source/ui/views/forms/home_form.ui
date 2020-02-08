@@ -3095,7 +3095,7 @@
                <item row="18" column="0">
                 <widget class="QLabel" name="label_visninger_1">
                  <property name="text">
-                  <string>Visninger</string>
+                  <string>Klikk på annonsen</string>
                  </property>
                  <property name="buddy">
                   <cstring>line_edit_views_1</cstring>
@@ -4088,7 +4088,7 @@
                <item row="17" column="0">
                 <widget class="QLabel" name="label_visninger_2">
                  <property name="text">
-                  <string>Visninger</string>
+                  <string>Klikk på annonsen</string>
                  </property>
                  <property name="buddy">
                   <cstring>line_edit_views_1</cstring>
@@ -5043,7 +5043,7 @@
                <item row="17" column="0">
                 <widget class="QLabel" name="label_visninger_3">
                  <property name="text">
-                  <string>Visninger</string>
+                  <string>Klikk på annonsen</string>
                  </property>
                  <property name="buddy">
                   <cstring>line_edit_views_1</cstring>

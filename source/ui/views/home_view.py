@@ -12,6 +12,7 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 # import ctypes
 
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
 
@@ -81,6 +82,7 @@ class HomeView(QMainWindow):
         self._home_model = HomeModel(self)
         self.ui.push_button_home_meta_data.clicked.connect(self._meta_view.show)
         self.ui.push_button_tom_skjema.clicked.connect(self.home_model.clear_all)
+        self.ui.action_logo.triggered.connect(self.info_tab)
 
     @property
     def error_view(self):
@@ -185,3 +187,11 @@ class HomeView(QMainWindow):
 
         """
         return self._sifo_model
+
+    @pyqtSlot()
+    def info_tab(self):
+        """
+        method for returning to info tab in HomeView
+
+        """
+        self.ui.tab_widget_home.setCurrentIndex(0)
