@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="img">
+    <file>budget.png</file>
+    <file>budget.png</file>
+    <file>statistikk.png</file>
     <file>history.png</file>
     <file>fetch.png</file>
     <file>back.png</file>
