@@ -52,9 +52,9 @@ class SifoView(QDialog):
 
         self.ui.push_button_sifo_meta_data.clicked.connect(self.meta_view.display)
         self.ui.push_button_vis_resultatet.clicked.connect(self.sifo_model.calculate_sifo_expenses)
-        self.ui.push_button_tom_skjema_1.clicked.connect(self.sifo_model.clear_all)
+        self.ui.push_button_tom_skjema_1.clicked.connect(self.clear_all)
         self.ui.push_button_avbryt_1.clicked.connect(self.close)
-        self.ui.push_button_tom_skjema_2.clicked.connect(self.sifo_model.clear_all)
+        self.ui.push_button_tom_skjema_2.clicked.connect(self.clear_all)
         self.ui.push_button_avbryt_2.clicked.connect(self.close)
         self.ui.push_button_tilbake.clicked.connect(self.back)
         self.ui.push_button_eksporter.clicked.connect(self.export)
@@ -125,7 +125,10 @@ class SifoView(QDialog):
 
         """
         sifo_expenses = self.ui.line_edit_totalt_1.text()
-        self.parent.mortgage_model.set_line_edit("sifo_utgifter", data=sifo_expenses)
+        if sifo_expenses:
+            self.parent.mortgage_model.set_line_edit("sifo_utgifter", data=sifo_expenses)
+        else:
+            self.parent.mortgage_model.clear_line_edit("sifo_utgifter")
         self.close()
 
     def back(self):
@@ -134,3 +137,7 @@ class SifoView(QDialog):
 
         """
         self.ui.tab_widget_sifo.setCurrentIndex(0)
+
+    def clear_all(self):
+        self.parent.mortgage_model.clear_line_edit("sifo_utgifter")
+        self.sifo_model.clear_all()

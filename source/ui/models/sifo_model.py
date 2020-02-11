@@ -344,7 +344,7 @@ class SifoModel(Model):
         """
         try:
             self.clear_results()
-            if self.data and all(len(val) > 1 for key, val in self.data.items() if "person" in key):
+            if any("person" in key and len(val) > 1 for key, val in self.data.items()):
                 self.parent.ui.tab_widget_sifo.setCurrentIndex(1)
                 self.sifo_process = CalculateSifoExpenses(self.data)
                 self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
@@ -387,7 +387,6 @@ class SifoModel(Model):
         method for clearing all information from SIFO dialog
 
         """
-        self.parent.ui.combo_box_kjonn_1.setFocus()
         for combo_box in range(1, 8):
             getattr(self.parent.ui, "combo_box_kjonn_" + str(combo_box)).setCurrentIndex(0)
             getattr(self.parent.ui, "combo_box_alder_" + str(combo_box)).setCurrentIndex(0)
@@ -396,3 +395,4 @@ class SifoModel(Model):
         self.parent.ui.combo_box_antall_biler.setCurrentIndex(0)
         self.clear_results()
         self.data = {}
+        self.parent.ui.combo_box_kjonn_1.setFocus()
