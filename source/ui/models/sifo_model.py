@@ -396,27 +396,3 @@ class SifoModel(Model):
         self.parent.ui.combo_box_antall_biler.setCurrentIndex(0)
         self.clear_results()
         self.data = {}
-
-    def export(self):
-        """
-        method for exporting SIFO expenses to HomeView
-
-        """
-        sifo_expenses = self.parent.ui.line_edit_totalt_1.text()
-        grandparent = self.parent.parent
-        grandparent.mortgage_model.set_line_edit("sifo_utgifter", data=sifo_expenses)
-        self.close()
-
-    def back(self):
-        """
-        method for returning for results page to input page
-
-        """
-        self.parent.ui.tab_widget_sifo.setCurrentIndex(0)
-
-    def close(self):
-        """
-        method for canceling / closing SIFO dialog
-
-        """
-        self.parent.close()

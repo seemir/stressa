@@ -5,6 +5,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from .mortgage_model import MortgageModel
 from .history_model import HistoryModel
+from .budget_model import BudgetModel
 from .home_model import HomeModel
 from .finn_model import FinnModel
 from .sifo_model import SifoModel

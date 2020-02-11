@@ -50,14 +50,14 @@ class SifoView(QDialog):
         self._error_view = self.parent.error_view
         self._meta_view = MetaView(self)
 
-        self.ui.push_button_sifo_meta_data.clicked.connect(self._meta_view.show)
+        self.ui.push_button_sifo_meta_data.clicked.connect(self.meta_view.display)
         self.ui.push_button_vis_resultatet.clicked.connect(self.sifo_model.calculate_sifo_expenses)
         self.ui.push_button_tom_skjema_1.clicked.connect(self.sifo_model.clear_all)
-        self.ui.push_button_avbryt_1.clicked.connect(self.sifo_model.close)
+        self.ui.push_button_avbryt_1.clicked.connect(self.close)
         self.ui.push_button_tom_skjema_2.clicked.connect(self.sifo_model.clear_all)
-        self.ui.push_button_avbryt_2.clicked.connect(self.sifo_model.close)
-        self.ui.push_button_tilbake.clicked.connect(self.sifo_model.back)
-        self.ui.push_button_eksporter.clicked.connect(self.sifo_model.export)
+        self.ui.push_button_avbryt_2.clicked.connect(self.close)
+        self.ui.push_button_tilbake.clicked.connect(self.back)
+        self.ui.push_button_eksporter.clicked.connect(self.export)
 
     @property
     def sifo_model(self):
@@ -118,3 +118,19 @@ class SifoView(QDialog):
         """
         self.sifo_model.sifo_info()
         self.exec_()
+
+    def export(self):
+        """
+        method for exporting SIFO expenses to HomeView
+
+        """
+        sifo_expenses = self.ui.line_edit_totalt_1.text()
+        self.parent.mortgage_model.set_line_edit("sifo_utgifter", data=sifo_expenses)
+        self.close()
+
+    def back(self):
+        """
+        method for returning for results page to input page
+
+        """
+        self.ui.tab_widget_sifo.setCurrentIndex(0)

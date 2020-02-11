@@ -27,8 +27,8 @@ class MortgageModel(Model):
     _post_code = ["postnr", "poststed", "kommune", "fylke"]
     _lanetype = ["", "Sammenligning", "Annuitetslån", "Serielån"]
     _laneperiode = [""] + [str(yr) + " år" for yr in range(1, 31)]
-    _intervall = ["", "Ukentlig", "Annenhver uke", "Månedlig", "Annenhver måned",
-                  "Kvartalsvis", "Årlig"]
+    _intervall = ["", "Årlig", "Halvårlig", "Kvartalsvis", "Annenhver måned", "Månedlig",
+                  "Semi-månedlig", "Annenhver uke", "Ukentlig"]
 
     def __init__(self, parent: QObject):
         """
@@ -128,10 +128,11 @@ class MortgageModel(Model):
         self.clear_line_edits(["fornavn", "etternavn", "adresse", "postnr",
                                "poststed", "kommune", "fylke", "epost", "mobil_tlf",
                                "privat_tlf", "jobb_tlf", "fax", "brutto_inntekt",
-                               "trygde_inntekt", "leieinntekt", "total_skatt",
-                               "total_netto", "netto_likviditet", "student_lan",
-                               "kreditt_gjeld", "husleie", "strom", "andre_utgifter",
-                               "sifo_utgifter", "totale_utgifter", "likviditetsgrad",
-                               "egenkapital"])
+                               "trygde_inntekt", "leieinntekt", "personinntekt",
+                               "total_skatt", "total_netto", "netto_likviditet",
+                               "student_lan", "kreditt_gjeld", "husleie", "strom",
+                               "andre_utgifter", "sum_utgifter", "sifo_utgifter",
+                               "totale_utgifter", "likviditetsgrad", "egenkapital"])
         self.clear_combo_boxes(["kjonn", "lanetype", "intervall", "laneperiode"])
         self.clear_date_edits(["fodselsdato", "startdato"])
+        self.parent.budget_view.budget_model.clear_all()

@@ -19,6 +19,7 @@ from PyQt5.uic import loadUi
 from source.ui.models import MortgageModel, FinnModel, HomeModel
 
 from .history_view import HistoryView
+from .budget_view import BudgetView
 from .error_view import ErrorView
 from .sifo_view import SifoView
 from .meta_view import MetaView
@@ -45,6 +46,7 @@ class HomeView(QMainWindow):
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/home_form.ui"), self)
 
         self._error_view = ErrorView(self)
+        self._budget_view = BudgetView(self)
         self._sifo_view = SifoView(self)
         self._history_view = HistoryView(self)
         self._meta_view = MetaView(self)
@@ -55,7 +57,9 @@ class HomeView(QMainWindow):
 
         self._mortgage_model.mortgage_info()
         self._finn_model.finn_info()
+        self._budget_view.budget_info()
 
+        self.ui.push_button_budsjett.clicked.connect(self.budget_view.display)
         self.ui.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
 
         self.ui.push_button_hent_finn_data_1.clicked.connect(
@@ -80,7 +84,7 @@ class HomeView(QMainWindow):
             lambda: self._history_view.add_finn_history("_3"))
 
         self._home_model = HomeModel(self)
-        self.ui.push_button_home_meta_data.clicked.connect(self._meta_view.show)
+        self.ui.push_button_home_meta_data.clicked.connect(self._meta_view.display)
         self.ui.push_button_tom_skjema.clicked.connect(self.home_model.clear_all)
         self.ui.action_logo.triggered.connect(self.info_tab)
 
@@ -96,6 +100,19 @@ class HomeView(QMainWindow):
 
         """
         return self._error_view
+
+    @property
+    def budget_view(self):
+        """
+        BudgetView getter
+
+        Returns
+        -------
+        out     : QObject
+                  active BudgetView in class
+
+        """
+        return self._budget_view
 
     @property
     def sifo_view(self):

@@ -55,7 +55,7 @@ class MetaView(QDialog):
         """
         return self._parent
 
-    def show(self):
+    def display(self):
         """
         method for showing the MetaView
 
@@ -79,8 +79,8 @@ class MetaView(QDialog):
                   dictionary with all metadata
 
         """
-        models = {"_mortgage_model": "lane_informasjon", "_sifo_model": "sifo_informasjon",
-                  "_finn_model": "finn_informasjon"}
+        models = {"_mortgage_model": "lane_informasjon", "_budget_model": "budsjett_informasjon",
+                  "_sifo_model": "sifo_informasjon", "_finn_model": "finn_informasjon"}
         meta_data = {}
         attr = [str(key) for key in list(self.parent.__dict__.keys())]
         for model, name in models.items():

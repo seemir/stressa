@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>dialog_eierskiftehistorikk</class>
- <widget class="QDialog" name="dialog_eierskiftehistorikk">
+ <class>dialog_budget</class>
+ <widget class="QDialog" name="dialog_budget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>850</width>
-    <height>750</height>
+    <width>1020</width>
+    <height>328</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>850</width>
-    <height>750</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -443,21 +443,25 @@
     </disabled>
    </palette>
   </property>
-  <property name="font">
-   <font>
-    <pointsize>8</pointsize>
-   </font>
-  </property>
   <property name="windowTitle">
-   <string>Eierskiftehistorikk</string>
+   <string>Budsjett</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../images/img.qrc">
     <normaloff>:/img/logo_no_text.png</normaloff>:/img/logo_no_text.png</iconset>
   </property>
+  <property name="whatsThis">
+   <string/>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" alignment="Qt::AlignLeft">
-    <widget class="QFrame" name="frame_eierskiftehistorikk">
+   <item row="2" column="0" alignment="Qt::AlignLeft">
+    <widget class="QFrame" name="frame_budget">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -466,7 +470,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>830</width>
+       <width>0</width>
        <height>0</height>
       </size>
      </property>
@@ -885,6 +889,12 @@
        </disabled>
       </palette>
      </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>8</pointsize>
+      </font>
+     </property>
      <property name="autoFillBackground">
       <bool>true</bool>
      </property>
@@ -895,190 +905,386 @@
       <enum>QFrame::Plain</enum>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="1" column="0" colspan="3">
-       <widget class="QFrame" name="frame_table_historikk">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
+      <item row="11" column="0" colspan="6">
+       <widget class="QFrame" name="frame_budget_whitespace_2">
         <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
+         <enum>QFrame::StyledPanel</enum>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QGridLayout" name="gridLayout_4">
-         <item row="0" column="0">
-          <widget class="QTableView" name="table_view_historikk">
-           <property name="enabled">
-            <bool>true</bool>
-           </property>
-           <property name="alternatingRowColors">
-            <bool>true</bool>
-           </property>
-           <property name="selectionBehavior">
-            <enum>QAbstractItemView::SelectRows</enum>
-           </property>
-           <property name="gridStyle">
-            <enum>Qt::DotLine</enum>
-           </property>
-           <property name="sortingEnabled">
-            <bool>false</bool>
-           </property>
-           <attribute name="horizontalHeaderHighlightSections">
-            <bool>false</bool>
-           </attribute>
-          </widget>
-         </item>
-        </layout>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QFrame" name="frame_info_historikk">
+      <item row="8" column="3" colspan="2">
+       <widget class="QPushButton" name="push_button_exporter">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="text">
+         <string>Exporter</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../images/img.qrc">
+          <normaloff>:/img/export.png</normaloff>:/img/export.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="8" column="5">
+       <widget class="QPushButton" name="push_button_tom_skjema">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="text">
+         <string>Tøm skjema</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../images/img.qrc">
+          <normaloff>:/img/erase.png</normaloff>:/img/erase.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="3" colspan="3">
+       <widget class="QFrame" name="frame_budget_whitespace_1">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
         <property name="frameShape">
-         <enum>QFrame::NoFrame</enum>
+         <enum>QFrame::StyledPanel</enum>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
         </property>
-        <layout class="QGridLayout" name="gridLayout_3">
-         <item row="3" column="1">
-          <widget class="QLineEdit" name="line_edit_gardsnr">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_finn_adresse">
-           <property name="minimumSize">
-            <size>
-             <width>120</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Adresse</string>
-           </property>
-           <property name="buddy">
-            <cstring>line_edit_finn_adresse</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_eieform_historikk">
-           <property name="text">
-            <string>Eieform</string>
-           </property>
-           <property name="buddy">
-            <cstring>line_edit_eieform</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_kommunenr">
-           <property name="text">
-            <string>Kommunenr</string>
-           </property>
-           <property name="buddy">
-            <cstring>line_edit_kommunenr</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_gardsnr">
-           <property name="text">
-            <string>Gårdsnr</string>
-           </property>
-           <property name="buddy">
-            <cstring>line_edit_gardsnr</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_bruksnr">
-           <property name="text">
-            <string>Bruksnr</string>
-           </property>
-           <property name="buddy">
-            <cstring>line_edit_bruksnr</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="line_edit_kommunenr">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="line_edit_finn_adresse">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>236</width>
-             <height>0</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLabel" name="label_bruksenhetsnr">
-           <property name="text">
-            <string>Bruksenhetsnr</string>
-           </property>
-           <property name="buddy">
-            <cstring>line_edit_bruksenhetsnr</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QLineEdit" name="line_edit_bruksenhetsnr">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QLineEdit" name="line_edit_bruksnr">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="line_edit_eieform">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_seksjonsnr">
-           <property name="text">
-            <string>Seksjonsnr</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QLineEdit" name="line_edit_seksjonsnr">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
+       </widget>
+      </item>
+      <item row="0" column="0" colspan="6">
+       <widget class="QFrame" name="frame_budget_whitespace_3">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="4">
+       <widget class="QComboBox" name="combo_box_interval_7"/>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_brutto_inntekter">
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Bruttoinntekt</string>
+        </property>
+        <property name="buddy">
+         <cstring>line_edit_brutto_inntekt</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QLabel" name="label_student_lan">
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Student lån</string>
+        </property>
+        <property name="buddy">
+         <cstring>line_edit_student_lan</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="4">
+       <widget class="QComboBox" name="combo_box_interval_8"/>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="combo_box_interval_1">
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLineEdit" name="line_edit_brutto_inntekt">
+        <property name="minimumSize">
+         <size>
+          <width>236</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QComboBox" name="combo_box_interval_4">
+        <property name="minimumSize">
+         <size>
+          <width>120</width>
+          <height>0</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="5">
+       <widget class="QLineEdit" name="line_edit_student_lan">
+        <property name="minimumSize">
+         <size>
+          <width>236</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="label_trygde_inntekt">
+        <property name="text">
+         <string>Trygd</string>
+        </property>
+        <property name="buddy">
+         <cstring>line_edit_trygde_inntekt</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QComboBox" name="combo_box_interval_2"/>
+      </item>
+      <item row="5" column="3">
+       <widget class="QLabel" name="label_andre_utgifter">
+        <property name="text">
+         <string>Andre utgifter</string>
+        </property>
+        <property name="buddy">
+         <cstring>line_edit_andre_utgifter</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="4">
+       <widget class="QComboBox" name="combo_box_interval_5"/>
+      </item>
+      <item row="3" column="3">
+       <widget class="QLabel" name="label_husleie">
+        <property name="text">
+         <string>Husleie</string>
+        </property>
+        <property name="buddy">
+         <cstring>line_edit_husleie</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
+       <widget class="QRadioButton" name="radio_button_skattefrie_inntekt">
+        <property name="text">
+         <string>Skattefri leieinntekt</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="3">
+       <widget class="QLabel" name="label_kreditt_gjeld">
+        <property name="text">
+         <string>Kreditt gjeld</string>
+        </property>
+        <property name="buddy">
+         <cstring>line_edit_kreditt_gjeld</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLineEdit" name="line_edit_trygde_inntekt">
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="3">
+       <widget class="QLabel" name="label_strom">
+        <property name="text">
+         <string>Strøm</string>
+        </property>
+        <property name="buddy">
+         <cstring>line_edit_strom</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="5">
+       <widget class="QLineEdit" name="line_edit_kreditt_gjeld">
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="2">
+       <widget class="QLineEdit" name="line_edit_leieinntekt">
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QComboBox" name="combo_box_interval_3"/>
+      </item>
+      <item row="3" column="5">
+       <widget class="QLineEdit" name="line_edit_husleie">
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="0">
+       <widget class="QLabel" name="label_leieinntekt">
+        <property name="text">
+         <string>Leieinntekt</string>
+        </property>
+        <property name="buddy">
+         <cstring>line_edit_leieinntekt</cstring>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="5">
+       <widget class="QLineEdit" name="line_edit_andre_utgifter">
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="4">
+       <widget class="QComboBox" name="combo_box_interval_6"/>
+      </item>
+      <item row="4" column="5">
+       <widget class="QLineEdit" name="line_edit_strom">
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="2">
+       <widget class="QLineEdit" name="line_edit_personinntekt">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="0">
+       <widget class="QLabel" name="label_personinntekt">
+        <property name="text">
+         <string>Personinntekt*</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="3">
+       <widget class="QLabel" name="label_total_person_utgifter">
+        <property name="text">
+         <string>Sum utgifter*</string>
+        </property>
+       </widget>
+      </item>
+      <item row="6" column="5">
+       <widget class="QLineEdit" name="line_edit_sum_utgifter">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="5">
+       <widget class="QPushButton" name="push_button_budget_meta_data">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="text">
+         <string>Metadata</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../images/img.qrc">
+          <normaloff>:/img/meta.png</normaloff>:/img/meta.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="10" column="3" colspan="2">
+       <widget class="QPushButton" name="push_button_avbryt">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="text">
+         <string>Avbryt</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../../images/img.qrc">
+          <normaloff>:/img/cancel.png</normaloff>:/img/cancel.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="0">
+       <widget class="QLabel" name="label_notat">
+        <property name="font">
+         <font>
+          <pointsize>6</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>*Verdi per måned</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+        </property>
        </widget>
       </item>
      </layout>
@@ -1087,16 +1293,32 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>line_edit_finn_adresse</tabstop>
-  <tabstop>line_edit_eieform</tabstop>
-  <tabstop>line_edit_kommunenr</tabstop>
-  <tabstop>line_edit_gardsnr</tabstop>
-  <tabstop>line_edit_bruksnr</tabstop>
-  <tabstop>line_edit_bruksenhetsnr</tabstop>
-  <tabstop>line_edit_seksjonsnr</tabstop>
-  <tabstop>table_view_historikk</tabstop>
+  <tabstop>combo_box_interval_1</tabstop>
+  <tabstop>line_edit_brutto_inntekt</tabstop>
+  <tabstop>combo_box_interval_2</tabstop>
+  <tabstop>line_edit_trygde_inntekt</tabstop>
+  <tabstop>combo_box_interval_3</tabstop>
+  <tabstop>line_edit_leieinntekt</tabstop>
+  <tabstop>radio_button_skattefrie_inntekt</tabstop>
+  <tabstop>line_edit_personinntekt</tabstop>
+  <tabstop>combo_box_interval_4</tabstop>
+  <tabstop>line_edit_student_lan</tabstop>
+  <tabstop>combo_box_interval_5</tabstop>
+  <tabstop>line_edit_kreditt_gjeld</tabstop>
+  <tabstop>combo_box_interval_6</tabstop>
+  <tabstop>line_edit_husleie</tabstop>
+  <tabstop>combo_box_interval_7</tabstop>
+  <tabstop>line_edit_strom</tabstop>
+  <tabstop>combo_box_interval_8</tabstop>
+  <tabstop>line_edit_andre_utgifter</tabstop>
+  <tabstop>line_edit_sum_utgifter</tabstop>
+  <tabstop>push_button_exporter</tabstop>
+  <tabstop>push_button_tom_skjema</tabstop>
+  <tabstop>push_button_avbryt</tabstop>
+  <tabstop>push_button_budget_meta_data</tabstop>
  </tabstops>
  <resources>
+  <include location="../../images/img.qrc"/>
   <include location="../../images/img.qrc"/>
  </resources>
  <connections/>

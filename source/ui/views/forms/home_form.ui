@@ -6263,7 +6263,7 @@
            <number>1</number>
           </property>
           <layout class="QGridLayout" name="gridLayout_5">
-           <item row="25" column="0" colspan="4">
+           <item row="26" column="0" colspan="4">
             <widget class="QFrame" name="frame_personlig_info_white_space">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -6285,7 +6285,62 @@
              </property>
             </widget>
            </item>
-           <item row="21" column="0">
+           <item row="24" column="3">
+            <widget class="QDateEdit" name="date_edit_startdato">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="dateTime">
+              <datetime>
+               <hour>0</hour>
+               <minute>0</minute>
+               <second>0</second>
+               <year>2000</year>
+               <month>1</month>
+               <day>1</day>
+              </datetime>
+             </property>
+             <property name="displayFormat">
+              <string>dd.MM.yyyy</string>
+             </property>
+             <property name="calendarPopup">
+              <bool>true</bool>
+             </property>
+             <property name="date">
+              <date>
+               <year>2000</year>
+               <month>1</month>
+               <day>1</day>
+              </date>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="0">
+            <widget class="Line" name="line_kontakt_info">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>25</height>
+              </size>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="22" column="0">
             <widget class="Line" name="line_budsjett_info">
              <property name="minimumSize">
               <size>
@@ -6338,58 +6393,29 @@
              </property>
             </widget>
            </item>
-           <item row="11" column="0">
-            <widget class="Line" name="line_kontakt_info">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>20</height>
-              </size>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="23" column="3">
-            <widget class="QDateEdit" name="date_edit_startdato">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+           <item row="10" column="0">
+            <widget class="QLabel" name="label_jobb_tlf">
              <property name="font">
               <font>
                <family>Segoe UI</family>
                <pointsize>8</pointsize>
               </font>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             <property name="text">
+              <string>Jobb tlf.</string>
              </property>
-             <property name="dateTime">
-              <datetime>
-               <hour>0</hour>
-               <minute>0</minute>
-               <second>0</second>
-               <year>2000</year>
-               <month>1</month>
-               <day>1</day>
-              </datetime>
+             <property name="buddy">
+              <cstring>line_edit_jobb_tlf</cstring>
              </property>
-             <property name="displayFormat">
-              <string>dd.MM.yyyy</string>
+            </widget>
+           </item>
+           <item row="20" column="2">
+            <widget class="QLabel" name="label_totale_utgifter">
+             <property name="text">
+              <string>Totale utgifter</string>
              </property>
-             <property name="calendarPopup">
-              <bool>true</bool>
-             </property>
-             <property name="date">
-              <date>
-               <year>2000</year>
-               <month>1</month>
-               <day>1</day>
-              </date>
+             <property name="buddy">
+              <cstring>line_edit_totale_utgifter</cstring>
              </property>
             </widget>
            </item>
@@ -6412,32 +6438,6 @@
              </property>
             </widget>
            </item>
-           <item row="10" column="0">
-            <widget class="QLabel" name="label_jobb_tlf">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Jobb tlf.</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_jobb_tlf</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="19" column="2">
-            <widget class="QLabel" name="label_totale_utgifter">
-             <property name="text">
-              <string>Totale utgifter</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_totale_utgifter</cstring>
-             </property>
-            </widget>
-           </item>
            <item row="1" column="1">
             <widget class="QComboBox" name="combo_box_kjonn">
              <property name="sizePolicy">
@@ -6445,6 +6445,50 @@
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+            </widget>
+           </item>
+           <item row="23" column="2">
+            <widget class="QLabel" name="label_intervall">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Intervall</string>
+             </property>
+             <property name="buddy">
+              <cstring>combo_box_intervall</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="23" column="3">
+            <widget class="QComboBox" name="combo_box_intervall">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
              </property>
              <property name="font">
               <font>
@@ -6486,51 +6530,7 @@
              </property>
             </widget>
            </item>
-           <item row="22" column="2">
-            <widget class="QLabel" name="label_intervall">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Intervall</string>
-             </property>
-             <property name="buddy">
-              <cstring>combo_box_intervall</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="22" column="3">
-            <widget class="QComboBox" name="combo_box_intervall">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-            </widget>
-           </item>
-           <item row="23" column="2">
+           <item row="24" column="2">
             <widget class="QLabel" name="label_start_dato">
              <property name="font">
               <font>
@@ -6546,7 +6546,7 @@
              </property>
             </widget>
            </item>
-           <item row="22" column="0">
+           <item row="23" column="0">
             <widget class="QLabel" name="label_lanetype">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -6574,7 +6574,7 @@
              </property>
             </widget>
            </item>
-           <item row="23" column="1">
+           <item row="24" column="1">
             <widget class="QComboBox" name="combo_box_laneperiode">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -6590,39 +6590,23 @@
              </property>
             </widget>
            </item>
-           <item row="18" column="1">
-            <widget class="QLineEdit" name="line_edit_total_skatt">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="22" column="1">
-            <widget class="QComboBox" name="combo_box_lanetype">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
+           <item row="5" column="0">
+            <widget class="QLabel" name="label_epost">
              <property name="font">
               <font>
                <family>Segoe UI</family>
                <pointsize>8</pointsize>
               </font>
              </property>
+             <property name="text">
+              <string>E-post</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_epost</cstring>
+             </property>
             </widget>
            </item>
-           <item row="23" column="0">
+           <item row="24" column="0">
             <widget class="QLabel" name="label_laneperiod">
              <property name="minimumSize">
               <size>
@@ -6644,19 +6628,54 @@
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
-            <widget class="QLabel" name="label_epost">
+           <item row="19" column="1">
+            <widget class="QLineEdit" name="line_edit_total_skatt">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="23" column="1">
+            <widget class="QComboBox" name="combo_box_lanetype">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="font">
               <font>
                <family>Segoe UI</family>
                <pointsize>8</pointsize>
               </font>
              </property>
-             <property name="text">
-              <string>E-post</string>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLineEdit" name="line_edit_poststed">
+             <property name="enabled">
+              <bool>false</bool>
              </property>
-             <property name="buddy">
-              <cstring>line_edit_epost</cstring>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -6688,41 +6707,6 @@
              </property>
             </widget>
            </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_adresse">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Adresse</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_adresse</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="3">
-            <widget class="QLineEdit" name="line_edit_poststed">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="4" column="3">
             <widget class="QLineEdit" name="line_edit_fylke">
              <property name="enabled">
@@ -6742,6 +6726,22 @@
              </property>
             </widget>
            </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_adresse">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Adresse</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_adresse</cstring>
+             </property>
+            </widget>
+           </item>
            <item row="1" column="0">
             <widget class="QLabel" name="label_kjonn">
              <property name="font">
@@ -6755,6 +6755,63 @@
              </property>
              <property name="buddy">
               <cstring>combo_box_kjonn</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="2">
+            <widget class="QLabel" name="label_privat_tlf">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Privat tlf.</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_privat_tlf</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="QLineEdit" name="line_edit_etternavn">
+             <property name="minimumSize">
+              <size>
+               <width>207</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1" colspan="3">
+            <widget class="QLineEdit" name="line_edit_epost">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -6796,63 +6853,6 @@
              </property>
             </widget>
            </item>
-           <item row="9" column="2">
-            <widget class="QLabel" name="label_privat_tlf">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Privat tlf.</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_privat_tlf</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="5" column="1" colspan="3">
-            <widget class="QLineEdit" name="line_edit_epost">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="QLineEdit" name="line_edit_etternavn">
-             <property name="minimumSize">
-              <size>
-               <width>207</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="10" column="3">
             <widget class="QLineEdit" name="line_edit_fax">
              <property name="enabled">
@@ -6872,22 +6872,6 @@
              </property>
              <property name="clearButtonEnabled">
               <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="2">
-            <widget class="QLabel" name="label_fylke">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Fylke</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_fylke</cstring>
              </property>
             </widget>
            </item>
@@ -6926,6 +6910,60 @@
              </property>
              <property name="buddy">
               <cstring>line_edit_etternavn</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QLabel" name="label_fylke">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Fylke</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_fylke</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLabel" name="label_poststed">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="text">
+              <string>Poststed</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_poststed</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="1">
+            <widget class="QLineEdit" name="line_edit_mobil_tlf">
+             <property name="enabled">
+              <bool>true</bool>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="readOnly">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -6970,22 +7008,6 @@
              </property>
             </widget>
            </item>
-           <item row="3" column="2">
-            <widget class="QLabel" name="label_poststed">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Poststed</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_poststed</cstring>
-             </property>
-            </widget>
-           </item>
            <item row="10" column="1">
             <widget class="QLineEdit" name="line_edit_jobb_tlf">
              <property name="enabled">
@@ -7008,35 +7030,19 @@
              </property>
             </widget>
            </item>
-           <item row="9" column="1">
-            <widget class="QLineEdit" name="line_edit_mobil_tlf">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_postnummer">
              <property name="font">
               <font>
                <family>Segoe UI</family>
                <pointsize>8</pointsize>
               </font>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="readOnly">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="0">
-            <widget class="QLabel" name="label_trygde_inntekt">
              <property name="text">
-              <string>Trygd</string>
+              <string>Postnummer</string>
              </property>
              <property name="buddy">
-              <cstring>line_edit_trygde_inntekt</cstring>
+              <cstring>line_edit_postnr</cstring>
              </property>
             </widget>
            </item>
@@ -7056,32 +7062,6 @@
              </property>
             </widget>
            </item>
-           <item row="20" column="2">
-            <widget class="QLabel" name="label_likviditetsgrad">
-             <property name="text">
-              <string>Likviditetsgrad</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_likviditetsgrad</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="label_postnummer">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Postnummer</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_postnr</cstring>
-             </property>
-            </widget>
-           </item>
            <item row="14" column="2">
             <widget class="QLabel" name="label_kreditt_gjeld">
              <property name="text">
@@ -7092,7 +7072,27 @@
              </property>
             </widget>
            </item>
-           <item row="18" column="3">
+           <item row="14" column="0">
+            <widget class="QLabel" name="label_trygde_inntekt">
+             <property name="text">
+              <string>Trygd</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_trygde_inntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="21" column="2">
+            <widget class="QLabel" name="label_likviditetsgrad">
+             <property name="text">
+              <string>Likviditetsgrad</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_likviditetsgrad</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="19" column="3">
             <widget class="QLineEdit" name="line_edit_sifo_utgifter">
              <property name="enabled">
               <bool>false</bool>
@@ -7102,8 +7102,8 @@
              </property>
             </widget>
            </item>
-           <item row="19" column="1">
-            <widget class="QLineEdit" name="line_edit_total_netto">
+           <item row="14" column="1">
+            <widget class="QLineEdit" name="line_edit_trygde_inntekt">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -7112,23 +7112,13 @@
              </property>
             </widget>
            </item>
-           <item row="13" column="3">
-            <widget class="QLineEdit" name="line_edit_student_lan">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
+           <item row="20" column="1">
+            <widget class="QLineEdit" name="line_edit_total_netto">
+             <property name="enabled">
+              <bool>false</bool>
              </property>
              <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="1">
-            <widget class="QLineEdit" name="line_edit_trygde_inntekt">
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -7142,8 +7132,34 @@
              </property>
             </widget>
            </item>
+           <item row="13" column="3">
+            <widget class="QLineEdit" name="line_edit_student_lan">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="16" column="3">
+            <widget class="QLineEdit" name="line_edit_strom">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
            <item row="20" column="3">
-            <widget class="QLineEdit" name="line_edit_likviditetsgrad">
+            <widget class="QLineEdit" name="line_edit_totale_utgifter">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -7154,20 +7170,6 @@
            </item>
            <item row="17" column="3">
             <widget class="QLineEdit" name="line_edit_andre_utgifter">
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="16" column="3">
-            <widget class="QLineEdit" name="line_edit_strom">
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="19" column="3">
-            <widget class="QLineEdit" name="line_edit_totale_utgifter">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -7186,8 +7188,37 @@
              </property>
             </widget>
            </item>
+           <item row="21" column="3">
+            <widget class="QLineEdit" name="line_edit_likviditetsgrad">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="0">
+            <widget class="QLabel" name="label_brutto_inntekter">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Bruttoinntekt</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_brutto_inntekt</cstring>
+             </property>
+            </widget>
+           </item>
            <item row="13" column="1">
             <widget class="QLineEdit" name="line_edit_brutto_inntekt">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -7195,11 +7226,11 @@
               </size>
              </property>
              <property name="clearButtonEnabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
-           <item row="18" column="0">
+           <item row="19" column="0">
             <widget class="QPushButton" name="push_button_skatt">
              <property name="minimumSize">
               <size>
@@ -7216,7 +7247,7 @@
              </property>
             </widget>
            </item>
-           <item row="18" column="2">
+           <item row="19" column="2">
             <widget class="QPushButton" name="push_button_sifo_utgifter">
              <property name="minimumSize">
               <size>
@@ -7230,22 +7261,6 @@
              <property name="icon">
               <iconset resource="../../images/img.qrc">
                <normaloff>:/img/expense.png</normaloff>:/img/expense.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="0">
-            <widget class="QLabel" name="label_brutto_inntekter">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Brutto</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_brutto_inntekt</cstring>
              </property>
             </widget>
            </item>
@@ -7265,7 +7280,7 @@
              </property>
             </widget>
            </item>
-           <item row="20" column="1">
+           <item row="21" column="1">
             <widget class="QLineEdit" name="line_edit_netto_likviditet">
              <property name="enabled">
               <bool>false</bool>
@@ -7277,12 +7292,15 @@
            </item>
            <item row="14" column="3">
             <widget class="QLineEdit" name="line_edit_kreditt_gjeld">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
              <property name="clearButtonEnabled">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
-           <item row="20" column="0">
+           <item row="21" column="0">
             <widget class="QLabel" name="label_netto_likviditet">
              <property name="text">
               <string>Netto likviditet</string>
@@ -7292,36 +7310,7 @@
              </property>
             </widget>
            </item>
-           <item row="16" column="1">
-            <widget class="QRadioButton" name="radio_button_skattefrie_inntekt">
-             <property name="text">
-              <string>Skattefri leieinntekt</string>
-             </property>
-            </widget>
-           </item>
-           <item row="24" column="1">
-            <widget class="QLineEdit" name="line_edit_egenkapital">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="24" column="0">
+           <item row="25" column="0">
             <widget class="QLabel" name="label_egenkapital">
              <property name="minimumSize">
               <size>
@@ -7343,7 +7332,7 @@
              </property>
             </widget>
            </item>
-           <item row="19" column="0">
+           <item row="20" column="0">
             <widget class="QLabel" name="label_total_netto">
              <property name="text">
               <string>Total netto</string>
@@ -7353,6 +7342,38 @@
              </property>
              <property name="buddy">
               <cstring>line_edit_total_netto</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="25" column="1">
+            <widget class="QLineEdit" name="line_edit_egenkapital">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="15" column="3">
+            <widget class="QLineEdit" name="line_edit_husleie">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -7366,20 +7387,6 @@
              </property>
             </widget>
            </item>
-           <item row="15" column="3">
-            <widget class="QLineEdit" name="line_edit_husleie">
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="1">
-            <widget class="QLineEdit" name="line_edit_leieinntekt">
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
            <item row="15" column="0">
             <widget class="QLabel" name="label_leieinntekt">
              <property name="text">
@@ -7387,6 +7394,16 @@
              </property>
              <property name="buddy">
               <cstring>line_edit_leieinntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="15" column="1">
+            <widget class="QLineEdit" name="line_edit_leieinntekt">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -7404,6 +7421,34 @@
              <property name="icon">
               <iconset resource="../../images/img.qrc">
                <normaloff>:/img/budget.png</normaloff>:/img/budget.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="1">
+            <widget class="QLineEdit" name="line_edit_personinntekt">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="0">
+            <widget class="QLabel" name="label_personinntekt">
+             <property name="text">
+              <string>Personinntekt</string>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="2">
+            <widget class="QLabel" name="label_sum_utgifter">
+             <property name="text">
+              <string>Sum utgifter</string>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="3">
+            <widget class="QLineEdit" name="line_edit_sum_utgifter">
+             <property name="enabled">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -7477,8 +7522,11 @@
           <zorder>line_edit_husleie</zorder>
           <zorder>line_edit_leieinntekt</zorder>
           <zorder>label_leieinntekt</zorder>
-          <zorder>radio_button_skattefrie_inntekt</zorder>
           <zorder>push_button_budsjett</zorder>
+          <zorder>line_edit_personinntekt</zorder>
+          <zorder>label_personinntekt</zorder>
+          <zorder>label_sum_utgifter</zorder>
+          <zorder>line_edit_sum_utgifter</zorder>
          </widget>
         </item>
        </layout>
@@ -9451,7 +9499,6 @@
   <tabstop>line_edit_brutto_inntekt</tabstop>
   <tabstop>line_edit_trygde_inntekt</tabstop>
   <tabstop>line_edit_leieinntekt</tabstop>
-  <tabstop>radio_button_skattefrie_inntekt</tabstop>
   <tabstop>push_button_skatt</tabstop>
   <tabstop>line_edit_total_skatt</tabstop>
   <tabstop>line_edit_total_netto</tabstop>
