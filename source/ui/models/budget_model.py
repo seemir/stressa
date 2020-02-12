@@ -32,54 +32,58 @@ class BudgetModel(Model):
     def budget_posts(self):
         return self._budget_posts
 
-    def clear_all(self):
-        for combo_box in range(1, 9):
-            getattr(self.parent.ui, "combo_box_interval_" + str(combo_box)).setCurrentIndex(0)
-        self.clear_line_edits(self.budget_posts)
-        self.parent.ui.radio_button_skattefrie_inntekt.setChecked(False)
-        self.parent.ui.combo_box_interval_1.setFocus()
-
     def budget_info(self):
+        self.parent.ui.combo_box_interval_1.setFocus()
+        self.parent.ui.combo_box_interval_1.activated.connect(
+            lambda: self.set_combo_box_value("brutto_inntekt", "_1"))
         self.parent.ui.line_edit_brutto_inntekt.editingFinished.connect(
-            lambda: self.set_line_edit("brutto_inntekt", Money, "value"))
+            lambda: self.set_value("brutto_inntekt", "_1"))
+        self.parent.ui.combo_box_interval_2.activated.connect(
+            lambda: self.set_combo_box_value("trygde_inntekt", "_2"))
         self.parent.ui.line_edit_trygde_inntekt.editingFinished.connect(
-            lambda: self.set_line_edit("trygde_inntekt", Money, "value"))
+            lambda: self.set_value("trygde_inntekt", "_2"))
+        self.parent.ui.combo_box_interval_3.activated.connect(
+            lambda: self.set_combo_box_value("leieinntekt", "_3"))
         self.parent.ui.line_edit_leieinntekt.editingFinished.connect(
-            lambda: self.set_line_edit("leieinntekt", Money, "value"))
+            lambda: self.set_value("leieinntekt", "_3"))
+
+        self.parent.ui.combo_box_interval_4.activated.connect(
+            lambda: self.set_combo_box_value("student_lan", "_4"))
         self.parent.ui.line_edit_student_lan.editingFinished.connect(
-            lambda: self.set_line_edit("student_lan", Money, "value"))
+            lambda: self.set_value("student_lan", "_4"))
+        self.parent.ui.combo_box_interval_5.activated.connect(
+            lambda: self.set_combo_box_value("kreditt_gjeld", "_5"))
         self.parent.ui.line_edit_kreditt_gjeld.editingFinished.connect(
-            lambda: self.set_line_edit("kreditt_gjeld", Money, "value"))
+            lambda: self.set_value("kreditt_gjeld", "_5"))
+        self.parent.ui.combo_box_interval_6.activated.connect(
+            lambda: self.set_combo_box_value("husleie", "_6"))
         self.parent.ui.line_edit_husleie.editingFinished.connect(
-            lambda: self.set_line_edit("husleie", Money, "value"))
+            lambda: self.set_value("husleie", "_6"))
+        self.parent.ui.combo_box_interval_7.activated.connect(
+            lambda: self.set_combo_box_value("strom", "_7"))
         self.parent.ui.line_edit_strom.editingFinished.connect(
-            lambda: self.set_line_edit("strom", Money, "value"))
+            lambda: self.set_value("strom", "_7"))
+        self.parent.ui.combo_box_interval_8.activated.connect(
+            lambda: self.set_combo_box_value("andre_utgifter", "_8"))
         self.parent.ui.line_edit_andre_utgifter.editingFinished.connect(
-            lambda: self.set_line_edit("andre_utgifter", Money, "value"))
-        self.sum_personal_income()
-        self.sum_personal_expenses()
+            lambda: self.set_value("andre_utgifter", "_8"))
 
-    def sum_personal_income(self):
-        self.parent.ui.combo_box_interval_1.activated.connect(self.monthly_income)
-        self.parent.ui.line_edit_brutto_inntekt.editingFinished.connect(self.monthly_income)
-        self.parent.ui.combo_box_interval_2.activated.connect(self.monthly_income)
-        self.parent.ui.line_edit_trygde_inntekt.editingFinished.connect(self.monthly_income)
-        self.parent.ui.combo_box_interval_3.activated.connect(self.monthly_income)
-        self.parent.ui.line_edit_leieinntekt.editingFinished.connect(self.monthly_income)
+    def set_value(self, line_edit, postfix):
+        if getattr(self.parent.ui, "line_edit_" + line_edit).text():
+            self.set_line_edit(line_edit, Money, "value")
+        else:
+            self.clear_line_edit(line_edit)
+            getattr(self.parent.ui, "combo_box_interval" + postfix).setCurrentIndex(0)
+        self.monthly_value()
 
-    def sum_personal_expenses(self):
-        self.parent.ui.combo_box_interval_4.activated.connect(self.monthly_expenses)
-        self.parent.ui.line_edit_student_lan.editingFinished.connect(self.monthly_expenses)
-        self.parent.ui.combo_box_interval_5.activated.connect(self.monthly_expenses)
-        self.parent.ui.line_edit_kreditt_gjeld.editingFinished.connect(self.monthly_expenses)
-        self.parent.ui.combo_box_interval_6.activated.connect(self.monthly_expenses)
-        self.parent.ui.line_edit_husleie.editingFinished.connect(self.monthly_expenses)
-        self.parent.ui.combo_box_interval_7.activated.connect(self.monthly_expenses)
-        self.parent.ui.line_edit_strom.editingFinished.connect(self.monthly_expenses)
-        self.parent.ui.combo_box_interval_8.activated.connect(self.monthly_expenses)
-        self.parent.ui.line_edit_andre_utgifter.editingFinished.connect(self.monthly_expenses)
+    def set_combo_box_value(self, line_edit, postfix):
+        if getattr(self.parent.ui, "combo_box_interval" + postfix).currentText():
+            pass
+        else:
+            self.clear_line_edit(line_edit)
+        self.monthly_value()
 
-    def monthly_income(self):
+    def monthly_value(self):
         parent = self.parent.ui
         brutto_income = self.calculate_monthly_values(
             "brutto_inntekt", parent.line_edit_brutto_inntekt.text(),
@@ -96,8 +100,6 @@ class BudgetModel(Model):
         parent.line_edit_personinntekt.setText(person_income)
         self.set_line_edit("personinntekt", data=person_income)
 
-    def monthly_expenses(self):
-        parent = self.parent.ui
         student_loan = self.calculate_monthly_values(
             "student_lan", parent.line_edit_student_lan.text(),
             self._intervall[parent.combo_box_interval_4.currentText()])
@@ -119,14 +121,16 @@ class BudgetModel(Model):
         parent.line_edit_sum_utgifter.setText(person_expenses)
         self.set_line_edit("sum_utgifter", data=person_expenses)
 
-    def calculate_monthly_values(self, line_edit: str, income: str, factor: str):
-        Assertor.assert_data_types([income, factor], [str, str])
-        if income and factor:
-            quantity = Decimal(income.replace(" ", "").replace("kr", "")) * Decimal(
+    def calculate_monthly_values(self, line_edit: str, value: str, factor: str):
+        Assertor.assert_data_types([value, factor], [str, str])
+        if value and factor:
+            quantity = Decimal(value.replace(" ", "").replace("kr", "")) * Decimal(
                 factor.replace(" ", "").replace("kr", ""))
             divisor = Decimal("12")
             monthly_values = round(Decimal(quantity / divisor))
             self.data.update({line_edit: Money(str(monthly_values)).value()})
+        elif value:
+            monthly_values = round(Decimal(value.replace(" ", "").replace("kr", "")))
         else:
             monthly_values = round(Decimal("0"))
         return monthly_values
