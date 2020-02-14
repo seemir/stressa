@@ -78,10 +78,9 @@ class FinnModel(Model):
                 getattr(self.parent.ui, "progress_bar" + postfix).setValue(randint(0, 30))
                 getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(False)
                 finn_processing = FinnAdvertProcessing(finn_code)
-                self.finn_data = {key + postfix: val for key, val in
-                                  finn_processing.multiplex_info.items()}
-                self.set_line_edits("finnkode", self._finn_keys, postfix=postfix,
-                                    data=finn_processing.multiplex_info)
+                finn_data = finn_processing.multiplex_info_2
+                self.finn_data = {key + postfix: val for key, val in finn_data.items()}
+                self.set_line_edits("finnkode", self._finn_keys, postfix=postfix, data=finn_data)
                 self.parent.history_view.history_model.add_finn_history(postfix)
                 self.data.update(self.parent.history_view.history_model.data)
                 getattr(self.parent.ui, "progress_bar" + postfix).setValue(30)

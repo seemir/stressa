@@ -47,7 +47,8 @@ class HistoryModel(Model):
             for key, val in grandparent.finn_data.items():
                 if key[:-len(postfix)] in self._finn_history_keys:
                     if key[:-len(postfix)] == "historikk":
-                        history_data.update({key: val.to_dict()})
+                        history_data.update(
+                            {key: val.to_dict() if isinstance(val, DataFrame) else {}})
                     else:
                         history_data.update({key: val})
         self.data.update(history_data)

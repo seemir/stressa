@@ -62,6 +62,14 @@
 }
 
 /* HomeView */
+#tab_primarsoker{
+  background-color: #f2f3f4;
+}
+
+#tab_sekundarsoker{
+  background-color: #f2f3f4;
+}
+
 .QFrame[objectName="frame_white_space_1"] {
   border: none;
 }

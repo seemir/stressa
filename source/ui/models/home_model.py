@@ -37,4 +37,6 @@ class HomeModel(Model):
         self.parent.ui.sifo_view.sifo_model.clear_all()
         self.parent.mortgage_model.clear_all()
         self.parent.finn_model.clear_all()
-        self.parent.ui.line_edit_fornavn.setFocus()
+        self.parent.ui.line_edit_fornavn_2.setFocus()
+        self.parent.ui.tab_widget_lanesokere.setCurrentIndex(0)
+        self.parent.ui.line_edit_fornavn_1.setFocus()

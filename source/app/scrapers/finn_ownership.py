@@ -104,7 +104,7 @@ class FinnOwnership(Finn):
 
                 info = dict(zip(keys, values))
                 historic_df = DataFrame(history_results, columns=history_headers)
-                info.update({"historikk": self.price_change(historic_df)})
+                info.update({"historikk": historic_df})
 
                 LOGGER.success(
                     "'{}' successfully retrieved".format(
@@ -127,18 +127,3 @@ class FinnOwnership(Finn):
 
         LOGGER.success(
             "'housing_ownership_information' successfully parsed to JSON at '{}'".format(file_dir))
-
-    @staticmethod
-    def price_change(df_: DataFrame):
-        """
-        method for calculating change in price of dataframe
-
-        Parameters
-        ----------
-        df_      : DataFrame
-                  df to be applied
-
-        """
-        change = df_.iloc[:, -1].str.replace(u"\xa0", "").str.replace(
-            " kr", "").astype(float).pct_change(-1).mul(100).round(2).astype(str)
-        return df_.assign(Endring=(change + " %").replace("nan %", ""))

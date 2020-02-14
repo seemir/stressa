@@ -11,8 +11,8 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util import Assertor, Profiling
 
 from .engine import Process, InputOperation, Signal, ScrapeFinnAdvertInfo, \
-    ScrapeFinnOwnershipHistory, \
-    ScrapeFinnStatisticsInfo, Multiplex, OutputSignal, OutputOperation, ValidateFinnCode
+    ScrapeFinnOwnershipHistory, ScrapeFinnStatisticsInfo, Multiplex, OutputSignal, \
+    OutputOperation, ValidateFinnCode, Extract, AddRowToDataFrame, PriceChange
 
 
 class FinnAdvertProcessing(Process):
@@ -34,8 +34,8 @@ class FinnAdvertProcessing(Process):
         super().__init__(name=self.__class__.__name__)
         self.start_process()
         Assertor.assert_data_types([finn_code], [str])
-        self._finn_code = self.input_operation({"finn_code": finn_code})
-        self._validated_finn_code = self.validate_finn_code(self.finn_code)
+        self.input_operation({"finn_code": finn_code})
+        self._validated_finn_code = self.validate_finn_code()
 
         self._finn_advert_info = None
         self._finn_ownership_history = None
@@ -43,23 +43,17 @@ class FinnAdvertProcessing(Process):
         self.run_parallel([self.scrape_finn_advert_info, self.scrape_finn_statistics_info,
                            self.scrape_finn_ownership_history])
 
-        self._multiplex_info = self.multiplex(
+        self._multiplex_info_1 = self.multiplex_1(
             [self.finn_advert_info, self.finn_ownership_history, self.finn_statistics_info])
+
+        self.extract()
+        self.add_to_dataframe()
+
+        self._price_changes = self.price_change()
+        self._multiplex_info_2 = self.multiplex_2([self.multiplex_info_1, self.price_changes])
+
         self.output_operation()
         self.end_process()
-
-    @property
-    def finn_code(self):
-        """
-        finn code getter
-
-        Returns
-        -------
-        out     : dict
-                  active finn-code in object
-
-        """
-        return self._finn_code
 
     @property
     def validated_finn_code(self):
@@ -114,9 +108,9 @@ class FinnAdvertProcessing(Process):
         return self._finn_statistics_info
 
     @property
-    def multiplex_info(self):
+    def multiplex_info_1(self):
         """
-        multiplex info getter
+        first multiplex info getter
 
         Returns
         -------
@@ -124,7 +118,31 @@ class FinnAdvertProcessing(Process):
                   active finn multiplex info in object
 
         """
-        return self._multiplex_info
+        return self._multiplex_info_1
+
+    @property
+    def multiplex_info_2(self):
+        """
+        second multiplex info getter
+
+        Returns
+        -------
+        out     : dict
+                  active finn multiplex info in object
+
+        """
+        return self._multiplex_info_2
+
+    @property
+    def price_changes(self):
+        """
+        getter for dictionary with changes in real-estate price
+
+        Returns
+        -------
+
+        """
+        return self._price_changes
 
     @Profiling
     def input_operation(self, data: dict):
@@ -151,26 +169,14 @@ class FinnAdvertProcessing(Process):
         self.add_signal(input_signal, "input_signal")
 
         self.add_transition(input_operation, input_signal)
-        return data
 
     @Profiling
-    def validate_finn_code(self, data: dict):
+    def validate_finn_code(self):
         """
         method for validating finn code
 
-        Parameters
-        ----------
-        data       : dict
-                     finn_code to be validated
-
-        Returns
-        -------
-        out         : dict
-                      validated finn_code
-
         """
-        Assertor.assert_data_types([data], [dict])
-        validate_finn_code = ValidateFinnCode(data["finn_code"])
+        validate_finn_code = ValidateFinnCode(self.get_signal("input_signal").data["finn_code"])
         self.add_node(validate_finn_code)
 
         self.add_transition(self.get_signal("input_signal"), validate_finn_code)
@@ -258,7 +264,7 @@ class FinnAdvertProcessing(Process):
             raise scrape_finn_statistics_info_exception
 
     @Profiling
-    def multiplex(self, signals: list):
+    def multiplex_1(self, signals: list):
         """
         method for multiplexing signals
 
@@ -281,12 +287,124 @@ class FinnAdvertProcessing(Process):
         self.add_transition(self.get_signal("finn_owner_history"), multiplex_operation)
         self.add_transition(self.get_signal("finn_stat_info"), multiplex_operation)
 
-        multiplex_data = multiplex_operation.run()
-        multiplex_signal = Signal(multiplex_data, desc="Multiplexed Finn Information",
+        multiplex = multiplex_operation.run()
+        multiplex_signal = Signal(multiplex, desc="Multiplexed Finn Information",
                                   prettify_keys=True)
         self.add_signal(multiplex_signal, "multiplexed_data")
         self.add_transition(multiplex_operation, multiplex_signal)
-        return multiplex_data
+        return multiplex
+
+    @Profiling
+    def extract(self):
+        """
+        method for extracting prisantydning and history from the multiplexed dictionary
+
+        """
+        extract_price_operation = Extract(self.get_signal("multiplexed_data").data, "prisantydning")
+        self.add_node(extract_price_operation)
+        extract_history_operation = Extract(self.get_signal("multiplexed_data").data, "historikk")
+        self.add_node(extract_history_operation)
+        self.add_transition(self.get_signal("multiplexed_data"), extract_price_operation)
+        self.add_transition(self.get_signal("multiplexed_data"), extract_history_operation)
+
+        extract_price = extract_price_operation.run()
+        extract_price_signal = Signal(extract_price, "List Price of Real-estate")
+        extract_history = extract_history_operation.run()
+        extract_history_signal = Signal(extract_history, "Ownership History")
+
+        self.add_signal(extract_price_signal, "list_price_of_real_estate")
+        self.add_signal(extract_history_signal, "ownership_history")
+
+        self.add_transition(extract_price_operation, extract_price_signal)
+        self.add_transition(extract_history_operation, extract_history_signal)
+
+    @Profiling
+    def add_to_dataframe(self):
+        """
+        method for adding prisantydning to ownership history dataframe
+
+        Returns
+        -------
+        out             : dict
+                          dictionary which can be converted to dataframe
+
+        """
+        add_row_to_dataframe_operation = AddRowToDataFrame(
+            self.get_signal("list_price_of_real_estate").data,
+            self.get_signal("ownership_history").data, "Add List Price to Ownership History")
+        self.add_node(add_row_to_dataframe_operation)
+
+        self.add_transition(self.get_signal("list_price_of_real_estate"),
+                            add_row_to_dataframe_operation,
+                            label="row")
+        self.add_transition(self.get_signal("ownership_history"), add_row_to_dataframe_operation,
+                            label="dataframe")
+
+        add_row_to_dataframe = add_row_to_dataframe_operation.run()
+        add_row_to_dataframe_signal = Signal(add_row_to_dataframe, "Ownership History with "
+                                                                   "List Price")
+        self.add_signal(add_row_to_dataframe_signal, "ownership_history_with_list_price")
+
+        self.add_transition(add_row_to_dataframe_operation, add_row_to_dataframe_signal)
+
+    @Profiling
+    def price_change(self):
+        """
+        method for calculating percentage change in prices
+
+        Returns
+        -------
+        out         : dict
+                      dictionary with ownership history, list-prices and percentage change in price
+
+        """
+        price_change_operation = PriceChange(
+            self.get_signal("ownership_history_with_list_price").data,
+            "Calculate Percentage Change in Real-estate Price")
+        self.add_node(price_change_operation)
+        price_change = {"historikk": price_change_operation.run()}
+
+        self.add_transition(self.get_signal("ownership_history_with_list_price"),
+                            price_change_operation)
+
+        price_change_signal = Signal(price_change, "Ownership History with Percentage Change "
+                                                   "in Real-estate Price")
+        self.add_signal(price_change_signal, "price_change_signal")
+
+        self.add_transition(price_change_operation, price_change_signal)
+        return price_change
+
+    @Profiling
+    def multiplex_2(self, signals):
+        """
+        second method for multiplexing signals
+
+        Parameters
+        ----------
+        signals     : list
+                      list of Signal objects
+
+        Returns
+        -------
+        dict        : dict
+                      dictionary with all signal information in one dict
+
+        """
+        Assertor.assert_data_types([signals], [list])
+        multiplex_operation = Multiplex(signals, desc="Multiplex Scraped Finn Information "
+                                                      "and Ownership History with List Price "
+                                                      "and Price Change")
+        self.add_node(multiplex_operation)
+        multiplex = multiplex_operation.run()
+
+        self.add_transition(self.get_signal("price_change_signal"), multiplex_operation)
+        self.add_transition(self.get_signal("multiplexed_data"), multiplex_operation)
+
+        multiplex_signal = Signal(multiplex, "Multiplexed Finn Information", prettify_keys=True)
+        self.add_signal(multiplex_signal, "multiplex_history_data")
+
+        self.add_transition(multiplex_operation, multiplex_signal)
+        return multiplex
 
     @Profiling
     def output_operation(self):
@@ -296,9 +414,9 @@ class FinnAdvertProcessing(Process):
         """
         output_operation = OutputOperation(desc="Multiplexed Finn Information")
         self.add_node(output_operation)
-        self.add_transition(self.get_signal("multiplexed_data"), output_operation)
+        self.add_transition(self.get_signal("multiplex_history_data"), output_operation)
 
-        output_signal = OutputSignal(self.multiplex_info, desc="Finn Information",
+        output_signal = OutputSignal(self.multiplex_info_1, desc="Finn Information",
                                      prettify_keys=True)
         self.add_signal(output_signal, "output_multiplex_data")
         self.add_transition(output_operation, output_signal)

@@ -42,7 +42,8 @@ class MortgageModel(Model):
         """
         Assertor.assert_data_types([parent], [QObject])
         super().__init__(parent)
-        self.parent.ui.combo_box_kjonn.addItems(self._kjonn)
+        self.parent.ui.combo_box_kjonn_1.addItems(self._kjonn)
+        self.parent.ui.combo_box_kjonn_2.addItems(self._kjonn)
         self.parent.ui.combo_box_lanetype.addItems(self._lanetype)
         self.parent.ui.combo_box_laneperiode.addItems(self._laneperiode)
         self.parent.ui.combo_box_intervall.addItems(self._intervall)
@@ -54,28 +55,53 @@ class MortgageModel(Model):
 
         """
         # contact information
-        self.parent.ui.line_edit_fornavn.editingFinished.connect(
-            lambda: self.set_line_edit("fornavn", Name, "format_name"))
-        self.parent.ui.line_edit_etternavn.editingFinished.connect(
-            lambda: self.set_line_edit("etternavn", Name, "format_name"))
-        self.parent.ui.combo_box_kjonn.activated.connect(
-            lambda: self.set_combo_box("kjonn"))
-        self.parent.ui.date_edit_fodselsdato.editingFinished.connect(
-            lambda: self.set_date_edit("fodselsdato"))
-        self.parent.ui.line_edit_adresse.editingFinished.connect(
-            lambda: self.set_line_edit("adresse", Address, "format_address"))
-        self.parent.ui.line_edit_postnr.editingFinished.connect(
-            lambda: self.update_line_edits("postnr", self._post_code, Posten, "zip_code_info"))
-        self.parent.ui.line_edit_epost.editingFinished.connect(
-            lambda: self.set_line_edit("epost", Email, "format_email"))
-        self.parent.ui.line_edit_mobil_tlf.editingFinished.connect(
-            lambda: self.set_line_edit("mobil_tlf", Mobile, "format_number"))
-        self.parent.ui.line_edit_privat_tlf.editingFinished.connect(
-            lambda: self.set_line_edit("privat_tlf", Phone, "format_number"))
-        self.parent.ui.line_edit_jobb_tlf.editingFinished.connect(
-            lambda: self.set_line_edit("jobb_tlf", Phone, "format_number"))
-        self.parent.ui.line_edit_fax.editingFinished.connect(
-            lambda: self.set_line_edit("fax", Phone, "format_number"))
+        self.parent.ui.line_edit_fornavn_1.editingFinished.connect(
+            lambda: self.set_line_edit("fornavn_1", Name, "format_name"))
+        self.parent.ui.line_edit_etternavn_1.editingFinished.connect(
+            lambda: self.set_line_edit("etternavn_1", Name, "format_name"))
+        self.parent.ui.combo_box_kjonn_1.activated.connect(
+            lambda: self.set_combo_box("kjonn_1"))
+        self.parent.ui.date_edit_fodselsdato_1.editingFinished.connect(
+            lambda: self.set_date_edit("fodselsdato_1"))
+        self.parent.ui.line_edit_adresse_1.editingFinished.connect(
+            lambda: self.set_line_edit("adresse_1", Address, "format_address"))
+        self.parent.ui.line_edit_postnr_1.editingFinished.connect(
+            lambda: self.update_line_edits("postnr", self._post_code, Posten, "zip_code_info",
+                                           postfix="_1"))
+        self.parent.ui.line_edit_epost_1.editingFinished.connect(
+            lambda: self.set_line_edit("epost_1", Email, "format_email"))
+        self.parent.ui.line_edit_mobil_tlf_1.editingFinished.connect(
+            lambda: self.set_line_edit("mobil_tlf_1", Mobile, "format_number"))
+        self.parent.ui.line_edit_privat_tlf_1.editingFinished.connect(
+            lambda: self.set_line_edit("privat_tlf_1", Phone, "format_number"))
+        self.parent.ui.line_edit_jobb_tlf_1.editingFinished.connect(
+            lambda: self.set_line_edit("jobb_tlf_1", Phone, "format_number"))
+        self.parent.ui.line_edit_fax_1.editingFinished.connect(
+            lambda: self.set_line_edit("fax_1", Phone, "format_number"))
+
+        self.parent.ui.line_edit_fornavn_2.editingFinished.connect(
+            lambda: self.set_line_edit("fornavn_2", Name, "format_name"))
+        self.parent.ui.line_edit_etternavn_2.editingFinished.connect(
+            lambda: self.set_line_edit("etternavn_2", Name, "format_name"))
+        self.parent.ui.combo_box_kjonn_2.activated.connect(
+            lambda: self.set_combo_box("kjonn_2"))
+        self.parent.ui.date_edit_fodselsdato_2.editingFinished.connect(
+            lambda: self.set_date_edit("fodselsdato_2"))
+        self.parent.ui.line_edit_adresse_2.editingFinished.connect(
+            lambda: self.set_line_edit("adresse_2", Address, "format_address"))
+        self.parent.ui.line_edit_postnr_2.editingFinished.connect(
+            lambda: self.update_line_edits("postnr", self._post_code, Posten, "zip_code_info",
+                                           postfix="_2"))
+        self.parent.ui.line_edit_epost_2.editingFinished.connect(
+            lambda: self.set_line_edit("epost_2", Email, "format_email"))
+        self.parent.ui.line_edit_mobil_tlf_2.editingFinished.connect(
+            lambda: self.set_line_edit("mobil_tlf_2", Mobile, "format_number"))
+        self.parent.ui.line_edit_privat_tlf_2.editingFinished.connect(
+            lambda: self.set_line_edit("privat_tlf_2", Phone, "format_number"))
+        self.parent.ui.line_edit_jobb_tlf_2.editingFinished.connect(
+            lambda: self.set_line_edit("jobb_tlf_2", Phone, "format_number"))
+        self.parent.ui.line_edit_fax_2.editingFinished.connect(
+            lambda: self.set_line_edit("fax_2", Phone, "format_number"))
 
         # budget information
         self.parent.ui.line_edit_brutto_inntekt.editingFinished.connect(
@@ -127,12 +153,16 @@ class MortgageModel(Model):
         """
         self.clear_line_edits(["fornavn", "etternavn", "adresse", "postnr",
                                "poststed", "kommune", "fylke", "epost", "mobil_tlf",
-                               "privat_tlf", "jobb_tlf", "fax", "brutto_inntekt",
-                               "trygde_inntekt", "leieinntekt", "personinntekt",
-                               "total_skatt", "total_netto", "netto_likviditet",
-                               "student_lan", "kreditt_gjeld", "husleie", "strom",
-                               "andre_utgifter", "sum_utgifter", "sifo_utgifter",
-                               "totale_utgifter", "likviditetsgrad", "egenkapital"])
-        self.clear_combo_boxes(["kjonn", "lanetype", "intervall", "laneperiode"])
-        self.clear_date_edits(["fodselsdato", "startdato"])
-        self.parent.budget_view.budget_model.clear_all()
+                               "privat_tlf", "jobb_tlf", "fax"], postfix="_1")
+        self.clear_line_edits(["fornavn", "etternavn", "adresse", "postnr",
+                               "poststed", "kommune", "fylke", "epost", "mobil_tlf",
+                               "privat_tlf", "jobb_tlf", "fax"], postfix="_2")
+        self.clear_line_edits(["brutto_inntekt", "trygde_inntekt", "leieinntekt",
+                               "personinntekt", "total_skatt", "total_netto",
+                               "netto_likviditet", "student_lan", "kreditt_gjeld",
+                               "husleie", "strom", "andre_utgifter", "sum_utgifter",
+                               "sifo_utgifter", "totale_utgifter", "likviditetsgrad",
+                               "egenkapital"])
+        self.clear_combo_boxes(["kjonn_1", "kjonn_2", "lanetype", "intervall", "laneperiode"])
+        self.clear_date_edits(["fodselsdato_1", "fodselsdato_2", "startdato"])
+        self.parent.budget_view.clear_all()
