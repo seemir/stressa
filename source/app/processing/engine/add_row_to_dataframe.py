@@ -7,6 +7,8 @@ Module containing operation for adding a row to a dataframe
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from typing import Union
+
 from pandas import DataFrame
 
 from source.util import Assertor
@@ -20,7 +22,7 @@ class AddRowToDataFrame(Operation):
 
     """
 
-    def __init__(self, row: dict, dataframe: dict, desc: str):
+    def __init__(self, row: dict, dataframe: Union[dict, None], desc: str):
         """
         Constructor / Instantiating class
 

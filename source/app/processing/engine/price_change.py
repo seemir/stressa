@@ -7,6 +7,8 @@ Module containing operation for calculating change in price of a pandas datafram
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from typing import Union
+
 from pandas import DataFrame as DataFrame_
 
 from source.util import Assertor
@@ -20,7 +22,7 @@ class PriceChange(Operation):
 
     """
 
-    def __init__(self, dataframe: dict, desc: str):
+    def __init__(self, dataframe: Union[dict, None], desc: str):
         """
 
         Parameters

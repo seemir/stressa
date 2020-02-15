@@ -69,4 +69,5 @@ class TestDivide:
 
         """
         divide = Divide(self.numerator, self.denominator, self.desc)
+        assert divide.run() == self.divide.run()
         assert divide.run() == {'klar': '33.33 %', 'sko': '33.33 %', 'mat': '33.33 %'}
