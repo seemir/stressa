@@ -8,14 +8,16 @@ Test module for Sifo scraper class
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import shutil
 import os
 import json
-import shutil
+
 from uuid import UUID
 from urllib.error import URLError
 
 import mock
 import pytest as pt
+from mechanize import Browser
 from mechanize._response import response_seek_wrapper
 
 from source.domain import Female, Family, Male
@@ -47,6 +49,13 @@ class TestSifo:
         assert isinstance(self.sifo, Sifo)
         assert isinstance(self.sifo, Scraper)
         assert issubclass(self.sifo.__class__, Scraper)
+
+    def test_sifo_has_browser_object_as_attribute(self):
+        """
+        Test that Sifo scraper has Browser object
+
+        """
+        assert isinstance(self.sifo.browser, Browser)
 
     @staticmethod
     @pt.mark.parametrize("invalid_family", [90210, 90210.0, True, [], (), {}])

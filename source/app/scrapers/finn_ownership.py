@@ -8,6 +8,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from http.client import responses
+import requests
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from bs4 import BeautifulSoup
@@ -49,8 +50,8 @@ class FinnOwnership(Finn):
         """
         try:
             try:
-                owner_response = self.browser.get(FINN_OWNER_URL + "{}".format(self.finn_code),
-                                                  timeout=TIMEOUT)
+                owner_response = requests.get(FINN_OWNER_URL + "{}".format(self.finn_code),
+                                              timeout=TIMEOUT)
                 owner_status_code = owner_response.status_code
                 LOGGER.info(
                     "HTTP status code -> OWNERSHIP HISTORY: "

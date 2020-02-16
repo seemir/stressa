@@ -9,6 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 from http.client import responses
+import requests
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from bs4 import BeautifulSoup
@@ -49,8 +50,8 @@ class FinnAd(Finn):
         """
         try:
             try:
-                ad_response = self.browser.get(FINN_AD_URL + "{}".format(self.finn_code),
-                                               timeout=TIMEOUT)
+                ad_response = requests.get(FINN_AD_URL + "{}".format(self.finn_code),
+                                           timeout=TIMEOUT)
                 ad_status_code = ad_response.status_code
                 LOGGER.info(
                     "HTTP status code -> AD: [{}: {}]".format(ad_status_code,

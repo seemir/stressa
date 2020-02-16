@@ -10,8 +10,6 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-import requests
-
 from source.util import cache, Assertor, LOGGER, NotFoundError
 
 from .scraper import Scraper
@@ -55,7 +53,7 @@ class Finn(Scraper):
             Assertor.assert_data_types([finn_code], [str])
             self.validate_finn_code(finn_code)
             self._finn_code = finn_code
-            self._browser = requests.session()
+            self._browser = None
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
         except Exception as finn_exception:
