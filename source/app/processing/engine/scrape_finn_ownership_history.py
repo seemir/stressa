@@ -34,7 +34,7 @@ class ScrapeFinnOwnershipHistory(Operation):
         super().__init__(name=self.name,
                          desc="from: '{}\\<[finn_code]\\>' \\n id: Scrape FINN Ownership "
                               "History".format(FINN_OWNER_URL))
-        self.finn_coe = finn_code
+        self.finn_code = finn_code
 
     def run(self):
         """
@@ -46,5 +46,5 @@ class ScrapeFinnOwnershipHistory(Operation):
                       dictionary with all finn ownership information
 
         """
-        finn_owner_history = FinnOwnership(self.finn_coe)
+        finn_owner_history = FinnOwnership(self.finn_code)
         return finn_owner_history.housing_ownership_information()

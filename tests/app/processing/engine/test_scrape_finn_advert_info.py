@@ -59,7 +59,7 @@ class TestScrapeFinnAdvertInfo:
 
     def test_scrape_finn_advert_info_run_method(self):
         """
-        Test the run method in Output operation
+        Test the run method in ScrapeFinnAdvertInfo operation
 
         """
         assert self.scrape_finn_advert_info.run() == {'finn_adresse': 'Sigyns gate 3, 0260 Oslo',

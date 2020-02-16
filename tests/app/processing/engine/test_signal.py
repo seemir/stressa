@@ -66,3 +66,19 @@ class TestSignal:
 
         assert signal1.keys == Signal.remove_quotation(list(self.signal.__dict__.keys()))
         assert not signal2.keys
+
+    def test_prettify_dict_keys_method(self):
+        """
+        Test the prettify_dict_keys method in the Signal class
+
+        """
+        test_dict_1 = {"test1": "test1", "test2": "test2"}
+        test_dict_2 = dict(zip(["test" + str(i) for i in range(16)],
+                               ["test" + str(i) for i in range(16)]))
+        assert self.signal.prettify_dict_keys(test_dict_1) == self.signal.remove_quotation(
+            list(test_dict_1.keys()))
+
+        assert self.signal.prettify_dict_keys(test_dict_2) == "[test0, test1, test2, test3, " \
+                                                              "test4, test5, test6, test7, " \
+                                                              "test8, test9, test10, test11, " \
+                                                              "test12, test13, test14, \\ntest15]"
