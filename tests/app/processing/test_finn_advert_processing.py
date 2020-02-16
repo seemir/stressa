@@ -150,5 +150,9 @@ class TestFinnAdvertProcessing:
         for key, val in finn_advert_processing.multiplex_info_2.items():
             if key == "historikk":
                 assert val.equals(results[key])
+            elif key in ["sqm_price", "views", "email_sent", "favorite_click", "prospect_viewed",
+                         "prospect_ordered", "add_to_calendar"]:
+                continue
+
             else:
                 assert val == results[key]
