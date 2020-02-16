@@ -451,6 +451,10 @@
   <property name="windowTitle">
    <string>SIFO kalkulator</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../images/img.qrc">
+    <normaloff>:/img/logo_no_text.svg</normaloff>:/img/logo_no_text.svg</iconset>
+  </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QTabWidget" name="tab_widget_sifo">
@@ -971,7 +975,7 @@
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../../images/img.qrc">:/img/sifo.png</pixmap>
+             <pixmap>:/img/sifo.png</pixmap>
             </property>
             <property name="scaledContents">
              <bool>true</bool>
@@ -2254,7 +2258,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../images/img.qrc">
-           <normaloff>:/img/show.png</normaloff>:/img/show.png</iconset>
+           <normaloff>:/img/show.svg</normaloff>:/img/show.svg</iconset>
          </property>
         </widget>
        </item>
@@ -2280,7 +2284,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../images/img.qrc">
-           <normaloff>:/img/cancel.png</normaloff>:/img/cancel.png</iconset>
+           <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
          </property>
         </widget>
        </item>
@@ -2337,7 +2341,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../images/img.qrc">
-           <normaloff>:/img/erase.png</normaloff>:/img/erase.png</iconset>
+           <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
          </property>
         </widget>
        </item>
@@ -2949,7 +2953,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../images/img.qrc">
-           <normaloff>:/img/cancel.png</normaloff>:/img/cancel.png</iconset>
+           <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
          </property>
         </widget>
        </item>
@@ -3043,7 +3047,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../images/img.qrc">
-           <normaloff>:/img/export.png</normaloff>:/img/export.png</iconset>
+           <normaloff>:/img/export.svg</normaloff>:/img/export.svg</iconset>
          </property>
         </widget>
        </item>
@@ -3060,7 +3064,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../images/img.qrc">
-           <normaloff>:/img/back.png</normaloff>:/img/back.png</iconset>
+           <normaloff>:/img/back.svg</normaloff>:/img/back.svg</iconset>
          </property>
         </widget>
        </item>
@@ -3077,7 +3081,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../images/img.qrc">
-           <normaloff>:/img/meta.png</normaloff>:/img/meta.png</iconset>
+           <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
          </property>
         </widget>
        </item>
@@ -3362,7 +3366,7 @@
          </property>
          <property name="icon">
           <iconset resource="../../images/img.qrc">
-           <normaloff>:/img/erase.png</normaloff>:/img/erase.png</iconset>
+           <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
          </property>
         </widget>
        </item>

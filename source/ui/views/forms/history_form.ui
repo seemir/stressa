@@ -453,7 +453,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../images/img.qrc">
-    <normaloff>:/img/logo_no_text.png</normaloff>:/img/logo_no_text.png</iconset>
+    <normaloff>:/img/logo_no_text.svg</normaloff>:/img/logo_no_text.svg</iconset>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0" alignment="Qt::AlignLeft">

@@ -448,7 +448,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../images/img.qrc">
-    <normaloff>:/img/logo_no_text.png</normaloff>:/img/logo_no_text.png</iconset>
+    <normaloff>:/img/logo_no_text.svg</normaloff>:/img/logo_no_text.svg</iconset>
   </property>
   <property name="whatsThis">
    <string/>
@@ -931,7 +931,7 @@
             <string/>
            </property>
            <property name="pixmap">
-            <pixmap resource="../../images/img.qrc">:/img/error.png</pixmap>
+            <pixmap resource="../../images/img.qrc">:/img/error.svg</pixmap>
            </property>
            <property name="scaledContents">
             <bool>true</bool>

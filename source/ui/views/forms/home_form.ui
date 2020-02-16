@@ -435,7 +435,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../images/img.qrc">
-    <normaloff>:/img/logo_no_text.png</normaloff>:/img/logo_no_text.png</iconset>
+    <normaloff>:/img/logo_no_text.svg</normaloff>:/img/logo_no_text.svg</iconset>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
@@ -1764,7 +1764,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/analyze.png</normaloff>:/img/analyze.png</iconset>
+                  <normaloff>:/img/analyze.svg</normaloff>:/img/analyze.svg</iconset>
                 </property>
                 <property name="iconSize">
                  <size>
@@ -1793,7 +1793,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/erase.png</normaloff>:/img/erase.png</iconset>
+                  <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
                 </property>
                </widget>
               </item>
@@ -1816,7 +1816,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/settings.png</normaloff>:/img/settings.png</iconset>
+                  <normaloff>:/img/settings.svg</normaloff>:/img/settings.svg</iconset>
                 </property>
                </widget>
               </item>
@@ -1833,7 +1833,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/meta.png</normaloff>:/img/meta.png</iconset>
+                  <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
                 </property>
                </widget>
               </item>
@@ -1856,7 +1856,7 @@
                 </property>
                 <property name="icon">
                  <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/quit.png</normaloff>:/img/quit.png</iconset>
+                  <normaloff>:/img/quit.svg</normaloff>:/img/quit.svg</iconset>
                 </property>
                </widget>
               </item>
@@ -2692,7 +2692,7 @@
              </property>
              <property name="icon">
               <iconset resource="../../images/img.qrc">
-               <normaloff>:/img/budget.png</normaloff>:/img/budget.png</iconset>
+               <normaloff>:/img/budget.svg</normaloff>:/img/budget.svg</iconset>
              </property>
             </widget>
            </item>
@@ -2920,7 +2920,7 @@
              </property>
              <property name="icon">
               <iconset resource="../../images/img.qrc">
-               <normaloff>:/img/expense.png</normaloff>:/img/expense.png</iconset>
+               <normaloff>:/img/expense.svg</normaloff>:/img/expense.svg</iconset>
              </property>
             </widget>
            </item>
@@ -2979,7 +2979,7 @@
              </property>
              <property name="icon">
               <iconset resource="../../images/img.qrc">
-               <normaloff>:/img/tax.png</normaloff>:/img/tax.png</iconset>
+               <normaloff>:/img/tax.svg</normaloff>:/img/tax.svg</iconset>
              </property>
             </widget>
            </item>
@@ -7303,7 +7303,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/fetch.png</normaloff>:/img/fetch.png</iconset>
+                   <normaloff>:/img/fetch.svg</normaloff>:/img/fetch.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -7378,7 +7378,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/statistikk.png</normaloff>:/img/statistikk.png</iconset>
+                   <normaloff>:/img/statistikk.svg</normaloff>:/img/statistikk.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -7395,7 +7395,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/web.png</normaloff>:/img/web.png</iconset>
+                   <normaloff>:/img/web.svg</normaloff>:/img/web.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -7412,7 +7412,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/history.png</normaloff>:/img/history.png</iconset>
+                   <normaloff>:/img/history.svg</normaloff>:/img/history.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -7522,7 +7522,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/fetch.png</normaloff>:/img/fetch.png</iconset>
+                   <normaloff>:/img/fetch.svg</normaloff>:/img/fetch.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -8382,7 +8382,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/web.png</normaloff>:/img/web.png</iconset>
+                   <normaloff>:/img/web.svg</normaloff>:/img/web.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -8399,7 +8399,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/history.png</normaloff>:/img/history.png</iconset>
+                   <normaloff>:/img/history.svg</normaloff>:/img/history.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -8416,7 +8416,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/statistikk.png</normaloff>:/img/statistikk.png</iconset>
+                   <normaloff>:/img/statistikk.svg</normaloff>:/img/statistikk.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -8545,7 +8545,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/fetch.png</normaloff>:/img/fetch.png</iconset>
+                   <normaloff>:/img/fetch.svg</normaloff>:/img/fetch.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -9386,7 +9386,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/web.png</normaloff>:/img/web.png</iconset>
+                   <normaloff>:/img/web.svg</normaloff>:/img/web.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -9403,7 +9403,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/history.png</normaloff>:/img/history.png</iconset>
+                   <normaloff>:/img/history.svg</normaloff>:/img/history.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -9420,7 +9420,7 @@
                  </property>
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/statistikk.png</normaloff>:/img/statistikk.png</iconset>
+                   <normaloff>:/img/statistikk.svg</normaloff>:/img/statistikk.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -10719,7 +10719,7 @@
     <property name="geometry">
      <rect>
       <x>284</x>
-      <y>146</y>
+      <y>118</y>
       <width>143</width>
       <height>209</height>
      </rect>
@@ -11206,7 +11206,7 @@
   <action name="action_ny">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/new.png</normaloff>:/img/new.png</iconset>
+     <normaloff>:/img/new.svg</normaloff>:/img/new.svg</iconset>
    </property>
    <property name="text">
     <string>Ny...</string>
@@ -11218,7 +11218,7 @@
   <action name="action_apne">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/open.png</normaloff>:/img/open.png</iconset>
+     <normaloff>:/img/open.svg</normaloff>:/img/open.svg</iconset>
    </property>
    <property name="text">
     <string>Åpne... </string>
@@ -11239,7 +11239,7 @@
   <action name="action_lagre">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/save.png</normaloff>:/img/save.png</iconset>
+     <normaloff>:/img/save.svg</normaloff>:/img/save.svg</iconset>
    </property>
    <property name="text">
     <string>Large</string>
@@ -11256,7 +11256,7 @@
   <action name="action_skriv_ut">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/print.png</normaloff>:/img/print.png</iconset>
+     <normaloff>:/img/print.svg</normaloff>:/img/print.svg</iconset>
    </property>
    <property name="text">
     <string>Skriv ut...</string>
@@ -11268,7 +11268,7 @@
   <action name="action_avslutt">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/quit.png</normaloff>:/img/quit.png</iconset>
+     <normaloff>:/img/quit.svg</normaloff>:/img/quit.svg</iconset>
    </property>
    <property name="text">
     <string>Avslutt</string>
@@ -11277,7 +11277,7 @@
   <action name="action_angre">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/undo.png</normaloff>:/img/undo.png</iconset>
+     <normaloff>:/img/undo.svg</normaloff>:/img/undo.svg</iconset>
    </property>
    <property name="text">
     <string>Angre</string>
@@ -11289,7 +11289,7 @@
   <action name="action_gjenta">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/redo.png</normaloff>:/img/redo.png</iconset>
+     <normaloff>:/img/redo.svg</normaloff>:/img/redo.svg</iconset>
    </property>
    <property name="text">
     <string>Gjenta</string>
@@ -11301,7 +11301,7 @@
   <action name="action_klipp_ut">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/cut.png</normaloff>:/img/cut.png</iconset>
+     <normaloff>:/img/cut.svg</normaloff>:/img/cut.svg</iconset>
    </property>
    <property name="text">
     <string>Klipp ut</string>
@@ -11313,7 +11313,7 @@
   <action name="action_kopier">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/copy.png</normaloff>:/img/copy.png</iconset>
+     <normaloff>:/img/copy.svg</normaloff>:/img/copy.svg</iconset>
    </property>
    <property name="text">
     <string>Kopier</string>
@@ -11325,7 +11325,7 @@
   <action name="action_lim_inn">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/paste.png</normaloff>:/img/paste.png</iconset>
+     <normaloff>:/img/paste.svg</normaloff>:/img/paste.svg</iconset>
    </property>
    <property name="text">
     <string>Lim inn</string>
@@ -11335,6 +11335,10 @@
    </property>
   </action>
   <action name="action_slett">
+   <property name="icon">
+    <iconset resource="../../images/img.qrc">
+     <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
+   </property>
    <property name="text">
     <string>Slett</string>
    </property>
@@ -11356,7 +11360,7 @@
    </property>
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/logo_no_text.png</normaloff>:/img/logo_no_text.png</iconset>
+     <normaloff>:/img/logo_no_text.svg</normaloff>:/img/logo_no_text.svg</iconset>
    </property>
    <property name="text">
     <string>logo</string>
@@ -11365,7 +11369,7 @@
   <action name="action_hjelp">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/help.png</normaloff>:/img/help.png</iconset>
+     <normaloff>:/img/help.svg</normaloff>:/img/help.svg</iconset>
    </property>
    <property name="text">
     <string>Hjelp</string>
@@ -11374,7 +11378,7 @@
   <action name="action_instillinger">
    <property name="icon">
     <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/settings.png</normaloff>:/img/settings.png</iconset>
+     <normaloff>:/img/settings.svg</normaloff>:/img/settings.svg</iconset>
    </property>
    <property name="text">
     <string>Instillinger</string>

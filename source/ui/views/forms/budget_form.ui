@@ -448,7 +448,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../images/img.qrc">
-    <normaloff>:/img/logo_no_text.png</normaloff>:/img/logo_no_text.png</iconset>
+    <normaloff>:/img/logo_no_text.svg</normaloff>:/img/logo_no_text.svg</iconset>
   </property>
   <property name="whatsThis">
    <string/>
@@ -931,7 +931,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../images/img.qrc">
-          <normaloff>:/img/export.png</normaloff>:/img/export.png</iconset>
+          <normaloff>:/img/export.svg</normaloff>:/img/export.svg</iconset>
         </property>
        </widget>
       </item>
@@ -951,7 +951,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../images/img.qrc">
-          <normaloff>:/img/erase.png</normaloff>:/img/erase.png</iconset>
+          <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
         </property>
        </widget>
       </item>
@@ -1248,7 +1248,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../images/img.qrc">
-          <normaloff>:/img/meta.png</normaloff>:/img/meta.png</iconset>
+          <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
         </property>
        </widget>
       </item>
@@ -1268,7 +1268,7 @@
         </property>
         <property name="icon">
          <iconset resource="../../images/img.qrc">
-          <normaloff>:/img/cancel.png</normaloff>:/img/cancel.png</iconset>
+          <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
         </property>
        </widget>
       </item>

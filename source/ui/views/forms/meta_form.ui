@@ -434,6 +434,10 @@
   <property name="windowTitle">
    <string>Metadata</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../../images/img.qrc">
+    <normaloff>:/img/logo_no_text.svg</normaloff>:/img/logo_no_text.svg</iconset>
+  </property>
   <property name="autoFillBackground">
    <bool>true</bool>
   </property>
