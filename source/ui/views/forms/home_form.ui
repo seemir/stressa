@@ -875,11 +875,434 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
       </property>
+      <widget class="QWidget" name="tab_oversikt">
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Light">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Midlight">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Dark">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>147</red>
+             <green>154</green>
+             <blue>162</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="BrightText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Shadow">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="AlternateBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>220</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Light">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Midlight">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Dark">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>147</red>
+             <green>154</green>
+             <blue>162</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="BrightText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Shadow">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="AlternateBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>220</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Light">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Midlight">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>237</red>
+             <green>243</green>
+             <blue>249</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Dark">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Mid">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>147</red>
+             <green>154</green>
+             <blue>162</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="BrightText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>255</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>110</red>
+             <green>115</green>
+             <blue>121</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Shadow">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="AlternateBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>220</red>
+             <green>231</green>
+             <blue>243</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipBase">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>255</green>
+             <blue>220</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ToolTipText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>0</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="autoFillBackground">
+        <bool>true</bool>
+       </property>
+       <attribute name="title">
+        <string>Oversikt</string>
+       </attribute>
+      </widget>
       <widget class="QWidget" name="tab_informasjon">
        <property name="palette">
         <palette>
@@ -2347,656 +2770,8 @@
           <property name="lineWidth">
            <number>1</number>
           </property>
-          <layout class="QGridLayout" name="gridLayout_5">
-           <item row="21" column="0" colspan="4">
-            <widget class="QFrame" name="frame_personlig_info_white_space">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="1">
-            <widget class="QLineEdit" name="line_edit_total_skatt">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="20" column="0">
-            <widget class="QLabel" name="label_egenkapital">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Egenkapital </string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_egenkapital</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="19" column="0">
-            <widget class="QLabel" name="label_laneperiod">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Låneperiode</string>
-             </property>
-             <property name="buddy">
-              <cstring>combo_box_laneperiode</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="19" column="1">
-            <widget class="QComboBox" name="combo_box_laneperiode">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-            </widget>
-           </item>
-           <item row="19" column="2">
-            <widget class="QLabel" name="label_start_dato">
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Start dato</string>
-             </property>
-             <property name="buddy">
-              <cstring>date_edit_startdato</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="1">
-            <widget class="QLineEdit" name="line_edit_trygde_inntekt">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="19" column="3">
-            <widget class="QDateEdit" name="date_edit_startdato">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="dateTime">
-              <datetime>
-               <hour>0</hour>
-               <minute>0</minute>
-               <second>0</second>
-               <year>2000</year>
-               <month>1</month>
-               <day>1</day>
-              </datetime>
-             </property>
-             <property name="displayFormat">
-              <string>dd.MM.yyyy</string>
-             </property>
-             <property name="calendarPopup">
-              <bool>true</bool>
-             </property>
-             <property name="date">
-              <date>
-               <year>2000</year>
-               <month>1</month>
-               <day>1</day>
-              </date>
-             </property>
-            </widget>
-           </item>
-           <item row="20" column="1">
-            <widget class="QLineEdit" name="line_edit_egenkapital">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="0">
-            <widget class="QLabel" name="label_personinntekt">
-             <property name="text">
-              <string>Personinntekt</string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="2">
-            <widget class="QLabel" name="label_husleie">
-             <property name="text">
-              <string>Husleie</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_husleie</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="3">
-            <widget class="QLineEdit" name="line_edit_sum_utgifter">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="2">
-            <widget class="QLabel" name="label_kreditt_gjeld">
-             <property name="text">
-              <string>Kreditt gjeld</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_kreditt_gjeld</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="2">
-            <widget class="QLabel" name="label_sum_utgifter">
-             <property name="text">
-              <string>Sum utgifter</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <widget class="QLabel" name="label_trygde_inntekt">
-             <property name="text">
-              <string>Trygd</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_trygde_inntekt</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="0">
-            <widget class="QLabel" name="label_brutto_inntekter">
-             <property name="minimumSize">
-              <size>
-               <width>120</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Bruttoinntekt</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_brutto_inntekt</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="1">
-            <widget class="QLineEdit" name="line_edit_leieinntekt">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="3">
-            <widget class="QLineEdit" name="line_edit_husleie">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="2">
-            <widget class="QLabel" name="label_strom">
-             <property name="text">
-              <string>Strøm</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_strom</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="3">
-            <widget class="QLineEdit" name="line_edit_student_lan">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="3">
-            <widget class="QLineEdit" name="line_edit_strom">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="2">
-            <widget class="QLabel" name="label_student_lan">
-             <property name="minimumSize">
-              <size>
-               <width>120</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Student lån</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_student_lan</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="2">
-            <widget class="QLabel" name="label_andre_utgifter">
-             <property name="text">
-              <string>Andre utgifter</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_andre_utgifter</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="7" column="0">
-            <widget class="QPushButton" name="push_button_budsjett">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Budsjett</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../images/img.qrc">
-               <normaloff>:/img/budget.svg</normaloff>:/img/budget.svg</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="12" column="3">
-            <widget class="QLineEdit" name="line_edit_andre_utgifter">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="3">
-            <widget class="QLineEdit" name="line_edit_kreditt_gjeld">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="16" column="0">
-            <widget class="QLabel" name="label_netto_likviditet">
-             <property name="text">
-              <string>Netto likviditet</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_netto_likviditet</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="1">
-            <widget class="QLineEdit" name="line_edit_personinntekt">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="0">
-            <widget class="QLabel" name="label_leieinntekt">
-             <property name="text">
-              <string>Leieinntekter</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_leieinntekt</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="1">
-            <widget class="QLineEdit" name="line_edit_brutto_inntekt">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="0">
-            <widget class="QLabel" name="label_total_netto">
-             <property name="text">
-              <string>Total netto</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_total_netto</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="18" column="2">
-            <widget class="QLabel" name="label_intervall">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Intervall</string>
-             </property>
-             <property name="buddy">
-              <cstring>combo_box_intervall</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="16" column="3">
-            <widget class="QLineEdit" name="line_edit_likviditetsgrad">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="17" column="0">
-            <widget class="Line" name="line_budsjett_info">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>10</height>
-              </size>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="1">
-            <widget class="QLineEdit" name="line_edit_total_netto">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="18" column="0">
-            <widget class="QLabel" name="label_lanetype">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-             <property name="text">
-              <string>Lånetype</string>
-             </property>
-             <property name="buddy">
-              <cstring>combo_box_lanetype</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="18" column="1">
-            <widget class="QComboBox" name="combo_box_lanetype">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="3">
-            <widget class="QLineEdit" name="line_edit_totale_utgifter">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="3">
-            <widget class="QLineEdit" name="line_edit_sifo_utgifter">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="2">
-            <widget class="QLabel" name="label_totale_utgifter">
-             <property name="text">
-              <string>Totale utgifter</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_totale_utgifter</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="2">
-            <widget class="QPushButton" name="push_button_sifo_utgifter">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>SIFO utgifter</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../images/img.qrc">
-               <normaloff>:/img/expense.svg</normaloff>:/img/expense.svg</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="16" column="1">
-            <widget class="QLineEdit" name="line_edit_netto_likviditet">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="clearButtonEnabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="16" column="2">
-            <widget class="QLabel" name="label_likviditetsgrad">
-             <property name="text">
-              <string>Likviditetsgrad</string>
-             </property>
-             <property name="buddy">
-              <cstring>line_edit_likviditetsgrad</cstring>
-             </property>
-            </widget>
-           </item>
-           <item row="18" column="3">
-            <widget class="QComboBox" name="combo_box_intervall">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="font">
-              <font>
-               <family>Segoe UI</family>
-               <pointsize>8</pointsize>
-              </font>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="0">
-            <widget class="QPushButton" name="push_button_skatt">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>30</height>
-              </size>
-             </property>
-             <property name="text">
-              <string>Beregn skatt</string>
-             </property>
-             <property name="icon">
-              <iconset resource="../../images/img.qrc">
-               <normaloff>:/img/tax.svg</normaloff>:/img/tax.svg</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="Line" name="line_kontakt_info">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0" colspan="4">
+          <layout class="QGridLayout" name="gridLayout_13">
+           <item row="0" column="0">
             <widget class="QTabWidget" name="tab_widget_lanesokere">
              <property name="sizePolicy">
               <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
@@ -3507,28 +3282,6 @@
                  </property>
                 </widget>
                </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="label_kommune_1">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Kommune</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_kommune_1</cstring>
-                 </property>
-                </widget>
-               </item>
                <item row="4" column="1">
                 <widget class="QLineEdit" name="line_edit_kommune_1">
                  <property name="enabled">
@@ -3560,39 +3313,8 @@
                  </property>
                 </widget>
                </item>
-               <item row="4" column="3">
-                <widget class="QLineEdit" name="line_edit_fylke_1">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_epost_1">
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_kommune_1">
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -3606,32 +3328,10 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>E-post</string>
+                  <string>Kommune</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_epost_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="6" column="0">
-                <widget class="QLabel" name="label_mobil_tlf_1">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Mobil tlf.</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_mobil_tlf_1</cstring>
+                  <cstring>line_edit_kommune_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -3703,10 +3403,35 @@
                  </property>
                 </widget>
                </item>
-               <item row="6" column="2">
-                <widget class="QLabel" name="label_privat_tlf_1">
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_epost_1">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI</family>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>E-post</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_epost_1</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="3">
+                <widget class="QLineEdit" name="line_edit_fylke_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
@@ -3723,11 +3448,55 @@
                    <pointsize>8</pointsize>
                   </font>
                  </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="6" column="0">
+                <widget class="QLabel" name="label_mobil_tlf_1">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI</family>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
                  <property name="text">
-                  <string>Privat tlf.</string>
+                  <string>Mobil tlf.</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_privat_tlf_1</cstring>
+                  <cstring>line_edit_mobil_tlf_1</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="7" column="0">
+                <widget class="QLabel" name="label_jobb_tlf_1">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI</family>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Jobb tlf.</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_jobb_tlf_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -3759,8 +3528,14 @@
                  </property>
                 </widget>
                </item>
-               <item row="7" column="0">
-                <widget class="QLabel" name="label_jobb_tlf_1">
+               <item row="6" column="2">
+                <widget class="QLabel" name="label_privat_tlf_1">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -3774,10 +3549,10 @@
                   </font>
                  </property>
                  <property name="text">
-                  <string>Jobb tlf.</string>
+                  <string>Privat tlf.</string>
                  </property>
                  <property name="buddy">
-                  <cstring>line_edit_jobb_tlf_1</cstring>
+                  <cstring>line_edit_privat_tlf_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -3812,6 +3587,34 @@
                  </property>
                  <property name="clearButtonEnabled">
                   <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QLabel" name="label_etternavn_1">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>115</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI</family>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Etternavn</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_etternavn_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -3890,7 +3693,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>236</width>
+                   <width>0</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -3905,62 +3708,6 @@
                  </property>
                  <property name="clearButtonEnabled">
                   <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="2">
-                <widget class="QLabel" name="label_etternavn_1">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>115</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Etternavn</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_etternavn_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="0">
-                <widget class="QLabel" name="label_fornavn_1">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>108</width>
-                   <height>33</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Fornavn                </string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_fornavn_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4014,6 +3761,34 @@
                  </property>
                 </widget>
                </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_fornavn_1">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>120</width>
+                   <height>33</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI</family>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Fornavn                </string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_fornavn_1</cstring>
+                 </property>
+                </widget>
+               </item>
                <item row="1" column="0">
                 <widget class="QLabel" name="label_kjonn_1">
                  <property name="sizePolicy">
@@ -4061,6 +3836,28 @@
                  </property>
                  <property name="buddy">
                   <cstring>line_edit_adresse_1</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_postnummer_1">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI</family>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Postnummer</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_postnr_1</cstring>
                  </property>
                 </widget>
                </item>
@@ -4138,56 +3935,6 @@
                  </property>
                 </widget>
                </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_postnummer_1">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Postnummer</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_postnr_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="1">
-                <widget class="QLineEdit" name="line_edit_postnr_1">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <family>Segoe UI</family>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="clearButtonEnabled">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
                <item row="3" column="3">
                 <widget class="QLineEdit" name="line_edit_poststed_1">
                  <property name="enabled">
@@ -4215,6 +3962,34 @@
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                  </property>
                  <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="1">
+                <widget class="QLineEdit" name="line_edit_postnr_1">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>0</height>
+                  </size>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Segoe UI</family>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="clearButtonEnabled">
                   <bool>true</bool>
                  </property>
                 </widget>
@@ -4710,7 +4485,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>236</width>
+                   <width>0</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -4738,7 +4513,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>108</width>
+                   <width>120</width>
                    <height>33</height>
                   </size>
                  </property>
@@ -5466,54 +5241,659 @@
              </widget>
             </widget>
            </item>
+           <item row="2" column="0">
+            <widget class="QGroupBox" name="group_box_lane_struktur">
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="title">
+              <string/>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_12">
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_egenkapital">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Segoe UI</family>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Egenkapital </string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_egenkapital</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLabel" name="label_start_dato">
+                <property name="font">
+                 <font>
+                  <family>Segoe UI</family>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Start dato</string>
+                </property>
+                <property name="buddy">
+                 <cstring>date_edit_startdato</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_laneperiod">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Segoe UI</family>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Låneperiode</string>
+                </property>
+                <property name="buddy">
+                 <cstring>combo_box_laneperiode</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QDateEdit" name="date_edit_startdato">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Segoe UI</family>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="dateTime">
+                 <datetime>
+                  <hour>0</hour>
+                  <minute>0</minute>
+                  <second>0</second>
+                  <year>2000</year>
+                  <month>1</month>
+                  <day>1</day>
+                 </datetime>
+                </property>
+                <property name="displayFormat">
+                 <string>dd.MM.yyyy</string>
+                </property>
+                <property name="calendarPopup">
+                 <bool>true</bool>
+                </property>
+                <property name="date">
+                 <date>
+                  <year>2000</year>
+                  <month>1</month>
+                  <day>1</day>
+                 </date>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_lanetype">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Segoe UI</family>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Lånetype</string>
+                </property>
+                <property name="buddy">
+                 <cstring>combo_box_lanetype</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="combo_box_lanetype">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Segoe UI</family>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_intervall">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Segoe UI</family>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Intervall</string>
+                </property>
+                <property name="buddy">
+                 <cstring>combo_box_intervall</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QComboBox" name="combo_box_laneperiode">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Segoe UI</family>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLineEdit" name="line_edit_egenkapital">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Segoe UI</family>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QComboBox" name="combo_box_intervall">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Segoe UI</family>
+                  <pointsize>8</pointsize>
+                 </font>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QFrame" name="frame_personlig_info_white_space">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QGroupBox" name="group_box_budsjett">
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="title">
+              <string/>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_5">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="push_button_budsjett">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Budsjett</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/budget.svg</normaloff>:/img/budget.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_brutto_inntekter">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Bruttoinntekt</string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_brutto_inntekt</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="line_edit_brutto_inntekt">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLabel" name="label_student_lan">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Student lån</string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_student_lan</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3">
+               <widget class="QLineEdit" name="line_edit_student_lan">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_trygde_inntekt">
+                <property name="text">
+                 <string>Trygd</string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_trygde_inntekt</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QLineEdit" name="line_edit_trygde_inntekt">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLabel" name="label_kreditt_gjeld">
+                <property name="text">
+                 <string>Kreditt gjeld</string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_kreditt_gjeld</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="QLineEdit" name="line_edit_kreditt_gjeld">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_leieinntekt">
+                <property name="text">
+                 <string>Leieinntekter</string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_leieinntekt</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="line_edit_leieinntekt">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="2">
+               <widget class="QLabel" name="label_husleie">
+                <property name="text">
+                 <string>Husleie</string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_husleie</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="3">
+               <widget class="QLineEdit" name="line_edit_husleie">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="2">
+               <widget class="QLabel" name="label_strom">
+                <property name="text">
+                 <string>Strøm</string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_strom</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="3">
+               <widget class="QLineEdit" name="line_edit_strom">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="2">
+               <widget class="QLabel" name="label_andre_utgifter">
+                <property name="text">
+                 <string>Andre utgifter</string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_andre_utgifter</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="3">
+               <widget class="QLineEdit" name="line_edit_andre_utgifter">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_personinntekt">
+                <property name="text">
+                 <string>Personinntekt</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="line_edit_personinntekt">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="2">
+               <widget class="QLabel" name="label_sum_utgifter">
+                <property name="text">
+                 <string>Sum utgifter</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="3">
+               <widget class="QLineEdit" name="line_edit_sum_utgifter">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QPushButton" name="push_button_skatt">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Beregn skatt</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/tax.svg</normaloff>:/img/tax.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="line_edit_total_skatt">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="2">
+               <widget class="QPushButton" name="push_button_sifo_utgifter">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>SIFO utgifter</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/expense.svg</normaloff>:/img/expense.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="3">
+               <widget class="QLineEdit" name="line_edit_sifo_utgifter">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="0">
+               <widget class="QLabel" name="label_total_netto">
+                <property name="text">
+                 <string>Total netto</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_total_netto</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="line_edit_total_netto">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="2">
+               <widget class="QLabel" name="label_totale_utgifter">
+                <property name="text">
+                 <string>Totale utgifter</string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_totale_utgifter</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="3">
+               <widget class="QLineEdit" name="line_edit_totale_utgifter">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="0">
+               <widget class="QLabel" name="label_netto_likviditet">
+                <property name="text">
+                 <string>Netto likviditet</string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_netto_likviditet</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="1">
+               <widget class="QLineEdit" name="line_edit_netto_likviditet">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="2">
+               <widget class="QLabel" name="label_likviditetsgrad">
+                <property name="text">
+                 <string>Likviditetsgrad</string>
+                </property>
+                <property name="buddy">
+                 <cstring>line_edit_likviditetsgrad</cstring>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="3">
+               <widget class="QLineEdit" name="line_edit_likviditetsgrad">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
           </layout>
-          <zorder>frame_personlig_info_white_space</zorder>
-          <zorder>label_brutto_inntekter</zorder>
-          <zorder>line_edit_brutto_inntekt</zorder>
-          <zorder>line_edit_trygde_inntekt</zorder>
-          <zorder>label_trygde_inntekt</zorder>
-          <zorder>label_student_lan</zorder>
-          <zorder>label_kreditt_gjeld</zorder>
-          <zorder>line_edit_student_lan</zorder>
-          <zorder>line_edit_kreditt_gjeld</zorder>
-          <zorder>label_strom</zorder>
-          <zorder>line_edit_strom</zorder>
-          <zorder>label_andre_utgifter</zorder>
-          <zorder>line_edit_andre_utgifter</zorder>
-          <zorder>push_button_skatt</zorder>
-          <zorder>line_edit_total_skatt</zorder>
-          <zorder>push_button_sifo_utgifter</zorder>
-          <zorder>line_edit_sifo_utgifter</zorder>
-          <zorder>line_edit_total_netto</zorder>
-          <zorder>label_total_netto</zorder>
-          <zorder>line_edit_totale_utgifter</zorder>
-          <zorder>label_totale_utgifter</zorder>
-          <zorder>label_netto_likviditet</zorder>
-          <zorder>line_edit_netto_likviditet</zorder>
-          <zorder>label_likviditetsgrad</zorder>
-          <zorder>line_edit_likviditetsgrad</zorder>
-          <zorder>label_lanetype</zorder>
-          <zorder>combo_box_lanetype</zorder>
-          <zorder>label_laneperiod</zorder>
-          <zorder>combo_box_laneperiode</zorder>
-          <zorder>label_egenkapital</zorder>
-          <zorder>line_edit_egenkapital</zorder>
-          <zorder>label_intervall</zorder>
-          <zorder>combo_box_intervall</zorder>
-          <zorder>label_start_dato</zorder>
-          <zorder>date_edit_startdato</zorder>
-          <zorder>line_budsjett_info</zorder>
-          <zorder>line_kontakt_info</zorder>
-          <zorder>label_husleie</zorder>
-          <zorder>line_edit_husleie</zorder>
-          <zorder>line_edit_leieinntekt</zorder>
-          <zorder>label_leieinntekt</zorder>
-          <zorder>push_button_budsjett</zorder>
-          <zorder>line_edit_personinntekt</zorder>
-          <zorder>label_personinntekt</zorder>
-          <zorder>label_sum_utgifter</zorder>
-          <zorder>line_edit_sum_utgifter</zorder>
-          <zorder>tab_widget_lanesokere</zorder>
          </widget>
         </item>
         <item row="0" column="1" rowspan="4">

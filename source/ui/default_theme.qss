@@ -1,3 +1,42 @@
+.QCalendarWidget QWidget#qt_calendar_prevmonth{
+  qproperty-icon: url("source/ui/images/previous.svg");
+}
+
+.QCalendarWidget QWidget#qt_calendar_nextmonth{
+  qproperty-icon: url("source/ui/images/next.svg");
+}
+
+.QCalendarWidget QWidget{
+  background-color: #93c0e7;
+}
+
+.QCalendarWidget QMenu{
+  selection-background-color: #93c0e7;
+  background-color: #f0f0f0;
+}
+
+.QCalendarWidget QAbstractItemView{
+  background-color: #ffffff;
+  selection-background-color: #93c0e7;
+  font-family: "MS Shell Dlg 2";
+  font-size: 12px;
+  height: 20px;
+}
+
+.QSpinBox{
+  selection-background-color: #93c0e7;
+}
+
+.QGroupBox{
+  background-color: #e7f3ff;
+  border: none;
+}
+
+.QTableView {
+  selection-background-color: #93c0e7;
+  selection-color: black;
+}
+
 .QProgressBar::chunk {
   background: #4c96d7;
   width: 10px;
@@ -16,24 +55,29 @@
 }
 
 .QLineEdit{
+  selection-background-color: #93c0e7;
   font-family: "MS Shell Dlg 2";
   font-size: 12px;
   height: 20px;
 }
 
 .QDateEdit{
+  selection-background-color: #93c0e7;
   font-family: "MS Shell Dlg 2";
   font-size: 12px;
   height: 20px;
 }
 
 .QComboBox{
+  selection-background-color: #93c0e7;
   font-family: "MS Shell Dlg 2";
+  background-color: #ffffff;
   font-size: 12px;
   height: 20px;
 }
 
 .QPushButton{
+  selection-background-color: #93c0e7;
   font-family: "MS Shell Dlg 2";
   font-size: 12px;
   height: 20px;
@@ -41,6 +85,7 @@
 }
 
 .QRadioButton{
+  selection-background-color: #93c0e7;
   font-family: "MS Shell Dlg 2";
   font-size: 12px;
   height: 20px;
@@ -52,6 +97,7 @@
 }
 
 .QPlainTextEdit{
+  selection-background-color: #93c0e7;
   font-family: "Consolas";
   font-size: 12px;
 }

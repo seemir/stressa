@@ -241,7 +241,8 @@ class SifoModel(Model):
         """
         Assertor.assert_data_types([name, postfix, values], [str, str, list])
         ui = self.parent.ui
-        getattr(ui, "label_tillegg" + postfix).setText(name.capitalize() + "?")
+        name = name.capitalize() if name != "sfo" else name.upper()
+        getattr(ui, "label_tillegg" + postfix).setText(name + "?")
         getattr(ui, "combo_box_tillegg" + postfix).show()
         getattr(ui, "combo_box_tillegg" + postfix).setEnabled(True)
         getattr(ui, "combo_box_tillegg" + postfix).clear()
