@@ -14,6 +14,8 @@ import shutil
 import traceback
 import json
 
+import time
+
 from PyQt5.QtWidgets import QDialog, QWidget
 from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.uic import loadUi
@@ -43,6 +45,7 @@ class ErrorView(QDialog):
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/error_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.log_dir = os.path.join(os.path.dirname(__file__), "logs")
 
     def show_error(self, exception: Exception, meta: dict):
         """
@@ -63,6 +66,7 @@ class ErrorView(QDialog):
         self.ui.plain_text_edit_log.setPlainText(self.read_log(exception))
         self.ui.plain_text_edit_error_meta_data.setPlainText(
             json.dumps(meta, indent=2, ensure_ascii=False))
+        self.show()
 
     @pyqtSlot()
     def read_log(self, exception: Exception):
@@ -81,10 +85,7 @@ class ErrorView(QDialog):
 
         """
         Assertor.assert_data_types([exception], [Exception])
-        log_dir = os.path.join(os.path.dirname(__file__), "logs")
-        if os.path.exists(log_dir):
-            shutil.rmtree(log_dir)
-        return self.extract_log(log_dir, exception)
+        return self.extract_log(self.log_dir, exception)
 
     @staticmethod
     def extract_log(file_dir: str, exp: Exception):
@@ -115,4 +116,8 @@ class ErrorView(QDialog):
                 log_str.append(lines)
             logger.remove(error_log)
             log_file.close()
+
+        time.sleep(0.2)
+        if os.path.exists(file_dir):
+            shutil.rmtree(file_dir)
         return "".join(log_str)

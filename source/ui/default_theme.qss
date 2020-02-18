@@ -28,8 +28,7 @@
 }
 
 .QGroupBox{
-  background-color: #e7f3ff;
-  border: none;
+  background-color: #e4f0fc;
 }
 
 .QTableView {
@@ -109,11 +108,11 @@
 
 /* HomeView */
 #tab_primarsoker{
-  background-color: #f2f3f4;
+  background-color: #e4f0fc;
 }
 
 #tab_sekundarsoker{
-  background-color: #f2f3f4;
+  background-color: #e4f0fc;
 }
 
 .QFrame[objectName="frame_white_space_1"] {

@@ -94,7 +94,6 @@ class Model(ABC):
             self.data.update({date_edit_name: date_edit_text.toString("dd.MM.yyyy")})
         except Exception as set_date_edit_error:
             self.parent.error_view.show_error(set_date_edit_error, self.data)
-            self.parent.error_view.exec_()
 
     @pyqtSlot()
     def clear_date_edits(self, date_edits: list):
@@ -155,7 +154,6 @@ class Model(ABC):
                     self.data.pop(key)
         except Exception as set_combo_box_error:
             self.parent.error_view.show_error(set_combo_box_error)
-            self.parent.error_view.exec_()
 
     @pyqtSlot()
     def clear_combo_boxes(self, combo_boxes: list):
@@ -211,7 +209,6 @@ class Model(ABC):
         except Exception as update_error:
             self.clear_line_edits(line_edits, postfix)
             self.parent.error_view.show_error(update_error, self.data)
-            self.parent.error_view.exec_()
             line_edit.setFocus()
 
     @pyqtSlot()
@@ -251,7 +248,6 @@ class Model(ABC):
         except Exception as set_line_edits_error:
             self.clear_line_edits(line_edits, postfix)
             self.parent.error_view.show_error(set_line_edits_error, self.data)
-            self.parent.error_view.exec_()
 
     @pyqtSlot()
     def set_line_edit(self, line_edit_name: str, obj: object = None, method: str = None,
@@ -292,7 +288,6 @@ class Model(ABC):
             getattr(self.parent.ui, "line_edit_" + line_edit_name).setText(output)
         except Exception as set_line_edit_error:
             self.parent.error_view.show_error(set_line_edit_error, self.data)
-            self.parent.error_view.exec_()
             self.clear_line_edit(line_edit_name)
             getattr(self.parent.ui, "line_edit_" + line_edit_name).setFocus()
             if clearing:
