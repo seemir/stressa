@@ -30,7 +30,7 @@ packaging==20.1
 pandas==1.0.1
 pluggy==0.13.1
 prettytable==0.7.2
-psutil==5.6.7
+psutil==5.7.0
 py==1.8.1
 pydot==1.4.1
 pylint==2.4.4
