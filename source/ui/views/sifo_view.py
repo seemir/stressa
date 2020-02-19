@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-
-__author__ = 'Samir Adrik'
-__email__ = 'samir.adrik@gmail.com'
-
 """
 SifoView which contains the GUI for the SIFO calculator
 
 """
+
+__author__ = 'Samir Adrik'
+__email__ = 'samir.adrik@gmail.com'
 
 import os
 
