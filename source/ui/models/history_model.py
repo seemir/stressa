@@ -6,10 +6,9 @@ __email__ = 'samir.adrik@gmail.com'
 from pandas import DataFrame
 
 import pyqtgraph as pg
-from pyqtgraph import BarGraphItem
-from pyqtgraph.exporters import ImageExporter
+from pyqtgraph import BarGraphItem, PlotDataItem
 
-from PyQt5.QtCore import QObject, pyqtSlot
+from PyQt5.QtCore import QObject, pyqtSlot, Qt
 from source.util import Assertor
 
 from .table_model import TableModel
@@ -35,6 +34,9 @@ class HistoryModel(Model):
         Assertor.assert_data_types([parent], [QObject])
         super().__init__(parent)
         self.legend = None
+        self.keys = None
+        self.values = None
+        self.table_view_mapping()
 
     @pyqtSlot()
     def add_finn_history(self, postfix: str):
@@ -69,12 +71,19 @@ class HistoryModel(Model):
 
                     # bar chart
                     history = self.data["historikk" + postfix]["Pris"]
-                    keys = [int(key) + 1.5 for key in list(history.keys())]
-                    values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", "")) for
-                              val in history.values()][::-1]
-                    history_item = BarGraphItem(x=keys, height=values, width=0.66, brush="#93c0e7")
-                    if not self.legend and "finnkode" + postfix in \
-                            grandparent.finn_model.finn_data.keys():
+                    self.keys = [int(key) + 1.5 for key in list(history.keys())]
+                    self.values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                                   for val in history.values()][::-1]
+                    history_item = BarGraphItem(x=self.keys, height=self.values, width=0.50,
+                                                brush="#d2e5f5")
+                    self.parent.ui.graphics_view.addItem(history_item)
+                    pen = pg.mkPen(color="#d2e5f5", style=Qt.DotLine, width=2)
+                    self.parent.ui.graphics_view.plot(x=self.keys, y=self.values, pen=pen,
+                                                      symbol='+', symbolSize=14)
+
+                    if not self.legend and all(
+                            val + postfix in grandparent.finn_model.finn_data.keys() for val in
+                            ["finnkode", "boligtype", "status"]):
                         self.legend = pg.LegendItem()
                         finn_code = grandparent.finn_model.finn_data["finnkode" + postfix]
                         bolig_type = grandparent.finn_model.finn_data["boligtype" + postfix]
@@ -83,7 +92,6 @@ class HistoryModel(Model):
                         self.legend.addItem(history_item, "FINN kode: " + finn_code)
                         self.legend.addItem(history_item, "Boligtype: " + bolig_type)
                         self.legend.addItem(history_item, "Status: " + status)
-                    self.parent.ui.graphics_view.addItem(history_item)
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
                 if key + postfix in self.data.keys():
@@ -93,9 +101,6 @@ class HistoryModel(Model):
         self.parent.ui.graphics_view.showGrid(x=True, y=True)
         self.parent.ui.graphics_view.getAxis('left').setStyle(showValues=False)
         self.parent.ui.graphics_view.getAxis('bottom').setStyle(showValues=False)
-        exporter = ImageExporter(self.parent.ui.graphics_view.plotItem)
-        exporter.params.param('width').setValue(1920, blockSignal=exporter.widthChanged)
-        exporter.params.param('height').setValue(1080, blockSignal=exporter.heightChanged)
 
     @pyqtSlot()
     def clear_finn_history(self, postfix: str):
@@ -136,3 +141,19 @@ class HistoryModel(Model):
             if isinstance(item, pg.LegendItem):
                 self.parent.ui.graphics_view.scene().removeItem(item)
         self.legend = None
+
+    def table_view_mapping(self):
+        self.parent.ui.table_view_historikk.clicked.connect(self.row_clicked)
+
+    def row_clicked(self, item):
+        row = len(self.values) - 1 - item.row()
+        history_item = BarGraphItem(x=self.keys, height=self.values, width=0.50,
+                                    brush="#d2e5f5")
+        clicked_item = BarGraphItem(x=[self.keys[row]], height=self.values[row], width=0.50,
+                                    brush="#69a8de")
+        pen = pg.mkPen(color="#69a8de", style=Qt.DotLine, width=2)
+        plot_item = PlotDataItem(x=self.keys, y=self.values, pen=pen,
+                                 symbol='+', symbolSize=14)
+        self.parent.ui.graphics_view.addItem(history_item)
+        self.parent.ui.graphics_view.addItem(clicked_item)
+        self.parent.ui.graphics_view.addItem(plot_item)
