@@ -5,11 +5,17 @@ __email__ = 'samir.adrik@gmail.com'
 
 from pandas import DataFrame
 
+import pyqtgraph as pg
+from pyqtgraph import BarGraphItem
+from pyqtgraph.exporters import ImageExporter
+
 from PyQt5.QtCore import QObject, pyqtSlot
 from source.util import Assertor
 
 from .table_model import TableModel
 from .model import Model
+
+pg.setConfigOption('background', 'w')
 
 
 class HistoryModel(Model):
@@ -28,6 +34,7 @@ class HistoryModel(Model):
         """
         Assertor.assert_data_types([parent], [QObject])
         super().__init__(parent)
+        self.legend = None
 
     @pyqtSlot()
     def add_finn_history(self, postfix: str):
@@ -41,10 +48,10 @@ class HistoryModel(Model):
 
         """
         Assertor.assert_data_types([postfix], [str])
-        grandparent = self.parent.parent.finn_model
+        grandparent = self.parent.parent
         history_data = {}
-        if grandparent.finn_data:
-            for key, val in grandparent.finn_data.items():
+        if grandparent.finn_model.finn_data:
+            for key, val in grandparent.finn_model.finn_data.items():
                 if key[:-len(postfix)] in self._finn_history_keys:
                     if key[:-len(postfix)] == "historikk":
                         history_data.update(
@@ -54,14 +61,41 @@ class HistoryModel(Model):
         self.data.update(history_data)
         for key in self._finn_history_keys:
             if key == "historikk":
-                self.parent.ui.table_view_historikk.setModel(None)
+                self.clear_graphics()
                 if key + postfix in self.data.keys():
+                    # table
                     history_data_model = TableModel(DataFrame(self.data[key + postfix]))
                     self.parent.ui.table_view_historikk.setModel(history_data_model)
+
+                    # bar chart
+                    history = self.data["historikk" + postfix]["Pris"]
+                    keys = [int(key) + 1.5 for key in list(history.keys())]
+                    values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", "")) for
+                              val in history.values()][::-1]
+                    history_item = BarGraphItem(x=keys, height=values, width=0.66, brush="#93c0e7")
+                    if not self.legend and "finnkode" + postfix in \
+                            grandparent.finn_model.finn_data.keys():
+                        self.legend = pg.LegendItem()
+                        finn_code = grandparent.finn_model.finn_data["finnkode" + postfix]
+                        bolig_type = grandparent.finn_model.finn_data["boligtype" + postfix]
+                        status = grandparent.finn_model.finn_data["status" + postfix]
+                        self.legend.setParentItem(self.parent.ui.graphics_view.graphicsItem())
+                        self.legend.addItem(history_item, "FINN kode: " + finn_code)
+                        self.legend.addItem(history_item, "Boligtype: " + bolig_type)
+                        self.legend.addItem(history_item, "Status: " + status)
+                    self.parent.ui.graphics_view.addItem(history_item)
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
                 if key + postfix in self.data.keys():
                     getattr(self.parent.ui, "line_edit_" + key).setText(self.data[key + postfix])
+
+        self.parent.ui.graphics_view.setMouseEnabled(x=False, y=False)
+        self.parent.ui.graphics_view.showGrid(x=True, y=True)
+        self.parent.ui.graphics_view.getAxis('left').setStyle(showValues=False)
+        self.parent.ui.graphics_view.getAxis('bottom').setStyle(showValues=False)
+        exporter = ImageExporter(self.parent.ui.graphics_view.plotItem)
+        exporter.params.param('width').setValue(1920, blockSignal=exporter.widthChanged)
+        exporter.params.param('height').setValue(1080, blockSignal=exporter.heightChanged)
 
     @pyqtSlot()
     def clear_finn_history(self, postfix: str):
@@ -85,7 +119,7 @@ class HistoryModel(Model):
                     grandparent.data.pop(full_key)
                 if full_key in grandparent.finn_data.keys():
                     grandparent.finn_data.pop(full_key)
-                self.parent.ui.table_view_historikk.setModel(None)
+                self.clear_graphics()
             else:
                 if full_key in self.data.keys():
                     self.data.pop(full_key)
@@ -94,3 +128,11 @@ class HistoryModel(Model):
                 if full_key in grandparent.finn_data.keys():
                     grandparent.finn_data.pop(full_key)
                 getattr(self.parent.ui, "line_edit_" + key).clear()
+
+    def clear_graphics(self):
+        self.parent.ui.table_view_historikk.setModel(None)
+        self.parent.ui.graphics_view.clear()
+        for item in self.parent.ui.graphics_view.childItems():
+            if isinstance(item, pg.LegendItem):
+                self.parent.ui.graphics_view.scene().removeItem(item)
+        self.legend = None

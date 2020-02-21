@@ -32,4 +32,4 @@ class HistoryView(QDialog):
     @pyqtSlot()
     def add_finn_history(self, postfix):
         self.history_model.add_finn_history(postfix)
-        self.exec_()
+        self.show()

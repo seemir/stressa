@@ -90,10 +90,13 @@ class FinnStat(Finn):
                     "price"]
                 info.update({"sqm_price": Amount.format_amount(sq_price) + " kr/m²"})
 
-                statistics = json.loads(
+                # view_statistics_detail = json.loads(
+                #     stat_soup.find("script", attrs={"id": "ad"}).text)
+
+                view_statistics_total = json.loads(
                     stat_soup.find("script", attrs={"id": "ad-summary"}).text)[self.finn_code]
 
-                for prop, value in statistics.items():
+                for prop, value in view_statistics_total.items():
                     info.update({prop.lower(): Amount.format_amount(value)})
 
                 LOGGER.success(

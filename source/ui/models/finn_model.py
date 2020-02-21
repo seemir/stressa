@@ -46,6 +46,29 @@ class FinnModel(Model):
         Assertor.assert_data_types([parent], [QObject])
         super().__init__(parent)
         self.finn_data = {}
+        self.parent.ui.push_button_hent_finn_data_1.clicked.connect(
+            lambda: self.add_finn_info("_1"))
+        self.parent.ui.push_button_finn_1.clicked.connect(
+            lambda: self.open_finn_url("_1"))
+        self.parent.ui.push_button_eierskifte_historikk_1.clicked.connect(
+            lambda: self.parent.history_view.add_finn_history("_1"))
+        self.parent.ui.push_button_statistikk_1.clicked.connect(self.parent.statistics_view.show)
+
+        self.parent.ui.push_button_hent_finn_data_2.clicked.connect(
+            lambda: self.add_finn_info("_2"))
+        self.parent.ui.push_button_finn_2.clicked.connect(
+            lambda: self.open_finn_url("_2"))
+        self.parent.ui.push_button_eierskifte_historikk_2.clicked.connect(
+            lambda: self.parent.history_view.add_finn_history("_2"))
+        self.parent.ui.push_button_statistikk_2.clicked.connect(self.parent.statistics_view.show)
+
+        self.parent.ui.push_button_hent_finn_data_3.clicked.connect(
+            lambda: self.add_finn_info("_3"))
+        self.parent.ui.push_button_finn_3.clicked.connect(
+            lambda: self.open_finn_url("_3"))
+        self.parent.ui.push_button_eierskifte_historikk_3.clicked.connect(
+            lambda: self.parent.history_view.add_finn_history("_3"))
+        self.parent.ui.push_button_statistikk_3.clicked.connect(self.parent.statistics_view.show)
 
     @pyqtSlot()
     def finn_info(self):

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>850</width>
+    <width>950</width>
     <height>750</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>850</width>
+    <width>950</width>
     <height>750</height>
    </size>
   </property>
@@ -466,7 +466,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>830</width>
+       <width>935</width>
        <height>0</height>
       </size>
      </property>
@@ -935,7 +935,7 @@
         </layout>
        </widget>
       </item>
-      <item row="0" column="0">
+      <item row="0" column="0" alignment="Qt::AlignTop">
        <widget class="QFrame" name="frame_info_historikk">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1081,11 +1081,34 @@
         </layout>
        </widget>
       </item>
+      <item row="0" column="1">
+       <widget class="PlotWidget" name="graphics_view">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>300</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::Box</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Plain</enum>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QGraphicsView</extends>
+   <header>pyqtgraph</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>line_edit_finn_adresse</tabstop>
   <tabstop>line_edit_eieform</tabstop>

@@ -64,30 +64,6 @@ class HomeView(QMainWindow):
         self.ui.push_button_budsjett.clicked.connect(self.budget_view.display)
         self.ui.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
 
-        self.ui.push_button_hent_finn_data_1.clicked.connect(
-            lambda: self.finn_model.add_finn_info("_1"))
-        self.ui.push_button_finn_1.clicked.connect(
-            lambda: self.finn_model.open_finn_url("_1"))
-        self.ui.push_button_eierskifte_historikk_1.clicked.connect(
-            lambda: self._history_view.add_finn_history("_1"))
-        self.ui.push_button_statistikk_1.clicked.connect(self.statistics_view.show)
-
-        self.ui.push_button_hent_finn_data_2.clicked.connect(
-            lambda: self.finn_model.add_finn_info("_2"))
-        self.ui.push_button_finn_2.clicked.connect(
-            lambda: self.finn_model.open_finn_url("_2"))
-        self.ui.push_button_eierskifte_historikk_2.clicked.connect(
-            lambda: self._history_view.add_finn_history("_2"))
-        self.ui.push_button_statistikk_2.clicked.connect(self.statistics_view.show)
-
-        self.ui.push_button_hent_finn_data_3.clicked.connect(
-            lambda: self.finn_model.add_finn_info("_3"))
-        self.ui.push_button_finn_3.clicked.connect(
-            lambda: self.finn_model.open_finn_url("_3"))
-        self.ui.push_button_eierskifte_historikk_3.clicked.connect(
-            lambda: self._history_view.add_finn_history("_3"))
-        self.ui.push_button_statistikk_3.clicked.connect(self.statistics_view.show)
-
         self._home_model = HomeModel(self)
         self.ui.push_button_home_meta_data.clicked.connect(self._meta_view.display)
         self.ui.push_button_tom_skjema.clicked.connect(self.home_model.clear_all)
