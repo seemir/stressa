@@ -59,6 +59,9 @@ class ErrorView(QDialog):
                       metadata
 
         """
+        time.sleep(0.2)
+        if os.path.exists(self.log_dir):
+            shutil.rmtree(self.log_dir)
         Assertor.assert_data_types([exception, meta], [Exception, dict])
         self.ui.tab_widget_error.setCurrentIndex(0)
         self.ui.label_error_text.setText(str(exception))
@@ -116,8 +119,4 @@ class ErrorView(QDialog):
                 log_str.append(lines)
             logger.remove(error_log)
             log_file.close()
-
-        time.sleep(0.2)
-        if os.path.exists(file_dir):
-            shutil.rmtree(file_dir)
         return "".join(log_str)

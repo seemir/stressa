@@ -6,13 +6,14 @@ __email__ = 'samir.adrik@gmail.com'
 from pandas import DataFrame
 
 import pyqtgraph as pg
-from pyqtgraph import BarGraphItem, PlotDataItem
 
-from PyQt5.QtCore import QObject, pyqtSlot, Qt
+from PyQt5.QtCore import QObject, pyqtSlot
 from source.util import Assertor
 
 from .table_model import TableModel
 from .model import Model
+
+from ..graphics import BarPlotWithLine
 
 pg.setConfigOption('background', 'w')
 
@@ -36,7 +37,8 @@ class HistoryModel(Model):
         self.legend = None
         self.keys = None
         self.values = None
-        self.table_view_mapping()
+        self.bar_plot_with_line = None
+        self.table_view_mapping = None
 
     @pyqtSlot()
     def add_finn_history(self, postfix: str):
@@ -63,7 +65,9 @@ class HistoryModel(Model):
         self.data.update(history_data)
         for key in self._finn_history_keys:
             if key == "historikk":
-                self.clear_graphics()
+                BarPlotWithLine.clear_graphics(self.parent.ui.graphics_view,
+                                               self.parent.ui.table_view_historikk)
+                self.legend = None
                 if key + postfix in self.data.keys():
                     # table
                     history_data_model = TableModel(DataFrame(self.data[key + postfix]))
@@ -74,24 +78,20 @@ class HistoryModel(Model):
                     self.keys = [int(key) + 1.5 for key in list(history.keys())]
                     self.values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
                                    for val in history.values()][::-1]
-                    history_item = BarGraphItem(x=self.keys, height=self.values, width=0.50,
-                                                brush="#d2e5f5")
-                    self.parent.ui.graphics_view.addItem(history_item)
-                    pen = pg.mkPen(color="#d2e5f5", style=Qt.DotLine, width=2)
-                    self.parent.ui.graphics_view.plot(x=self.keys, y=self.values, pen=pen,
-                                                      symbol='+', symbolSize=14)
-
-                    if not self.legend and all(
-                            val + postfix in grandparent.finn_model.finn_data.keys() for val in
-                            ["finnkode", "boligtype", "status"]):
+                    self.bar_plot_with_line = BarPlotWithLine(self.keys, self.values,
+                                                              self.parent.ui.graphics_view,
+                                                              self.parent.ui.table_view_historikk)
+                    if not self.legend and all(val + postfix in
+                                               grandparent.finn_model.data.keys() for val in
+                                               ["finnkode", "boligtype", "status"]):
                         self.legend = pg.LegendItem()
-                        finn_code = grandparent.finn_model.finn_data["finnkode" + postfix]
-                        bolig_type = grandparent.finn_model.finn_data["boligtype" + postfix]
-                        status = grandparent.finn_model.finn_data["status" + postfix]
-                        self.legend.setParentItem(self.parent.ui.graphics_view.graphicsItem())
-                        self.legend.addItem(history_item, "FINN kode: " + finn_code)
-                        self.legend.addItem(history_item, "Boligtype: " + bolig_type)
-                        self.legend.addItem(history_item, "Status: " + status)
+                        finn_code = grandparent.finn_model.data["finnkode" + postfix]
+                        bolig_type = grandparent.finn_model.data["boligtype" + postfix]
+                        status = grandparent.finn_model.data["status" + postfix]
+                        self.bar_plot_with_line.add_legend(self.legend, "Finnkode: " + finn_code,
+                                                           "Boligtype: " + bolig_type,
+                                                           "Status: " + status)
+                    self.table_view_mapping = self.bar_plot_with_line.table_view_mapping()
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
                 if key + postfix in self.data.keys():
@@ -124,7 +124,9 @@ class HistoryModel(Model):
                     grandparent.data.pop(full_key)
                 if full_key in grandparent.finn_data.keys():
                     grandparent.finn_data.pop(full_key)
-                self.clear_graphics()
+                BarPlotWithLine.clear_graphics(self.parent.ui.graphics_view,
+                                               self.parent.ui.table_view_historikk)
+                self.legend = None
             else:
                 if full_key in self.data.keys():
                     self.data.pop(full_key)
@@ -133,27 +135,3 @@ class HistoryModel(Model):
                 if full_key in grandparent.finn_data.keys():
                     grandparent.finn_data.pop(full_key)
                 getattr(self.parent.ui, "line_edit_" + key).clear()
-
-    def clear_graphics(self):
-        self.parent.ui.table_view_historikk.setModel(None)
-        self.parent.ui.graphics_view.clear()
-        for item in self.parent.ui.graphics_view.childItems():
-            if isinstance(item, pg.LegendItem):
-                self.parent.ui.graphics_view.scene().removeItem(item)
-        self.legend = None
-
-    def table_view_mapping(self):
-        self.parent.ui.table_view_historikk.clicked.connect(self.row_clicked)
-
-    def row_clicked(self, item):
-        row = len(self.values) - 1 - item.row()
-        history_item = BarGraphItem(x=self.keys, height=self.values, width=0.50,
-                                    brush="#d2e5f5")
-        clicked_item = BarGraphItem(x=[self.keys[row]], height=self.values[row], width=0.50,
-                                    brush="#69a8de")
-        pen = pg.mkPen(color="#69a8de", style=Qt.DotLine, width=2)
-        plot_item = PlotDataItem(x=self.keys, y=self.values, pen=pen,
-                                 symbol='+', symbolSize=14)
-        self.parent.ui.graphics_view.addItem(history_item)
-        self.parent.ui.graphics_view.addItem(clicked_item)
-        self.parent.ui.graphics_view.addItem(plot_item)
