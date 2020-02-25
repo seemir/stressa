@@ -27,7 +27,7 @@ if __name__ == "__main__":
     app.setStyle("Fusion")
     app.setStyleSheet(qss)
 
-    # splash = SplashView(app)
+    splash = SplashView(app)
     home = HomeView()
     home.showMaximized()
 

@@ -1362,6 +1362,13 @@
             </property>
            </widget>
           </item>
+          <item row="12" column="1">
+           <widget class="QLineEdit" name="line_edit_municipality_sqm_price">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
           <item row="10" column="1">
            <widget class="QLineEdit" name="line_edit_sqm_price">
             <property name="enabled">
@@ -1390,7 +1397,7 @@
             </property>
            </widget>
           </item>
-          <item row="22" column="0">
+          <item row="19" column="0">
            <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -1468,21 +1475,7 @@
            </widget>
           </item>
           <item row="13" column="1">
-           <widget class="QLineEdit" name="line_edit_views">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="21" column="1">
-           <widget class="QLineEdit" name="line_edit_prospect_ordered">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="20" column="1">
-           <widget class="QLineEdit" name="line_edit_prospect_viewed">
+           <widget class="QLineEdit" name="line_edit_totalviews">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1495,23 +1488,13 @@
             </property>
            </widget>
           </item>
-          <item row="20" column="0">
-           <widget class="QLabel" name="label_prospekt_sett">
-            <property name="text">
-             <string>Prospekt sett</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_prospect_viewed</cstring>
-            </property>
-           </widget>
-          </item>
           <item row="13" column="0">
            <widget class="QLabel" name="label_visninger">
             <property name="text">
              <string>Klikk på annonsen</string>
             </property>
             <property name="buddy">
-             <cstring>line_edit_views</cstring>
+             <cstring>line_edit_totalviews</cstring>
             </property>
            </widget>
           </item>
@@ -1521,31 +1504,14 @@
              <string>Favorisert</string>
             </property>
             <property name="buddy">
-             <cstring>line_edit_favorite_click</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="19" column="1">
-           <widget class="QLineEdit" name="line_edit_add_to_calendar">
-            <property name="enabled">
-             <bool>false</bool>
+             <cstring>line_edit_currentfavorites</cstring>
             </property>
            </widget>
           </item>
           <item row="18" column="1">
-           <widget class="QLineEdit" name="line_edit_favorite_click">
+           <widget class="QLineEdit" name="line_edit_currentfavorites">
             <property name="enabled">
              <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="21" column="0">
-           <widget class="QLabel" name="label_prospekt_bestilt">
-            <property name="text">
-             <string>Prospekt bestilt</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_prospect_ordered</cstring>
             </property>
            </widget>
           </item>
@@ -1563,18 +1529,8 @@
             </property>
            </widget>
           </item>
-          <item row="19" column="0">
-           <widget class="QLabel" name="label_kalender">
-            <property name="text">
-             <string>Lagt til kalender</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_add_to_calendar</cstring>
-            </property>
-           </widget>
-          </item>
           <item row="17" column="1">
-           <widget class="QLineEdit" name="line_edit_email_sent">
+           <widget class="QLineEdit" name="line_edit_latestemailcount">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1621,21 +1577,7 @@
              <string>E-post sent</string>
             </property>
             <property name="buddy">
-             <cstring>line_edit_email_sent</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="0">
-           <widget class="QLabel" name="label_city_area_sqm_price">
-            <property name="text">
-             <string>KMP (område)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="1">
-           <widget class="QLineEdit" name="line_edit_city_area_sqm_price">
-            <property name="enabled">
-             <bool>false</bool>
+             <cstring>line_edit_latestemailcount</cstring>
             </property>
            </widget>
           </item>
@@ -1646,10 +1588,17 @@
             </property>
            </widget>
           </item>
-          <item row="12" column="1">
-           <widget class="QLineEdit" name="line_edit_municipality_sqm_price">
+          <item row="11" column="1">
+           <widget class="QLineEdit" name="line_edit_city_area_sqm_price">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_city_area_sqm_price">
+            <property name="text">
+             <string>KMP (område)</string>
             </property>
            </widget>
           </item>
@@ -4653,14 +4602,11 @@
   <tabstop>line_edit_sqm_price</tabstop>
   <tabstop>line_edit_city_area_sqm_price</tabstop>
   <tabstop>line_edit_municipality_sqm_price</tabstop>
-  <tabstop>line_edit_views</tabstop>
+  <tabstop>line_edit_totalviews</tabstop>
   <tabstop>line_edit_normal_traffic</tabstop>
   <tabstop>line_edit_ad_of_the_week</tabstop>
-  <tabstop>line_edit_email_sent</tabstop>
-  <tabstop>line_edit_favorite_click</tabstop>
-  <tabstop>line_edit_add_to_calendar</tabstop>
-  <tabstop>line_edit_prospect_viewed</tabstop>
-  <tabstop>line_edit_prospect_ordered</tabstop>
+  <tabstop>line_edit_latestemailcount</tabstop>
+  <tabstop>line_edit_currentfavorites</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

@@ -21,11 +21,10 @@ class StatisticsModel(Model):
     """
     _statistics_keys = ["finnkode", "first_published", "location", "property_type", "price_range",
                         "prisantydning", "sqm_price", "city_area_sqm_price",
-                        "municipality_sqm_price", "size_range", "primrrom", "bruttoareal", "views",
-                        "ad_of_the_week", "normal_traffic", "email_sent", "favorite_click",
-                        "add_to_calendar", "prospect_viewed", "prospect_ordered",
-                        "city_area_sqm_price", "municipality_sqm_price", "city_area",
-                        "municipality"]
+                        "municipality_sqm_price", "size_range", "primrrom", "bruttoareal",
+                        "ad_of_the_week", "normal_traffic", "totalviews", "latestemailcount",
+                        "currentfavorites", "city_area_sqm_price", "municipality_sqm_price",
+                        "city_area", "municipality"]
 
     def __init__(self, parent: QObject):
         """

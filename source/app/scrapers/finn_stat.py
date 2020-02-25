@@ -92,15 +92,15 @@ class FinnStat(Finn):
                     "price"]
                 info.update({"sqm_price": Amount.format_amount(sq_price) + " kr/m²"})
 
+                # with open('content.html', 'w', encoding='utf-8') as f:
+                #     f.write(stat_soup.prettify())
+
                 view_statistics_total = json.loads(
                     stat_soup.find("script", attrs={"id": "ad-summary"}).text)[self.finn_code]
                 view_statistics_detail = json.loads(
                     stat_soup.find("script", attrs={"id": "ad"}).text)
                 area_sales_statistics = json.loads(
                     stat_soup.find("script", attrs={"id": "area-sales"}).text)
-
-                # with open('statistics.json', 'w', encoding='utf-8') as f:
-                #     json.dump(view_statistics_total, f, ensure_ascii=False, indent=4)
 
                 info.update(self.extract_view_statistics(view_statistics_total, info))
                 info.update(self.extract_detail_view_statistics(view_statistics_detail, info))
@@ -113,6 +113,9 @@ class FinnStat(Finn):
                             info["hist_data_city_area"]) + " kr/m²"})
                     info.update({"municipality_sqm_price": self.calculate_average(
                         info["hist_data_municipality"]) + " kr/m²"})
+
+                # with open('data.json', 'w', encoding='utf-8') as f:
+                #     json.dump(info, f, ensure_ascii=False, indent=4)
 
                 LOGGER.success(
                     "'{}' successfully retrieved".format(self.housing_stat_information.__name__))
@@ -155,12 +158,7 @@ class FinnStat(Finn):
         Assertor.assert_data_types([total_view_statistics, info], [dict, dict])
         for prop, value in total_view_statistics.items():
             if isinstance(value, (int, float)):
-                unique_keys = {"totalviews": "views", "latestemailcount": "email_sent",
-                               "currentfavorites": "favorite_click"}
-                if prop.lower() in unique_keys.keys():
-                    info.update({unique_keys[prop.lower()]: Amount.format_amount(str(value))})
-                else:
-                    info.update({prop.lower(): Amount.format_amount(str(value))})
+                info.update({prop.lower(): Amount.format_amount(str(value))})
         return info
 
     @staticmethod
@@ -239,6 +237,10 @@ class FinnStat(Finn):
         location_name = ["city_area", "municipality"]
         Assertor.assert_data_types([areal_sales_statistics, info], [list, dict])
         for i, data in enumerate(areal_sales_statistics):
+            if len(areal_sales_statistics) == 3:
+                if i == 0:
+                    continue
+                i -= 1
             for prop, value in data.items():
                 if prop.lower() == "locationdetails":
                     if value:
