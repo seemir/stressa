@@ -233,3 +233,16 @@
 #scroll_area_widget_contents_meta_data{
   background-color: #ffffff;
 }
+
+/* StatisticsView */
+.QFrame[objectName="frame_statistikk_1"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_statistikk_2"] {
+  border: none;
+}
+
+.QFrame[objectName="frame_statistikk_3"] {
+  border: none;
+}

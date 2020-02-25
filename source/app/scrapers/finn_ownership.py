@@ -104,7 +104,7 @@ class FinnOwnership(Finn):
                         history_results.append(row)
 
                 info = dict(zip(keys, values))
-                historic_df = DataFrame(history_results, columns=history_headers)
+                historic_df = DataFrame(history_results, columns=history_headers).to_dict()
                 info.update({"historikk": historic_df})
 
                 LOGGER.success(
@@ -120,7 +120,7 @@ class FinnOwnership(Finn):
 
     def to_json(self, file_dir: str = "report/json/finn_information"):
         """
-        save mortgage offers information to JSON file
+        save ownership information to JSON file
 
         """
         self.save_json(self.housing_ownership_information(), file_dir,

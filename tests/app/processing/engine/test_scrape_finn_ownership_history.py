@@ -7,8 +7,6 @@ Test module for the ScrapeFinnOwnershipHistory operation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from pandas import DataFrame
-
 import pytest as pt
 
 from source.app import Operation, ScrapeFinnOwnershipHistory, FINN_OWNER_URL
@@ -67,6 +65,6 @@ class TestScrapeFinnOwnershipHistory:
 
         """
         ownership_history = self.scrape_finn_ownership_history.run()
-        assert ownership_history["historikk"].equals(DataFrame(
-            {'Tinglyst': {0: '30.06.1994'}, 'Boligtype': {0: 'Frittliggende enebolig'},
-             'Pris': {0: '3\xa0950\xa0000 kr'}}))
+        assert ownership_history["historikk"] == {'Tinglyst': {0: '30.06.1994'},
+                                                  'Boligtype': {0: 'Frittliggende enebolig'},
+                                                  'Pris': {0: '3\xa0950\xa0000 kr'}}

@@ -145,13 +145,19 @@ class TestFinnAdvertProcessing:
                                     'Endring': {0: '1672.15 %', 1: ''}}),
             'sqm_price': '106 700 kr/m²', 'views': '611 635', 'email_sent': '13 164',
             'favorite_click': '3 427', 'prospect_viewed': '2 897', 'prospect_ordered': '109',
-            'add_to_calendar': '0'}
+            'add_to_calendar': '0', "published": "12.04.2019",
+            "size_range": "større eller lik 650 m²",
+            "property_type": "Bolig", "city_area": "Uranienborg - Majorstuen",
+            "municipality": "Oslo"}
         finn_advert_processing = FinnAdvertProcessing(self.finn_code)
         for key, val in finn_advert_processing.multiplex_info_2.items():
             if key == "historikk":
                 assert val.equals(results[key])
             elif key in ["sqm_price", "views", "email_sent", "favorite_click", "prospect_viewed",
-                         "prospect_ordered", "add_to_calendar"]:
+                         "prospect_ordered", "add_to_calendar", "views_development",
+                         "first_published", "normal_traffic", "location", "price_range",
+                         "hist_data_city_area", "city_area_sqm_price", "hist_data_municipality",
+                         "municipality_sqm_price"]:
                 continue
 
             else:

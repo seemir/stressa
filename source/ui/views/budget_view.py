@@ -98,7 +98,7 @@ class BudgetView(QDialog):
     @pyqtSlot()
     def display(self):
         self.ui.combo_box_interval_1.setFocus()
-        self.exec_()
+        self.show()
 
     @pyqtSlot()
     def export(self):

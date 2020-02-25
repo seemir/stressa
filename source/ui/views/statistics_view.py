@@ -15,6 +15,8 @@ from PyQt5.uic import loadUi
 
 from source.util import Assertor
 
+from ..models import StatisticsModel
+
 
 class StatisticsView(QDialog):
     """
@@ -38,3 +40,39 @@ class StatisticsView(QDialog):
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+        self._parent = parent
+        self._statistics_model = StatisticsModel(self)
+
+    @property
+    def parent(self):
+        """
+        parent getter
+
+        Returns
+        -------
+        out     : QObject
+                  active parent view for the StatiticsView
+
+        """
+        return self._parent
+
+    @property
+    def statistics_model(self):
+        """
+        StatisticsModel getter
+
+        Returns
+        -------
+        out     : StatisticsModel
+                  active StatisticsModel
+
+        """
+        return self._statistics_model
+
+    def add_statistics_info(self, postfix):
+        """
+        Method for displaying StatisticsView
+
+        """
+        self.statistics_model.add_statistics_info(postfix)
+        self.show()

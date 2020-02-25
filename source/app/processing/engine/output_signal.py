@@ -19,7 +19,7 @@ class OutputSignal(Signal):
 
     """
 
-    def __init__(self, data: object, desc: str, prettify_keys: bool = False, ):
+    def __init__(self, data: object, desc: str, prettify_keys: bool = False, length: int = 15):
         """
         Constructor / Instantiating class
 
@@ -31,8 +31,10 @@ class OutputSignal(Signal):
                           description of operation
         prettify_keys   : bool
                           True if one wants to prettify keys in data
+        length          : int
+                          length to apply new line, default is 15
 
         """
-        Assertor.assert_data_types([data, desc, prettify_keys], [object, str, bool])
-        super().__init__(data=data, desc=desc, prettify_keys=prettify_keys, style="dashed",
-                         color="blue", penwidth=1.5)
+        Assertor.assert_data_types([data, desc, prettify_keys, length], [object, str, bool, int])
+        super().__init__(data=data, desc=desc, prettify_keys=prettify_keys, length=length,
+                         style="dashed", color="blue", penwidth=1.5)

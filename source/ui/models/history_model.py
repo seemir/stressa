@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
+"""
+Module containing logic for table and graph with Ownership History
+
+"""
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from pandas import DataFrame
-
-import pyqtgraph as pg
 
 from PyQt5.QtCore import QObject, pyqtSlot
 from source.util import Assertor
@@ -15,10 +17,12 @@ from .model import Model
 
 from ..graphics import BarPlotWithLine
 
-pg.setConfigOption('background', 'w')
-
 
 class HistoryModel(Model):
+    """
+    Implementation of model for Ownership history
+
+    """
     _finn_history_keys = ["finn_adresse", "eieform", "kommunenr", "gardsnr", "bruksnr",
                           "bruksenhetsnr", "seksjonsnr", "historikk"]
 
@@ -37,7 +41,7 @@ class HistoryModel(Model):
         self.legend = None
         self.keys = None
         self.values = None
-        self.bar_plot_with_line = None
+        self.bar_plot = None
         self.table_view_mapping = None
 
     @pyqtSlot()
@@ -48,7 +52,7 @@ class HistoryModel(Model):
         Parameters
         ----------
         postfix     : str
-                      index if used in naming of line_edits
+                      index if used in naming of widgets
 
         """
         Assertor.assert_data_types([postfix], [str])
@@ -65,10 +69,10 @@ class HistoryModel(Model):
         self.data.update(history_data)
         for key in self._finn_history_keys:
             if key == "historikk":
-                BarPlotWithLine.clear_graphics(self.parent.ui.graphics_view,
+                BarPlotWithLine.clear_graphics(self.parent.ui.graphics_view_historikk,
                                                self.parent.ui.table_view_historikk)
                 self.legend = None
-                if key + postfix in self.data.keys():
+                if key + postfix in self.data.keys() and self.data["historikk" + postfix]:
                     # table
                     history_data_model = TableModel(DataFrame(self.data[key + postfix]))
                     self.parent.ui.table_view_historikk.setModel(history_data_model)
@@ -78,34 +82,33 @@ class HistoryModel(Model):
                     self.keys = [int(key) + 1.5 for key in list(history.keys())]
                     self.values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
                                    for val in history.values()][::-1]
-                    self.bar_plot_with_line = BarPlotWithLine(self.keys, self.values,
-                                                              self.parent.ui.graphics_view,
-                                                              self.parent.ui.table_view_historikk)
+                    self.bar_plot = BarPlotWithLine(self.keys, self.values,
+                                                    self.parent.ui.graphics_view_historikk,
+                                                    self.parent.ui.table_view_historikk)
                     if not self.legend and all(val + postfix in
                                                grandparent.finn_model.data.keys() for val in
                                                ["finnkode", "boligtype", "status"]):
-                        self.legend = pg.LegendItem()
                         finn_code = grandparent.finn_model.data["finnkode" + postfix]
                         bolig_type = grandparent.finn_model.data["boligtype" + postfix]
                         status = grandparent.finn_model.data["status" + postfix]
-                        self.bar_plot_with_line.add_legend(self.legend, "Finnkode: " + finn_code,
-                                                           "Boligtype: " + bolig_type,
-                                                           "Status: " + status)
-                    self.table_view_mapping = self.bar_plot_with_line.table_view_mapping()
+                        self.bar_plot.add_legend("Finnkode: " + finn_code,
+                                                 "Boligtype: " + bolig_type,
+                                                 "Status: " + status)
+                    self.table_view_mapping = self.bar_plot.table_view_mapping()
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
                 if key + postfix in self.data.keys():
                     getattr(self.parent.ui, "line_edit_" + key).setText(self.data[key + postfix])
 
-        self.parent.ui.graphics_view.setMouseEnabled(x=False, y=False)
-        self.parent.ui.graphics_view.showGrid(x=True, y=True)
-        self.parent.ui.graphics_view.getAxis('left').setStyle(showValues=False)
-        self.parent.ui.graphics_view.getAxis('bottom').setStyle(showValues=False)
+        self.parent.ui.graphics_view_historikk.setMouseEnabled(x=False, y=False)
+        self.parent.ui.graphics_view_historikk.showGrid(x=True, y=True)
+        self.parent.ui.graphics_view_historikk.getAxis('left').setStyle(showValues=False)
+        self.parent.ui.graphics_view_historikk.getAxis('bottom').setStyle(showValues=False)
 
     @pyqtSlot()
     def clear_finn_history(self, postfix: str):
         """
-        method for clearing finn ownership history from line_edit
+        method for clearing finn ownership history from line_edit and graphics
 
         Parameters
         ----------
@@ -124,7 +127,7 @@ class HistoryModel(Model):
                     grandparent.data.pop(full_key)
                 if full_key in grandparent.finn_data.keys():
                     grandparent.finn_data.pop(full_key)
-                BarPlotWithLine.clear_graphics(self.parent.ui.graphics_view,
+                BarPlotWithLine.clear_graphics(self.parent.ui.graphics_view_historikk,
                                                self.parent.ui.table_view_historikk)
                 self.legend = None
             else:

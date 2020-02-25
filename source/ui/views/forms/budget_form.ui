@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1020</width>
-    <height>328</height>
+    <width>1008</width>
+    <height>368</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -471,7 +471,7 @@
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>0</height>
+       <height>350</height>
       </size>
      </property>
      <property name="palette">
@@ -1051,7 +1051,7 @@
        <widget class="QLineEdit" name="line_edit_brutto_inntekt">
         <property name="minimumSize">
          <size>
-          <width>236</width>
+          <width>230</width>
           <height>0</height>
          </size>
         </property>
@@ -1074,7 +1074,7 @@
        <widget class="QLineEdit" name="line_edit_student_lan">
         <property name="minimumSize">
          <size>
-          <width>236</width>
+          <width>230</width>
           <height>0</height>
          </size>
         </property>

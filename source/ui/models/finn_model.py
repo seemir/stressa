@@ -52,7 +52,8 @@ class FinnModel(Model):
             lambda: self.open_finn_url("_1"))
         self.parent.ui.push_button_eierskifte_historikk_1.clicked.connect(
             lambda: self.parent.history_view.add_finn_history("_1"))
-        self.parent.ui.push_button_statistikk_1.clicked.connect(self.parent.statistics_view.show)
+        self.parent.ui.push_button_statistikk_1.clicked.connect(
+            lambda: self.parent.statistics_view.add_statistics_info("_1"))
 
         self.parent.ui.push_button_hent_finn_data_2.clicked.connect(
             lambda: self.add_finn_info("_2"))
@@ -60,7 +61,8 @@ class FinnModel(Model):
             lambda: self.open_finn_url("_2"))
         self.parent.ui.push_button_eierskifte_historikk_2.clicked.connect(
             lambda: self.parent.history_view.add_finn_history("_2"))
-        self.parent.ui.push_button_statistikk_2.clicked.connect(self.parent.statistics_view.show)
+        self.parent.ui.push_button_statistikk_2.clicked.connect(
+            lambda: self.parent.statistics_view.add_statistics_info("_2"))
 
         self.parent.ui.push_button_hent_finn_data_3.clicked.connect(
             lambda: self.add_finn_info("_3"))
@@ -68,7 +70,8 @@ class FinnModel(Model):
             lambda: self.open_finn_url("_3"))
         self.parent.ui.push_button_eierskifte_historikk_3.clicked.connect(
             lambda: self.parent.history_view.add_finn_history("_3"))
-        self.parent.ui.push_button_statistikk_3.clicked.connect(self.parent.statistics_view.show)
+        self.parent.ui.push_button_statistikk_3.clicked.connect(
+            lambda: self.parent.statistics_view.add_statistics_info("_3"))
 
     @pyqtSlot()
     def finn_info(self):
@@ -104,6 +107,8 @@ class FinnModel(Model):
                 finn_data = finn_processing.multiplex_info_2
                 self.finn_data = {key + postfix: val for key, val in finn_data.items()}
                 self.set_line_edits("finnkode", self._finn_keys, postfix=postfix, data=finn_data)
+                self.parent.statistics_view.statistics_model.add_statistics_info(postfix)
+                self.data.update(self.parent.statistics_view.statistics_model.data)
                 self.parent.history_view.history_model.add_finn_history(postfix)
                 self.data.update(self.parent.history_view.history_model.data)
                 getattr(self.parent.ui, "progress_bar" + postfix).setValue(30)
@@ -143,6 +148,7 @@ class FinnModel(Model):
             self.clear_line_edits(["finnkode" + postfix])
             self.clear_line_edits(self._finn_keys, postfix)
             self.parent.history_view.history_model.clear_finn_history(postfix)
+            self.parent.statistics_view.statistics_model.clear_statistics_info(postfix)
             getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(False)
             getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
 
@@ -173,9 +179,12 @@ class FinnModel(Model):
         self.parent.ui.tab_widget_finn.setCurrentIndex(0)
         self.clear_finn_info("_1", True)
         self.parent.history_view.history_model.clear_finn_history("_1")
+        self.parent.statistics_view.statistics_model.clear_statistics_info("_1")
 
         self.clear_finn_info("_2", True)
         self.parent.history_view.history_model.clear_finn_history("_2")
+        self.parent.statistics_view.statistics_model.clear_statistics_info("_2")
 
         self.clear_finn_info("_3", True)
         self.parent.history_view.history_model.clear_finn_history("_3")
+        self.parent.statistics_view.statistics_model.clear_statistics_info("_3")

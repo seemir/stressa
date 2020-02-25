@@ -23,15 +23,17 @@ class Signal(Node, ABC):
     """
 
     @staticmethod
-    def remove_quotation(strings: list):
+    def remove_quotation(strings: list, remove_new_line=False):
         """
         method for removing quotation marks in list of strings
 
         """
+        if remove_new_line:
+            strings = [string.replace("\n", "") for string in strings]
         return str(list(strings)).translate({39: None})
 
     def __init__(self, data: object, desc: str, style: str = "dotted", prettify_keys: bool = False,
-                 **attrs):
+                 length=15, **attrs):
         """
         Constructor / Instantiating class
 
@@ -43,17 +45,20 @@ class Signal(Node, ABC):
                           description of operation
         prettify_keys   : bool
                           True if one wants to prettify keys in data
+        length          : int
+                          length to apply new line, default is 15
 
         """
-        Assertor.assert_data_types([data, desc, style, prettify_keys], [object, str, str, bool])
+        Assertor.assert_data_types([data, desc, style, prettify_keys, length],
+                                   [object, str, str, bool, int])
         if hasattr(data, "__dict__"):
             keys = data.__dict__.keys()
-            self.keys = self.prettify_dict_keys(keys) if prettify_keys else self.remove_quotation(
-                list(keys))
+            self.keys = self.prettify_dict_keys(keys, length) if prettify_keys else \
+                self.remove_quotation(list(keys), remove_new_line=True)
         elif isinstance(data, dict):
             keys = data.keys()
-            self.keys = self.prettify_dict_keys(keys) if prettify_keys else self.remove_quotation(
-                list(keys))
+            self.keys = self.prettify_dict_keys(keys, length) if prettify_keys else \
+                self.remove_quotation(list(keys), remove_new_line=True)
         else:
             self.keys = ""
         self.desc = desc
@@ -62,7 +67,7 @@ class Signal(Node, ABC):
                          label="keys\\<{}\\> \\n {} \\<type '{}'\\>".format(
                              self.keys, self.desc, data.__class__.__name__), **attrs)
 
-    def prettify_dict_keys(self, dict_keys):
+    def prettify_dict_keys(self, dict_keys, length=15):
         """
         method for prettify the dictionary keys
 
@@ -70,6 +75,8 @@ class Signal(Node, ABC):
         ----------
         dict_keys   :
                       keys to prettify
+        length      : int
+                      length to apply new line, default is 15
 
         Returns
         -------
@@ -79,7 +86,7 @@ class Signal(Node, ABC):
         """
         pretty_keys = []
         for i, keys in enumerate(list(dict_keys)):
-            if i % 15 == 0 and i != 0:
+            if i % length == 0 and i != 0:
                 pretty_keys.append("\n" + str(keys))
             else:
                 pretty_keys.append(keys)

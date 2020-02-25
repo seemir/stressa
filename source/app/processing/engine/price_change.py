@@ -11,7 +11,7 @@ from typing import Union
 
 from pandas import DataFrame as DataFrame_
 
-from source.util import Assertor
+from source.util import Assertor, LOGGER
 
 from .operation import Operation
 
@@ -43,11 +43,15 @@ class PriceChange(Operation):
         method for running the operation
 
         """
-        final_change = None
-        if self.dataframe:
-            change = DataFrame_(self.dataframe).iloc[:, -1].str.replace(
-                u"\xa0", "").str.replace(" kr", "").str.replace(" ", "")
-            final_change = DataFrame_(self.dataframe).assign(
-                Endring=(change.astype(float).pct_change(-1).mul(100).round(2).astype(
-                    str) + " %").replace("nan %", ""))
-        return final_change
+        try:
+            final_change = None
+            if self.dataframe:
+                change = DataFrame_(self.dataframe).iloc[:, -1].str.replace(
+                    u"\xa0", "").str.replace(" kr", "").str.replace(" ", "")
+                final_change = DataFrame_(self.dataframe).assign(
+                    Endring=(change.astype(float).pct_change(-1).mul(100).round(2).astype(
+                        str) + " %").replace("nan %", ""))
+            return final_change
+        except ValueError as price_change_exception:
+            LOGGER.debug("Calculate price change not possible, exited with '{}'. "
+                         "Continuing without price change".format(price_change_exception))

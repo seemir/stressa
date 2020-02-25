@@ -3,6 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from .statistics_model import StatisticsModel
 from .mortgage_model import MortgageModel
 from .history_model import HistoryModel
 from .budget_model import BudgetModel

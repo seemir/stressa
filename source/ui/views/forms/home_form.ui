@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1615</width>
+    <width>1622</width>
     <height>838</height>
    </rect>
   </property>
@@ -2327,7 +2327,7 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>750</width>
+            <width>0</width>
             <height>0</height>
            </size>
           </property>
@@ -3600,7 +3600,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>115</width>
+                   <width>120</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -3693,7 +3693,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>230</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -4454,7 +4454,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>115</width>
+                   <width>120</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -4485,7 +4485,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>0</width>
+                   <width>230</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -5906,7 +5906,7 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>750</width>
+            <width>0</width>
             <height>0</height>
            </size>
           </property>
@@ -7307,7 +7307,7 @@
                 <widget class="QLineEdit" name="line_edit_finnkode_1">
                  <property name="minimumSize">
                   <size>
-                   <width>140</width>
+                   <width>230</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -7352,7 +7352,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>140</width>
+                   <width>230</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -7398,7 +7398,7 @@
                 <widget class="QLabel" name="label_referanse_1">
                  <property name="minimumSize">
                   <size>
-                   <width>100</width>
+                   <width>120</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -7828,7 +7828,7 @@
                 <widget class="QLineEdit" name="line_edit_finnkode_2">
                  <property name="minimumSize">
                   <size>
-                   <width>140</width>
+                   <width>230</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -7910,7 +7910,7 @@
                 <widget class="QLabel" name="label_referanse_2">
                  <property name="minimumSize">
                   <size>
-                   <width>100</width>
+                   <width>120</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -7934,7 +7934,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>140</width>
+                   <width>230</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -8892,7 +8892,7 @@
                 <widget class="QLineEdit" name="line_edit_finnkode_3">
                  <property name="minimumSize">
                   <size>
-                   <width>140</width>
+                   <width>230</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -9063,7 +9063,7 @@
                  </property>
                  <property name="minimumSize">
                   <size>
-                   <width>140</width>
+                   <width>230</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -9084,7 +9084,7 @@
                 <widget class="QLabel" name="label_referanse_3">
                  <property name="minimumSize">
                   <size>
-                   <width>100</width>
+                   <width>120</width>
                    <height>0</height>
                   </size>
                  </property>
@@ -11091,7 +11091,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1615</width>
+     <width>1622</width>
      <height>21</height>
     </rect>
    </property>
@@ -11715,10 +11715,6 @@
    </property>
   </action>
   <action name="action_slett">
-   <property name="icon">
-    <iconset resource="../../images/img.qrc">
-     <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
-   </property>
    <property name="text">
     <string>Slett</string>
    </property>

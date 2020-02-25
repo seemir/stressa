@@ -116,7 +116,7 @@ class SifoView(QDialog):
 
         """
         self.sifo_model.sifo_info()
-        self.exec_()
+        self.show()
 
     def export(self):
         """

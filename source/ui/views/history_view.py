@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Module with logic for the View that handles the Ownership History
+
+"""
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
@@ -14,8 +18,21 @@ from source.util import Assertor
 
 
 class HistoryView(QDialog):
+    """
+    Implementation of model for Ownership history view
+
+    """
 
     def __init__(self, parent: QWidget):
+        """
+        Constructor / Instantiation of class
+
+        Parameters
+        ----------
+        parent  : QWidget
+                  parent view of the HistoryView
+
+        """
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QWidget])
         self.parent = parent
@@ -27,9 +44,28 @@ class HistoryView(QDialog):
 
     @property
     def history_model(self):
+        """
+        HistoryModel getter
+
+        Returns
+        -------
+        out     : HistoryModel
+                  Model containing all the logic of the OwnershipHistory
+
+        """
         return self._history_model
 
     @pyqtSlot()
-    def add_finn_history(self, postfix):
+    def add_finn_history(self, postfix: str):
+        """
+        method for adding ownership history to view
+
+        Parameters
+        ----------
+        postfix     : str
+                      index if used in naming of widgets
+
+        """
+        Assertor.assert_data_types([postfix], [str])
         self.history_model.add_finn_history(postfix)
         self.show()

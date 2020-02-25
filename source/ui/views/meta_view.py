@@ -63,7 +63,7 @@ class MetaView(QDialog):
         try:
             meta_data = self.get_all_meta_data()
             self.ui.plain_text_edit_meta_data.setPlainText(
-                json.dumps(meta_data if meta_data else {}, indent=2))
+                json.dumps(meta_data if meta_data else {}, ensure_ascii=False, indent=4))
             self.exec_()
         except Exception as metadata_error:
             self.parent.error.show_error(metadata_error)
