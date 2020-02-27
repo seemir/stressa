@@ -37,21 +37,14 @@ class FinnAdvertProcessing(Process):
             self.start_process()
             Assertor.assert_data_types([finn_code], [str])
             self.input_operation({"finn_code": finn_code})
-            self._validated_finn_code = self.validate_finn_code()
-
-            self._finn_advert_info = None
-            self._finn_ownership_history = None
-            self._finn_statistics_info = None
+            self.validate_finn_code()
             self.run_parallel([self.scrape_finn_advert_info, self.scrape_finn_statistics_info,
                                self.scrape_finn_ownership_history])
-
-            self._multiplex_info_1 = self.multiplex_1(
-                [self.finn_advert_info, self.finn_ownership_history, self.finn_statistics_info])
-
+            self._multiplex_info_1 = self.multiplex_1()
             self.extract()
             self.extract_first_row()
-            self.check_newest_date()
             self.add_to_dataframe_1()
+            self.check_newest_date()
             self.add_to_dataframe_2()
             self.price_change()
             self._multiplex_info_2 = self.multiplex_2()
@@ -61,58 +54,6 @@ class FinnAdvertProcessing(Process):
         except Exception as finn_advert_processing_exception:
             LOGGER.exception(finn_advert_processing_exception)
             raise finn_advert_processing_exception
-
-    @property
-    def validated_finn_code(self):
-        """
-        validated finn code getter
-
-        Returns
-        -------
-        out     : dict
-                  active validated finn-code in object
-
-        """
-        return self._validated_finn_code
-
-    @property
-    def finn_advert_info(self):
-        """
-        finn advert info getter
-
-        Returns
-        -------
-        out     : dict
-                  active finn advert info in object
-
-        """
-        return self._finn_advert_info
-
-    @property
-    def finn_ownership_history(self):
-        """
-        finn advert info getter
-
-        Returns
-        -------
-        out     : dict
-                  active finn ownership info in object
-
-        """
-        return self._finn_ownership_history
-
-    @property
-    def finn_statistics_info(self):
-        """
-        finn statistics getter
-
-        Returns
-        -------
-        out     : dict
-                  active finn statistics info in object
-
-        """
-        return self._finn_statistics_info
 
     @property
     def multiplex_info_1(self):
@@ -182,7 +123,6 @@ class FinnAdvertProcessing(Process):
         self.add_signal(validated_finn_code_signal, "validated_finn_code")
 
         self.add_transition(validate_finn_code, validated_finn_code_signal)
-        return validated_finn_code
 
     @Profiling
     def scrape_finn_advert_info(self):
@@ -191,7 +131,8 @@ class FinnAdvertProcessing(Process):
 
         """
         try:
-            scrape_finn_ad_operation = ScrapeFinnAdvertInfo(self._validated_finn_code["finn_code"])
+            validated_finn_code = self.get_signal("validated_finn_code").data
+            scrape_finn_ad_operation = ScrapeFinnAdvertInfo(validated_finn_code["finn_code"])
             self.add_node(scrape_finn_ad_operation)
 
             self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_ad_operation,
@@ -204,7 +145,6 @@ class FinnAdvertProcessing(Process):
 
             self.add_transition(scrape_finn_ad_operation, finn_ad_info_signal,
                                 label="thread")
-            self._finn_advert_info = finn_ad_info
         except Exception as scrape_finn_ad_info_exception:
             self.exception_queue.put(scrape_finn_ad_info_exception)
             raise scrape_finn_ad_info_exception
@@ -216,8 +156,8 @@ class FinnAdvertProcessing(Process):
 
         """
         try:
-            scrape_finn_owner_history = ScrapeFinnOwnershipHistory(
-                self._validated_finn_code["finn_code"])
+            validated_finn_code = self.get_signal("validated_finn_code").data
+            scrape_finn_owner_history = ScrapeFinnOwnershipHistory(validated_finn_code["finn_code"])
             self.add_node(scrape_finn_owner_history)
             self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_owner_history,
                                 label="thread")
@@ -227,7 +167,6 @@ class FinnAdvertProcessing(Process):
 
             self.add_transition(scrape_finn_owner_history, finn_owner_history_signal,
                                 label="thread")
-            self._finn_ownership_history = finn_owner_history
         except Exception as scrape_finn_ownership_history_exception:
             self.exception_queue.put(scrape_finn_ownership_history_exception)
             raise scrape_finn_ownership_history_exception
@@ -239,8 +178,8 @@ class FinnAdvertProcessing(Process):
 
         """
         try:
-            scrape_finn_stat_operation = ScrapeFinnStatisticsInfo(
-                self._validated_finn_code["finn_code"])
+            validated_finn_code = self.get_signal("validated_finn_code").data
+            scrape_finn_stat_operation = ScrapeFinnStatisticsInfo(validated_finn_code["finn_code"])
             self.add_node(scrape_finn_stat_operation)
 
             self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_stat_operation,
@@ -253,34 +192,27 @@ class FinnAdvertProcessing(Process):
 
             self.add_transition(scrape_finn_stat_operation, finn_stat_info_signal,
                                 label="thread")
-            self._finn_statistics_info = finn_stat_info
         except Exception as scrape_finn_statistics_info_exception:
             self.exception_queue.put(scrape_finn_statistics_info_exception)
             raise scrape_finn_statistics_info_exception
 
     @Profiling
-    def multiplex_1(self, signals: list):
+    def multiplex_1(self):
         """
         method for multiplexing signals
 
-        Parameters
-        ----------
-        signals     : list
-                      list of Signal objects
-
-        Returns
-        -------
-        dict        : dict
-                      dictionary with all signal information in one dict
-
         """
-        Assertor.assert_data_types([signals], [list])
+        finn_ad_info = self.get_signal("finn_ad_info")
+        finn_owner_history = self.get_signal("finn_owner_history")
+        finn_stat_info = self.get_signal("finn_stat_info")
+
+        signals = [finn_ad_info.data, finn_owner_history.data, finn_stat_info.data]
         multiplex_operation = Multiplex(signals, desc="Multiplex Scraped Finn Information")
         self.add_node(multiplex_operation)
 
-        self.add_transition(self.get_signal("finn_ad_info"), multiplex_operation)
-        self.add_transition(self.get_signal("finn_owner_history"), multiplex_operation)
-        self.add_transition(self.get_signal("finn_stat_info"), multiplex_operation)
+        self.add_transition(finn_ad_info, multiplex_operation)
+        self.add_transition(finn_owner_history, multiplex_operation)
+        self.add_transition(finn_stat_info, multiplex_operation)
 
         multiplex = multiplex_operation.run()
         multiplex_signal = Signal(multiplex, desc="Multiplexed Finn Information",
@@ -359,7 +291,7 @@ class FinnAdvertProcessing(Process):
         self.signal.update({"sold": check_newest_date})
 
         not_sold_signal = Signal(extracted_first_row.data,
-                                 desc="Advertised Real-Estate Not Sold Yet")
+                                 desc="Advertised Real-Estate Not Sold / Registered Yet")
         final_sales_price = Signal(extracted_first_row.data,
                                    desc="Final Sales Price of Advertised Real-Estate")
 

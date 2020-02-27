@@ -58,14 +58,6 @@ class TestCalculateSifoExpenses:
         with pt.raises(TypeError):
             CalculateSifoExpenses(invalid_data)
 
-    def test_arguments_gets_set_in_object(self):
-        """
-        Test that arguments gets set in the CalculateSifoExpenses object
-
-        """
-        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
-        assert calculate_sifo_expenses.data == {"data": self.data}
-
     def test_set_signal_method(self):
         """
         Test the set_signal method
@@ -106,16 +98,6 @@ class TestCalculateSifoExpenses:
         assert calculate_sifo_expenses.get_signal("new_data").keys == Signal.remove_quotation(
             list(new_data.keys()))
 
-    @pt.mark.parametrize('invalid_base_expenses', [True, 'test', 90210, 90210.0, ('test', 'test')])
-    def test_invalid_base_expenses_raises_typeerror(self, invalid_base_expenses):
-        """
-        Test that CalculateSifoExpenses object raises TypeError if base_expenses is invalid
-
-        """
-        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
-        with pt.raises(TypeError):
-            calculate_sifo_expenses.base_expenses = invalid_base_expenses
-
     @staticmethod
     def test_get_signal_method_with_none():
         """
@@ -128,21 +110,6 @@ class TestCalculateSifoExpenses:
                     "person_4": {"alder_4": "3", "barnehage_4": "Ja", "kjonn_4": "Mann"}}
         calculate_sifo_expenses = CalculateSifoExpenses(new_data)
         assert not calculate_sifo_expenses.get_signal("new_data")
-
-    def test_base_expenses_setter(self):
-        """
-        Test that the base_expenses gets set in object
-
-        """
-        base_expenses = {"mat_1": "2 930 kr", "klar_1": "770 kr", "helse_1": "580 kr",
-                         "fritid_1": "1 240 kr", "kollektivt_1": "750 kr", "spedbarn_1": "0 kr",
-                         "sumindivid_1": "6 270 kr", "dagligvarer_1": "270 kr",
-                         "husholdsart_1": "370 kr", "mobler_1": "360 kr", "medier_1": "2 240 kr",
-                         "biler_1": "0 kr", "barnehage_1": "0 kr", "sfo_1": "0 kr",
-                         "sumhusholdning_1": "3 240 kr", "totalt_1": "9 510 kr", }
-        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
-        calculate_sifo_expenses.base_expenses = base_expenses
-        assert calculate_sifo_expenses.base_expenses == base_expenses
 
     @staticmethod
     def test_base_expenses_shares_getter():

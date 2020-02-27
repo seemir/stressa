@@ -8,7 +8,7 @@ Process for calculating Sifo expenses
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.domain import Family, Expenses
+from source.domain import Expenses
 from source.util import Assertor, Profiling, LOGGER
 
 from .engine import Process, Signal, ValidateFamily, ScrapeSifoBaseExpenses, Extract, Divide, \
@@ -35,42 +35,16 @@ class CalculateSifoExpenses(Process):
             super().__init__(name=self.__class__.__name__)
             self.start_process()
             Assertor.assert_data_types([data], [dict])
-            self._data = self.input_operation({"data": data})
-            self._family = self.validate_family(self.data["data"])
-            self._base_expenses = self.scrape_sifo_base_expenses(self.family)
-            self._total = self.extract(self.base_expenses)
-            self._expenses_shares = self.divide(self.base_expenses)
+            self.input_operation({"data": data})
+            self.validate_family()
+            self._base_expenses = self.scrape_sifo_base_expenses()
+            self.extract()
+            self._expenses_shares = self.divide()
             self.output_operation()
             self.end_process()
         except Exception as sifo_processing_error:
             LOGGER.exception(sifo_processing_error)
             raise sifo_processing_error
-
-    @property
-    def data(self):
-        """
-        data object getter
-
-        Returns
-        -------
-        out     : dict
-                  active _data property
-
-        """
-        return self._data
-
-    @property
-    def family(self):
-        """
-        family object getter
-
-        Returns
-        -------
-        out     : Family
-                  active _family property
-
-        """
-        return self._family
 
     @property
     def base_expenses(self):
@@ -84,33 +58,6 @@ class CalculateSifoExpenses(Process):
 
         """
         return self._base_expenses
-
-    @base_expenses.setter
-    def base_expenses(self, new_base_expenses: dict):
-        """
-        base expenses setter
-
-        Parameters
-        ----------
-        new_base_expenses   : dict
-                              new base expense to set
-
-        """
-        Assertor.assert_data_types([new_base_expenses], [dict])
-        self._base_expenses = new_base_expenses
-
-    @property
-    def total(self):
-        """
-        total expenses getter
-
-        Returns
-        -------
-        out     : dict
-                  active _total
-
-        """
-        return self._total
 
     @property
     def expenses_shares(self):
@@ -135,11 +82,6 @@ class CalculateSifoExpenses(Process):
         data        : dict
                       data sent in to process
 
-        Returns
-        -------
-        out         : dict
-                      data saved to object
-
         """
         Assertor.assert_data_types([data], [dict])
         input_operation = InputOperation("SIFO Form Data")
@@ -149,45 +91,28 @@ class CalculateSifoExpenses(Process):
         self.add_signal(input_signal, "input_signal")
 
         self.add_transition(input_operation, input_signal)
-        return data
 
     @Profiling
-    def validate_family(self, data: dict):
+    def validate_family(self):
         """
         method for validating family information
 
-        Parameters
-        ----------
-        data    : dict
-                  Sifo compatible dictionary with input
-
-        Returns
-        -------
-        out     : Family
-                  Sifo compatible Family object with all necessary family information
-
         """
-        Assertor.assert_data_types([data], [dict])
-        populate_operation = ValidateFamily(data)
+        input_signal = self.get_signal("input_signal")
+        populate_operation = ValidateFamily(input_signal.data["data"])
         self.add_node(populate_operation)
-        self.add_transition(self.get_signal("input_signal"), populate_operation)
+        self.add_transition(input_signal, populate_operation)
 
         family = populate_operation.run()
         populate_signal = Signal(family, "Validated Family Information")
         self.add_signal(populate_signal, "validated_family")
 
         self.add_transition(populate_operation, populate_signal)
-        return family
 
     @Profiling
-    def scrape_sifo_base_expenses(self, data: Family):
+    def scrape_sifo_base_expenses(self):
         """
         method for scraping SIFO base expenses
-
-        Parameters
-        ----------
-        data    : Family
-                  family object
 
         Returns
         -------
@@ -195,11 +120,11 @@ class CalculateSifoExpenses(Process):
                   dictionary with SIFO base expenses
 
         """
-        Assertor.assert_data_types([data], [Family])
-        sifo_scraper_operation = ScrapeSifoBaseExpenses(data)
+        validated_family = self.get_signal("validated_family")
+        sifo_scraper_operation = ScrapeSifoBaseExpenses(validated_family.data)
         self.add_node(sifo_scraper_operation)
 
-        self.add_transition(self.get_signal("validated_family"), sifo_scraper_operation)
+        self.add_transition(validated_family, sifo_scraper_operation)
 
         sifo_base_expenses = Expenses(sifo_scraper_operation.run())
         sifo_base_expenses_signal = Signal(sifo_base_expenses.verdi, "SIFO Base Expenses")
@@ -209,23 +134,12 @@ class CalculateSifoExpenses(Process):
         return sifo_base_expenses.verdi
 
     @Profiling
-    def extract(self, data: dict):
+    def extract(self):
         """
         method for extracting the total monthly expenses from SIFO dict
 
-        Parameters
-        ----------
-        data     : dict
-                   dictionary with SIFO base expenses
-
-        Returns
-        -------
-        out     : dict
-                  dictionary with total monthly expenses
-
         """
-        Assertor.assert_data_types([data], [dict])
-        extract_total_operation = Extract(data, "totalt")
+        extract_total_operation = Extract(self.base_expenses, "totalt")
         self.add_node(extract_total_operation)
 
         self.add_transition(self.get_signal("sifo_base_expenses"), extract_total_operation)
@@ -235,17 +149,11 @@ class CalculateSifoExpenses(Process):
         self.add_signal(total_expenses_signal, "total_monthly_expenses")
 
         self.add_transition(extract_total_operation, total_expenses_signal)
-        return total_expenses
 
     @Profiling
-    def divide(self, data: dict):
+    def divide(self):
         """
         method for calculating shares of total expenses
-
-        Parameters
-        ----------
-        data     : dict
-                   dictionary with SIFO base expenses
 
         Returns
         -------
@@ -253,8 +161,9 @@ class CalculateSifoExpenses(Process):
                   dictionary with shares of total monthly expenses
 
         """
-        Assertor.assert_data_types([data], [dict])
-        total_shares = Divide(data, self.total, "Calculate Shares of Total Monthly Expenses")
+
+        total_shares = Divide(self.base_expenses, self.get_signal("total_monthly_expenses").data,
+                              "Calculate Shares of Total Monthly Expenses")
         self.add_node(total_shares)
 
         self.add_transition(self.get_signal("total_monthly_expenses"), total_shares,

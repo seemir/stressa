@@ -59,14 +59,6 @@ class TestFinnAdvertProcessing:
         with pt.raises(TypeError):
             FinnAdvertProcessing(invalid_finn_code)
 
-    def test_arguments_gets_set_in_object(self):
-        """
-        Test that arguments gets set in the FinnAdvertProcessing object
-
-        """
-        finn_advert_processing = FinnAdvertProcessing(self.finn_code)
-        assert finn_advert_processing.validated_finn_code == {"finn_code": self.finn_code}
-
     def test_set_signal_method(self):
         """
         Test the set_signal method
