@@ -247,9 +247,23 @@ class FinnStat(Finn):
                         if "name" in value[0]:
                             info.update({location_name[i]: value[0]["name"]})
                 elif prop.lower() == "histdata":
-                    info.update({historical_data_names[i]: value})
+                    historical_values = {}
+                    for key, val in value.items():
+                        historical_values.update({int(key): int(val)})
+                    info.update({historical_data_names[i]: historical_values})
+                    info.update(
+                        {historical_data_names[i] + "_count": Amount.format_amount(
+                            str(sum(historical_values.values())))})
                 else:
                     pass
+            if all(name in info.keys() for name in historical_data_names):
+                city_area_values = {}
+                for key in info["hist_data_municipality"].keys():
+                    if key not in info["hist_data_city_area"].keys():
+                        city_area_values.update({key: 0})
+                    else:
+                        city_area_values.update({key: info["hist_data_city_area"][key]})
+                info.update({"hist_data_city_area": city_area_values})
         return info
 
     @staticmethod

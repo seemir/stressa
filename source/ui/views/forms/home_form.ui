@@ -6236,6 +6236,21 @@
                <string>Annonse 1</string>
               </attribute>
               <layout class="QGridLayout" name="gridLayout_7">
+               <item row="14" column="0">
+                <widget class="QLabel" name="label_etasje_1">
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Etasje</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_etasje_1</cstring>
+                 </property>
+                </widget>
+               </item>
                <item row="0" column="1">
                 <widget class="QLineEdit" name="line_edit_finnkode_1">
                  <property name="minimumSize">
@@ -6257,64 +6272,6 @@
                  </property>
                  <property name="clearButtonEnabled">
                   <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="18" column="0" colspan="4">
-                <widget class="QFrame" name="frame_annonse_white_space_1">
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="14" column="0">
-                <widget class="QLabel" name="label_etasje_1">
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Etasje</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_etasje_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="11" column="2">
-                <widget class="QLabel" name="label_fellesformue_1">
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Fellesformue</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_fellesformue_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="13" column="1">
-                <widget class="QLineEdit" name="line_edit_boligtype_1">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="readOnly">
-                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -6363,6 +6320,39 @@
                  </property>
                  <property name="buddy">
                   <cstring>line_edit_energimerking_1</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="11" column="2">
+                <widget class="QLabel" name="label_fellesformue_1">
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Fellesformue</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_fellesformue_1</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="13" column="1">
+                <widget class="QLineEdit" name="line_edit_boligtype_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="readOnly">
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -6453,6 +6443,24 @@
                  </property>
                 </widget>
                </item>
+               <item row="6" column="1">
+                <widget class="QLineEdit" name="line_edit_sistendret_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="readOnly">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
                <item row="16" column="3">
                 <widget class="QLineEdit" name="line_edit_bruttoareal_1">
                  <property name="enabled">
@@ -6486,56 +6494,8 @@
                  </property>
                 </widget>
                </item>
-               <item row="6" column="1">
-                <widget class="QLineEdit" name="line_edit_sistendret_1">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="readOnly">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
                <item row="7" column="1" colspan="3">
                 <widget class="QLineEdit" name="line_edit_finn_adresse_1">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item row="8" column="0">
-                <widget class="QLabel" name="label_prisantydning_1">
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Prisantydning</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_prisantydning_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="8" column="1">
-                <widget class="QLineEdit" name="line_edit_prisantydning_1">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
@@ -6597,6 +6557,43 @@
                  </property>
                 </widget>
                </item>
+               <item row="8" column="1">
+                <widget class="QLineEdit" name="line_edit_prisantydning_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="0">
+                <widget class="QLabel" name="label_prisantydning_1">
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Prisantydning</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_prisantydning_1</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QLineEdit" name="line_edit_status_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
                <item row="6" column="0">
                 <widget class="QLabel" name="label_sist_endret_1">
                  <property name="font">
@@ -6609,13 +6606,6 @@
                  </property>
                  <property name="buddy">
                   <cstring>line_edit_sistendret_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="1">
-                <widget class="QLineEdit" name="line_edit_status_1">
-                 <property name="enabled">
-                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -6651,31 +6641,6 @@
                  </property>
                 </widget>
                </item>
-               <item row="11" column="3">
-                <widget class="QLineEdit" name="line_edit_fellesformue_1">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="12" column="1">
-                <widget class="QLineEdit" name="line_edit_sqm_price_1">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
                <item row="11" column="0">
                 <widget class="QLabel" name="label_totalpris_1">
                  <property name="font">
@@ -6688,21 +6653,6 @@
                  </property>
                  <property name="buddy">
                   <cstring>line_edit_totalpris_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="11" column="1">
-                <widget class="QLineEdit" name="line_edit_totalpris_1">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
@@ -6721,8 +6671,30 @@
                  </property>
                 </widget>
                </item>
-               <item row="14" column="3">
-                <widget class="QLineEdit" name="line_edit_bygger_1">
+               <item row="11" column="1">
+                <widget class="QLineEdit" name="line_edit_totalpris_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                </widget>
+               </item>
+               <item row="12" column="1">
+                <widget class="QLineEdit" name="line_edit_sqm_price_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="11" column="3">
+                <widget class="QLineEdit" name="line_edit_fellesformue_1">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
@@ -6735,7 +6707,7 @@
                   <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                  </property>
                  <property name="readOnly">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                 </widget>
                </item>
@@ -6749,24 +6721,6 @@
                    <width>230</width>
                    <height>0</height>
                   </size>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="readOnly">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="14" column="1">
-                <widget class="QLineEdit" name="line_edit_etasje_1">
-                 <property name="enabled">
-                  <bool>false</bool>
                  </property>
                  <property name="font">
                   <font>
@@ -6806,6 +6760,72 @@
                  </property>
                 </widget>
                </item>
+               <item row="14" column="1">
+                <widget class="QLineEdit" name="line_edit_etasje_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="readOnly">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="14" column="3">
+                <widget class="QLineEdit" name="line_edit_bygger_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="readOnly">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="15" column="0">
+                <widget class="QLabel" name="label_soverom_1">
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Soverom</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_soverom_1</cstring>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="2">
+                <widget class="QLabel" name="label_formuesverdi_1">
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Formuesverdi</string>
+                 </property>
+                 <property name="buddy">
+                  <cstring>line_edit_formuesverdi_1</cstring>
+                 </property>
+                </widget>
+               </item>
                <item row="9" column="1">
                 <widget class="QLineEdit" name="line_edit_fellesgjeld_1">
                  <property name="enabled">
@@ -6842,54 +6862,6 @@
                  </property>
                 </widget>
                </item>
-               <item row="15" column="0">
-                <widget class="QLabel" name="label_soverom_1">
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Soverom</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_soverom_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="8" column="2">
-                <widget class="QLabel" name="label_formuesverdi_1">
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="text">
-                  <string>Formuesverdi</string>
-                 </property>
-                 <property name="buddy">
-                  <cstring>line_edit_formuesverdi_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="9" column="3">
-                <widget class="QLineEdit" name="line_edit_felleskostmnd_1">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="readOnly">
-                  <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
                <item row="10" column="0">
                 <widget class="QLabel" name="label_omkostninger_1">
                  <property name="font">
@@ -6902,24 +6874,6 @@
                  </property>
                  <property name="buddy">
                   <cstring>line_edit_omkostninger_1</cstring>
-                 </property>
-                </widget>
-               </item>
-               <item row="16" column="1">
-                <widget class="QLineEdit" name="line_edit_primrrom_1">
-                 <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                 <property name="font">
-                  <font>
-                   <pointsize>8</pointsize>
-                  </font>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                 <property name="readOnly">
-                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -6946,6 +6900,42 @@
                </item>
                <item row="15" column="3">
                 <widget class="QLineEdit" name="line_edit_rom_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="readOnly">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="3">
+                <widget class="QLineEdit" name="line_edit_felleskostmnd_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>8</pointsize>
+                  </font>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                 </property>
+                 <property name="readOnly">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item row="16" column="1">
+                <widget class="QLineEdit" name="line_edit_primrrom_1">
                  <property name="enabled">
                   <bool>false</bool>
                  </property>
@@ -6995,6 +6985,13 @@
                  </property>
                 </widget>
                </item>
+               <item row="12" column="3">
+                <widget class="QLineEdit" name="line_edit_renovertr_1">
+                 <property name="enabled">
+                  <bool>false</bool>
+                 </property>
+                </widget>
+               </item>
                <item row="12" column="0">
                 <widget class="QLabel" name="label_kvadratpris_1">
                  <property name="text">
@@ -7015,10 +7012,20 @@
                  </property>
                 </widget>
                </item>
-               <item row="12" column="3">
-                <widget class="QLineEdit" name="line_edit_renovertr_1">
-                 <property name="enabled">
-                  <bool>false</bool>
+               <item row="1" column="1">
+                <widget class="QPushButton" name="push_button_hent_finn_data_1">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="text">
+                  <string>Hent Finn data</string>
+                 </property>
+                 <property name="icon">
+                  <iconset resource="../../images/img.qrc">
+                   <normaloff>:/img/fetch.svg</normaloff>:/img/fetch.svg</iconset>
                  </property>
                 </widget>
                </item>
@@ -7050,37 +7057,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="1">
-                <widget class="QPushButton" name="push_button_hent_finn_data_1">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Hent Finn data</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/fetch.svg</normaloff>:/img/fetch.svg</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QProgressBar" name="progress_bar_1">
-                 <property name="maximum">
-                  <number>30</number>
-                 </property>
-                 <property name="value">
-                  <number>0</number>
-                 </property>
-                 <property name="textVisible">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="3">
+               <item row="1" column="3">
                 <widget class="QPushButton" name="push_button_statistikk_1">
                  <property name="minimumSize">
                   <size>
@@ -7094,6 +7071,16 @@
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
                    <normaloff>:/img/statistikk.svg</normaloff>:/img/statistikk.svg</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="18" column="0" colspan="4">
+                <widget class="QFrame" name="frame_annonse_white_space_1">
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
                  </property>
                 </widget>
                </item>
@@ -7114,20 +7101,16 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="3">
-                <widget class="QPushButton" name="push_button_eierskifte_historikk_1">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
+               <item row="2" column="1">
+                <widget class="QProgressBar" name="progress_bar_1">
+                 <property name="maximum">
+                  <number>30</number>
                  </property>
-                 <property name="text">
-                  <string>Eierskiftehistorikk</string>
+                 <property name="value">
+                  <number>0</number>
                  </property>
-                 <property name="icon">
-                  <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/history.svg</normaloff>:/img/history.svg</iconset>
+                 <property name="textVisible">
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -7218,19 +7201,6 @@
                  </property>
                  <property name="clearButtonEnabled">
                   <bool>true</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QProgressBar" name="progress_bar_2">
-                 <property name="maximum">
-                  <number>30</number>
-                 </property>
-                 <property name="value">
-                  <number>0</number>
-                 </property>
-                 <property name="textVisible">
-                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -7999,7 +7969,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="2" column="3">
+               <item row="1" column="3">
                 <widget class="QPushButton" name="push_button_statistikk_2">
                  <property name="minimumSize">
                   <size>
@@ -8016,20 +7986,16 @@
                  </property>
                 </widget>
                </item>
-               <item row="1" column="3">
-                <widget class="QPushButton" name="push_button_eierskifte_historikk_2">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
+               <item row="2" column="1">
+                <widget class="QProgressBar" name="progress_bar_2">
+                 <property name="maximum">
+                  <number>30</number>
                  </property>
-                 <property name="text">
-                  <string>Eierskiftehistorikk</string>
+                 <property name="value">
+                  <number>0</number>
                  </property>
-                 <property name="icon">
-                  <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/history.svg</normaloff>:/img/history.svg</iconset>
+                 <property name="textVisible">
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -8173,19 +8139,6 @@
                <item row="4" column="1">
                 <widget class="QLineEdit" name="line_edit_status_3">
                  <property name="enabled">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QProgressBar" name="progress_bar_3">
-                 <property name="maximum">
-                  <number>30</number>
-                 </property>
-                 <property name="value">
-                  <number>0</number>
-                 </property>
-                 <property name="textVisible">
                   <bool>false</bool>
                  </property>
                 </widget>
@@ -8902,23 +8855,6 @@
                 </widget>
                </item>
                <item row="1" column="3">
-                <widget class="QPushButton" name="push_button_eierskifte_historikk_3">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>30</height>
-                  </size>
-                 </property>
-                 <property name="text">
-                  <string>Eierskiftehistorikk</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../../images/img.qrc">
-                   <normaloff>:/img/history.svg</normaloff>:/img/history.svg</iconset>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="3">
                 <widget class="QPushButton" name="push_button_statistikk_3">
                  <property name="minimumSize">
                   <size>
@@ -8932,6 +8868,19 @@
                  <property name="icon">
                   <iconset resource="../../images/img.qrc">
                    <normaloff>:/img/statistikk.svg</normaloff>:/img/statistikk.svg</iconset>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QProgressBar" name="progress_bar_3">
+                 <property name="maximum">
+                  <number>30</number>
+                 </property>
+                 <property name="value">
+                  <number>0</number>
+                 </property>
+                 <property name="textVisible">
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -11514,8 +11463,6 @@
   <tabstop>line_edit_finnkode_1</tabstop>
   <tabstop>push_button_hent_finn_data_1</tabstop>
   <tabstop>push_button_finn_1</tabstop>
-  <tabstop>push_button_eierskifte_historikk_1</tabstop>
-  <tabstop>push_button_statistikk_1</tabstop>
   <tabstop>line_edit_status_1</tabstop>
   <tabstop>line_edit_referanse_1</tabstop>
   <tabstop>line_edit_sistendret_1</tabstop>
@@ -11543,8 +11490,6 @@
   <tabstop>line_edit_finnkode_2</tabstop>
   <tabstop>push_button_hent_finn_data_2</tabstop>
   <tabstop>push_button_finn_2</tabstop>
-  <tabstop>push_button_eierskifte_historikk_2</tabstop>
-  <tabstop>push_button_statistikk_2</tabstop>
   <tabstop>line_edit_status_2</tabstop>
   <tabstop>line_edit_referanse_2</tabstop>
   <tabstop>line_edit_sistendret_2</tabstop>
@@ -11572,8 +11517,6 @@
   <tabstop>line_edit_finnkode_3</tabstop>
   <tabstop>push_button_hent_finn_data_3</tabstop>
   <tabstop>push_button_finn_3</tabstop>
-  <tabstop>push_button_eierskifte_historikk_3</tabstop>
-  <tabstop>push_button_statistikk_3</tabstop>
   <tabstop>line_edit_status_3</tabstop>
   <tabstop>line_edit_referanse_3</tabstop>
   <tabstop>line_edit_sistendret_3</tabstop>

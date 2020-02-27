@@ -4,3 +4,4 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from .bar_plot_with_line import BarPlotWithLine
+from .bar_plot import BarPlot

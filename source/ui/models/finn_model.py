@@ -49,8 +49,6 @@ class FinnModel(Model):
             lambda: self.add_finn_info("_1"))
         self.parent.ui.push_button_finn_1.clicked.connect(
             lambda: self.open_finn_url("_1"))
-        self.parent.ui.push_button_eierskifte_historikk_1.clicked.connect(
-            lambda: self.parent.history_view.add_finn_history("_1"))
         self.parent.ui.push_button_statistikk_1.clicked.connect(
             lambda: self.parent.statistics_view.add_statistics_info("_1"))
 
@@ -58,8 +56,6 @@ class FinnModel(Model):
             lambda: self.add_finn_info("_2"))
         self.parent.ui.push_button_finn_2.clicked.connect(
             lambda: self.open_finn_url("_2"))
-        self.parent.ui.push_button_eierskifte_historikk_2.clicked.connect(
-            lambda: self.parent.history_view.add_finn_history("_2"))
         self.parent.ui.push_button_statistikk_2.clicked.connect(
             lambda: self.parent.statistics_view.add_statistics_info("_2"))
 
@@ -67,8 +63,6 @@ class FinnModel(Model):
             lambda: self.add_finn_info("_3"))
         self.parent.ui.push_button_finn_3.clicked.connect(
             lambda: self.open_finn_url("_3"))
-        self.parent.ui.push_button_eierskifte_historikk_3.clicked.connect(
-            lambda: self.parent.history_view.add_finn_history("_3"))
         self.parent.ui.push_button_statistikk_3.clicked.connect(
             lambda: self.parent.statistics_view.add_statistics_info("_3"))
 

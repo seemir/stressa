@@ -74,5 +74,7 @@ class StatisticsView(QDialog):
         Method for displaying StatisticsView
 
         """
+        self.ui.push_button_eierskifte_historikk.clicked.connect(
+            lambda: self.parent.history_view.add_finn_history(postfix))
         self.statistics_model.add_statistics_info(postfix)
         self.show()
