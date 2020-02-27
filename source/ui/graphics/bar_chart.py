@@ -8,17 +8,17 @@ from itertools import chain
 
 import pyqtgraph as pg
 from pyqtgraph import BarGraphItem, PlotWidget
-from PyQt5.QtCore import QObject, Qt
 from PyQt5.QtWidgets import QTableView
+from PyQt5.QtCore import QObject
 
 from source.util import Assertor
 
-pg.setConfigOption('background', 'w')
+from ..graphics import cross_hair
 
 
-class BarPlot(QObject):
+class BarChart(QObject):
 
-    def __init__(self, x: list, y: list, graphics_view: PlotWidget):
+    def __init__(self, x: list, y: list, graphics_view: PlotWidget, legend: str, labels=("x", "y")):
         """
         Constructor / Instantiation of class
 
@@ -29,10 +29,11 @@ class BarPlot(QObject):
         y               : list
                           y-values
         graphics_view   : PlotWidget
-                          graphics view to place plot
+                          graphics view to place chart
 
         """
-        Assertor.assert_data_types([x, y, graphics_view], [list, list, PlotWidget, QTableView])
+        Assertor.assert_data_types([x, y, graphics_view, legend, labels],
+                                   [list, list, PlotWidget, str, (type(None), tuple)])
         super().__init__(parent=None)
         self.y, self.x = self.create_bins(x, y, bins=x)
         self.graphics_view = graphics_view
@@ -41,26 +42,7 @@ class BarPlot(QObject):
         self.bar_item = BarGraphItem(x=self.x[:-1], height=self.y, width=1000,
                                      brush="#d2e5f5")
         self.graphics_view.addItem(self.bar_item)
-
-    def add_legend(self, title: str, subtitle: str, subsubtitle: str):
-        """
-        method for adding legend to plot
-
-        Parameters
-        ----------
-        title           : str
-                          name of title
-        subtitle        : str
-                          name of subtitle / second title
-        subsubtitle     : str
-                          name of subsubtitle / third title
-
-        """
-        Assertor.assert_data_types([title, subtitle, subsubtitle], [str, str, str])
-        self.legend.setParentItem(self.graphics_view.graphicsItem())
-        self.legend.addItem(self.bar_item, title)
-        self.legend.addItem(self.bar_item, subtitle)
-        self.legend.addItem(self.bar_item, subsubtitle)
+        cross_hair(self.x, self.y, self.graphics_view, legend, labels)
 
     @staticmethod
     def clear_graphics(graphics_view: PlotWidget):
@@ -70,7 +52,7 @@ class BarPlot(QObject):
         Parameters
         ----------
         graphics_view   : PlotWidget
-                          graphics view to place plot
+                          graphics view to place chart
 
         """
         Assertor.assert_data_types([graphics_view], [PlotWidget, QTableView])

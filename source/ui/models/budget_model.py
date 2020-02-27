@@ -17,14 +17,14 @@ class BudgetModel(Model):
     _intervall = {"": "", "Årlig": "1", "Halvårlig": "2", "Kvartalsvis": "4",
                   "Annenhver måned": "6", "Månedlig": "12", "Semi-månedlig": "24",
                   "Annenhver uke": "26", "Ukentlig": "52"}
-    _budget_posts = ["brutto_inntekt", "trygde_inntekt", "leieinntekt",
-                     "personinntekt", "student_lan", "kreditt_gjeld",
-                     "husleie", "strom", "andre_utgifter", "sum_utgifter"]
+    _budget_posts = ["brutto_inntekt", "trygde_inntekt", "leieinntekt", "andre_inntekter",
+                     "personinntekt", "student_lan", "kreditt_gjeld", "husleie", "strom",
+                     "andre_utgifter", "sum_utgifter"]
 
     def __init__(self, parent: QObject):
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QObject])
-        for num in range(1, 9):
+        for num in range(1, 10):
             getattr(self.parent.ui, "combo_box_interval_" + str(num)).addItems(
                 self._intervall.keys())
 
@@ -46,27 +46,31 @@ class BudgetModel(Model):
             lambda: self.set_combo_box_value("leieinntekt", "_3"))
         self.parent.ui.line_edit_leieinntekt.editingFinished.connect(
             lambda: self.set_value("leieinntekt", "_3"))
-
         self.parent.ui.combo_box_interval_4.activated.connect(
-            lambda: self.set_combo_box_value("student_lan", "_4"))
-        self.parent.ui.line_edit_student_lan.editingFinished.connect(
-            lambda: self.set_value("student_lan", "_4"))
+            lambda: self.set_combo_box_value("andre_inntekter", "_4"))
+        self.parent.ui.line_edit_andre_inntekter.editingFinished.connect(
+            lambda: self.set_value("andre_inntekter", "_4"))
+
         self.parent.ui.combo_box_interval_5.activated.connect(
-            lambda: self.set_combo_box_value("kreditt_gjeld", "_5"))
-        self.parent.ui.line_edit_kreditt_gjeld.editingFinished.connect(
-            lambda: self.set_value("kreditt_gjeld", "_5"))
+            lambda: self.set_combo_box_value("student_lan", "_5"))
+        self.parent.ui.line_edit_student_lan.editingFinished.connect(
+            lambda: self.set_value("student_lan", "_5"))
         self.parent.ui.combo_box_interval_6.activated.connect(
-            lambda: self.set_combo_box_value("husleie", "_6"))
-        self.parent.ui.line_edit_husleie.editingFinished.connect(
-            lambda: self.set_value("husleie", "_6"))
+            lambda: self.set_combo_box_value("kreditt_gjeld", "_6"))
+        self.parent.ui.line_edit_kreditt_gjeld.editingFinished.connect(
+            lambda: self.set_value("kreditt_gjeld", "_6"))
         self.parent.ui.combo_box_interval_7.activated.connect(
-            lambda: self.set_combo_box_value("strom", "_7"))
-        self.parent.ui.line_edit_strom.editingFinished.connect(
-            lambda: self.set_value("strom", "_7"))
+            lambda: self.set_combo_box_value("husleie", "_7"))
+        self.parent.ui.line_edit_husleie.editingFinished.connect(
+            lambda: self.set_value("husleie", "_7"))
         self.parent.ui.combo_box_interval_8.activated.connect(
-            lambda: self.set_combo_box_value("andre_utgifter", "_8"))
+            lambda: self.set_combo_box_value("strom", "_8"))
+        self.parent.ui.line_edit_strom.editingFinished.connect(
+            lambda: self.set_value("strom", "_8"))
+        self.parent.ui.combo_box_interval_9.activated.connect(
+            lambda: self.set_combo_box_value("andre_utgifter", "_9"))
         self.parent.ui.line_edit_andre_utgifter.editingFinished.connect(
-            lambda: self.set_value("andre_utgifter", "_8"))
+            lambda: self.set_value("andre_utgifter", "_9"))
 
     def set_value(self, line_edit, postfix):
         if getattr(self.parent.ui, "line_edit_" + line_edit).text():
@@ -94,27 +98,30 @@ class BudgetModel(Model):
         leie_income = self.calculate_monthly_values(
             "leieinntekt", parent.line_edit_leieinntekt.text(),
             self._intervall[parent.combo_box_interval_3.currentText()])
+        other_income = self.calculate_monthly_values(
+            "andre_inntekter", parent.line_edit_andre_inntekter.text(),
+            self._intervall[parent.combo_box_interval_4.currentText()])
 
-        sum_income = brutto_income + trygd_income + leie_income
+        sum_income = brutto_income + trygd_income + leie_income + other_income
         person_income = Money(str(sum_income)).value() if sum_income != 0 else ""
         parent.line_edit_personinntekt.setText(person_income)
         self.set_line_edit("personinntekt", data=person_income)
 
         student_loan = self.calculate_monthly_values(
             "student_lan", parent.line_edit_student_lan.text(),
-            self._intervall[parent.combo_box_interval_4.currentText()])
+            self._intervall[parent.combo_box_interval_5.currentText()])
         credit_debt = self.calculate_monthly_values(
             "kreditt_gjeld", parent.line_edit_kreditt_gjeld.text(),
-            self._intervall[parent.combo_box_interval_5.currentText()])
+            self._intervall[parent.combo_box_interval_6.currentText()])
         housing_rent = self.calculate_monthly_values(
             "husleie", parent.line_edit_husleie.text(),
-            self._intervall[parent.combo_box_interval_6.currentText()])
+            self._intervall[parent.combo_box_interval_7.currentText()])
         power = self.calculate_monthly_values(
             "strom", parent.line_edit_strom.text(),
-            self._intervall[parent.combo_box_interval_7.currentText()])
+            self._intervall[parent.combo_box_interval_8.currentText()])
         other = self.calculate_monthly_values(
             "andre_utgifter", parent.line_edit_andre_utgifter.text(),
-            self._intervall[parent.combo_box_interval_8.currentText()])
+            self._intervall[parent.combo_box_interval_9.currentText()])
 
         sum_expenses = student_loan + credit_debt + housing_rent + power + other
         person_expenses = Money(str(sum_expenses)).value() if sum_expenses != 0 else ""

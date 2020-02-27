@@ -1661,29 +1661,36 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
+          <item row="2" column="0">
+           <widget class="PlotWidget" name="graphics_view_performance">
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1">
-           <widget class="PlotWidget" name="graphics_view_city_area_sales">
+           <widget class="PlotWidget" name="graphics_view_hist_data_city_area">
             <property name="frameShape">
              <enum>QFrame::Box</enum>
             </property>
            </widget>
           </item>
           <item row="1" column="1">
-           <widget class="PlotWidget" name="graphics_view_municipality_sales">
+           <widget class="PlotWidget" name="graphics_view_hist_data_municipality">
             <property name="frameShape">
              <enum>QFrame::Box</enum>
             </property>
            </widget>
           </item>
-          <item row="0" column="0">
+          <item row="0" column="0" rowspan="2">
            <widget class="PlotWidget" name="graphics_view_views_development">
             <property name="frameShape">
              <enum>QFrame::Box</enum>
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="PlotWidget" name="graphics_view_performance">
+          <item row="2" column="1">
+           <widget class="PlotWidget" name="graphics_view_some_statistics">
             <property name="frameShape">
              <enum>QFrame::Box</enum>
             </property>
@@ -4688,9 +4695,8 @@
   <tabstop>line_edit_latestemailcount</tabstop>
   <tabstop>line_edit_currentfavorites</tabstop>
   <tabstop>graphics_view_views_development</tabstop>
-  <tabstop>graphics_view_city_area_sales</tabstop>
+  <tabstop>graphics_view_hist_data_city_area</tabstop>
   <tabstop>graphics_view_performance</tabstop>
-  <tabstop>graphics_view_municipality_sales</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

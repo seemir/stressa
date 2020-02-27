@@ -15,7 +15,7 @@ from source.util import Assertor
 from .table_model import TableModel
 from .model import Model
 
-from ..graphics import BarPlotWithLine
+from ..graphics import BarChartWithLine
 
 
 class HistoryModel(Model):
@@ -38,7 +38,6 @@ class HistoryModel(Model):
         """
         Assertor.assert_data_types([parent], [QObject])
         super().__init__(parent)
-        self.legend = None
         self.keys = None
         self.values = None
         self.bar_plot = None
@@ -69,9 +68,8 @@ class HistoryModel(Model):
         self.data.update(history_data)
         for key in self._finn_history_keys:
             if key == "historikk":
-                BarPlotWithLine.clear_graphics(self.parent.ui.graphics_view_historikk,
-                                               self.parent.ui.table_view_historikk)
-                self.legend = None
+                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_historikk,
+                                                self.parent.ui.table_view_historikk)
                 if key + postfix in self.data.keys() and self.data["historikk" + postfix]:
                     # table
                     history_data_model = TableModel(DataFrame(self.data[key + postfix]))
@@ -82,18 +80,16 @@ class HistoryModel(Model):
                     self.keys = [int(key) + 1.5 for key in list(history.keys())]
                     self.values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
                                    for val in history.values()][::-1]
-                    self.bar_plot = BarPlotWithLine(self.keys, self.values,
-                                                    self.parent.ui.graphics_view_historikk,
-                                                    self.parent.ui.table_view_historikk)
-                    if not self.legend and all(val + postfix in
-                                               grandparent.finn_model.data.keys() for val in
-                                               ["finnkode", "boligtype", "status"]):
-                        finn_code = grandparent.finn_model.data["finnkode" + postfix]
-                        bolig_type = grandparent.finn_model.data["boligtype" + postfix]
-                        status = grandparent.finn_model.data["status" + postfix]
-                        self.bar_plot.add_legend("Finnkode: " + finn_code,
-                                                 "Boligtype: " + bolig_type,
-                                                 "Status: " + status)
+                    finn_code = grandparent.finn_model.data["finnkode" + postfix]
+                    bolig_type = grandparent.finn_model.data["boligtype" + postfix]
+                    status = grandparent.finn_model.data["status" + postfix]
+                    self.bar_plot = BarChartWithLine(self.keys, self.values,
+                                                     self.parent.ui.graphics_view_historikk,
+                                                     self.parent.ui.table_view_historikk,
+                                                     legend="FINN kode: {} \nBoligtype: {} "
+                                                            "\nStatus: {}".format(finn_code,
+                                                                                  bolig_type,
+                                                                                  status))
                     self.table_view_mapping = self.bar_plot.table_view_mapping()
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -127,9 +123,8 @@ class HistoryModel(Model):
                     grandparent.data.pop(full_key)
                 if full_key in grandparent.finn_data.keys():
                     grandparent.finn_data.pop(full_key)
-                BarPlotWithLine.clear_graphics(self.parent.ui.graphics_view_historikk,
-                                               self.parent.ui.table_view_historikk)
-                self.legend = None
+                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_historikk,
+                                                self.parent.ui.table_view_historikk)
             else:
                 if full_key in self.data.keys():
                     self.data.pop(full_key)

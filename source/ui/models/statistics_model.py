@@ -13,7 +13,7 @@ from source.util import Assertor
 
 from .model import Model
 
-from ..graphics import BarPlot
+from ..graphics import BarChart
 
 
 class StatisticsModel(Model):
@@ -57,28 +57,23 @@ class StatisticsModel(Model):
         Assertor.assert_data_types([postfix], [str])
         grandparent = self.parent.parent
         statistics_data = {}
+        prefix = "graphics_view_"
         if grandparent.finn_model.finn_data:
             for key, val in grandparent.finn_model.finn_data.items():
                 if key[:-len(postfix)] in self._statistics_keys:
                     statistics_data.update({key: val})
         self.data.update(statistics_data)
         for key in self._statistics_keys:
-            if key == "hist_data_city_area":
-                BarPlot.clear_graphics(self.parent.ui.graphics_view_city_area_sales)
-                if key + postfix in self.data.keys() and self.data["hist_data_city_area" + postfix]:
-                    area_sales = self.data["hist_data_city_area" + postfix]
-                    self.area_sales_plot = BarPlot(list(area_sales.keys()),
-                                                   list(area_sales.values()),
-                                                   self.parent.ui.graphics_view_city_area_sales)
-            elif key == "hist_data_municipality":
-                BarPlot.clear_graphics(self.parent.ui.graphics_view_municipality_sales)
-                if key + postfix in self.data.keys() and \
-                        self.data["hist_data_municipality" + postfix]:
-                    municipality_sales = self.data["hist_data_municipality" + postfix]
-                    self.area_sales_plot = BarPlot(list(municipality_sales.keys()),
-                                                   list(municipality_sales.values()),
-                                                   self.parent.ui.graphics_view_municipality_sales)
-
+            if key in ["hist_data_city_area", "hist_data_municipality"]:
+                BarChart.clear_graphics(getattr(self.parent.ui, prefix + key))
+                if key + postfix in self.data.keys() and self.data[key + postfix]:
+                    area_sales = self.data[key + postfix]
+                    name = "city_area" if key == "hist_data_city_area" else "municipality"
+                    self.area_sales_plot = BarChart(list(area_sales.keys()),
+                                                    list(area_sales.values()),
+                                                    getattr(self.parent.ui, prefix + key),
+                                                    legend=self.data[name + postfix],
+                                                    labels=("KMP", "salg"))
             else:
                 if key + postfix in self.data.keys():
                     if key in ["city_area", "municipality"]:
@@ -93,9 +88,8 @@ class StatisticsModel(Model):
                 else:
                     if key not in ["municipality", "city_area"]:
                         getattr(self.parent.ui, "line_edit_" + key).clear()
-        for graphics_view in ["city_area_sales", "municipality_sales", "views_development",
-                              "performance"]:
-            prefix = "graphics_view_"
+        for graphics_view in ["hist_data_city_area", "hist_data_municipality", "views_development",
+                              "performance", "some_statistics"]:
             getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=False, y=False)
             getattr(self.parent.ui, prefix + graphics_view).showGrid(x=True, y=True)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
@@ -124,15 +118,15 @@ class StatisticsModel(Model):
             if full_key in grandparent.finn_data.keys():
                 grandparent.finn_data.pop(full_key)
 
-            if key == "city_area":
+            if key in "city_area":
                 self.parent.label_city_area_sqm_price.setText("KMP (område)")
                 self.parent.label_sales_city_area.setText("Salg (område)")
             elif key == "municipality":
                 self.parent.label_municipality_sqm_price.setText("KMP (kommune)")
                 self.parent.label_sales_municipality.setText("Salg (kommune)")
             elif key == "hist_data_city_area":
-                BarPlot.clear_graphics(self.parent.ui.graphics_view_city_area_sales)
+                BarChart.clear_graphics(self.parent.ui.graphics_view_hist_data_city_area)
             elif key == "hist_data_municipality":
-                BarPlot.clear_graphics(self.parent.ui.graphics_view_municipality_sales)
+                BarChart.clear_graphics(self.parent.ui.graphics_view_hist_data_municipality)
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()

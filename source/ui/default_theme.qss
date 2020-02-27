@@ -34,6 +34,8 @@
 .QTableView {
   selection-background-color: #93c0e7;
   selection-color: black;
+  font-family: "MS Shell Dlg 2";
+  font-size: 12px;
 }
 
 .QProgressBar::chunk {

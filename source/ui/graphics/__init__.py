@@ -3,5 +3,10 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from .bar_plot_with_line import BarPlotWithLine
-from .bar_plot import BarPlot
+import pyqtgraph as pg
+
+from .bar_chart_with_line import BarChartWithLine
+from .cross_hair import cross_hair
+from .bar_chart import BarChart
+
+pg.setConfigOption('background', 'w')
