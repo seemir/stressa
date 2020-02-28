@@ -42,7 +42,7 @@ class StatisticsModel(Model):
         """
         Assertor.assert_data_types([parent], [QObject])
         super().__init__(parent)
-        self.area_sales_plot = None
+        self.sales_plot = None
 
     def add_statistics_info(self, postfix):
         """
@@ -64,16 +64,25 @@ class StatisticsModel(Model):
                     statistics_data.update({key: val})
         self.data.update(statistics_data)
         for key in self._statistics_keys:
-            if key in ["hist_data_city_area", "hist_data_municipality"]:
-                BarChart.clear_graphics(getattr(self.parent.ui, prefix + key))
+            if key == "hist_data_municipality":
+                BarChart.clear_graphics(getattr(self.parent.ui, prefix + "hist_data_municipality"))
+                BarChart.clear_graphics(getattr(self.parent.ui, prefix + "hist_data_city_area"))
                 if key + postfix in self.data.keys() and self.data[key + postfix]:
-                    area_sales = self.data[key + postfix]
-                    name = "city_area" if key == "hist_data_city_area" else "municipality"
-                    self.area_sales_plot = BarChart(list(area_sales.keys()),
-                                                    list(area_sales.values()),
-                                                    getattr(self.parent.ui, prefix + key),
-                                                    legend=self.data[name + postfix],
-                                                    labels=("KMP", "salg"))
+                    city_area_sales = self.data["hist_data_city_area" + postfix]
+                    municipality_sales = self.data["hist_data_municipality" + postfix]
+                    labels = (self.data["city_area" + postfix],
+                              self.data["municipality" + postfix])
+                    self.sales_plot = BarChart(list(city_area_sales.keys()),
+                                               list(city_area_sales.values()),
+                                               list(municipality_sales.keys()),
+                                               list(municipality_sales.values()),
+                                               getattr(self.parent.ui,
+                                                       prefix + "hist_data_city_area"),
+                                               getattr(self.parent.ui,
+                                                       prefix + "hist_data_municipality"),
+                                               labels)
+            elif key == "hist_data_city_area":
+                pass
             else:
                 if key + postfix in self.data.keys():
                     if key in ["city_area", "municipality"]:

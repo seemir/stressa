@@ -77,7 +77,7 @@ class HistoryModel(Model):
 
                     # bar chart
                     history = self.data["historikk" + postfix]["Pris"]
-                    self.keys = [int(key) + 1.5 for key in list(history.keys())]
+                    self.keys = [int(key) + 0.5 for key in list(history.keys())]
                     self.values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
                                    for val in history.values()][::-1]
                     finn_code = grandparent.finn_model.data["finnkode" + postfix]
