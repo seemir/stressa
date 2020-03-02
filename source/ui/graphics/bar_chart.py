@@ -6,14 +6,15 @@ __email__ = 'samir.adrik@gmail.com'
 import numpy as np
 from itertools import chain
 
-import pyqtgraph as pg
+from collections.abc import Iterable
+
 from pyqtgraph import BarGraphItem, PlotWidget
 from PyQt5.QtWidgets import QTableView
 from PyQt5.QtCore import QObject
 
 from source.util import Assertor
 
-from ..graphics import cross_hair
+from ..graphics import CrossHair
 
 
 class BarChart(QObject):
@@ -55,8 +56,14 @@ class BarChart(QObject):
                                        brush="#d2e5f5")
         self.graphics_view_1.addItem(self.bar_item_1)
         self.graphics_view_2.addItem(self.bar_item_2)
-        cross_hair(self.x_1[:-1], self.x_2[:-1], self.y_1, self.y_2, self.graphics_view_1,
-                   self.graphics_view_2, labels)
+        self.cross_hair = CrossHair(self.x_1[:-1], self.y_1, self.x_2[:-1], self.y_2,
+                                    self.graphics_view_1,
+                                    self.graphics_view_2, labels)
+        self.cross_hair.add_cross_hair_to_chart()
+        self.graphics_view_1.plotItem.vb.setLimits(xMin=min(self.x_1) - 1000, xMax=max(self.x_1))
+        self.graphics_view_2.plotItem.vb.setLimits(xMin=min(self.x_2) - 1000, xMax=max(self.x_2))
+        self.graphics_view_1.setMenuEnabled(False)
+        self.graphics_view_2.setMenuEnabled(False)
 
     @staticmethod
     def clear_graphics(graphics_view: PlotWidget):
@@ -71,9 +78,6 @@ class BarChart(QObject):
         """
         Assertor.assert_data_types([graphics_view], [PlotWidget, QTableView])
         graphics_view.clear()
-        for item in graphics_view.childItems():
-            if isinstance(item, pg.LegendItem):
-                graphics_view.scene().removeItem(item)
 
     @staticmethod
     def create_bins(x, y, bins):

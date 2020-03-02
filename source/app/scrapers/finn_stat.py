@@ -15,6 +15,7 @@ from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 import requests
 
 from bs4 import BeautifulSoup
+import numpy as np
 
 from source.util import LOGGER, TimeOutError, NoConnectionError, Assertor
 from source.domain import Amount
@@ -211,8 +212,6 @@ class FinnStat(Finn):
                             info.update({"size_range": val.replace(" -", " m² -") + " m²"})
                         else:
                             info.update({key.lower(): val})
-            else:
-                pass
         return info
 
     @staticmethod
@@ -254,17 +253,44 @@ class FinnStat(Finn):
                     info.update(
                         {historical_data_names[i] + "_count": Amount.format_amount(
                             str(sum(historical_values.values())))})
-                else:
-                    pass
+
             if all(name in info.keys() for name in historical_data_names):
-                city_area_values = {}
-                for key in info["hist_data_municipality"].keys():
-                    if key not in info["hist_data_city_area"].keys():
-                        city_area_values.update({key: 0})
-                    else:
-                        city_area_values.update({key: info["hist_data_city_area"][key]})
-                info.update({"hist_data_city_area": city_area_values})
+                FinnStat.harmonize_data_sets(info)
         return info
+
+    @staticmethod
+    def harmonize_data_sets(info):
+        """
+        method for harmonize data sets
+
+        Parameters
+        ----------
+        info                    : dict
+                                  dictionary to store results
+        Returns
+        -------
+        out                     : dict
+                                  dictionary with results
+
+        """
+        if sum(list(info["hist_data_municipality"].values())) > 15000:
+            mean = np.mean(list(info["hist_data_municipality"].keys()))
+            std = np.std(list(info["hist_data_municipality"].keys()))
+            upper = mean + std * 1.5
+            lower = mean - std * 1.5
+            for key, val in info["hist_data_municipality"].copy().items():
+                if lower <= key <= upper:
+                    info["hist_data_municipality"].update({key: val})
+                else:
+                    info["hist_data_municipality"].pop(key)
+
+        city_area_values = {}
+        for key in info["hist_data_municipality"].keys():
+            if key not in info["hist_data_city_area"].keys():
+                city_area_values.update({key: 0})
+            else:
+                city_area_values.update({key: info["hist_data_city_area"][key]})
+        info.update({"hist_data_city_area": city_area_values})
 
     @staticmethod
     def calculate_average(elements: dict):

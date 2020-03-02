@@ -50,7 +50,7 @@ class BarChartWithLine(QObject):
         self.legend = TextItem()
         self.legend.setPos(0, int(max(y) * 1.10))
         self.legend.setText(legend)
-        self.graphics_view.addItem(self.legend)
+        self.graphics_view.addItem(self.legend, ignore_bounds=True)
 
         self.bar_item = BarGraphItem(x=self.x, height=self.y, width=0.50, brush="#d2e5f5")
         self.graphics_view.addItem(self.bar_item)
@@ -97,6 +97,3 @@ class BarChartWithLine(QObject):
         Assertor.assert_data_types([graphics_view, table_view], [PlotWidget, QTableView])
         table_view.setModel(None)
         graphics_view.clear()
-        for item in graphics_view.childItems():
-            if isinstance(item, pg.LegendItem):
-                graphics_view.scene().removeItem(item)
