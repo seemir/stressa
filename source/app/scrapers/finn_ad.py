@@ -7,6 +7,7 @@ Implementation of scarper against Finn.no housing ad search
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from time import time
 import re
 from http.client import responses
 import requests
@@ -51,12 +52,14 @@ class FinnAd(Finn):
         """
         try:
             try:
+                start = time()
                 ad_response = requests.get(FINN_AD_URL + "{}".format(self.finn_code),
                                            timeout=TIMEOUT)
                 ad_status_code = ad_response.status_code
+                elapsed = self.elapsed_time(start)
                 LOGGER.info(
-                    "HTTP status code -> AD: [{}: {}]".format(ad_status_code,
-                                                              responses[ad_status_code]))
+                    "HTTP status code -> ADVERT: [{}: {}] -> elapsed: {}".format(
+                        ad_status_code, responses[ad_status_code], elapsed))
                 return ad_response
             except ConnectTimeout as finn_ad_timeout_error:
                 raise TimeOutError(

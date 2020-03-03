@@ -6,7 +6,8 @@ __email__ = 'samir.adrik@gmail.com'
 import pyqtgraph as pg
 
 from .bar_chart_with_line import BarChartWithLine
-from .cross_hair import CrossHair
+from .double_bar_chart import DoubleBarChart
+from .double_cross_hair import DoubleCrossHair
 from .bar_chart import BarChart
 
 pg.setConfigOption('background', 'w')

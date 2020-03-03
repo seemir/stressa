@@ -7,15 +7,18 @@ Module containing logic for the graphics know simply as BarChartWithLine
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import numpy as np
+
 import pyqtgraph as pg
 from pyqtgraph import BarGraphItem, PlotDataItem, PlotWidget, TextItem
 from PyQt5.QtWidgets import QTableView
-from PyQt5.QtCore import Qt, QObject
+from PyQt5.QtCore import Qt
 
 from source.util import Assertor
+from .chart import Chart
 
 
-class BarChartWithLine(QObject):
+class BarChartWithLine(Chart):
     """
     Implementation of the Bar chart with line graphics
 
@@ -42,15 +45,15 @@ class BarChartWithLine(QObject):
         """
         Assertor.assert_data_types([x, y, graphics_view, table_view, legend],
                                    [list, list, PlotWidget, QTableView, str])
-        super().__init__(parent=None)
+        super().__init__()
         self.x = x
         self.y = y
         self.graphics_view = graphics_view
         self.table_view = table_view
-        self.legend = TextItem()
-        self.legend.setPos(0, int(max(y) * 1.10))
-        self.legend.setText(legend)
-        self.graphics_view.addItem(self.legend, ignore_bounds=True)
+        self.label = TextItem()
+        self.label.setPos(min(self.x) * 0.2, int(max(y) * 1.40))
+        self.label.setText(legend)
+        self.graphics_view.addItem(self.label, ignore_bounds=True)
 
         self.bar_item = BarGraphItem(x=self.x, height=self.y, width=0.50, brush="#d2e5f5")
         self.graphics_view.addItem(self.bar_item)

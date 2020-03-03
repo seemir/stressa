@@ -10,6 +10,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 from abc import ABC, abstractmethod
 from uuid import uuid4
+from time import time
+
 import datetime
 import json
 import os
@@ -56,6 +58,14 @@ class Scraper(ABC):
         except Exception as json_exception:
             LOGGER.exception(json)
             raise json_exception
+
+    @staticmethod
+    def elapsed_time(start):
+        """
+        method for calculating the elapsed time in milliseconds from start
+
+        """
+        return str(round((time() - start) * 1000, 7)) + "ms"
 
     @abstractmethod
     def __init__(self):

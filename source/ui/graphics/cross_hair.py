@@ -1,8 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Module containing logic for cross hairs on plots
-
-"""
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
@@ -12,60 +8,45 @@ import numpy as np
 from pyqtgraph import TextItem, InfiniteLine, SignalProxy, mkPen, PlotWidget, BarGraphItem
 from PyQt5.QtCore import Qt, QObject
 
-from source.domain import Amount
 from source.util import Assertor
+from source.domain import Amount
 
 
 class CrossHair(QObject):
-    """
-    Cross hair implementation
 
-    """
-
-    def __init__(self, x_1: np.ndarray, y_1: np.ndarray, x_2: np.ndarray, y_2: np.ndarray,
-                 plot_widget_1: PlotWidget, plot_widget_2: PlotWidget, labels: tuple):
+    def __init__(self, x: list, y: list, plot_widget: PlotWidget, labels: str, x_time: list = None):
         """
         Constructor / Instantiation of class
 
         Parameters
         ----------
-        x_1               : np.ndarray
+        x                 : list
                             x-values
-        y_1               : np.ndarray
+        y                 : list
                             y-values
-        x_2               : np.ndarray
-                            x-values
-        y_2               : np.ndarray
-                            y-values
-        plot_widget_1     : PlotWidget
-                            graphics view to place chart
-        plot_widget_2     : PlotWidget
-                            graphics view to place chart
-        labels            : tuple
-                            labels for legend
+        plot_widget       : PlotWidget
+                            graphics view to place cross hair
+        labels            : str
+                            label for legend
+        x_time            : list
+                            date values, if supplied
 
         """
         super().__init__(parent=None)
-        Assertor.assert_data_types([x_1, x_2, y_1, y_2, plot_widget_1, plot_widget_2, labels],
-                                   [np.ndarray, np.ndarray, np.ndarray, np.ndarray, PlotWidget,
-                                    PlotWidget, tuple])
-        self.x_1, self.y_1 = x_1, y_1
-        self.x_2, self.y_2 = x_2, y_2
-        self.plot_widget_1 = plot_widget_1
-        self.plot_widget_2 = plot_widget_2
-        self.bar_item_1 = None
-        self.bar_item_2 = None
+        Assertor.assert_data_types([x, y, plot_widget, labels, x_time],
+                                   [list, list, PlotWidget, str, (type(None), list)])
+        self.x, self.y = x, y
+        self.plot_widget = plot_widget
+        self.labels = labels
+        self.bar_item = None
+        self.label = TextItem()
+        self.x_time = x_time
 
         pen = mkPen(color="#4c96d7", style=Qt.SolidLine, width=1)
-        self.vertical_line_1 = InfiniteLine(angle=90, movable=False, pen=pen)
-        self.vertical_line_2 = InfiniteLine(angle=90, movable=False, pen=pen)
-        self.label_1, self.label_2 = TextItem(), TextItem()
-        self.labels = labels
+        self.vertical_line = InfiniteLine(angle=90, movable=False, pen=pen)
 
-        self.plot_widget_1.addItem(self.vertical_line_1, ignoreBounds=True)
-        self.plot_widget_2.addItem(self.vertical_line_2, ignoreBounds=True)
-        self.view_box_1 = self.plot_widget_1.getViewBox()
-        self.view_box_2 = self.plot_widget_2.getViewBox()
+        self.plot_widget.addItem(self.vertical_line, ignoreBounds=True)
+        self.view_box = self.plot_widget.getViewBox()
         self.configure_cross_hair()
 
     def configure_cross_hair(self):
@@ -73,55 +54,37 @@ class CrossHair(QObject):
         method for configuring cross hair
 
         """
-        self.label_1.setPos(min(self.x_1), int(max(self.y_1)))
-        self.label_2.setPos(min(self.x_2), int(max(self.y_2)))
-        self.plot_widget_1.addItem(self.label_1)
-        self.plot_widget_2.addItem(self.label_2)
-        self.draw_average_line()
+        place = np.percentile(np.array(self.x), 75)
 
-    def draw_average_line(self):
-        """
-        method for drawing average lines on plot widget
-
-        """
-        pen = mkPen(color="#4c96d7", style=Qt.DotLine, width=2)
-        average_line_1 = InfiniteLine(angle=90, movable=False, pen=pen)
-        average_line_2 = InfiniteLine(angle=90, movable=False, pen=pen)
-        average_line_1.setPos(np.average(self.x_1, weights=self.y_1))
-        average_line_2.setPos(np.average(self.x_2, weights=self.y_2))
-        self.plot_widget_1.addItem(average_line_1)
-        self.plot_widget_2.addItem(average_line_2)
+        self.label.setPos(place, int(max(self.y) * 1.25))
+        self.plot_widget.addItem(self.label)
 
     def move_vertical_lines(self, pos):
         """
         method for moving the vertical lines on the plot
 
         """
-        mouse_point_1 = self.view_box_1.mapSceneToView(pos)
-        mouse_point_2 = self.view_box_2.mapSceneToView(pos)
+        mouse_point = self.view_box.mapSceneToView(pos)
 
-        x_val_1 = int(round(mouse_point_1.x(), -3))
-        x_val_2 = int(round(mouse_point_2.x(), -3))
-        x_idx_1 = np.where(self.x_1 == x_val_1)
-        x_idx_2 = np.where(self.x_2 == x_val_2)
-        y_val_1 = int(self.y_1[x_idx_1]) if self.y_1[x_idx_1] else 0
-        y_val_2 = int(self.y_2[x_idx_2]) if self.y_2[x_idx_2] else 0
+        x_val = int(round(mouse_point.x()))
+        x_idx = np.where(np.array(self.x) == x_val)[0]
 
-        self.vertical_line_1.setPos(x_val_1)
-        self.vertical_line_2.setPos(x_val_1)
-        return x_val_1, y_val_1, x_val_2, y_val_2
+        if x_idx.size != 0:
+            y_val = self.y[x_idx.item()]
+        else:
+            y_val = 0
 
-    def highlight_bar_items(self, x_val_1, y_val_1, x_val_2, y_val_2):
+        self.vertical_line.setPos(x_val)
+        return x_val, y_val
+
+    def highlight_bar_items(self, x_val, y_val):
         """
         method for highlighting bar items
 
         """
-        self.plot_widget_1.removeItem(self.bar_item_1)
-        self.plot_widget_2.removeItem(self.bar_item_2)
-        self.bar_item_1 = BarGraphItem(x=[x_val_1], height=y_val_1, width=1000, brush="#69a8de")
-        self.bar_item_2 = BarGraphItem(x=[x_val_2], height=y_val_2, width=1000, brush="#69a8de")
-        self.plot_widget_1.addItem(self.bar_item_1)
-        self.plot_widget_2.addItem(self.bar_item_2)
+        self.plot_widget.removeItem(self.bar_item)
+        self.bar_item = BarGraphItem(x=[x_val], height=y_val, width=0.5, brush="#69a8de")
+        self.plot_widget.addItem(self.bar_item)
 
     def mouse_moved(self, evt):
         """
@@ -129,29 +92,23 @@ class CrossHair(QObject):
 
         """
         pos = evt[0]
-        if self.plot_widget_1.sceneBoundingRect().contains(
-                pos) or self.plot_widget_2.sceneBoundingRect().contains(pos):
-            x_val_1, y_val_1, x_val_2, y_val_2 = self.move_vertical_lines(pos)
+        if self.plot_widget.sceneBoundingRect().contains(pos):
+            x_val, y_val = self.move_vertical_lines(pos)
 
-            self.label_1.setText(
-                "{} \n{} \n({})".format(self.labels[0],
-                                        Amount.format_amount(str(x_val_1)) + " kr/m²",
-                                        Amount.format_amount(str(y_val_1)) + " salg"))
-            self.label_2.setText(
-                "{} \n{} \n({})".format(self.labels[1],
-                                        Amount.format_amount(str(x_val_2)) + " kr/m²",
-                                        Amount.format_amount(str(y_val_2)) + " salg"))
-            if len(self.plot_widget_1.getViewBox().allChildren()) > 3:
-                self.highlight_bar_items(x_val_1, y_val_1, x_val_2, y_val_2)
+            x_label_idx = np.where(np.array(self.x) == x_val)[0]
+            x_label = self.x_time[x_label_idx.item()] \
+                if self.x_time and x_label_idx.size != 0 else ""
+            y_label = "({} klikk)".format(Amount.format_amount(str(y_val))) if x_label else ""
+            legend_label = "{} \n{} \n{}".format(self.labels, x_label, y_label)
+            self.label.setText(legend_label)
+            if len(self.plot_widget.getViewBox().allChildren()) > 3:
+                self.highlight_bar_items(x_val, y_val)
 
     def add_cross_hair_to_chart(self):
         """
         method for adding cross hair to the charts
 
         """
-        proxy_mouse_moved_1 = SignalProxy(self.plot_widget_1.scene().sigMouseMoved, rateLimit=60,
-                                          slot=self.mouse_moved)
-        proxy_mouse_moved_2 = SignalProxy(self.plot_widget_2.scene().sigMouseMoved, rateLimit=60,
-                                          slot=self.mouse_moved)
-        self.plot_widget_1.proxy = proxy_mouse_moved_1
-        self.plot_widget_2.proxy = proxy_mouse_moved_2
+        proxy_mouse_moved = SignalProxy(self.plot_widget.scene().sigMouseMoved, rateLimit=60,
+                                        slot=self.mouse_moved)
+        self.plot_widget.proxy = proxy_mouse_moved

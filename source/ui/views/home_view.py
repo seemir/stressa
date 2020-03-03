@@ -10,7 +10,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import os
-# import ctypes
+import ctypes
 
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow
@@ -28,8 +28,8 @@ from .meta_view import MetaView
 from . import resources
 
 
-# myappid = 'mycompany.myproduct.subproduct.version'
-# ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+myappid = 'Stressa.stressa.ui.version'
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 
 class HomeView(QMainWindow):

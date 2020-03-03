@@ -7,6 +7,7 @@ Implementation of scarper against Finn.no housing ownership history search
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from time import time
 from http.client import responses
 import requests
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
@@ -50,12 +51,14 @@ class FinnOwnership(Finn):
         """
         try:
             try:
+                start = time()
                 owner_response = requests.get(FINN_OWNER_URL + "{}".format(self.finn_code),
                                               timeout=TIMEOUT)
                 owner_status_code = owner_response.status_code
+                elapsed = self.elapsed_time(start)
                 LOGGER.info(
-                    "HTTP status code -> OWNERSHIP HISTORY: "
-                    "[{}: {}]".format(owner_status_code, responses[owner_status_code]))
+                    "HTTP status code -> OWNERSHIP HISTORY: [{}: {}] -> elapsed: {}".format(
+                        owner_status_code, responses[owner_status_code], elapsed))
                 return owner_response
             except ConnectTimeout as finn_owner_timeout_error:
                 raise TimeOutError(

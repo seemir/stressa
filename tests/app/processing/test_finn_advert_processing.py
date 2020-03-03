@@ -139,7 +139,7 @@ class TestFinnAdvertProcessing:
             'favorite_click': '3 427', 'prospect_viewed': '2 897', 'prospect_ordered': '109',
             'add_to_calendar': '0', "published": "12.04.2019",
             "size_range": "større eller lik 650 m²",
-            "property_type": "Bolig", "city_area": "Uranienborg - Majorstuen",
+            "property_type": "Enebolig", "city_area": "Uranienborg - Majorstuen",
             "municipality": "Oslo"}
         finn_advert_processing = FinnAdvertProcessing(self.finn_code)
         for key, val in finn_advert_processing.multiplex_info_2.items():

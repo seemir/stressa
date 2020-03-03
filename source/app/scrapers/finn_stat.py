@@ -8,6 +8,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from datetime import datetime
+from time import time
 
 import json
 from http.client import responses
@@ -55,12 +56,14 @@ class FinnStat(Finn):
         """
         try:
             try:
+                start = time()
                 stat_response = requests.get(FINN_STAT_URL + "{}".format(self.finn_code),
                                              timeout=TIMEOUT)
                 stat_status_code = stat_response.status_code
+                elapsed = self.elapsed_time(start)
                 LOGGER.info(
-                    "HTTP status code -> STATISTICS: [{}: {}]".format(stat_status_code,
-                                                                      responses[stat_status_code]))
+                    "HTTP status code -> STATISTICS: [{}: {}] -> elapsed: {}".format(
+                        stat_status_code, responses[stat_status_code], elapsed))
                 return stat_response
             except ConnectTimeout as finn_stat_timeout_error:
                 raise TimeOutError(
@@ -184,19 +187,30 @@ class FinnStat(Finn):
         for prop, value in detail_view_statistics.items():
             if prop.lower() == "ad":
                 if "firstPublished" in value.keys():
-                    today = datetime.today()
                     pub = datetime.fromisoformat(value["firstPublished"][:-1])
-                    days = today - pub
                     date = datetime.strptime(str(pub), "%Y-%m-%d %H:%M:%S").strftime(
                         "%d. %b %Y %H:%M")
                     info.update(
                         {"first_published": str(date).lower() + " ({} dager siden)".format(
-                            days.days)})
+                            (datetime.today() - pub).days)})
                     info.update({
                         "published": datetime.strptime(str(pub), "%Y-%m-%d %H:%M:%S").strftime(
                             "%d.%m.%Y")})
             elif prop.lower() == "views":
-                info.update({"views_development": value})
+                organic = {}
+                effect = {}
+                for key, val in value.items():
+                    if len(val) == 2:
+                        effect.update({key: list(val.values())[0]})
+                        organic.update({key: list(val.values())[1]})
+                    elif len(val) == 1:
+                        effect.update({key: 0})
+                        organic.update({key: list(val.values())[0]})
+                    else:
+                        effect.update({key: 0})
+                        organic.update({key: 0})
+                info.update({"views_development": [{"organic": sorted(organic.items())},
+                                                   {"effect": sorted(effect.items())}]})
             elif prop.lower() == "totals":
                 for key, val in value.items():
                     info.update({key.lower(): Amount.format_amount(val)})
