@@ -129,7 +129,7 @@ class TestFinnAdvertProcessing:
             'eieform': 'Eier (Selveier)', 'soverom': '7', 'primrrom': '656 m²',
             'bruksareal': '831 m²', 'bygger': '1918', 'energimerking': 'G - mørkegrønn',
             'tomteareal': '1135 m² (eiet)', 'bruttoareal': '947 m²', 'formuesverdi': '9 283 581 kr',
-            'finnkode': '144857770', 'sistendret': '14. feb 2020 02:20', 'referanse': '3180364',
+            'finnkode': '144857770', 'sistendret': '14. feb. 2020 02:20', 'referanse': '3180364',
             'kommunenr': '301', 'gardsnr': '212', 'bruksnr': '522',
             'historikk': DataFrame({'Tinglyst': {0: 'Prisantydning', 1: '30.06.1994'},
                                     'Boligtype': {0: '-', 1: 'Frittliggende enebolig'},
