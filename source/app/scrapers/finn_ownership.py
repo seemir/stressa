@@ -107,8 +107,10 @@ class FinnOwnership(Finn):
                         history_results.append(row)
 
                 info = dict(zip(keys, values))
-                historic_df = DataFrame(history_results, columns=history_headers).to_dict()
-                info.update({"historikk": historic_df})
+                historic_df = DataFrame(history_results, columns=history_headers)
+                info.update(
+                    {"historikk": historic_df.assign(Pris=historic_df.iloc[:, -1].str.replace(
+                        ",", " kr").str.replace("\u2212", "")).to_dict()})
 
                 LOGGER.success(
                     "'{}' successfully retrieved".format(
