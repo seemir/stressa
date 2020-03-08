@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>800</height>
+    <height>900</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>1600</width>
-    <height>800</height>
+    <height>900</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -1661,15 +1661,8 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
-          <item row="2" column="0">
-           <widget class="PlotWidget" name="graphics_view_performance">
-            <property name="frameShape">
-             <enum>QFrame::Box</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="PlotWidget" name="graphics_view_hist_data_city_area">
+          <item row="1" column="0">
+           <widget class="PlotWidget" name="graphics_view_accumulated">
             <property name="frameShape">
              <enum>QFrame::Box</enum>
             </property>
@@ -1682,8 +1675,22 @@
             </property>
            </widget>
           </item>
-          <item row="0" column="0" rowspan="2">
+          <item row="0" column="1">
+           <widget class="PlotWidget" name="graphics_view_hist_data_city_area">
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
            <widget class="PlotWidget" name="graphics_view_views_development">
+            <property name="frameShape">
+             <enum>QFrame::Box</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="PlotWidget" name="graphics_view_baseline">
             <property name="frameShape">
              <enum>QFrame::Box</enum>
             </property>
@@ -4696,7 +4703,6 @@
   <tabstop>line_edit_currentfavorites</tabstop>
   <tabstop>graphics_view_views_development</tabstop>
   <tabstop>graphics_view_hist_data_city_area</tabstop>
-  <tabstop>graphics_view_performance</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

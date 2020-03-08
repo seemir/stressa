@@ -7,10 +7,8 @@ Module containing logic for the graphics know simply as BarChartWithLine
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import numpy as np
-
 import pyqtgraph as pg
-from pyqtgraph import BarGraphItem, PlotDataItem, PlotWidget, TextItem
+from pyqtgraph import BarGraphItem, PlotDataItem, PlotWidget, TextItem, mkPen
 from PyQt5.QtWidgets import QTableView
 from PyQt5.QtCore import Qt
 
@@ -55,9 +53,9 @@ class BarChartWithLine(Chart):
         self.label.setText(legend)
         self.graphics_view.addItem(self.label, ignore_bounds=True)
 
-        self.bar_item = BarGraphItem(x=self.x, height=self.y, width=0.50, brush="#d2e5f5")
+        self.bar_item = BarGraphItem(x=self.x, height=self.y, width=0.4, brush="#d2e5f5")
         self.graphics_view.addItem(self.bar_item)
-        pen = pg.mkPen(color="#d2e5f5", style=Qt.DotLine, width=2)
+        pen = mkPen(color="#d2e5f5", style=Qt.DotLine, width=2)
         self.graphics_view.plot(x=self.x, y=self.y, pen=pen, symbol='+', symbolSize=14)
         self.graphics_view.setMenuEnabled(False)
 
@@ -74,10 +72,10 @@ class BarChartWithLine(Chart):
 
         """
         row = len(self.x) - 1 - item.row()
-        bar_item = BarGraphItem(x=self.x, height=self.y, width=0.50, brush="#d2e5f5")
-        clicked_item = BarGraphItem(x=[self.x[row]], height=self.y[row], width=0.50,
+        bar_item = BarGraphItem(x=self.x, height=self.y, width=0.40, brush="#d2e5f5")
+        clicked_item = BarGraphItem(x=[self.x[row]], height=self.y[row], width=0.40,
                                     brush="#69a8de")
-        pen = pg.mkPen(color="#69a8de", style=Qt.DotLine, width=2)
+        pen = mkPen(color="#69a8de", style=Qt.DotLine, width=2)
         chart_item = PlotDataItem(x=self.x, y=self.y, pen=pen,
                                   symbol='+', symbolSize=14)
         self.graphics_view.addItem(bar_item)

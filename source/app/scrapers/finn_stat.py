@@ -209,12 +209,14 @@ class FinnStat(Finn):
                     else:
                         effect.update({key: 0})
                         organic.update({key: 0})
-                info.update({"views_development": [{"organic": sorted(organic.items())},
-                                                   {"effect": sorted(effect.items())}]})
+                info.update({"views_development": [{"organic": dict(sorted(organic.items()))},
+                                                   {"effect": dict(sorted(effect.items()))}]})
             elif prop.lower() == "totals":
                 for key, val in value.items():
                     info.update({key.lower(): Amount.format_amount(val)})
             elif prop.lower() == "performance":
+                if "baseline" in value.keys():
+                    FinnStat.extract_view_baseline(value["baseline"], info)
                 if "description" in value.keys():
                     for key, val in value["description"].items():
                         if key.lower() == "price":
@@ -226,6 +228,41 @@ class FinnStat(Finn):
                             info.update({"size_range": val.replace(" -", " m² -") + " m²"})
                         else:
                             info.update({key.lower(): val})
+        return info
+
+    @staticmethod
+    def extract_view_baseline(baseline: dict, info: dict):
+        """
+        method for extracting view baseline statistics
+
+        Parameters
+        ----------
+        baseline                : dict
+                                  dictionary with baseline statistics
+        info                    : dict
+                                  dictionary to store results
+
+        Returns
+        -------
+        out                     : dict
+                                  dictionary with results
+
+        """
+        Assertor.assert_data_types([baseline, info], [dict, dict])
+        value = {}
+        lower = {}
+        upper = {}
+        for date, values in baseline.items():
+            if date in info["views_development"][0]["organic"].keys():
+                for label, val in values.items():
+                    if label == "value":
+                        value.update({date: val})
+                    elif label == "lower":
+                        lower.update({date: value[date] - val})
+                    elif label == "upper":
+                        upper.update({date: value[date] + val})
+        info.update({"baseline": [dict(sorted(value.items())), dict(sorted(lower.items())),
+                                  dict(sorted(upper.items()))]})
         return info
 
     @staticmethod
@@ -246,9 +283,9 @@ class FinnStat(Finn):
                                   dictionary with results
 
         """
+        Assertor.assert_data_types([areal_sales_statistics, info], [list, dict])
         historical_data_names = ["hist_data_city_area", "hist_data_municipality"]
         location_name = ["city_area", "municipality"]
-        Assertor.assert_data_types([areal_sales_statistics, info], [list, dict])
         for i, data in enumerate(areal_sales_statistics):
             if len(areal_sales_statistics) == 3:
                 if i == 0:
@@ -267,7 +304,6 @@ class FinnStat(Finn):
                     info.update(
                         {historical_data_names[i] + "_count": Amount.format_amount(
                             str(sum(historical_values.values())))})
-
             if all(name in info.keys() for name in historical_data_names):
                 FinnStat.harmonize_data_sets(info)
         return info
@@ -297,7 +333,6 @@ class FinnStat(Finn):
                     info["hist_data_municipality"].update({key: val})
                 else:
                     info["hist_data_municipality"].pop(key)
-
         city_area_values = {}
         for key in info["hist_data_municipality"].keys():
             if key not in info["hist_data_city_area"].keys():

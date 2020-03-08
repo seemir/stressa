@@ -23,7 +23,8 @@ class DoubleCrossHair(QObject):
     """
 
     def __init__(self, x_1: np.ndarray, y_1: np.ndarray, x_2: np.ndarray, y_2: np.ndarray,
-                 plot_widget_1: PlotWidget, plot_widget_2: PlotWidget, labels: tuple):
+                 plot_widget_1: PlotWidget, plot_widget_2: PlotWidget, labels: tuple, units=None,
+                 precision=0, width=1, x_time=None):
         """
         Constructor / Instantiation of class
 
@@ -43,16 +44,28 @@ class DoubleCrossHair(QObject):
                             graphics view to place chart
         labels            : tuple
                             labels for legend
+        precision         : int
+                            precision for rounding, default is zero
+        width             : int, float
+                            width of any bars
+        x_time            : array-like
+                            array of dates, i.e. time-period
 
         """
         super().__init__(parent=None)
-        Assertor.assert_data_types([x_1, x_2, y_1, y_2, plot_widget_1, plot_widget_2, labels],
-                                   [np.ndarray, np.ndarray, np.ndarray, np.ndarray, PlotWidget,
-                                    PlotWidget, tuple])
+        Assertor.assert_data_types(
+            [x_1, y_1, x_2, y_2, plot_widget_1, plot_widget_2, labels, precision, width],
+            [np.ndarray, np.ndarray, np.ndarray, np.ndarray, PlotWidget,
+             PlotWidget, tuple, int, (int, float)])
         self.x_1, self.y_1 = x_1, y_1
         self.x_2, self.y_2 = x_2, y_2
+
         self.plot_widget_1 = plot_widget_1
         self.plot_widget_2 = plot_widget_2
+        self.precision = precision
+        self.width = width
+        self.x_time = x_time
+
         self.bar_item_1 = None
         self.bar_item_2 = None
 
@@ -61,6 +74,7 @@ class DoubleCrossHair(QObject):
         self.vertical_line_2 = InfiniteLine(angle=90, movable=False, pen=pen)
         self.label_1, self.label_2 = TextItem(), TextItem()
         self.labels = labels
+        self.units = units if units else tuple(["" for _ in range(10)])
 
         self.plot_widget_1.addItem(self.vertical_line_1, ignoreBounds=True)
         self.plot_widget_2.addItem(self.vertical_line_2, ignoreBounds=True)
@@ -73,26 +87,12 @@ class DoubleCrossHair(QObject):
         method for configuring cross hair
 
         """
-        place = np.percentile(np.array(self.x_1), 75)
+        place = np.percentile(np.array(self.x_1), 5)
 
-        self.label_1.setPos(place, int(max(self.y_1) * 1.25))
-        self.label_2.setPos(place, int(max(self.y_2) * 1.25))
+        self.label_1.setPos(place, int(max(self.y_1) * 1.4))
+        self.label_2.setPos(place, int(max(self.y_2) * 1.4))
         self.plot_widget_1.addItem(self.label_1)
         self.plot_widget_2.addItem(self.label_2)
-        self.draw_average_line()
-
-    def draw_average_line(self):
-        """
-        method for drawing average lines on plot widget
-
-        """
-        pen = mkPen(color="#4c96d7", style=Qt.DotLine, width=2)
-        average_line_1 = InfiniteLine(angle=90, movable=False, pen=pen)
-        average_line_2 = InfiniteLine(angle=90, movable=False, pen=pen)
-        average_line_1.setPos(np.average(self.x_1, weights=self.y_1))
-        average_line_2.setPos(np.average(self.x_2, weights=self.y_2))
-        self.plot_widget_1.addItem(average_line_1)
-        self.plot_widget_2.addItem(average_line_2)
 
     def move_vertical_lines(self, pos):
         """
@@ -102,8 +102,8 @@ class DoubleCrossHair(QObject):
         mouse_point_1 = self.view_box_1.mapSceneToView(pos)
         mouse_point_2 = self.view_box_2.mapSceneToView(pos)
 
-        x_val_1 = int(round(mouse_point_1.x(), -3))
-        x_val_2 = int(round(mouse_point_2.x(), -3))
+        x_val_1 = int(round(mouse_point_1.x(), self.precision))
+        x_val_2 = int(round(mouse_point_2.x(), self.precision))
         x_idx_1 = np.where(self.x_1 == x_val_1)
         x_idx_2 = np.where(self.x_2 == x_val_2)
         y_val_1 = int(self.y_1[x_idx_1]) if self.y_1[x_idx_1] else 0
@@ -120,8 +120,10 @@ class DoubleCrossHair(QObject):
         """
         self.plot_widget_1.removeItem(self.bar_item_1)
         self.plot_widget_2.removeItem(self.bar_item_2)
-        self.bar_item_1 = BarGraphItem(x=[x_val_1], height=y_val_1, width=1000, brush="#69a8de")
-        self.bar_item_2 = BarGraphItem(x=[x_val_2], height=y_val_2, width=1000, brush="#69a8de")
+        self.bar_item_1 = BarGraphItem(x=[x_val_1], height=y_val_1, width=self.width,
+                                       brush="#69a8de")
+        self.bar_item_2 = BarGraphItem(x=[x_val_2], height=y_val_2, width=self.width,
+                                       brush="#69a8de")
         self.plot_widget_1.addItem(self.bar_item_1)
         self.plot_widget_2.addItem(self.bar_item_2)
 
@@ -134,17 +136,26 @@ class DoubleCrossHair(QObject):
         if self.plot_widget_1.sceneBoundingRect().contains(
                 pos) or self.plot_widget_2.sceneBoundingRect().contains(pos):
             x_val_1, y_val_1, x_val_2, y_val_2 = self.move_vertical_lines(pos)
+
             if len(self.plot_widget_1.getViewBox().allChildren()) > 3:
                 self.highlight_bar_items(x_val_1, y_val_1, x_val_2, y_val_2)
 
-            self.label_1.setText(
-                "{} \n{} \n({})".format(self.labels[0],
-                                        Amount.format_amount(str(x_val_1)) + " kr/m²",
-                                        Amount.format_amount(str(y_val_1)) + " salg"))
-            self.label_2.setText(
-                "{} \n{} \n({})".format(self.labels[1],
-                                        Amount.format_amount(str(x_val_2)) + " kr/m²",
-                                        Amount.format_amount(str(y_val_2)) + " salg"))
+            x_label_idx = np.where(np.array(self.x_1) == x_val_1)[0]
+            x_label_1 = self.x_time[x_label_idx.item()] if \
+                self.x_time and x_label_idx.size != 0 else Amount.format_amount(
+                str(x_val_1)) + self.units[0]
+            y_label_1 = Amount.format_amount(str(y_val_1)) + self.units[1]
+
+            x_label_2 = self.x_time[x_label_idx.item()] if \
+                self.x_time and x_label_idx.size != 0 else Amount.format_amount(
+                str(x_val_2)) + self.units[2]
+            y_label_2 = Amount.format_amount(str(y_val_2)) + self.units[3]
+
+            if min(self.x_1) <= x_val_1 <= max(self.x_1):
+                self.label_1.setText(
+                    "{} \n{} \n({})".format(self.labels[0], x_label_1, y_label_1))
+                self.label_2.setText(
+                    "{} \n{} \n({})".format(self.labels[1], x_label_2, y_label_2))
 
     def add_cross_hair_to_chart(self):
         """

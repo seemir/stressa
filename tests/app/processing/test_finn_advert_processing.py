@@ -149,7 +149,8 @@ class TestFinnAdvertProcessing:
                          "views_development", "first_published", "normal_traffic", "location",
                          "price_range", "hist_data_city_area", "city_area_sqm_price",
                          "hist_data_municipality", "municipality_sqm_price",
-                         "hist_data_city_area_count", "hist_data_municipality_count"]:
+                         "hist_data_city_area_count", "hist_data_municipality_count",
+                         "baseline"]:
                 continue
 
             else:

@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 from PyQt5.QtCore import QObject
 
 from source.util import Assertor
-from source.ui.graphics import BarChart, DoubleBarChart
+from source.ui.graphics import BarChart, DoubleBarChart, ErrorBarPlot
 
 from .model import Model
 
@@ -27,7 +27,7 @@ class StatisticsModel(Model):
                         "currentfavorites", "city_area_sqm_price", "municipality_sqm_price",
                         "city_area", "municipality", "hist_data_city_area",
                         "hist_data_municipality", "hist_data_city_area_count",
-                        "hist_data_municipality_count", "views_development"]
+                        "hist_data_municipality_count", "views_development", "baseline"]
 
     def __init__(self, parent: QObject):
         """
@@ -43,6 +43,7 @@ class StatisticsModel(Model):
         super().__init__(parent)
         self.sales_plot = None
         self.view_plot = None
+        self.error_plot = None
 
     def add_statistics_info(self, postfix: str):
         """
@@ -69,14 +70,17 @@ class StatisticsModel(Model):
                     BarChart.clear_graphics(
                         getattr(self.parent.ui, prefix + "hist_data_municipality"))
                     BarChart.clear_graphics(getattr(self.parent.ui, prefix + "hist_data_city_area"))
-                    self.add_bar_chart(prefix, postfix)
-            elif key == "hist_data_city_area":
+                    self.add_sqm_dist_charts(prefix, postfix)
+            elif key in ["hist_data_city_area", "baseline"]:
                 pass
             elif key == "views_development":
                 if key + postfix in self.data.keys() and self.data[key + postfix]:
                     DoubleBarChart.clear_graphics(
                         getattr(self.parent.ui, prefix + "views_development"))
-                    self.add_double_bar_chart(prefix, postfix)
+                    DoubleBarChart.clear_graphics(
+                        getattr(self.parent.ui, prefix + "accumulated"))
+                    ErrorBarPlot.clear_graphics(getattr(self.parent.ui, prefix + "baseline"))
+                    self.add_view_charts(prefix, postfix)
             else:
                 if key + postfix in self.data.keys():
                     self.add_statistics_label(key, postfix)
@@ -84,7 +88,7 @@ class StatisticsModel(Model):
                     if key not in ["municipality", "city_area"]:
                         getattr(self.parent.ui, "line_edit_" + key).clear()
         for graphics_view in ["hist_data_city_area", "hist_data_municipality", "views_development",
-                              "performance", "some_statistics"]:
+                              "accumulated", "baseline", "some_statistics"]:
             getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=False, y=False)
             getattr(self.parent.ui, prefix + graphics_view).showGrid(x=True, y=True)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
@@ -113,7 +117,7 @@ class StatisticsModel(Model):
             if full_key in grandparent.finn_data.keys():
                 grandparent.finn_data.pop(full_key)
 
-            if key in "city_area":
+            if key == "city_area":
                 self.parent.label_city_area_sqm_price.setText("KMP (område)")
                 self.parent.label_sales_city_area.setText("Salg (område)")
             elif key == "municipality":
@@ -125,12 +129,15 @@ class StatisticsModel(Model):
                 BarChart.clear_graphics(self.parent.ui.graphics_view_hist_data_municipality)
             elif key == "views_development":
                 DoubleBarChart.clear_graphics(self.parent.graphics_view_views_development)
+                DoubleBarChart.clear_graphics(self.parent.graphics_view_accumulated)
+            elif key == "baseline":
+                ErrorBarPlot.clear_graphics(self.parent.graphics_view_baseline)
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
 
-    def add_bar_chart(self, prefix: str, postfix: str):
+    def add_sqm_dist_charts(self, prefix: str, postfix: str):
         """
-        method for adding bar chart to the statistic model
+        method for adding square meter distribution chart to the statistics model
 
         Parameters
         ----------
@@ -153,9 +160,9 @@ class StatisticsModel(Model):
                                            prefix + "hist_data_city_area"),
                                    getattr(self.parent.ui,
                                            prefix + "hist_data_municipality"),
-                                   labels)
+                                   labels, precision=-3, width=1000)
 
-    def add_double_bar_chart(self, prefix: str, postfix: str):
+    def add_view_charts(self, prefix: str, postfix: str):
         """
         method for adding double bar chart to the statistic model
 
@@ -169,12 +176,21 @@ class StatisticsModel(Model):
         """
         original = dict(*self.data["views_development" + postfix][0].values())
         effect = dict(*self.data["views_development" + postfix][1].values())
+
+        value = self.data["baseline" + postfix][0].values()
+        lower = self.data["baseline" + postfix][1].values()
+        upper = self.data["baseline" + postfix][2].values()
+
         self.view_plot = DoubleBarChart(list(original.keys()),
                                         list(original.values()),
                                         list(effect.keys()),
                                         list(effect.values()),
                                         getattr(self.parent.ui,
-                                                prefix + "views_development"))
+                                                prefix + "views_development"),
+                                        getattr(self.parent.ui,
+                                                prefix + "accumulated"))
+        self.error_plot = ErrorBarPlot(y=list(value), bottom=list(lower), top=list(upper),
+                                       graphics_view=getattr(self.parent.ui, prefix + "baseline"))
 
     def add_statistics_label(self, key: str, postfix: str):
         """
