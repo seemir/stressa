@@ -7,9 +7,9 @@ Module containing logic for double cross hairs on plots
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import numpy as np
+from numpy import percentile, ndarray, array, where, insert
 
-from pyqtgraph import TextItem, InfiniteLine, SignalProxy, mkPen, PlotWidget, BarGraphItem
+from pyqtgraph import TextItem, InfiniteLine, mkPen, PlotWidget, BarGraphItem
 from PyQt5.QtCore import Qt, QObject
 
 from source.domain import Amount
@@ -22,7 +22,7 @@ class DoubleCrossHair(QObject):
 
     """
 
-    def __init__(self, x_1: np.ndarray, y_1: np.ndarray, x_2: np.ndarray, y_2: np.ndarray,
+    def __init__(self, x_1: ndarray, y_1: ndarray, x_2: ndarray, y_2: ndarray,
                  plot_widget_1: PlotWidget, plot_widget_2: PlotWidget, labels: tuple, units=None,
                  precision=0, width=1, x_time=None):
         """
@@ -55,7 +55,7 @@ class DoubleCrossHair(QObject):
         super().__init__(parent=None)
         Assertor.assert_data_types(
             [x_1, y_1, x_2, y_2, plot_widget_1, plot_widget_2, labels, precision, width],
-            [np.ndarray, np.ndarray, np.ndarray, np.ndarray, PlotWidget,
+            [ndarray, ndarray, ndarray, ndarray, PlotWidget,
              PlotWidget, tuple, int, (int, float)])
         self.x_1, self.y_1 = x_1, y_1
         self.x_2, self.y_2 = x_2, y_2
@@ -87,7 +87,7 @@ class DoubleCrossHair(QObject):
         method for configuring cross hair
 
         """
-        place = np.percentile(np.array(self.x_1), 5)
+        place = percentile(insert(array(self.x_1), 0, 0), 10)
 
         self.label_1.setPos(place, int(max(self.y_1) * 1.4))
         self.label_2.setPos(place, int(max(self.y_2) * 1.4))
@@ -104,8 +104,8 @@ class DoubleCrossHair(QObject):
 
         x_val_1 = int(round(mouse_point_1.x(), self.precision))
         x_val_2 = int(round(mouse_point_2.x(), self.precision))
-        x_idx_1 = np.where(self.x_1 == x_val_1)
-        x_idx_2 = np.where(self.x_2 == x_val_2)
+        x_idx_1 = where(self.x_1 == x_val_1)
+        x_idx_2 = where(self.x_2 == x_val_2)
         y_val_1 = int(self.y_1[x_idx_1]) if self.y_1[x_idx_1] else 0
         y_val_2 = int(self.y_2[x_idx_2]) if self.y_2[x_idx_2] else 0
 
@@ -137,10 +137,12 @@ class DoubleCrossHair(QObject):
                 pos) or self.plot_widget_2.sceneBoundingRect().contains(pos):
             x_val_1, y_val_1, x_val_2, y_val_2 = self.move_vertical_lines(pos)
 
-            if len(self.plot_widget_1.getViewBox().allChildren()) > 3:
+            limits = min(self.x_1) <= x_val_1 <= max(self.x_1)
+
+            if len(self.plot_widget_1.getViewBox().allChildren()) > 3 and limits:
                 self.highlight_bar_items(x_val_1, y_val_1, x_val_2, y_val_2)
 
-            x_label_idx = np.where(np.array(self.x_1) == x_val_1)[0]
+            x_label_idx = where(array(self.x_1) == x_val_1)[0]
             x_label_1 = self.x_time[x_label_idx.item()] if \
                 self.x_time and x_label_idx.size != 0 else Amount.format_amount(
                 str(x_val_1)) + self.units[0]
@@ -151,20 +153,8 @@ class DoubleCrossHair(QObject):
                 str(x_val_2)) + self.units[2]
             y_label_2 = Amount.format_amount(str(y_val_2)) + self.units[3]
 
-            if min(self.x_1) <= x_val_1 <= max(self.x_1):
+            if limits:
                 self.label_1.setText(
                     "{} \n{} \n({})".format(self.labels[0], x_label_1, y_label_1))
                 self.label_2.setText(
                     "{} \n{} \n({})".format(self.labels[1], x_label_2, y_label_2))
-
-    def add_cross_hair_to_chart(self):
-        """
-        method for adding cross hair to the charts
-
-        """
-        proxy_mouse_moved_1 = SignalProxy(self.plot_widget_1.scene().sigMouseMoved, rateLimit=60,
-                                          slot=self.mouse_moved)
-        proxy_mouse_moved_2 = SignalProxy(self.plot_widget_2.scene().sigMouseMoved, rateLimit=60,
-                                          slot=self.mouse_moved)
-        self.plot_widget_1.proxy = proxy_mouse_moved_1
-        self.plot_widget_2.proxy = proxy_mouse_moved_2

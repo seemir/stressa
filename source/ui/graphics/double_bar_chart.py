@@ -9,8 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from numpy import arange, cumsum, asarray
 
-from PyQt5.QtCore import Qt
-from pyqtgraph import BarGraphItem, PlotWidget, PlotDataItem, mkPen
+from pyqtgraph import BarGraphItem, PlotWidget, SignalProxy
 
 from source.util import Assertor
 
@@ -78,9 +77,37 @@ class DoubleBarChart(Chart):
                                                                  "Klikk på annonsen (akkumulert)"),
                                           units=(" ", " klikk", "", " klikk"), width=width,
                                           x_time=x_1)
-        self.cross_hair.add_cross_hair_to_chart()
 
         self.graphics_view_1.plotItem.vb.setLimits(xMin=0, xMax=max(self.x_1) + 1)
         self.graphics_view_2.plotItem.vb.setLimits(xMin=0, xMax=max(self.x_2) + 1)
         self.graphics_view_1.setMenuEnabled(False)
         self.graphics_view_2.setMenuEnabled(False)
+
+        self.connection_chart = None
+        self.graphics_view_3 = None
+
+    def connect(self, chart, plot_widget):
+        self.connection_chart = chart
+        self.graphics_view_3 = plot_widget
+        self.add_cross_hair_to_chart()
+
+    def add_cross_hair_to_chart(self):
+        """
+        method for adding cross hair to the charts
+
+        """
+        proxy_mouse_moved_1 = SignalProxy(self.graphics_view_1.scene().sigMouseMoved, rateLimit=60,
+                                          slot=self.mouse_moved)
+        proxy_mouse_moved_2 = SignalProxy(self.graphics_view_2.scene().sigMouseMoved, rateLimit=60,
+                                          slot=self.mouse_moved)
+        proxy_mouse_moved_3 = SignalProxy(self.graphics_view_3.scene().sigMouseMoved, rateLimit=60,
+                                          slot=self.mouse_moved)
+        self.graphics_view_1.proxy = proxy_mouse_moved_1
+        self.graphics_view_2.proxy = proxy_mouse_moved_2
+        self.graphics_view_3.proxy = proxy_mouse_moved_3
+
+    def mouse_moved(self, evt):
+        self.cross_hair.mouse_moved(evt)
+        pos = evt[0]
+        if self.graphics_view_3.sceneBoundingRect().contains(pos):
+            self.connection_chart.mouse_moved(evt)

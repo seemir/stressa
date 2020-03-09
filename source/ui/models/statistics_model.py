@@ -90,7 +90,6 @@ class StatisticsModel(Model):
         for graphics_view in ["hist_data_city_area", "hist_data_municipality", "views_development",
                               "accumulated", "baseline", "some_statistics"]:
             getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=False, y=False)
-            getattr(self.parent.ui, prefix + graphics_view).showGrid(x=True, y=True)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
                 showValues=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('bottom').setStyle(
@@ -189,8 +188,11 @@ class StatisticsModel(Model):
                                                 prefix + "views_development"),
                                         getattr(self.parent.ui,
                                                 prefix + "accumulated"))
-        self.error_plot = ErrorBarPlot(y=list(value), bottom=list(lower), top=list(upper),
-                                       graphics_view=getattr(self.parent.ui, prefix + "baseline"))
+        self.error_plot = ErrorBarPlot(y=list(value), top=list(upper), bottom=list(lower),
+                                       graphics_view=getattr(self.parent.ui, prefix + "baseline"),
+                                       labels="Klikk på annonsen (forventet)", units=("", " klikk"),
+                                       x_time=list(original.keys()))
+        self.view_plot.connect(self.error_plot, getattr(self.parent.ui, prefix + "baseline"))
 
     def add_statistics_label(self, key: str, postfix: str):
         """

@@ -7,7 +7,8 @@ Module containing logic for the graphics know simply as BarChartWithLine
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import pyqtgraph as pg
+from numpy import percentile, insert, array
+
 from pyqtgraph import BarGraphItem, PlotDataItem, PlotWidget, TextItem, mkPen
 from PyQt5.QtWidgets import QTableView
 from PyQt5.QtCore import Qt
@@ -49,7 +50,10 @@ class BarChartWithLine(Chart):
         self.graphics_view = graphics_view
         self.table_view = table_view
         self.label = TextItem()
-        self.label.setPos(min(self.x) * 0.2, int(max(y) * 1.40))
+
+        place = percentile(insert(array(self.x), 0, 0), 10)
+        self.label.setPos(place, int(max(y) * 1.40))
+
         self.label.setText(legend)
         self.graphics_view.addItem(self.label, ignore_bounds=True)
 

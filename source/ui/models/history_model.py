@@ -97,7 +97,6 @@ class HistoryModel(Model):
                     getattr(self.parent.ui, "line_edit_" + key).setText(self.data[key + postfix])
 
         self.parent.ui.graphics_view_historikk.setMouseEnabled(x=False, y=False)
-        self.parent.ui.graphics_view_historikk.showGrid(x=True, y=True)
         self.parent.ui.graphics_view_historikk.getAxis('left').setStyle(showValues=False)
         self.parent.ui.graphics_view_historikk.getAxis('bottom').setStyle(showValues=False)
 

@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import numpy as np
 
-from pyqtgraph import BarGraphItem, PlotWidget, mkPen, InfiniteLine
+from pyqtgraph import BarGraphItem, PlotWidget, mkPen, InfiniteLine, SignalProxy
 from PyQt5.QtCore import Qt
 
 from source.util import Assertor
@@ -74,7 +74,7 @@ class BarChart(Chart):
         self.cross_hair = DoubleCrossHair(self.x_1[:-1], self.y_1, self.x_2[:-1], self.y_2,
                                           self.graphics_view_1, self.graphics_view_2, labels,
                                           (" kr/m²", " salg", " kr/m²", " salg"), precision, width)
-        self.cross_hair.add_cross_hair_to_chart()
+        self.add_cross_hair_to_chart()
 
         self.graphics_view_1.plotItem.vb.setLimits(xMin=min(self.x_1), xMax=max(self.x_1))
         self.graphics_view_2.plotItem.vb.setLimits(xMin=min(self.x_2), xMax=max(self.x_2))
@@ -93,3 +93,15 @@ class BarChart(Chart):
         average_line_2.setPos(np.average(self.x_2[:-1], weights=self.y_2))
         self.graphics_view_1.addItem(average_line_1)
         self.graphics_view_2.addItem(average_line_2)
+
+    def add_cross_hair_to_chart(self):
+        """
+        method for adding cross hair to the charts
+
+        """
+        proxy_mouse_moved_1 = SignalProxy(self.graphics_view_1.scene().sigMouseMoved, rateLimit=60,
+                                          slot=self.cross_hair.mouse_moved)
+        proxy_mouse_moved_2 = SignalProxy(self.graphics_view_2.scene().sigMouseMoved, rateLimit=60,
+                                          slot=self.cross_hair.mouse_moved)
+        self.graphics_view_1.proxy = proxy_mouse_moved_1
+        self.graphics_view_2.proxy = proxy_mouse_moved_2
