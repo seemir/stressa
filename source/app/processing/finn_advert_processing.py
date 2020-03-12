@@ -12,8 +12,8 @@ from source.util import Assertor, Profiling, LOGGER
 
 from .engine import Process, InputOperation, Signal, ScrapeFinnAdvertInfo, \
     ScrapeFinnOwnershipHistory, ScrapeFinnStatisticsInfo, Multiplex, OutputSignal, \
-    OutputOperation, ValidateFinnCode, Extract, AddRowToDataFrame, PriceChange, \
-    ExtractFirstRow, CheckNewestDate
+    OutputOperation, ValidateFinnCode, Extract, AddRowToDataFrame, RateOfChange, \
+    ExtractFirstRow, CheckNewestDate, Accumulate
 
 
 class FinnAdvertProcessing(Process):
@@ -44,10 +44,13 @@ class FinnAdvertProcessing(Process):
             self.extract()
             self.extract_first_row()
             self.add_to_dataframe_1()
+            self.rate_of_change_1()
+            self.accumulate()
+            self.multiplex_2()
             self.check_newest_date()
             self.add_to_dataframe_2()
-            self.price_change()
-            self._multiplex_info_2 = self.multiplex_2()
+            self.rate_of_change_2()
+            self._multiplex_info_2 = self.multiplex_3()
 
             self.output_operation()
             self.end_process()
@@ -235,10 +238,13 @@ class FinnAdvertProcessing(Process):
         self.add_node(extract_price_operation)
         extract_history_operation = Extract(multiplexed_data.data, "historikk")
         self.add_node(extract_history_operation)
+        extract_views_development_operation = Extract(multiplexed_data.data, "views_development")
+        self.add_node(extract_views_development_operation)
 
         self.add_transition(multiplexed_data, extract_published_date_operation)
         self.add_transition(multiplexed_data, extract_price_operation)
         self.add_transition(multiplexed_data, extract_history_operation)
+        self.add_transition(multiplexed_data, extract_views_development_operation)
 
         extract_published_date = extract_published_date_operation.run()
         extract_published_date_signal = Signal(extract_published_date,
@@ -247,14 +253,19 @@ class FinnAdvertProcessing(Process):
         extract_price_signal = Signal(extract_price, "List Price of Real-estate")
         extract_history = extract_history_operation.run()
         extract_history_signal = Signal(extract_history, "Ownership History")
+        extract_views_development = extract_views_development_operation.run()
+        extract_views_development_signal = Signal(extract_views_development,
+                                                  "Development of Advert Views")
 
         self.add_signal(extract_published_date_signal, "publish_date")
         self.add_signal(extract_price_signal, "list_price_of_real_estate")
         self.add_signal(extract_history_signal, "ownership_history")
+        self.add_signal(extract_views_development_signal, "views_development")
 
         self.add_transition(extract_published_date_operation, extract_published_date_signal)
         self.add_transition(extract_price_operation, extract_price_signal)
         self.add_transition(extract_history_operation, extract_history_signal)
+        self.add_transition(extract_views_development_operation, extract_views_development_signal)
 
     @Profiling
     def extract_first_row(self):
@@ -273,6 +284,79 @@ class FinnAdvertProcessing(Process):
         self.add_transition(extract_first_row_operation, extract_first_row_signal)
 
     @Profiling
+    def rate_of_change_1(self):
+        """
+        method for calculating rate of change in views vector
+
+        """
+        views_development = self.get_signal("views_development")
+        total = views_development.data["views_development"]["total_views"][::-1]
+        views_development.data["views_development"].update({"total_views": total})
+
+        rate_of_change_operation = RateOfChange(views_development.data["views_development"],
+                                                "Calculate Percentage Change in Advert Views")
+
+        self.add_node(rate_of_change_operation)
+        self.add_transition(views_development, rate_of_change_operation)
+
+        rate_of_change = rate_of_change_operation.run()
+        index = list(rate_of_change["total_views"].keys())
+        total = list(rate_of_change["total_views"].values())[::-1]
+        change = list(rate_of_change["Endring"].values())[::-1]
+
+        rate_of_change.update({"total_views": dict(zip(index, total))})
+        rate_of_change.update({"Endring": dict(zip(index, change))})
+        rate_of_change["change"] = rate_of_change["Endring"]
+        del rate_of_change["Endring"]
+
+        rate_of_change_signal = Signal({"views_development": rate_of_change},
+                                       "Percentage Change in Advert Views")
+
+        self.add_signal(rate_of_change_signal, "views_change_signal")
+        self.add_transition(rate_of_change_operation, rate_of_change_signal)
+
+    @Profiling
+    def accumulate(self):
+        """
+        method for accumulating the values in dataframe column
+
+        """
+        views_development = self.get_signal("views_change_signal")
+        total = dict([[*views_development.data["views_development"].items()][3]])
+
+        accumulate_operation = Accumulate(total, "Calculate the Accumulated Sum of Views")
+
+        self.add_node(accumulate_operation)
+        self.add_transition(views_development, accumulate_operation)
+
+        accumulate = accumulate_operation.run()
+
+        accumulate_signal = Signal(accumulate, "Accumulated Sum of Views")
+        self.add_signal(accumulate_signal, "accumulated_signal")
+        self.add_transition(accumulate_operation, accumulate_signal)
+
+    @Profiling
+    def multiplex_2(self):
+        """
+        multiplexing the accumulated sum of views with the views development
+
+        """
+        views_development = self.get_signal("views_change_signal")
+        accumulated = self.get_signal("accumulated_signal")
+
+        multiplex_operation = Multiplex(
+            [views_development.data["views_development"], accumulated.data],
+            "Multiplex Accumulated Sum with Views Development")
+        self.add_node(multiplex_operation)
+        self.add_transition(views_development, multiplex_operation)
+        self.add_transition(accumulated, multiplex_operation)
+
+        multiplex = {"views_development": multiplex_operation.run()}
+        multiplex_signal = Signal(multiplex, "Multiplexed Accumulated Sum with Views Development")
+        self.add_signal(multiplex_signal, "multiplex_views")
+        self.add_transition(multiplex_operation, multiplex_signal)
+
+    @Profiling
     def check_newest_date(self):
         """
         method for checking which of two dates are the newest date
@@ -280,7 +364,8 @@ class FinnAdvertProcessing(Process):
         """
         publish_date = self.get_signal("publish_date")
         extracted_first_row = self.get_signal("extracted_first_row")
-        check_newest_date_operation = CheckNewestDate(publish_date.data, extracted_first_row.data,
+        check_newest_date_operation = CheckNewestDate(publish_date.data,
+                                                      extracted_first_row.data,
                                                       "Publishing Date of Advertisement Later "
                                                       "Than Newest Sale")
         self.add_node(check_newest_date_operation)
@@ -295,20 +380,15 @@ class FinnAdvertProcessing(Process):
         final_sales_price = Signal(extracted_first_row.data,
                                    desc="Final Sales Price of Advertised Real-Estate")
 
-        self.add_signal(final_sales_price, "final_sales_price")
         self.add_signal(not_sold_signal, "not_sold")
-        self.add_transition(check_newest_date_operation, not_sold_signal, label="false")
+        self.add_signal(final_sales_price, "final_sales_price")
         self.add_transition(check_newest_date_operation, final_sales_price, label="true")
+        self.add_transition(check_newest_date_operation, not_sold_signal, label="false")
 
     @Profiling
     def add_to_dataframe_1(self):
         """
         method for adding prisantydning to ownership history dataframe
-
-        Returns
-        -------
-        out             : dict
-                          dictionary which can be converted to dataframe
 
         """
         add_row_to_dataframe_operation = AddRowToDataFrame(
@@ -319,7 +399,8 @@ class FinnAdvertProcessing(Process):
         self.add_transition(self.get_signal("list_price_of_real_estate"),
                             add_row_to_dataframe_operation,
                             label="row")
-        self.add_transition(self.get_signal("ownership_history"), add_row_to_dataframe_operation,
+        self.add_transition(self.get_signal("ownership_history"),
+                            add_row_to_dataframe_operation,
                             label="dataframe")
 
         add_row_to_dataframe = add_row_to_dataframe_operation.run()
@@ -333,11 +414,6 @@ class FinnAdvertProcessing(Process):
     def add_to_dataframe_2(self):
         """
         method for adding final sales price (if sold) to ownership history dataframe
-
-        Returns
-        -------
-        out             : dict
-                          dictionary which can be converted to dataframe
 
         """
         sales_price = self.get_signal("final_sales_price")
@@ -353,21 +429,23 @@ class FinnAdvertProcessing(Process):
                 desc="Add Final Sales Price to Ownership History")
         self.add_node(add_row_to_dataframe_operation)
         self.add_transition(sales_price, add_row_to_dataframe_operation, label="row")
-        self.add_transition(ownership_history, add_row_to_dataframe_operation, label="dataframe")
+        self.add_transition(ownership_history, add_row_to_dataframe_operation,
+                            label="dataframe")
 
         add_row_to_dataframe = add_row_to_dataframe_operation.run()
-        add_row_to_dataframe_signal = Signal(add_row_to_dataframe, "Ownership History With List "
-                                                                   "Price and Final Sales Price")
+        add_row_to_dataframe_signal = Signal(add_row_to_dataframe,
+                                             "Ownership History With List "
+                                             "Price and Final Sales Price")
         self.add_signal(add_row_to_dataframe_signal, "final_ownership_history")
         self.add_transition(add_row_to_dataframe_operation, add_row_to_dataframe_signal)
 
     @Profiling
-    def price_change(self):
+    def rate_of_change_2(self):
         """
         method for calculating percentage change in prices
 
         """
-        price_change_operation = PriceChange(
+        price_change_operation = RateOfChange(
             self.get_signal("final_ownership_history").data,
             "Calculate Percentage Change in Real-estate Price")
         self.add_node(price_change_operation)
@@ -383,7 +461,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(price_change_operation, price_change_signal)
 
     @Profiling
-    def multiplex_2(self):
+    def multiplex_3(self):
         """
         second method for multiplexing signals
 
@@ -391,19 +469,21 @@ class FinnAdvertProcessing(Process):
         """
         multiplexed_data = self.get_signal("multiplexed_data")
         price_change = self.get_signal("price_change_signal")
+        multiplex_views = self.get_signal("multiplex_views")
 
-        signals = [multiplexed_data.data, price_change.data]
+        signals = [multiplexed_data.data, price_change.data, multiplex_views.data]
         multiplex_operation = Multiplex(signals, desc="Multiplex Scraped Finn Information "
                                                       "and Ownership History with Price Change")
         self.add_node(multiplex_operation)
         multiplex = multiplex_operation.run()
 
-        self.add_transition(price_change, multiplex_operation)
         self.add_transition(multiplexed_data, multiplex_operation)
+        self.add_transition(price_change, multiplex_operation)
+        self.add_transition(multiplex_views, multiplex_operation)
 
         multiplex_signal = Signal(multiplex, "Multiplexed Finn Information", prettify_keys=True,
                                   length=14)
-        self.add_signal(multiplex_signal, "multiplex_history_data")
+        self.add_signal(multiplex_signal, "multiplex_finn_data")
 
         self.add_transition(multiplex_operation, multiplex_signal)
         return multiplex
@@ -416,7 +496,7 @@ class FinnAdvertProcessing(Process):
         """
         output_operation = OutputOperation(desc="Multiplexed Finn Information")
         self.add_node(output_operation)
-        self.add_transition(self.get_signal("multiplex_history_data"), output_operation)
+        self.add_transition(self.get_signal("multiplex_finn_data"), output_operation)
 
         output_signal = OutputSignal(self.multiplex_info_1, desc="Finn Information",
                                      prettify_keys=True, length=14)

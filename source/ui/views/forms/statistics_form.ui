@@ -1690,7 +1690,7 @@
            </widget>
           </item>
           <item row="2" column="0">
-           <widget class="PlotWidget" name="graphics_view_baseline">
+           <widget class="PlotWidget" name="graphics_view_change">
             <property name="frameShape">
              <enum>QFrame::Box</enum>
             </property>

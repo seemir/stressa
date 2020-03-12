@@ -7,7 +7,6 @@ Test module for the FinnAdvertProcessing process
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from pandas import DataFrame
 import pytest as pt
 import mock
 
@@ -117,41 +116,30 @@ class TestFinnAdvertProcessing:
         finn_advert_processing = FinnAdvertProcessing(self.finn_code)
         assert not finn_advert_processing.print_pdf()
 
-    def test_multiplex_info_2_method(self):
+    def test_multiplex_info_2(self):
         """
-        Test the multiplex_info_2 method
+        Test the multiplex_info_2
 
         """
-        results = {
-            'finn_adresse': 'Sigyns gate 3, 0260 Oslo', 'prisantydning': '70 000 000 kr',
-            'status': 'Ikke solgt', 'omkostninger': '1 765 642 kr', 'totalpris': '71 765 642 kr',
-            'kommunaleavg': '12 716 kr per år', 'boligtype': 'Enebolig',
-            'eieform': 'Eier (Selveier)', 'soverom': '7', 'primrrom': '656 m²',
-            'bruksareal': '831 m²', 'bygger': '1918', 'energimerking': 'G - mørkegrønn',
-            'tomteareal': '1135 m² (eiet)', 'bruttoareal': '947 m²', 'formuesverdi': '9 283 581 kr',
-            'finnkode': '144857770', 'sistendret': '14. feb. 2020 02:20', 'referanse': '3180364',
-            'kommunenr': '301', 'gardsnr': '212', 'bruksnr': '522',
-            'historikk': DataFrame({'Tinglyst': {0: 'Prisantydning', 1: '30.06.1994'},
-                                    'Boligtype': {0: '-', 1: 'Frittliggende enebolig'},
-                                    'Pris': {0: '70 000 000 kr', 1: '3\xa0950\xa0000 kr'},
-                                    'Endring': {0: '1672.15 %', 1: ''}}),
-            'sqm_price': '106 700 kr/m²', 'views': '611 635', 'email_sent': '13 164',
-            'favorite_click': '3 427', 'prospect_viewed': '2 897', 'prospect_ordered': '109',
-            'add_to_calendar': '0', "published": "12.04.2019",
-            "size_range": "større eller lik 650 m²",
-            "property_type": "Enebolig", "city_area": "Uranienborg - Majorstuen",
-            "municipality": "Oslo"}
+        results = {'finn_adresse': 'Sigyns gate 3, 0260 Oslo', 'prisantydning': '70 000 000 kr',
+                   'status': 'Ikke solgt', 'omkostninger': '1 765 642 kr',
+                   'totalpris': '71 765 642 kr', 'kommunaleavg': '12 716 kr per år',
+                   'boligtype': 'Enebolig', 'eieform': 'Eier (Selveier)', 'soverom': '7',
+                   'primrrom': '656 m²', 'bruksareal': '831 m²', 'bygger': '1918',
+                   'energimerking': 'G - mørkegrønn', 'tomteareal': '1135 m² (eiet)',
+                   'bruttoareal': '947 m²', 'formuesverdi': '9 283 581 kr', 'finnkode': '144857770',
+                   'sistendret': '14. feb. 2020 02:20', 'referanse': '3180364', 'kommunenr': '301',
+                   'gardsnr': '212', 'bruksnr': '522',
+                   'historikk': {'Tinglyst': {0: 'Prisantydning', 1: '30.06.1994'},
+                                 'Boligtype': {0: '-', 1: 'Frittliggende enebolig'},
+                                 'Pris': {0: '70 000 000 kr', 1: '3\xa0950\xa0000 kr'},
+                                 'Endring': {0: '1672.15 %', 1: ''}},
+                   'published': '12.04.2019', 'location': 'Uranienborg - Majorstuen',
+                   'price_range': 'større eller lik 70\xa0000\xa0000 kr',
+                   'size_range': 'større eller lik 650 m²', 'property_type': 'Enebolig',
+                   'city_area': 'Uranienborg - Majorstuen', 'municipality': 'Oslo'}
+
         finn_advert_processing = FinnAdvertProcessing(self.finn_code)
         for key, val in finn_advert_processing.multiplex_info_2.items():
-            if key == "historikk":
-                assert val.equals(results[key])
-            elif key in ["sqm_price", "totalviews", "latestemailcount", "currentfavorites",
-                         "views_development", "first_published", "normal_traffic", "location",
-                         "price_range", "hist_data_city_area", "city_area_sqm_price",
-                         "hist_data_municipality", "municipality_sqm_price",
-                         "hist_data_city_area_count", "hist_data_municipality_count",
-                         "baseline"]:
-                continue
-
-            else:
-                assert val == results[key]
+            if key in results.keys():
+                assert results[key] == val

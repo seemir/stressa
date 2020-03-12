@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 from PyQt5.QtCore import QObject
 
 from source.util import Assertor
-from source.ui.graphics import BarChart, DoubleBarChart, ErrorBarPlot
+from source.ui.graphics import BarChart, DoubleBarChart
 
 from .model import Model
 
@@ -27,7 +27,7 @@ class StatisticsModel(Model):
                         "currentfavorites", "city_area_sqm_price", "municipality_sqm_price",
                         "city_area", "municipality", "hist_data_city_area",
                         "hist_data_municipality", "hist_data_city_area_count",
-                        "hist_data_municipality_count", "views_development", "baseline"]
+                        "hist_data_municipality_count", "views_development"]
 
     def __init__(self, parent: QObject):
         """
@@ -66,20 +66,19 @@ class StatisticsModel(Model):
         self.data.update(statistics_data)
         for key in self._statistics_keys:
             if key == "hist_data_municipality":
+                BarChart.clear_graphics(
+                    getattr(self.parent.ui, prefix + "hist_data_municipality"))
+                BarChart.clear_graphics(getattr(self.parent.ui, prefix + "hist_data_city_area"))
                 if key + postfix in self.data.keys() and self.data[key + postfix]:
-                    BarChart.clear_graphics(
-                        getattr(self.parent.ui, prefix + "hist_data_municipality"))
-                    BarChart.clear_graphics(getattr(self.parent.ui, prefix + "hist_data_city_area"))
                     self.add_sqm_dist_charts(prefix, postfix)
-            elif key in ["hist_data_city_area", "baseline"]:
+            elif key in ["hist_data_city_area"]:
                 pass
             elif key == "views_development":
+                DoubleBarChart.clear_graphics(
+                    getattr(self.parent.ui, prefix + "views_development"))
+                DoubleBarChart.clear_graphics(
+                    getattr(self.parent.ui, prefix + "accumulated"))
                 if key + postfix in self.data.keys() and self.data[key + postfix]:
-                    DoubleBarChart.clear_graphics(
-                        getattr(self.parent.ui, prefix + "views_development"))
-                    DoubleBarChart.clear_graphics(
-                        getattr(self.parent.ui, prefix + "accumulated"))
-                    ErrorBarPlot.clear_graphics(getattr(self.parent.ui, prefix + "baseline"))
                     self.add_view_charts(prefix, postfix)
             else:
                 if key + postfix in self.data.keys():
@@ -88,7 +87,7 @@ class StatisticsModel(Model):
                     if key not in ["municipality", "city_area"]:
                         getattr(self.parent.ui, "line_edit_" + key).clear()
         for graphics_view in ["hist_data_city_area", "hist_data_municipality", "views_development",
-                              "accumulated", "baseline", "some_statistics"]:
+                              "accumulated", "change", "some_statistics"]:
             getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=False, y=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
                 showValues=False)
@@ -129,8 +128,6 @@ class StatisticsModel(Model):
             elif key == "views_development":
                 DoubleBarChart.clear_graphics(self.parent.graphics_view_views_development)
                 DoubleBarChart.clear_graphics(self.parent.graphics_view_accumulated)
-            elif key == "baseline":
-                ErrorBarPlot.clear_graphics(self.parent.graphics_view_baseline)
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
 
@@ -173,26 +170,14 @@ class StatisticsModel(Model):
                       index if used in naming of line_edits
 
         """
-        original = dict(*self.data["views_development" + postfix][0].values())
-        effect = dict(*self.data["views_development" + postfix][1].values())
+        dates = list(self.data["views_development" + postfix]["dates"].values())
+        total = list(self.data["views_development" + postfix]["total_views"].values())
+        organic = list(self.data["views_development" + postfix]["organic_views"].values())
 
-        value = self.data["baseline" + postfix][0].values()
-        lower = self.data["baseline" + postfix][1].values()
-        upper = self.data["baseline" + postfix][2].values()
-
-        self.view_plot = DoubleBarChart(list(original.keys()),
-                                        list(original.values()),
-                                        list(effect.keys()),
-                                        list(effect.values()),
-                                        getattr(self.parent.ui,
-                                                prefix + "views_development"),
-                                        getattr(self.parent.ui,
-                                                prefix + "accumulated"))
-        self.error_plot = ErrorBarPlot(y=list(value), top=list(upper), bottom=list(lower),
-                                       graphics_view=getattr(self.parent.ui, prefix + "baseline"),
-                                       labels="Klikk på annonsen (forventet)", units=("", " klikk"),
-                                       x_time=list(original.keys()))
-        self.view_plot.connect(self.error_plot, getattr(self.parent.ui, prefix + "baseline"))
+        self.view_plot = DoubleBarChart(dates, total, dates, organic,
+                                        getattr(self.parent.ui, prefix + "views_development"),
+                                        getattr(self.parent.ui, prefix + "accumulated"))
+        self.view_plot.add_cross_hair_to_chart()
 
     def add_statistics_label(self, key: str, postfix: str):
         """

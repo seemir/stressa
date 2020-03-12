@@ -51,28 +51,28 @@ class DoubleBarChart(Chart):
         self.x_1 = list(arange(1, len(x_1) + 1, 1))
         self.y_1 = y_1
         self.x_2 = self.x_1
-        self.y_2 = [sum(element) for element in zip(self.y_1, y_2)]
+        self.y_2 = y_2
 
         self.graphics_view_1 = graphics_view_1
         self.graphics_view_2 = graphics_view_2
 
-        self.bar_item_1 = BarGraphItem(x=self.x_1, height=self.y_2, width=width,
+        self.bar_item_1 = BarGraphItem(x=self.x_1, height=self.y_1, width=width,
                                        brush="#a8ccec")
         self.graphics_view_1.addItem(self.bar_item_1)
-        self.bar_item_2 = BarGraphItem(x=self.x_1, height=self.y_1, width=width,
+        self.bar_item_2 = BarGraphItem(x=self.x_1, height=self.y_2, width=width,
                                        brush="#d2e5f5")
         self.graphics_view_1.addItem(self.bar_item_2)
 
-        self.bar_item_3 = BarGraphItem(x=self.x_1, height=cumsum(self.y_2), width=width,
+        self.bar_item_3 = BarGraphItem(x=self.x_1, height=cumsum(self.y_1), width=width,
                                        brush="#a8ccec")
         self.graphics_view_2.addItem(self.bar_item_3)
 
-        self.bar_item_4 = BarGraphItem(x=self.x_1, height=cumsum(self.y_1), width=width,
+        self.bar_item_4 = BarGraphItem(x=self.x_1, height=cumsum(self.y_2), width=width,
                                        brush="#d2e5f5")
         self.graphics_view_2.addItem(self.bar_item_4)
 
-        self.cross_hair = DoubleCrossHair(asarray(self.x_1), asarray(self.y_2), asarray(self.x_2),
-                                          asarray(cumsum(self.y_2)), self.graphics_view_1,
+        self.cross_hair = DoubleCrossHair(asarray(self.x_1), asarray(self.y_1), asarray(self.x_2),
+                                          asarray(cumsum(self.y_1)), self.graphics_view_1,
                                           self.graphics_view_2, ("Klikk på annonsen (per dag)",
                                                                  "Klikk på annonsen (akkumulert)"),
                                           units=(" ", " klikk", "", " klikk"), width=width,
@@ -100,14 +100,17 @@ class DoubleBarChart(Chart):
                                           slot=self.mouse_moved)
         proxy_mouse_moved_2 = SignalProxy(self.graphics_view_2.scene().sigMouseMoved, rateLimit=60,
                                           slot=self.mouse_moved)
-        proxy_mouse_moved_3 = SignalProxy(self.graphics_view_3.scene().sigMouseMoved, rateLimit=60,
-                                          slot=self.mouse_moved)
         self.graphics_view_1.proxy = proxy_mouse_moved_1
         self.graphics_view_2.proxy = proxy_mouse_moved_2
-        self.graphics_view_3.proxy = proxy_mouse_moved_3
+
+        if self.graphics_view_3:
+            proxy_mouse_moved_3 = SignalProxy(self.graphics_view_3.scene().sigMouseMoved,
+                                              rateLimit=60,
+                                              slot=self.mouse_moved)
+            self.graphics_view_3.proxy = proxy_mouse_moved_3
 
     def mouse_moved(self, evt):
         self.cross_hair.mouse_moved(evt)
         pos = evt[0]
-        if self.graphics_view_3.sceneBoundingRect().contains(pos):
+        if self.graphics_view_3 and self.graphics_view_3.sceneBoundingRect().contains(pos):
             self.connection_chart.mouse_moved(evt)

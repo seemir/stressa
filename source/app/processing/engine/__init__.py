@@ -18,8 +18,9 @@ from .check_newest_date import CheckNewestDate
 from .output_operation import OutputOperation
 from .validate_family import ValidateFamily
 from .input_operation import InputOperation
+from .rate_of_change import RateOfChange
 from .output_signal import OutputSignal
-from .price_change import PriceChange
+from .accumulate import Accumulate
 from .operation import Operation
 from .muliplex import Multiplex
 from .process import Process

@@ -62,7 +62,7 @@ class HistoryModel(Model):
                 if key[:-len(postfix)] in self._finn_history_keys:
                     if key[:-len(postfix)] == "historikk":
                         history_data.update(
-                            {key: val.to_dict() if isinstance(val, DataFrame) else {}})
+                            {key: val.to_dict() if isinstance(val, DataFrame) else val})
                     else:
                         history_data.update({key: val})
         self.data.update(history_data)
@@ -71,12 +71,14 @@ class HistoryModel(Model):
                 BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_historikk,
                                                 self.parent.ui.table_view_historikk)
                 if key + postfix in self.data.keys() and self.data["historikk" + postfix]:
+
                     # table
                     history_data_model = TableModel(DataFrame(self.data[key + postfix]))
                     self.parent.ui.table_view_historikk.setModel(history_data_model)
 
                     # bar chart
                     history = self.data["historikk" + postfix]["Pris"]
+
                     self.keys = [int(key) + 0.5 for key in list(history.keys())]
                     self.values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
                                    for val in history.values()][::-1]
