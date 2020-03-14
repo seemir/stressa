@@ -8,7 +8,7 @@ import pyqtgraph as pg
 from .bar_chart_with_line import BarChartWithLine
 from .double_cross_hair import DoubleCrossHair
 from .double_bar_chart import DoubleBarChart
-from .error_bar_plot import ErrorBarPlot
+from .change_bar_chart import ChangeBarChart
 from .bar_chart import BarChart
 
 pg.setConfigOption('background', 'w')

@@ -9,8 +9,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 from PyQt5.QtCore import QObject
 
+from source.ui.graphics import BarChart, DoubleBarChart, ChangeBarChart
 from source.util import Assertor
-from source.ui.graphics import BarChart, DoubleBarChart
 
 from .model import Model
 
@@ -43,7 +43,7 @@ class StatisticsModel(Model):
         super().__init__(parent)
         self.sales_plot = None
         self.view_plot = None
-        self.error_plot = None
+        self.change_plot = None
 
     def add_statistics_info(self, postfix: str):
         """
@@ -78,6 +78,7 @@ class StatisticsModel(Model):
                     getattr(self.parent.ui, prefix + "views_development"))
                 DoubleBarChart.clear_graphics(
                     getattr(self.parent.ui, prefix + "accumulated"))
+                ChangeBarChart.clear_graphics(getattr(self.parent.ui, prefix + "change"))
                 if key + postfix in self.data.keys() and self.data[key + postfix]:
                     self.add_view_charts(prefix, postfix)
             else:
@@ -173,11 +174,19 @@ class StatisticsModel(Model):
         dates = list(self.data["views_development" + postfix]["dates"].values())
         total = list(self.data["views_development" + postfix]["total_views"].values())
         organic = list(self.data["views_development" + postfix]["organic_views"].values())
+        change = list(self.data["views_development" + postfix]["change"].values())
+        accumulated = list(self.data["views_development" + postfix]["accumulated"].values())
 
-        self.view_plot = DoubleBarChart(dates, total, dates, organic,
+        self.view_plot = DoubleBarChart(dates, total, dates, organic, dates, accumulated,
                                         getattr(self.parent.ui, prefix + "views_development"),
-                                        getattr(self.parent.ui, prefix + "accumulated"))
-        self.view_plot.add_cross_hair_to_chart()
+                                        getattr(self.parent.ui, prefix + "accumulated"),
+                                        ("Klikk på annonsen (per dag)",
+                                         "Klikk på annonsen (akkumulert)"),
+                                        ("", " klikk", "", " klikk"))
+        self.change_plot = ChangeBarChart(dates, change, getattr(self.parent.ui, prefix + "change"),
+                                          labels="Klikk på annonsen (endring dag-til-dag)",
+                                          units=("", " %"), x_labels=dates)
+        self.view_plot.connect(self.change_plot, getattr(self.parent.ui, prefix + "change"))
 
     def add_statistics_label(self, key: str, postfix: str):
         """
