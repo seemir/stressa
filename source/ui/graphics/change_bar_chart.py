@@ -49,9 +49,11 @@ class ChangeBarChart(Chart):
         self.labels = labels
         self.units = units if units else tuple(["" for _ in range(10)])
         self.x_time = x_labels
+        self.width = width
 
-        self.error_bar_1 = BarGraphItem(x=self.x, height=self.y, width=width, brush="#a8ccec")
-        self.graphics_view.addItem(self.error_bar_1)
+        self.bar_item_1 = BarGraphItem(x=self.x, height=self.y, width=self.width, brush="#a8ccec")
+        self.graphics_view.addItem(self.bar_item_1)
+        self.bar_item_2 = None
 
         self.label = TextItem()
         pen = mkPen(color="#4c96d7", style=Qt.SolidLine, width=1)
@@ -88,6 +90,16 @@ class ChangeBarChart(Chart):
 
         return x_val, y_val
 
+    def highlight_bar_items(self, x_val, y_val):
+        """
+        method for highlighting bar items
+
+        """
+        self.graphics_view.removeItem(self.bar_item_2)
+        self.bar_item_2 = BarGraphItem(x=[x_val], height=y_val, width=self.width,
+                                       brush="#69a8de")
+        self.graphics_view.addItem(self.bar_item_2)
+
     def mouse_moved(self, evt):
         """
         method for moving the vertical lines based on mouse placement
@@ -95,6 +107,11 @@ class ChangeBarChart(Chart):
         """
         pos = evt[0]
         x_val, y_val = self.move_vertical_lines(pos)
+
+        limits = min(self.x) <= x_val <= max(self.x)
+        if len(self.graphics_view.getViewBox().allChildren()) > 3 and limits:
+            self.highlight_bar_items(x_val, y_val)
+
         x_label_idx = where(array(self.x) == x_val)[0]
         x_label = self.x_time[x_label_idx.item()] if \
             self.x_time and x_label_idx.size != 0 else Amount.format_amount(
