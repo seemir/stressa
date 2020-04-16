@@ -103,8 +103,8 @@ class FinnStat(Finn):
                 info.update({"sqm_price": Amount.format_amount(sq_price) + " kr/m²"})
 
                 view_statistics_total = json.loads(
-                    stat_soup.find("script", attrs={"id": "ad-summary"}).contents[0])[
-                    self.finn_code]
+                    stat_soup.find("script", attrs={"id": "ad-summary"}
+                                   ).contents[0])[self.finn_code]
                 view_statistics_detail = json.loads(
                     stat_soup.find("script", attrs={"id": "ad"}).contents[0])
                 area_sales_statistics = json.loads(
