@@ -77,5 +77,5 @@ class TestScrapeFinnAdvertInfo:
                                                       'bruttoareal': '947 m²',
                                                       'formuesverdi': '9 283 581 kr',
                                                       'finnkode': '144857770',
-                                                      'sistendret': '14. feb. 2020 02:20',
+                                                      'sistendret': '6. apr. 2020 02:07',
                                                       'referanse': '3180364'}

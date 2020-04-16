@@ -92,19 +92,23 @@ class FinnStat(Finn):
             info = {}
             try:
                 stat_soup = BeautifulSoup(response.content, "lxml")
-                sq_price = json.loads(stat_soup.find("script", attrs={"id": "area-prices"}).text)[
-                    "price"]
-                info.update({"sqm_price": Amount.format_amount(sq_price) + " kr/m²"})
 
                 # with open('content.html', 'w', encoding='utf-8') as f:
                 #     f.write(stat_soup.prettify())
 
+                sq_price = \
+                    json.loads(stat_soup.find("script", attrs={"id": "area-prices"}).contents[0])[
+                        "price"]
+
+                info.update({"sqm_price": Amount.format_amount(sq_price) + " kr/m²"})
+
                 view_statistics_total = json.loads(
-                    stat_soup.find("script", attrs={"id": "ad-summary"}).text)[self.finn_code]
+                    stat_soup.find("script", attrs={"id": "ad-summary"}).contents[0])[
+                    self.finn_code]
                 view_statistics_detail = json.loads(
-                    stat_soup.find("script", attrs={"id": "ad"}).text)
+                    stat_soup.find("script", attrs={"id": "ad"}).contents[0])
                 area_sales_statistics = json.loads(
-                    stat_soup.find("script", attrs={"id": "area-sales"}).text)
+                    stat_soup.find("script", attrs={"id": "area-sales"}).contents[0])
 
                 info.update(self.extract_view_statistics(view_statistics_total, info))
                 info.update(self.extract_detail_view_statistics(view_statistics_detail, info))
