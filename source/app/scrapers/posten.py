@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
 """
-Implementation of scaper against posten.no zip code search
+Implementation of scaper against posten.no postal code search
 
 """
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
+
+from time import time
 
 import re
 from http.client import responses
@@ -26,37 +28,35 @@ class Posten(Scraper):
     """
 
     @staticmethod
-    def validate_zip_code(zip_code: str):
+    def validate_postal_code(postal_code: str):
         """
-        static method for validating Norwegian zip codes
+        static method for validating Norwegian postal codes
 
         Parameters
         ----------
-        zip_code
-
-        Returns
-        -------
+        postal_code        : str
+                             possible postal code to be validated
 
         """
-        valid_zip = re.compile("[0-9]{4}").search(zip_code)
-        if not valid_zip:
-            raise NotFoundError("'{}' is an invalid zip code".format(zip_code))
+        valid_postal = re.compile("[0-9]{4}").search(postal_code)
+        if not valid_postal:
+            raise NotFoundError("'{}' is an invalid postal code".format(postal_code))
 
-    def __init__(self, zip_code: str):
+    def __init__(self, postal_code: str):
         """
         Constructor / Instantiate the class
 
         Parameters
         ----------
-        zip_code    : str
-                      Zip code to be searched
+        postal_code    : str
+                         postal code to be searched
 
         """
         try:
             super().__init__()
-            Assertor.assert_data_types([zip_code], [str])
-            self.validate_zip_code(zip_code)
-            self._zip_code = zip_code
+            Assertor.assert_data_types([postal_code], [str])
+            self.validate_postal_code(postal_code)
+            self._postal_code = postal_code
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
         except Exception as posten_exception:
@@ -64,32 +64,32 @@ class Posten(Scraper):
             raise posten_exception
 
     @property
-    def zip_code(self):
+    def postal_code(self):
         """
-        ZIP code getter
+        postal code getter
 
         Returns
         -------
         out     : str
-                  active ZIP code attribute
+                  active postal code attribute
 
         """
-        return self._zip_code
+        return self._postal_code
 
-    @zip_code.setter
-    def zip_code(self, code):
+    @postal_code.setter
+    def postal_code(self, code):
         """
-        ZIP code setter
+        postal code setter
 
         Parameters
         ----------
         code    : str
-                  Zip code to be searched
+                  new postal code to be set
 
         """
         Assertor.assert_data_types([code], [str])
-        self.validate_zip_code(code)
-        self._zip_code = code
+        self.validate_postal_code(code)
+        self._postal_code = code
 
     def response(self):
         """
@@ -102,12 +102,15 @@ class Posten(Scraper):
 
         """
         try:
+            start = time()
             self._browser.open(POSTEN_URL, timeout=TIMEOUT)
             self._browser.select_form(nr=0)
-            self._browser[POSTEN_FORM] = self.zip_code
+            self._browser[POSTEN_FORM] = self.postal_code
             response = self._browser.submit()
+            elapsed = self.elapsed_time(start)
             LOGGER.info(
-                "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
+                "HTTP status code -> POSTEN: [{}: {}] -> elapsed: {}".format(
+                    response.code, responses[response.code], elapsed))
             return response
         except URLError as posten_response_error:
             if str(posten_response_error) == "<urlopen error timed out>":
@@ -119,19 +122,19 @@ class Posten(Scraper):
                 "client or contact system administrator,\nexited with '{}'".format(
                     posten_response_error))
 
-    def zip_code_info(self):
+    def postal_code_info(self):
         """
-        gets Zip code information
+        gets postal code information
 
         Returns
         -------
         out         : dict
-                      dictionary with Zip code informtion
+                      dictionary with postal code information
 
         """
         try:
-            LOGGER.info("trying to retrieve '{}' for -> '{}'".format(self.zip_code_info.__name__,
-                                                                     self.zip_code))
+            LOGGER.info("trying to retrieve '{}' for -> '{}'".format(self.postal_code_info.__name__,
+                                                                     self.postal_code))
             soup = BeautifulSoup(self.response(), "lxml")
             rows = soup.find_all('tr')
             if len(rows) == 2:
@@ -139,16 +142,16 @@ class Posten(Scraper):
                 values = [value.text.strip().upper() if i != 4 else
                           value.text.strip().upper().rsplit(' ', 1)[0] for i, value in
                           enumerate(rows[1].find_all('td'))]
-                LOGGER.success("'{}' successfully retrieved".format(self.zip_code_info.__name__))
+                LOGGER.success("'{}' successfully retrieved".format(self.postal_code_info.__name__))
                 return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
-            raise NotFoundError("'{}' is an invalid zip code".format(self.zip_code))
-        except Exception as zip_code_exception:
-            LOGGER.exception(zip_code_exception)
-            raise zip_code_exception
+            raise NotFoundError("'{}' is an invalid postal code".format(self.postal_code))
+        except Exception as postal_code_exception:
+            LOGGER.exception(postal_code_exception)
+            raise postal_code_exception
 
-    def to_json(self, file_dir: str = "report/json/zip_code"):
+    def to_json(self, file_dir: str = "report/json/postal_code"):
         """
-        save Zip code information to JSON
+        save postal code information to JSON
 
         Parameters
         ----------
@@ -156,5 +159,17 @@ class Posten(Scraper):
                       file directory to save JSON files
 
         """
-        self.save_json(self.zip_code_info(), file_dir=file_dir, file_prefix="ZipCode_")
-        LOGGER.success("'zip_code_info' successfully parsed to JSON at '{}'".format(file_dir))
+        self.save_json(self.postal_code_info(), file_dir=file_dir, file_prefix="PostalCode_")
+        LOGGER.success("'postal_code_info' successfully parsed to JSON at '{}'".format(file_dir))
+
+    @staticmethod
+    def rules():
+        """
+        list of all rules in this scraper
+
+        Returns
+        -------
+        out         : list
+                      all rules in scraper
+        """
+        return ["only_numeric_values", "max_len_four"]

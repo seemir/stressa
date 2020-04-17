@@ -6,8 +6,9 @@ Module with logic for the Scrape Finn Statistics information
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.app.scrapers import FinnStat, FINN_STAT_URL
 from source.util import Assertor
+
+from ...scrapers import FinnStat, FINN_STAT_URL
 
 from .operation import Operation
 

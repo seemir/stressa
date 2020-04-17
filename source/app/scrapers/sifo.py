@@ -8,6 +8,8 @@ Implementation of scaper against sifo budget calculator
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from time import time
+
 import xml.etree.ElementTree as Et
 from http.client import responses
 from urllib.error import URLError
@@ -77,6 +79,7 @@ class Sifo(Scraper):
 
         """
         try:
+            start = time()
             self._browser.open(SIFO_URL, timeout=TIMEOUT)
             self._browser.select_form(SIFO_FORM)
             for prop, value in self.family.sifo_properties().items():
@@ -85,8 +88,10 @@ class Sifo(Scraper):
                 else:
                     self._browser[prop] = [value]
             response = self._browser.submit()
+            elapsed = self.elapsed_time(start)
             LOGGER.info(
-                "HTTP status code -> [{}: {}]".format(response.code, responses[response.code]))
+                "HTTP status code -> SIFO: [{}: {}] -> elapsed: {}".format(
+                    response.code, responses[response.code], elapsed))
             return response
         except URLError as sifo_response_error:
             if str(sifo_response_error) == "<urlopen error timed out>":

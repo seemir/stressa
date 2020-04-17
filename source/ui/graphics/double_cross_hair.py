@@ -89,8 +89,8 @@ class DoubleCrossHair(QObject):
         """
         place = percentile(insert(array(self.x_1), 0, 0), 10)
 
-        self.label_1.setPos(place, int(max(self.y_1) * 1.4))
-        self.label_2.setPos(place, int(max(self.y_2) * 1.4))
+        self.label_1.setPos(place, int(abs(max(self.y_1, key=abs)) * 1.4))
+        self.label_2.setPos(place, int(abs(max(self.y_2, key=abs)) * 1.4))
         self.plot_widget_1.addItem(self.label_1)
         self.plot_widget_2.addItem(self.label_2)
 

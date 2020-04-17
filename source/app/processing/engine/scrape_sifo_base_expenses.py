@@ -8,9 +8,10 @@ Module for operation of Scraping SIFO base expenses
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.app.scrapers import SIFO_URL, Sifo
 from source.domain import Family
 from source.util import Assertor
+
+from ...scrapers import SIFO_URL, Sifo
 
 from .operation import Operation
 

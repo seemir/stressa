@@ -7,8 +7,9 @@ Module with logic for the Scrape Finn Ownership history information
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.app.scrapers import FinnOwnership, FINN_OWNER_URL
 from source.util import Assertor
+
+from ...scrapers import FinnOwnership, FINN_OWNER_URL
 
 from .operation import Operation
 

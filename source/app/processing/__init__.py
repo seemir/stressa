@@ -10,4 +10,5 @@ __email__ = 'samir.adrik@gmail.com'
 
 from .calculate_sifo_expenses import CalculateSifoExpenses
 from .finn_advert_processing import FinnAdvertProcessing
+from .postal_code_extraction import PostalCodeExtraction
 from .engine import *

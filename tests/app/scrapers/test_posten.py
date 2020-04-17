@@ -40,14 +40,14 @@ class TestPosten:
         assert issubclass(posten.__class__, Scraper)
 
     @staticmethod
-    @pt.mark.parametrize("invalid_zip_code_type", [90210, 90210.0, True, [], (), {}])
-    def test_posten_raises_type_error_if_invalid_zip_code_passed(invalid_zip_code_type):
+    @pt.mark.parametrize("invalid_postal_code_type", [90210, 90210.0, True, [], (), {}])
+    def test_posten_raises_type_error_if_invalid_postal_code_passed(invalid_postal_code_type):
         """
-        TypeError thrown if Posten does not get passed a valid zip code type
+        TypeError thrown if Posten does not get passed a valid postal code type
 
         """
         with pt.raises(TypeError):
-            Posten(invalid_zip_code_type)
+            Posten(invalid_postal_code_type)
 
     @staticmethod
     def test_posten_has_uuid4_compatible_id():
@@ -59,27 +59,27 @@ class TestPosten:
         assert UUID(str(posten.id_))
 
     @staticmethod
-    @pt.mark.parametrize("zip_code", ["0010", "0018", "0021", "0026", "0027"])
-    def test_zip_code_gets_set(zip_code):
+    @pt.mark.parametrize("postal_code", ["0010", "0018", "0021", "0026", "0027"])
+    def test_postal_code_gets_set(postal_code):
         """
-        Test that zip code gets set in Posten scraper object
+        Test that postal code gets set in Posten scraper object
 
         """
         posten = Posten("0010")
-        posten.zip_code = zip_code
-        assert posten.zip_code == zip_code
+        posten.postal_code = postal_code
+        assert posten.postal_code == postal_code
 
     @staticmethod
-    @pt.mark.parametrize("invalid_zip_code", ["0", "00", "000", "+0", "0+", "-1"])
-    def test_validate_zip_code_method(invalid_zip_code):
+    @pt.mark.parametrize("invalid_postal_code", ["0", "00", "000", "+0", "0+", "-1"])
+    def test_validate_postal_code_method(invalid_postal_code):
         """
         Test that NotFoundError is thrown for invalid zip_codes
 
         """
         with pt.raises(NotFoundError):
-            Posten(invalid_zip_code)
+            Posten(invalid_postal_code)
         with pt.raises(NotFoundError):
-            Posten.validate_zip_code(invalid_zip_code)
+            Posten.validate_postal_code(invalid_postal_code)
 
     @staticmethod
     def test_posten_response_method():
@@ -93,15 +93,15 @@ class TestPosten:
         assert isinstance(response, response_seek_wrapper)
 
     @staticmethod
-    def test_zip_code_info_method():
+    def test_postal_code_info_method():
         """
-        Test that zip_code_info method return correct content
+        Test that postal_code_info method return correct content
 
         """
         posten = Posten("0010")
         correct_content = {'postnr': '0010', 'poststed': 'OSLO',
                            'kommune': 'OSLO', 'fylke': 'OSLO'}
-        assert posten.zip_code_info() == correct_content
+        assert posten.postal_code_info() == correct_content
 
     @staticmethod
     @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("timed out")))
@@ -127,18 +127,19 @@ class TestPosten:
 
     @staticmethod
     @mock.patch("source.app.scrapers.posten.Posten.response", mock.MagicMock(return_value=""))
-    def test_zip_code_info_throws_not_found_error():
+    def test_postal_code_info_throws_not_found_error():
         """
         Patch that mocks Posten.response() method to return '' and accordingly
-        throws NotFoundError when calling zip_code_info() method
+        throws NotFoundError when calling postal_code_info() method
 
         """
         posten = Posten("0010")
         with pt.raises(NotFoundError):
-            posten.zip_code_info()
+            posten.postal_code_info()
 
     @staticmethod
-    @mock.patch("source.app.scrapers.posten.Posten.zip_code_info", mock.MagicMock(return_value=""))
+    @mock.patch("source.app.scrapers.posten.Posten.postal_code_info",
+                mock.MagicMock(return_value=""))
     def test_to_json():
         """
         Test that staticmethod to_json() produces json file with correct content

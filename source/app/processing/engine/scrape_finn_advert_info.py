@@ -7,8 +7,9 @@ Module with logic for the Scrape Finn advert information
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.app.scrapers import FinnAd, FINN_AD_URL
 from source.util import Assertor
+
+from ...scrapers import FinnAd, FINN_AD_URL
 
 from .operation import Operation
 
@@ -42,7 +43,7 @@ class ScrapeFinnAdvertInfo(Operation):
 
         Returns
         -------
-        dict        : dict
+        out         : dict
                       dictionary with all finn advert information
 
         """

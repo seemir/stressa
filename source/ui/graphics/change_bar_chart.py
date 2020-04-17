@@ -73,7 +73,7 @@ class ChangeBarChart(Chart):
         """
         place = percentile(array(insert(self.x, 0, 0)), 10)
 
-        self.label.setPos(place, int((max(self.y) * 1.4)))
+        self.label.setPos(place, int(abs(max(self.y, key=abs)) * 1.4))
         self.graphics_view.addItem(self.label)
 
     def move_vertical_lines(self, pos):

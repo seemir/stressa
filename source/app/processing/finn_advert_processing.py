@@ -87,7 +87,7 @@ class FinnAdvertProcessing(Process):
     @Profiling
     def input_operation(self, data: dict):
         """
-        method for assigning finn code to finn processing object
+        initial operation in process
 
         Parameters
         ----------
@@ -97,7 +97,7 @@ class FinnAdvertProcessing(Process):
         Returns
         -------
         out              : dict
-                           finn_code saved to object
+                           finn_code saved as signal
 
         """
         Assertor.assert_data_types([data], [dict])
@@ -116,10 +116,11 @@ class FinnAdvertProcessing(Process):
         method for validating finn code
 
         """
-        validate_finn_code = ValidateFinnCode(self.get_signal("input_signal").data["finn_code"])
+        input_signal = self.get_signal("input_signal")
+        validate_finn_code = ValidateFinnCode(input_signal.data["finn_code"])
         self.add_node(validate_finn_code)
 
-        self.add_transition(self.get_signal("input_signal"), validate_finn_code)
+        self.add_transition(input_signal, validate_finn_code)
 
         validated_finn_code = {"finn_code": validate_finn_code.run()}
         validated_finn_code_signal = Signal(validated_finn_code, "Validated Finn Code")
@@ -134,12 +135,11 @@ class FinnAdvertProcessing(Process):
 
         """
         try:
-            validated_finn_code = self.get_signal("validated_finn_code").data
-            scrape_finn_ad_operation = ScrapeFinnAdvertInfo(validated_finn_code["finn_code"])
+            validated_finn_code = self.get_signal("validated_finn_code")
+            scrape_finn_ad_operation = ScrapeFinnAdvertInfo(validated_finn_code.data["finn_code"])
             self.add_node(scrape_finn_ad_operation)
 
-            self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_ad_operation,
-                                label="thread")
+            self.add_transition(validated_finn_code, scrape_finn_ad_operation, label="thread")
 
             finn_ad_info = scrape_finn_ad_operation.run()
             finn_ad_info_signal = Signal(finn_ad_info, "FINN Advert Information",
@@ -159,10 +159,11 @@ class FinnAdvertProcessing(Process):
 
         """
         try:
-            validated_finn_code = self.get_signal("validated_finn_code").data
-            scrape_finn_owner_history = ScrapeFinnOwnershipHistory(validated_finn_code["finn_code"])
+            validated_finn_code = self.get_signal("validated_finn_code")
+            scrape_finn_owner_history = ScrapeFinnOwnershipHistory(
+                validated_finn_code.data["finn_code"])
             self.add_node(scrape_finn_owner_history)
-            self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_owner_history,
+            self.add_transition(validated_finn_code, scrape_finn_owner_history,
                                 label="thread")
             finn_owner_history = scrape_finn_owner_history.run()
             finn_owner_history_signal = Signal(finn_owner_history, "FINN Ownership History")
@@ -181,12 +182,12 @@ class FinnAdvertProcessing(Process):
 
         """
         try:
-            validated_finn_code = self.get_signal("validated_finn_code").data
-            scrape_finn_stat_operation = ScrapeFinnStatisticsInfo(validated_finn_code["finn_code"])
+            validated_finn_code = self.get_signal("validated_finn_code")
+            scrape_finn_stat_operation = ScrapeFinnStatisticsInfo(
+                validated_finn_code.data["finn_code"])
             self.add_node(scrape_finn_stat_operation)
 
-            self.add_transition(self.get_signal("validated_finn_code"), scrape_finn_stat_operation,
-                                label="thread")
+            self.add_transition(validated_finn_code, scrape_finn_stat_operation, label="thread")
 
             finn_stat_info = scrape_finn_stat_operation.run()
             finn_stat_info_signal = Signal(finn_stat_info, "FINN Statistics Information",
