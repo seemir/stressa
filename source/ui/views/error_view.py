@@ -14,10 +14,11 @@ import shutil
 import traceback
 import json
 
+from typing import Union
 import time
 
-from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.QtCore import pyqtSlot, Qt
+from PyQt5.QtWidgets import QDialog
+from PyQt5.QtCore import pyqtSlot, Qt, QObject
 from PyQt5.uic import loadUi
 from loguru import logger
 
@@ -30,7 +31,7 @@ class ErrorView(QDialog):
 
     """
 
-    def __init__(self, parent: QWidget):
+    def __init__(self, parent: Union[QObject, None]):
         """
         Constructor / Instantiate the class
 
@@ -40,14 +41,14 @@ class ErrorView(QDialog):
                       parent class for which this dialog window is part
 
         """
-        Assertor.assert_data_types([parent], [QWidget])
-        super().__init__(parent)
+        Assertor.assert_data_types([parent], [(QObject, type(None))])
+        super().__init__(None)
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/error_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.log_dir = os.path.join(os.path.dirname(__file__), "logs")
 
-    def show_error(self, exception: Exception, meta: dict):
+    def show_error(self, exception: Exception, meta: dict, trace_back=None):
         """
         method for shows an error form with exception, traceback and log information
 
@@ -57,6 +58,8 @@ class ErrorView(QDialog):
                       exception to be added to form
         meta        : dict
                       metadata
+        trace_back  : str, optional
+                      Optional trace_back string
 
         """
         time.sleep(0.2)
@@ -65,7 +68,8 @@ class ErrorView(QDialog):
         Assertor.assert_data_types([exception, meta], [Exception, dict])
         self.ui.tab_widget_error.setCurrentIndex(0)
         self.ui.label_error_text.setText(str(exception))
-        self.ui.plain_text_edit_traceback.setPlainText(traceback.format_exc())
+        self.ui.plain_text_edit_traceback.setPlainText(
+            traceback.format_exc() if not trace_back else trace_back)
         self.ui.plain_text_edit_log.setPlainText(self.read_log(exception))
         self.ui.plain_text_edit_error_meta_data.setPlainText(
             json.dumps(meta, indent=2, ensure_ascii=False))

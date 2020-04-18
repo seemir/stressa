@@ -16,7 +16,7 @@ from .chart import Chart
 
 class ChangeBarChart(Chart):
 
-    def __init__(self, y: list, x: list, graphics_view: PlotWidget, labels: str,
+    def __init__(self, x: list, y: list, graphics_view: PlotWidget, labels: str,
                  units=None, x_labels=None, width=0.4):
         """
         Constructor / Instantiation of class
@@ -87,6 +87,9 @@ class ChangeBarChart(Chart):
         x_idx = where(self.x == x_val)
         y_val = int(self.y[x_idx]) if self.y[x_idx] else 0
         self.vertical_line.setPos(x_val)
+        limits = min(self.x) <= x_val <= max(self.x)
+        if len(self.graphics_view.getViewBox().allChildren()) > 3 and limits:
+            self.highlight_bar_items(x_val, y_val)
 
         return x_val, y_val
 
@@ -107,10 +110,6 @@ class ChangeBarChart(Chart):
         """
         pos = evt[0]
         x_val, y_val = self.move_vertical_lines(pos)
-
-        limits = min(self.x) <= x_val <= max(self.x)
-        if len(self.graphics_view.getViewBox().allChildren()) > 3 and limits:
-            self.highlight_bar_items(x_val, y_val)
 
         x_label_idx = where(array(self.x) == x_val)[0]
         x_label = self.x_time[x_label_idx.item()] if \

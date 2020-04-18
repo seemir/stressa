@@ -89,7 +89,7 @@ class StatisticsModel(Model):
                         getattr(self.parent.ui, "line_edit_" + key).clear()
         for graphics_view in ["hist_data_city_area", "hist_data_municipality", "views_development",
                               "accumulated", "change", "some_statistics"]:
-            getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=False, y=False)
+            getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=True, y=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
                 showValues=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('bottom').setStyle(
@@ -183,7 +183,7 @@ class StatisticsModel(Model):
                                         ("Klikk på annonsen (per dag)",
                                          "Klikk på annonsen (akkumulert)"),
                                         ("", " klikk", "", " klikk"))
-        self.change_plot = ChangeBarChart(dates, change, getattr(self.parent.ui, prefix + "change"),
+        self.change_plot = ChangeBarChart(change, dates, getattr(self.parent.ui, prefix + "change"),
                                           labels="Klikk på annonsen (endring dag-til-dag)",
                                           units=("", " %"), x_labels=dates)
         self.view_plot.connect(self.change_plot, getattr(self.parent.ui, prefix + "change"))
