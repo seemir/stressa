@@ -94,6 +94,12 @@ class StatisticsModel(Model):
                 showValues=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('bottom').setStyle(
                 showValues=False)
+        self.parent.ui.graphics_view_hist_data_city_area.getViewBox().setXLink(
+            self.parent.ui.graphics_view_hist_data_municipality)
+        self.parent.ui.graphics_view_views_development.getViewBox().setXLink(
+            self.parent.ui.graphics_view_accumulated)
+        self.parent.ui.graphics_view_accumulated.getViewBox().setXLink(
+            self.parent.ui.graphics_view_change)
 
     def clear_statistics_info(self, postfix: str):
         """

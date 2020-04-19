@@ -111,7 +111,13 @@ class DoubleCrossHair(QObject):
 
         self.vertical_line_1.setPos(x_val_1)
         self.vertical_line_2.setPos(x_val_1)
-        return x_val_1, y_val_1, x_val_2, y_val_2
+
+        limits = min(self.x_1) <= x_val_1 <= max(self.x_1)
+
+        if len(self.plot_widget_1.getViewBox().allChildren()) > 3 and limits:
+            self.highlight_bar_items(x_val_1, y_val_1, x_val_2, y_val_2)
+
+        return x_val_1, y_val_1, x_val_2, y_val_2, limits
 
     def highlight_bar_items(self, x_val_1, y_val_1, x_val_2, y_val_2):
         """
@@ -135,12 +141,7 @@ class DoubleCrossHair(QObject):
         pos = evt[0]
         if self.plot_widget_1.sceneBoundingRect().contains(
                 pos) or self.plot_widget_2.sceneBoundingRect().contains(pos):
-            x_val_1, y_val_1, x_val_2, y_val_2 = self.move_vertical_lines(pos)
-
-            limits = min(self.x_1) <= x_val_1 <= max(self.x_1)
-
-            if len(self.plot_widget_1.getViewBox().allChildren()) > 3 and limits:
-                self.highlight_bar_items(x_val_1, y_val_1, x_val_2, y_val_2)
+            x_val_1, y_val_1, x_val_2, y_val_2, limits = self.move_vertical_lines(pos)
 
             x_label_idx = where(array(self.x_1) == x_val_1)[0]
             x_label_1 = self.x_time[x_label_idx.item()] if \
