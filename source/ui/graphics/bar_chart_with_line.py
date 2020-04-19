@@ -62,6 +62,7 @@ class BarChartWithLine(Chart):
         pen = mkPen(color="#d2e5f5", style=Qt.DotLine, width=2)
         self.graphics_view.plot(x=self.x, y=self.y, pen=pen, symbol='+', symbolSize=14)
         self.graphics_view.setMenuEnabled(False)
+        self.graphics_view.getViewBox().enableAutoRange()
 
     def table_view_mapping(self):
         """

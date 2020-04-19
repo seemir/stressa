@@ -94,6 +94,7 @@ class StatisticsModel(Model):
                 showValues=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('bottom').setStyle(
                 showValues=False)
+            getattr(self.parent.ui, prefix + graphics_view).getViewBox().enableAutoRange()
         self.parent.ui.graphics_view_hist_data_city_area.getViewBox().setXLink(
             self.parent.ui.graphics_view_hist_data_municipality)
         self.parent.ui.graphics_view_views_development.getViewBox().setXLink(
