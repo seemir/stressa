@@ -62,20 +62,25 @@ class TestScrapeFinnAdvertInfo:
         Test the run method in ScrapeFinnAdvertInfo operation
 
         """
-        assert self.scrape_finn_advert_info.run() == {'finn_adresse': 'Sigyns gate 3, 0260 Oslo',
-                                                      'prisantydning': '70 000 000 kr',
-                                                      'status': 'Ikke solgt',
-                                                      'omkostninger': '1 765 642 kr',
-                                                      'totalpris': '71 765 642 kr',
-                                                      'kommunaleavg': '12 716 kr per år',
-                                                      'boligtype': 'Enebolig',
-                                                      'eieform': 'Eier (Selveier)', 'soverom': '7',
-                                                      'primrrom': '656 m²', 'bruksareal': '831 m²',
-                                                      'bygger': '1918',
-                                                      'energimerking': 'G - mørkegrønn',
-                                                      'tomteareal': '1135 m² (eiet)',
-                                                      'bruttoareal': '947 m²',
-                                                      'formuesverdi': '9 283 581 kr',
-                                                      'finnkode': '144857770',
-                                                      'sistendret': '6. apr. 2020 02:07',
-                                                      'referanse': '3180364'}
+        results = {'finn_adresse': 'Sigyns gate 3, 0260 Oslo',
+                   'prisantydning': '70 000 000 kr',
+                   'status': 'Ikke solgt',
+                   'omkostninger': '1 765 642 kr',
+                   'totalpris': '71 765 642 kr',
+                   'kommunaleavg': '12 716 kr per år',
+                   'boligtype': 'Enebolig',
+                   'eieform': 'Eier (Selveier)', 'soverom': '7',
+                   'primrrom': '656 m²', 'bruksareal': '831 m²',
+                   'bygger': '1918',
+                   'energimerking': 'G - mørkegrønn',
+                   'tomteareal': '1135 m² (eiet)',
+                   'bruttoareal': '947 m²',
+                   'formuesverdi': '9 283 581 kr',
+                   'finnkode': '144857770',
+                   'sistendret': '6. apr. 2020 02:07',
+                   'referanse': '3180364'}
+        for key, val in self.scrape_finn_advert_info.run().items():
+            if key in results.keys():
+                if key == "sistendret":
+                    continue
+                assert val == results[key]
