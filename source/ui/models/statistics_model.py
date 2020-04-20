@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from PyQt5.QtCore import QObject
 
-from source.ui.graphics import BarChart, DoubleBarChart, ChangeBarChart
+from source.ui.graphics import BarChart, DoubleBarChart, ChangeBarChart, RatioChart
 from source.util import Assertor
 
 from .model import Model
@@ -44,6 +44,7 @@ class StatisticsModel(Model):
         self.sales_plot = None
         self.view_plot = None
         self.change_plot = None
+        self.ration_plot = None
 
     def add_statistics_info(self, postfix: str):
         """
@@ -69,6 +70,7 @@ class StatisticsModel(Model):
                 BarChart.clear_graphics(
                     getattr(self.parent.ui, prefix + "hist_data_municipality"))
                 BarChart.clear_graphics(getattr(self.parent.ui, prefix + "hist_data_city_area"))
+                RatioChart.clear_graphics(self.parent.ui.graphics_view_ratio_statistics)
                 if key + postfix in self.data.keys() and self.data[key + postfix]:
                     self.add_sqm_dist_charts(prefix, postfix)
             elif key in ["hist_data_city_area"]:
@@ -88,7 +90,7 @@ class StatisticsModel(Model):
                     if key not in ["municipality", "city_area"]:
                         getattr(self.parent.ui, "line_edit_" + key).clear()
         for graphics_view in ["hist_data_city_area", "hist_data_municipality", "views_development",
-                              "accumulated", "change", "some_statistics"]:
+                              "accumulated", "change", "ratio_statistics"]:
             getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=True, y=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
                 showValues=False)
@@ -97,6 +99,9 @@ class StatisticsModel(Model):
             getattr(self.parent.ui, prefix + graphics_view).getViewBox().enableAutoRange()
         self.parent.ui.graphics_view_hist_data_city_area.getViewBox().setXLink(
             self.parent.ui.graphics_view_hist_data_municipality)
+        self.parent.ui.graphics_view_hist_data_municipality.getViewBox().setXLink(
+            self.parent.ui.graphics_view_ratio_statistics)
+
         self.parent.ui.graphics_view_views_development.getViewBox().setXLink(
             self.parent.ui.graphics_view_accumulated)
         self.parent.ui.graphics_view_accumulated.getViewBox().setXLink(
@@ -137,6 +142,7 @@ class StatisticsModel(Model):
                 DoubleBarChart.clear_graphics(self.parent.graphics_view_views_development)
                 DoubleBarChart.clear_graphics(self.parent.graphics_view_accumulated)
             else:
+                RatioChart.clear_graphics(self.parent.ui.graphics_view_ratio_statistics)
                 getattr(self.parent.ui, "line_edit_" + key).clear()
 
     def add_sqm_dist_charts(self, prefix: str, postfix: str):
@@ -164,7 +170,15 @@ class StatisticsModel(Model):
                                            prefix + "hist_data_city_area"),
                                    getattr(self.parent.ui,
                                            prefix + "hist_data_municipality"),
-                                   labels, precision=-3, width=1000)
+                                   labels, units=(" kr/m²", " salg", " kr/m²", " salg"),
+                                   precision=-3, width=1000)
+        self.ration_plot = RatioChart(list(city_area_sales.keys()),
+                                      list(city_area_sales.values()),
+                                      list(municipality_sales.values()),
+                                      getattr(self.parent.ui, prefix + "ratio_statistics"),
+                                      "Forhold ({})".format(" / ".join(labels)),
+                                      units=(" kr/m²", ""), precision=-3, width=1000)
+        self.sales_plot.connect(self.ration_plot, self.parent.ui.graphics_view_ratio_statistics)
 
     def add_view_charts(self, prefix: str, postfix: str):
         """
@@ -190,7 +204,7 @@ class StatisticsModel(Model):
                                         ("Klikk på annonsen (per dag)",
                                          "Klikk på annonsen (akkumulert)"),
                                         ("", " klikk", "", " klikk"))
-        self.change_plot = ChangeBarChart(change, dates, getattr(self.parent.ui, prefix + "change"),
+        self.change_plot = ChangeBarChart(dates, change, getattr(self.parent.ui, prefix + "change"),
                                           labels="Klikk på annonsen (endring dag-til-dag)",
                                           units=("", " %"), x_labels=dates)
         self.view_plot.connect(self.change_plot, getattr(self.parent.ui, prefix + "change"))

@@ -25,7 +25,7 @@ class BarChart(Chart):
     """
 
     def __init__(self, x_1: list, y_1: list, x_2: list, y_2: list, graphics_view_1: PlotWidget,
-                 graphics_view_2: PlotWidget, labels: tuple, precision=0, width=1):
+                 graphics_view_2: PlotWidget, labels: tuple, units=None, precision=0, width=1):
         """
         Constructor / Instantiation of class
 
@@ -45,6 +45,8 @@ class BarChart(Chart):
                             graphics view to place chart
         labels            : tuple
                             labels for legend
+        units             : tuple, optional
+                            measurement units got labels
         precision         : int
                             precision for rounding, default is zero
         width             : int
@@ -61,6 +63,8 @@ class BarChart(Chart):
 
         self.graphics_view_1 = graphics_view_1
         self.graphics_view_2 = graphics_view_2
+        self.connection_chart = None
+        self.graphics_view_3 = None
 
         self.bar_item_1 = BarGraphItem(x=self.x_1[:-1], height=self.y_1, width=1000,
                                        brush="#d2e5f5")
@@ -69,17 +73,23 @@ class BarChart(Chart):
 
         self.graphics_view_1.addItem(self.bar_item_1)
         self.graphics_view_2.addItem(self.bar_item_2)
+        self.units = units if units else ("", "", "", "")
         self.draw_average_line()
 
         self.cross_hair = DoubleCrossHair(self.x_1[:-1], self.y_1, self.x_2[:-1], self.y_2,
                                           self.graphics_view_1, self.graphics_view_2, labels,
-                                          (" kr/m²", " salg", " kr/m²", " salg"), precision, width)
+                                          self.units, precision, width)
         self.add_cross_hair_to_chart()
 
         self.graphics_view_1.plotItem.vb.setLimits(xMin=min(self.x_1), xMax=max(self.x_1))
         self.graphics_view_2.plotItem.vb.setLimits(xMin=min(self.x_2), xMax=max(self.x_2))
         self.graphics_view_1.setMenuEnabled(False)
         self.graphics_view_2.setMenuEnabled(False)
+
+    def connect(self, chart, plot_widget):
+        self.connection_chart = chart
+        self.graphics_view_3 = plot_widget
+        self.add_cross_hair_to_chart()
 
     def draw_average_line(self):
         """
@@ -100,8 +110,19 @@ class BarChart(Chart):
 
         """
         proxy_mouse_moved_1 = SignalProxy(self.graphics_view_1.scene().sigMouseMoved, rateLimit=60,
-                                          slot=self.cross_hair.mouse_moved)
+                                          slot=self.mouse_moved)
         proxy_mouse_moved_2 = SignalProxy(self.graphics_view_2.scene().sigMouseMoved, rateLimit=60,
-                                          slot=self.cross_hair.mouse_moved)
+                                          slot=self.mouse_moved)
         self.graphics_view_1.proxy = proxy_mouse_moved_1
         self.graphics_view_2.proxy = proxy_mouse_moved_2
+
+        if self.graphics_view_3:
+            proxy_mouse_moved_3 = SignalProxy(self.graphics_view_3.scene().sigMouseMoved,
+                                              rateLimit=60, slot=self.mouse_moved)
+            self.graphics_view_3.proxy = proxy_mouse_moved_3
+
+    def mouse_moved(self, evt):
+        self.cross_hair.mouse_moved(evt)
+        pos = evt[0]
+        if self.graphics_view_3 and self.graphics_view_3.sceneBoundingRect().contains(pos):
+            self.connection_chart.mouse_moved(evt)

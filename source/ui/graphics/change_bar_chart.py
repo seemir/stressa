@@ -40,11 +40,11 @@ class ChangeBarChart(Chart):
 
         """
         super().__init__()
-        Assertor.assert_data_types([x, y, graphics_view, labels, units, x_labels],
+        Assertor.assert_data_types([x, y, graphics_view, labels, units, x_labels, width],
                                    [list, list, PlotWidget, str, (type(None), tuple),
-                                    (type(None), list)])
+                                    (type(None), list), (float, int)])
         self.x = asarray(arange(1, len(x) + 1, 1))
-        self.y = asarray([float(val.replace(" ", "").replace("%", "")) if val else 0 for val in x])
+        self.y = asarray([float(val.replace(" ", "").replace("%", "")) if val else 0 for val in y])
         self.graphics_view = graphics_view
         self.labels = labels
         self.units = units if units else tuple(["" for _ in range(10)])
