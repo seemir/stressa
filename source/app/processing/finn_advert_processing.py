@@ -44,9 +44,14 @@ class FinnAdvertProcessing(Process):
             self.extract()
             self.extract_first_row()
             self.add_to_dataframe_1()
-            self.rate_of_change_1()
-            self.accumulate()
-            self.multiplex_2()
+            try:
+                self.rate_of_change_1()
+                self.accumulate()
+                self.multiplex_2()
+            except Exception as calculation_error:
+                LOGGER.debug(
+                    "calculation not possible due to missing data, exited with '{}'".format(
+                        calculation_error))
             self.check_newest_date()
             self.add_to_dataframe_2()
             self.rate_of_change_2()
@@ -472,7 +477,10 @@ class FinnAdvertProcessing(Process):
         price_change = self.get_signal("price_change_signal")
         multiplex_views = self.get_signal("multiplex_views")
 
-        signals = [multiplexed_data.data, price_change.data, multiplex_views.data]
+        if multiplex_views:
+            signals = [multiplexed_data.data, price_change.data, multiplex_views.data]
+        else:
+            signals = [multiplexed_data.data, price_change.data]
         multiplex_operation = Multiplex(signals, desc="Multiplex Scraped Finn Information "
                                                       "and Ownership History with Price Change")
         self.add_node(multiplex_operation)
