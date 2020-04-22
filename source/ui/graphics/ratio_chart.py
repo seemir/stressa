@@ -1,22 +1,61 @@
 # -*- coding: utf-8 -*-
+"""
+Module containing logic for RatioChart
+
+"""
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from numpy import percentile, array, insert, where
 
-from pyqtgraph import FillBetweenItem, PlotWidget, BarGraphItem, TextItem, InfiniteLine, mkPen
+from pyqtgraph import PlotWidget, BarGraphItem, TextItem, InfiniteLine, mkPen
 from PyQt5.QtCore import Qt
 
 from source.domain import Amount, Percent
+from source.util import Assertor
 
 from .chart import Chart
 
 
 class RatioChart(Chart):
+    """
+    Implementation of the RatioChart graphics used for visualizing the ratio between sqm-prices
+    in area vs municipality.
+
+    """
 
     def __init__(self, x: list, y_1: list, y_2: list, graphics_view: PlotWidget, labels: str,
                  units=None, x_labels=None, precision=0, width=0.4):
+        """
+        Constructor / Instantiate the class
+
+        Parameters
+        ----------
+        x               : list
+                          x-values
+        y_1             : np.ndarray
+                          y-values
+        y_2             : np.ndarray
+                          y-values
+        graphics_view   : PlotWidget
+                          widget to add items
+        labels          : str
+                          legend labels
+        units           : tuple
+                          measurement units for tuple
+        x_labels        : array-like
+                          array of x_labels
+        precision       : int
+                          precision for rounding, default is zero
+        width           : int, float
+                          width of any bars
+
+        """
+        Assertor.assert_data_types(
+            [x, y_1, y_2, graphics_view, labels, units, x_labels, precision, width],
+            [list, list, list, PlotWidget, str, (type(None), tuple), (type(None), list),
+             (float, int), (float, int)])
         super().__init__()
         self.y_1, self.x = self.create_bins(x, y_1, bins=x)
         self.y_2, self.x = self.create_bins(x, y_2, bins=x)
