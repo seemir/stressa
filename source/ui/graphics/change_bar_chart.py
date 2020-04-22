@@ -71,7 +71,7 @@ class ChangeBarChart(Chart):
         method for configuring cross hair
 
         """
-        place = percentile(array(insert(self.x, 0, 0)), 10)
+        place = percentile(array(insert(self.x, 0, 0)), 2)
 
         self.label.setPos(place, int(abs(max(self.y, key=abs)) * 1.4))
         self.graphics_view.addItem(self.label)

@@ -51,7 +51,7 @@ class BarChartWithLine(Chart):
         self.table_view = table_view
         self.label = TextItem()
 
-        place = percentile(insert(array(self.x), 0, 0), 10)
+        place = percentile(insert(array(self.x), 0, 0), 2)
         self.label.setPos(place, int(max(y) * 1.40))
 
         self.label.setText(legend)

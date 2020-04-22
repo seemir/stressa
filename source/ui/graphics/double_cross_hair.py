@@ -87,7 +87,7 @@ class DoubleCrossHair(QObject):
         method for configuring cross hair
 
         """
-        place = percentile(insert(array(self.x_1), 0, 0), 10)
+        place = percentile(insert(array(self.x_1), 0, 0), 2)
 
         self.label_1.setPos(place, int(abs(max(self.y_1, key=abs)) * 1.4))
         self.label_2.setPos(place, int(abs(max(self.y_2, key=abs)) * 1.4))

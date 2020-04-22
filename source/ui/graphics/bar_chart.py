@@ -10,6 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 import numpy as np
 
 from pyqtgraph import BarGraphItem, PlotWidget, mkPen, InfiniteLine, SignalProxy, LinearRegionItem
+from PyQt5.QtGui import QBrush, QColor
 from PyQt5.QtCore import Qt
 
 from source.util import Assertor
@@ -122,8 +123,11 @@ class BarChart(Chart):
         average_line_3 = InfiniteLine(angle=90, movable=False, pen=pen_2)
         average_line_4 = InfiniteLine(angle=90, movable=False, pen=pen_2)
 
-        linear_region_1 = LinearRegionItem([average_1, self.average], movable=False)
-        linear_region_2 = LinearRegionItem([average_2, self.average], movable=False)
+        brush = QBrush(QColor(0, 0, 255, 20))
+        linear_region_1 = LinearRegionItem([average_1, self.average], movable=False,
+                                           brush=brush)
+        linear_region_2 = LinearRegionItem([average_2, self.average], movable=False,
+                                           brush=brush)
         self.graphics_view_1.addItem(linear_region_1)
         self.graphics_view_2.addItem(linear_region_2)
 
