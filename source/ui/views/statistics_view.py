@@ -15,6 +15,8 @@ from PyQt5.uic import loadUi
 
 from source.util import Assertor
 
+from .meta_view import MetaView
+
 from ..models import StatisticsModel
 
 
@@ -42,6 +44,9 @@ class StatisticsView(QDialog):
         self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self._parent = parent
         self._statistics_model = StatisticsModel(self)
+        self._meta_view = MetaView(self)
+
+        self.ui.push_button_meta_data.clicked.connect(self.meta_view.display)
 
     @property
     def parent(self):
@@ -51,7 +56,7 @@ class StatisticsView(QDialog):
         Returns
         -------
         out     : QObject
-                  active parent view for the StatiticsView
+                  active parent view for the StatisticsView
 
         """
         return self._parent
@@ -68,6 +73,19 @@ class StatisticsView(QDialog):
 
         """
         return self._statistics_model
+
+    @property
+    def meta_view(self):
+        """
+        MetaView getter
+
+        Returns
+        -------
+        out     : MetaView
+                  View with the metadata for the Statistics view
+
+        """
+        return self._meta_view
 
     def add_statistics_info(self, postfix):
         """

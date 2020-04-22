@@ -1317,6 +1317,13 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
+          <item row="13" column="2">
+           <widget class="QLineEdit" name="line_edit_municipality_sqm_price">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
           <item row="8" column="2">
            <widget class="QLineEdit" name="line_edit_primrrom">
             <property name="enabled">
@@ -1331,22 +1338,8 @@
             </property>
            </widget>
           </item>
-          <item row="19" column="0">
-           <widget class="QLabel" name="label_ukens_annonse">
-            <property name="text">
-             <string>Ukens annonse</string>
-            </property>
-           </widget>
-          </item>
           <item row="10" column="2">
            <widget class="QLineEdit" name="line_edit_sqm_price">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="19" column="2">
-           <widget class="QLineEdit" name="line_edit_ad_of_the_week">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1359,10 +1352,54 @@
             </property>
            </widget>
           </item>
-          <item row="13" column="2">
-           <widget class="QLineEdit" name="line_edit_municipality_sqm_price">
+          <item row="19" column="0">
+           <widget class="QLabel" name="label_ukens_annonse">
+            <property name="text">
+             <string>Ukens annonse</string>
+            </property>
+           </widget>
+          </item>
+          <item row="19" column="2">
+           <widget class="QLineEdit" name="line_edit_ad_of_the_week">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_bruttoareal">
+            <property name="text">
+             <string>Bruttoareal</string>
+            </property>
+           </widget>
+          </item>
+          <item row="24" column="0">
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Expanding</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>0</width>
+              <height>0</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item row="9" column="2">
+           <widget class="QLineEdit" name="line_edit_bruttoareal">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QLabel" name="label_kvadratmeterpris">
+            <property name="text">
+             <string>Kvadratmeterpris (KMP)</string>
             </property>
            </widget>
           </item>
@@ -1379,47 +1416,24 @@
             </property>
            </widget>
           </item>
-          <item row="23" column="0">
-           <spacer name="verticalSpacer">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Expanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>0</width>
-              <height>0</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLabel" name="label_bruttoareal">
-            <property name="text">
-             <string>Bruttoareal</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="2">
-           <widget class="QLineEdit" name="line_edit_bruttoareal">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0">
-           <widget class="QLabel" name="label_kvadratmeterpris">
-            <property name="text">
-             <string>Kvadratmeterpris (KMP)</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="2">
            <widget class="QLineEdit" name="line_edit_first_published">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="16" column="2">
+           <widget class="QLineEdit" name="line_edit_totalviews">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_publisert">
+            <property name="text">
+             <string>Publisert</string>
             </property>
            </widget>
           </item>
@@ -1433,13 +1447,6 @@
             </property>
             <property name="text">
              <string>FINN kode</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_publisert">
-            <property name="text">
-             <string>Publisert</string>
             </property>
            </widget>
           </item>
@@ -1457,10 +1464,13 @@
             </property>
            </widget>
           </item>
-          <item row="16" column="2">
-           <widget class="QLineEdit" name="line_edit_totalviews">
-            <property name="enabled">
-             <bool>false</bool>
+          <item row="16" column="0">
+           <widget class="QLabel" name="label_visninger">
+            <property name="text">
+             <string>Klikk på annonsen</string>
+            </property>
+            <property name="buddy">
+             <cstring>line_edit_totalviews</cstring>
             </property>
            </widget>
           </item>
@@ -1481,18 +1491,22 @@
             </property>
            </widget>
           </item>
-          <item row="16" column="0">
-           <widget class="QLabel" name="label_visninger">
-            <property name="text">
-             <string>Klikk på annonsen</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_totalviews</cstring>
+          <item row="18" column="2">
+           <widget class="QLineEdit" name="line_edit_normal_traffic">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
-          <item row="18" column="2">
-           <widget class="QLineEdit" name="line_edit_normal_traffic">
+          <item row="20" column="2">
+           <widget class="QLineEdit" name="line_edit_latestemailcount">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="line_edit_property_type">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1512,13 +1526,6 @@
             </property>
            </widget>
           </item>
-          <item row="20" column="2">
-           <widget class="QLineEdit" name="line_edit_latestemailcount">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
           <item row="21" column="2">
            <widget class="QLineEdit" name="line_edit_currentfavorites">
             <property name="enabled">
@@ -1526,10 +1533,20 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="line_edit_property_type">
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="line_edit_price_range">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="20" column="0">
+           <widget class="QLabel" name="label_epost_sent">
+            <property name="text">
+             <string>E-post sent</string>
+            </property>
+            <property name="buddy">
+             <cstring>line_edit_latestemailcount</cstring>
             </property>
            </widget>
           </item>
@@ -1537,13 +1554,6 @@
            <widget class="QLabel" name="label_boligtype">
             <property name="text">
              <string>Eiendomstype</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QLineEdit" name="line_edit_price_range">
-            <property name="enabled">
-             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -1561,20 +1571,10 @@
             </property>
            </widget>
           </item>
-          <item row="20" column="0">
-           <widget class="QLabel" name="label_epost_sent">
-            <property name="text">
-             <string>E-post sent</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_latestemailcount</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="13" column="0">
-           <widget class="QLabel" name="label_municipality_sqm_price">
-            <property name="text">
-             <string>KMP (kommune)</string>
+          <item row="14" column="2">
+           <widget class="QLineEdit" name="line_edit_hist_data_city_area_count">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -1582,6 +1582,13 @@
            <widget class="QLabel" name="label_city_area_sqm_price">
             <property name="text">
              <string>KMP (område)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="13" column="0">
+           <widget class="QLabel" name="label_municipality_sqm_price">
+            <property name="text">
+             <string>KMP (kommune)</string>
             </property>
            </widget>
           </item>
@@ -1599,8 +1606,8 @@
             </property>
            </widget>
           </item>
-          <item row="14" column="2">
-           <widget class="QLineEdit" name="line_edit_hist_data_city_area_count">
+          <item row="15" column="2">
+           <widget class="QLineEdit" name="line_edit_hist_data_municipality_count">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1610,13 +1617,6 @@
            <widget class="QLabel" name="label_sales_municipality">
             <property name="text">
              <string>Salg (kommune)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="15" column="2">
-           <widget class="QLineEdit" name="line_edit_hist_data_municipality_count">
-            <property name="enabled">
-             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -1634,6 +1634,23 @@
             <property name="icon">
              <iconset resource="../../images/img.qrc">
               <normaloff>:/img/history.svg</normaloff>:/img/history.svg</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="23" column="2">
+           <widget class="QPushButton" name="push_button_meta_data">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Metadata</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../images/img.qrc">
+              <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
             </property>
            </widget>
           </item>
