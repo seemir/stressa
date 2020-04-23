@@ -15,6 +15,7 @@ import os
 FINN_AD_URL = "https://finn.no/realestate/homes/ad.html?finnkode="
 FINN_OWNER_URL = "https://finn.no/realestate/ownershiphistory.html?finnkode="
 FINN_STAT_URL = "https://finn.no/pulse/pricepersqm?finnkode="
+FINN_COMMUNITY = "https://profil.nabolag.no/"
 
 PORTALEN_URL = "https://finansportalen.no/feed/v3/bank/boliglan.atom"
 PORTALEN_CRED = tuple(os.environ.get(cred) for cred in ["PORTALEN_USERNAME", "PORTALEN_PASSWORD"])
