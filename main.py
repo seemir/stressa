@@ -20,7 +20,16 @@ QApplication.setAttribute(Qt.AA_DisableHighDpiScaling, True)
 
 
 class Main(QApplication):
+    """
+    Implementation of the main application class
+
+    """
+
     def __init__(self):
+        """
+        Constructor / Instantiate the class
+
+        """
         super().__init__(sys.argv)
 
         self.f = QFile("source/ui/default_theme.qss")
@@ -39,6 +48,10 @@ class Main(QApplication):
 
 
 def except_hook(exc_type, exc_value, exc_tb):
+    """
+    exception hook to handle all exception that are handled by logic in the application
+
+    """
     error_view = ErrorView(None)
     trace_back_list = traceback.format_exception(exc_type, exc_value, exc_tb)
     trace_back = "".join(trace_back_list)

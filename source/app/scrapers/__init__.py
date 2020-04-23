@@ -8,8 +8,9 @@ All reference to Scraper objects in this subpackage
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from .ssb_payload import SsbPayload
 from .finn_ownership import FinnOwnership
+from .finn_community import FinnCommunity
+from .ssb_payload import SsbPayload
 from .finn_stat import FinnStat
 from .portalen import Portalen
 from .scraper import Scraper
