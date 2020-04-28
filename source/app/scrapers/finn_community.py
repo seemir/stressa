@@ -102,6 +102,7 @@ class FinnCommunity(Finn):
                 # with open('data.json', 'w', encoding='utf-8') as f:
                 #     json.dump(info, f, ensure_ascii=False, indent=4)
 
+                return info
             except AttributeError as no_community_statistics_exception:
                 LOGGER.debug("No community statistics found!, exited with '{}'".format(
                     no_community_statistics_exception))

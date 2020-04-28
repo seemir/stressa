@@ -71,7 +71,6 @@ class HistoryModel(Model):
                 BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_historikk,
                                                 self.parent.ui.table_view_historikk)
                 if key + postfix in self.data.keys() and self.data["historikk" + postfix]:
-
                     # table
                     history_data_model = TableModel(DataFrame(self.data[key + postfix]))
                     self.parent.ui.table_view_historikk.setModel(history_data_model)
@@ -114,23 +113,25 @@ class HistoryModel(Model):
 
         """
         Assertor.assert_data_types([postfix], [str])
-        grandparent = self.parent.parent.finn_model
         for key in self._finn_history_keys:
             full_key = key + postfix
             if key == "historikk":
-                if full_key in self.data.keys():
-                    self.data.pop(full_key)
-                if full_key in grandparent.data.keys():
-                    grandparent.data.pop(full_key)
-                if full_key in grandparent.finn_data.keys():
-                    grandparent.finn_data.pop(full_key)
+                self.clear_finn_data(full_key)
                 BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_historikk,
                                                 self.parent.ui.table_view_historikk)
             else:
-                if full_key in self.data.keys():
-                    self.data.pop(full_key)
-                if full_key in grandparent.data.keys():
-                    grandparent.data.pop(full_key)
-                if full_key in grandparent.finn_data.keys():
-                    grandparent.finn_data.pop(full_key)
+                self.clear_finn_data(full_key)
                 getattr(self.parent.ui, "line_edit_" + key).clear()
+
+    def clear_finn_data(self, full_key):
+        """
+        helper method for clearing inputted Finn data
+
+        """
+        grandparent = self.parent.parent.finn_model
+        if full_key in self.data.keys():
+            self.data.pop(full_key)
+        if full_key in grandparent.data.keys():
+            grandparent.data.pop(full_key)
+        if full_key in grandparent.finn_data.keys():
+            grandparent.finn_data.pop(full_key)
