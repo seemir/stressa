@@ -2570,6 +2570,35 @@
       <attribute name="title">
        <string>Mennesker</string>
       </attribute>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="0">
+        <widget class="QGraphicsView" name="graphics_view_age_distribution"/>
+       </item>
+       <item row="0" column="1">
+        <widget class="QGraphicsView" name="graphics_view_relationship_status"/>
+       </item>
+       <item row="0" column="2">
+        <widget class="QGraphicsView" name="graphics_view_income"/>
+       </item>
+       <item row="0" column="3" rowspan="3">
+        <widget class="QTableView" name="table_view_education"/>
+       </item>
+       <item row="0" column="4" rowspan="3">
+        <widget class="QTableView" name="table_view_education_institution"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QTableView" name="table_view_age_distribution"/>
+       </item>
+       <item row="1" column="1" rowspan="2">
+        <widget class="QTableView" name="table_view_relationship_status"/>
+       </item>
+       <item row="1" column="2" rowspan="2">
+        <widget class="QTableView" name="table_view_income"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QTableView" name="table_view_people"/>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="tab_familie">
       <property name="palette">
