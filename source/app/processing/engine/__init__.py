@@ -7,6 +7,7 @@ Workflow engine for controlling and documenting all calculations in application
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from .scrape_finn_community_statistics import ScrapeFinnCommunityStatistics
 from .scrape_finn_ownership_history import ScrapeFinnOwnershipHistory
 from .scrape_finn_statistics_info import ScrapeFinnStatisticsInfo
 from .scrape_sifo_base_expenses import ScrapeSifoBaseExpenses

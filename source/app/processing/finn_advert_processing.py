@@ -13,7 +13,7 @@ from source.util import Assertor, Profiling, LOGGER
 from .engine import Process, InputOperation, Signal, ScrapeFinnAdvertInfo, \
     ScrapeFinnOwnershipHistory, ScrapeFinnStatisticsInfo, Multiplex, OutputSignal, \
     OutputOperation, ValidateFinnCode, Extract, AddRowToDataFrame, RateOfChange, \
-    ExtractFirstRow, CheckNewestDate, Accumulate
+    ExtractFirstRow, CheckNewestDate, Accumulate, ScrapeFinnCommunityStatistics
 
 
 class FinnAdvertProcessing(Process):
@@ -38,7 +38,9 @@ class FinnAdvertProcessing(Process):
             Assertor.assert_data_types([finn_code], [str])
             self.input_operation({"finn_code": finn_code})
             self.validate_finn_code()
-            self.run_parallel([self.scrape_finn_advert_info, self.scrape_finn_statistics_info,
+            self.run_parallel([self.scrape_finn_statistics_info,
+                               self.scrape_finn_community_statistics,
+                               self.scrape_finn_advert_info,
                                self.scrape_finn_ownership_history])
             self._multiplex_info_1 = self.multiplex_1()
             self.extract()
@@ -46,17 +48,16 @@ class FinnAdvertProcessing(Process):
             self.add_to_dataframe_1()
             try:
                 self.rate_of_change_1()
+                self.check_newest_date()
                 self.accumulate()
+                self.add_to_dataframe_2()
                 self.multiplex_2()
             except Exception as calculation_error:
                 LOGGER.debug(
                     "calculation not possible due to missing data, exited with '{}'".format(
                         calculation_error))
-            self.check_newest_date()
-            self.add_to_dataframe_2()
             self.rate_of_change_2()
             self._multiplex_info_2 = self.multiplex_3()
-
             self.output_operation()
             self.end_process()
         except Exception as finn_advert_processing_exception:
@@ -183,7 +184,7 @@ class FinnAdvertProcessing(Process):
     @Profiling
     def scrape_finn_statistics_info(self):
         """
-        method for scraping finn statistics info in finn-processing
+        method for scraping finn view statistics info in finn-processing
 
         """
         try:
@@ -206,6 +207,32 @@ class FinnAdvertProcessing(Process):
             raise scrape_finn_statistics_info_exception
 
     @Profiling
+    def scrape_finn_community_statistics(self):
+        """
+        method for scraping finn community statistics
+
+        """
+        try:
+            validated_finn_code = self.get_signal("validated_finn_code")
+            scrape_finn_community_statistics_operation = ScrapeFinnCommunityStatistics(
+                validated_finn_code.data["finn_code"])
+            self.add_node(scrape_finn_community_statistics_operation)
+
+            self.add_transition(validated_finn_code, scrape_finn_community_statistics_operation,
+                                label="thread")
+            finn_community_statistics = scrape_finn_community_statistics_operation.run()
+            finn_community_statistics_signal = Signal(finn_community_statistics,
+                                                      "FINN Community Statistics",
+                                                      prettify_keys=True, length=6)
+            self.add_signal(finn_community_statistics_signal, "finn_community_statistics")
+
+            self.add_transition(scrape_finn_community_statistics_operation,
+                                finn_community_statistics_signal, label="thread")
+        except Exception as scrape_finn_community_statistics_exception:
+            self.exception_queue.put(scrape_finn_community_statistics_exception)
+            raise scrape_finn_community_statistics_exception
+
+    @Profiling
     def multiplex_1(self):
         """
         method for multiplexing signals
@@ -214,18 +241,21 @@ class FinnAdvertProcessing(Process):
         finn_ad_info = self.get_signal("finn_ad_info")
         finn_owner_history = self.get_signal("finn_owner_history")
         finn_stat_info = self.get_signal("finn_stat_info")
+        finn_community_stat = self.get_signal("finn_community_statistics")
 
-        signals = [finn_ad_info.data, finn_owner_history.data, finn_stat_info.data]
+        signals = [finn_ad_info.data, finn_owner_history.data, finn_stat_info.data,
+                   finn_community_stat.data]
         multiplex_operation = Multiplex(signals, desc="Multiplex Scraped Finn Information")
         self.add_node(multiplex_operation)
 
         self.add_transition(finn_ad_info, multiplex_operation)
         self.add_transition(finn_owner_history, multiplex_operation)
         self.add_transition(finn_stat_info, multiplex_operation)
+        self.add_transition(finn_community_stat, multiplex_operation)
 
         multiplex = multiplex_operation.run()
         multiplex_signal = Signal(multiplex, desc="Multiplexed Finn Information",
-                                  prettify_keys=True, length=14)
+                                  prettify_keys=True, length=9)
         self.add_signal(multiplex_signal, "multiplexed_data")
         self.add_transition(multiplex_operation, multiplex_signal)
         return multiplex

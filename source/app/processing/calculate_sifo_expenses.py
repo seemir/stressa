@@ -127,7 +127,8 @@ class CalculateSifoExpenses(Process):
         self.add_transition(validated_family, sifo_scraper_operation)
 
         sifo_base_expenses = Expenses(sifo_scraper_operation.run())
-        sifo_base_expenses_signal = Signal(sifo_base_expenses.verdi, "SIFO Base Expenses")
+        sifo_base_expenses_signal = Signal(sifo_base_expenses.verdi, "SIFO Base Expenses",
+                                           prettify_keys=True, length=10)
         self.add_signal(sifo_base_expenses_signal, "sifo_base_expenses")
 
         self.add_transition(sifo_scraper_operation, sifo_base_expenses_signal)
@@ -171,7 +172,8 @@ class CalculateSifoExpenses(Process):
         self.add_transition(self.get_signal("sifo_base_expenses"), total_shares, label="quantity")
 
         expenses_shares = total_shares.run()
-        expenses_shares_signal = Signal(expenses_shares, "Shares of Total Monthly Expenses")
+        expenses_shares_signal = Signal(expenses_shares, "Shares of Total Monthly Expenses",
+                                        prettify_keys=True, length=10)
         self.add_signal(expenses_shares_signal, "share_of_total")
 
         self.add_transition(total_shares, expenses_shares_signal)
@@ -190,10 +192,11 @@ class CalculateSifoExpenses(Process):
         self.add_transition(self.get_signal("share_of_total"), output_operation)
         self.add_transition(self.get_signal("sifo_base_expenses"), output_operation)
 
-        self.add_signal(OutputSignal(self._base_expenses, "SIFO Base Expenses"),
-                        "output_base_expenses")
-        self.add_signal(OutputSignal(self._expenses_shares, "Shares of Total Monthly Expenses"),
-                        "output_shares")
+        self.add_signal(OutputSignal(self._base_expenses, "SIFO Base Expenses", prettify_keys=True,
+                                     length=10), "output_base_expenses")
+        self.add_signal(
+            OutputSignal(self._expenses_shares, "Shares of Total Monthly Expenses",
+                         prettify_keys=True, length=10), "output_shares")
 
         self.add_transition(output_operation, self.get_signal("output_base_expenses"))
         self.add_transition(output_operation, self.get_signal("output_shares"))

@@ -68,6 +68,9 @@ class MortgageModel(Model):
         self.parent.ui.line_edit_postnr_1.editingFinished.connect(
             lambda: self.update_line_edits("postnr", self._post_code, PostalCodeExtraction,
                                            "output_operation", postfix="_1"))
+
+        self.parent.ui.line_edit_postnr_1.editingFinished.connect(self.print_pdf)
+
         self.parent.ui.line_edit_epost_1.editingFinished.connect(
             lambda: self.set_line_edit("epost_1", Email, "format_email"))
         self.parent.ui.line_edit_mobil_tlf_1.editingFinished.connect(
@@ -166,3 +169,7 @@ class MortgageModel(Model):
         self.clear_combo_boxes(["kjonn_1", "kjonn_2", "lanetype", "intervall", "laneperiode"])
         self.clear_date_edits(["fodselsdato_1", "fodselsdato_2", "startdato"])
         self.parent.budget_view.clear_all()
+
+    def print_pdf(self):
+        postal_code = PostalCodeExtraction(self.parent.ui.line_edit_postnr_1.text())
+        postal_code.print_pdf()
