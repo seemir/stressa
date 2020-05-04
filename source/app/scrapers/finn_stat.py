@@ -93,8 +93,8 @@ class FinnStat(Finn):
             try:
                 stat_soup = BeautifulSoup(response.content, "lxml")
 
-                # with open('content.html', 'w', encoding='utf-8') as f:
-                #     f.write(stat_soup.prettify())
+                # with open('content.html', 'w', encoding='utf-8') as file:
+                #     file.write(stat_soup.prettify())
 
                 sq_price = \
                     json.loads(stat_soup.find("script", attrs={"id": "area-prices"}).contents[0])[
@@ -122,8 +122,8 @@ class FinnStat(Finn):
                     info.update({"municipality_sqm_price": self.calculate_average(
                         info["hist_data_municipality"]) + " kr/m²"})
 
-                # with open('data.json', 'w', encoding='utf-8') as f:
-                #     json.dump(info, f, ensure_ascii=False, indent=4)
+                # with open('stat_data.json', 'w', encoding='utf-8') as file:
+                #     json.dump(info, file, ensure_ascii=False, indent=4)
 
                 LOGGER.success(
                     "'{}' successfully retrieved".format(self.housing_stat_information.__name__))

@@ -69,7 +69,7 @@ class MortgageModel(Model):
             lambda: self.update_line_edits("postnr", self._post_code, PostalCodeExtraction,
                                            "output_operation", postfix="_1"))
 
-        self.parent.ui.line_edit_postnr_1.editingFinished.connect(self.print_pdf)
+        # self.parent.ui.line_edit_postnr_1.editingFinished.connect(self.print_pdf)
 
         self.parent.ui.line_edit_epost_1.editingFinished.connect(
             lambda: self.set_line_edit("epost_1", Email, "format_email"))
@@ -171,5 +171,9 @@ class MortgageModel(Model):
         self.parent.budget_view.clear_all()
 
     def print_pdf(self):
+        """
+        test method for printing pdf of procedure graph
+
+        """
         postal_code = PostalCodeExtraction(self.parent.ui.line_edit_postnr_1.text())
         postal_code.print_pdf()

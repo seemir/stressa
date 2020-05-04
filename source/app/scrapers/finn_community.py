@@ -93,8 +93,8 @@ class FinnCommunity(Finn):
             try:
                 community_stat_soup = BeautifulSoup(response.content, "lxml")
 
-                # with open('content.html', 'w', encoding='utf-8') as f:
-                #     f.write(stat_soup.prettify())
+                # with open('content.html', 'w', encoding='utf-8') as file:
+                #     file.write(community_stat_soup.prettify())
 
                 nabolag_soup = json.loads(
                     community_stat_soup.find("script", attrs={"id": "__NEXT_DATA__"}).contents[0])
@@ -103,8 +103,8 @@ class FinnCommunity(Finn):
 
                 info.update({"nabolag": nabolag})
 
-                # with open('data.json', 'w', encoding='utf-8') as f:
-                #     json.dump(info, f, ensure_ascii=False, indent=4)
+                # with open('community_data.json', 'w', encoding='utf-8') as file:
+                #     json.dump(info, file, ensure_ascii=False, indent=4)
 
                 return info
             except AttributeError as no_community_statistics_exception:

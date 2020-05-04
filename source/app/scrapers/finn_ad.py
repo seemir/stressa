@@ -7,6 +7,7 @@ Implementation of scarper against Finn.no housing ad search
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+# import json
 from time import time
 import re
 from http.client import responses
@@ -103,11 +104,17 @@ class FinnAd(Finn):
 
                 info = {"finn_adresse": address.text, "prisantydning": price,
                         "status": status.text.capitalize() if status else "Ikke solgt"}
-                keys, values = list(ad_soup.find_all(["th", "dt"])), list(
-                    ad_soup.find_all(["td", "dd"]))
-                info.update(
-                    {re.sub("[^a-z]+", "", key.text.lower()): val.text.strip().replace(u"\xa0", " ")
-                     for key, val in zip(keys, values)})
+                keys, values = list(key.get_text() for key in ad_soup.find_all(["th", "dt"])), \
+                               list(value.get_text() for value in ad_soup.find_all(["td", "dd"]))
+
+                for key, val in zip(keys, values):
+                    key = re.sub("[^a-z]+", "", key.lower())
+                    val = val.strip().replace(u"\xa0", " ")
+                    if (key and len(key) > 3) or key == "rom":
+                        info.update({key: val})
+
+                # with open('advert_data.json', 'w', encoding='utf-8') as file:
+                #     json.dump(info, file, ensure_ascii=False, indent=4)
 
                 LOGGER.success(
                     "'{}' successfully retrieved".format(self.housing_ad_information.__name__))

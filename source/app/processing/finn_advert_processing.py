@@ -276,11 +276,14 @@ class FinnAdvertProcessing(Process):
         self.add_node(extract_history_operation)
         extract_views_development_operation = Extract(multiplexed_data.data, "views_development")
         self.add_node(extract_views_development_operation)
+        extract_community_data_operation = Extract(multiplexed_data.data, "nabolag")
+        self.add_node(extract_community_data_operation)
 
         self.add_transition(multiplexed_data, extract_published_date_operation)
         self.add_transition(multiplexed_data, extract_price_operation)
         self.add_transition(multiplexed_data, extract_history_operation)
         self.add_transition(multiplexed_data, extract_views_development_operation)
+        self.add_transition(multiplexed_data, extract_community_data_operation)
 
         extract_published_date = extract_published_date_operation.run()
         extract_published_date_signal = Signal(extract_published_date,
@@ -292,16 +295,21 @@ class FinnAdvertProcessing(Process):
         extract_views_development = extract_views_development_operation.run()
         extract_views_development_signal = Signal(extract_views_development,
                                                   "Development of Advert Views")
+        extract_community_data = extract_community_data_operation.run()
+        extract_community_data_signal = Signal(extract_community_data,
+                                               "Finn Community / Nabolag JSON")
 
         self.add_signal(extract_published_date_signal, "publish_date")
         self.add_signal(extract_price_signal, "list_price_of_real_estate")
         self.add_signal(extract_history_signal, "ownership_history")
         self.add_signal(extract_views_development_signal, "views_development")
+        self.add_signal(extract_community_data_signal, "community_data")
 
         self.add_transition(extract_published_date_operation, extract_published_date_signal)
         self.add_transition(extract_price_operation, extract_price_signal)
         self.add_transition(extract_history_operation, extract_history_signal)
         self.add_transition(extract_views_development_operation, extract_views_development_signal)
+        self.add_transition(extract_community_data_operation, extract_community_data_signal)
 
     @Profiling
     def extract_first_row(self):
