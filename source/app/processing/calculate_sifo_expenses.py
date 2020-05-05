@@ -32,8 +32,8 @@ class CalculateSifoExpenses(Process):
 
         """
         try:
-            super().__init__(name=self.__class__.__name__)
             self.start_process()
+            super().__init__(name=self.__class__.__name__)
             Assertor.assert_data_types([data], [dict])
             self.input_operation({"data": data})
             self.validate_family()

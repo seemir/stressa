@@ -15,6 +15,8 @@ from .engine import Process, InputOperation, Signal, ScrapeFinnAdvertInfo, \
     OutputOperation, ValidateFinnCode, Extract, AddRowToDataFrame, RateOfChange, \
     ExtractFirstRow, CheckNewestDate, Accumulate, ScrapeFinnCommunityStatistics
 
+from .community_sub_model import CommunitySubModel
+
 
 class FinnAdvertProcessing(Process):
     """
@@ -33,8 +35,8 @@ class FinnAdvertProcessing(Process):
 
         """
         try:
-            super().__init__(name=self.__class__.__name__)
             self.start_process()
+            super().__init__(name=self.__class__.__name__)
             Assertor.assert_data_types([finn_code], [str])
             self.input_operation({"finn_code": finn_code})
             self.validate_finn_code()
@@ -48,6 +50,7 @@ class FinnAdvertProcessing(Process):
             self.add_to_dataframe_1()
             try:
                 self.rate_of_change_1()
+                self.finn_community_process()
                 self.check_newest_date()
                 self.accumulate()
                 self.add_to_dataframe_2()
@@ -358,6 +361,20 @@ class FinnAdvertProcessing(Process):
 
         self.add_signal(rate_of_change_signal, "views_change_signal")
         self.add_transition(rate_of_change_operation, rate_of_change_signal)
+
+    @Profiling
+    def finn_community_process(self):
+        """
+        method for processing community statistics data from Finn
+
+        """
+        community_json = self.get_signal("community_data")
+
+        process_community_data_operation = CommunitySubModel(community_json.data)
+        self.add_node(process_community_data_operation)
+        self.add_transition(community_json, process_community_data_operation)
+
+        process_community_data_operation.run()
 
     @Profiling
     def accumulate(self):

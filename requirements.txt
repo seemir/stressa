@@ -5,12 +5,13 @@ beautifulsoup4==4.9.0
 bs4==0.0.1
 certifi==2020.4.5.1
 chardet==3.0.4
-Click==7.1.2
+click==7.1.2
 codecov==2.0.22
 colorama==0.4.3
 coverage==5.1
 DateTime==4.3
 dnspython==1.16.0
+graphviz==0.14
 helpdev==0.6.10
 hid==1.0.4
 html5lib==1.0.1
@@ -49,6 +50,7 @@ requests==2.23.0
 requests-cache==0.5.2
 six==1.14.0
 soupsieve==2.0
+toml==0.10.0
 typed-ast==1.4.1
 untangle==1.1.1
 urllib3==1.25.9

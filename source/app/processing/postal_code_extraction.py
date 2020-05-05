@@ -31,8 +31,8 @@ class PostalCodeExtraction(Process):
                              Postal Code to be searched
 
         """
-        super().__init__(name=self.__class__.__name__)
         self.start_process()
+        super().__init__(name=self.__class__.__name__)
         Assertor.assert_data_types([postal_code], [str])
         self.input_operation({"postal_code": postal_code})
         self.validate_postal_code()

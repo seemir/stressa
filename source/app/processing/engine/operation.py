@@ -23,7 +23,7 @@ class Operation(Node, ABC):
     """
 
     @abstractmethod
-    def __init__(self, name: str, desc: str):
+    def __init__(self, name: str, desc: str, label: str = None):
         """
         Constructor / Instantiating class
 
@@ -38,8 +38,9 @@ class Operation(Node, ABC):
         Assertor.assert_data_types([name, desc], [str, str])
         self.name = name
         self.desc = desc
+        self.label = "\\<{}\\> \\n {}".format(self.name, self.desc) if not label else label
         super().__init__(name=str(uuid4()), style="filled", fillcolor="gray", shape="record",
-                         label="\\<{}\\> \\n {}".format(self.name, self.desc))
+                         label=self.label)
 
     @abstractmethod
     def run(self):

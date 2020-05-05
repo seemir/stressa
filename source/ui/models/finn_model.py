@@ -105,7 +105,7 @@ class FinnModel(Model):
                 self.parent.history_view.history_model.add_finn_history(postfix)
                 self.data.update(self.parent.history_view.history_model.data)
                 getattr(self.parent.ui, "progress_bar" + postfix).setValue(30)
-                # finn_processing.print_pdf()
+                finn_processing.print_pdf()
             elif finn_code and finn_code in self.data.values():
                 if ("finnkode" + postfix) not in self.data.keys():
                     getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)

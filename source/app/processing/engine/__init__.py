@@ -23,6 +23,7 @@ from .validate_family import ValidateFamily
 from .input_operation import InputOperation
 from .rate_of_change import RateOfChange
 from .output_signal import OutputSignal
+from .sub_model import SubModel
 from .accumulate import Accumulate
 from .operation import Operation
 from .muliplex import Multiplex
