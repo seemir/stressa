@@ -72,7 +72,8 @@ class DoubleCrossHair(QObject):
         pen = mkPen(color="#4c96d7", style=Qt.SolidLine, width=1)
         self.vertical_line_1 = InfiniteLine(angle=90, movable=False, pen=pen)
         self.vertical_line_2 = InfiniteLine(angle=90, movable=False, pen=pen)
-        self.label_1, self.label_2 = TextItem(), TextItem()
+        self.label_1 = TextItem()
+        self.label_2 = TextItem()
         self.labels = labels
         self.units = units if units else tuple(["" for _ in range(10)])
 
@@ -89,8 +90,8 @@ class DoubleCrossHair(QObject):
         """
         place = percentile(insert(array(self.x_1), 0, 0), 2)
 
-        self.label_1.setPos(place, int(abs(max(self.y_1, key=abs)) * 1.4))
-        self.label_2.setPos(place, int(abs(max(self.y_2, key=abs)) * 1.4))
+        self.label_1.setPos(place, int(abs(max(self.y_1, key=abs)) * 1.5))
+        self.label_2.setPos(place, int(abs(max(self.y_2, key=abs)) * 1.5))
         self.plot_widget_1.addItem(self.label_1)
         self.plot_widget_2.addItem(self.label_2)
 
@@ -155,7 +156,13 @@ class DoubleCrossHair(QObject):
             y_label_2 = Amount.format_amount(str(y_val_2)) + self.units[3]
 
             if limits:
-                self.label_1.setText(
-                    "{} \n{} \n({})".format(self.labels[0], x_label_1, y_label_1))
-                self.label_2.setText(
-                    "{} \n{} \n({})".format(self.labels[1], x_label_2, y_label_2))
+                self.label_1.setHtml('<div style="text-align: center">'
+                                     '<span style="font-size: 10pt">{}</span><br>'
+                                     '<span style="font-size: 10pt">{}</span><br>'
+                                     '<span style="font-size: 10pt">({})</span>'
+                                     '</div>'.format(self.labels[0], x_label_1, y_label_1))
+                self.label_2.setHtml('<div style="text-align: center">'
+                                     '<span style="font-size: 10pt">{}</span><br>'
+                                     '<span style="font-size: 10pt">{}</span><br>'
+                                     '<span style="font-size: 10pt">({})</span>'
+                                     '</div>'.format(self.labels[1], x_label_2, y_label_2))

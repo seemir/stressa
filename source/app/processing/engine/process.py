@@ -150,7 +150,7 @@ class Process(Dot, ABC):
         """
         return self._exception_queue
 
-    def add_signal(self, signal: Signal, key=str):
+    def add_signal(self, signal: Signal, key: str):
         """
         method for adding signal to workflow
 

@@ -73,7 +73,7 @@ class ChangeBarChart(Chart):
         """
         place = percentile(array(insert(self.x, 0, 0)), 2)
 
-        self.label.setPos(place, int(abs(max(self.y, key=abs)) * 1.4))
+        self.label.setPos(place, int(abs(max(self.y, key=abs)) * 1.5))
         self.graphics_view.addItem(self.label)
 
     def move_vertical_lines(self, pos):
@@ -118,5 +118,8 @@ class ChangeBarChart(Chart):
         y_label = str(y_val) + self.units[1]
 
         if min(self.x) <= x_val <= max(self.x):
-            self.label.setText(
-                "{} \n{} \n({})".format(self.labels, x_label, y_label))
+            self.label.setHtml('<div style="text-align: center">'
+                               '<span style="font-size: 10pt">{}</span><br>'
+                               '<span style="font-size: 10pt">{}</span><br>'
+                               '<span style="font-size: 10pt">({})</span>'
+                               '</div>'.format(self.labels, x_label, y_label))

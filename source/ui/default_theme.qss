@@ -38,6 +38,10 @@
   font-size: 12px;
 }
 
+.QHeaderView {
+ font-size: 12px;
+}
+
 .QProgressBar::chunk {
   background: #4c96d7;
   width: 10px;

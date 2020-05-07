@@ -84,13 +84,15 @@ class HistoryModel(Model):
                     finn_code = grandparent.finn_model.data["finnkode" + postfix]
                     bolig_type = grandparent.finn_model.data["boligtype" + postfix]
                     status = grandparent.finn_model.data["status" + postfix]
-                    self.bar_plot = BarChartWithLine(self.keys, self.values,
-                                                     self.parent.ui.graphics_view_historikk,
-                                                     self.parent.ui.table_view_historikk,
-                                                     legend="FINN kode: {} \nBoligtype: {} "
-                                                            "\nStatus: {}".format(finn_code,
-                                                                                  bolig_type,
-                                                                                  status))
+                    self.bar_plot = BarChartWithLine(
+                        self.keys, self.values,
+                        self.parent.ui.graphics_view_historikk,
+                        self.parent.ui.table_view_historikk,
+                        legend='<div style="text-align: center">'
+                               '<span style="font-size: 10pt">FINN kode:{}</span><br>'
+                               '<span style="font-size: 10pt">Boligtype: {}</span><br>'
+                               '<span style="font-size: 10pt">(Status: {})</span>'
+                               '</div>'.format(finn_code, bolig_type, status))
                     self.table_view_mapping = self.bar_plot.table_view_mapping()
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()

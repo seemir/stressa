@@ -92,7 +92,7 @@ class RatioChart(Chart):
         """
         place = percentile(array(insert(self.x, 0, 0)), 2)
 
-        self.label.setPos(place, int(abs(max(self.ratio, key=abs)) * 1.4))
+        self.label.setPos(place, int(abs(max(self.ratio, key=abs)) * 1.5))
         self.graphics_view.addItem(self.label)
 
     def move_vertical_lines(self, pos):
@@ -135,6 +135,9 @@ class RatioChart(Chart):
         percent = Percent(str(y_val / 100).replace("[", "").replace("]", ""))
 
         if min(self.x) <= x_val <= max(self.x):
-            self.label.setText(
-                "{}\n {} {}\n({})".format(self.labels, Amount.format_amount(str(x_val)),
-                                          self.units[0], percent.value))
+            self.label.setHtml('<div style="text-align: center">'
+                               '<span style="font-size: 10pt">{}</span><br>'
+                               '<span style="font-size: 10pt">{} {}</span><br>'
+                               '<span style="font-size: 10pt">({})</span>'
+                               '</div>'.format(self.labels, Amount.format_amount(str(x_val)),
+                                               self.units[0], percent.value))

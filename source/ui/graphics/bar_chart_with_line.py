@@ -38,7 +38,7 @@ class BarChartWithLine(Chart):
                           graphics view to place chart
         table_view      : QTableView
                           table view to link graphics_view
-        legend          : str
+        legend          : HTML str
                           legend
 
         """
@@ -52,9 +52,9 @@ class BarChartWithLine(Chart):
         self.label = TextItem()
 
         place = percentile(insert(array(self.x), 0, 0), 2)
-        self.label.setPos(place, int(max(y) * 1.40))
+        self.label.setPos(place, int(max(y) * 1.5))
 
-        self.label.setText(legend)
+        self.label.setHtml(legend)
         self.graphics_view.addItem(self.label, ignore_bounds=True)
 
         self.bar_item = BarGraphItem(x=self.x, height=self.y, width=0.4, brush="#d2e5f5")
