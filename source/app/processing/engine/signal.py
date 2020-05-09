@@ -60,7 +60,7 @@ class Signal(Node, ABC):
             self.keys = self.prettify_dict_keys(keys, length) if prettify_keys else \
                 self.remove_quotation(list(keys), remove_new_line=True)
         else:
-            self.keys = ""
+            self.keys = "None"
         self.desc = desc
         self.data = data
         super().__init__(name=str(uuid4()), shape="record", style=style,

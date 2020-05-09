@@ -100,12 +100,12 @@ class FinnCommunity(Finn):
                     community_stat_soup.find("script", attrs={"id": "__NEXT_DATA__"}).contents[0])
 
                 nabolag = nabolag_soup["props"]["initialState"]["nabolag"]["data"]
+                if not nabolag:
+                    raise AttributeError("empty community data")
 
                 info.update({"nabolag": nabolag})
-
                 # with open('community_data.json', 'w', encoding='utf-8') as file:
                 #     json.dump(info, file, ensure_ascii=False, indent=4)
-
                 return info
             except AttributeError as no_community_statistics_exception:
                 LOGGER.debug("No community statistics found!, exited with '{}'".format(

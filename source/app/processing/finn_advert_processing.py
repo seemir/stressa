@@ -532,7 +532,7 @@ class FinnAdvertProcessing(Process):
         price_change = self.get_signal("price_change_signal")
         multiplex_views = self.get_signal("multiplex_views")
 
-        if multiplex_views and price_change and multiplex_views:
+        if multiplexed_data and price_change and multiplex_views:
             signals = [multiplexed_data.data, price_change.data, multiplex_views.data]
         elif multiplexed_data and price_change:
             signals = [multiplexed_data.data, price_change.data]

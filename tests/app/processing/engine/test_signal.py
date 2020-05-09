@@ -65,7 +65,7 @@ class TestSignal:
         signal2 = Signal(self.desc, self.desc)
 
         assert signal1.keys == Signal.remove_quotation(list(self.signal.__dict__.keys()))
-        assert not signal2.keys
+        assert signal2.keys == "None"
 
     def test_prettify_dict_keys_method(self):
         """
