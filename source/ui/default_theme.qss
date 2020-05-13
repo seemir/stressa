@@ -220,6 +220,10 @@
   background-color: #e7f3ff;
 }
 
+#scroll_area_widget_contents_tracking{
+  background-color: #ffffff;
+}
+
 #scroll_area_widget_contents_error{
   background-color: #e7f3ff;
 }

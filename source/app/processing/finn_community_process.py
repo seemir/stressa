@@ -146,4 +146,4 @@ class FinnCommunityProcess(Process):
         final operation of the process
 
         """
-        # self.print_pdf()
+        self.print_pdf()

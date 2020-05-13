@@ -67,12 +67,23 @@ class ErrorView(QDialog):
             shutil.rmtree(self.log_dir)
         Assertor.assert_data_types([exception, meta], [Exception, dict])
         self.ui.tab_widget_error.setCurrentIndex(0)
-        self.ui.label_error_text.setText(str(exception))
+        error_list = str(exception).split("->")
+        error = error_list[-1].strip()
+        tracking = []
+        for i, element in enumerate(error_list):
+            if i == 0:
+                tracking.append(element + "\n")
+            else:
+                tracking.append("|\n")
+                tracking.append("|" + "__" * i * 2 + element + "\n")
+
+        self.ui.label_error_text.setText(error)
+        self.ui.plain_text_edit_tracking.setPlainText("".join(tracking))
         self.ui.plain_text_edit_traceback.setPlainText(
             traceback.format_exc() if not trace_back else trace_back)
         self.ui.plain_text_edit_log.setPlainText(self.read_log(exception))
         self.ui.plain_text_edit_error_meta_data.setPlainText(
-            json.dumps(meta, indent=2, ensure_ascii=False))
+            json.dumps(meta, indent=4, ensure_ascii=False))
         self.show()
 
     @pyqtSlot()
