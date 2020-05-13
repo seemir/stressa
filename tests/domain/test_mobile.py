@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 import pytest as pt
 
 from source.domain import Mobile, Phone, Value
-from source.util import InvalidMobilePhoneNumberError
+from source.util import TrackingError
 
 
 class TestMobile:
@@ -63,9 +63,9 @@ class TestMobile:
         Test the validate_mobile_number method
 
         """
-        with pt.raises(InvalidMobilePhoneNumberError):
+        with pt.raises(TrackingError):
             self.mobile.number = invalid_mobile_number
-        with pt.raises(InvalidMobilePhoneNumberError):
+        with pt.raises(TrackingError):
             self.mobile.validate_mobile_number(invalid_mobile_number)
 
     def test_mobile_value_object_equal(self):

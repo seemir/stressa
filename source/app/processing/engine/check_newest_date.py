@@ -12,7 +12,7 @@ from typing import Union
 
 from datetime import datetime
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .operation import Operation
 
@@ -23,6 +23,7 @@ class CheckNewestDate(Operation):
 
     """
 
+    @Tracking
     def __init__(self, date_1: Union[dict, None], date_2: Union[dict, None], desc: str):
         """
         Constructor / Instantiate the class.
@@ -44,6 +45,7 @@ class CheckNewestDate(Operation):
         self.date_1 = list(date_1.values())[0] if date_1 else None
         self.date_2 = list(date_2.values())[0] if date_2 else None
 
+    @Tracking
     def run(self):
         """
         method for running operation

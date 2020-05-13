@@ -65,7 +65,7 @@ class Assertor(ABC):
                         "only possible values for '{}' are {}".format(name, value))
 
     @staticmethod
-    def assert_non_negative(numbers):
+    def assert_non_negative(numbers, msg=""):
         """
         Evaluate a non-negative numeric (int, float). Raise ValueError if negative
 
@@ -73,9 +73,10 @@ class Assertor(ABC):
         ----------
         numbers : list, str, int, float
                   number(s) to be evaluated
+        msg     : str
+                  message to display
 
         """
-        msg = "only non-negative numbers accepted"
         if isinstance(numbers, list):
             for number in numbers:
                 if float(number) < 0:

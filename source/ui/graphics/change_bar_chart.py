@@ -113,8 +113,8 @@ class ChangeBarChart(Chart):
 
         x_label_idx = where(array(self.x) == x_val)[0]
         x_label = self.x_time[x_label_idx.item()] if \
-            self.x_time and x_label_idx.size != 0 else Amount.format_amount(
-            str(x_val)) + self.units[0]
+            self.x_time and x_label_idx.size != 0 else \
+            Amount(str(x_val)).amount + self.units[0]
         y_label = str(y_val) + self.units[1]
 
         if min(self.x) <= x_val <= max(self.x):

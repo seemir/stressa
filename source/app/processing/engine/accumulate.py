@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from pandas import DataFrame
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .operation import Operation
 
@@ -21,6 +21,7 @@ class Accumulate(Operation):
 
     """
 
+    @Tracking
     def __init__(self, data: dict, desc: str):
         """
         Constructor / instantiating the class
@@ -38,6 +39,7 @@ class Accumulate(Operation):
         super().__init__(name=self.name, desc="id: {}".format(desc))
         self.data = data
 
+    @Tracking
     def run(self):
         """
         method for running the operation

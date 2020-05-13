@@ -10,6 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 import pytest as pt
 
 from source.app import Operation, RateOfChange
+from source.util import TrackingError
 
 
 class TestRateOfChange:
@@ -43,15 +44,15 @@ class TestRateOfChange:
 
     @pt.mark.parametrize('invalid_dataframe', [True, 'test', 90210, 90210.0, ('test', 'test')])
     @pt.mark.parametrize('invalid_desc', [True, 90210, 90210.0, ('test', 'test'), {}])
-    def test_invalid_args_raises_typeerror(self, invalid_dataframe, invalid_desc):
+    def test_invalid_args_raises_tracking_error(self, invalid_dataframe, invalid_desc):
         """
-        Test that RateOfChange object raises TypeError if dataframe or desc
+        Test that RateOfChange object raises TrackingError if dataframe or desc
         argument are invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             RateOfChange(invalid_dataframe, self.desc)
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             RateOfChange(self.dataframe, invalid_desc)
 
     def test_arguments_gets_set_in_object(self):
@@ -82,6 +83,6 @@ class TestRateOfChange:
         Test the run method in RateOfChange operation
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             rate_of_change = RateOfChange(None, self.desc)
             rate_of_change.run()

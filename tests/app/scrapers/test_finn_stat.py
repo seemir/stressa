@@ -19,7 +19,7 @@ import mock
 import pytest as pt
 
 from source.app import FinnStat, Scraper
-from source.util import NotFoundError, TimeOutError, NoConnectionError
+from source.util import TrackingError
 
 
 class TestFinnStat:
@@ -59,12 +59,12 @@ class TestFinnStat:
     @pt.mark.parametrize("invalid_finn_stat_code", ["1448577", "2448577701", "24485777a"])
     def test_validate_finn_stat_code_method(self, invalid_finn_stat_code):
         """
-        Test that invalid finn_stat_code raises NotFoundError
+        Test that invalid finn_stat_code raises TrackingError
 
         """
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             FinnStat(invalid_finn_stat_code)
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             self.finn_stat.validate_finn_code(invalid_finn_stat_code)
 
     def test_finn_stat_has_uuid4_compatible_id(self):
@@ -83,23 +83,23 @@ class TestFinnStat:
 
     @staticmethod
     @mock.patch("requests.get", mock.MagicMock(side_effect=ConnectTimeout))
-    def test_response_throws_time_out_error():
+    def test_response_throws_tracking_error_for_time_out_error():
         """
-        Test that response method throws TimeOutError if requests.get throws ReadTimeout
+        Test that response method throws TrackingError if requests.get throws ConnectTimeout
 
         """
-        with pt.raises(TimeOutError):
+        with pt.raises(TrackingError):
             finn_stat = FinnStat("144857770")
             finn_stat.stat_response()
 
     @staticmethod
     @mock.patch("requests.get", mock.MagicMock(side_effect=ConnectError))
-    def test_response_throws_no_connection_error():
+    def test_response_throws_tracking_error_for_no_connection_error():
         """
-        Test that response method throws NoConnectionError if requests.get throws ReadTimeout
+        Test that response method throws TrackingError if requests.get throws ConnectError
 
         """
-        with pt.raises(NoConnectionError):
+        with pt.raises(TrackingError):
             finn_stat = FinnStat("144857770")
             finn_stat.stat_response()
 
@@ -122,7 +122,7 @@ class TestFinnStat:
         Test that housing_stat_information captures and raises exception
 
         """
-        with pt.raises(ValueError):
+        with pt.raises(TrackingError):
             self.finn_stat.housing_stat_information()
 
     @mock.patch("source.app.scrapers.finn_stat.FinnStat.housing_stat_information",

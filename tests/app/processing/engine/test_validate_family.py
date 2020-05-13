@@ -10,6 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 import pytest as pt
 
 from source.app import ValidateFamily, Operation
+from source.util import TrackingError
 from source.domain import Family
 
 
@@ -59,12 +60,12 @@ class TestValidateFamily:
 
     @staticmethod
     @pt.mark.parametrize('invalid_data', [True, 'test', 90210, 90210.0, ('test', 'test')])
-    def test_invalid_args_raises_typeerror(invalid_data):
+    def test_invalid_args_raises_tracking_error(invalid_data):
         """
-        Test that validate_family object raises TypeError if data is invalid
+        Test that validate_family object raises TrackingError if data is invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             ValidateFamily(invalid_data)
 
     def test_arguments_gets_set_in_object(self):

@@ -8,7 +8,7 @@ Module containing the Extract Operation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .operation import Operation
 
@@ -19,6 +19,7 @@ class Extract(Operation):
 
     """
 
+    @Tracking
     def __init__(self, data: dict, key: str):
         """
         Constructor / Instantiate the class.
@@ -38,6 +39,7 @@ class Extract(Operation):
         self.data = data
         self.key = key
 
+    @Tracking
     def run(self):
         """
         method for running operation

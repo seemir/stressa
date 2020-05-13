@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 from decimal import Decimal
 
 from source.domain import Share
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .operation import Operation
 
@@ -21,6 +21,7 @@ class Divide(Operation):
 
     """
 
+    @Tracking
     def __init__(self, numerator: dict, denominator: dict, desc: str):
         """
         Constructor / Instantiate the class.
@@ -35,12 +36,13 @@ class Divide(Operation):
                           description
 
         """
-        Assertor.assert_data_types([numerator, denominator, desc], [dict, dict, str])
         self.name = self.__class__.__name__
+        Assertor.assert_data_types([numerator, denominator, desc], [dict, dict, str])
         super().__init__(name=self.name, desc="id: {}".format(desc))
         self.numerator = numerator
         self.denominator = denominator
 
+    @Tracking
     def run(self):
         """
         method for running operation
@@ -52,7 +54,8 @@ class Divide(Operation):
 
         """
         shares = {}
-        den = Decimal(str(list(self.denominator.values())[0]).replace(" ", "").replace("kr", ""))
+        den = Decimal(
+            str(list(self.denominator.values())[0]).replace(" ", "").replace("kr", ""))
         for key, val in self.numerator.items():
             num = Decimal(val.replace(" ", "").replace("kr", ""))
             shares.update({key: Share(num, den).value})

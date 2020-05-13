@@ -9,7 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.domain import Family
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from ...scrapers import SIFO_URL, Sifo
 
@@ -22,6 +22,7 @@ class ScrapeSifoBaseExpenses(Operation):
 
     """
 
+    @Tracking
     def __init__(self, data: Family):
         """
         Constructor / Instantiate the class.
@@ -32,12 +33,13 @@ class ScrapeSifoBaseExpenses(Operation):
                    Sifo compatible Family object with all necessary family information
 
         """
-        Assertor.assert_data_types([data], [Family])
         self.name = self.__class__.__name__
+        Assertor.assert_data_types([data], [Family])
         super().__init__(name=self.name,
                          desc="from: '{}' \\n id: Scrape SIFO Base Expenses".format(SIFO_URL))
         self.data = data
 
+    @Tracking
     def run(self):
         """
         method for running operation

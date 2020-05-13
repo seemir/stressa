@@ -12,6 +12,7 @@ import pytest as pt
 
 from source.app import ScrapeSifoBaseExpenses, Operation
 from source.domain import Male, Female, Family
+from source.util import TrackingError
 
 
 class TestScrapeSifoBaseExpenses:
@@ -40,12 +41,12 @@ class TestScrapeSifoBaseExpenses:
 
     @staticmethod
     @pt.mark.parametrize('invalid_data', [True, 'test', 90210, 90210.0, ('test', 'test')])
-    def test_invalid_args_raises_typeerror(invalid_data):
+    def test_invalid_args_raises_tracking_error(invalid_data):
         """
-        Test that ScrapeSifoBaseExpenses object raises TypeError if data is invalid
+        Test that ScrapeSifoBaseExpenses object raises TrackingError if data is invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             ScrapeSifoBaseExpenses(invalid_data)
 
     def test_arguments_gets_set_in_object(self):

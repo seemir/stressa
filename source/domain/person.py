@@ -10,9 +10,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 from typing import Union
 from bisect import bisect_left
-from abc import abstractmethod
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .entity import Entity
 
@@ -23,8 +22,8 @@ class Person(Entity):
 
     """
 
-    @staticmethod
-    def sifo_age(age: Union[int, float, str]):
+    @Tracking
+    def sifo_age(self, age: Union[int, float, str]):
         """
         Converts age into SIFO compatible str
 
@@ -47,7 +46,6 @@ class Person(Entity):
         sifo_yrs = [0.41, 0.91, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75]
         return str(sifo_yrs[bisect_left(sifo_yrs, age)]) if age <= 75 else str(75)
 
-    @abstractmethod
     def __init__(self, sex: str = 'm', age: Union[int, float, str] = 0, kinder_garden: str = '0',
                  sfo: str = '0'):
         """

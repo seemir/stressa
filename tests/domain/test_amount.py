@@ -12,7 +12,7 @@ from decimal import Decimal
 
 import pytest as pt
 
-from source.util import InvalidAmountError
+from source.util import TrackingError
 from source.domain import Value, Amount
 
 
@@ -65,11 +65,11 @@ class TestAmount:
         Test the static method validate_amount method
 
         """
-        with pt.raises(InvalidAmountError):
+        with pt.raises(TrackingError):
             Amount(invalid_amount)
-        with pt.raises(InvalidAmountError):
+        with pt.raises(TrackingError):
             self.amount.amount = invalid_amount
-        with pt.raises(InvalidAmountError):
+        with pt.raises(TrackingError):
             self.amount.validate_amount(invalid_amount)
 
     @pt.mark.parametrize("invalid_amount", ["one", "ten_", "one_thousand", "ten-thousand"])
@@ -78,7 +78,7 @@ class TestAmount:
         Test that the format_amount method throws InvalidAmountError for invalid amounts
 
         """
-        with pt.raises(InvalidAmountError):
+        with pt.raises(TrackingError):
             self.amount.format_amount(invalid_amount)
 
     def test_amount_value_object_equal(self):

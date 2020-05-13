@@ -8,7 +8,7 @@ Module with logic for currency value object
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import InvalidCurrencyError, Assertor
+from source.util import InvalidCurrencyError, Assertor, Tracking
 
 from .value import Value
 
@@ -19,8 +19,8 @@ class Currency(Value):
 
     """
 
-    @staticmethod
-    def validate_currency(currency: str):
+    @Tracking
+    def validate_currency(self, currency: str):
         """
         method for validating currency string
 
@@ -31,7 +31,8 @@ class Currency(Value):
 
         """
         if currency not in ["kr"]:
-            raise InvalidCurrencyError("'{}' is an unsupported currency".format(currency))
+            raise InvalidCurrencyError(
+                "'{}' is an unsupported currency".format(currency))
 
     def __init__(self, currency: str = "kr"):
         """

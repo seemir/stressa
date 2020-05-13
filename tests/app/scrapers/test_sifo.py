@@ -21,7 +21,7 @@ from mechanize import Browser
 from mechanize._response import response_seek_wrapper
 
 from source.domain import Female, Family, Male
-from source.util import NoConnectionError, TimeOutError
+from source.util import TrackingError
 from source.app import Scraper, Sifo
 
 
@@ -88,19 +88,19 @@ class TestSifo:
     @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("timed out")))
     def test_response_throws_time_out_error_for_read_timeout(self):
         """
-        Test that response method throws TimeOutError
+        Test that response method throws TrackingError if URLError("timed out")
 
         """
-        with pt.raises(TimeOutError):
+        with pt.raises(TrackingError):
             self.sifo.response()
 
     @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("")))
     def test_response_throws_no_connection_error(self):
         """
-        Test that response method throws NoConnectionError
+        Test that response method throws TrackingError if URLError("")
 
         """
-        with pt.raises(NoConnectionError):
+        with pt.raises(TrackingError):
             self.sifo.response()
 
     def test_sifo_response_received(self):

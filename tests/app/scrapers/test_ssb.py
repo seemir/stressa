@@ -20,7 +20,7 @@ import pytest as pt
 import mock
 
 from source.app import Ssb, SsbPayload, Scraper
-from source.util import NoConnectionError, TimeOutError
+from source.util import TrackingError
 
 
 class TestSsb:
@@ -74,21 +74,21 @@ class TestSsb:
         assert self.ssb.payload == payload
 
     @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectError))
-    def test_response_throws_no_connection_error_for_connection_error(self):
+    def test_response_throws_tracking_error_for_connect_error(self):
         """
-        Test that response method throws NotConnectionError if requests.post throws ConnectionError
+        Test that response method throws TrackingError if requests.post throws ConnectError
 
         """
-        with pt.raises(NoConnectionError):
+        with pt.raises(TrackingError):
             self.ssb.response()
 
     @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectTimeout))
-    def test_response_throws_time_out_error_for_readtimeout(self):
+    def test_response_throws_tracking_error_for_readtimeout(self):
         """
-        Test that response method throws TimeOutError if requests.post throws ReadTimeout
+        Test that response method throws TrackingError if requests.post throws ConnectTimeout
 
         """
-        with pt.raises(TimeOutError):
+        with pt.raises(TrackingError):
             self.ssb.response()
 
     def test_ssb_response_method(self):
@@ -114,10 +114,10 @@ class TestSsb:
     def test_ssb_interest_rates_throws_exception(self):
         """
         Patch that mocks Ssb.response() method to return '' and accordingly
-        throws Exception
+        throws TrackingError
 
         """
-        with pt.raises(Exception):
+        with pt.raises(TrackingError):
             self.ssb.ssb_interest_rates()
 
     @mock.patch("source.app.scrapers.ssb.Ssb.ssb_interest_rates", mock.MagicMock(return_value=""))

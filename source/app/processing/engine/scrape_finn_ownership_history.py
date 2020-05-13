@@ -7,7 +7,7 @@ Module with logic for the Scrape Finn Ownership history information
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from ...scrapers import FinnOwnership, FINN_OWNER_URL
 
@@ -20,6 +20,7 @@ class ScrapeFinnOwnershipHistory(Operation):
 
     """
 
+    @Tracking
     def __init__(self, finn_code: str):
         """
         Constructor / Instantiating class
@@ -30,13 +31,14 @@ class ScrapeFinnOwnershipHistory(Operation):
                           finn_code for ad to scrape information from
 
         """
-        Assertor.assert_data_types([finn_code], [str])
         self.name = self.__class__.__name__
-        super().__init__(name=self.name,
+        Assertor.assert_data_types([finn_code], [str])
+        super().__init__(name=self.__class__.__name__,
                          desc="from: '{}\\<[finn_code]\\>' \\n id: Scrape FINN Ownership "
                               "History".format(FINN_OWNER_URL))
         self.finn_code = finn_code
 
+    @Tracking
     def run(self):
         """
         method for running the operation

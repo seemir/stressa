@@ -10,7 +10,9 @@ __email__ = 'samir.adrik@gmail.com'
 
 from .logging import LOGGER, logging
 from .version import __version__
+from .tracking import Tracking
+from .debugger import Debugger
 from .assertor import Assertor
-from .profiling import *
 from .caching import cache
 from .exceptions import *
+from .profiling import *

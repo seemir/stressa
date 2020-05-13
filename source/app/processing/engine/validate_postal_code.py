@@ -7,7 +7,8 @@ Validate Finn code operation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
+
 from ...scrapers import Posten
 
 from .operation import Operation
@@ -19,6 +20,7 @@ class ValidatePostalCode(Operation):
 
     """
 
+    @Tracking
     def __init__(self, postal_code: str):
         """
         Constructor / Instantiate the class.
@@ -29,12 +31,13 @@ class ValidatePostalCode(Operation):
                          postal_code to be validated
 
         """
-        Assertor.assert_data_types([postal_code], [str])
         self.name = self.__class__.__name__
+        Assertor.assert_data_types([postal_code], [str])
         super().__init__(name=self.name,
                          desc="rules: {} \\n id: Validate Postal Code".format(Posten.rules()))
         self.zip_code = postal_code
 
+    @Tracking
     def run(self):
         """
         method for running the operation
@@ -45,5 +48,5 @@ class ValidatePostalCode(Operation):
                       validated Postal Code str
 
         """
-        Posten.validate_postal_code(self.zip_code)
+        Posten(self.zip_code).validate_postal_code()
         return self.zip_code

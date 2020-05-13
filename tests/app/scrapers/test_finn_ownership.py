@@ -19,7 +19,7 @@ from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 import pytest as pt
 
 from source.app import FinnOwnership, Scraper
-from source.util import NotFoundError, TimeOutError, NoConnectionError
+from source.util import TrackingError
 
 
 class TestFinnOwnership:
@@ -59,12 +59,12 @@ class TestFinnOwnership:
     @pt.mark.parametrize("invalid_finn_ownership_code", ["1448577", "2448577701", "24485777a"])
     def test_validate_finn_ownership_code_method(self, invalid_finn_ownership_code):
         """
-        Test that invalid finn_ownership_code raises NotFoundError
+        Test that invalid finn_ownership_code raises TrackingError
 
         """
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             FinnOwnership(invalid_finn_ownership_code)
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             self.finn_ownership.validate_finn_code(invalid_finn_ownership_code)
 
     def test_finn_ownership_has_uuid4_compatible_id(self):
@@ -83,23 +83,23 @@ class TestFinnOwnership:
 
     @staticmethod
     @mock.patch("requests.get", mock.MagicMock(side_effect=ConnectTimeout))
-    def test_response_throws_time_out_error():
+    def test_response_throws_tracking_error_for_time_out():
         """
-        Test that response method throws TimeOutError if requests.get throws ReadTimeout
+        Test that response method throws TrackingError if requests.get throws ConnectTimeout
 
         """
-        with pt.raises(TimeOutError):
+        with pt.raises(TrackingError):
             finn_ownership = FinnOwnership("144857770")
             finn_ownership.ownership_response()
 
     @staticmethod
     @mock.patch("requests.get", mock.MagicMock(side_effect=ConnectError))
-    def test_response_throws_no_connection_error():
+    def test_response_throws_tracking_error_no_connection():
         """
-        Test that response method throws NoConnectionError if requests.get throws ReadTimeout
+        Test that response method throws TrackingError if requests.get throws ConnectError
 
         """
-        with pt.raises(NoConnectionError):
+        with pt.raises(TrackingError):
             finn_ownership = FinnOwnership("144857770")
             finn_ownership.ownership_response()
 
@@ -122,7 +122,7 @@ class TestFinnOwnership:
         Test that housing_ad_information captures and raises exception
 
         """
-        with pt.raises(ValueError):
+        with pt.raises(TrackingError):
             self.finn_ownership.housing_ownership_information()
 
     @mock.patch("source.app.scrapers.finn_ownership.FinnOwnership.housing_ownership_information",

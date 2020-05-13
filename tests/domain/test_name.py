@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import pytest as pt
 
-from source.util import InvalidNameError
+from source.util import TrackingError
 from source.domain import Name, Value
 
 
@@ -62,11 +62,11 @@ class TestName:
         Test the static method validate_name method
 
         """
-        with pt.raises(InvalidNameError):
+        with pt.raises(TrackingError):
             Name(invalid_name)
-        with pt.raises(InvalidNameError):
+        with pt.raises(TrackingError):
             self.name.name = invalid_name
-        with pt.raises(InvalidNameError):
+        with pt.raises(TrackingError):
             self.name.validate_name(invalid_name)
 
     @staticmethod

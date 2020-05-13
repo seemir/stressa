@@ -6,7 +6,7 @@ Module with logic for the Scrape Finn Statistics information
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from ...scrapers import FinnStat, FINN_STAT_URL
 
@@ -19,6 +19,7 @@ class ScrapeFinnStatisticsInfo(Operation):
 
     """
 
+    @Tracking
     def __init__(self, finn_code: str):
         """
         Constructor / Instantiating class
@@ -30,12 +31,12 @@ class ScrapeFinnStatisticsInfo(Operation):
 
         """
         Assertor.assert_data_types([finn_code], [str])
-        self.name = self.__class__.__name__
-        super().__init__(name=self.name,
+        super().__init__(name=self.__class__.__name__,
                          desc="from: '{}\\<[finn_code]\\>' \\n id: Scrape FINN Statistics "
                               "Info".format(FINN_STAT_URL))
         self.finn_code = finn_code
 
+    @Tracking
     def run(self):
         """
         method for running the operation

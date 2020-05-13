@@ -16,7 +16,7 @@ from abc import ABC, abstractmethod
 
 from pydot import Dot, Edge
 
-from source.util import Assertor, __version__, profiling_config, LOGGER
+from source.util import Assertor, __version__, profiling_config, LOGGER, Debugger, Tracking
 
 from .signal import Signal
 
@@ -150,6 +150,7 @@ class Process(Dot, ABC):
         """
         return self._exception_queue
 
+    @Tracking
     def add_signal(self, signal: Signal, key: str):
         """
         method for adding signal to workflow
@@ -159,6 +160,7 @@ class Process(Dot, ABC):
         self.signal.update({key: signal})
         self.add_node(signal)
 
+    @Tracking
     def get_signal(self, key: str):
         """
         method for retrieving a signal from WorkFlow
@@ -180,6 +182,7 @@ class Process(Dot, ABC):
             signal = None
         return signal
 
+    @Tracking
     def add_transition(self, node_1, node_2, label: str = "default"):
         """
         method for adding a transition between nodes in workflow
@@ -198,6 +201,7 @@ class Process(Dot, ABC):
         transition = Edge(node_1, node_2, color=color, label=label)
         self.add_edge(transition)
 
+    @Debugger
     def print_pdf(self):
         """
         method for printing a pdf with the procedure graph

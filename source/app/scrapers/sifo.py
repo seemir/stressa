@@ -15,7 +15,7 @@ from http.client import responses
 from urllib.error import URLError
 
 from source.domain import Family
-from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError
+from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Tracking
 
 from .settings import SIFO_URL, SIFO_FORM, TIMEOUT
 from .scraper import Scraper
@@ -68,6 +68,7 @@ class Sifo(Scraper):
         Assertor.assert_data_types([fam], [Family])
         self._family = fam
 
+    @Tracking
     def response(self):
         """
         Submits and gets response for SIFO request
@@ -96,13 +97,14 @@ class Sifo(Scraper):
         except URLError as sifo_response_error:
             if str(sifo_response_error) == "<urlopen error timed out>":
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system administrator, "
-                    "\nexited with '{}'".format(sifo_response_error))
+                    "Timeout occurred - please try again later or contact system "
+                    "administrator, exited with '{}'".format(sifo_response_error))
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator,\nexited with '{}'".format(
+                "client or contact system administrator, exited with '{}'".format(
                     sifo_response_error))
 
+    @Tracking
     def sifo_base_expenses(self, include_id: bool = False):
         """
         get SIFO base expenses given the family information
@@ -113,29 +115,25 @@ class Sifo(Scraper):
                       dictionary with SIFO expenses
 
         """
+        LOGGER.info("trying to retrieve '{}'".format(self.sifo_base_expenses.__name__))
+        root = Et.fromstring(self.response().read())
 
-        try:
-            LOGGER.info("trying to retrieve '{}'".format(self.sifo_base_expenses.__name__))
-            root = Et.fromstring(self.response().read())
+        expenses = {}
+        for child in root:
+            expenses.update({child.tag: child.text.strip().replace(".", "")})
 
-            expenses = {}
-            for child in root:
-                expenses.update({child.tag: child.text.strip().replace(".", "")})
+        keys = list(expenses.keys())[-17:]
+        values = list(expenses.values())[-17:]
 
-            keys = list(expenses.keys())[-17:]
-            values = list(expenses.values())[-17:]
+        sifo_expenses = {}
+        if include_id:
+            sifo_expenses.update({'_id': self.family.id_})
+        sifo_expenses.update(dict(zip(keys, values)))
 
-            sifo_expenses = {}
-            if include_id:
-                sifo_expenses.update({'_id': self.family.id_})
-            sifo_expenses.update(dict(zip(keys, values)))
+        LOGGER.success("'{}' successfully retrieved".format(self.sifo_base_expenses.__name__))
+        return sifo_expenses
 
-            LOGGER.success("'{}' successfully retrieved".format(self.sifo_base_expenses.__name__))
-            return sifo_expenses
-        except Exception as sifo_expenses_exception:
-            LOGGER.exception(sifo_expenses_exception)
-            raise sifo_expenses_exception
-
+    @Tracking
     def to_json(self, file_dir: str):
         """
         save sifo expenses to JSON

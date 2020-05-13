@@ -19,7 +19,7 @@ from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 import pytest as pt
 
 from source.app import FinnAd, Scraper
-from source.util import NotFoundError, TimeOutError, NoConnectionError
+from source.util import TrackingError
 
 
 class TestFinnAd:
@@ -58,12 +58,12 @@ class TestFinnAd:
     @pt.mark.parametrize("invalid_finn_ad_code", ["1448577", "2448577701", "24485777a"])
     def test_validate_finn_ad_code_method(self, invalid_finn_ad_code):
         """
-        Test that invalid finn_ad_code raises NotFoundError
+        Test that invalid finn_ad_code raises TrackingError
 
         """
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             FinnAd(invalid_finn_ad_code)
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             self.finn_ad.validate_finn_code(invalid_finn_ad_code)
 
     def test_finn_ad_has_uuid4_compatible_id(self):
@@ -82,23 +82,23 @@ class TestFinnAd:
 
     @staticmethod
     @mocker.patch("requests.get", mocker.MagicMock(side_effect=ConnectTimeout))
-    def test_response_throws_time_out_error():
+    def test_response_throws_tracking_error_for_time_out():
         """
-        Test that response method throws TimeOutError if requests.get throws ReadTimeout
+        Test that response method throws TrackingError if requests.get throws ReadTimeout
 
         """
-        with pt.raises(TimeOutError):
+        with pt.raises(TrackingError):
             finn_ad = FinnAd("144857770")
             finn_ad.ad_response()
 
     @staticmethod
     @mocker.patch("requests.get", mocker.MagicMock(side_effect=ConnectError))
-    def test_response_throws_no_connection_error():
+    def test_response_throws_tracking_error_for_no_connection():
         """
-        Test that response method throws NoConnectionError if requests.get throws ReadTimeout
+        Test that response method throws TrackingError if requests.get throws NoConnection
 
         """
-        with pt.raises(NoConnectionError):
+        with pt.raises(TrackingError):
             finn_ad = FinnAd("144857770")
             finn_ad.ad_response()
 
@@ -107,10 +107,10 @@ class TestFinnAd:
                   mocker.MagicMock(return_value=None))
     def test_housing_ad_information_throws_not_found_error_if_none_response():
         """
-        Test that housing_ad_information method throws NotFoundError if ad_response is None
+        Test that housing_ad_information method throws TrackingError if ad_response is None
 
         """
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             finn_ad = FinnAd("144857770")
             finn_ad.housing_ad_information()
 

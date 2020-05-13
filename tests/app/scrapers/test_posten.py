@@ -18,7 +18,7 @@ import mock
 import pytest as pt
 from mechanize._response import response_seek_wrapper
 
-from source.util import NotFoundError, NoConnectionError, TimeOutError
+from source.util import TrackingError
 from source.app import Posten, Scraper
 
 
@@ -73,12 +73,12 @@ class TestPosten:
     @pt.mark.parametrize("invalid_postal_code", ["0", "00", "000", "+0", "0+", "-1"])
     def test_validate_postal_code_method(invalid_postal_code):
         """
-        Test that NotFoundError is thrown for invalid zip_codes
+        Test that TrackingError is thrown for invalid zip_codes
 
         """
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             Posten(invalid_postal_code)
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             Posten.validate_postal_code(invalid_postal_code)
 
     @staticmethod
@@ -105,24 +105,24 @@ class TestPosten:
 
     @staticmethod
     @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("timed out")))
-    def test_response_throws_time_out_error_for_read_timeout():
+    def test_response_throws_tracking_error_for_read_timeout():
         """
-        Test that response method throws TimeOutError
+        Test that response method throws TrackingError if TimeOutError
 
         """
         posten = Posten("0010")
-        with pt.raises(TimeOutError):
+        with pt.raises(TrackingError):
             posten.response()
 
     @staticmethod
     @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("")))
-    def test_response_throws_no_connection_error():
+    def test_response_throws_tracking_error_for_no_connection_error():
         """
-        Test that response method throws NoConnectionError
+        Test that response method throws TrackingError if URLError
 
         """
         posten = Posten("0010")
-        with pt.raises(NoConnectionError):
+        with pt.raises(TrackingError):
             posten.response()
 
     @staticmethod
@@ -130,11 +130,11 @@ class TestPosten:
     def test_postal_code_info_throws_not_found_error():
         """
         Patch that mocks Posten.response() method to return '' and accordingly
-        throws NotFoundError when calling postal_code_info() method
+        throws TrackingError if NotFoundError when calling postal_code_info() method
 
         """
         posten = Posten("0010")
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             posten.postal_code_info()
 
     @staticmethod

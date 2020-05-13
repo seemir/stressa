@@ -13,6 +13,7 @@ from pydot import Node
 import pytest as pt
 
 from source.app import Signal
+from source.util import TrackingError
 
 
 class TestSignal:
@@ -42,14 +43,14 @@ class TestSignal:
             assert issubclass(self.signal.__class__, parent)
 
     @pt.mark.parametrize('invalid_desc', [True, 90210, 90210.0, ('test', 'test'), {}])
-    def test_invalid_args_raises_typeerror(self, invalid_desc):
+    def test_invalid_args_raises_tracking_error(self, invalid_desc):
         """
-        Test that Signal object raises TypeError if desc or style arguments are invalid
+        Test that Signal object raises TrackingError if desc or style arguments are invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             Signal(self.data, invalid_desc, self.style)
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             Signal(self.data, self.desc, invalid_desc)
 
     def test_arguments_gets_set_in_signal(self):
@@ -59,12 +60,12 @@ class TestSignal:
         """
         assert self.signal.data == self.data
         assert self.signal.desc == self.desc
-        assert self.signal.keys == Signal.remove_quotation(list(self.data.keys()))
+        assert self.signal.keys == self.signal.remove_quotation(list(self.data.keys()))
 
         signal1 = Signal(self.signal, self.desc)
         signal2 = Signal(self.desc, self.desc)
 
-        assert signal1.keys == Signal.remove_quotation(list(self.signal.__dict__.keys()))
+        assert signal1.keys == self.signal.remove_quotation(list(self.signal.__dict__.keys()))
         assert signal2.keys == "None"
 
     def test_prettify_dict_keys_method(self):

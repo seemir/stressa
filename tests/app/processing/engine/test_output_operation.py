@@ -10,6 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 import pytest as pt
 
 from source.app import Operation, OutputOperation
+from source.util import TrackingError
 
 
 class TestOutputOperation:
@@ -38,12 +39,12 @@ class TestOutputOperation:
 
     @staticmethod
     @pt.mark.parametrize('invalid_desc', [True, 90210, 90210.0, ('test', 'test'), {}])
-    def test_invalid_args_raises_typeerror(invalid_desc):
+    def test_invalid_args_raises_tracking_error(invalid_desc):
         """
-        Test that OutputOperation object raises TypeError if desc argument are invalid
+        Test that OutputOperation object raises TrackingError if desc argument are invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             OutputOperation(invalid_desc)
 
     def test_arguments_gets_set_in_object(self):

@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import pytest as pt
 
-from source.util import InvalidEmailError
+from source.util import TrackingError
 from source.domain import Email, Value
 
 
@@ -63,11 +63,11 @@ class TestEmail:
         Test the static method validate_email method
 
         """
-        with pt.raises(InvalidEmailError):
+        with pt.raises(TrackingError):
             Email(invalid_email)
-        with pt.raises(InvalidEmailError):
+        with pt.raises(TrackingError):
             self.email.email = invalid_email
-        with pt.raises(InvalidEmailError):
+        with pt.raises(TrackingError):
             self.email.validate_email(invalid_email)
 
     @staticmethod

@@ -16,7 +16,7 @@ from http.client import responses
 from urllib.error import URLError
 from bs4 import BeautifulSoup
 
-from source.util import Assertor, LOGGER, NotFoundError, NoConnectionError, TimeOutError
+from source.util import Assertor, LOGGER, NotFoundError, NoConnectionError, TimeOutError, Tracking
 from .settings import POSTEN_URL, POSTEN_FORM, TIMEOUT
 from .scraper import Scraper
 
@@ -27,20 +27,16 @@ class Posten(Scraper):
 
     """
 
-    @staticmethod
-    def validate_postal_code(postal_code: str):
+    @Tracking
+    def validate_postal_code(self):
         """
         static method for validating Norwegian postal codes
 
-        Parameters
-        ----------
-        postal_code        : str
-                             possible postal code to be validated
-
         """
-        valid_postal = re.compile("[0-9]{4}").search(postal_code)
+        valid_postal = re.compile("[0-9]{4}").search(self.postal_code)
         if not valid_postal:
-            raise NotFoundError("'{}' is an invalid postal code".format(postal_code))
+            raise NotFoundError(
+                "'{}' is an invalid postal code".format(self.postal_code))
 
     def __init__(self, postal_code: str):
         """
@@ -55,8 +51,8 @@ class Posten(Scraper):
         try:
             super().__init__()
             Assertor.assert_data_types([postal_code], [str])
-            self.validate_postal_code(postal_code)
             self._postal_code = postal_code
+            self.validate_postal_code()
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
         except Exception as posten_exception:
@@ -88,9 +84,10 @@ class Posten(Scraper):
 
         """
         Assertor.assert_data_types([code], [str])
-        self.validate_postal_code(code)
         self._postal_code = code
+        self.validate_postal_code()
 
+    @Tracking
     def response(self):
         """
         Submits and gets response for posten request
@@ -115,13 +112,14 @@ class Posten(Scraper):
         except URLError as posten_response_error:
             if str(posten_response_error) == "<urlopen error timed out>":
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system administrator, "
-                    "\nexited with '{}'".format(posten_response_error))
+                    "Timeout occurred - please try again later or contact "
+                    "system administrator, exited with '{}'".format(posten_response_error))
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator,\nexited with '{}'".format(
+                "client or contact system administrator, exited with '{}'".format(
                     posten_response_error))
 
+    @Tracking
     def postal_code_info(self):
         """
         gets postal code information
@@ -132,23 +130,19 @@ class Posten(Scraper):
                       dictionary with postal code information
 
         """
-        try:
-            LOGGER.info("trying to retrieve '{}' for -> '{}'".format(self.postal_code_info.__name__,
-                                                                     self.postal_code))
-            soup = BeautifulSoup(self.response(), "lxml")
-            rows = soup.find_all('tr')
-            if len(rows) == 2:
-                header = [head.text.strip().lower() for head in soup.find_all('th')]
-                values = [value.text.strip().upper() if i != 4 else
-                          value.text.strip().upper().rsplit(' ', 1)[0] for i, value in
-                          enumerate(rows[1].find_all('td'))]
-                LOGGER.success("'{}' successfully retrieved".format(self.postal_code_info.__name__))
-                return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
-            raise NotFoundError("'{}' is an invalid postal code".format(self.postal_code))
-        except Exception as postal_code_exception:
-            LOGGER.exception(postal_code_exception)
-            raise postal_code_exception
+        LOGGER.info("trying to retrieve 'postal_code_info' for -> '{}'".format(self.postal_code))
+        soup = BeautifulSoup(self.response(), "lxml")
+        rows = soup.find_all('tr')
+        if len(rows) == 2:
+            header = [head.text.strip().lower() for head in soup.find_all('th')]
+            values = [value.text.strip().upper() if i != 4 else
+                      value.text.strip().upper().rsplit(' ', 1)[0] for i, value in
+                      enumerate(rows[1].find_all('td'))]
+            LOGGER.success("'postal_code_info' successfully retrieved")
+            return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
+        raise NotFoundError("'{}' is an invalid postal code".format(self.postal_code))
 
+    @Tracking
     def to_json(self, file_dir: str = "report/json/postal_code"):
         """
         save postal code information to JSON

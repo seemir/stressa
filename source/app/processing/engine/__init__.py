@@ -26,7 +26,7 @@ from .output_signal import OutputSignal
 from .sub_model import SubModel
 from .accumulate import Accumulate
 from .operation import Operation
-from .muliplex import Multiplex
+from .multiplex import Multiplex
 from .separate import Separate
 from .process import Process
 from .extract import Extract

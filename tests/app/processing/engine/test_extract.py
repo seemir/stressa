@@ -10,6 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 import pytest as pt
 
 from source.app import Operation, Extract
+from source.util import TrackingError
 
 
 class TestExtract:
@@ -38,14 +39,14 @@ class TestExtract:
 
     @pt.mark.parametrize('invalid_data', [True, 'test', 90210, 90210.0, ('test', 'test')])
     @pt.mark.parametrize('invalid_key', [True, 90210, 90210.0, ('test', 'test'), {}])
-    def test_invalid_args_raises_typeerror(self, invalid_data, invalid_key):
+    def test_invalid_args_raises_tracking_error(self, invalid_data, invalid_key):
         """
-        Test that Extract object raises TypeError if data or desc argument are invalid
+        Test that Extract object raises TrackingError if data or desc argument are invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             Extract(invalid_data, "totalt")
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             Extract(self.data, invalid_key)
 
     def test_arguments_gets_set_in_object(self):

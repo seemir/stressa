@@ -18,7 +18,7 @@ import requests
 from bs4 import BeautifulSoup
 import numpy as np
 
-from source.util import LOGGER, TimeOutError, NoConnectionError, Assertor
+from source.util import LOGGER, TimeOutError, NoConnectionError, Assertor, Tracking
 from source.domain import Amount
 
 from .settings import FINN_STAT_URL, TIMEOUT
@@ -44,6 +44,7 @@ class FinnStat(Finn):
         Assertor.assert_data_types([finn_code], [str])
         super().__init__(finn_code=finn_code)
 
+    @Tracking
     def stat_response(self):
         """
         Response from Finn-no housing statistics search
@@ -67,14 +68,15 @@ class FinnStat(Finn):
                 return stat_response
             except ConnectTimeout as finn_stat_timeout_error:
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system administrator, "
-                    "\nexited with '{}'".format(finn_stat_timeout_error))
+                    "Timeout occurred - please try again later or contact system "
+                    "administrator, exited with '{}'".format(finn_stat_timeout_error))
         except ConnectError as finn_stat_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator,\nexited with '{}'".format(
+                "client or contact system administrator, exited with '{}'".format(
                     finn_stat_response_error))
 
+    @Tracking
     def housing_stat_information(self):
         """
         Retrieve and parse housing ad information from Finn.no search to dict
@@ -84,57 +86,53 @@ class FinnStat(Finn):
         out     : dict
 
         """
+        LOGGER.info(
+            "trying to retrieve 'housing_stat_information' for -> '{}'".format(self.finn_code))
+        response = self.stat_response()
+        info = {}
         try:
-            LOGGER.info(
-                "trying to retrieve '{}' for -> '{}'".format(self.housing_stat_information.__name__,
-                                                             self.finn_code))
-            response = self.stat_response()
-            info = {}
-            try:
-                stat_soup = BeautifulSoup(response.content, "lxml")
+            stat_soup = BeautifulSoup(response.content, "lxml")
 
-                # with open('content.html', 'w', encoding='utf-8') as file:
-                #     file.write(stat_soup.prettify())
+            # with open('content.html', 'w', encoding='utf-8') as file:
+            #     file.write(stat_soup.prettify())
 
-                sq_price = \
-                    json.loads(stat_soup.find("script", attrs={"id": "area-prices"}).contents[0])[
-                        "price"]
+            sq_price = \
+                json.loads(stat_soup.find("script", attrs={"id": "area-prices"}).contents[0])[
+                    "price"]
 
-                info.update({"sqm_price": Amount.format_amount(sq_price) + " kr/m²"})
+            info.update({"sqm_price": Amount(str(sq_price)).amount + " kr/m²"})
 
-                view_statistics_total = json.loads(
-                    stat_soup.find("script", attrs={"id": "ad-summary"}
-                                   ).contents[0])[self.finn_code]
-                view_statistics_detail = json.loads(
-                    stat_soup.find("script", attrs={"id": "ad"}).contents[0])
-                area_sales_statistics = json.loads(
-                    stat_soup.find("script", attrs={"id": "area-sales"}).contents[0])
+            view_statistics_total = json.loads(
+                stat_soup.find("script", attrs={"id": "ad-summary"}
+                               ).contents[0])[self.finn_code]
+            view_statistics_detail = json.loads(
+                stat_soup.find("script", attrs={"id": "ad"}).contents[0])
+            area_sales_statistics = json.loads(
+                stat_soup.find("script", attrs={"id": "area-sales"}).contents[0])
 
-                info.update(self.extract_view_statistics(view_statistics_total, info))
-                info.update(self.extract_detail_view_statistics(view_statistics_detail, info))
-                info.update(self.extract_area_sales_statistics(area_sales_statistics, info))
+            info.update(self.extract_view_statistics(view_statistics_total, info))
+            info.update(self.extract_detail_view_statistics(view_statistics_detail, info))
+            info.update(self.extract_area_sales_statistics(area_sales_statistics, info))
 
-                if all(name in info.keys() for name in ["hist_data_city_area",
-                                                        "hist_data_municipality"]):
-                    info.update(
-                        {"city_area_sqm_price": self.calculate_average(
-                            info["hist_data_city_area"]) + " kr/m²"})
-                    info.update({"municipality_sqm_price": self.calculate_average(
-                        info["hist_data_municipality"]) + " kr/m²"})
+            if all(name in info.keys() for name in ["hist_data_city_area",
+                                                    "hist_data_municipality"]):
+                info.update(
+                    {"city_area_sqm_price": self.calculate_average(
+                        info["hist_data_city_area"]) + " kr/m²"})
+                info.update({"municipality_sqm_price": self.calculate_average(
+                    info["hist_data_municipality"]) + " kr/m²"})
 
-                # with open('stat_data.json', 'w', encoding='utf-8') as file:
-                #     json.dump(info, file, ensure_ascii=False, indent=4)
+            # with open('stat_data.json', 'w', encoding='utf-8') as file:
+            #     json.dump(info, file, ensure_ascii=False, indent=4)
 
-                LOGGER.success(
-                    "'{}' successfully retrieved".format(self.housing_stat_information.__name__))
-                return info
-            except AttributeError as no_ownership_history_exception:
-                LOGGER.debug("No housing statistics found!, exited with '{}'".format(
-                    no_ownership_history_exception))
-        except Exception as housing_stat_information_exception:
-            LOGGER.exception(housing_stat_information_exception)
-            raise housing_stat_information_exception
+            LOGGER.success("'housing_stat_information' successfully retrieved")
 
+            return info
+        except AttributeError as no_ownership_history_exception:
+            LOGGER.debug("[{}] No housing statistics found!, exited with '{}'".format(
+                self.__class__.__name__, no_ownership_history_exception))
+
+    @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):
         """
         save statistics information to JSON file
@@ -145,8 +143,8 @@ class FinnStat(Finn):
         LOGGER.success(
             "'housing_stat_information' successfully parsed to JSON at '{}'".format(file_dir))
 
-    @staticmethod
-    def extract_view_statistics(total_view_statistics: dict, info: dict):
+    @Tracking
+    def extract_view_statistics(self, total_view_statistics: dict, info: dict):
         """
         method for extracting the total view statistics
 
@@ -166,11 +164,11 @@ class FinnStat(Finn):
         Assertor.assert_data_types([total_view_statistics, info], [dict, dict])
         for prop, value in total_view_statistics.items():
             if isinstance(value, (int, float)):
-                info.update({prop.lower(): Amount.format_amount(str(value))})
+                info.update({prop.lower(): Amount(str(value)).amount})
         return info
 
-    @staticmethod
-    def extract_detail_view_statistics(detail_view_statistics: dict, info: dict):
+    @Tracking
+    def extract_detail_view_statistics(self, detail_view_statistics: dict, info: dict):
         """
         method for extracting the detail view statistics
 
@@ -231,7 +229,7 @@ class FinnStat(Finn):
 
             elif prop.lower() == "totals":
                 for key, val in value.items():
-                    info.update({key.lower(): Amount.format_amount(val)})
+                    info.update({key.lower(): Amount(str(val)).amount})
             elif prop.lower() == "performance":
                 if "description" in value.keys():
                     for key, val in value["description"].items():
@@ -246,8 +244,8 @@ class FinnStat(Finn):
                             info.update({key.lower(): val})
         return info
 
-    @staticmethod
-    def extract_area_sales_statistics(areal_sales_statistics: dict, info: dict):
+    @Tracking
+    def extract_area_sales_statistics(self, areal_sales_statistics: dict, info: dict):
         """
         method for extracting the detail view statistics
 
@@ -283,14 +281,14 @@ class FinnStat(Finn):
                         historical_values.update({int(key): int(val)})
                     info.update({historical_data_names[i]: historical_values})
                     info.update(
-                        {historical_data_names[i] + "_count": Amount.format_amount(
-                            str(sum(historical_values.values())))})
+                        {historical_data_names[i] + "_count": Amount(
+                            str(sum(historical_values.values()))).amount})
             if all(name in info.keys() for name in historical_data_names):
-                FinnStat.harmonize_data_sets(info)
+                self.harmonize_data_sets(info)
         return info
 
-    @staticmethod
-    def harmonize_data_sets(info):
+    @Tracking
+    def harmonize_data_sets(self, info):
         """
         method for harmonize data sets
 
@@ -322,8 +320,8 @@ class FinnStat(Finn):
                 city_area_values.update({key: info["hist_data_city_area"][key]})
         info.update({"hist_data_city_area": city_area_values})
 
-    @staticmethod
-    def calculate_average(elements: dict):
+    @Tracking
+    def calculate_average(self, elements: dict):
         """
         method for calculating the average
 
@@ -343,4 +341,5 @@ class FinnStat(Finn):
         for price, num in elements.items():
             products.append(int(price) * num)
             sums += num
-        return Amount.format_amount(str(round(sum(products) / sums)))
+        average = Amount(str(round(sum(products) / sums))).amount
+        return average

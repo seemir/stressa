@@ -8,7 +8,7 @@ Module for the processing of Finn advert information
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor, Profiling, LOGGER
+from source.util import Assertor, Profiling, LOGGER, Tracking
 
 from .engine import Process, InputOperation, Signal, ScrapeFinnAdvertInfo, \
     ScrapeFinnOwnershipHistory, ScrapeFinnStatisticsInfo, Multiplex, OutputSignal, \
@@ -24,6 +24,7 @@ class FinnAdvertProcessing(Process):
 
     """
 
+    @Tracking
     def __init__(self, finn_code: str):
         """
         Constructor / Instantiate the class
@@ -34,38 +35,34 @@ class FinnAdvertProcessing(Process):
                       Finn-code to be search finn-advert information
 
         """
+        self.start_process()
+        super().__init__(name=self.__class__.__name__)
+        Assertor.assert_data_types([finn_code], [str])
+        self.input_operation({"finn_code": finn_code})
+        self.validate_finn_code()
+        self.run_parallel([self.scrape_finn_statistics_info,
+                           self.scrape_finn_community_statistics,
+                           self.scrape_finn_advert_info,
+                           self.scrape_finn_ownership_history])
+        self._multiplex_info_1 = self.multiplex_1()
+        self.extract()
         try:
-            self.start_process()
-            super().__init__(name=self.__class__.__name__)
-            Assertor.assert_data_types([finn_code], [str])
-            self.input_operation({"finn_code": finn_code})
-            self.validate_finn_code()
-            self.run_parallel([self.scrape_finn_statistics_info,
-                               self.scrape_finn_community_statistics,
-                               self.scrape_finn_advert_info,
-                               self.scrape_finn_ownership_history])
-            self._multiplex_info_1 = self.multiplex_1()
-            self.extract()
             self.extract_first_row()
             self.add_to_dataframe_1()
-            try:
-                self.rate_of_change_1()
-                self.finn_community_process()
-                self.check_newest_date()
-                self.accumulate()
-                self.add_to_dataframe_2()
-                self.multiplex_2()
-                self.rate_of_change_2()
-            except Exception as calculation_error:
-                LOGGER.debug(
-                    "calculation not possible due to missing data, exited with '{}'".format(
-                        calculation_error))
-            self._multiplex_info_2 = self.multiplex_3()
-            self.output_operation()
-            self.end_process()
-        except Exception as finn_advert_processing_exception:
-            LOGGER.exception(finn_advert_processing_exception)
-            raise finn_advert_processing_exception
+            self.rate_of_change_1()
+            self.finn_community_process()
+            self.check_newest_date()
+            self.accumulate()
+            self.add_to_dataframe_2()
+            self.multiplex_2()
+            self.rate_of_change_2()
+        except Exception as calculation_error:
+            LOGGER.debug(
+                "[{}] Calculation not possible due to missing data, exited with '{}'".format(
+                    self.__class__.__name__, calculation_error))
+        self._multiplex_info_2 = self.multiplex_3()
+        self.output_operation()
+        self.end_process()
 
     @property
     def multiplex_info_1(self):
@@ -94,6 +91,7 @@ class FinnAdvertProcessing(Process):
         return self._multiplex_info_2
 
     @Profiling
+    @Tracking
     def input_operation(self, data: dict):
         """
         initial operation in process
@@ -120,6 +118,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(input_operation, input_signal)
 
     @Profiling
+    @Tracking
     def validate_finn_code(self):
         """
         method for validating finn code
@@ -138,6 +137,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(validate_finn_code, validated_finn_code_signal)
 
     @Profiling
+    @Tracking
     def scrape_finn_advert_info(self):
         """
         method for scraping finn advert info in finn-processing
@@ -162,6 +162,7 @@ class FinnAdvertProcessing(Process):
             raise scrape_finn_ad_info_exception
 
     @Profiling
+    @Tracking
     def scrape_finn_ownership_history(self):
         """
         method for scraping finn ownership history in finn-processing
@@ -185,6 +186,7 @@ class FinnAdvertProcessing(Process):
             raise scrape_finn_ownership_history_exception
 
     @Profiling
+    @Tracking
     def scrape_finn_statistics_info(self):
         """
         method for scraping finn view statistics info in finn-processing
@@ -210,6 +212,7 @@ class FinnAdvertProcessing(Process):
             raise scrape_finn_statistics_info_exception
 
     @Profiling
+    @Tracking
     def scrape_finn_community_statistics(self):
         """
         method for scraping finn community statistics
@@ -236,6 +239,7 @@ class FinnAdvertProcessing(Process):
             raise scrape_finn_community_statistics_exception
 
     @Profiling
+    @Tracking
     def multiplex_1(self):
         """
         method for multiplexing signals
@@ -264,6 +268,7 @@ class FinnAdvertProcessing(Process):
         return multiplex
 
     @Profiling
+    @Tracking
     def extract(self):
         """
         method for extracting prisantydning and history from the multiplexed dictionary
@@ -315,6 +320,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(extract_community_data_operation, extract_community_data_signal)
 
     @Profiling
+    @Tracking
     def extract_first_row(self):
         """
         method for extracting first row from ownership history
@@ -331,6 +337,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(extract_first_row_operation, extract_first_row_signal)
 
     @Profiling
+    @Tracking
     def rate_of_change_1(self):
         """
         method for calculating rate of change in views vector
@@ -363,6 +370,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(rate_of_change_operation, rate_of_change_signal)
 
     @Profiling
+    @Tracking
     def finn_community_process(self):
         """
         method for processing community statistics data from Finn
@@ -377,6 +385,7 @@ class FinnAdvertProcessing(Process):
         process_community_data_operation.run()
 
     @Profiling
+    @Tracking
     def accumulate(self):
         """
         method for accumulating the values in dataframe column
@@ -397,6 +406,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(accumulate_operation, accumulate_signal)
 
     @Profiling
+    @Tracking
     def multiplex_2(self):
         """
         multiplexing the accumulated sum of views with the views development
@@ -418,6 +428,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(multiplex_operation, multiplex_signal)
 
     @Profiling
+    @Tracking
     def check_newest_date(self):
         """
         method for checking which of two dates are the newest date
@@ -447,6 +458,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(check_newest_date_operation, not_sold_signal, label="false")
 
     @Profiling
+    @Tracking
     def add_to_dataframe_1(self):
         """
         method for adding prisantydning to ownership history dataframe
@@ -472,6 +484,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(add_row_to_dataframe_operation, add_row_to_dataframe_signal)
 
     @Profiling
+    @Tracking
     def add_to_dataframe_2(self):
         """
         method for adding final sales price (if sold) to ownership history dataframe
@@ -501,6 +514,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(add_row_to_dataframe_operation, add_row_to_dataframe_signal)
 
     @Profiling
+    @Tracking
     def rate_of_change_2(self):
         """
         method for calculating percentage change in prices
@@ -522,6 +536,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(price_change_operation, price_change_signal)
 
     @Profiling
+    @Tracking
     def multiplex_3(self):
         """
         second method for multiplexing signals
@@ -555,6 +570,7 @@ class FinnAdvertProcessing(Process):
         return multiplex
 
     @Profiling
+    @Tracking
     def output_operation(self):
         """
         final method call in process

@@ -18,7 +18,7 @@ from requests.exceptions import ReadTimeout, ConnectionError as ConnectError
 import mock
 import pytest as pt
 
-from source.util import NoConnectionError, NotFoundError, TimeOutError
+from source.util import TrackingError
 from source.app import Portalen, Scraper
 
 
@@ -57,7 +57,7 @@ class TestPortalen:
         Test that response method returns HTTP code 200: OK
 
         """
-        response = self.portalen.response()
+        response = self.portalen.portalen_response()
         assert response.status_code == 200
         assert isinstance(response, Response)
 
@@ -71,35 +71,36 @@ class TestPortalen:
 
     @staticmethod
     @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectError))
-    def test_response_throws_no_connection_error_for_connection_error():
+    def test_response_throws_tracking_error_for_connection_error():
         """
-        Test that response method throws NotConnectionError if requests.post throws ConnectionError
+        Test that response method throws TrackingError if requests.post throws ConnectionError
 
         """
         portalen = Portalen()
-        with pt.raises(NoConnectionError):
-            portalen.response()
+        with pt.raises(TrackingError):
+            portalen.portalen_response()
 
     @staticmethod
     @mock.patch("requests.post", mock.MagicMock(side_effect=ReadTimeout))
-    def test_response_throws_time_out_error_for_read_timeout():
+    def test_response_throws_tracking_error_for_for_read_timeout():
         """
-        Test that response method throws TimeOutError if requests.post throws ReadTimeout
+        Test that response method throws TrackingError if requests.post throws ReadTimeout
 
         """
         portalen = Portalen()
-        with pt.raises(TimeOutError):
-            portalen.response()
+        with pt.raises(TrackingError):
+            portalen.portalen_response()
 
     @staticmethod
-    @mock.patch("source.app.scrapers.portalen.Portalen.response", mock.MagicMock(return_value=None))
+    @mock.patch("source.app.scrapers.portalen.Portalen.portalen_response",
+                mock.MagicMock(return_value=None))
     def test_mortgage_offers_throws_not_found_error_for_none_response():
         """
-        Test that mortgage offers method throws NotFoundError if response is None
+        Test that mortgage offers method throws TrackingError if response is None
 
         """
         portalen = Portalen()
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             portalen.mortgage_offers()
 
     @mock.patch("source.app.scrapers.portalen.Portalen.mortgage_offers",

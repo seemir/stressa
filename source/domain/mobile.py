@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import InvalidMobilePhoneNumberError, Assertor
+from source.util import InvalidMobilePhoneNumberError, Assertor, Tracking
 
 from .phone import Phone
 
@@ -66,6 +66,7 @@ class Mobile(Phone):
         self.validate_mobile_number(new_mobile_number)
         self._number = new_mobile_number
 
+    @Tracking
     def validate_mobile_number(self, number: str):
         """
         method for validating a mobile phone number

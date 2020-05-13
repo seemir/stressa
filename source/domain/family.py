@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from typing import Union
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .entity import Entity
 from .female import Female
@@ -23,8 +23,8 @@ class Family(Entity):
 
     """
 
-    @staticmethod
-    def validate_family_members(family_members: list):
+    @Tracking
+    def validate_family_members(self, family_members: list):
         """
         Validate the family_members object. In this implementation a Family has the following
         characteristics:
@@ -43,6 +43,34 @@ class Family(Entity):
         for family_member in family_members:
             Assertor.assert_data_types([family_member], [(Male, Female)])
 
+    @Tracking
+    def validate_income(self, income: Union[int, float, str]):
+        """
+        method for validating that income is non-negative
+
+        Parameters
+        ----------
+        income          : int, float, str
+                          income to be validated
+
+        """
+        Assertor.assert_data_types([income], [(int, float, str)])
+        Assertor.assert_non_negative([income], msg="Only non-negative 'income' accepted")
+
+    @Tracking
+    def validating_cars(self, cars: Union[int, str]):
+        """
+        method for validating that number of cars is non-negative
+
+        Parameters
+        ----------
+        cars          : int, str
+                        number of cars to be validated
+
+        """
+        Assertor.assert_data_types([cars], [(int, str)])
+        Assertor.assert_non_negative([cars], msg="Only non-negative 'numbers of cars'")
+
     def __init__(self, family_members: list = None, income: Union[int, float, str] = 0,
                  cars: Union[int, str] = 0):
         """
@@ -59,16 +87,13 @@ class Family(Entity):
 
         """
         super().__init__()
-        try:
-            self.validate_family_members(family_members)
-            Assertor.assert_data_types([income, cars], [(int, float, str), (int, str)])
-            Assertor.assert_non_negative([income, cars])
+        self.validate_family_members(family_members)
+        self.validate_income(income)
+        self.validating_cars(cars)
 
-            self._familie_medlemmer = family_members
-            self._inntekt = str(income)
-            self._antall_biler = str(cars)
-        except Exception as family_exception:
-            raise family_exception
+        self._familie_medlemmer = family_members
+        self._inntekt = str(income)
+        self._antall_biler = str(cars)
 
     @property
     def familie_medlemmer(self):
@@ -98,6 +123,7 @@ class Family(Entity):
         self.validate_family_members(new_members)
         self._familie_medlemmer = new_members
 
+    @Tracking
     def add_family_members(self, family_members: (list, Male, Female)):
         """
         Append a list Male or Female family_member to family_members
@@ -139,8 +165,7 @@ class Family(Entity):
                       new gross yearly income
 
         """
-        Assertor.assert_data_types([income], [(int, float, str)])
-        Assertor.assert_non_negative(income)
+        self.validate_income(income)
         self._inntekt = str(income)
 
     @property
@@ -167,10 +192,10 @@ class Family(Entity):
                   new number of cars to set in family
 
         """
-        Assertor.assert_data_types([cars], [(int, str)])
-        Assertor.assert_non_negative(cars)
+        self.validating_cars(cars)
         self._antall_biler = str(cars)
 
+    @Tracking
     def sifo_properties(self):
         """
         return all active sifo compatible properties and values in a dictionary

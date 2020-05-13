@@ -7,7 +7,9 @@ Module with the logic for the Community sub-process
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.app.processing.engine.sub_model import SubModel
+from source.util import Assertor, Tracking
+
+from .engine import SubModel
 from .finn_community_process import FinnCommunityProcess
 
 
@@ -17,6 +19,7 @@ class CommunitySubModel(SubModel):
 
     """
 
+    @Tracking
     def __init__(self, community_json: dict):
         """
         Constructor / Instantiate the class.
@@ -27,14 +30,15 @@ class CommunitySubModel(SubModel):
                               JSON object as dict with community statistics
 
         """
+        Assertor.assert_data_types([community_json], [dict])
         self.name = FinnCommunityProcess.__name__
         super().__init__(name=self.name, desc="Processing Community Data / Statistics")
         self.community_json = community_json
 
+    @Tracking
     def run(self):
         """
         method for running the sub model
 
         """
-        # finn_community_process = FinnCommunityProcess(self.community_json)
-        # finn_community_process.print_pdf()
+        FinnCommunityProcess(self.community_json)

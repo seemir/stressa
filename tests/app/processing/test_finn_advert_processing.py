@@ -13,6 +13,7 @@ import mock
 from prettytable import PrettyTable
 
 from source.app import FinnAdvertProcessing, Process, Signal
+from source.util import TrackingError
 
 
 class TestFinnAdvertProcessing:
@@ -50,12 +51,12 @@ class TestFinnAdvertProcessing:
 
     @staticmethod
     @pt.mark.parametrize('invalid_finn_code', [True, 90210, 90210.0, ('test', 'test'), {}])
-    def test_invalid_args_raises_typeerror(invalid_finn_code):
+    def test_invalid_args_raises_tracking_error(invalid_finn_code):
         """
-        Test that FinnAdvertProcessing object raises TypeError if finn_code is invalid
+        Test that FinnAdvertProcessing object raises TrackingError if finn_code is invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             FinnAdvertProcessing(invalid_finn_code)
 
     def test_set_signal_method(self):
@@ -103,7 +104,7 @@ class TestFinnAdvertProcessing:
         Test the threading_exception method in the Process super class
 
         """
-        with pt.raises(ValueError):
+        with pt.raises(TrackingError):
             finn_advert_processing = FinnAdvertProcessing(self.finn_code)
             finn_advert_processing.threading_exception()
 

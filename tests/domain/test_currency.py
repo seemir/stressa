@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import pytest as pt
 
-from source.util import InvalidCurrencyError
+from source.util import TrackingError
 from source.domain import Currency, Value
 
 
@@ -63,11 +63,11 @@ class TestCurrency:
         Test the static method validate_currency method
 
         """
-        with pt.raises(InvalidCurrencyError):
+        with pt.raises(TrackingError):
             Currency(invalid_currency)
-        with pt.raises(InvalidCurrencyError):
+        with pt.raises(TrackingError):
             self.currency.currency = invalid_currency
-        with pt.raises(InvalidCurrencyError):
+        with pt.raises(TrackingError):
             self.currency.validate_currency(invalid_currency)
 
     def test_currency_value_object_equal(self):

@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import Assertor, InvalidPhoneNumberError
+from source.util import Assertor, InvalidPhoneNumberError, Tracking
 
 from .value import Value
 
@@ -88,6 +88,7 @@ class Phone(Value):
         self.validate_number(new_number)
         self._number = new_number
 
+    @Tracking
     def validate_number(self, number: str):
         """
         method for validating a phone number
@@ -101,8 +102,10 @@ class Phone(Value):
         number = self.remove_prefix(number)
         valid_number = re.compile("^\\+?[0-9]{8,20}$").search(number)
         if not valid_number:
-            raise InvalidPhoneNumberError("'{}' is an invalid phone number".format(number))
+            raise InvalidPhoneNumberError(
+                "'{}' is an invalid phone number".format(number))
 
+    @Tracking
     def format_number(self):
         """
         formatting of phone number according to norwegian standard

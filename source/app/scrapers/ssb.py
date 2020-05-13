@@ -13,7 +13,7 @@ from http.client import responses
 import requests
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
-from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError
+from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Tracking
 
 from .settings import SSB_URL, TIMEOUT
 from .ssb_payload import SsbPayload
@@ -74,6 +74,7 @@ class Ssb(Scraper):
         Assertor.assert_data_types([pay_load], [(type(None), SsbPayload)])
         self._payload = pay_load
 
+    @Tracking
     def response(self):
         """
         submits and gets response for SSB request
@@ -94,13 +95,14 @@ class Ssb(Scraper):
             except ConnectTimeout as ssb_timeout_error:
                 raise TimeOutError(
                     "Timeout occurred - please try again later or contact system administrator, "
-                    "\nexited with '{}'".format(ssb_timeout_error))
+                    "exited with '{}'".format(ssb_timeout_error))
         except ConnectError as ssb_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator,\nexited with '{}'".format(
+                "client or contact system administrator, exited with '{}'".format(
                     ssb_response_error))
 
+    @Tracking
     def ssb_interest_rates(self):
         """
         gets the interest information from SSB table nr. 10748
@@ -112,18 +114,14 @@ class Ssb(Scraper):
 
         """
 
-        try:
-            LOGGER.info("trying to retrieve '{}'".format(self.ssb_interest_rates.__name__))
-            response = self.response().json()
-            keys = response["dimension"]["Rentebinding"]["category"]["label"].values()
-            values = response["value"]
-            LOGGER.success(
-                "'{}' successfully retrieved".format(self.ssb_interest_rates.__name__))
-            return {key.lower(): str(val) for key, val in dict(zip(keys, values)).items()}
-        except Exception as ssb_interest_rates_exception:
-            LOGGER.exception(ssb_interest_rates_exception)
-            raise ssb_interest_rates_exception
+        LOGGER.info("trying to retrieve 'ssb_interest_rates'")
+        response = self.response().json()
+        keys = response["dimension"]["Rentebinding"]["category"]["label"].values()
+        values = response["value"]
+        LOGGER.success("'ssb_interest_rates' successfully retrieved")
+        return {key.lower(): str(val) for key, val in dict(zip(keys, values)).items()}
 
+    @Tracking
     def to_json(self, file_dir: str = "report/json/interest_rates"):
         """
         save ssb interest rate information to JSON

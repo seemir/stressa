@@ -11,7 +11,7 @@ from typing import Union
 
 from pandas import DataFrame
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .operation import Operation
 
@@ -22,6 +22,7 @@ class AddRowToDataFrame(Operation):
 
     """
 
+    @Tracking
     def __init__(self, row: Union[dict, None], dataframe: Union[dict, None], desc: str):
         """
         Constructor / Instantiating class
@@ -36,13 +37,14 @@ class AddRowToDataFrame(Operation):
                       description of operation
 
         """
+        self.name = self.__class__.__name__
         Assertor.assert_data_types([row, dataframe, desc],
                                    [(dict, type(None)), (dict, type(None)), str])
-        self.name = self.__class__.__name__
         super().__init__(name=self.name, desc="id: {}".format(desc))
         self.row = row if row else None
         self.dataframe = dataframe if dataframe else None
 
+    @Tracking
     def run(self):
         """
         method for running the operation

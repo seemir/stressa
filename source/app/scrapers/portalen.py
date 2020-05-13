@@ -15,7 +15,7 @@ import xml.etree.cElementTree as Et
 import requests
 from requests.exceptions import ReadTimeout, ConnectionError as ConnectError
 
-from source.util import LOGGER, cache, NoConnectionError, TimeOutError, NotFoundError
+from source.util import LOGGER, cache, NoConnectionError, TimeOutError, NotFoundError, Tracking
 
 from .settings import PORTALEN_URL, PORTALEN_CRED, PORTALEN_ENTRY, TIMEOUT
 from .scraper import Scraper
@@ -40,8 +40,8 @@ class Portalen(Scraper):
         LOGGER.success(
             "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
 
-    @staticmethod
-    def response():
+    @Tracking
+    def portalen_response(self):
         """
         Response from finansportalen.no xml feed
 
@@ -61,13 +61,14 @@ class Portalen(Scraper):
             except ReadTimeout as portalen_timeout_error:
                 raise TimeOutError(
                     "Timeout occurred - please try again later or contact system administrator, "
-                    "\nexited with '{}'".format(portalen_timeout_error))
+                    "exited with '{}'".format(portalen_timeout_error))
         except ConnectError as portalen_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator,\nexited with '{}'".format(
+                "client or contact system administrator, exited with '{}'".format(
                     portalen_response_error))
 
+    @Tracking
     def mortgage_offers(self):
         """
         Retrieve finansportalen.no's boliglån grunndata xml and returns dict for content
@@ -78,30 +79,27 @@ class Portalen(Scraper):
                   content from boliglån grunndata Xxml feed
 
         """
-        try:
-            LOGGER.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
+        LOGGER.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
 
-            response = self.response()
-            if response:
-                tree = Et.fromstring(response.content.decode("windows-1252")).findall(
-                    PORTALEN_ENTRY)
+        response = self.portalen_response()
+        if response:
+            tree = Et.fromstring(response.content.decode("windows-1252")).findall(
+                PORTALEN_ENTRY)
 
-                offers = {}
-                count = 0
+            offers = {}
+            count = 0
 
-                for entries in tree:
-                    count += 1
-                    offers.update(
-                        {count: {re.sub("{[^>]+}", "", entry.tag): entry.text.strip() for entry in
-                                 entries if entry.text}})
+            for entries in tree:
+                count += 1
+                offers.update(
+                    {count: {re.sub("{[^>]+}", "", entry.tag): entry.text.strip() for entry in
+                             entries if entry.text}})
 
-                LOGGER.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
-                return offers
-            raise NotFoundError("No 'mortgage_offers' received")
-        except Exception as mortgage_offers_exception:
-            LOGGER.exception(mortgage_offers_exception)
-            raise mortgage_offers_exception
+            LOGGER.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
+            return offers
+        raise NotFoundError("No 'mortgage_offers' received")
 
+    @Tracking
     def to_json(self, file_dir: str = "report/json/mortgage_offers"):
         """
         save mortgage offers information to JSON file

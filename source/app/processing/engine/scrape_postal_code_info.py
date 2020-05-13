@@ -7,7 +7,7 @@ Module with logic for the Scrape Posten Postal code information
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from ...scrapers import POSTEN_URL, Posten
 
@@ -21,6 +21,7 @@ class ScrapePostalCodeInfo(Operation):
 
     """
 
+    @Tracking
     def __init__(self, postal_code: str):
         """
         Constructor / Instantiating class
@@ -38,6 +39,7 @@ class ScrapePostalCodeInfo(Operation):
                              POSTEN_URL))
         self.postal_code = postal_code
 
+    @Tracking
     def run(self):
         """
         method for running the operation

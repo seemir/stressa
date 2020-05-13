@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 import pytest as pt
 
 from source.app import Operation, ValidateFinnCode, Finn
-from source.util import NotFoundError
+from source.util import TrackingError
 
 
 class TestValidateFinnCode:
@@ -39,13 +39,13 @@ class TestValidateFinnCode:
 
     @staticmethod
     @pt.mark.parametrize('invalid_finn_code', [True, 90210, 90210.0, ('test', 'test'), {}])
-    def test_invalid_args_raises_typeerror(invalid_finn_code):
+    def test_invalid_args_raises_tracking_error(invalid_finn_code):
         """
-        Test that ValidateFinnCode object raises TypeError if finn_code
+        Test that ValidateFinnCode object raises TrackingError if finn_code
         argument are invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             ValidateFinnCode(invalid_finn_code)
 
     def test_arguments_gets_set_in_object(self):
@@ -65,7 +65,7 @@ class TestValidateFinnCode:
         Test the run method in ValidateFinnCode operation
 
         """
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             validate_finn_code = ValidateFinnCode(invalid_finn_code)
             validate_finn_code.run()
 

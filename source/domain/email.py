@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import InvalidEmailError, Assertor
+from source.util import InvalidEmailError, Assertor, Tracking
 
 from .value import Value
 
@@ -21,8 +21,8 @@ class Email(Value):
 
     """
 
-    @staticmethod
-    def validate_email(email: str):
+    @Tracking
+    def validate_email(self, email: str):
         """
         Method for validating a email according to regrex
 

@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 import re
 from decimal import Decimal, InvalidOperation
 
-from source.util import Assertor, InvalidAmountError
+from source.util import Assertor, InvalidAmountError, Tracking
 
 from .value import Value
 
@@ -22,8 +22,8 @@ class Amount(Value):
 
     """
 
-    @staticmethod
-    def validate_amount(amount: str):
+    @Tracking
+    def validate_amount(self, amount: str):
         """
         method for validating an amount
 
@@ -37,8 +37,8 @@ class Amount(Value):
         if not valid_amount:
             raise InvalidAmountError("'{}' is an invalid amount".format(amount))
 
-    @staticmethod
-    def format_amount(amount: str):
+    @Tracking
+    def format_amount(self, amount: str):
         """
         method for formatting an amount with thousand spacing
 

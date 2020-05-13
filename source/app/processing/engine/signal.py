@@ -13,7 +13,7 @@ from uuid import uuid4
 
 from pydot import Node
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 
 class Signal(Node, ABC):
@@ -22,8 +22,8 @@ class Signal(Node, ABC):
 
     """
 
-    @staticmethod
-    def remove_quotation(strings: list, remove_new_line=False):
+    @Tracking
+    def remove_quotation(self, strings: list, remove_new_line=False):
         """
         method for removing quotation marks in list of strings
 
@@ -32,6 +32,7 @@ class Signal(Node, ABC):
             strings = [string.replace("\n", "") for string in strings]
         return str(list(strings)).translate({39: None})
 
+    @Tracking
     def __init__(self, data: object, desc: str, style: str = "dotted", prettify_keys: bool = False,
                  length=15, **attrs):
         """
@@ -67,6 +68,7 @@ class Signal(Node, ABC):
                          label="keys\\<{}\\> \\n {} \\<type '{}'\\>".format(
                              self.keys, self.desc, data.__class__.__name__), **attrs)
 
+    @Tracking
     def prettify_dict_keys(self, dict_keys, length=15):
         """
         method for prettify the dictionary keys

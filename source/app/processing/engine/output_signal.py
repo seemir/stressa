@@ -8,7 +8,7 @@ Module with logic of output signal
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .signal import Signal
 
@@ -19,6 +19,7 @@ class OutputSignal(Signal):
 
     """
 
+    @Tracking
     def __init__(self, data: object, desc: str, prettify_keys: bool = False, length: int = 15):
         """
         Constructor / Instantiating class
@@ -35,6 +36,7 @@ class OutputSignal(Signal):
                           length to apply new line, default is 15
 
         """
-        Assertor.assert_data_types([data, desc, prettify_keys, length], [object, str, bool, int])
+        Assertor.assert_data_types([data, desc, prettify_keys, length],
+                                   [object, str, bool, int])
         super().__init__(data=data, desc=desc, prettify_keys=prettify_keys, length=length,
                          style="dashed", color="blue", penwidth=1.5)

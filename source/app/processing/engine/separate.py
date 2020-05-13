@@ -7,7 +7,7 @@ Module with Separate operation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .operation import Operation
 
@@ -18,6 +18,7 @@ class Separate(Operation):
 
     """
 
+    @Tracking
     def __init__(self, data: list, desc: str):
         """
         Constructor / Instantiate the class.
@@ -30,11 +31,12 @@ class Separate(Operation):
                       description of operation
 
         """
-        Assertor.assert_data_types([data, desc], [list, str])
         self.name = self.__class__.__name__
+        Assertor.assert_data_types([data, desc], [list, str])
         super().__init__(name=self.name, desc="id: {}".format(desc))
         self.data = data
 
+    @Tracking
     def run(self):
         """
         method for running operation

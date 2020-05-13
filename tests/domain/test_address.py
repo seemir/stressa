@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import pytest as pt
 
-from source.util import InvalidAddressError
+from source.util import TrackingError
 from source.domain import Address, Value
 
 
@@ -60,14 +60,14 @@ class TestAddress:
     @pt.mark.parametrize("invalid_address", ["///", "+++", "---", "___"])
     def test_validate_address_method(self, invalid_address):
         """
-        Test the static method validate_address method
+        Test the method validate_address method
 
         """
-        with pt.raises(InvalidAddressError):
+        with pt.raises(TrackingError):
             Address(invalid_address)
-        with pt.raises(InvalidAddressError):
+        with pt.raises(TrackingError):
             self.address.address = invalid_address
-        with pt.raises(InvalidAddressError):
+        with pt.raises(TrackingError):
             self.address.validate_address(invalid_address)
 
     @staticmethod

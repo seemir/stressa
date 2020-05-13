@@ -12,6 +12,7 @@ import pytest as pt
 from prettytable import PrettyTable
 
 from source.app import CalculateSifoExpenses, Process, Signal
+from source.util import TrackingError
 
 
 class TestCalculateSifoExpenses:
@@ -50,12 +51,12 @@ class TestCalculateSifoExpenses:
 
     @staticmethod
     @pt.mark.parametrize('invalid_data', [True, 'test', 90210, 90210.0, ('test', 'test')])
-    def test_invalid_args_raises_typeerror(invalid_data):
+    def test_invalid_args_raises_tracking_error(invalid_data):
         """
-        Test that CalculateSifoExpenses object raises TypeError if data is invalid
+        Test that CalculateSifoExpenses object raises TrackingError if data is invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             CalculateSifoExpenses(invalid_data)
 
     def test_set_signal_method(self):
@@ -95,7 +96,7 @@ class TestCalculateSifoExpenses:
         calculate_sifo_expenses = CalculateSifoExpenses(self.data)
         calculate_sifo_expenses.signal = {"new_data": signal}
         assert calculate_sifo_expenses.get_signal("new_data") == signal
-        assert calculate_sifo_expenses.get_signal("new_data").keys == Signal.remove_quotation(
+        assert calculate_sifo_expenses.get_signal("new_data").keys == signal.remove_quotation(
             list(new_data.keys()))
 
     @staticmethod

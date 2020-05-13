@@ -13,7 +13,7 @@ from uuid import UUID
 import pytest as pt
 
 from source.app import Finn
-from source.util import NotFoundError
+from source.util import TrackingError
 
 
 class TestFinn:
@@ -41,7 +41,7 @@ class TestFinn:
 
     @staticmethod
     @pt.mark.parametrize("invalid_finn_code_types", [144857770, 144857770.0, True, [], (), {}])
-    def test_invalid_finn_code_raises_not_found_error(invalid_finn_code_types):
+    def test_invalid_finn_code_raises_type_error(invalid_finn_code_types):
         """
         Test that Finn raises TypeError for invalid finn_code types
 
@@ -52,13 +52,11 @@ class TestFinn:
     @pt.mark.parametrize("invalid_finn_code", ["1448577", "2448577701", "24485777a"])
     def test_validate_finn_code_method(self, invalid_finn_code):
         """
-        Test that invalid finn_code raises NotFoundError
+        Test that invalid finn_code raises TrackingError
 
         """
-        with pt.raises(NotFoundError):
+        with pt.raises(TrackingError):
             Finn(invalid_finn_code)
-        with pt.raises(NotFoundError):
-            self.finn.validate_finn_code(invalid_finn_code)
 
     def test_finn_has_uuid4_compatible_id(self):
         """

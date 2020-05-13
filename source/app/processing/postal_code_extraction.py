@@ -8,7 +8,7 @@ Process for extracting Postal Code Information
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor, Profiling
+from source.util import Assertor, Profiling, Tracking
 
 from .engine import Process, InputOperation, Signal, ValidatePostalCode, ScrapePostalCodeInfo, \
     OutputSignal, OutputOperation
@@ -21,6 +21,7 @@ class PostalCodeExtraction(Process):
 
     """
 
+    @Tracking
     def __init__(self, postal_code: str):
         """
         Constructor / Instantiate the class.
@@ -55,6 +56,7 @@ class PostalCodeExtraction(Process):
         return self._postal_code_info
 
     @Profiling
+    @Tracking
     def input_operation(self, data: object):
         """
         initial operation in process
@@ -80,6 +82,7 @@ class PostalCodeExtraction(Process):
         self.add_transition(input_operation, input_signal)
 
     @Profiling
+    @Tracking
     def validate_postal_code(self):
         """
         method for validating Postal Code
@@ -98,6 +101,7 @@ class PostalCodeExtraction(Process):
         self.add_transition(validate_postal_code, validated_postal_code_signal)
 
     @Profiling
+    @Tracking
     def scrape_postal_code_info(self):
         """
         method for scraping Norwegian Postal Code Information from Postens public address search
@@ -117,6 +121,7 @@ class PostalCodeExtraction(Process):
         self.add_transition(scrape_postal_code_operation, postal_code_info_signal)
 
     @Profiling
+    @Tracking
     def output_operation(self):
         """
         final method call in process

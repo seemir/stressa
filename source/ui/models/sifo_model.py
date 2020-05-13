@@ -381,7 +381,6 @@ class SifoModel(Model):
         """
         self.clear_line_edits(self._sifo_expenses, "_1")
         self.clear_line_edits(self._sifo_expenses, "_2")
-        self.parent.ui.tab_widget_sifo.setCurrentIndex(0)
 
     def clear_all(self):
         """

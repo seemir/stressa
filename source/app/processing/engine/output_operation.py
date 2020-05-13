@@ -7,7 +7,7 @@ Module with logic for the output operation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .operation import Operation
 
@@ -19,6 +19,7 @@ class OutputOperation(Operation):
 
     """
 
+    @Tracking
     def __init__(self, desc: str):
         """
         Constructor / Instantiate the class.
@@ -30,9 +31,9 @@ class OutputOperation(Operation):
 
         """
         Assertor.assert_data_types([desc], [str])
-        self.name = self.__class__.__name__
-        super().__init__(name=self.name, desc="id: {}".format(desc))
+        super().__init__(name=self.__class__.__name__, desc="id: {}".format(desc))
 
+    @Tracking
     def run(self):
         """
         method for running the operation

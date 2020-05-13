@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from abc import abstractmethod
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .operation import Operation
 
@@ -20,6 +20,7 @@ class SubModel(Operation):
 
     """
 
+    @Tracking
     def __init__(self, name: str, desc: str):
         """
         Constructor / Instantiating class
@@ -32,8 +33,8 @@ class SubModel(Operation):
                       description of operation process
 
         """
-        Assertor.assert_data_types([name, desc], [str, str])
         self.name = name
+        Assertor.assert_data_types([name, desc], [str, str])
         self.desc = desc
         Operation.__init__(self, name=self.name, desc=self.desc,
                            label="\\<SubModel ({})\\> \n Process: {} \\n id: {}".format(

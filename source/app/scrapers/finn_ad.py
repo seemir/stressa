@@ -16,7 +16,7 @@ from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from bs4 import BeautifulSoup
 
-from source.util import LOGGER, TimeOutError, NoConnectionError, NotFoundError, Assertor
+from source.util import LOGGER, TimeOutError, NoConnectionError, NotFoundError, Assertor, Tracking
 
 from .settings import FINN_AD_URL, TIMEOUT
 from .finn import Finn
@@ -41,6 +41,7 @@ class FinnAd(Finn):
         Assertor.assert_data_types([finn_code], [str])
         super().__init__(finn_code=finn_code)
 
+    @Tracking
     def ad_response(self):
         """
         Response from Finn-no ad housing search
@@ -64,14 +65,15 @@ class FinnAd(Finn):
                 return ad_response
             except ConnectTimeout as finn_ad_timeout_error:
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system administrator, "
-                    "\nexited with '{}'".format(finn_ad_timeout_error))
+                    "Timeout occurred - please try again later or contact system "
+                    "administrator, exited with '{}'".format(finn_ad_timeout_error))
         except ConnectError as finn_ad_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator,\nexited with '{}'".format(
+                "client or contact system administrator, exited with '{}'".format(
                     finn_ad_response_error))
 
+    @Tracking
     def housing_ad_information(self):
         """
         Retrieve and parse housing ad information from Finn.no search to dict
@@ -83,49 +85,46 @@ class FinnAd(Finn):
 
         """
         try:
-            try:
-                LOGGER.info(
-                    "trying to retrieve '{}' for -> '{}'".format(
-                        self.housing_ad_information.__name__,
-                        self.finn_code))
-                response = self.ad_response()
-                if not response:
-                    raise NotFoundError(
-                        "Not found! '{}' may be an invalid Finn code".format(self.finn_code))
+            LOGGER.info(
+                "trying to retrieve 'housing_ad_information' for -> '{}'".format(self.finn_code))
+            response = self.ad_response()
+            if not response:
+                raise NotFoundError(
+                    "[{}] Not found! '{}' may be an invalid Finn code".format(
+                        self.__class__.__name__, self.finn_code))
 
-                ad_soup = BeautifulSoup(response.content, "lxml")
-                address = ad_soup.find("p", attrs={"class": "u-caption"})
+            ad_soup = BeautifulSoup(response.content, "lxml")
+            address = ad_soup.find("p", attrs={"class": "u-caption"})
 
-                price = "".join(
-                    price.text for price in ad_soup.find_all("span", attrs={"class": "u-t3"})
-                    if " kr" in price.text).strip().replace(u"\xa0", " ")
-                status = ad_soup.find("span",
-                                      attrs={"class": "u-capitalize status status--warning u-mb0"})
+            price = "".join(
+                price.text for price in ad_soup.find_all("span", attrs={"class": "u-t3"})
+                if " kr" in price.text).strip().replace(u"\xa0", " ")
+            status = ad_soup.find("span",
+                                  attrs={"class": "u-capitalize status status--warning u-mb0"})
 
-                info = {"finn_adresse": address.text, "prisantydning": price,
-                        "status": status.text.capitalize() if status else "Ikke solgt"}
-                keys, values = list(key.get_text() for key in ad_soup.find_all(["th", "dt"])), \
-                               list(value.get_text() for value in ad_soup.find_all(["td", "dd"]))
+            info = {"finn_adresse": address.text, "prisantydning": price,
+                    "status": status.text.capitalize() if status else "Ikke solgt"}
+            keys, values = list(key.get_text() for key in ad_soup.find_all(["th", "dt"])), \
+                           list(value.get_text() for value in ad_soup.find_all(["td", "dd"]))
 
-                for key, val in zip(keys, values):
-                    key = re.sub("[^a-z]+", "", key.lower())
-                    val = val.strip().replace(u"\xa0", " ")
-                    if (key and len(key) > 3) or key == "rom":
-                        info.update({key: val})
+            for key, val in zip(keys, values):
+                key = re.sub("[^a-z]+", "", key.lower())
+                val = val.strip().replace(u"\xa0", " ")
+                if (key and len(key) > 3) or key == "rom":
+                    info.update({key: val})
 
-                # with open('advert_data.json', 'w', encoding='utf-8') as file:
-                #     json.dump(info, file, ensure_ascii=False, indent=4)
+            # with open('advert_data.json', 'w', encoding='utf-8') as file:
+            #     json.dump(info, file, ensure_ascii=False, indent=4)
 
-                LOGGER.success(
-                    "'{}' successfully retrieved".format(self.housing_ad_information.__name__))
-                return info
-            except AttributeError as no_housing_ad_information_exception:
-                raise NotFoundError("Not enough advert information found, exited with '{}'".format(
+            LOGGER.success("'housing_ad_information' successfully retrieved")
+            return info
+
+        except AttributeError as no_housing_ad_information_exception:
+            raise NotFoundError(
+                "Not enough advert information found, exited with '{}'".format(
                     no_housing_ad_information_exception))
-        except Exception as housing_ad_information_exception:
-            LOGGER.exception(housing_ad_information_exception)
-            raise housing_ad_information_exception
 
+    @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):
         """
         save advert information to JSON file

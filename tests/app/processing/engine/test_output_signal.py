@@ -10,6 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 import pytest as pt
 
 from source.app import Signal, OutputSignal
+from source.util import TrackingError
 
 
 class TestOutsignal:
@@ -40,12 +41,12 @@ class TestOutsignal:
     @staticmethod
     @pt.mark.parametrize('invalid_data', [True, 'test', 90210, 90210.0, ('test', 'test')])
     @pt.mark.parametrize('invalid_desc', [True, 90210, 90210.0, ('test', 'test'), {}])
-    def test_invalid_args_raises_typeerror(invalid_data, invalid_desc):
+    def test_invalid_args_raises_tracking_error(invalid_data, invalid_desc):
         """
-        Test that OutputOperation object raises TypeError if desc argument are invalid
+        Test that OutputOperation object raises TrackingError if desc argument are invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             OutputSignal(invalid_data, invalid_desc)
 
     def test_arguments_gets_set_in_object(self):

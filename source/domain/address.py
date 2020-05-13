@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import InvalidAddressError, Assertor
+from source.util import InvalidAddressError, Assertor, Tracking
 
 from .value import Value
 
@@ -21,8 +21,8 @@ class Address(Value):
 
     """
 
-    @staticmethod
-    def validate_address(address: str):
+    @Tracking
+    def validate_address(self, address: str):
         """
         Method for validating a address according to regrex
 
@@ -81,6 +81,7 @@ class Address(Value):
         self.validate_address(new_address)
         self._address = new_address
 
+    @Tracking
     def format_address(self):
         """
         method that returns formatted address

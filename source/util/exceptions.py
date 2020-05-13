@@ -117,3 +117,14 @@ class TimeOutError(Exception):
     def __init__(self, msg: str):
         super().__init__(msg)
         self.msg = msg
+
+
+class TrackingError(Exception):
+    """
+    Exception thrown when time out occurs
+
+    """
+
+    def __init__(self, msg: str):
+        super().__init__(msg)
+        self.msg = msg

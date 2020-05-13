@@ -12,6 +12,7 @@ from pandas import DataFrame
 import pytest as pt
 
 from source.app import AddRowToDataFrame, Operation
+from source.util import TrackingError
 
 
 class TestAddRowToDataFrame:
@@ -48,17 +49,17 @@ class TestAddRowToDataFrame:
     @pt.mark.parametrize('invalid_row', ['test', 90210])
     @pt.mark.parametrize('invalid_dataframe', [True, 90210.0, ('test', 'test')])
     @pt.mark.parametrize('invalid_desc', [['test'], {'test': 'test'}])
-    def test_invalid_args_raises_typeerror(self, invalid_row, invalid_dataframe, invalid_desc):
+    def test_invalid_args_raises_tracking_error(self, invalid_row, invalid_dataframe, invalid_desc):
         """
-        Test that AddRowToDataFrame object raises TypeError if row, dataframe or desc
+        Test that AddRowToDataFrame object raises TrackingError if row, dataframe or desc
         argument are invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             AddRowToDataFrame(invalid_row, self.dataframe, self.desc)
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             AddRowToDataFrame(self.row, invalid_dataframe, self.desc)
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             AddRowToDataFrame(self.row, self.dataframe, invalid_desc)
 
     def test_arguments_gets_set_in_object(self):

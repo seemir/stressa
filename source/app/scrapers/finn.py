@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import cache, Assertor, LOGGER, NotFoundError
+from source.util import cache, Assertor, LOGGER, NotFoundError, Tracking
 
 from .scraper import Scraper
 
@@ -23,20 +23,16 @@ class Finn(Scraper):
 
     """
 
-    @staticmethod
-    def validate_finn_code(finn_code: str):
+    @Tracking
+    def validate_finn_code(self):
         """
         static method for validating Finn.no code
 
-        Parameters
-        ----------
-        finn_code    : str
-                       Finn-code to be validated
-
         """
-        valid_finn_code = re.compile("^1[0-9]{7,8}$").search(finn_code)
+        valid_finn_code = re.compile("^1[0-9]{7,8}$").search(self.finn_code)
         if not valid_finn_code:
-            raise NotFoundError("'{}' is an invalid Finn code".format(finn_code))
+            raise NotFoundError(
+                "'{}' is an invalid Finn code".format(self.finn_code))
 
     def __init__(self, finn_code: str):
         """
@@ -51,8 +47,8 @@ class Finn(Scraper):
         try:
             super().__init__()
             Assertor.assert_data_types([finn_code], [str])
-            self.validate_finn_code(finn_code)
             self._finn_code = finn_code
+            self.validate_finn_code()
             self._browser = None
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))

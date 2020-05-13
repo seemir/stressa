@@ -9,7 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.domain import Family, Male, Female
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .operation import Operation
 
@@ -25,6 +25,7 @@ class ValidateFamily(Operation):
     barnehage_arg = {"Nei": "0", "Ja": "1"}
     sfo_arg = {"Nei": "0", "Halvdag": "1", "Heldag": "2"}
 
+    @Tracking
     def __init__(self, data: dict):
         """
         Constructor / Instantiate the class.
@@ -35,13 +36,14 @@ class ValidateFamily(Operation):
                   Sifo compatible dictionary with all necessary family information
 
         """
-        Assertor.assert_data_types([data], [dict])
         self.name = self.__class__.__name__
+        Assertor.assert_data_types([data], [dict])
         super().__init__(name=self.name,
                          desc="rules: {} \\n id: Validate Family Information".format(
                              Family.rules()))
         self.data = data
 
+    @Tracking
     def run(self):
         """
         method for running operation

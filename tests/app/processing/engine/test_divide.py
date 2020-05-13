@@ -10,6 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 import pytest as pt
 
 from source.app import Operation, Divide
+from source.util import TrackingError
 
 
 class TestDivide:
@@ -40,17 +41,17 @@ class TestDivide:
 
     @pt.mark.parametrize('invalid_num', [True, 'test', 90210, 90210.0, ('test', 'test')])
     @pt.mark.parametrize('invalid_desc', [True, 90210, 90210.0, ('test', 'test'), {}])
-    def test_invalid_args_raises_typeerror(self, invalid_num, invalid_desc):
+    def test_invalid_args_raises_tracking_error(self, invalid_num, invalid_desc):
         """
-        Test that Divide object raises TypeError if numerator, denominator or desc
+        Test that Divide object raises TrackingError if numerator, denominator or desc
         argument are invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             Divide(invalid_num, self.denominator, self.desc)
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             Divide(self.numerator, invalid_num, self.desc)
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             Divide(self.numerator, self.denominator, invalid_desc)
 
     def test_arguments_gets_set_in_object(self):

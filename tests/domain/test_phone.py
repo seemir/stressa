@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 import pytest as pt
 
 from source.domain import Phone, Value
-from source.util import InvalidPhoneNumberError
+from source.util import TrackingError
 
 
 class TestPhone:
@@ -79,10 +79,10 @@ class TestPhone:
     @pt.mark.parametrize("invalid_numbers", ["1121121", "+471121121", "00471121121"])
     def test_validate_number_method(self, invalid_numbers):
         """
-        Test validate number method, i.e. NotPossibleError thrown for invalid numbers
+        Test validate number method, i.e. TrackingError thrown for invalid numbers
 
         """
-        with pt.raises(InvalidPhoneNumberError):
+        with pt.raises(TrackingError):
             self.phone.validate_number(invalid_numbers)
 
     @pt.mark.parametrize("numbers", ["+4791515915", "004791515915", "+47 91 51 59 15",

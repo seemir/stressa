@@ -8,7 +8,7 @@ Module with logic for the Expenses entity
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .entity import Entity
 from .money import Money
@@ -20,8 +20,8 @@ class Expenses(Entity):
 
     """
 
-    @staticmethod
-    def cast_expenses(data: dict):
+    @Tracking
+    def cast_expenses(self, data: dict):
         """
         method for making expenses (NOK)
 

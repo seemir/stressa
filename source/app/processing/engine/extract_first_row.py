@@ -12,7 +12,7 @@ from typing import Union
 
 import pandas as pd
 
-from source.util import Assertor
+from source.util import Assertor, Tracking
 
 from .operation import Operation
 
@@ -23,6 +23,7 @@ class ExtractFirstRow(Operation):
 
     """
 
+    @Tracking
     def __init__(self, data: Union[dict, None], desc: str):
         """
         Constructor / Instantiate the class.
@@ -41,6 +42,7 @@ class ExtractFirstRow(Operation):
                          desc="id: {}".format(desc))
         self.data = data
 
+    @Tracking
     def run(self):
         """
         method for running operation

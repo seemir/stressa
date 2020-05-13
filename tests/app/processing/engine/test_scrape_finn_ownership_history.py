@@ -10,6 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 import pytest as pt
 
 from source.app import Operation, ScrapeFinnOwnershipHistory, FINN_OWNER_URL
+from source.util import TrackingError
 
 
 class TestScrapeFinnOwnershipHistory:
@@ -38,13 +39,13 @@ class TestScrapeFinnOwnershipHistory:
 
     @staticmethod
     @pt.mark.parametrize('invalid_finn_code', [True, 90210, 90210.0, ('test', 'test'), {}])
-    def test_invalid_args_raises_typeerror(invalid_finn_code):
+    def test_invalid_args_raises_tracking_error(invalid_finn_code):
         """
-        Test that ScrapeFinnOwnershipHistory object raises TypeError if finn_code
+        Test that ScrapeFinnOwnershipHistory object raises TrackingError if finn_code
         argument are invalid
 
         """
-        with pt.raises(TypeError):
+        with pt.raises(TrackingError):
             ScrapeFinnOwnershipHistory(invalid_finn_code)
 
     def test_arguments_gets_set_in_object(self):

@@ -139,5 +139,5 @@ class RatioChart(Chart):
                                '<span style="font-size: 10pt">{}</span><br>'
                                '<span style="font-size: 10pt">{} {}</span><br>'
                                '<span style="font-size: 10pt">({})</span>'
-                               '</div>'.format(self.labels, Amount.format_amount(str(x_val)),
+                               '</div>'.format(self.labels, Amount(str(x_val)).amount,
                                                self.units[0], percent.value))

@@ -9,7 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.domain import Expenses
-from source.util import Assertor, Profiling, LOGGER
+from source.util import Assertor, Profiling, Tracking
 
 from .engine import Process, Signal, ValidateFamily, ScrapeSifoBaseExpenses, Extract, Divide, \
     OutputOperation, OutputSignal, InputOperation
@@ -21,6 +21,7 @@ class CalculateSifoExpenses(Process):
 
     """
 
+    @Tracking
     def __init__(self, data: dict):
         """
         Constructor / Instantiate the class.
@@ -31,20 +32,16 @@ class CalculateSifoExpenses(Process):
                   information about the family, i.e. arguments to be passed to Family object
 
         """
-        try:
-            self.start_process()
-            super().__init__(name=self.__class__.__name__)
-            Assertor.assert_data_types([data], [dict])
-            self.input_operation({"data": data})
-            self.validate_family()
-            self._base_expenses = self.scrape_sifo_base_expenses()
-            self.extract()
-            self._expenses_shares = self.divide()
-            self.output_operation()
-            self.end_process()
-        except Exception as sifo_processing_error:
-            LOGGER.exception(sifo_processing_error)
-            raise sifo_processing_error
+        self.start_process()
+        super().__init__(name=__class__.__name__)
+        Assertor.assert_data_types([data], [dict])
+        self.input_operation({"data": data})
+        self.validate_family()
+        self._base_expenses = self.scrape_sifo_base_expenses()
+        self.extract()
+        self._expenses_shares = self.divide()
+        self.output_operation()
+        self.end_process()
 
     @property
     def base_expenses(self):
@@ -73,6 +70,7 @@ class CalculateSifoExpenses(Process):
         return self._expenses_shares
 
     @Profiling
+    @Tracking
     def input_operation(self, data: dict):
         """
         method for retrieving information from SIFO form and saving it to sifo processing object
@@ -93,6 +91,7 @@ class CalculateSifoExpenses(Process):
         self.add_transition(input_operation, input_signal)
 
     @Profiling
+    @Tracking
     def validate_family(self):
         """
         method for validating family information
@@ -110,6 +109,7 @@ class CalculateSifoExpenses(Process):
         self.add_transition(populate_operation, populate_signal)
 
     @Profiling
+    @Tracking
     def scrape_sifo_base_expenses(self):
         """
         method for scraping SIFO base expenses
@@ -135,6 +135,7 @@ class CalculateSifoExpenses(Process):
         return sifo_base_expenses.verdi
 
     @Profiling
+    @Tracking
     def extract(self):
         """
         method for extracting the total monthly expenses from SIFO dict
@@ -152,6 +153,7 @@ class CalculateSifoExpenses(Process):
         self.add_transition(extract_total_operation, total_expenses_signal)
 
     @Profiling
+    @Tracking
     def divide(self):
         """
         method for calculating shares of total expenses
@@ -180,6 +182,7 @@ class CalculateSifoExpenses(Process):
         return expenses_shares
 
     @Profiling
+    @Tracking
     def output_operation(self):
         """
         final method call in process
