@@ -153,7 +153,7 @@ class DoubleCrossHair(QObject):
             x_label_2 = self.x_time[x_label_idx.item()] if \
                 self.x_time and x_label_idx.size != 0 else \
                 Amount(str(x_val_2)).amount + self.units[2]
-            y_label_2 = Amount(str(y_val_1)).amount + self.units[3]
+            y_label_2 = Amount(str(y_val_2)).amount + self.units[3]
 
             if limits:
                 self.label_1.setHtml('<div style="text-align: center">'
