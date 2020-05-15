@@ -179,5 +179,5 @@ class TestFamily:
         """
         rules = ["non_negative_income", "non_negative_cars", "kindergarten_criteria",
                  "sfo_criteria", "pregnant_criteria"]
-        assert Family.rules() == rules
-        assert self.family.rules() == rules
+        assert Family.rules() == ", ".join(rules).replace("'", "")
+        assert self.family.rules() == ", ".join(rules).replace("'", "")

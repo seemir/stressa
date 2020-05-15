@@ -79,4 +79,5 @@ class Finn(Scraper):
         out         : list
                       all rules in scraper
         """
-        return ["only_numeric_values", "starts_with_one", "max_len_eight_or_nine"]
+        return ", ".join(
+            ["only_numeric_values", "starts_with_one", "max_len_eight_or_nine"]).replace("'", "")

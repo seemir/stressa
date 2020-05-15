@@ -8,7 +8,7 @@ Module for the processing of Finn advert information
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor, Profiling, LOGGER, Tracking
+from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, InputOperation, Signal, ScrapeFinnAdvertInfo, \
     ScrapeFinnOwnershipHistory, ScrapeFinnStatisticsInfo, Multiplex, OutputSignal, \
@@ -46,20 +46,15 @@ class FinnAdvertProcessing(Process):
                            self.scrape_finn_ownership_history])
         self._multiplex_info_1 = self.multiplex_1()
         self.extract()
-        try:
-            self.extract_first_row()
-            self.add_to_dataframe_1()
-            self.rate_of_change_1()
-            self.finn_community_process()
-            self.check_newest_date()
-            self.accumulate()
-            self.add_to_dataframe_2()
-            self.multiplex_2()
-            self.rate_of_change_2()
-        except Exception as calculation_error:
-            LOGGER.debug(
-                "[{}] Calculation not possible due to missing data, exited with '{}'".format(
-                    self.__class__.__name__, calculation_error))
+        self.extract_first_row()
+        self.add_to_dataframe_1()
+        self.rate_of_change_1()
+        self.finn_community_process()
+        self.check_newest_date()
+        self.accumulate()
+        self.add_to_dataframe_2()
+        self.multiplex_2()
+        self.rate_of_change_2()
         self._multiplex_info_2 = self.multiplex_3()
         self.output_operation()
         self.end_process()
@@ -305,7 +300,7 @@ class FinnAdvertProcessing(Process):
                                                   "Development of Advert Views")
         extract_community_data = extract_community_data_operation.run()
         extract_community_data_signal = Signal(extract_community_data,
-                                               "Finn Community / Nabolag JSON")
+                                               "Finn Community Statistics")
 
         self.add_signal(extract_published_date_signal, "publish_date")
         self.add_signal(extract_price_signal, "list_price_of_real_estate")
@@ -320,7 +315,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(extract_community_data_operation, extract_community_data_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def extract_first_row(self):
         """
         method for extracting first row from ownership history
@@ -337,13 +332,14 @@ class FinnAdvertProcessing(Process):
         self.add_transition(extract_first_row_operation, extract_first_row_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def rate_of_change_1(self):
         """
         method for calculating rate of change in views vector
 
         """
         views_development = self.get_signal("views_development")
+
         total = views_development.data["views_development"]["total_views"][::-1]
         views_development.data["views_development"].update({"total_views": total})
 
@@ -354,6 +350,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(views_development, rate_of_change_operation)
 
         rate_of_change = rate_of_change_operation.run()
+
         index = list(rate_of_change["total_views"].keys())
         total = list(rate_of_change["total_views"].values())[::-1]
         change = list(rate_of_change["Endring"].values())[::-1]
@@ -370,7 +367,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(rate_of_change_operation, rate_of_change_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def finn_community_process(self):
         """
         method for processing community statistics data from Finn
@@ -385,13 +382,14 @@ class FinnAdvertProcessing(Process):
         process_community_data_operation.run()
 
     @Profiling
-    @Tracking
+    @Debugger
     def accumulate(self):
         """
         method for accumulating the values in dataframe column
 
         """
         views_development = self.get_signal("views_change_signal")
+
         total = dict([[*views_development.data["views_development"].items()][3]])
 
         accumulate_operation = Accumulate(total, "Calculate the Accumulated Sum of Views")
@@ -406,7 +404,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(accumulate_operation, accumulate_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def multiplex_2(self):
         """
         multiplexing the accumulated sum of views with the views development
@@ -428,7 +426,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(multiplex_operation, multiplex_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def check_newest_date(self):
         """
         method for checking which of two dates are the newest date
@@ -458,7 +456,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(check_newest_date_operation, not_sold_signal, label="false")
 
     @Profiling
-    @Tracking
+    @Debugger
     def add_to_dataframe_1(self):
         """
         method for adding prisantydning to ownership history dataframe
@@ -484,7 +482,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(add_row_to_dataframe_operation, add_row_to_dataframe_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def add_to_dataframe_2(self):
         """
         method for adding final sales price (if sold) to ownership history dataframe
@@ -514,7 +512,7 @@ class FinnAdvertProcessing(Process):
         self.add_transition(add_row_to_dataframe_operation, add_row_to_dataframe_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def rate_of_change_2(self):
         """
         method for calculating percentage change in prices

@@ -72,7 +72,8 @@ class StatisticsModel(Model):
                 BarChart.clear_graphics(getattr(self.parent.ui, prefix + "hist_data_city_area"))
                 RatioChart.clear_graphics(self.parent.ui.graphics_view_ratio_statistics)
                 if key + postfix in self.data.keys() and self.data[key + postfix]:
-                    self.add_sqm_dist_charts(prefix, postfix)
+                    if sum(list(self.data["hist_data_city_area" + postfix].values())) != 0:
+                        self.add_sqm_dist_charts(prefix, postfix)
             elif key in ["hist_data_city_area"]:
                 pass
             elif key == "views_development":
@@ -160,8 +161,17 @@ class StatisticsModel(Model):
         Assertor.assert_data_types([prefix, postfix], [str, str])
         city_area_sales = self.data["hist_data_city_area" + postfix]
         municipality_sales = self.data["hist_data_municipality" + postfix]
-        labels = (self.data["city_area" + postfix],
-                  self.data["municipality" + postfix])
+
+        if "city_area" + postfix in self.data.keys() and \
+                "municipality" + postfix in self.data.keys():
+            labels = (self.data["city_area" + postfix], self.data["municipality" + postfix])
+        elif "city_area" + postfix in self.data.keys():
+            labels = (self.data["city_area" + postfix], "")
+        elif "municipality" + postfix in self.data.keys():
+            labels = ("", self.data["municipality" + postfix])
+        else:
+            labels = ("", "")
+
         self.sales_plot = BarChart(list(city_area_sales.keys()),
                                    list(city_area_sales.values()),
                                    list(municipality_sales.keys()),

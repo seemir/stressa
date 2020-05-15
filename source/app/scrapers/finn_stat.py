@@ -341,5 +341,5 @@ class FinnStat(Finn):
         for price, num in elements.items():
             products.append(int(price) * num)
             sums += num
-        average = Amount(str(round(sum(products) / sums))).amount
+        average = Amount(str(round(sum(products) / sums))).amount if sums != 0 else "0"
         return average

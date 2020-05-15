@@ -32,7 +32,7 @@ class CommunitySubModel(SubModel):
         """
         Assertor.assert_data_types([community_json], [dict])
         self.name = FinnCommunityProcess.__name__
-        super().__init__(name=self.name, desc="Processing Community Data / Statistics")
+        super().__init__(name=self.name, desc="Processing Finn Community Statistics")
         self.community_json = community_json
 
     @Tracking

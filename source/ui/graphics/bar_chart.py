@@ -116,25 +116,27 @@ class BarChart(Chart):
         average_line_1 = InfiniteLine(angle=90, movable=False, pen=pen_1)
         average_line_2 = InfiniteLine(angle=90, movable=False, pen=pen_1)
 
-        average_1 = np.average(self.x_1[:-1], weights=self.y_1)
-        average_2 = np.average(self.x_1[:-1], weights=self.y_2)
-
         pen_2 = mkPen(color="#4c96d7", style=Qt.SolidLine, width=2)
         average_line_3 = InfiniteLine(angle=90, movable=False, pen=pen_2)
         average_line_4 = InfiniteLine(angle=90, movable=False, pen=pen_2)
 
         brush = QBrush(QColor(0, 0, 255, 20))
-        linear_region_1 = LinearRegionItem([average_1, self.average], movable=False,
-                                           brush=brush)
-        linear_region_2 = LinearRegionItem([average_2, self.average], movable=False,
-                                           brush=brush)
-        self.graphics_view_1.addItem(linear_region_1)
-        self.graphics_view_2.addItem(linear_region_2)
 
-        average_line_1.setPos(average_1)
-        average_line_2.setPos(average_2)
-        self.graphics_view_1.addItem(average_line_1)
-        self.graphics_view_2.addItem(average_line_2)
+        if sum(self.y_1) != 0:
+            average_1 = np.average(self.x_1[:-1], weights=self.y_1)
+            linear_region_1 = LinearRegionItem([average_1, self.average], movable=False,
+                                               brush=brush)
+            self.graphics_view_1.addItem(linear_region_1)
+            average_line_1.setPos(average_1)
+            self.graphics_view_1.addItem(average_line_1)
+
+        if sum(self.y_2) != 0:
+            average_2 = np.average(self.x_2[:-1], weights=self.y_2)
+            linear_region_2 = LinearRegionItem([average_2, self.average], movable=False,
+                                               brush=brush)
+            self.graphics_view_2.addItem(linear_region_2)
+            average_line_2.setPos(average_2)
+            self.graphics_view_2.addItem(average_line_2)
 
         average_line_3.setPos(self.average)
         average_line_4.setPos(self.average)

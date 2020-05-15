@@ -166,4 +166,4 @@ class Posten(Scraper):
         out         : list
                       all rules in scraper
         """
-        return ["only_numeric_values", "max_len_four"]
+        return ", ".join(["only_numeric_values", "max_len_four"]).replace("'", "")

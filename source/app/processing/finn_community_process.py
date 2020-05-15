@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Profiling, Tracking
 
-from .engine import Process, InputOperation, Signal, Extract, Separate
+from .engine import Process, InputOperation, Signal, Extract, Separate, Restructure
 
 
 class FinnCommunityProcess(Process):
@@ -35,6 +35,10 @@ class FinnCommunityProcess(Process):
         self.extract_1()
         self.separate()
         self.extract_2()
+
+        self.run_parallel(
+            [self.restructure_1, self.restructure_2, self.restructure_3, self.restructure_4])
+
         self.output_operation()
         self.end_process()
 
@@ -46,10 +50,10 @@ class FinnCommunityProcess(Process):
 
         """
         Assertor.assert_data_types([data], [dict])
-        input_operation = InputOperation("Finn Community / Nabolag JSON")
+        input_operation = InputOperation("Finn Community Statistics")
         self.add_node(input_operation)
 
-        input_signal = Signal(data, desc="Finn Community / Nabolag JSON")
+        input_signal = Signal(data, desc="Finn Community Statistics")
         self.add_signal(input_signal, "input_signal")
 
         self.add_transition(input_operation, input_signal)
@@ -116,6 +120,7 @@ class FinnCommunityProcess(Process):
         self.add_transition(separate_signal, pois_operation)
 
         age_distribution = age_distribution_operation.run()
+
         civil_status = civil_status_operation.run()
         education = education_operation.run()
         income = income_operation.run()
@@ -125,7 +130,7 @@ class FinnCommunityProcess(Process):
         civil_status_signal = Signal(civil_status, "Civil Status Distribution of Community")
         education_signal = Signal(education, "Educational Distribution of Community")
         income_signal = Signal(income, "Income Distribution of Community")
-        pois_signal = Signal(pois, "List of Higher Educational Institutions")
+        pois_signal = Signal(pois, "Information on Higher Educational Institutions")
 
         self.add_signal(age_distribution_signal, "age_distribution")
         self.add_signal(civil_status_signal, "civil_status")
@@ -138,6 +143,110 @@ class FinnCommunityProcess(Process):
         self.add_transition(education_operation, education_signal)
         self.add_transition(income_operation, income_signal)
         self.add_transition(pois_operation, pois_signal)
+
+    @Profiling
+    @Tracking
+    def restructure_1(self):
+        """
+        method for restructuring age_distribution JSON node to pandas dataframe dict
+
+        """
+        try:
+            age_distribution = self.get_signal("age_distribution")
+            age_distribution_rest_operation = Restructure(
+                age_distribution.data["age_distribution"],
+                "Restructure Age Distribution to DataFrame Dict")
+            self.add_node(age_distribution_rest_operation)
+            self.add_transition(age_distribution, age_distribution_rest_operation, label="thread")
+
+            age_distribution_rest = age_distribution_rest_operation.run()
+
+            age_distribution_rest_signal = Signal(age_distribution_rest,
+                                                  "Restructured Age Distribution")
+            self.add_signal(age_distribution_rest_signal, "age_distribution_rest")
+
+            self.add_transition(age_distribution_rest_operation, age_distribution_rest_signal,
+                                label="thread")
+        except Exception as create_data_frame_exception:
+            self.exception_queue.put(create_data_frame_exception)
+            raise create_data_frame_exception
+
+    @Profiling
+    @Tracking
+    def restructure_2(self):
+        """
+        method for restructuring civil_status JSON node to pandas dataframe dict
+
+        """
+        try:
+            civil_status = self.get_signal("civil_status")
+            civil_status_rest_operation = Restructure(
+                civil_status.data["civil_status"],
+                "Restructure Civil Status to DataFrame Dict")
+            self.add_node(civil_status_rest_operation)
+            self.add_transition(civil_status, civil_status_rest_operation, label="thread")
+
+            civil_status_rest = civil_status_rest_operation.run()
+
+            civil_status_rest_signal = Signal(civil_status_rest,
+                                              "Restructured Civil Status Distribution")
+            self.add_signal(civil_status_rest_signal, "civil_status_rest")
+
+            self.add_transition(civil_status_rest_operation, civil_status_rest_signal,
+                                label="thread")
+        except Exception as create_data_frame_exception:
+            self.exception_queue.put(create_data_frame_exception)
+            raise create_data_frame_exception
+
+    @Profiling
+    @Tracking
+    def restructure_3(self):
+        """
+        method for restructuring education JSON node to pandas dataframe dict
+
+        """
+        try:
+            education = self.get_signal("education")
+            education_rest_operation = Restructure(education.data["education"],
+                                                   "Restructure Education to DataFrame Dict")
+            self.add_node(education_rest_operation)
+            self.add_transition(education, education_rest_operation, label="thread")
+
+            education_rest = education_rest_operation.run()
+
+            education_rest_signal = Signal(education_rest, "Restructured Education Distribution")
+            self.add_signal(education_rest_signal, "education_rest")
+
+            self.add_transition(education_rest_operation, education_rest_signal,
+                                label="thread")
+        except Exception as create_data_frame_exception:
+            self.exception_queue.put(create_data_frame_exception)
+            raise create_data_frame_exception
+
+    @Profiling
+    @Tracking
+    def restructure_4(self):
+        """
+        method for restructuring income JSON node to pandas dataframe dict
+
+        """
+        try:
+            income = self.get_signal("income")
+            income_rest_operation = Restructure(income.data["income"],
+                                                "Restructure Income to DataFrame Dict")
+            self.add_node(income_rest_operation)
+            self.add_transition(income, income_rest_operation, label="thread")
+
+            income_rest = income_rest_operation.run()
+
+            income_rest_signal = Signal(income_rest, "Restructured Income Distribution")
+            self.add_signal(income_rest_signal, "income_rest")
+
+            self.add_transition(income_rest_operation, income_rest_signal,
+                                label="thread")
+        except Exception as create_data_frame_exception:
+            self.exception_queue.put(create_data_frame_exception)
+            raise create_data_frame_exception
 
     @Profiling
     @Tracking

@@ -140,8 +140,8 @@ class DoubleCrossHair(QObject):
 
         """
         pos = evt[0]
-        if self.plot_widget_1.sceneBoundingRect().contains(
-                pos) or self.plot_widget_2.sceneBoundingRect().contains(pos):
+        if self.plot_widget_1.sceneBoundingRect().contains(pos) or \
+                self.plot_widget_2.sceneBoundingRect().contains(pos):
             x_val_1, y_val_1, x_val_2, y_val_2, limits = self.move_vertical_lines(pos)
 
             x_label_idx = where(array(self.x_1) == x_val_1)[0]

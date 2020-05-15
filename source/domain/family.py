@@ -224,5 +224,6 @@ class Family(Entity):
                       all rules in entity
 
         """
-        return ["non_negative_income", "non_negative_cars", "kindergarten_criteria", "sfo_criteria",
-                "pregnant_criteria"]
+        return ", ".join(
+            ['non_negative_income', 'non_negative_cars', 'kindergarten_criteria', 'sfo_criteria',
+             'pregnant_criteria']).replace("'", "")
