@@ -19,6 +19,7 @@ from .validate_finn_code import ValidateFinnCode
 from .extract_first_row import ExtractFirstRow
 from .check_newest_date import CheckNewestDate
 from .output_operation import OutputOperation
+from .restructure_pois import RestructurePois
 from .validate_family import ValidateFamily
 from .input_operation import InputOperation
 from .rate_of_change import RateOfChange

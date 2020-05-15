@@ -42,7 +42,6 @@ class Restructure(Operation):
         method for running operation
 
         """
-        final_dict = {}
         group = []
         neighborhood = []
         city = []
@@ -63,8 +62,7 @@ class Restructure(Operation):
                                     neighborhood.append(elem)
                                 elif prop == "city":
                                     city.append(elem)
-        final_dict.update(
-            {self.data.copy()["type"].lower(): {"Gruppe": group,
-                                                "Nabolag": neighborhood,
-                                                "By": city}})
-        return final_dict
+        data = {self.data.copy()["type"].lower(): {"Gruppe": group,
+                                                   "Nabolag": neighborhood,
+                                                   "By": city}}
+        return data

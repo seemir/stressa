@@ -9,7 +9,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Profiling, Tracking
 
-from .engine import Process, InputOperation, Signal, Extract, Separate, Restructure
+from .engine import Process, InputOperation, Signal, Extract, Separate, \
+    Restructure, RestructurePois, Multiplex, OutputOperation
 
 
 class FinnCommunityProcess(Process):
@@ -37,9 +38,12 @@ class FinnCommunityProcess(Process):
         self.extract_2()
 
         self.run_parallel(
-            [self.restructure_1, self.restructure_2, self.restructure_3, self.restructure_4])
+            [self.restructure_1, self.restructure_2, self.restructure_3,
+             self.restructure_4, self.restructure_5])
 
-        self.output_operation()
+        self.multiplex()
+        self.finn_community_statistics = self.output_operation()
+
         self.end_process()
 
     @Profiling
@@ -163,13 +167,13 @@ class FinnCommunityProcess(Process):
 
             age_distribution_rest_signal = Signal(age_distribution_rest,
                                                   "Restructured Age Distribution")
-            self.add_signal(age_distribution_rest_signal, "age_distribution_rest")
+            self.add_signal(age_distribution_rest_signal, "age_rest")
 
             self.add_transition(age_distribution_rest_operation, age_distribution_rest_signal,
                                 label="thread")
-        except Exception as create_data_frame_exception:
-            self.exception_queue.put(create_data_frame_exception)
-            raise create_data_frame_exception
+        except Exception as restructure_frame_exception:
+            self.exception_queue.put(restructure_frame_exception)
+            raise restructure_frame_exception
 
     @Profiling
     @Tracking
@@ -194,9 +198,9 @@ class FinnCommunityProcess(Process):
 
             self.add_transition(civil_status_rest_operation, civil_status_rest_signal,
                                 label="thread")
-        except Exception as create_data_frame_exception:
-            self.exception_queue.put(create_data_frame_exception)
-            raise create_data_frame_exception
+        except Exception as restructure_frame_exception:
+            self.exception_queue.put(restructure_frame_exception)
+            raise restructure_frame_exception
 
     @Profiling
     @Tracking
@@ -219,9 +223,9 @@ class FinnCommunityProcess(Process):
 
             self.add_transition(education_rest_operation, education_rest_signal,
                                 label="thread")
-        except Exception as create_data_frame_exception:
-            self.exception_queue.put(create_data_frame_exception)
-            raise create_data_frame_exception
+        except Exception as restructure_frame_exception:
+            self.exception_queue.put(restructure_frame_exception)
+            raise restructure_frame_exception
 
     @Profiling
     @Tracking
@@ -244,9 +248,65 @@ class FinnCommunityProcess(Process):
 
             self.add_transition(income_rest_operation, income_rest_signal,
                                 label="thread")
-        except Exception as create_data_frame_exception:
-            self.exception_queue.put(create_data_frame_exception)
-            raise create_data_frame_exception
+        except Exception as restructure_frame_exception:
+            self.exception_queue.put(restructure_frame_exception)
+            raise restructure_frame_exception
+
+    @Profiling
+    @Tracking
+    def restructure_5(self):
+        """
+        method for restructuring pois JSON node to pandas dataframe dict
+
+        """
+        try:
+            pois = self.get_signal("pois")
+            pois_rest_operation = RestructurePois(pois.data["pois"],
+                                                  "Restructure POIS to DataFrame Dict")
+            self.add_node(pois_rest_operation)
+            self.add_transition(pois, pois_rest_operation, label="thread")
+
+            pois_rest = pois_rest_operation.run()
+
+            pois_rest_signal = Signal(pois_rest, "Restructured Income Distribution")
+            self.add_signal(pois_rest_signal, "pois_rest")
+
+            self.add_transition(pois_rest_operation, pois_rest_signal,
+                                label="thread")
+        except Exception as restructure_frame_exception:
+            self.exception_queue.put(restructure_frame_exception)
+            raise restructure_frame_exception
+
+    @Profiling
+    @Tracking
+    def multiplex(self):
+        """
+        multiplex all processed data
+
+        """
+        age_distribution = self.get_signal("age_rest")
+        civil_status_distribution = self.get_signal("civil_status_rest")
+        education_distribution = self.get_signal("education_rest")
+        income_distribution = self.get_signal("income_rest")
+        pois_distribution = self.get_signal("pois_rest")
+
+        multiplex_operation = Multiplex(
+            [age_distribution.data, civil_status_distribution.data, education_distribution.data,
+             income_distribution.data, pois_distribution.data],
+            desc="Multiplex Finn Community Statistics")
+        self.add_node(multiplex_operation)
+
+        self.add_transition(age_distribution, multiplex_operation)
+        self.add_transition(civil_status_distribution, multiplex_operation)
+        self.add_transition(education_distribution, multiplex_operation)
+        self.add_transition(income_distribution, multiplex_operation)
+        self.add_transition(pois_distribution, multiplex_operation)
+
+        multiplex = multiplex_operation.run()
+
+        multiplex_signal = Signal(multiplex, "Multiplexed Finn Community Statistics")
+        self.add_signal(multiplex_signal, "multiplexed_finn_community_statistics")
+        self.add_transition(multiplex_operation, multiplex_signal)
 
     @Profiling
     @Tracking
@@ -255,4 +315,10 @@ class FinnCommunityProcess(Process):
         final operation of the process
 
         """
-        # self.print_pdf()
+        multiplexed_community_statistics = self.get_signal("multiplexed_finn_community_statistics")
+        output_operation = OutputOperation("Finn Community Statistics")
+
+        self.add_node(output_operation)
+        self.add_transition(multiplexed_community_statistics, output_operation)
+
+        return multiplexed_community_statistics.data

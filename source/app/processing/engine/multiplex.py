@@ -10,6 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util import Assertor, Tracking
 
 from .operation import Operation
+from .signal import Signal
 
 
 class Multiplex(Operation):
@@ -49,6 +50,8 @@ class Multiplex(Operation):
         """
         signals = {}
         for signal in self.signals:
-            if signal:
+            if isinstance(signal, Signal):
+                signals.update(signal.data)
+            elif signal:
                 signals.update(signal)
         return signals

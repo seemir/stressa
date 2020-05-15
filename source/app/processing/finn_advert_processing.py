@@ -245,8 +245,7 @@ class FinnAdvertProcessing(Process):
         finn_stat_info = self.get_signal("finn_stat_info")
         finn_community_stat = self.get_signal("finn_community_statistics")
 
-        signals = [finn_ad_info.data, finn_owner_history.data, finn_stat_info.data,
-                   finn_community_stat.data]
+        signals = [finn_ad_info, finn_owner_history, finn_stat_info, finn_community_stat]
         multiplex_operation = Multiplex(signals, desc="Multiplex Scraped Finn Information")
         self.add_node(multiplex_operation)
 
@@ -379,7 +378,12 @@ class FinnAdvertProcessing(Process):
         self.add_node(process_community_data_operation)
         self.add_transition(community_json, process_community_data_operation)
 
-        process_community_data_operation.run()
+        process_community_data = process_community_data_operation.run()
+
+        process_community_data_signal = Signal(process_community_data,
+                                               "Processed Finn Community Statistics")
+        self.add_signal(process_community_data_signal, "processed_community_data")
+        self.add_transition(process_community_data_operation, process_community_data_signal)
 
     @Profiling
     @Debugger
@@ -414,7 +418,7 @@ class FinnAdvertProcessing(Process):
         accumulated = self.get_signal("accumulated_signal")
 
         multiplex_operation = Multiplex(
-            [views_development.data["views_development"], accumulated.data],
+            [views_development.data["views_development"], accumulated],
             "Multiplex Accumulated Sum with Views Development")
         self.add_node(multiplex_operation)
         self.add_transition(views_development, multiplex_operation)
@@ -544,24 +548,23 @@ class FinnAdvertProcessing(Process):
         multiplexed_data = self.get_signal("multiplexed_data")
         price_change = self.get_signal("price_change_signal")
         multiplex_views = self.get_signal("multiplex_views")
+        community_statistics = self.get_signal("processed_community_data")
 
-        if multiplexed_data and price_change and multiplex_views:
-            signals = [multiplexed_data.data, price_change.data, multiplex_views.data]
-        elif multiplexed_data and price_change:
-            signals = [multiplexed_data.data, price_change.data]
-        else:
-            signals = [multiplexed_data.data]
-        multiplex_operation = Multiplex(signals, desc="Multiplex Scraped Finn Information "
-                                                      "and Ownership History with Price Change")
+        signals = [multiplexed_data, price_change, multiplex_views, community_statistics]
+
+        multiplex_operation = Multiplex(signals,
+                                        desc="Multiplex Scraped Finn Information, Ownership History"
+                                             "\n with Price Change, View- and Community Statistics")
         self.add_node(multiplex_operation)
         multiplex = multiplex_operation.run()
 
         self.add_transition(multiplexed_data, multiplex_operation)
         self.add_transition(price_change, multiplex_operation)
         self.add_transition(multiplex_views, multiplex_operation)
+        self.add_transition(community_statistics, multiplex_operation)
 
         multiplex_signal = Signal(multiplex, "Multiplexed Finn Information", prettify_keys=True,
-                                  length=14)
+                                  length=12)
         self.add_signal(multiplex_signal, "multiplex_finn_data")
 
         self.add_transition(multiplex_operation, multiplex_signal)

@@ -41,4 +41,5 @@ class CommunitySubModel(SubModel):
         method for running the sub model
 
         """
-        FinnCommunityProcess(self.community_json)
+        finn_community_process = FinnCommunityProcess(self.community_json)
+        return finn_community_process.finn_community_statistics
