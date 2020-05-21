@@ -50,8 +50,9 @@ class Multiplex(Operation):
         """
         signals = {}
         for signal in self.signals:
-            if isinstance(signal, Signal):
-                signals.update(signal.data)
+            if isinstance(signal, Signal) and hasattr(signal, "data"):
+                if signal.data:
+                    signals.update(signal.data)
             elif signal:
                 signals.update(signal)
         return signals

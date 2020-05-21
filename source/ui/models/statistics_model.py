@@ -21,7 +21,7 @@ class StatisticsModel(Model):
 
     """
     _statistics_keys = ["finnkode", "first_published", "location", "property_type", "price_range",
-                        "prisantydning", "sqm_price", "city_area_sqm_price",
+                        "prisantydning", "fellesgjeld", "sqm_price", "city_area_sqm_price",
                         "municipality_sqm_price", "size_range", "primrrom", "bruttoareal",
                         "ad_of_the_week", "normal_traffic", "totalviews", "latestemailcount",
                         "currentfavorites", "city_area_sqm_price", "municipality_sqm_price",

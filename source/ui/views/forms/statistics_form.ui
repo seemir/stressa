@@ -1441,7 +1441,7 @@
            <widget class="QLabel" name="label_finn_kode">
             <property name="minimumSize">
              <size>
-              <width>120</width>
+              <width>150</width>
               <height>0</height>
              </size>
             </property>
@@ -1651,6 +1651,20 @@
             <property name="icon">
              <iconset resource="../../images/img.qrc">
               <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_fellesgjeld">
+            <property name="text">
+             <string>Fellesgjeld</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QLineEdit" name="line_edit_fellesgjeld">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -2571,32 +2585,44 @@
        <string>Mennesker</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <widget class="QGraphicsView" name="graphics_view_age_distribution"/>
-       </item>
        <item row="0" column="1">
-        <widget class="QGraphicsView" name="graphics_view_relationship_status"/>
+        <widget class="QGraphicsView" name="graphics_view_relationship_status_municipality"/>
+       </item>
+       <item row="0" column="0">
+        <widget class="QGraphicsView" name="graphics_view_age_distribution_municipality"/>
        </item>
        <item row="0" column="2">
-        <widget class="QGraphicsView" name="graphics_view_income"/>
-       </item>
-       <item row="0" column="3" rowspan="3">
-        <widget class="QTableView" name="table_view_education"/>
+        <widget class="QGraphicsView" name="graphics_view_income_municiaplity"/>
        </item>
        <item row="0" column="4" rowspan="3">
         <widget class="QTableView" name="table_view_education_institution"/>
        </item>
        <item row="1" column="0">
-        <widget class="QTableView" name="table_view_age_distribution"/>
-       </item>
-       <item row="1" column="1" rowspan="2">
-        <widget class="QTableView" name="table_view_relationship_status"/>
-       </item>
-       <item row="1" column="2" rowspan="2">
-        <widget class="QTableView" name="table_view_income"/>
+        <widget class="QGraphicsView" name="graphics_view_age_distribution_city"/>
        </item>
        <item row="2" column="0">
-        <widget class="QTableView" name="table_view_people"/>
+        <widget class="QTableView" name="table_view_age_distribution"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="QTableView" name="table_view_relationship_status"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QGraphicsView" name="graphics_view_relationship_status_city"/>
+       </item>
+       <item row="2" column="2">
+        <widget class="QTableView" name="table_view_income"/>
+       </item>
+       <item row="1" column="2">
+        <widget class="QGraphicsView" name="graphics_view_income_city"/>
+       </item>
+       <item row="2" column="3">
+        <widget class="QTableView" name="table_view_education"/>
+       </item>
+       <item row="1" column="3">
+        <widget class="QGraphicsView" name="graphics_view_education_city"/>
+       </item>
+       <item row="0" column="3">
+        <widget class="QGraphicsView" name="graphics_view_education_municipality"/>
        </item>
       </layout>
      </widget>
@@ -4747,8 +4773,27 @@
   <tabstop>line_edit_ad_of_the_week</tabstop>
   <tabstop>line_edit_latestemailcount</tabstop>
   <tabstop>line_edit_currentfavorites</tabstop>
+  <tabstop>push_button_eierskifte_historikk</tabstop>
+  <tabstop>push_button_meta_data</tabstop>
   <tabstop>graphics_view_views_development</tabstop>
   <tabstop>graphics_view_hist_data_city_area</tabstop>
+  <tabstop>graphics_view_accumulated</tabstop>
+  <tabstop>graphics_view_hist_data_municipality</tabstop>
+  <tabstop>graphics_view_change</tabstop>
+  <tabstop>graphics_view_ratio_statistics</tabstop>
+  <tabstop>graphics_view_age_distribution_municipality</tabstop>
+  <tabstop>graphics_view_age_distribution_city</tabstop>
+  <tabstop>table_view_age_distribution</tabstop>
+  <tabstop>graphics_view_relationship_status_municipality</tabstop>
+  <tabstop>graphics_view_relationship_status_city</tabstop>
+  <tabstop>table_view_relationship_status</tabstop>
+  <tabstop>graphics_view_income_municiaplity</tabstop>
+  <tabstop>graphics_view_income_city</tabstop>
+  <tabstop>table_view_income</tabstop>
+  <tabstop>graphics_view_education_municipality</tabstop>
+  <tabstop>graphics_view_education_city</tabstop>
+  <tabstop>table_view_education</tabstop>
+  <tabstop>table_view_education_institution</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

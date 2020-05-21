@@ -134,7 +134,7 @@ class FinnCommunityProcess(Process):
         civil_status_signal = Signal(civil_status, "Civil Status Distribution of Community")
         education_signal = Signal(education, "Educational Distribution of Community")
         income_signal = Signal(income, "Income Distribution of Community")
-        pois_signal = Signal(pois, "Information on Higher Educational Institutions")
+        pois_signal = Signal(pois, "Information about Higher Educational Institutions")
 
         self.add_signal(age_distribution_signal, "age_distribution")
         self.add_signal(civil_status_signal, "civil_status")
@@ -268,7 +268,9 @@ class FinnCommunityProcess(Process):
 
             pois_rest = pois_rest_operation.run()
 
-            pois_rest_signal = Signal(pois_rest, "Restructured Income Distribution")
+            pois_rest_signal = Signal(pois_rest,
+                                      "Restructured Information about Higher Educational "
+                                      "Institutions")
             self.add_signal(pois_rest_signal, "pois_rest")
 
             self.add_transition(pois_rest_operation, pois_rest_signal,
