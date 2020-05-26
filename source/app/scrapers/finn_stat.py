@@ -12,8 +12,11 @@ from time import time
 
 import json
 from http.client import responses
-from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
-import requests
+
+import asyncio
+from asyncio import TimeoutError as TError
+from aiohttp import ClientSession, ClientTimeout
+from aiohttp.client_exceptions import ClientConnectionError
 
 from bs4 import BeautifulSoup
 import numpy as np
@@ -45,7 +48,7 @@ class FinnStat(Finn):
         super().__init__(finn_code=finn_code)
 
     @Tracking
-    def stat_response(self):
+    async def stat_response(self):
         """
         Response from Finn-no housing statistics search
 
@@ -58,19 +61,19 @@ class FinnStat(Finn):
         try:
             try:
                 start = time()
-                stat_response = requests.get(FINN_STAT_URL + "{}".format(self.finn_code),
-                                             timeout=TIMEOUT)
-                stat_status_code = stat_response.status_code
-                elapsed = self.elapsed_time(start)
-                LOGGER.info(
-                    "HTTP status code -> STATISTICS: [{}: {}] -> elapsed: {}".format(
-                        stat_status_code, responses[stat_status_code], elapsed))
-                return stat_response
-            except ConnectTimeout as finn_stat_timeout_error:
+                async with ClientSession(timeout=ClientTimeout(TIMEOUT)) as session:
+                    async with session.get(
+                            FINN_STAT_URL + "{}".format(self.finn_code)) as stat_response:
+                        stat_status_code = stat_response.status
+                        elapsed = self.elapsed_time(start)
+                        LOGGER.info(
+                            "HTTP status code -> STATISTICS: [{}: {}] -> elapsed: {}".format(
+                                stat_status_code, responses[stat_status_code], elapsed))
+                        return await stat_response.text()
+            except TError:
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system "
-                    "administrator, exited with '{}'".format(finn_stat_timeout_error))
-        except ConnectError as finn_stat_response_error:
+                    "Timeout occurred - please try again later or contact system administrator")
+        except ClientConnectionError as finn_stat_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
                 "client or contact system administrator, exited with '{}'".format(
@@ -88,10 +91,10 @@ class FinnStat(Finn):
         """
         LOGGER.info(
             "trying to retrieve 'housing_stat_information' for -> '{}'".format(self.finn_code))
-        response = self.stat_response()
-        info = {}
+        response = asyncio.run(self.stat_response())
         try:
-            stat_soup = BeautifulSoup(response.content, "lxml")
+            info = {}
+            stat_soup = BeautifulSoup(response, "lxml")
 
             # with open('content.html', 'w', encoding='utf-8') as file:
             #     file.write(stat_soup.prettify())
@@ -128,7 +131,7 @@ class FinnStat(Finn):
             LOGGER.success("'housing_stat_information' successfully retrieved")
 
             return info
-        except AttributeError as no_ownership_history_exception:
+        except Exception as no_ownership_history_exception:
             LOGGER.debug("[{}] No housing statistics found!, exited with '{}'".format(
                 self.__class__.__name__, no_ownership_history_exception))
 

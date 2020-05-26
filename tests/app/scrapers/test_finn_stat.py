@@ -13,13 +13,16 @@ import shutil
 import os
 
 from uuid import UUID
-from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
-import mock
+
+import asyncio
+from asyncio import TimeoutError as TError
+from aiohttp.client_exceptions import ClientConnectionError
 
 import pytest as pt
+import mock
 
 from source.app import FinnStat, Scraper
-from source.util import TrackingError
+from source.util import TimeOutError, TrackingError, NoConnectionError
 
 
 class TestFinnStat:
@@ -79,41 +82,41 @@ class TestFinnStat:
         Test the FinnStat response method
 
         """
-        assert self.finn_stat.stat_response().status_code == 200
+        assert asyncio.run(self.finn_stat.stat_response())
 
     @staticmethod
-    @mock.patch("requests.get", mock.MagicMock(side_effect=ConnectTimeout))
+    @mock.patch("aiohttp.ClientSession.get", mock.MagicMock(side_effect=TError))
     def test_response_throws_tracking_error_for_time_out_error():
         """
         Test that response method throws TrackingError if requests.get throws ConnectTimeout
 
         """
-        with pt.raises(TrackingError):
+        with pt.raises(TimeOutError):
             finn_stat = FinnStat("144857770")
-            finn_stat.stat_response()
+            asyncio.run(finn_stat.stat_response())
 
     @staticmethod
-    @mock.patch("requests.get", mock.MagicMock(side_effect=ConnectError))
+    @mock.patch("aiohttp.ClientSession.get", mock.MagicMock(side_effect=ClientConnectionError))
     def test_response_throws_tracking_error_for_no_connection_error():
         """
         Test that response method throws TrackingError if requests.get throws ConnectError
 
         """
-        with pt.raises(TrackingError):
+        with pt.raises(NoConnectionError):
             finn_stat = FinnStat("144857770")
-            finn_stat.stat_response()
+            asyncio.run(finn_stat.stat_response())
 
     @staticmethod
     @mock.patch("source.app.scrapers.finn_stat.FinnStat.stat_response",
                 mock.MagicMock(return_value=None))
-    def test_housing_stat_information_throws_not_found_error_if_none_response():
+    def test_housing_stat_information_throws_tracking_error_if_none_response():
         """
-        Test that housing_stat_information method does not throws AttributeError
-        if stat_response is None
+        Test that housing_stat_information method throws TrackingError if stat_response is None
 
         """
-        finn_stat = FinnStat("144857770")
-        finn_stat.housing_stat_information()
+        with pt.raises(TrackingError):
+            finn_stat = FinnStat("144857770")
+            finn_stat.housing_stat_information()
 
     @mock.patch("source.app.scrapers.finn_stat.FinnStat.stat_response",
                 mock.MagicMock(side_effect=ValueError("this is a test")))
