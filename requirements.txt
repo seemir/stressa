@@ -1,3 +1,4 @@
+aiohttp==3.6.2
 astroid==2.4.1
 atomicwrites==1.4.0
 attrs==19.3.0
@@ -60,5 +61,3 @@ win32-setctime==1.0.1
 wrapt==1.12.1
 zipp==3.1.0
 zope.interface==5.1.0
-
-aiohttp~=3.6.2

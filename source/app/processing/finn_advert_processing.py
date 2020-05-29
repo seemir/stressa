@@ -585,3 +585,4 @@ class FinnAdvertProcessing(Process):
                                      prettify_keys=True, length=14)
         self.add_signal(output_signal, "output_multiplex_data")
         self.add_transition(output_operation, output_signal)
+        # self.print_pdf()

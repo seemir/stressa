@@ -65,11 +65,10 @@ class MortgageModel(Model):
             lambda: self.set_date_edit("fodselsdato_1"))
         self.parent.ui.line_edit_adresse_1.editingFinished.connect(
             lambda: self.set_line_edit("adresse_1", Address, "format_address"))
+
         self.parent.ui.line_edit_postnr_1.editingFinished.connect(
             lambda: self.update_line_edits("postnr", self._post_code, PostalCodeExtraction,
                                            "output_operation", postfix="_1"))
-
-        # self.parent.ui.line_edit_postnr_1.editingFinished.connect(self.print_pdf)
 
         self.parent.ui.line_edit_epost_1.editingFinished.connect(
             lambda: self.set_line_edit("epost_1", Email, "format_email"))
@@ -92,9 +91,11 @@ class MortgageModel(Model):
             lambda: self.set_date_edit("fodselsdato_2"))
         self.parent.ui.line_edit_adresse_2.editingFinished.connect(
             lambda: self.set_line_edit("adresse_2", Address, "format_address"))
+
         self.parent.ui.line_edit_postnr_2.editingFinished.connect(
             lambda: self.update_line_edits("postnr", self._post_code, PostalCodeExtraction,
                                            "output_operation", postfix="_2"))
+
         self.parent.ui.line_edit_epost_2.editingFinished.connect(
             lambda: self.set_line_edit("epost_2", Email, "format_email"))
         self.parent.ui.line_edit_mobil_tlf_2.editingFinished.connect(

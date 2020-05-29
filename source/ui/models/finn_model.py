@@ -96,16 +96,8 @@ class FinnModel(Model):
             if finn_code and finn_code not in self.data.values():
                 getattr(self.parent.ui, "progress_bar" + postfix).setValue(randint(0, 30))
                 getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(False)
-                finn_processing = FinnAdvertProcessing(finn_code)
-                finn_data = finn_processing.multiplex_info_2
-                self.finn_data = {key + postfix: val for key, val in finn_data.items()}
-                self.set_line_edits("finnkode", self._finn_keys, postfix=postfix, data=finn_data)
-                self.parent.statistics_view.statistics_model.add_statistics_info(postfix)
-                self.data.update(self.parent.statistics_view.statistics_model.data)
-                self.parent.history_view.history_model.add_finn_history(postfix)
-                self.data.update(self.parent.history_view.history_model.data)
+                self.process_finn_data(finn_code, postfix)
                 getattr(self.parent.ui, "progress_bar" + postfix).setValue(30)
-                # finn_processing.print_pdf()
             elif finn_code and finn_code in self.data.values():
                 if ("finnkode" + postfix) not in self.data.keys():
                     getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
@@ -121,6 +113,20 @@ class FinnModel(Model):
             self.clear_finn_info(postfix, force=True)
             getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
             getattr(self.parent.ui, "line_edit_finnkode" + postfix).setFocus()
+
+    def process_finn_data(self, finn_code, postfix):
+        """
+        method for processing finn info
+
+        """
+        finn_processing = FinnAdvertProcessing(finn_code)
+        finn_data = finn_processing.multiplex_info_2
+        self.finn_data = {key + postfix: val for key, val in finn_data.items()}
+        self.set_line_edits("finnkode", self._finn_keys, postfix=postfix, data=finn_data)
+        self.parent.statistics_view.statistics_model.add_statistics_info(postfix)
+        self.data.update(self.parent.statistics_view.statistics_model.data)
+        self.parent.history_view.history_model.add_finn_history(postfix)
+        self.data.update(self.parent.history_view.history_model.data)
 
     @pyqtSlot()
     def clear_finn_info(self, postfix, force=False):

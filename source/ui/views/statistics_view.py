@@ -8,6 +8,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import os
+from random import randint
 
 from PyQt5.QtWidgets import QDialog, QWidget
 from PyQt5.QtCore import Qt
@@ -47,6 +48,7 @@ class StatisticsView(QDialog):
         self._meta_view = MetaView(self)
 
         self.ui.push_button_meta_data.clicked.connect(self.meta_view.display)
+        self.ui.push_button_oppdater.clicked.connect(self.update)
 
     @property
     def parent(self):
@@ -95,4 +97,31 @@ class StatisticsView(QDialog):
         self.ui.push_button_eierskifte_historikk.clicked.connect(
             lambda: self.parent.history_view.add_finn_history(postfix))
         self.statistics_model.add_statistics_info(postfix)
+        self.show_progress_bar()
         self.show()
+
+    def update(self):
+        """
+        method for updating
+
+        """
+        finn_code = getattr(self.ui, "line_edit_finnkode").text()
+        finn_code_1 = getattr(self.parent.ui, "line_edit_finnkode_1").text().strip()
+        if finn_code_1 and finn_code:
+            getattr(self.ui, "progress_bar_statistics").setValue(randint(0, 30))
+            self.parent.finn_model.process_finn_data(finn_code_1, "_1")
+            getattr(self.ui, "progress_bar_statistics").setValue(30)
+
+    def show_progress_bar(self):
+        finn_code = getattr(self.ui, "line_edit_finnkode").text()
+        finn_code_1 = getattr(self.parent.ui, "line_edit_finnkode_1").text().strip()
+        finn_code_2 = getattr(self.parent.ui, "line_edit_finnkode_2").text().strip()
+        finn_code_3 = getattr(self.parent.ui, "line_edit_finnkode_3").text().strip()
+        if finn_code_1 and finn_code:
+            getattr(self.ui, "progress_bar_statistics").setValue(30)
+        elif finn_code_2 and finn_code:
+            getattr(self.ui, "progress_bar_statistics").setValue(30)
+        elif finn_code_3 and finn_code:
+            getattr(self.ui, "progress_bar_statistics").setValue(30)
+        else:
+            getattr(self.ui, "progress_bar_statistics").setValue(0)

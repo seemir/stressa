@@ -84,7 +84,7 @@ class TestFinnAd:
     @mocker.patch("requests.get", mocker.MagicMock(side_effect=ConnectTimeout))
     def test_response_throws_tracking_error_for_time_out():
         """
-        Test that response method throws TrackingError if requests.get throws ReadTimeout
+        Test that response method throws TrackingError if requests.get throws ConnectTimeOut
 
         """
         with pt.raises(TrackingError):
@@ -95,7 +95,7 @@ class TestFinnAd:
     @mocker.patch("requests.get", mocker.MagicMock(side_effect=ConnectError))
     def test_response_throws_tracking_error_for_no_connection():
         """
-        Test that response method throws TrackingError if requests.get throws NoConnection
+        Test that response method throws TrackingError if requests.get throws ConnectError
 
         """
         with pt.raises(TrackingError):

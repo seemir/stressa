@@ -12,12 +12,13 @@ from time import time
 
 import re
 from http.client import responses
+from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
+import requests
 
-from urllib.error import URLError
 from bs4 import BeautifulSoup
 
 from source.util import Assertor, LOGGER, NotFoundError, NoConnectionError, TimeOutError, Tracking
-from .settings import POSTEN_URL, POSTEN_FORM, TIMEOUT
+from .settings import POSTEN_URL, TIMEOUT
 from .scraper import Scraper
 
 
@@ -99,21 +100,21 @@ class Posten(Scraper):
 
         """
         try:
-            start = time()
-            self._browser.open(POSTEN_URL, timeout=TIMEOUT)
-            self._browser.select_form(nr=0)
-            self._browser[POSTEN_FORM] = self.postal_code
-            response = self._browser.submit()
-            elapsed = self.elapsed_time(start)
-            LOGGER.info(
-                "HTTP status code -> POSTEN: [{}: {}] -> elapsed: {}".format(
-                    response.code, responses[response.code], elapsed))
-            return response
-        except URLError as posten_response_error:
-            if str(posten_response_error) == "<urlopen error timed out>":
+            try:
+                start = time()
+                posten_response = requests.get(POSTEN_URL + "{}".format(self.postal_code),
+                                               timeout=TIMEOUT)
+                posten_status_code = posten_response.status_code
+                elapsed = self.elapsed_time(start)
+                LOGGER.info(
+                    "HTTP status code -> POSTEN: [{}: {}] -> elapsed: {}".format(
+                        posten_status_code, responses[posten_status_code], elapsed))
+                return posten_response
+            except ConnectTimeout as posten_timeout_error:
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact "
-                    "system administrator, exited with '{}'".format(posten_response_error))
+                    "Timeout occurred - please try again later or contact system "
+                    "administrator, exited with '{}'".format(posten_timeout_error))
+        except ConnectError as posten_response_error:
             raise NoConnectionError(
                 "Failed HTTP request - please insure that internet access is provided to the "
                 "client or contact system administrator, exited with '{}'".format(
@@ -131,8 +132,12 @@ class Posten(Scraper):
 
         """
         LOGGER.info("trying to retrieve 'postal_code_info' for -> '{}'".format(self.postal_code))
-        soup = BeautifulSoup(self.response(), "lxml")
-        rows = soup.find_all('tr')
+        soup = BeautifulSoup(self.response().content, "lxml")
+        rows = soup.find_all("tr")
+
+        # with open('content.html', 'w', encoding='utf-8') as file:
+        #     file.write(soup.prettify())
+
         if len(rows) == 2:
             header = [head.text.strip().lower() for head in soup.find_all('th')]
             values = [value.text.strip().upper() if i != 4 else

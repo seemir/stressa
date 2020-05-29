@@ -69,7 +69,7 @@ class FinnStat(Finn):
                         LOGGER.info(
                             "HTTP status code -> STATISTICS: [{}: {}] -> elapsed: {}".format(
                                 stat_status_code, responses[stat_status_code], elapsed))
-                        return await stat_response.text()
+                        return await stat_response.content.read()
             except TError:
                 raise TimeOutError(
                     "Timeout occurred - please try again later or contact system administrator")
@@ -238,7 +238,8 @@ class FinnStat(Finn):
                     for key, val in value["description"].items():
                         if key.lower() == "price":
                             info.update(
-                                {"price_range": val.replace("kr ", "").replace(",00", " kr")})
+                                {"price_range": val.replace("kr\xa0", "").replace(",00",
+                                                                                  " kr").strip()})
                         elif key.lower() == "published":
                             pass
                         elif key.lower() == "size":

@@ -86,9 +86,10 @@ class TestFinnStat:
 
     @staticmethod
     @mock.patch("aiohttp.ClientSession.get", mock.MagicMock(side_effect=TError))
-    def test_response_throws_tracking_error_for_time_out_error():
+    def test_response_throws_time_out_error_for_time_out_error():
         """
-        Test that response method throws TrackingError if requests.get throws ConnectTimeout
+        Test that response method throws TimeOutError if aiohttp.ClientSession.get
+        throws TimeoutError
 
         """
         with pt.raises(TimeOutError):
@@ -97,9 +98,10 @@ class TestFinnStat:
 
     @staticmethod
     @mock.patch("aiohttp.ClientSession.get", mock.MagicMock(side_effect=ClientConnectionError))
-    def test_response_throws_tracking_error_for_no_connection_error():
+    def test_response_throws_no_connection_error_for_client_connection_error():
         """
-        Test that response method throws TrackingError if requests.get throws ConnectError
+        Test that response method throws NoConnectionError if aiohttp.ClientSession.get
+        throws ClientConnectionError
 
         """
         with pt.raises(NoConnectionError):

@@ -322,5 +322,6 @@ class FinnCommunityProcess(Process):
 
         self.add_node(output_operation)
         self.add_transition(multiplexed_community_statistics, output_operation)
+        # self.print_pdf()
 
         return multiplexed_community_statistics.data

@@ -21,7 +21,7 @@ PORTALEN_URL = "https://finansportalen.no/feed/v3/bank/boliglan.atom"
 PORTALEN_CRED = tuple(os.environ.get(cred) for cred in ["PORTALEN_USERNAME", "PORTALEN_PASSWORD"])
 PORTALEN_ENTRY = "{http://www.w3.org/2005/Atom}entry"
 
-POSTEN_URL = "https://adressesok.posten.no/nb/postal_codes/search"
+POSTEN_URL = "https://adressesok.posten.no/nb/postal_codes/search?utf8=%E2%9C%93&q="
 POSTEN_FORM = "q"
 
 SIFO_URL = "http://kalkulator.referansebudsjett.no/php/blank_template.php"

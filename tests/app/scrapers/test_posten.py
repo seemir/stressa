@@ -11,12 +11,11 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 import json
 from uuid import UUID
-from urllib.error import URLError
 import shutil
 
 import mock
 import pytest as pt
-from mechanize._response import response_seek_wrapper
+from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from source.util import TrackingError
 from source.app import Posten, Scraper
@@ -89,8 +88,7 @@ class TestPosten:
         """
         posten = Posten("0010")
         response = posten.response()
-        assert response.code == 200
-        assert isinstance(response, response_seek_wrapper)
+        assert response.status_code == 200
 
     @staticmethod
     def test_postal_code_info_method():
@@ -104,10 +102,10 @@ class TestPosten:
         assert posten.postal_code_info() == correct_content
 
     @staticmethod
-    @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("timed out")))
+    @mock.patch("requests.get", mock.MagicMock(side_effect=ConnectTimeout))
     def test_response_throws_tracking_error_for_read_timeout():
         """
-        Test that response method throws TrackingError if TimeOutError
+        Test that response method throws TrackingError if ConnectTimeout
 
         """
         posten = Posten("0010")
@@ -115,10 +113,10 @@ class TestPosten:
             posten.response()
 
     @staticmethod
-    @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("")))
+    @mock.patch("requests.get", mock.MagicMock(side_effect=ConnectError))
     def test_response_throws_tracking_error_for_no_connection_error():
         """
-        Test that response method throws TrackingError if URLError
+        Test that response method throws TrackingError if ConnectError
 
         """
         posten = Posten("0010")
