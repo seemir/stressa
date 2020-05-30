@@ -34,8 +34,10 @@ class FinnCommunityProcess(Process):
         super().__init__(name=self.__class__.__name__)
         self.input_operation(community_json)
         self.extract_1()
-        self.separate()
         self.extract_2()
+        self.extract_3()
+        self.separate()
+        self.extract_4()
 
         self.run_parallel(
             [self.restructure_1, self.restructure_2, self.restructure_3,
@@ -81,6 +83,39 @@ class FinnCommunityProcess(Process):
 
     @Profiling
     @Tracking
+    def extract_2(self):
+        """
+        method for extracting general information
+
+        """
+        input_signal = self.get_signal("input_signal")
+        extract_general_operation = Extract(input_signal.data["nabolag"], "general")
+        self.add_node(extract_general_operation)
+        self.add_transition(input_signal, extract_general_operation)
+
+        extract_general = extract_general_operation.run()
+        extract_general_signal = Signal(extract_general, "Extract General Information")
+        self.add_signal(extract_general_signal, "general_signal")
+        self.add_transition(extract_general_operation, extract_general_signal)
+
+    @Profiling
+    def extract_3(self):
+        """
+        method for extracting info from general information
+
+        """
+        general_signal = self.get_signal("general_signal")
+        extract_info_operation = Extract(general_signal.data["general"], "info")
+        self.add_node(extract_info_operation)
+        self.add_transition(general_signal, extract_info_operation)
+
+        extract_info = extract_info_operation.run()
+        extract_info_signal = Signal(extract_info, "Extract Info Information")
+        self.add_signal(extract_info_signal, "info_signal")
+        self.add_transition(extract_info_operation, extract_info_signal)
+
+    @Profiling
+    @Tracking
     def separate(self):
         """
         method for separating list of dict to dict of dict
@@ -99,7 +134,7 @@ class FinnCommunityProcess(Process):
 
     @Profiling
     @Tracking
-    def extract_2(self):
+    def extract_4(self):
         """
         method for extracting community statistics from community Information
 
@@ -291,10 +326,11 @@ class FinnCommunityProcess(Process):
         education_distribution = self.get_signal("education_rest")
         income_distribution = self.get_signal("income_rest")
         pois_distribution = self.get_signal("pois_rest")
+        info_signal = self.get_signal("info_signal")
 
         multiplex_operation = Multiplex(
             [age_distribution.data, civil_status_distribution.data, education_distribution.data,
-             income_distribution.data, pois_distribution.data],
+             income_distribution.data, pois_distribution.data, info_signal.data],
             desc="Multiplex Finn Community Statistics")
         self.add_node(multiplex_operation)
 
@@ -303,6 +339,7 @@ class FinnCommunityProcess(Process):
         self.add_transition(education_distribution, multiplex_operation)
         self.add_transition(income_distribution, multiplex_operation)
         self.add_transition(pois_distribution, multiplex_operation)
+        self.add_transition(info_signal, multiplex_operation)
 
         multiplex = multiplex_operation.run()
 

@@ -8,6 +8,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import numpy as np
+from numpy import array
 
 from pyqtgraph import BarGraphItem, PlotWidget, mkPen, InfiniteLine, SignalProxy, LinearRegionItem
 from PyQt5.QtGui import QBrush, QColor
@@ -27,7 +28,7 @@ class BarChart(Chart):
 
     def __init__(self, x_1: list, y_1: list, x_2: list, y_2: list, graphics_view_1: PlotWidget,
                  graphics_view_2: PlotWidget, labels: tuple, units=None, precision=0, width=1,
-                 average=None):
+                 average=None, create_bins=True, display=int, x_labels=None, highlight_bars=True):
         """
         Constructor / Instantiation of class
 
@@ -51,43 +52,60 @@ class BarChart(Chart):
                             measurement units got labels
         precision         : int
                             precision for rounding, default is zero
-        width             : int
+        width             : int, float
                             width of any bars, default is 1
         average           : str
-                            average sqm-price
+                            average
+        create_bins       : bool
+                            create bins boolean
+        display           : type
+                            display dtype for labels
+        x_labels          : array-like
+                            array of dates, i.e. time-period or other labels
+        highlight_bars    : bool
+                            whether to highlight bars in plot
 
         """
         Assertor.assert_data_types(
             [x_1, y_1, x_2, y_2, graphics_view_1, graphics_view_2, labels, precision, average],
-            [list, list, list, list, PlotWidget, PlotWidget, tuple, int, (type(None), str)])
+            [list, list, list, list, PlotWidget, PlotWidget, tuple, (int, float),
+             (type(None), str)])
         super().__init__()
-        self.y_1, self.x_1 = self.create_bins(x_1, y_1, bins=x_1)
-        self.y_2, self.x_2 = self.create_bins(x_2, y_2, bins=x_2)
+        if create_bins:
+            self.y_1, self.x_1 = self.create_bins(x_1, y_1, bins=x_1)
+            self.y_2, self.x_2 = self.create_bins(x_2, y_2, bins=x_2)
+        else:
+            self.y_1, self.x_1 = array(y_1), array(x_1 + [0])
+            self.y_2, self.x_2 = array(y_2), array(x_2 + [0])
 
         self.graphics_view_1 = graphics_view_1
         self.graphics_view_2 = graphics_view_2
         self.connection_chart = None
         self.graphics_view_3 = None
-        self.average = float(average)
+        if average:
+            self.average = float(average)
 
-        self.bar_item_1 = BarGraphItem(x=self.x_1[:-1], height=self.y_1, width=1000,
+        self.bar_item_1 = BarGraphItem(x=self.x_1[:-1], height=self.y_1, width=width,
                                        brush="#d2e5f5")
-        self.bar_item_2 = BarGraphItem(x=self.x_2[:-1], height=self.y_2, width=1000,
+        self.bar_item_2 = BarGraphItem(x=self.x_2[:-1], height=self.y_2, width=width,
                                        brush="#d2e5f5")
 
         self.graphics_view_1.addItem(self.bar_item_1)
         self.graphics_view_2.addItem(self.bar_item_2)
         self.units = units if units else ("", "", "", "")
-        if self.average:
+        if average:
             self.draw_average_line()
 
         self.cross_hair = DoubleCrossHair(self.x_1[:-1], self.y_1, self.x_2[:-1], self.y_2,
                                           self.graphics_view_1, self.graphics_view_2, labels,
-                                          self.units, precision, width)
+                                          self.units, precision, width, display=display,
+                                          x_labels=x_labels, highlight_bars=highlight_bars)
         self.add_cross_hair_to_chart()
 
-        self.graphics_view_1.plotItem.vb.setLimits(xMin=min(self.x_1), xMax=max(self.x_1))
-        self.graphics_view_2.plotItem.vb.setLimits(xMin=min(self.x_2), xMax=max(self.x_2))
+        self.graphics_view_1.plotItem.vb.setLimits(xMin=min(self.x_1) - width,
+                                                   xMax=max(self.x_1) + width)
+        self.graphics_view_2.plotItem.vb.setLimits(xMin=min(self.x_2) - width,
+                                                   xMax=max(self.x_2) + width)
         self.graphics_view_1.setMenuEnabled(False)
         self.graphics_view_2.setMenuEnabled(False)
 

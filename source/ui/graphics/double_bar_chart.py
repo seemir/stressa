@@ -87,7 +87,7 @@ class DoubleBarChart(Chart):
         self.cross_hair = DoubleCrossHair(asarray(self.x_1), asarray(self.y_1), asarray(self.x_2),
                                           asarray(self.y_3), self.graphics_view_1,
                                           self.graphics_view_2, labels, units=units, width=width,
-                                          x_time=x_1)
+                                          x_labels=x_1)
 
         self.graphics_view_1.plotItem.vb.setLimits(xMin=0, xMax=max(self.x_1) + 1)
         self.graphics_view_2.plotItem.vb.setLimits(xMin=0, xMax=max(self.x_2) + 1)

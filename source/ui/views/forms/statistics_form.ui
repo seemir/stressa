@@ -2660,7 +2660,11 @@
         <widget class="QGraphicsView" name="graphics_view_relationship_status_municipality"/>
        </item>
        <item row="0" column="0">
-        <widget class="QGraphicsView" name="graphics_view_age_distribution_municipality"/>
+        <widget class="PlotWidget" name="graphics_view_age_distribution_city_area">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
        </item>
        <item row="0" column="2">
         <widget class="QGraphicsView" name="graphics_view_income_municiaplity"/>
@@ -2669,10 +2673,30 @@
         <widget class="QTableView" name="table_view_education_institution"/>
        </item>
        <item row="1" column="0">
-        <widget class="QGraphicsView" name="graphics_view_age_distribution_city"/>
+        <widget class="PlotWidget" name="graphics_view_age_distribution_municipality">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
        </item>
        <item row="2" column="0">
-        <widget class="QTableView" name="table_view_age_distribution"/>
+        <widget class="QTableView" name="table_view_age_distribution">
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="gridStyle">
+          <enum>Qt::DotLine</enum>
+         </property>
+         <attribute name="horizontalHeaderHighlightSections">
+          <bool>false</bool>
+         </attribute>
+        </widget>
        </item>
        <item row="2" column="1">
         <widget class="QTableView" name="table_view_relationship_status"/>
@@ -4855,8 +4879,8 @@
   <tabstop>graphics_view_hist_data_municipality</tabstop>
   <tabstop>graphics_view_change</tabstop>
   <tabstop>graphics_view_ratio_statistics</tabstop>
+  <tabstop>graphics_view_age_distribution_city_area</tabstop>
   <tabstop>graphics_view_age_distribution_municipality</tabstop>
-  <tabstop>graphics_view_age_distribution_city</tabstop>
   <tabstop>table_view_age_distribution</tabstop>
   <tabstop>graphics_view_relationship_status_municipality</tabstop>
   <tabstop>graphics_view_relationship_status_city</tabstop>

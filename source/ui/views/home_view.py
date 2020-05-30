@@ -27,7 +27,6 @@ from .meta_view import MetaView
 
 from . import resources
 
-
 # myappid = 'Stressa.stressa.ui.version'
 # ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
