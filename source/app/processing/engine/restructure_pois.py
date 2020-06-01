@@ -54,7 +54,7 @@ class RestructurePois(Restructure):
                         elif keys == "distances":
                             if "unit" in values.keys():
                                 for key, value in values.items():
-                                    distance = str(value) + " " + values["unit"]
+                                    distance = str(value) + " " + values["unit"] if value else "-"
                                     if key == "air":
                                         distance_air.append(distance)
                                     elif key == "drive":
@@ -65,38 +65,55 @@ class RestructurePois(Restructure):
                             if "unit" in values.keys():
                                 for key, value in values.items():
                                     if key == "walk":
-                                        duration_walk.append(str(int(round(value / 60))) + " min")
+                                        duration_walk.append(
+                                            str(int(round(value / 60))) + " min" if value else "-")
                                     elif key == "drive":
-                                        duration_drive.append(str(int(round(value / 60))) + " min")
+                                        duration_drive.append(
+                                            str(int(round(value / 60))) + " min" if value else "-")
         institutions_col = []
         distance_col = []
         duration_col = []
         full_line = "----------------------"
         half_line = "- - - - - - - - - - - "
-        for i, val in enumerate(institutions):
+
+        for i, _ in enumerate(institutions):
             if i == 0:
                 institutions_col.append(full_line)
                 distance_col.append(full_line)
                 duration_col.append(full_line)
-            else:
-                institutions_col.append(institutions[i])
-                distance_col.append("")
-                duration_col.append("")
-                institutions_col.append(half_line)
-                distance_col.append(half_line)
-                duration_col.append(half_line)
-                institutions_col.append("Luftlinje")
+            institutions_col.append(institutions[i])
+            distance_col.append("")
+            duration_col.append("")
+            institutions_col.append(half_line)
+            distance_col.append(half_line)
+            duration_col.append(half_line)
+            institutions_col.append("Luftlinje")
+            if distance_air and i < len(distance_air):
                 distance_col.append(distance_air[i])
-                duration_col.append("-")
-                institutions_col.append("Til fots")
+            else:
+                distance_col.append("-")
+            duration_col.append("-")
+            institutions_col.append("Til fots")
+            if distance_walk and i < len(distance_walk):
                 distance_col.append(distance_walk[i])
+            else:
+                distance_col.append("-")
+            if duration_walk and i < len(duration_walk):
                 duration_col.append(duration_walk[i])
-                institutions_col.append("Med bil")
+            else:
+                duration_col.append("-")
+            institutions_col.append("Med bil")
+            if distance_drive and i < len(distance_drive):
                 distance_col.append(distance_drive[i])
+            else:
+                distance_col.append("-")
+            if duration_drive and i < len(duration_drive):
                 duration_col.append(duration_drive[i])
-                institutions_col.append(full_line)
-                distance_col.append(full_line)
-                duration_col.append(full_line)
+            else:
+                duration_col.append("")
+            institutions_col.append(full_line)
+            distance_col.append(full_line)
+            duration_col.append(full_line)
         data = {self.data.copy()["type"].lower(): {"Institusjon": institutions_col,
                                                    "Distanse": distance_col,
                                                    "Tid": duration_col}}
