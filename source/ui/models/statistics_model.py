@@ -15,7 +15,7 @@ from pandas import DataFrame
 from source.ui.graphics import BarChart, DoubleBarChart, ChangeBarChart, RatioChart, \
     BarChartWithLine
 from source.util import Assertor
-from source.domain import Amount, Percent
+from source.domain import Amount, Percent, Money
 
 from .table_model import TableModel
 from .model import Model
@@ -34,7 +34,7 @@ class StatisticsModel(Model):
                         "municipality_sqm_price", "city_area", "municipality",
                         "hist_data_city_area", "hist_data_municipality", "views_development",
                         "hist_data_city_area_count", "hist_data_municipality_count",
-                        "age_distribution", "info"]
+                        "age_distribution", "info", "civil_status", "education", "income", "pois"]
 
     def __init__(self, parent: QObject):
         """
@@ -52,8 +52,14 @@ class StatisticsModel(Model):
         self.view_plot = None
         self.change_plot = None
         self.ration_plot = None
-        self.city_area_dist_bar_line = None
-        self.city_dist_bar_line = None
+        self.age_dist_city_area_plot = None
+        self.age_dist_city_plot = None
+        self.civil_status_city_area_plot = None
+        self.civil_status_city_plot = None
+        self.education_city_area_plot = None
+        self.education_city_plot = None
+        self.income_city_area_plot = None
+        self.income_city_plot = None
 
     def add_statistics_info(self, postfix: str):
         """
@@ -83,6 +89,14 @@ class StatisticsModel(Model):
                 self.add_views_statistics(prefix, postfix, key)
             elif key == "age_distribution":
                 self.add_age_dist_chart(prefix, postfix, key)
+            elif key == "civil_status":
+                self.add_civil_status_chart(prefix, postfix, key)
+            elif key == "education":
+                self.add_education_chart(prefix, postfix, key)
+            elif key == "income":
+                self.add_income_chart(prefix, postfix, key)
+            elif key == "pois":
+                self.add_pois_table(postfix, key)
             elif key == "info":
                 pass
             else:
@@ -105,7 +119,10 @@ class StatisticsModel(Model):
         """
         for graphics_view in ["hist_data_city_area", "hist_data_municipality", "views_development",
                               "accumulated", "change", "ratio_statistics",
-                              "age_distribution_city_area", "age_distribution_municipality"]:
+                              "age_distribution_city_area", "age_distribution_city",
+                              "civil_status_city_area", "civil_status_city",
+                              "education_city_area", "education_city", "income_city_area",
+                              "income_city"]:
             getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=True, y=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
                 showValues=False)
@@ -121,8 +138,11 @@ class StatisticsModel(Model):
         self.parent.ui.graphics_view_accumulated.getViewBox().setXLink(
             self.parent.ui.graphics_view_change)
         self.parent.ui.graphics_view_age_distribution_city_area.getViewBox().setXLink(
-            self.parent.ui.graphics_view_age_distribution_municipality
-        )
+            self.parent.ui.graphics_view_age_distribution_city)
+        self.parent.ui.graphics_view_education_city_area.getViewBox().setXLink(
+            self.parent.ui.graphics_view_education_city)
+        self.parent.ui.graphics_view_income_city_area.getViewBox().setXLink(
+            self.parent.ui.graphics_view_income_city)
 
     def clear_statistics_info(self, postfix: str):
         """
@@ -159,9 +179,28 @@ class StatisticsModel(Model):
                 DoubleBarChart.clear_graphics(self.parent.graphics_view_views_development)
                 DoubleBarChart.clear_graphics(self.parent.graphics_view_accumulated)
             elif key == "age_distribution":
-                BarChart.clear_graphics(self.parent.ui.graphics_view_age_distribution_city_area)
-                BarChart.clear_graphics(self.parent.ui.graphics_view_age_distribution_municipality)
-                self.parent.ui.table_view_age_distribution.setModel(None)
+                BarChartWithLine.clear_graphics(
+                    self.parent.ui.graphics_view_age_distribution_city_area,
+                    self.parent.ui.table_view_age_distribution)
+                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_age_distribution_city,
+                                                self.parent.ui.table_view_age_distribution)
+            elif key == "civil_status":
+                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_civil_status_city_area,
+                                                self.parent.ui.table_view_civil_status)
+                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_civil_status_city,
+                                                self.parent.ui.table_view_civil_status)
+            elif key == "education":
+                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_education_city_area,
+                                                self.parent.ui.table_view_education)
+                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_education_city,
+                                                self.parent.ui.table_view_education)
+            elif key == "income":
+                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_income_city_area,
+                                                self.parent.ui.table_view_income)
+                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_income_city,
+                                                self.parent.ui.table_view_income)
+            elif key == "pois":
+                self.parent.ui.table_view_pois.setModel(None)
             elif key == "info":
                 pass
             else:
@@ -296,6 +335,99 @@ class StatisticsModel(Model):
         if key + postfix in self.data.keys() and self.data[key + postfix]:
             self.add_view_charts(prefix, postfix)
 
+    def add_dist_chart(self, prefix: str, postfix: str, key: str, plot_name_1: str,
+                       plot_name_2: str, table_name: str, dist_name: str, dist_var_1: str,
+                       dist_var_2: str, ignore_total: bool = True):
+        """
+        method for adding distribution chart to the statistics model
+
+        Parameters
+        ----------
+        prefix      : str
+                      name of prefix, i.e. "graphics"
+        postfix     : str
+                      index if used in naming of line_edits
+        key         : str
+                      name of label to change
+        plot_name_1 : str
+                      name of first plot
+        plot_name_2 : str
+                      name of second plot
+        table_name  : str
+                      name of table
+        dist_name   : str
+                      name of distribution variable
+        dist_var_1  : str
+                      name of instance variable for distribution
+        dist_var_2  : str
+                      name of second instance variable for distribution
+        ignore_total: str
+                      boolean for handling total values
+
+        """
+        Assertor.assert_data_types([prefix, postfix, key, plot_name_1, plot_name_2, table_name,
+                                    dist_name, dist_var_1, dist_var_2, ignore_total],
+                                   [str, str, str, str, str, str, str, str, str, bool])
+        BarChart.clear_graphics(
+            getattr(self.parent.ui, prefix + plot_name_1))
+        BarChart.clear_graphics(getattr(self.parent.ui, prefix + plot_name_2))
+        if key + postfix in self.data.keys() and self.data[key + postfix]:
+            dist = self.data[key + postfix]
+            city_area_dist = dist["Nabolag"][:-2] if ignore_total else dist["Nabolag"]
+            city_dist = dist["By"][:-2] if ignore_total else dist["By"]
+            dist_range = list(range(len(city_area_dist)))
+            if "info" + postfix in self.data.keys():
+                neighbourhood = self.data["info" + postfix]["neighborhood"]["name"] \
+                    .replace("-", " - ")
+                city = self.data["info" + postfix]["neighborhood"]["city"]
+            else:
+                neighbourhood = ""
+                city = ""
+            city_area = self.data["city_area" + postfix]
+            if sum(city_area_dist) != 0:
+                dist_df = {"Gruppe": [], "Nabolag": [],
+                           "By": []}
+                for keys, values in dist.items():
+                    if keys == "Gruppe":
+                        dist_df[keys] = values
+                    else:
+                        if ignore_total:
+                            dist_df[keys] = [Percent(str(val / 100)).value if i not in (
+                                len(values) - 1, len(values) - 2) else Amount(str(val)).amount
+                                             for i, val in enumerate(values)]
+                        else:
+                            dist_df[keys] = [Percent(str(val / 100)).value for i, val in
+                                             enumerate(values)]
+
+                table_model = TableModel(DataFrame(dist_df))
+                getattr(self.parent.ui, table_name).setModel(table_model)
+                getattr(self.parent.ui, table_name).horizontalHeader().setSectionResizeMode(
+                    QHeaderView.Stretch)
+
+                setattr(self, dist_var_1, BarChartWithLine(
+                    dist_range, city_area_dist,
+                    getattr(self.parent.ui, prefix + plot_name_1),
+                    getattr(self.parent.ui, table_name),
+                    width=0.5, reverse=False,
+                    legend='<div style="text-align: center">'
+                           '<span style="font-size: 10pt">{}:</span><br>'
+                           '<span style="font-size: 10pt">{}</span><br>'
+                           '<span style="font-size: 10pt">({})</span><br>'
+                           '</div>'.format(dist_name, neighbourhood, city_area)))
+
+                setattr(self, dist_var_2, BarChartWithLine(
+                    dist_range, city_dist,
+                    getattr(self.parent.ui, prefix + plot_name_2),
+                    getattr(self.parent.ui, table_name),
+                    width=0.5, reverse=False,
+                    legend='<div style="text-align: center">'
+                           '<span style="font-size: 10pt">{}:</span><br>'
+                           '<span style="font-size: 10pt">{}</span><br>'
+                           '</div>'.format(dist_name, city)))
+
+                getattr(self, dist_var_1).table_view_mapping()
+                getattr(self, dist_var_2).table_view_mapping()
+
     def add_age_dist_chart(self, prefix: str, postfix: str, key: str):
         """
         method for adding age distribution chart to the statistics model
@@ -310,59 +442,81 @@ class StatisticsModel(Model):
                       name of label to change
 
         """
-        Assertor.assert_data_types([prefix, postfix, key], [str, str, str])
-        BarChart.clear_graphics(
-            getattr(self.parent.ui, prefix + "age_distribution_city_area"))
-        BarChart.clear_graphics(getattr(self.parent.ui, prefix + "age_distribution_municipality"))
+        self.add_dist_chart(prefix, postfix, key, "age_distribution_city_area",
+                            "age_distribution_city", "table_view_age_distribution",
+                            "Aldersfordeling", "age_dist_city_area_plot", "age_dist_city_plot")
+
+    def add_civil_status_chart(self, prefix: str, postfix: str, key: str):
+        """
+        method for adding civil_status distribution chart to the statistics model
+
+        Parameters
+        ----------
+        prefix      : str
+                      name of prefix, i.e. "graphics"
+        postfix     : str
+                      index if used in naming of line_edits
+        key         : str
+                      name of label to change
+
+        """
+        self.add_dist_chart(prefix, postfix, key, "civil_status_city_area",
+                            "civil_status_city", "table_view_civil_status",
+                            "Sivil status fordeling", "civil_status_city_area_plot",
+                            "civil_status_city_plot", ignore_total=False)
+
+    def add_education_chart(self, prefix: str, postfix: str, key: str):
+        """
+        method for adding education distribution chart to the statistics model
+
+        Parameters
+        ----------
+        prefix      : str
+                      name of prefix, i.e. "graphics"
+        postfix     : str
+                      index if used in naming of line_edits
+        key         : str
+                      name of label to change
+
+        """
+        self.add_dist_chart(prefix, postfix, key, "education_city_area",
+                            "education_city", "table_view_education",
+                            "Utdanningsfordeling", "education_city_area_plot",
+                            "education_city_plot", ignore_total=False)
+
+    def add_income_chart(self, prefix: str, postfix: str, key: str):
+        """
+        method for adding income distribution chart to the statistics model
+
+        Parameters
+        ----------
+        prefix      : str
+                      name of prefix, i.e. "graphics"
+        postfix     : str
+                      index if used in naming of line_edits
+        key         : str
+                      name of label to change
+
+        """
+        self.add_dist_chart(prefix, postfix, key, "income_city_area", "income_city",
+                            "table_view_income", "Inntektsfordeling", "income_city_are_plot",
+                            "income_city_plot", ignore_total=False)
+
+    def add_pois_table(self, postfix: str, key: str):
+        """
+        method for adding pois table
+
+        Parameters
+        ----------
+        postfix     : str
+                      index if used in naming of line_edits
+        key         : str
+                      name of label to change
+
+        """
+        self.parent.ui.table_view_pois.setModel(None)
         if key + postfix in self.data.keys() and self.data[key + postfix]:
-            age_dist = self.data[key + postfix]
-            city_area_dist = age_dist["Nabolag"][:-2]
-            city_dist = age_dist["By"][:-2]
-            age_dist_range = list(range(len(city_area_dist)))
-            if "info" + postfix in self.data.keys():
-                neighbourhood = self.data["info" + postfix]["neighborhood"]["name"] \
-                    .replace("-", " - ")
-                city = self.data["info" + postfix]["neighborhood"]["city"]
-            else:
-                neighbourhood = ""
-                city = ""
-            city_area = self.data["city_area" + postfix]
-            if sum(city_area_dist) != 0:
-                age_dist_df = {"Gruppe": [], "Nabolag": [],
-                               "By": []}
-                for keys, values in age_dist.items():
-                    if keys == "Gruppe":
-                        age_dist_df[keys] = values
-                    else:
-                        age_dist_df[keys] = [Percent(str(val / 100)).value if i not in (
-                            len(values) - 1, len(values) - 2) else Amount(str(val)).amount for
-                                             i, val in enumerate(values)]
-
-                age_data_model = TableModel(DataFrame(age_dist_df))
-                self.parent.ui.table_view_age_distribution.setModel(age_data_model)
-                self.parent.ui.table_view_age_distribution.horizontalHeader().setSectionResizeMode(
-                    QHeaderView.Stretch)
-
-                self.city_area_dist_bar_line = BarChartWithLine(
-                    age_dist_range, city_area_dist,
-                    getattr(self.parent.ui, prefix + "age_distribution_city_area"),
-                    getattr(self.parent.ui, "table_view_age_distribution"),
-                    width=0.5, reverse=False,
-                    legend='<div style="text-align: center">'
-                           '<span style="font-size: 10pt">Aldersfordeling:</span><br>'
-                           '<span style="font-size: 10pt">{}</span><br>'
-                           '<span style="font-size: 10pt">({})</span><br>'
-                           '</div>'.format(neighbourhood, city_area))
-
-                self.city_dist_bar_line = BarChartWithLine(
-                    age_dist_range, city_dist,
-                    getattr(self.parent.ui, prefix + "age_distribution_municipality"),
-                    getattr(self.parent.ui, "table_view_age_distribution"),
-                    width=0.5, reverse=False,
-                    legend='<div style="text-align: center">'
-                           '<span style="font-size: 10pt">Aldersfordeling:</span><br>'
-                           '<span style="font-size: 10pt">{}</span><br>'
-                           '</div>'.format(city))
-
-                self.city_area_dist_bar_line.table_view_mapping()
-                self.city_dist_bar_line.table_view_mapping()
+            pois_table_model = TableModel(DataFrame(self.data[key + postfix]))
+            self.parent.ui.table_view_pois.setModel(pois_table_model)
+            self.parent.ui.table_view_pois.horizontalHeader().setSectionResizeMode(
+                QHeaderView.Stretch)

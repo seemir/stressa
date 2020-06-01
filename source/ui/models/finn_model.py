@@ -94,7 +94,7 @@ class FinnModel(Model):
             Assertor.assert_data_types([postfix], [str])
             finn_code = getattr(self.parent.ui, "line_edit_finnkode" + postfix).text().strip()
             if finn_code and finn_code not in self.data.values():
-                getattr(self.parent.ui, "progress_bar" + postfix).setValue(randint(0, 30))
+                getattr(self.parent.ui, "progress_bar" + postfix).setValue(randint(5, 25))
                 getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(False)
                 self.process_finn_data(finn_code, postfix)
                 getattr(self.parent.ui, "progress_bar" + postfix).setValue(30)

@@ -2657,30 +2657,31 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
        <item row="0" column="1">
-        <widget class="QGraphicsView" name="graphics_view_relationship_status_municipality"/>
-       </item>
-       <item row="0" column="0">
         <widget class="PlotWidget" name="graphics_view_age_distribution_city_area">
          <property name="frameShape">
           <enum>QFrame::Box</enum>
          </property>
         </widget>
        </item>
-       <item row="0" column="2">
-        <widget class="QGraphicsView" name="graphics_view_income_municiaplity"/>
-       </item>
-       <item row="0" column="4" rowspan="3">
-        <widget class="QTableView" name="table_view_education_institution"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="PlotWidget" name="graphics_view_age_distribution_municipality">
+       <item row="1" column="1">
+        <widget class="PlotWidget" name="graphics_view_age_distribution_city">
          <property name="frameShape">
           <enum>QFrame::Box</enum>
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QTableView" name="table_view_age_distribution">
+       <item row="0" column="4">
+        <widget class="PlotWidget" name="graphics_view_civil_status_city_area">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="7" rowspan="3">
+        <widget class="QTableView" name="table_view_pois">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
          <property name="alternatingRowColors">
           <bool>true</bool>
          </property>
@@ -2699,25 +2700,115 @@
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QTableView" name="table_view_relationship_status"/>
+        <widget class="QTableView" name="table_view_age_distribution">
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="gridStyle">
+          <enum>Qt::DotLine</enum>
+         </property>
+         <attribute name="horizontalHeaderHighlightSections">
+          <bool>false</bool>
+         </attribute>
+        </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QGraphicsView" name="graphics_view_relationship_status_city"/>
+       <item row="1" column="4">
+        <widget class="PlotWidget" name="graphics_view_civil_status_city">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QTableView" name="table_view_income"/>
+       <item row="2" column="4">
+        <widget class="QTableView" name="table_view_civil_status">
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="gridStyle">
+          <enum>Qt::DotLine</enum>
+         </property>
+         <attribute name="horizontalHeaderHighlightSections">
+          <bool>false</bool>
+         </attribute>
+        </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QGraphicsView" name="graphics_view_income_city"/>
+       <item row="0" column="0">
+        <widget class="PlotWidget" name="graphics_view_education_city_area">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
        </item>
-       <item row="2" column="3">
-        <widget class="QTableView" name="table_view_education"/>
+       <item row="1" column="0">
+        <widget class="PlotWidget" name="graphics_view_education_city">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
        </item>
-       <item row="1" column="3">
-        <widget class="QGraphicsView" name="graphics_view_education_city"/>
+       <item row="2" column="0">
+        <widget class="QTableView" name="table_view_education">
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="gridStyle">
+          <enum>Qt::DotLine</enum>
+         </property>
+         <attribute name="horizontalHeaderHighlightSections">
+          <bool>false</bool>
+         </attribute>
+        </widget>
        </item>
        <item row="0" column="3">
-        <widget class="QGraphicsView" name="graphics_view_education_municipality"/>
+        <widget class="PlotWidget" name="graphics_view_income_city_area">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="PlotWidget" name="graphics_view_income_city">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="QTableView" name="table_view_income">
+         <property name="alternatingRowColors">
+          <bool>true</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SingleSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectRows</enum>
+         </property>
+         <property name="gridStyle">
+          <enum>Qt::DotLine</enum>
+         </property>
+         <attribute name="horizontalHeaderHighlightSections">
+          <bool>false</bool>
+         </attribute>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -4879,19 +4970,19 @@
   <tabstop>graphics_view_hist_data_municipality</tabstop>
   <tabstop>graphics_view_change</tabstop>
   <tabstop>graphics_view_ratio_statistics</tabstop>
-  <tabstop>graphics_view_age_distribution_city_area</tabstop>
-  <tabstop>graphics_view_age_distribution_municipality</tabstop>
-  <tabstop>table_view_age_distribution</tabstop>
-  <tabstop>graphics_view_relationship_status_municipality</tabstop>
-  <tabstop>graphics_view_relationship_status_city</tabstop>
-  <tabstop>table_view_relationship_status</tabstop>
-  <tabstop>graphics_view_income_municiaplity</tabstop>
-  <tabstop>graphics_view_income_city</tabstop>
-  <tabstop>table_view_income</tabstop>
-  <tabstop>graphics_view_education_municipality</tabstop>
+  <tabstop>graphics_view_education_city_area</tabstop>
   <tabstop>graphics_view_education_city</tabstop>
   <tabstop>table_view_education</tabstop>
-  <tabstop>table_view_education_institution</tabstop>
+  <tabstop>graphics_view_age_distribution_city_area</tabstop>
+  <tabstop>graphics_view_age_distribution_city</tabstop>
+  <tabstop>table_view_age_distribution</tabstop>
+  <tabstop>graphics_view_income_city_area</tabstop>
+  <tabstop>graphics_view_income_city</tabstop>
+  <tabstop>table_view_income</tabstop>
+  <tabstop>graphics_view_civil_status_city_area</tabstop>
+  <tabstop>graphics_view_civil_status_city</tabstop>
+  <tabstop>table_view_civil_status</tabstop>
+  <tabstop>table_view_pois</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

@@ -18,6 +18,18 @@ class Restructure(Operation):
 
     """
 
+    _categories = {"AllmenneFag": "Allmennefaglig", "HelseSosial": "Helse og sosial",
+                   "Okonomiske": "Økonomiske fag", "NatVit": "Naturvitenskapelig",
+                   "HumanEstetikk": "Human og estetikk", "Samfunn": "Samfunnsfaglig",
+                   "Laerer": "Lærerutdanning", "Primaer": "Primærnæring",
+                   "Andre": "Andre / uoppgitt", "0-12": "0 år - 12 år",
+                   "13-18": "13 år - 18 år", "19-34": "19 år - 34 år",
+                   "35-64": "35 år - 64 år", "65+": "65+ år", "NotMarried": "Ugift",
+                   "Married": "Gift", "Separated": "Separert", "Widow": "Enke",
+                   "0-100000": "0 - 100K", "100000-200000": "100K - 200K",
+                   "200000-400000": "200K - 400K", "400000-500000": "400K - 500K",
+                   "500000-800000": "500K - 800K", "800000+": "800K+"}
+
     @Tracking
     def __init__(self, data: dict, desc: str):
         """
@@ -55,7 +67,9 @@ class Restructure(Operation):
                             elif val == "Households":
                                 group.append("Husholdninger")
                             else:
-                                group.append(val)
+                                group.append(
+                                    self._categories[val] if val in self._categories.keys()
+                                    else val)
                         elif key in ("percent", "total"):
                             for prop, elem in val.items():
                                 if prop == "neighborhood":

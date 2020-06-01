@@ -108,7 +108,7 @@ class StatisticsView(QDialog):
         finn_code = getattr(self.ui, "line_edit_finnkode").text()
         finn_code_1 = getattr(self.parent.ui, "line_edit_finnkode_1").text().strip()
         if finn_code_1 and finn_code:
-            getattr(self.ui, "progress_bar_statistics").setValue(randint(0, 30))
+            getattr(self.ui, "progress_bar_statistics").setValue(randint(5, 25))
             self.parent.finn_model.process_finn_data(finn_code_1, "_1")
             getattr(self.ui, "progress_bar_statistics").setValue(30)
 
