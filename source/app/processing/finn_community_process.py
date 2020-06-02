@@ -7,7 +7,7 @@ Process that handles the Community Statistics from Finn
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor, Profiling, Tracking
+from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, InputOperation, Signal, Extract, Separate, \
     Restructure, RestructurePois, Multiplex, OutputOperation
@@ -37,7 +37,9 @@ class FinnCommunityProcess(Process):
         self.extract_2()
         self.extract_3()
         self.separate()
-        self.extract_4()
+        self.run_parallel(
+            [self.extract_4, self.extract_5, self.extract_6,
+             self.extract_7, self.extract_8])
 
         self.run_parallel(
             [self.restructure_1, self.restructure_2, self.restructure_3,
@@ -65,7 +67,7 @@ class FinnCommunityProcess(Process):
         self.add_transition(input_operation, input_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def extract_1(self):
         """
         method for extracting community information / statistics from community JSON
@@ -82,7 +84,7 @@ class FinnCommunityProcess(Process):
         self.add_transition(extract_people_operation, extract_people_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def extract_2(self):
         """
         method for extracting general information
@@ -99,6 +101,7 @@ class FinnCommunityProcess(Process):
         self.add_transition(extract_general_operation, extract_general_signal)
 
     @Profiling
+    @Debugger
     def extract_3(self):
         """
         method for extracting info from general information
@@ -115,7 +118,7 @@ class FinnCommunityProcess(Process):
         self.add_transition(extract_info_operation, extract_info_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def separate(self):
         """
         method for separating list of dict to dict of dict
@@ -133,58 +136,102 @@ class FinnCommunityProcess(Process):
         self.add_transition(separate_operation, separate_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def extract_4(self):
         """
-        method for extracting community statistics from community Information
+        method for extracting age distribution
 
         """
-        separate_signal = self.get_signal("separate_signal")
-        age_distribution_operation = Extract(separate_signal.data, "age_distribution")
-        civil_status_operation = Extract(separate_signal.data, "civil_status")
-        education_operation = Extract(separate_signal.data, "education")
-        income_operation = Extract(separate_signal.data, "income")
-        pois_operation = Extract(separate_signal.data, "pois")
-
-        self.add_node(age_distribution_operation)
-        self.add_node(civil_status_operation)
-        self.add_node(education_operation)
-        self.add_node(income_operation)
-        self.add_node(pois_operation)
-
-        self.add_transition(separate_signal, age_distribution_operation)
-        self.add_transition(separate_signal, civil_status_operation)
-        self.add_transition(separate_signal, education_operation)
-        self.add_transition(separate_signal, income_operation)
-        self.add_transition(separate_signal, pois_operation)
-
-        age_distribution = age_distribution_operation.run()
-
-        civil_status = civil_status_operation.run()
-        education = education_operation.run()
-        income = income_operation.run()
-        pois = pois_operation.run()
-
-        age_distribution_signal = Signal(age_distribution, "Age Distribution of Community")
-        civil_status_signal = Signal(civil_status, "Civil Status Distribution of Community")
-        education_signal = Signal(education, "Educational Distribution of Community")
-        income_signal = Signal(income, "Income Distribution of Community")
-        pois_signal = Signal(pois, "Information about Higher Educational Institutions")
-
-        self.add_signal(age_distribution_signal, "age_distribution")
-        self.add_signal(civil_status_signal, "civil_status")
-        self.add_signal(education_signal, "education")
-        self.add_signal(income_signal, "income")
-        self.add_signal(pois_signal, "pois")
-
-        self.add_transition(age_distribution_operation, age_distribution_signal)
-        self.add_transition(civil_status_operation, civil_status_signal)
-        self.add_transition(education_operation, education_signal)
-        self.add_transition(income_operation, income_signal)
-        self.add_transition(pois_operation, pois_signal)
+        try:
+            separate_signal = self.get_signal("separate_signal")
+            age_distribution_operation = Extract(separate_signal.data, "age_distribution")
+            self.add_node(age_distribution_operation)
+            self.add_transition(separate_signal, age_distribution_operation)
+            age_distribution = age_distribution_operation.run()
+            age_distribution_signal = Signal(age_distribution, "Age Distribution of Community")
+            self.add_signal(age_distribution_signal, "age_distribution")
+            self.add_transition(age_distribution_operation, age_distribution_signal, label="thread")
+        except Exception as extract_exception:
+            self.exception_queue.put(extract_exception)
 
     @Profiling
-    @Tracking
+    @Debugger
+    def extract_5(self):
+        """
+        method for extracting civil status distribution
+
+        """
+        try:
+            separate_signal = self.get_signal("separate_signal")
+            civil_status_operation = Extract(separate_signal.data, "civil_status")
+            self.add_node(civil_status_operation)
+            self.add_transition(separate_signal, civil_status_operation)
+            civil_status = civil_status_operation.run()
+            civil_status_signal = Signal(civil_status, "Civil Status Distribution of Community")
+            self.add_signal(civil_status_signal, "civil_status")
+            self.add_transition(civil_status_operation, civil_status_signal, label="thread")
+        except Exception as extract_exception:
+            self.exception_queue.put(extract_exception)
+
+    @Profiling
+    @Debugger
+    def extract_6(self):
+        """
+        method for extracting education distribution
+
+        """
+        try:
+            separate_signal = self.get_signal("separate_signal")
+            education_operation = Extract(separate_signal.data, "education")
+            self.add_node(education_operation)
+            self.add_transition(separate_signal, education_operation)
+            education = education_operation.run()
+            education_signal = Signal(education, "Education Distribution of Community")
+            self.add_signal(education_signal, "education")
+            self.add_transition(education_operation, education_signal, label="thread")
+        except Exception as extract_exception:
+            self.exception_queue.put(extract_exception)
+
+    @Profiling
+    @Debugger
+    def extract_7(self):
+        """
+        method for extracting income distribution
+
+        """
+        try:
+            separate_signal = self.get_signal("separate_signal")
+            income_operation = Extract(separate_signal.data, "income")
+            self.add_node(income_operation)
+            self.add_transition(separate_signal, income_operation)
+            income = income_operation.run()
+            income_signal = Signal(income, "Income Distribution of Community")
+            self.add_signal(income_signal, "income")
+            self.add_transition(income_operation, income_signal, label="thread")
+        except Exception as extract_exception:
+            self.exception_queue.put(extract_exception)
+
+    @Profiling
+    @Debugger
+    def extract_8(self):
+        """
+        method for extracting information about higher educational institutions
+
+        """
+        try:
+            separate_signal = self.get_signal("separate_signal")
+            pois_operation = Extract(separate_signal.data, "pois")
+            self.add_node(pois_operation)
+            self.add_transition(separate_signal, pois_operation)
+            pois = pois_operation.run()
+            pois_signal = Signal(pois, "Information about Higher Educational Institutions")
+            self.add_signal(pois_signal, "pois")
+            self.add_transition(pois_operation, pois_signal, label="thread")
+        except Exception as extract_exception:
+            self.exception_queue.put(extract_exception)
+
+    @Profiling
+    @Debugger
     def restructure_1(self):
         """
         method for restructuring age_distribution JSON node to pandas dataframe dict
@@ -208,10 +255,9 @@ class FinnCommunityProcess(Process):
                                 label="thread")
         except Exception as restructure_frame_exception:
             self.exception_queue.put(restructure_frame_exception)
-            raise restructure_frame_exception
 
     @Profiling
-    @Tracking
+    @Debugger
     def restructure_2(self):
         """
         method for restructuring civil_status JSON node to pandas dataframe dict
@@ -235,10 +281,9 @@ class FinnCommunityProcess(Process):
                                 label="thread")
         except Exception as restructure_frame_exception:
             self.exception_queue.put(restructure_frame_exception)
-            raise restructure_frame_exception
 
     @Profiling
-    @Tracking
+    @Debugger
     def restructure_3(self):
         """
         method for restructuring education JSON node to pandas dataframe dict
@@ -260,10 +305,9 @@ class FinnCommunityProcess(Process):
                                 label="thread")
         except Exception as restructure_frame_exception:
             self.exception_queue.put(restructure_frame_exception)
-            raise restructure_frame_exception
 
     @Profiling
-    @Tracking
+    @Debugger
     def restructure_4(self):
         """
         method for restructuring income JSON node to pandas dataframe dict
@@ -285,10 +329,9 @@ class FinnCommunityProcess(Process):
                                 label="thread")
         except Exception as restructure_frame_exception:
             self.exception_queue.put(restructure_frame_exception)
-            raise restructure_frame_exception
 
     @Profiling
-    @Tracking
+    @Debugger
     def restructure_5(self):
         """
         method for restructuring pois JSON node to pandas dataframe dict
@@ -312,10 +355,9 @@ class FinnCommunityProcess(Process):
                                 label="thread")
         except Exception as restructure_frame_exception:
             self.exception_queue.put(restructure_frame_exception)
-            raise restructure_frame_exception
 
     @Profiling
-    @Tracking
+    @Debugger
     def multiplex(self):
         """
         multiplex all processed data
@@ -348,7 +390,7 @@ class FinnCommunityProcess(Process):
         self.add_transition(multiplex_operation, multiplex_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def output_operation(self):
         """
         final operation of the process

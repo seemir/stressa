@@ -53,12 +53,13 @@ def except_hook(exc_type, exc_value, exc_tb):
 
     """
     error_view = ErrorView(None)
-    trace_back_list = traceback.format_exception(exc_type, exc_value, exc_tb)
+    trace_back_list = [trace.strip() + "\n" for trace in
+                       traceback.format_exception(exc_type, exc_value, exc_tb)]
     trace_back = "".join(trace_back_list)
     try:
         raise Exception(
-            "Error! Please contact system administrator, exited with\n'{}".format(
-                trace_back_list[2])[:-2] + "''")
+            "Error! Please contact system administrator, exited with\n\n'{}: {}'".format(
+                exc_type.__name__, exc_value))
     except Exception as except_hook_exception:
         error_view.show_error(except_hook_exception, {}, trace_back)
 

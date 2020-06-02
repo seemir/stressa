@@ -74,19 +74,13 @@ class RestructurePois(Restructure):
         distance_col = []
         duration_col = []
         full_line = "----------------------"
-        half_line = "- - - - - - - - - - - "
-
         for i, _ in enumerate(institutions):
-            if i == 0:
-                institutions_col.append(full_line)
-                distance_col.append(full_line)
-                duration_col.append(full_line)
             institutions_col.append(institutions[i])
             distance_col.append("")
             duration_col.append("")
-            institutions_col.append(half_line)
-            distance_col.append(half_line)
-            duration_col.append(half_line)
+            institutions_col.append(full_line)
+            distance_col.append("")
+            duration_col.append("")
             institutions_col.append("Luftlinje")
             if distance_air and i < len(distance_air):
                 distance_col.append(distance_air[i])
@@ -110,10 +104,10 @@ class RestructurePois(Restructure):
             if duration_drive and i < len(duration_drive):
                 duration_col.append(duration_drive[i])
             else:
-                duration_col.append("")
-            institutions_col.append(full_line)
-            distance_col.append(full_line)
-            duration_col.append(full_line)
+                duration_col.append("-")
+            institutions_col.append("")
+            distance_col.append("")
+            duration_col.append("")
         data = {self.data.copy()["type"].lower(): {"Institusjon": institutions_col,
                                                    "Distanse": distance_col,
                                                    "Tid": duration_col}}
