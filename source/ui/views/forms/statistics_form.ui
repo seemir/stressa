@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>950</height>
+    <height>960</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>1600</width>
-    <height>950</height>
+    <height>960</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -2685,7 +2685,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>290</height>
+           <height>0</height>
           </size>
          </property>
          <property name="frameShape">
@@ -2712,7 +2712,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>292</height>
+           <height>300</height>
           </size>
          </property>
          <property name="alternatingRowColors">
@@ -2775,7 +2775,7 @@
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>290</height>
+           <height>293</height>
           </size>
          </property>
          <property name="frameShape">
