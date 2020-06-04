@@ -1,3 +1,7 @@
+.QWebEngineView QWidget#qt_back{
+  qproperty-icon: url("source/ui/images/previous.svg");
+}
+
 .QCalendarWidget QWidget#qt_calendar_prevmonth{
   qproperty-icon: url("source/ui/images/previous.svg");
 }

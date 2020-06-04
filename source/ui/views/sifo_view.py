@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import QDialog, QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 
-from source.ui.models import SifoModel
+from ..models import SifoModel
 from source.util import Assertor
 
 from .meta_view import MetaView

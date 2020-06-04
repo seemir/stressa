@@ -15,6 +15,7 @@ from PyQt5.QtCore import QFile, QTextStream, Qt
 from PyQt5.QtWidgets import QApplication
 
 from source.ui import HomeView, SplashView, ErrorView
+from source.util import LOGGER
 
 QApplication.setAttribute(Qt.AA_DisableHighDpiScaling, True)
 
@@ -62,6 +63,7 @@ def except_hook(exc_type, exc_value, exc_tb):
                 exc_type.__name__, exc_value))
     except Exception as except_hook_exception:
         error_view.show_error(except_hook_exception, {}, trace_back)
+        LOGGER.exception("{}\n\n {}".format(except_hook_exception, trace_back.strip()))
 
 
 if __name__ == "__main__":

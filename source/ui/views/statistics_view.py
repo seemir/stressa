@@ -17,6 +17,7 @@ from PyQt5.uic import loadUi
 from source.util import Assertor
 
 from .meta_view import MetaView
+from .map_view import MapView
 
 from ..models import StatisticsModel
 
@@ -46,9 +47,12 @@ class StatisticsView(QDialog):
         self._parent = parent
         self._statistics_model = StatisticsModel(self)
         self._meta_view = MetaView(self)
+        self._map_view = MapView(self)
 
         self.ui.push_button_meta_data.clicked.connect(self.meta_view.display)
         self.ui.push_button_oppdater.clicked.connect(self.update)
+        self.ui.push_button_show_in_map_1.clicked.connect(self.map_view.show)
+        self.ui.push_button_show_in_map_2.clicked.connect(self.map_view.show)
 
     @property
     def parent(self):
@@ -89,6 +93,19 @@ class StatisticsView(QDialog):
         """
         return self._meta_view
 
+    @property
+    def map_view(self):
+        """
+        MapView getter
+
+        Returns
+        -------
+        out     : MapView
+                  View with the mapdata for the Statistics view
+
+        """
+        return self._map_view
+
     def add_statistics_info(self, postfix):
         """
         Method for displaying StatisticsView
@@ -113,6 +130,10 @@ class StatisticsView(QDialog):
             getattr(self.ui, "progress_bar_statistics").setValue(30)
 
     def show_progress_bar(self):
+        """
+        method for progress bar display
+
+        """
         finn_code = getattr(self.ui, "line_edit_finnkode").text()
         finn_code_1 = getattr(self.parent.ui, "line_edit_finnkode_1").text().strip()
         finn_code_2 = getattr(self.parent.ui, "line_edit_finnkode_2").text().strip()

@@ -7,6 +7,7 @@ Module of the Statistics model which handles all the statistics from the Finn Ad
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from PyQt5.QtWebEngineWidgets import QWebEngineSettings
 from PyQt5.QtWidgets import QHeaderView
 from PyQt5.QtCore import QObject
 
@@ -15,8 +16,9 @@ from pandas import DataFrame
 from source.ui.graphics import BarChart, DoubleBarChart, ChangeBarChart, RatioChart, \
     BarChartWithLine
 from source.util import Assertor
-from source.domain import Amount, Percent, Money
+from source.domain import Amount, Percent
 
+from ..util import CreateHtmlTable
 from .table_model import TableModel
 from .model import Model
 
@@ -98,7 +100,7 @@ class StatisticsModel(Model):
             elif key == "pois":
                 self.add_pois_table(postfix, key)
             elif key == "info":
-                pass
+                self.add_map(postfix, key)
             else:
                 if key + postfix in self.data.keys():
                     self.add_statistics_label(key, postfix)
@@ -201,8 +203,9 @@ class StatisticsModel(Model):
                                                 self.parent.ui.table_view_income)
             elif key == "pois":
                 self.parent.ui.table_view_pois.setModel(None)
+                self.parent.ui.table_view_pois.clearSpans()
             elif key == "info":
-                pass
+                self.parent.map_view.web_view_map.close()
             else:
                 RatioChart.clear_graphics(self.parent.ui.graphics_view_ratio_statistics)
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -520,3 +523,28 @@ class StatisticsModel(Model):
             self.parent.ui.table_view_pois.setModel(pois_table_model)
             self.parent.ui.table_view_pois.horizontalHeader().setSectionResizeMode(
                 QHeaderView.Stretch)
+
+    def add_map(self, postfix: str, keys: str):
+        """
+        method for adding pois table
+
+        Parameters
+        ----------
+        postfix     : str
+                      index if used in naming of line_edits
+        keys         : str
+                      name of label to change
+
+        """
+        self.parent.map_view.web_view_map.close()
+        if keys + postfix in self.data.keys() and self.data[keys + postfix]:
+            lat = self.data[keys + postfix]["location"]["lat"]
+            long = self.data[keys + postfix]["location"]["long"]
+            html_table = CreateHtmlTable(self.data["info" + postfix])
+
+            self.parent.map_view.web_view_map.page().settings().setAttribute(
+                QWebEngineSettings.ShowScrollBars, False)
+            self.parent.map_view.map_model \
+                .show_map(coords=[lat, long],
+                          web_engine_view=self.parent.map_view.web_view_map,
+                          pop_up=html_table.html_table())

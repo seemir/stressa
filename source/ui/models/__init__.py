@@ -10,3 +10,4 @@ from .budget_model import BudgetModel
 from .home_model import HomeModel
 from .finn_model import FinnModel
 from .sifo_model import SifoModel
+from .map_model import MapModel

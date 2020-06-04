@@ -13,7 +13,7 @@ from PyQt5.QtWidgets import QDialog, QWidget, QHeaderView
 from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.uic import loadUi
 
-from source.ui.models import HistoryModel
+from ..models import HistoryModel
 from source.util import Assertor
 
 

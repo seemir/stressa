@@ -16,7 +16,7 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.uic import loadUi
 
-from source.ui.models import MortgageModel, FinnModel, HomeModel
+from ..models import MortgageModel, FinnModel, HomeModel
 
 from .statistics_view import StatisticsView
 from .history_view import HistoryView

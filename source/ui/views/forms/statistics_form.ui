@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>900</height>
+    <height>950</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>1600</width>
-    <height>900</height>
+    <height>950</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -1317,6 +1317,30 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="line_edit_property_type">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="27" column="2">
+           <widget class="QPushButton" name="push_button_show_in_map_1">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Vis i kart</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../images/img.qrc">
+              <normaloff>:/img/map.svg</normaloff>:/img/map.svg</iconset>
+            </property>
+           </widget>
+          </item>
           <item row="21" column="2">
            <widget class="QLineEdit" name="line_edit_latestemailcount">
             <property name="enabled">
@@ -1341,15 +1365,29 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="line_edit_property_type">
-            <property name="enabled">
-             <bool>false</bool>
+          <item row="12" column="0">
+           <widget class="QLabel" name="label_city_area_sqm_price">
+            <property name="text">
+             <string>KMP (område)</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_boligtype">
+            <property name="text">
+             <string>Eiendomstype</string>
             </property>
            </widget>
           </item>
           <item row="8" column="2">
            <widget class="QLineEdit" name="line_edit_size_range">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="15" column="2">
+           <widget class="QLineEdit" name="line_edit_hist_data_city_area_count">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1362,47 +1400,10 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_boligtype">
+          <item row="14" column="0">
+           <widget class="QLabel" name="label_municipality_sqm_price">
             <property name="text">
-             <string>Eiendomstype</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="0">
-           <widget class="QLabel" name="label_city_area_sqm_price">
-            <property name="text">
-             <string>KMP (område)</string>
-            </property>
-           </widget>
-          </item>
-          <item row="15" column="2">
-           <widget class="QLineEdit" name="line_edit_hist_data_city_area_count">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="25" column="2">
-           <widget class="QPushButton" name="push_button_eierskifte_historikk">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>230</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Eierskiftehistorikk</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../images/img.qrc">
-              <normaloff>:/img/history.svg</normaloff>:/img/history.svg</iconset>
+             <string>KMP (kommune)</string>
             </property>
            </widget>
           </item>
@@ -1413,15 +1414,22 @@
             </property>
            </widget>
           </item>
-          <item row="14" column="0">
-           <widget class="QLabel" name="label_municipality_sqm_price">
-            <property name="text">
-             <string>KMP (kommune)</string>
+          <item row="6" column="2">
+           <widget class="QLineEdit" name="line_edit_fellesgjeld">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
-          <item row="6" column="2">
-           <widget class="QLineEdit" name="line_edit_fellesgjeld">
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_totalpris">
+            <property name="text">
+             <string>Totalpris</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLineEdit" name="line_edit_totalpris">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1441,7 +1449,7 @@
             </property>
            </widget>
           </item>
-          <item row="27" column="2">
+          <item row="30" column="2">
            <widget class="QPushButton" name="push_button_meta_data">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1464,41 +1472,6 @@
             </property>
            </widget>
           </item>
-          <item row="7" column="2">
-           <widget class="QLineEdit" name="line_edit_totalpris">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_totalpris">
-            <property name="text">
-             <string>Totalpris</string>
-            </property>
-           </widget>
-          </item>
-          <item row="19" column="2">
-           <widget class="QLineEdit" name="line_edit_normal_traffic">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="label_fellesgjeld">
-            <property name="text">
-             <string>Fellesgjeld</string>
-            </property>
-           </widget>
-          </item>
-          <item row="16" column="0">
-           <widget class="QLabel" name="label_sales_municipality">
-            <property name="text">
-             <string>Salg (kommune)</string>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="2">
            <widget class="QLineEdit" name="line_edit_finnkode">
             <property name="enabled">
@@ -1512,6 +1485,13 @@
             </property>
            </widget>
           </item>
+          <item row="16" column="0">
+           <widget class="QLabel" name="label_sales_municipality">
+            <property name="text">
+             <string>Salg (kommune)</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="2">
            <widget class="QLineEdit" name="line_edit_first_published">
             <property name="enabled">
@@ -1519,10 +1499,24 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_publisert">
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_fellesgjeld">
             <property name="text">
-             <string>Publisert</string>
+             <string>Fellesgjeld</string>
+            </property>
+           </widget>
+          </item>
+          <item row="19" column="2">
+           <widget class="QLineEdit" name="line_edit_normal_traffic">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_beliggenhet">
+            <property name="text">
+             <string>Beliggenhet</string>
             </property>
            </widget>
           </item>
@@ -1536,6 +1530,13 @@
             </property>
             <property name="text">
              <string>FINN kode</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_publisert">
+            <property name="text">
+             <string>Publisert</string>
             </property>
            </widget>
           </item>
@@ -1553,10 +1554,10 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_beliggenhet">
-            <property name="text">
-             <string>Beliggenhet</string>
+          <item row="14" column="2">
+           <widget class="QLineEdit" name="line_edit_municipality_sqm_price">
+            <property name="enabled">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -1577,13 +1578,6 @@
             </property>
            </widget>
           </item>
-          <item row="14" column="2">
-           <widget class="QLineEdit" name="line_edit_municipality_sqm_price">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
           <item row="5" column="0">
            <widget class="QLabel" name="label_prisantydning">
             <property name="text">
@@ -1595,23 +1589,6 @@
            <widget class="QLineEdit" name="line_edit_primrrom">
             <property name="enabled">
              <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="2">
-           <widget class="QLineEdit" name="line_edit_sqm_price">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="22" column="0">
-           <widget class="QLabel" name="label_favorisert">
-            <property name="text">
-             <string>Favorisert</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_currentfavorites</cstring>
             </property>
            </widget>
           </item>
@@ -1629,14 +1606,31 @@
             </property>
            </widget>
           </item>
-          <item row="11" column="0">
-           <widget class="QLabel" name="label_kvadratmeterpris">
+          <item row="22" column="0">
+           <widget class="QLabel" name="label_favorisert">
             <property name="text">
-             <string>Kvadratmeterpris (KMP)</string>
+             <string>Favorisert</string>
+            </property>
+            <property name="buddy">
+             <cstring>line_edit_currentfavorites</cstring>
             </property>
            </widget>
           </item>
-          <item row="29" column="0">
+          <item row="11" column="2">
+           <widget class="QLineEdit" name="line_edit_sqm_price">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_storrelse">
+            <property name="text">
+             <string>Størrelsesintervall</string>
+            </property>
+           </widget>
+          </item>
+          <item row="33" column="0">
            <spacer name="verticalSpacer">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -1666,24 +1660,17 @@
             </property>
            </widget>
           </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="label_kvadratmeterpris">
+            <property name="text">
+             <string>Kvadratmeterpris (KMP)</string>
+            </property>
+           </widget>
+          </item>
           <item row="4" column="0">
            <widget class="QLabel" name="label_price_range">
             <property name="text">
              <string>Prisintervall</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_storrelse">
-            <property name="text">
-             <string>Størrelsesintervall</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="2">
-           <widget class="QLineEdit" name="line_edit_bruttoareal">
-            <property name="enabled">
-             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -1694,7 +1681,7 @@
             </property>
            </widget>
           </item>
-          <item row="28" column="2">
+          <item row="32" column="2">
            <widget class="QProgressBar" name="progress_bar_statistics">
             <property name="maximum">
              <number>30</number>
@@ -1707,7 +1694,37 @@
             </property>
            </widget>
           </item>
-          <item row="24" column="2">
+          <item row="10" column="2">
+           <widget class="QLineEdit" name="line_edit_bruttoareal">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="25" column="2">
+           <widget class="QPushButton" name="push_button_eierskifte_historikk">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>230</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Eierskiftehistorikk</string>
+            </property>
+            <property name="icon">
+             <iconset resource="../../images/img.qrc">
+              <normaloff>:/img/history.svg</normaloff>:/img/history.svg</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="26" column="2">
            <widget class="QPushButton" name="push_button_oppdater">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -2656,37 +2673,53 @@
        <string>Mennesker</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="1">
-        <widget class="PlotWidget" name="graphics_view_age_distribution_city_area">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
+       <item row="2" column="1">
         <widget class="PlotWidget" name="graphics_view_age_distribution_city">
          <property name="frameShape">
           <enum>QFrame::Box</enum>
          </property>
         </widget>
        </item>
-       <item row="0" column="4">
-        <widget class="PlotWidget" name="graphics_view_civil_status_city_area">
+       <item row="2" column="4">
+        <widget class="PlotWidget" name="graphics_view_civil_status_city">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>290</height>
+          </size>
+         </property>
          <property name="frameShape">
           <enum>QFrame::Box</enum>
          </property>
         </widget>
        </item>
-       <item row="0" column="7" rowspan="3">
-        <widget class="QTableView" name="table_view_pois">
+       <item row="2" column="0">
+        <widget class="PlotWidget" name="graphics_view_education_city">
          <property name="frameShape">
           <enum>QFrame::Box</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="3">
+        <widget class="PlotWidget" name="graphics_view_income_city">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="4" rowspan="2">
+        <widget class="QTableView" name="table_view_civil_status">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>292</height>
+          </size>
          </property>
          <property name="alternatingRowColors">
           <bool>true</bool>
          </property>
          <property name="selectionMode">
-          <enum>QAbstractItemView::ExtendedSelection</enum>
+          <enum>QAbstractItemView::SingleSelection</enum>
          </property>
          <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectRows</enum>
@@ -2699,7 +2732,7 @@
          </attribute>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1" rowspan="2">
         <widget class="QTableView" name="table_view_age_distribution">
          <property name="alternatingRowColors">
           <bool>true</bool>
@@ -2718,15 +2751,8 @@
          </attribute>
         </widget>
        </item>
-       <item row="1" column="4">
-        <widget class="PlotWidget" name="graphics_view_civil_status_city">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="4">
-        <widget class="QTableView" name="table_view_civil_status">
+       <item row="3" column="3" rowspan="2">
+        <widget class="QTableView" name="table_view_income">
          <property name="alternatingRowColors">
           <bool>true</bool>
          </property>
@@ -2744,21 +2770,41 @@
          </attribute>
         </widget>
        </item>
-       <item row="0" column="0">
+       <item row="0" column="4" rowspan="2">
+        <widget class="PlotWidget" name="graphics_view_civil_status_city_area">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>290</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3" rowspan="2">
+        <widget class="PlotWidget" name="graphics_view_income_city_area">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1" rowspan="2">
+        <widget class="PlotWidget" name="graphics_view_age_distribution_city_area">
+         <property name="frameShape">
+          <enum>QFrame::Box</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0" rowspan="2">
         <widget class="PlotWidget" name="graphics_view_education_city_area">
          <property name="frameShape">
           <enum>QFrame::Box</enum>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="PlotWidget" name="graphics_view_education_city">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
+       <item row="3" column="0" rowspan="2">
         <widget class="QTableView" name="table_view_education">
          <property name="alternatingRowColors">
           <bool>true</bool>
@@ -2777,27 +2823,33 @@
          </attribute>
         </widget>
        </item>
-       <item row="0" column="3">
-        <widget class="PlotWidget" name="graphics_view_income_city_area">
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
+       <item row="0" column="6">
+        <widget class="QPushButton" name="push_button_show_in_map_2">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>Vis i kart</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../../images/img.qrc">
+           <normaloff>:/img/map.svg</normaloff>:/img/map.svg</iconset>
          </property>
         </widget>
        </item>
-       <item row="1" column="3">
-        <widget class="PlotWidget" name="graphics_view_income_city">
+       <item row="1" column="6" rowspan="4">
+        <widget class="QTableView" name="table_view_pois">
          <property name="frameShape">
           <enum>QFrame::Box</enum>
          </property>
-        </widget>
-       </item>
-       <item row="2" column="3">
-        <widget class="QTableView" name="table_view_income">
          <property name="alternatingRowColors">
           <bool>true</bool>
          </property>
          <property name="selectionMode">
-          <enum>QAbstractItemView::SingleSelection</enum>
+          <enum>QAbstractItemView::ExtendedSelection</enum>
          </property>
          <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectRows</enum>
@@ -4961,8 +5013,9 @@
   <tabstop>line_edit_ad_of_the_week</tabstop>
   <tabstop>line_edit_latestemailcount</tabstop>
   <tabstop>line_edit_currentfavorites</tabstop>
-  <tabstop>push_button_oppdater</tabstop>
   <tabstop>push_button_eierskifte_historikk</tabstop>
+  <tabstop>push_button_oppdater</tabstop>
+  <tabstop>push_button_show_in_map_1</tabstop>
   <tabstop>push_button_meta_data</tabstop>
   <tabstop>graphics_view_views_development</tabstop>
   <tabstop>graphics_view_hist_data_city_area</tabstop>
@@ -4982,6 +5035,7 @@
   <tabstop>graphics_view_civil_status_city_area</tabstop>
   <tabstop>graphics_view_civil_status_city</tabstop>
   <tabstop>table_view_civil_status</tabstop>
+  <tabstop>push_button_show_in_map_2</tabstop>
   <tabstop>table_view_pois</tabstop>
  </tabstops>
  <resources>

@@ -117,4 +117,5 @@ class BarChartWithLine(Chart):
         """
         Assertor.assert_data_types([graphics_view, table_view], [PlotWidget, QTableView])
         table_view.setModel(None)
+        table_view.clearSpans()
         graphics_view.clear()
