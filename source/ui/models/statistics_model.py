@@ -37,6 +37,12 @@ class StatisticsModel(Model):
                         "hist_data_city_area", "hist_data_municipality", "views_development",
                         "hist_data_city_area_count", "hist_data_municipality_count",
                         "age_distribution", "info", "civil_status", "education", "income", "pois"]
+    _charts = ["hist_data_city_area", "hist_data_municipality", "views_development",
+               "accumulated", "change", "ratio_statistics",
+               "age_distribution_city_area", "age_distribution_city",
+               "civil_status_city_area", "civil_status_city",
+               "education_city_area", "education_city", "income_city_area",
+               "income_city"]
 
     def __init__(self, parent: QObject):
         """
@@ -74,6 +80,7 @@ class StatisticsModel(Model):
 
         """
         Assertor.assert_data_types([postfix], [str])
+        self.clear_charts()
         grandparent = self.parent.parent
         statistics_data = {}
         prefix = "graphics_view_"
@@ -119,12 +126,7 @@ class StatisticsModel(Model):
                       name of prefix, i.e. "graphics"
 
         """
-        for graphics_view in ["hist_data_city_area", "hist_data_municipality", "views_development",
-                              "accumulated", "change", "ratio_statistics",
-                              "age_distribution_city_area", "age_distribution_city",
-                              "civil_status_city_area", "civil_status_city",
-                              "education_city_area", "education_city", "income_city_area",
-                              "income_city"]:
+        for graphics_view in self._charts:
             getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=True, y=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
                 showValues=False)
@@ -173,42 +175,43 @@ class StatisticsModel(Model):
             elif key == "municipality":
                 self.parent.label_municipality_sqm_price.setText("KMP (kommune)")
                 self.parent.label_sales_municipality.setText("Salg (kommune)")
-            elif key == "hist_data_city_area":
-                BarChart.clear_graphics(self.parent.ui.graphics_view_hist_data_city_area)
-            elif key == "hist_data_municipality":
-                BarChart.clear_graphics(self.parent.ui.graphics_view_hist_data_municipality)
-            elif key == "views_development":
-                DoubleBarChart.clear_graphics(self.parent.graphics_view_views_development)
-                DoubleBarChart.clear_graphics(self.parent.graphics_view_accumulated)
-            elif key == "age_distribution":
-                BarChartWithLine.clear_graphics(
-                    self.parent.ui.graphics_view_age_distribution_city_area,
-                    self.parent.ui.table_view_age_distribution)
-                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_age_distribution_city,
-                                                self.parent.ui.table_view_age_distribution)
-            elif key == "civil_status":
-                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_civil_status_city_area,
-                                                self.parent.ui.table_view_civil_status)
-                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_civil_status_city,
-                                                self.parent.ui.table_view_civil_status)
-            elif key == "education":
-                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_education_city_area,
-                                                self.parent.ui.table_view_education)
-                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_education_city,
-                                                self.parent.ui.table_view_education)
-            elif key == "income":
-                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_income_city_area,
-                                                self.parent.ui.table_view_income)
-                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_income_city,
-                                                self.parent.ui.table_view_income)
-            elif key == "pois":
-                self.parent.ui.table_view_pois.setModel(None)
-                self.parent.ui.table_view_pois.clearSpans()
-            elif key == "info":
-                self.parent.map_view.web_view_map.close()
+            elif key in ["hist_data_city_area", "hist_data_municipality", "views_development",
+                         "age_distribution", "civil_status", "education", "income", "pois", "info"]:
+                continue
             else:
-                RatioChart.clear_graphics(self.parent.ui.graphics_view_ratio_statistics)
                 getattr(self.parent.ui, "line_edit_" + key).clear()
+            self.clear_charts()
+
+    def clear_charts(self):
+        """
+        method for clearing charts
+
+        """
+        BarChart.clear_graphics(self.parent.ui.graphics_view_hist_data_city_area)
+        BarChart.clear_graphics(self.parent.ui.graphics_view_hist_data_municipality)
+        DoubleBarChart.clear_graphics(self.parent.graphics_view_views_development)
+        DoubleBarChart.clear_graphics(self.parent.graphics_view_accumulated)
+        RatioChart.clear_graphics(self.parent.ui.graphics_view_ratio_statistics)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui.graphics_view_age_distribution_city_area,
+            self.parent.ui.table_view_age_distribution)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_age_distribution_city,
+                                        self.parent.ui.table_view_age_distribution)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_civil_status_city_area,
+                                        self.parent.ui.table_view_civil_status)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_civil_status_city,
+                                        self.parent.ui.table_view_civil_status)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_education_city_area,
+                                        self.parent.ui.table_view_education)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_education_city,
+                                        self.parent.ui.table_view_education)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_income_city_area,
+                                        self.parent.ui.table_view_income)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_income_city,
+                                        self.parent.ui.table_view_income)
+        self.parent.ui.table_view_pois.setModel(None)
+        self.parent.ui.table_view_pois.clearSpans()
+        self.parent.map_view.web_view_map.close()
 
     def add_sqm_dist_charts(self, prefix: str, postfix: str, key: str):
         """

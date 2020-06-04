@@ -16,7 +16,7 @@ class CreateHtmlTable:
     def html_table(self):
         style = """
                 <head><style>
-                .leaflet-popup-content-wrapper {background-color: #e7f3ff; color:black}
+                .leaflet-popup-content-wrapper {background-color: #f3f9ff; color:black}
                 </style></head>
                 """
         info = []
