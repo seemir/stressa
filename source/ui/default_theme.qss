@@ -23,7 +23,7 @@
   background-color: #ffffff;
   selection-background-color: #93c0e7;
   font-family: "MS Shell Dlg 2";
-  font-size: 12px;
+  font-size: 13px;
   height: 20px;
 }
 
@@ -39,11 +39,11 @@
   selection-background-color: #93c0e7;
   selection-color: black;
   font-family: "MS Shell Dlg 2";
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .QHeaderView {
- font-size: 12px;
+ font-size: 13px;
 }
 
 .QProgressBar::chunk {
@@ -53,12 +53,12 @@
 }
 
 .QProgressBar{
-  height: 25px;
+  height: 20px;
 }
 
 .QLabel{
   font-family: "MS Shell Dlg 2";
-  font-size: 12px;
+  font-size: 13px;
   height: 20px;
   width: 120px;
 }
@@ -66,14 +66,14 @@
 .QLineEdit{
   selection-background-color: #93c0e7;
   font-family: "MS Shell Dlg 2";
-  font-size: 12px;
+  font-size: 13px;
   height: 20px;
 }
 
 .QDateEdit{
   selection-background-color: #93c0e7;
   font-family: "MS Shell Dlg 2";
-  font-size: 12px;
+  font-size: 13px;
   height: 20px;
 }
 
@@ -81,34 +81,34 @@
   selection-background-color: #93c0e7;
   font-family: "MS Shell Dlg 2";
   background-color: #ffffff;
-  font-size: 12px;
+  font-size: 13px;
   height: 20px;
 }
 
 .QPushButton{
   selection-background-color: #93c0e7;
   font-family: "MS Shell Dlg 2";
-  font-size: 12px;
+  font-size: 13px;
   height: 20px;
-  padding: 7px;
+  padding: 10px;
 }
 
 .QRadioButton{
   selection-background-color: #93c0e7;
   font-family: "MS Shell Dlg 2";
-  font-size: 12px;
+  font-size: 13px;
   height: 20px;
 }
 
 .QTabWidget{
   font-family: "MS Shell Dlg 2";
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .QPlainTextEdit{
   selection-background-color: #93c0e7;
   font-family: "Consolas";
-  font-size: 12px;
+  font-size: 13px;
 }
 
 /* MenyBar */
@@ -117,6 +117,10 @@
 }
 
 /* HomeView */
+#scroll_area_widget_contents_budget{
+  background-color:#dce7f3;
+}
+
 #tab_primarsoker{
   background-color: #e4f0fc;
 }
@@ -138,10 +142,6 @@
 }
 
 .QFrame[objectName="frame_analyse_white_space"] {
-  border: none;
-}
-
-.QFrame[objectName="frame_buttons"] {
   border: none;
 }
 
@@ -187,6 +187,10 @@
 }
 
 /* SifoView */
+#scroll_area_widget_contents_sifo{
+  background-color:#dce7f3;
+}
+
 .QFrame[objectName="frame_sifo_logo"] {
   border: none;
 }
@@ -249,6 +253,10 @@
 }
 
 /* StatisticsView */
+#scroll_area_widget_contents_statistics{
+  background-color:#dce7f3;
+}
+
 .QFrame[objectName="frame_statistikk_1"] {
   border: none;
 }

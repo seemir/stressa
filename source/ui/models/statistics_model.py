@@ -37,12 +37,12 @@ class StatisticsModel(Model):
                         "hist_data_city_area", "hist_data_municipality", "views_development",
                         "hist_data_city_area_count", "hist_data_municipality_count",
                         "age_distribution", "info", "civil_status", "education", "income", "pois"]
-    _charts = ["hist_data_city_area", "hist_data_municipality", "views_development",
-               "accumulated", "change", "ratio_statistics",
-               "age_distribution_city_area", "age_distribution_city",
-               "civil_status_city_area", "civil_status_city",
-               "education_city_area", "education_city", "income_city_area",
-               "income_city"]
+    _ad_charts = ["hist_data_city_area", "hist_data_municipality", "views_development",
+                  "accumulated", "change", "ratio_statistics"]
+    _community_charts = ["age_distribution_city_area", "age_distribution_city",
+                         "civil_status_city_area", "civil_status_city",
+                         "education_city_area", "education_city", "income_city_area",
+                         "income_city"]
 
     def __init__(self, parent: QObject):
         """
@@ -126,13 +126,15 @@ class StatisticsModel(Model):
                       name of prefix, i.e. "graphics"
 
         """
-        for graphics_view in self._charts:
+        for graphics_view in self._ad_charts:
             getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=True, y=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
                 showValues=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('bottom').setStyle(
                 showValues=False)
             getattr(self.parent.ui, prefix + graphics_view).getViewBox().enableAutoRange()
+            getattr(self.parent.ui, prefix + graphics_view).setMenuEnabled(False)
+
         self.parent.ui.graphics_view_hist_data_city_area.getViewBox().setXLink(
             self.parent.ui.graphics_view_hist_data_municipality)
         self.parent.ui.graphics_view_hist_data_municipality.getViewBox().setXLink(
@@ -141,12 +143,14 @@ class StatisticsModel(Model):
             self.parent.ui.graphics_view_accumulated)
         self.parent.ui.graphics_view_accumulated.getViewBox().setXLink(
             self.parent.ui.graphics_view_change)
-        self.parent.ui.graphics_view_age_distribution_city_area.getViewBox().setXLink(
-            self.parent.ui.graphics_view_age_distribution_city)
-        self.parent.ui.graphics_view_education_city_area.getViewBox().setXLink(
-            self.parent.ui.graphics_view_education_city)
-        self.parent.ui.graphics_view_income_city_area.getViewBox().setXLink(
-            self.parent.ui.graphics_view_income_city)
+
+        for graphics_view in self._community_charts:
+            getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=False, y=False)
+            getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
+                showValues=False)
+            getattr(self.parent.ui, prefix + graphics_view).getAxis('bottom').setStyle(
+                showValues=False)
+            getattr(self.parent.ui, prefix + graphics_view).setMenuEnabled(False)
 
     def clear_statistics_info(self, postfix: str):
         """
@@ -525,7 +529,7 @@ class StatisticsModel(Model):
             pois_table_model = TableModel(DataFrame(self.data[key + postfix]))
             self.parent.ui.table_view_pois.setModel(pois_table_model)
             self.parent.ui.table_view_pois.horizontalHeader().setSectionResizeMode(
-                QHeaderView.Stretch)
+                QHeaderView.ResizeToContents)
 
     def add_map(self, postfix: str, keys: str):
         """

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>890</width>
-    <height>600</height>
+    <width>1000</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>890</width>
-    <height>600</height>
+    <width>1000</width>
+    <height>700</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -986,7 +986,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>747</width>
+              <width>857</width>
               <height>63</height>
              </rect>
             </property>
@@ -1464,12 +1464,12 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>826</width>
-               <height>429</height>
+               <width>936</width>
+               <height>529</height>
               </rect>
              </property>
              <property name="autoFillBackground">
-              <bool>false</bool>
+              <bool>true</bool>
              </property>
              <layout class="QGridLayout" name="gridLayout_13">
               <item row="0" column="0">
@@ -1924,8 +1924,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>826</width>
-               <height>429</height>
+               <width>936</width>
+               <height>529</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_7">
@@ -2390,8 +2390,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>826</width>
-               <height>429</height>
+               <width>936</width>
+               <height>529</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_8">
@@ -2853,8 +2853,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>826</width>
-               <height>429</height>
+               <width>936</width>
+               <height>529</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_10">
@@ -2886,6 +2886,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>tab_widget_error</tabstop>
+  <tabstop>plain_text_edit_tracking</tabstop>
+  <tabstop>scroll_area_tracking</tabstop>
+  <tabstop>scroll_area_traceback</tabstop>
+  <tabstop>plain_text_edit_traceback</tabstop>
+  <tabstop>scroll_area_log</tabstop>
+  <tabstop>plain_text_edit_log</tabstop>
+  <tabstop>scroll_area_error_meta_data</tabstop>
+  <tabstop>plain_text_edit_error_meta_data</tabstop>
+  <tabstop>scroll_area_error</tabstop>
+ </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>
   <include location="../../images/img.qrc"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>map_form</class>
- <widget class="QDialog" name="map_form">
+ <class>dialog_map</class>
+ <widget class="QDialog" name="dialog_map">
   <property name="geometry">
    <rect>
     <x>0</x>
