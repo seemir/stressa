@@ -32,8 +32,12 @@ class CreateHtmlTable:
                                 info.append(
                                     "<tr><td>" + self.trans[key] + ": " + element + "</td></tr>")
                 else:
-                    element = "<tr><td>" + self.trans[keys] + ": " + str(
-                        values).replace("/", " / ") + "</td></tr>"
+                    if keys in self.trans.keys():
+                        element = "<tr><td>" + self.trans[keys] + ": " + \
+                                  str(values).replace("/", " / ") + "</td></tr>"
+                    else:
+                        element = "<tr><td>" + keys + ": " + \
+                                  str(values).replace("/", " / ") + "</td></tr>"
                     if keys == "finnkode":
                         info[0] = element
                     else:

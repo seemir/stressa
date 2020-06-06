@@ -203,3 +203,4 @@ class CalculateSifoExpenses(Process):
 
         self.add_transition(output_operation, self.get_signal("output_base_expenses"))
         self.add_transition(output_operation, self.get_signal("output_shares"))
+        # self.print_pdf()

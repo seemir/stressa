@@ -14,6 +14,8 @@ from PyQt5.QtCore import QObject
 
 from .model import Model
 
+from ..util import CreateHtmlTable
+
 
 class MapModel(Model):
 
@@ -21,15 +23,30 @@ class MapModel(Model):
         super().__init__(parent)
 
     @staticmethod
-    def show_map(coords: list, web_engine_view: QWebEngineView, pop_up: str = None):
+    def show_map(coords: list, web_engine_view: QWebEngineView, pop_up: str = None, pois=None):
+        icon_size = (40, 40)
+        max_width = 300
         bytes_io = BytesIO()
         map_builder = Map(location=coords, tiles="CartoDB positron", zoom_start=16)
         map_icon = CustomIcon(up(up(__file__)) + "/images/marker.png",
-                              icon_size=(40, 40))
+                              icon_size=icon_size)
         if pop_up:
-            Marker(coords, icon=map_icon, popup=Popup(pop_up, max_width=300)).add_to(map_builder)
+            Marker(coords, icon=map_icon, popup=Popup(pop_up, max_width=max_width)).add_to(
+                map_builder)
         else:
             Marker(coords, icon=map_icon).add_to(map_builder)
+
+        if pois:
+            for poi in pois:
+                pois_icon = CustomIcon(up(up(__file__)) + "/images/pois.png",
+                                       icon_size=icon_size)
+                lat = poi["Breddegrad"]
+                long = poi["Lengdegrad"]
+                pois_pop_up = Popup(CreateHtmlTable(poi).html_table(),
+                                    max_width=max_width)
+                Marker(location=[lat, long], icon=pois_icon,
+                       popup=pois_pop_up).add_to(map_builder)
+
         TileLayer('OpenStreetMap').add_to(map_builder)
         TileLayer('Stamen Toner').add_to(map_builder)
         TileLayer('Stamen Terrain').add_to(map_builder)

@@ -36,7 +36,8 @@ class StatisticsModel(Model):
                         "municipality_sqm_price", "city_area", "municipality",
                         "hist_data_city_area", "hist_data_municipality", "views_development",
                         "hist_data_city_area_count", "hist_data_municipality_count",
-                        "age_distribution", "info", "civil_status", "education", "income", "pois"]
+                        "age_distribution", "info", "civil_status", "education", "income", "pois",
+                        "pois_location"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "views_development",
                   "accumulated", "change", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
@@ -106,6 +107,8 @@ class StatisticsModel(Model):
                 self.add_income_chart(prefix, postfix, key)
             elif key == "pois":
                 self.add_pois_table(postfix, key)
+            elif key == "pois_location":
+                pass
             elif key == "info":
                 self.add_map(postfix, key)
             else:
@@ -180,7 +183,8 @@ class StatisticsModel(Model):
                 self.parent.label_municipality_sqm_price.setText("KMP (kommune)")
                 self.parent.label_sales_municipality.setText("Salg (kommune)")
             elif key in ["hist_data_city_area", "hist_data_municipality", "views_development",
-                         "age_distribution", "civil_status", "education", "income", "pois", "info"]:
+                         "age_distribution", "civil_status", "education", "income", "pois",
+                         "pois_location", "info"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -537,10 +541,10 @@ class StatisticsModel(Model):
 
         Parameters
         ----------
-        postfix     : str
+        postfix      : str
                       index if used in naming of line_edits
         keys         : str
-                      name of label to change
+                       name of label to change
 
         """
         self.parent.map_view.web_view_map.close()
@@ -554,4 +558,5 @@ class StatisticsModel(Model):
             self.parent.map_view.map_model \
                 .show_map(coords=[lat, long],
                           web_engine_view=self.parent.map_view.web_view_map,
-                          pop_up=html_table.html_table())
+                          pop_up=html_table.html_table(),
+                          pois=self.data["pois_location" + postfix])

@@ -40,6 +40,7 @@ class RestructurePois(Restructure):
 
         """
         institutions = []
+        pois_location = []
         distance_air = []
         distance_walk = []
         distance_drive = []
@@ -51,6 +52,12 @@ class RestructurePois(Restructure):
                     for keys, values in element.items():
                         if keys == "name":
                             institutions.append(values)
+                        elif keys == "coordinates":
+                            name = element["name"] if "name" in element.keys() else ""
+                            lat = list(values.values())[0]
+                            long = list(values.values())[1]
+                            pois_location.append(
+                                {"Institusjon": name, "Breddegrad": lat, "Lengdegrad": long})
                         elif keys == "distances":
                             if "unit" in values.keys():
                                 for key, value in values.items():
@@ -70,6 +77,22 @@ class RestructurePois(Restructure):
                                     elif key == "drive":
                                         duration_drive.append(
                                             str(int(round(value / 60))) + " min" if value else "-")
+
+        inst_col, dist_col, dur_col, pois_location = self.check_data(institutions, distance_air,
+                                                                     duration_walk, distance_walk,
+                                                                     duration_drive, distance_drive,
+                                                                     pois_location)
+
+        return {self.data.copy()["type"].lower(): {"Institusjon": inst_col, "Distanse": dist_col,
+                                                   "Tid": dur_col}, "pois_location": pois_location}
+
+    @staticmethod
+    def check_data(institutions, distance_air, duration_walk, distance_walk,
+                   duration_drive, distance_drive, pois_location):
+        """
+        method for checking retrieved data
+
+        """
         institutions_col = []
         distance_col = []
         duration_col = []
@@ -84,31 +107,38 @@ class RestructurePois(Restructure):
             institutions_col.append("Luftlinje")
             if distance_air and i < len(distance_air):
                 distance_col.append(distance_air[i])
+                pois_location[i].update({"Distance (luftlinje)": distance_air[i]})
             else:
                 distance_col.append("-")
+                pois_location[i].update({"Distance (luftlinje)": "-"})
             duration_col.append("-")
             institutions_col.append("Til fots")
             if distance_walk and i < len(distance_walk):
                 distance_col.append(distance_walk[i])
+                pois_location[i].update({"Distance (til fots)": distance_walk[i]})
             else:
                 distance_col.append("-")
+                pois_location[i].update({"Distance (til fots)": "-"})
             if duration_walk and i < len(duration_walk):
                 duration_col.append(duration_walk[i])
+                pois_location[i].update({"Tid (til fots)": duration_walk[i]})
             else:
                 duration_col.append("-")
+                pois_location[i].update({"Tid (til fots)": "-"})
             institutions_col.append("Med bil")
             if distance_drive and i < len(distance_drive):
                 distance_col.append(distance_drive[i])
+                pois_location[i].update({"Distance (med bil)": distance_drive[i]})
             else:
                 distance_col.append("-")
+                pois_location[i].update({"Distance (med bil)": "-"})
             if duration_drive and i < len(duration_drive):
                 duration_col.append(duration_drive[i])
+                pois_location[i].update({"Tid (med bil)": duration_drive[i]})
             else:
                 duration_col.append("-")
+                pois_location[i].update({"Tid (med bil)": "-"})
             institutions_col.append("")
             distance_col.append("")
             duration_col.append("")
-        data = {self.data.copy()["type"].lower(): {"Institusjon": institutions_col,
-                                                   "Distanse": distance_col,
-                                                   "Tid": duration_col}}
-        return data
+        return [institutions_col, distance_col, duration_col, pois_location]
