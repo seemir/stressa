@@ -25,7 +25,7 @@ class MapModel(Model):
     @staticmethod
     def show_map(coords: list, web_engine_view: QWebEngineView, pop_up: str = None, pois=None):
         icon_size = (40, 40)
-        max_width = 300
+        max_width = 400
         bytes_io = BytesIO()
         map_builder = Map(location=coords, tiles="CartoDB positron", zoom_start=16)
         map_icon = CustomIcon(up(up(__file__)) + "/images/marker.png",

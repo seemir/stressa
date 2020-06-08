@@ -118,12 +118,12 @@ class DoubleCrossHair(QObject):
         y_val_1 = self.display(self.y_1[x_idx_1]) if self.y_1[x_idx_1] else 0
         y_val_2 = self.display(self.y_2[x_idx_2]) if self.y_2[x_idx_2] else 0
 
+        self.vertical_line_1.setPos(x_val_1)
+        self.vertical_line_2.setPos(x_val_1)
         limits = min(self.x_1) <= x_val_1 <= max(self.x_1)
 
         if len(self.plot_widget_1.getViewBox().allChildren()) > 3 and limits \
                 and self.highlight_bars:
-            self.vertical_line_1.setPos(x_val_1)
-            self.vertical_line_2.setPos(x_val_1)
             self.highlight_bar_items(x_val_1, y_val_1, x_val_2, y_val_2)
 
         return x_val_1, y_val_1, x_val_2, y_val_2, limits

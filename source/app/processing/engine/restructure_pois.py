@@ -96,7 +96,7 @@ class RestructurePois(Restructure):
         institutions_col = []
         distance_col = []
         duration_col = []
-        full_line = "----------------------"
+        full_line = "---------------------------------"
         for i, _ in enumerate(institutions):
             institutions_col.append(institutions[i])
             distance_col.append("")
@@ -107,18 +107,18 @@ class RestructurePois(Restructure):
             institutions_col.append("Luftlinje")
             if distance_air and i < len(distance_air):
                 distance_col.append(distance_air[i])
-                pois_location[i].update({"Distance (luftlinje)": distance_air[i]})
+                pois_location[i].update({"Distanse (luftlinje)": distance_air[i]})
             else:
                 distance_col.append("-")
-                pois_location[i].update({"Distance (luftlinje)": "-"})
+                pois_location[i].update({"Distanse (luftlinje)": "-"})
             duration_col.append("-")
             institutions_col.append("Til fots")
             if distance_walk and i < len(distance_walk):
                 distance_col.append(distance_walk[i])
-                pois_location[i].update({"Distance (til fots)": distance_walk[i]})
+                pois_location[i].update({"Distanse (til fots)": distance_walk[i]})
             else:
                 distance_col.append("-")
-                pois_location[i].update({"Distance (til fots)": "-"})
+                pois_location[i].update({"Distanse (til fots)": "-"})
             if duration_walk and i < len(duration_walk):
                 duration_col.append(duration_walk[i])
                 pois_location[i].update({"Tid (til fots)": duration_walk[i]})
@@ -128,10 +128,10 @@ class RestructurePois(Restructure):
             institutions_col.append("Med bil")
             if distance_drive and i < len(distance_drive):
                 distance_col.append(distance_drive[i])
-                pois_location[i].update({"Distance (med bil)": distance_drive[i]})
+                pois_location[i].update({"Distanse (med bil)": distance_drive[i]})
             else:
                 distance_col.append("-")
-                pois_location[i].update({"Distance (med bil)": "-"})
+                pois_location[i].update({"Distanse (med bil)": "-"})
             if duration_drive and i < len(duration_drive):
                 duration_col.append(duration_drive[i])
                 pois_location[i].update({"Tid (med bil)": duration_drive[i]})

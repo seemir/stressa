@@ -129,30 +129,13 @@ class StatisticsModel(Model):
                       name of prefix, i.e. "graphics"
 
         """
-        for graphics_view in self._ad_charts:
-            getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=True, y=False)
-            getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
-                showValues=False)
-            getattr(self.parent.ui, prefix + graphics_view).getAxis('bottom').setStyle(
-                showValues=False)
-            getattr(self.parent.ui, prefix + graphics_view).getViewBox().enableAutoRange()
-            getattr(self.parent.ui, prefix + graphics_view).setMenuEnabled(False)
-
-        self.parent.ui.graphics_view_hist_data_city_area.getViewBox().setXLink(
-            self.parent.ui.graphics_view_hist_data_municipality)
-        self.parent.ui.graphics_view_hist_data_municipality.getViewBox().setXLink(
-            self.parent.ui.graphics_view_ratio_statistics)
-        self.parent.ui.graphics_view_views_development.getViewBox().setXLink(
-            self.parent.ui.graphics_view_accumulated)
-        self.parent.ui.graphics_view_accumulated.getViewBox().setXLink(
-            self.parent.ui.graphics_view_change)
-
-        for graphics_view in self._community_charts:
+        for graphics_view in self._ad_charts + self._community_charts:
             getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=False, y=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
                 showValues=False)
             getattr(self.parent.ui, prefix + graphics_view).getAxis('bottom').setStyle(
                 showValues=False)
+            getattr(self.parent.ui, prefix + graphics_view).getViewBox().enableAutoRange()
             getattr(self.parent.ui, prefix + graphics_view).setMenuEnabled(False)
 
     def clear_statistics_info(self, postfix: str):
@@ -533,7 +516,15 @@ class StatisticsModel(Model):
             pois_table_model = TableModel(DataFrame(self.data[key + postfix]))
             self.parent.ui.table_view_pois.setModel(pois_table_model)
             self.parent.ui.table_view_pois.horizontalHeader().setSectionResizeMode(
+                0, QHeaderView.Fixed)
+            self.parent.ui.table_view_pois.setColumnWidth(0, 175)
+            self.parent.ui.table_view_pois.horizontalHeader().setSectionResizeMode(
+                1, QHeaderView.ResizeToContents)
+            self.parent.ui.table_view_pois.horizontalHeader().setSectionResizeMode(
+                2, QHeaderView.ResizeToContents)
+            self.parent.ui.table_view_pois.verticalHeader().setSectionResizeMode(
                 QHeaderView.ResizeToContents)
+            self.parent.ui.table_view_pois.setWordWrap(True)
 
     def add_map(self, postfix: str, keys: str):
         """
