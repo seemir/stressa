@@ -48,7 +48,7 @@ py==1.8.1
 pycares==3.1.1
 pycparser==2.20
 pydot==1.4.1
-pylint==2.5.2
+pylint==2.5.3
 pymongo==3.10.1
 pyparsing==2.4.7
 PyQt5==5.15.0
