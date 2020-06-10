@@ -27,6 +27,7 @@ class Process(Dot, ABC):
 
     """
     profiling = None
+    elapsed = 0.0
     start = None
 
     @classmethod
@@ -45,8 +46,11 @@ class Process(Dot, ABC):
         method for ending logging and profiling of process
 
         """
-        cls.profiling.add_row(["---------", "", "", ""])
-        cls.profiling.add_row(["total", "", "", str(round((time() - cls.start) * 1000, 7)) + "ms"])
+        digits = 7
+        elapsed = round((time() - cls.start) * 1000, digits)
+        cls.profiling.add_row(["-----------", "", "", ""])
+        cls.profiling.add_row(["total", "", "", str(elapsed) + "ms"])
+        cls.profiling.add_row(["Speedup", "", "", str(round(cls.elapsed - elapsed, digits)) + "ms"])
         LOGGER.success("ending '{}'".format(cls.__name__))
         LOGGER.info("reporting profiling results -> \n\n profiling: '{}' \n\n".format(
             cls.__name__) + str(cls.profiling) + "\n")
@@ -183,7 +187,7 @@ class Process(Dot, ABC):
         return signal
 
     @Tracking
-    def add_transition(self, node_1, node_2, label: str = "default"):
+    def add_transition(self, node_1, node_2, label: str = "default", thread=False):
         """
         method for adding a transition between nodes in workflow
 
@@ -195,9 +199,11 @@ class Process(Dot, ABC):
                       second node in transition
         label       : str
                       label to be displayed
+        thread      : bool
+                      thread boolean
 
         """
-        color = "gray" if label != "thread" else "blue"
+        color = "blue" if (label == "thread" or thread) else "gray"
         transition = Edge(node_1, node_2, color=color, label=label)
         self.add_edge(transition)
 

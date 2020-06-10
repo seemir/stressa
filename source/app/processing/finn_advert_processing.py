@@ -44,16 +44,19 @@ class FinnAdvertProcessing(Process):
                            self.scrape_finn_community_statistics,
                            self.scrape_finn_advert_info,
                            self.scrape_finn_ownership_history])
+
         self._multiplex_info_1 = self.multiplex_1()
-        self.extract()
-        self.extract_first_row()
-        self.add_to_dataframe_1()
-        self.rate_of_change_1()
-        self.finn_community_process()
-        self.check_newest_date()
-        self.accumulate()
-        self.add_to_dataframe_2()
-        self.multiplex_2()
+
+        self.run_parallel([self.extract_1, self.extract_2, self.extract_3,
+                           self.extract_4, self.extract_5])
+
+        self.run_parallel([self.extract_first_row, self.add_to_dataframe_1,
+                           self.rate_of_change_1, self.finn_community_process])
+
+        self.run_parallel([self.check_newest_date, self.accumulate])
+
+        self.run_parallel([self.add_to_dataframe_2, self.multiplex_2])
+
         self.rate_of_change_2()
         self._multiplex_info_2 = self.multiplex_3()
         self.output_operation()
@@ -263,55 +266,127 @@ class FinnAdvertProcessing(Process):
 
     @Profiling
     @Tracking
-    def extract(self):
+    def extract_1(self):
         """
-        method for extracting prisantydning and history from the multiplexed dictionary
+        method for extracting published date
 
         """
-        multiplexed_data = self.get_signal("multiplexed_data")
+        try:
+            multiplexed_data = self.get_signal("multiplexed_data")
 
-        extract_published_date_operation = Extract(multiplexed_data.data, "published")
-        self.add_node(extract_published_date_operation)
-        extract_price_operation = Extract(multiplexed_data.data, "prisantydning")
-        self.add_node(extract_price_operation)
-        extract_history_operation = Extract(multiplexed_data.data, "historikk")
-        self.add_node(extract_history_operation)
-        extract_views_development_operation = Extract(multiplexed_data.data, "views_development")
-        self.add_node(extract_views_development_operation)
-        extract_community_data_operation = Extract(multiplexed_data.data, "nabolag")
-        self.add_node(extract_community_data_operation)
+            extract_published_date_operation = Extract(multiplexed_data.data, "published")
+            self.add_node(extract_published_date_operation)
+            self.add_transition(multiplexed_data, extract_published_date_operation, label="thread")
 
-        self.add_transition(multiplexed_data, extract_published_date_operation)
-        self.add_transition(multiplexed_data, extract_price_operation)
-        self.add_transition(multiplexed_data, extract_history_operation)
-        self.add_transition(multiplexed_data, extract_views_development_operation)
-        self.add_transition(multiplexed_data, extract_community_data_operation)
+            extract_published_date = extract_published_date_operation.run()
+            extract_published_date_signal = Signal(extract_published_date,
+                                                   "Publishing Date of Advertisement")
+            self.add_signal(extract_published_date_signal, "publish_date")
 
-        extract_published_date = extract_published_date_operation.run()
-        extract_published_date_signal = Signal(extract_published_date,
-                                               "Publishing Date of Advertisement")
-        extract_price = extract_price_operation.run()
-        extract_price_signal = Signal(extract_price, "List Price of Real-estate")
-        extract_history = extract_history_operation.run()
-        extract_history_signal = Signal(extract_history, "Ownership History")
-        extract_views_development = extract_views_development_operation.run()
-        extract_views_development_signal = Signal(extract_views_development,
-                                                  "Development of Advert Views")
-        extract_community_data = extract_community_data_operation.run()
-        extract_community_data_signal = Signal(extract_community_data,
-                                               "Finn Community Statistics")
+            self.add_transition(extract_published_date_operation, extract_published_date_signal,
+                                label="thread")
+        except Exception as extract_exception:
+            self.exception_queue.put(extract_exception)
+            raise extract_exception
 
-        self.add_signal(extract_published_date_signal, "publish_date")
-        self.add_signal(extract_price_signal, "list_price_of_real_estate")
-        self.add_signal(extract_history_signal, "ownership_history")
-        self.add_signal(extract_views_development_signal, "views_development")
-        self.add_signal(extract_community_data_signal, "community_data")
+    @Profiling
+    @Tracking
+    def extract_2(self):
+        """
+        method for extracting price of real-estate
 
-        self.add_transition(extract_published_date_operation, extract_published_date_signal)
-        self.add_transition(extract_price_operation, extract_price_signal)
-        self.add_transition(extract_history_operation, extract_history_signal)
-        self.add_transition(extract_views_development_operation, extract_views_development_signal)
-        self.add_transition(extract_community_data_operation, extract_community_data_signal)
+        """
+        try:
+            multiplexed_data = self.get_signal("multiplexed_data")
+
+            extract_price_operation = Extract(multiplexed_data.data, "prisantydning")
+            self.add_node(extract_price_operation)
+            self.add_transition(multiplexed_data, extract_price_operation, label="thread")
+
+            extract_price = extract_price_operation.run()
+            extract_price_signal = Signal(extract_price, "List Price of Real-estate")
+            self.add_signal(extract_price_signal, "list_price_of_real_estate")
+
+            self.add_transition(extract_price_operation, extract_price_signal, label="thread")
+        except Exception as extract_exception:
+            self.exception_queue.put(extract_exception)
+            raise extract_exception
+
+    @Profiling
+    @Tracking
+    def extract_3(self):
+        """
+        method for extracting sales history
+
+        """
+        try:
+            multiplexed_data = self.get_signal("multiplexed_data")
+
+            extract_history_operation = Extract(multiplexed_data.data, "historikk")
+            self.add_node(extract_history_operation)
+            self.add_transition(multiplexed_data, extract_history_operation, label="thread")
+
+            extract_history = extract_history_operation.run()
+            extract_history_signal = Signal(extract_history, "Ownership History")
+            self.add_signal(extract_history_signal, "ownership_history")
+
+            self.add_transition(extract_history_operation, extract_history_signal, label="thread")
+        except Exception as extract_exception:
+            self.exception_queue.put(extract_exception)
+            raise extract_exception
+
+    @Profiling
+    @Tracking
+    def extract_4(self):
+        """
+        method for extracting view development statistics
+
+        """
+        try:
+            multiplexed_data = self.get_signal("multiplexed_data")
+
+            extract_views_development_operation = Extract(multiplexed_data.data,
+                                                          "views_development")
+            self.add_node(extract_views_development_operation)
+            self.add_transition(multiplexed_data, extract_views_development_operation,
+                                label="thread")
+
+            extract_views_development = extract_views_development_operation.run()
+            extract_views_development_signal = Signal(extract_views_development,
+                                                      "Development of Advert Views")
+            self.add_signal(extract_views_development_signal, "views_development")
+
+            self.add_transition(extract_views_development_operation,
+                                extract_views_development_signal,
+                                label="thread")
+        except Exception as extract_exception:
+            self.exception_queue.put(extract_exception)
+            raise extract_exception
+
+    @Profiling
+    @Tracking
+    def extract_5(self):
+        """
+        method for extracting community json
+
+        """
+        try:
+            multiplexed_data = self.get_signal("multiplexed_data")
+
+            extract_community_data_operation = Extract(multiplexed_data.data, "nabolag")
+            self.add_node(extract_community_data_operation)
+            self.add_transition(multiplexed_data, extract_community_data_operation, label="thread")
+
+            extract_community_data = extract_community_data_operation.run()
+            extract_community_data_signal = Signal(extract_community_data,
+                                                   "Finn Community Statistics")
+            self.add_signal(extract_community_data_signal, "community_data")
+
+            self.add_transition(extract_community_data_operation, extract_community_data_signal,
+                                label="thread")
+        except Exception as extract_exception:
+            self.exception_queue.put(extract_exception)
+            raise extract_exception
 
     @Profiling
     @Debugger
@@ -320,144 +395,20 @@ class FinnAdvertProcessing(Process):
         method for extracting first row from ownership history
 
         """
-        extract_first_row_operation = ExtractFirstRow(self.get_signal("ownership_history").data,
-                                                      "Extract the Newest Sale with Date")
-        self.add_node(extract_first_row_operation)
-        self.add_transition(self.get_signal("ownership_history"), extract_first_row_operation)
+        try:
+            extract_first_row_operation = ExtractFirstRow(self.get_signal("ownership_history").data,
+                                                          "Extract the Newest Sale with Date")
+            self.add_node(extract_first_row_operation)
+            self.add_transition(self.get_signal("ownership_history"), extract_first_row_operation,
+                                label="thread")
 
-        extract_first_row = extract_first_row_operation.run()
-        extract_first_row_signal = Signal(extract_first_row, "Newest Sale with Date")
-        self.add_signal(extract_first_row_signal, "extracted_first_row")
-        self.add_transition(extract_first_row_operation, extract_first_row_signal)
-
-    @Profiling
-    @Debugger
-    def rate_of_change_1(self):
-        """
-        method for calculating rate of change in views vector
-
-        """
-        views_development = self.get_signal("views_development")
-
-        total = views_development.data["views_development"]["total_views"][::-1]
-        views_development.data["views_development"].update({"total_views": total})
-
-        rate_of_change_operation = RateOfChange(views_development.data["views_development"],
-                                                "Calculate Percentage Change in Advert Views")
-
-        self.add_node(rate_of_change_operation)
-        self.add_transition(views_development, rate_of_change_operation)
-
-        rate_of_change = rate_of_change_operation.run()
-
-        index = list(rate_of_change["total_views"].keys())
-        total = list(rate_of_change["total_views"].values())[::-1]
-        change = list(rate_of_change["Endring"].values())[::-1]
-
-        rate_of_change.update({"total_views": dict(zip(index, total))})
-        rate_of_change.update({"Endring": dict(zip(index, change))})
-        rate_of_change["change"] = rate_of_change["Endring"]
-        del rate_of_change["Endring"]
-
-        rate_of_change_signal = Signal({"views_development": rate_of_change},
-                                       "Percentage Change in Advert Views")
-
-        self.add_signal(rate_of_change_signal, "views_change_signal")
-        self.add_transition(rate_of_change_operation, rate_of_change_signal)
-
-    @Profiling
-    @Debugger
-    def finn_community_process(self):
-        """
-        method for processing community statistics data from Finn
-
-        """
-        community_json = self.get_signal("community_data")
-
-        process_community_data_operation = CommunitySubModel(community_json.data)
-        self.add_node(process_community_data_operation)
-        self.add_transition(community_json, process_community_data_operation)
-
-        process_community_data = process_community_data_operation.run()
-
-        process_community_data_signal = Signal(process_community_data,
-                                               "Processed Finn Community Statistics")
-        self.add_signal(process_community_data_signal, "processed_community_data")
-        self.add_transition(process_community_data_operation, process_community_data_signal)
-
-    @Profiling
-    @Debugger
-    def accumulate(self):
-        """
-        method for accumulating the values in dataframe column
-
-        """
-        views_development = self.get_signal("views_change_signal")
-
-        total = dict([[*views_development.data["views_development"].items()][3]])
-
-        accumulate_operation = Accumulate(total, "Calculate the Accumulated Sum of Views")
-
-        self.add_node(accumulate_operation)
-        self.add_transition(views_development, accumulate_operation)
-
-        accumulate = accumulate_operation.run()
-
-        accumulate_signal = Signal(accumulate, "Accumulated Sum of Views")
-        self.add_signal(accumulate_signal, "accumulated_signal")
-        self.add_transition(accumulate_operation, accumulate_signal)
-
-    @Profiling
-    @Debugger
-    def multiplex_2(self):
-        """
-        multiplexing the accumulated sum of views with the views development
-
-        """
-        views_development = self.get_signal("views_change_signal")
-        accumulated = self.get_signal("accumulated_signal")
-
-        multiplex_operation = Multiplex(
-            [views_development.data["views_development"], accumulated],
-            "Multiplex Accumulated Sum with Views Development")
-        self.add_node(multiplex_operation)
-        self.add_transition(views_development, multiplex_operation)
-        self.add_transition(accumulated, multiplex_operation)
-
-        multiplex = {"views_development": multiplex_operation.run()}
-        multiplex_signal = Signal(multiplex, "Multiplexed Accumulated Sum with Views Development")
-        self.add_signal(multiplex_signal, "multiplex_views")
-        self.add_transition(multiplex_operation, multiplex_signal)
-
-    @Profiling
-    @Debugger
-    def check_newest_date(self):
-        """
-        method for checking which of two dates are the newest date
-
-        """
-        publish_date = self.get_signal("publish_date")
-        extracted_first_row = self.get_signal("extracted_first_row")
-        check_newest_date_operation = CheckNewestDate(publish_date.data,
-                                                      extracted_first_row.data,
-                                                      "Publishing Date of Advertisement Later "
-                                                      "Than Newest Sale")
-        self.add_node(check_newest_date_operation)
-        self.add_transition(publish_date, check_newest_date_operation)
-        self.add_transition(extracted_first_row, check_newest_date_operation)
-
-        check_newest_date = check_newest_date_operation.run()
-        self.signal.update({"sold": check_newest_date})
-
-        not_sold_signal = Signal(extracted_first_row.data,
-                                 desc="Advertised Real-Estate Not Sold / Registered Yet")
-        final_sales_price = Signal(extracted_first_row.data,
-                                   desc="Final Sales Price of Advertised Real-Estate")
-
-        self.add_signal(not_sold_signal, "not_sold")
-        self.add_signal(final_sales_price, "final_sales_price")
-        self.add_transition(check_newest_date_operation, final_sales_price, label="true")
-        self.add_transition(check_newest_date_operation, not_sold_signal, label="false")
+            extract_first_row = extract_first_row_operation.run()
+            extract_first_row_signal = Signal(extract_first_row, "Newest Sale with Date")
+            self.add_signal(extract_first_row_signal, "extracted_first_row")
+            self.add_transition(extract_first_row_operation, extract_first_row_signal,
+                                label="thread")
+        except Exception as extract_first_row_exception:
+            self.exception_queue.put(extract_first_row_exception)
 
     @Profiling
     @Debugger
@@ -466,24 +417,149 @@ class FinnAdvertProcessing(Process):
         method for adding prisantydning to ownership history dataframe
 
         """
-        add_row_to_dataframe_operation = AddRowToDataFrame(
-            self.get_signal("list_price_of_real_estate").data,
-            self.get_signal("ownership_history").data, "Add List Price to Ownership History")
-        self.add_node(add_row_to_dataframe_operation)
+        try:
+            add_row_to_dataframe_operation = AddRowToDataFrame(
+                self.get_signal("list_price_of_real_estate").data,
+                self.get_signal("ownership_history").data, "Add List Price to Ownership History")
+            self.add_node(add_row_to_dataframe_operation)
 
-        self.add_transition(self.get_signal("list_price_of_real_estate"),
-                            add_row_to_dataframe_operation,
-                            label="row")
-        self.add_transition(self.get_signal("ownership_history"),
-                            add_row_to_dataframe_operation,
-                            label="dataframe")
+            self.add_transition(self.get_signal("list_price_of_real_estate"),
+                                add_row_to_dataframe_operation,
+                                label="row", thread=True)
+            self.add_transition(self.get_signal("ownership_history"),
+                                add_row_to_dataframe_operation,
+                                label="dataframe", thread=True)
 
-        add_row_to_dataframe = add_row_to_dataframe_operation.run()
-        add_row_to_dataframe_signal = Signal(add_row_to_dataframe, "Ownership History with "
-                                                                   "List Price")
-        self.add_signal(add_row_to_dataframe_signal, "ownership_history_with_list_price")
+            add_row_to_dataframe = add_row_to_dataframe_operation.run()
+            add_row_to_dataframe_signal = Signal(add_row_to_dataframe, "Ownership History with "
+                                                                       "List Price")
+            self.add_signal(add_row_to_dataframe_signal, "ownership_history_with_list_price")
 
-        self.add_transition(add_row_to_dataframe_operation, add_row_to_dataframe_signal)
+            self.add_transition(add_row_to_dataframe_operation, add_row_to_dataframe_signal,
+                                label="thread")
+        except Exception as add_to_dateframe_exception:
+            self.exception_queue.put(add_to_dateframe_exception)
+
+    @Profiling
+    @Debugger
+    def rate_of_change_1(self):
+        """
+        method for calculating rate of change in views vector
+
+        """
+        try:
+            views_development = self.get_signal("views_development")
+
+            total = views_development.data["views_development"]["total_views"][::-1]
+            views_development.data["views_development"].update({"total_views": total})
+
+            rate_of_change_operation = RateOfChange(views_development.data["views_development"],
+                                                    "Calculate Percentage Change in Advert Views")
+
+            self.add_node(rate_of_change_operation)
+            self.add_transition(views_development, rate_of_change_operation, label="thread")
+
+            rate_of_change = rate_of_change_operation.run()
+
+            index = list(rate_of_change["total_views"].keys())
+            total = list(rate_of_change["total_views"].values())[::-1]
+            change = list(rate_of_change["Endring"].values())[::-1]
+
+            rate_of_change.update({"total_views": dict(zip(index, total))})
+            rate_of_change.update({"Endring": dict(zip(index, change))})
+            rate_of_change["change"] = rate_of_change["Endring"]
+            del rate_of_change["Endring"]
+
+            rate_of_change_signal = Signal({"views_development": rate_of_change},
+                                           "Percentage Change in Advert Views")
+
+            self.add_signal(rate_of_change_signal, "views_change_signal")
+            self.add_transition(rate_of_change_operation, rate_of_change_signal, label="thread")
+        except Exception as rate_of_change_exception:
+            self.exception_queue.put(rate_of_change_exception)
+
+    @Profiling
+    @Debugger
+    def finn_community_process(self):
+        """
+        method for processing community statistics data from Finn
+
+        """
+        try:
+            community_json = self.get_signal("community_data")
+
+            process_community_data_operation = CommunitySubModel(community_json.data)
+            self.add_node(process_community_data_operation)
+            self.add_transition(community_json, process_community_data_operation, label="thread")
+
+            process_community_data = process_community_data_operation.run()
+
+            process_community_data_signal = Signal(process_community_data,
+                                                   "Processed Finn Community Statistics")
+            self.add_signal(process_community_data_signal, "processed_community_data")
+            self.add_transition(process_community_data_operation, process_community_data_signal,
+                                label="thread")
+        except Exception as finn_community_exception:
+            self.exception_queue.put(finn_community_exception)
+
+    @Profiling
+    @Debugger
+    def check_newest_date(self):
+        """
+        method for checking which of two dates are the newest date
+
+        """
+        try:
+            publish_date = self.get_signal("publish_date")
+            extracted_first_row = self.get_signal("extracted_first_row")
+            check_newest_date_operation = CheckNewestDate(publish_date.data,
+                                                          extracted_first_row.data,
+                                                          "Publishing Date of Advertisement Later "
+                                                          "Than Newest Sale")
+            self.add_node(check_newest_date_operation)
+            self.add_transition(publish_date, check_newest_date_operation, label="thread")
+            self.add_transition(extracted_first_row, check_newest_date_operation, label="thread")
+
+            check_newest_date = check_newest_date_operation.run()
+            self.signal.update({"sold": check_newest_date})
+
+            not_sold_signal = Signal(extracted_first_row.data,
+                                     desc="Advertised Real-Estate Not Sold / Registered Yet")
+            final_sales_price = Signal(extracted_first_row.data,
+                                       desc="Final Sales Price of Advertised Real-Estate")
+
+            self.add_signal(not_sold_signal, "not_sold")
+            self.add_signal(final_sales_price, "final_sales_price")
+            self.add_transition(check_newest_date_operation, final_sales_price, label="true",
+                                thread=True)
+            self.add_transition(check_newest_date_operation, not_sold_signal, label="false",
+                                thread=True)
+        except Exception as check_newest_date_exception:
+            self.exception_queue.put(check_newest_date_exception)
+
+    @Profiling
+    @Debugger
+    def accumulate(self):
+        """
+        method for accumulating the values in dataframe column
+
+        """
+        try:
+            views_development = self.get_signal("views_change_signal")
+
+            total = dict([[*views_development.data["views_development"].items()][3]])
+            accumulate_operation = Accumulate(total, "Calculate the Accumulated Sum of Views")
+
+            self.add_node(accumulate_operation)
+            self.add_transition(views_development, accumulate_operation, label="thread")
+
+            accumulate = accumulate_operation.run()
+
+            accumulate_signal = Signal(accumulate, "Accumulated Sum of Views")
+            self.add_signal(accumulate_signal, "accumulated_signal")
+            self.add_transition(accumulate_operation, accumulate_signal, label="thread")
+        except Exception as accumulate_exception:
+            self.exception_queue.put(accumulate_exception)
 
     @Profiling
     @Debugger
@@ -492,28 +568,59 @@ class FinnAdvertProcessing(Process):
         method for adding final sales price (if sold) to ownership history dataframe
 
         """
-        sales_price = self.get_signal("final_sales_price")
-        ownership_history = self.get_signal("ownership_history_with_list_price")
-        if self.get_signal("sold"):
-            add_row_to_dataframe_operation = AddRowToDataFrame(
-                sales_price.data, ownership_history.data,
-                desc="Add Final Sales Price to to Ownership History")
-        else:
-            add_row_to_dataframe_operation = AddRowToDataFrame(
-                row=None,
-                dataframe=ownership_history.data,
-                desc="Add Final Sales Price to Ownership History")
-        self.add_node(add_row_to_dataframe_operation)
-        self.add_transition(sales_price, add_row_to_dataframe_operation, label="row")
-        self.add_transition(ownership_history, add_row_to_dataframe_operation,
-                            label="dataframe")
+        try:
+            sales_price = self.get_signal("final_sales_price")
+            ownership_history = self.get_signal("ownership_history_with_list_price")
+            if self.get_signal("sold"):
+                add_row_to_dataframe_operation = AddRowToDataFrame(
+                    sales_price.data, ownership_history.data,
+                    desc="Add Final Sales Price to to Ownership History")
+            else:
+                add_row_to_dataframe_operation = AddRowToDataFrame(
+                    row=None,
+                    dataframe=ownership_history.data,
+                    desc="Add Final Sales Price to Ownership History")
+            self.add_node(add_row_to_dataframe_operation)
+            self.add_transition(sales_price, add_row_to_dataframe_operation, label="row",
+                                thread=True)
+            self.add_transition(ownership_history, add_row_to_dataframe_operation,
+                                label="dataframe", thread=True)
 
-        add_row_to_dataframe = add_row_to_dataframe_operation.run()
-        add_row_to_dataframe_signal = Signal(add_row_to_dataframe,
-                                             "Ownership History With List "
-                                             "Price and Final Sales Price")
-        self.add_signal(add_row_to_dataframe_signal, "final_ownership_history")
-        self.add_transition(add_row_to_dataframe_operation, add_row_to_dataframe_signal)
+            add_row_to_dataframe = add_row_to_dataframe_operation.run()
+            add_row_to_dataframe_signal = Signal(add_row_to_dataframe,
+                                                 "Ownership History With List "
+                                                 "Price and Final Sales Price")
+            self.add_signal(add_row_to_dataframe_signal, "final_ownership_history")
+            self.add_transition(add_row_to_dataframe_operation, add_row_to_dataframe_signal,
+                                label="thread")
+        except Exception as add_to_dateframe_exception:
+            self.exception_queue.put(add_to_dateframe_exception)
+
+    @Profiling
+    @Debugger
+    def multiplex_2(self):
+        """
+        multiplexing the accumulated sum of views with the views development
+
+        """
+        try:
+            views_development = self.get_signal("views_change_signal")
+            accumulated = self.get_signal("accumulated_signal")
+
+            multiplex_operation = Multiplex(
+                [views_development.data["views_development"], accumulated],
+                "Multiplex Accumulated Sum with Views Development")
+            self.add_node(multiplex_operation)
+            self.add_transition(views_development, multiplex_operation, label="thread")
+            self.add_transition(accumulated, multiplex_operation, label="thread")
+
+            multiplex = {"views_development": multiplex_operation.run()}
+            multiplex_signal = Signal(multiplex,
+                                      "Multiplexed Accumulated Sum with Views Development")
+            self.add_signal(multiplex_signal, "multiplex_views")
+            self.add_transition(multiplex_operation, multiplex_signal, label="thread")
+        except Exception as multiplex_exception:
+            self.exception_queue.put(multiplex_exception)
 
     @Profiling
     @Debugger

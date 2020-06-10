@@ -108,7 +108,7 @@ class StatisticsView(QDialog):
 
     def add_statistics_info(self, postfix):
         """
-        Method for displaying StatisticsView
+        method for displaying StatisticsView
 
         """
         self.ui.tab_widget_statistics.setCurrentIndex(0)
@@ -116,7 +116,7 @@ class StatisticsView(QDialog):
             lambda: self.parent.history_view.add_finn_history(postfix))
         self.statistics_model.add_statistics_info(postfix)
         self.show_progress_bar()
-        self.show()
+        self.showMaximized()
 
     def update(self):
         """

@@ -40,12 +40,15 @@ class Profiling:
         private call method
 
         """
+        digits = 7
         start = time()
         function = self.func(*args, **kwargs)
         end = time()
+        elapsed = round((end - start) * 1000, digits)
+        self.type.elapsed += elapsed
         self.type.profiling.add_row(
             [self.func.__name__, self.local_time(start), self.local_time(end),
-             str(round((end - start) * 1000, 7)) + "ms"])
+             str(elapsed) + "ms"])
         return function
 
     @staticmethod
@@ -81,5 +84,5 @@ def profiling_config():
     profiling_table.field_names = ["operation", "start", "end", "elapsed"]
     profiling_table.align = "l"
     profiling_table.align["elapsed"] = "r"
-    profiling_table.add_row(["---------" for _ in range(4)])
+    profiling_table.add_row(["-----------" for _ in range(4)])
     return profiling_table
