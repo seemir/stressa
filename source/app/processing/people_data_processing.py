@@ -33,11 +33,14 @@ class PeopleDataProcessing(Process):
         super().__init__(name=self.__class__.__name__)
         self.start_process()
         self.input_operation(people_data)
+
         self.run_parallel(
             [self.extract_1, self.extract_2, self.extract_3, self.extract_4, self.extract_5])
+
         self.run_parallel(
             [self.restructure_1, self.restructure_2, self.restructure_3, self.restructure_4,
              self.restructure_5])
+
         self.multiplex()
         self.people_statistics = self.output_operation()
         self.end_process()
@@ -142,13 +145,15 @@ class PeopleDataProcessing(Process):
         """
         try:
             input_signal = self.get_signal("input_signal")
-            pois_operation = Extract(input_signal.data, "pois")
-            self.add_node(pois_operation)
-            self.add_transition(input_signal, pois_operation, label="thread")
-            pois = pois_operation.run()
-            pois_signal = Signal(pois, "Information about Higher Educational Institutions")
-            self.add_signal(pois_signal, "pois")
-            self.add_transition(pois_operation, pois_signal, label="thread")
+            higheducation_operation = Extract(input_signal.data, "higheducation")
+            self.add_node(higheducation_operation)
+            self.add_transition(input_signal, higheducation_operation, label="thread")
+            higheducation = higheducation_operation.run()
+            higheducation_signal = Signal(higheducation,
+                                          "Information about Higher Educational Institutions")
+            self.add_signal(higheducation_signal, "higheducation")
+            self.add_transition(higheducation_operation, higheducation_signal, label="thread")
+
         except Exception as extract_exception:
             self.exception_queue.put(extract_exception)
 
@@ -175,8 +180,8 @@ class PeopleDataProcessing(Process):
 
             self.add_transition(age_distribution_rest_operation, age_distribution_rest_signal,
                                 label="thread")
-        except Exception as restructure_frame_exception:
-            self.exception_queue.put(restructure_frame_exception)
+        except Exception as restructure_exception:
+            self.exception_queue.put(restructure_exception)
 
     @Profiling
     @Debugger
@@ -201,8 +206,8 @@ class PeopleDataProcessing(Process):
 
             self.add_transition(civil_status_rest_operation, civil_status_rest_signal,
                                 label="thread")
-        except Exception as restructure_frame_exception:
-            self.exception_queue.put(restructure_frame_exception)
+        except Exception as restructure_exception:
+            self.exception_queue.put(restructure_exception)
 
     @Profiling
     @Debugger
@@ -225,8 +230,8 @@ class PeopleDataProcessing(Process):
 
             self.add_transition(education_rest_operation, education_rest_signal,
                                 label="thread")
-        except Exception as restructure_frame_exception:
-            self.exception_queue.put(restructure_frame_exception)
+        except Exception as restructure_exception:
+            self.exception_queue.put(restructure_exception)
 
     @Profiling
     @Debugger
@@ -249,8 +254,8 @@ class PeopleDataProcessing(Process):
 
             self.add_transition(income_rest_operation, income_rest_signal,
                                 label="thread")
-        except Exception as restructure_frame_exception:
-            self.exception_queue.put(restructure_frame_exception)
+        except Exception as restructure_exception:
+            self.exception_queue.put(restructure_exception)
 
     @Profiling
     @Debugger
@@ -260,23 +265,24 @@ class PeopleDataProcessing(Process):
 
         """
         try:
-            pois = self.get_signal("pois")
-            pois_rest_operation = RestructurePois(pois.data["pois"],
-                                                  "Restructure POIS to DataFrame Dict")
-            self.add_node(pois_rest_operation)
-            self.add_transition(pois, pois_rest_operation, label="thread")
+            higheducation = self.get_signal("higheducation")
+            higheducation_rest_operation = RestructurePois(
+                higheducation.data["higheducation"],
+                "Restructure Higher Education Info to DataFrame Dict")
+            self.add_node(higheducation_rest_operation)
+            self.add_transition(higheducation, higheducation_rest_operation, label="thread")
 
-            pois_rest = pois_rest_operation.run()
+            higheducation_rest = higheducation_rest_operation.run()
 
-            pois_rest_signal = Signal(pois_rest,
-                                      "Restructured Information about Higher Educational "
-                                      "Institutions")
-            self.add_signal(pois_rest_signal, "pois_rest")
+            higheducation_rest_signal = Signal(higheducation_rest,
+                                               "Restructured Information about Higher Educational "
+                                               "Institutions")
+            self.add_signal(higheducation_rest_signal, "higheducation_rest")
 
-            self.add_transition(pois_rest_operation, pois_rest_signal,
+            self.add_transition(higheducation_rest_operation, higheducation_rest_signal,
                                 label="thread")
-        except Exception as restructure_frame_exception:
-            self.exception_queue.put(restructure_frame_exception)
+        except Exception as restructure_exception:
+            self.exception_queue.put(restructure_exception)
 
     @Profiling
     @Debugger
@@ -289,7 +295,7 @@ class PeopleDataProcessing(Process):
         civil_status_distribution = self.get_signal("civil_status_rest")
         education_distribution = self.get_signal("education_rest")
         income_distribution = self.get_signal("income_rest")
-        pois_distribution = self.get_signal("pois_rest")
+        pois_distribution = self.get_signal("higheducation_rest")
 
         multiplex_operation = Multiplex(
             [age_distribution.data, civil_status_distribution.data, education_distribution.data,

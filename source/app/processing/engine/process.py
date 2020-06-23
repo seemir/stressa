@@ -48,9 +48,13 @@ class Process(Dot, ABC):
         """
         digits = 7
         elapsed = round((time() - cls.start) * 1000, digits)
+        speedup = round(cls.elapsed - elapsed, digits)
         cls.profiling.add_row(["-----------", "", "", ""])
         cls.profiling.add_row(["total", "", "", str(elapsed) + "ms"])
-        cls.profiling.add_row(["Speedup", "", "", str(round(cls.elapsed - elapsed, digits)) + "ms"])
+        cls.profiling.add_row(["", "", "", ""])
+        cls.profiling.add_row(["speedup", "", "", str(speedup) + "ms"])
+        cls.profiling.add_row(
+            ["(total without speedup)", "", "", str(round(cls.elapsed, digits)) + "ms"])
         LOGGER.success("ending '{}'".format(cls.__name__))
         LOGGER.info("reporting profiling results -> \n\n profiling: '{}' \n\n".format(
             cls.__name__) + str(cls.profiling) + "\n")

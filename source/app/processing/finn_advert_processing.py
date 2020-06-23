@@ -15,7 +15,7 @@ from .engine import Process, InputOperation, Signal, ScrapeFinnAdvertInfo, \
     OutputOperation, ValidateFinnCode, Extract, AddRowToDataFrame, RateOfChange, \
     ExtractFirstRow, CheckNewestDate, Accumulate, ScrapeFinnCommunityStatistics
 
-from .community_sub_model import CommunitySubModel
+from .finn_community_sub_model import FinnCommunitySubModel
 
 
 class FinnAdvertProcessing(Process):
@@ -488,7 +488,7 @@ class FinnAdvertProcessing(Process):
         try:
             community_json = self.get_signal("community_data")
 
-            process_community_data_operation = CommunitySubModel(community_json.data)
+            process_community_data_operation = FinnCommunitySubModel(community_json.data)
             self.add_node(process_community_data_operation)
             self.add_transition(community_json, process_community_data_operation, label="thread")
 

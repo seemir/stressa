@@ -12,6 +12,7 @@ from source.util import Assertor, Profiling, Tracking, Debugger
 from .engine import Process, InputOperation, Signal, Extract, Separate, Multiplex, OutputOperation
 
 from .people_sub_model import PeopleSubModel
+from .family_sub_model import FamilySubModel
 
 
 class FinnCommunityProcess(Process):
@@ -36,12 +37,14 @@ class FinnCommunityProcess(Process):
         Assertor.assert_data_types([community_json], [dict])
 
         self.community_json = community_json
+
         self.input_operation(self.community_json)
 
         self.run_parallel([self.extract_1, self.extract_2, self.extract_3])
         self.run_parallel([self.separate_1, self.separate_2, self.extract_4])
 
-        self.people_data_processing()
+        self.run_parallel([self.people_data_processing, self.family_data_processing])
+
         self.multiplex()
 
         self.finn_community_statistics = self.output_operation()
@@ -126,7 +129,7 @@ class FinnCommunityProcess(Process):
         self.add_transition(general_signal, extract_info_operation, label="thread")
 
         extract_info = extract_info_operation.run()
-        extract_info_signal = Signal(extract_info, "Extract Info Information")
+        extract_info_signal = Signal(extract_info, "Extract Community Specific Information")
         self.add_signal(extract_info_signal, "info_signal")
         self.add_transition(extract_info_operation, extract_info_signal, label="thread")
 
@@ -162,7 +165,8 @@ class FinnCommunityProcess(Process):
         self.add_transition(people_signal, separate_operation, label="thread")
 
         separate = separate_operation.run()
-        separate_signal = Signal(separate, "Separated Family Statistics")
+        separate_signal = Signal(separate, "Separated Family Statistics", prettify_keys=True,
+                                 length=5)
         self.add_signal(separate_signal, "separate_family_signal")
         self.add_transition(separate_operation, separate_signal, label="thread")
 
@@ -177,12 +181,31 @@ class FinnCommunityProcess(Process):
         people_processing_operation = PeopleSubModel(people_signal.data)
 
         self.add_node(people_processing_operation)
-        self.add_transition(people_signal, people_processing_operation)
+        self.add_transition(people_signal, people_processing_operation, label="thread")
 
         people_processing = people_processing_operation.run()
         people_processing_signal = Signal(people_processing, "Processed People Statistics")
         self.add_signal(people_processing_signal, "people_statistics_signal")
-        self.add_transition(people_processing_operation, people_processing_signal)
+        self.add_transition(people_processing_operation, people_processing_signal, label="thread")
+
+    @Profiling
+    @Tracking
+    def family_data_processing(self):
+        """
+        sub model for processing finn family data
+
+        """
+        family_signal = self.get_signal("separate_family_signal")
+        family_processing_operation = FamilySubModel(family_signal.data)
+
+        self.add_node(family_processing_operation)
+        self.add_transition(family_signal, family_processing_operation, label="thread")
+
+        family_processing = family_processing_operation.run()
+        family_processing_signal = Signal(family_processing, "Processed Family Statistics",
+                                          prettify_keys=True, length=4)
+        self.add_signal(family_processing_signal, "family_statistics_signal")
+        self.add_transition(family_processing_operation, family_processing_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -192,20 +215,23 @@ class FinnCommunityProcess(Process):
 
         """
         people_statistics = self.get_signal("people_statistics_signal")
+        family_statistics = self.get_signal("family_statistics_signal")
 
         info_signal = self.get_signal("info_signal")
 
         multiplex_operation = Multiplex(
-            [people_statistics.data, info_signal.data],
+            [people_statistics.data, family_statistics.data, info_signal.data],
             desc="Multiplex Finn Community Statistics")
         self.add_node(multiplex_operation)
 
         self.add_transition(people_statistics, multiplex_operation)
+        self.add_transition(family_statistics, multiplex_operation)
         self.add_transition(info_signal, multiplex_operation)
 
         multiplex = multiplex_operation.run()
 
-        multiplex_signal = Signal(multiplex, "Multiplexed Finn Community Statistics")
+        multiplex_signal = Signal(multiplex, "Multiplexed Finn Community Statistics",
+                                  prettify_keys=True, length=6)
         self.add_signal(multiplex_signal, "multiplexed_finn_community_statistics")
         self.add_transition(multiplex_operation, multiplex_signal)
 

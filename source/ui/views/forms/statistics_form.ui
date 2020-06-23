@@ -2719,7 +2719,7 @@
              </property>
              <layout class="QGridLayout" name="gridLayout_7">
               <item row="2" column="0">
-               <widget class="QTableView" name="table_view_pois">
+               <widget class="QTableView" name="table_view_higheducation">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
@@ -5134,7 +5134,7 @@
   <tabstop>graphics_view_civil_status_city</tabstop>
   <tabstop>table_view_civil_status</tabstop>
   <tabstop>push_button_show_in_map_2</tabstop>
-  <tabstop>table_view_pois</tabstop>
+  <tabstop>table_view_higheducation</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

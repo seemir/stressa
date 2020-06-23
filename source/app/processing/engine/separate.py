@@ -49,8 +49,16 @@ class Separate(Operation):
         """
         output = {}
         for dictionary in self.data:
-            if "type" in dictionary.keys():
-                output.update({dictionary["type"].lower(): dictionary})
+            if "id" in dictionary.keys():
+                identifier = dictionary["id"].lower()
+                if identifier == "1006":
+                    output.update({"rating_kids_area": dictionary})
+                elif identifier == "1007":
+                    output.update({"rating_schools": dictionary})
+                elif identifier == "1008":
+                    output.update({"rating_kindergardens": dictionary})
+                else:
+                    output.update({identifier: dictionary})
             else:
                 output.update(dictionary)
         return output

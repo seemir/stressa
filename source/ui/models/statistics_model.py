@@ -36,8 +36,8 @@ class StatisticsModel(Model):
                         "municipality_sqm_price", "city_area", "municipality",
                         "hist_data_city_area", "hist_data_municipality", "views_development",
                         "hist_data_city_area_count", "hist_data_municipality_count",
-                        "age_distribution", "info", "civil_status", "education", "income", "pois",
-                        "pois_location"]
+                        "age_distribution", "info", "civil_status", "education", "income",
+                        "higheducation", "higheducation_location"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "views_development",
                   "accumulated", "change", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
@@ -105,12 +105,12 @@ class StatisticsModel(Model):
                 self.add_education_chart(prefix, postfix, key)
             elif key == "income":
                 self.add_income_chart(prefix, postfix, key)
-            elif key == "pois":
+            elif key == "higheducation":
                 self.add_pois_table(postfix, key)
-            elif key == "pois_location":
+            elif key == "higheducation_location":
                 pass
             elif key == "info":
-                self.add_map(postfix, key)
+                self.add_map(postfix, key, location="higheducation_location")
             else:
                 if key + postfix in self.data.keys():
                     self.add_statistics_label(key, postfix)
@@ -166,8 +166,8 @@ class StatisticsModel(Model):
                 self.parent.label_municipality_sqm_price.setText("KMP (kommune)")
                 self.parent.label_sales_municipality.setText("Salg (kommune)")
             elif key in ["hist_data_city_area", "hist_data_municipality", "views_development",
-                         "age_distribution", "civil_status", "education", "income", "pois",
-                         "pois_location", "info"]:
+                         "age_distribution", "civil_status", "education", "income", "higheducation",
+                         "higheducation_location", "info"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -200,8 +200,8 @@ class StatisticsModel(Model):
                                         self.parent.ui.table_view_income)
         BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_income_city,
                                         self.parent.ui.table_view_income)
-        self.parent.ui.table_view_pois.setModel(None)
-        self.parent.ui.table_view_pois.clearSpans()
+        self.parent.ui.table_view_higheducation.setModel(None)
+        self.parent.ui.table_view_higheducation.clearSpans()
         self.parent.map_view.web_view_map.close()
 
     def add_sqm_dist_charts(self, prefix: str, postfix: str, key: str):
@@ -511,22 +511,22 @@ class StatisticsModel(Model):
                       name of label to change
 
         """
-        self.parent.ui.table_view_pois.setModel(None)
+        getattr(self.parent.ui, "table_view_" + key).setModel(None)
         if key + postfix in self.data.keys() and self.data[key + postfix]:
             pois_table_model = TableModel(DataFrame(self.data[key + postfix]))
-            self.parent.ui.table_view_pois.setModel(pois_table_model)
-            self.parent.ui.table_view_pois.horizontalHeader().setSectionResizeMode(
+            getattr(self.parent.ui, "table_view_" + key).setModel(pois_table_model)
+            getattr(self.parent.ui, "table_view_" + key).horizontalHeader().setSectionResizeMode(
                 0, QHeaderView.Fixed)
-            self.parent.ui.table_view_pois.setColumnWidth(0, 175)
-            self.parent.ui.table_view_pois.horizontalHeader().setSectionResizeMode(
+            getattr(self.parent.ui, "table_view_" + key).setColumnWidth(0, 175)
+            getattr(self.parent.ui, "table_view_" + key).horizontalHeader().setSectionResizeMode(
                 1, QHeaderView.ResizeToContents)
-            self.parent.ui.table_view_pois.horizontalHeader().setSectionResizeMode(
+            getattr(self.parent.ui, "table_view_" + key).horizontalHeader().setSectionResizeMode(
                 2, QHeaderView.ResizeToContents)
-            self.parent.ui.table_view_pois.verticalHeader().setSectionResizeMode(
+            getattr(self.parent.ui, "table_view_" + key).verticalHeader().setSectionResizeMode(
                 QHeaderView.ResizeToContents)
-            self.parent.ui.table_view_pois.setWordWrap(True)
+            getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)
 
-    def add_map(self, postfix: str, keys: str):
+    def add_map(self, postfix: str, keys: str, location: str):
         """
         method for adding pois table
 
@@ -536,6 +536,8 @@ class StatisticsModel(Model):
                       index if used in naming of line_edits
         keys         : str
                        name of label to change
+        location     : str
+                       name of location data dict
 
         """
         self.parent.map_view.web_view_map.close()
@@ -550,4 +552,4 @@ class StatisticsModel(Model):
                 .show_map(coords=[lat, long],
                           web_engine_view=self.parent.map_view.web_view_map,
                           pop_up=html_table.html_table(),
-                          pois=self.data["pois_location" + postfix])
+                          pois=self.data[location + postfix])

@@ -82,9 +82,9 @@ class RestructurePois(Restructure):
                                                                      duration_walk, distance_walk,
                                                                      duration_drive, distance_drive,
                                                                      pois_location)
-
-        return {self.data.copy()["type"].lower(): {"Institusjon": inst_col, "Distanse": dist_col,
-                                                   "Tid": dur_col}, "pois_location": pois_location}
+        identifier = self.data.copy()["id"].lower()
+        return {identifier: {"Institusjon": inst_col, "Distanse": dist_col,
+                             "Tid": dur_col}, identifier + "_location": pois_location}
 
     @staticmethod
     def check_data(institutions, distance_air, duration_walk, distance_walk,

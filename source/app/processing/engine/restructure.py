@@ -76,7 +76,7 @@ class Restructure(Operation):
                                     neighborhood.append(elem)
                                 elif prop == "city":
                                     city.append(elem)
-        data = {self.data.copy()["type"].lower(): {"Gruppe": group,
-                                                   "Nabolag": neighborhood,
-                                                   "By": city}}
+        data = {self.data.copy()["id"].lower(): {"Gruppe": group,
+                                                 "Nabolag": neighborhood,
+                                                 "By": city}}
         return data

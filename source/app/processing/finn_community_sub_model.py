@@ -13,7 +13,7 @@ from .engine import SubModel
 from .finn_community_process import FinnCommunityProcess
 
 
-class CommunitySubModel(SubModel):
+class FinnCommunitySubModel(SubModel):
     """
     Sub model that handles the FinnCommunityProcess
 
