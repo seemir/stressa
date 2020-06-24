@@ -11,7 +11,7 @@ import pytest as pt
 
 from prettytable import PrettyTable
 
-from source.app import CalculateSifoExpenses, Process, Signal
+from source.app import SifoExpensesProcess, Process, Signal
 from source.util import TrackingError
 
 
@@ -35,8 +35,8 @@ class TestCalculateSifoExpenses:
         Test that CalculateSifoExpenses is instance and subclass of SifoProcessing
 
         """
-        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
-        for parent in [CalculateSifoExpenses, Process]:
+        calculate_sifo_expenses = SifoExpensesProcess(self.data)
+        for parent in [SifoExpensesProcess, Process]:
             assert isinstance(calculate_sifo_expenses, parent)
             assert issubclass(calculate_sifo_expenses.__class__, parent)
 
@@ -46,8 +46,8 @@ class TestCalculateSifoExpenses:
         Test that all the class variables are correct in the object
 
         """
-        assert isinstance(CalculateSifoExpenses.start, float)
-        assert isinstance(CalculateSifoExpenses.profiling.__class__, PrettyTable.__class__)
+        assert isinstance(SifoExpensesProcess.start, float)
+        assert isinstance(SifoExpensesProcess.profiling.__class__, PrettyTable.__class__)
 
     @staticmethod
     @pt.mark.parametrize('invalid_data', [True, 'test', 90210, 90210.0, ('test', 'test')])
@@ -57,7 +57,7 @@ class TestCalculateSifoExpenses:
 
         """
         with pt.raises(TrackingError):
-            CalculateSifoExpenses(invalid_data)
+            SifoExpensesProcess(invalid_data)
 
     def test_set_signal_method(self):
         """
@@ -69,7 +69,7 @@ class TestCalculateSifoExpenses:
                     "person_3": {"alder_3": "6-9", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
                     "person_4": {"alder_4": "3", "barnehage_4": "Ja", "kjonn_4": "Mann"}}
         signal = Signal(new_data, "new_data")
-        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
+        calculate_sifo_expenses = SifoExpensesProcess(self.data)
         calculate_sifo_expenses.signal = {"new_data": signal}
         assert calculate_sifo_expenses.signal == {"new_data": signal}
 
@@ -79,7 +79,7 @@ class TestCalculateSifoExpenses:
         Test that CalculateSifoExpenses object raises TypeError if signal is invalid
 
         """
-        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
+        calculate_sifo_expenses = SifoExpensesProcess(self.data)
         with pt.raises(TypeError):
             calculate_sifo_expenses.signal = invalid_signal
 
@@ -93,7 +93,7 @@ class TestCalculateSifoExpenses:
                     "person_3": {"alder_3": "6-9", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
                     "person_4": {"alder_4": "3", "barnehage_4": "Ja", "kjonn_4": "Mann"}}
         signal = Signal(new_data, "new_data")
-        calculate_sifo_expenses = CalculateSifoExpenses(self.data)
+        calculate_sifo_expenses = SifoExpensesProcess(self.data)
         calculate_sifo_expenses.signal = {"new_data": signal}
         assert calculate_sifo_expenses.get_signal("new_data") == signal
         assert calculate_sifo_expenses.get_signal("new_data").keys == signal.remove_quotation(
@@ -109,7 +109,7 @@ class TestCalculateSifoExpenses:
                     "person_2": {"alder_2": "20-50", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
                     "person_3": {"alder_3": "6-9", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
                     "person_4": {"alder_4": "3", "barnehage_4": "Ja", "kjonn_4": "Mann"}}
-        calculate_sifo_expenses = CalculateSifoExpenses(new_data)
+        calculate_sifo_expenses = SifoExpensesProcess(new_data)
         assert not calculate_sifo_expenses.get_signal("new_data")
 
     @staticmethod
@@ -126,5 +126,5 @@ class TestCalculateSifoExpenses:
                                 "husholdsart": "3.89 %", "mobler": "3.79 %", "medier": "23.55 %",
                                 "biler": "0.00 %", "barnehage": "0.00 %", "sfo": "0.00 %",
                                 "sumhusholdning": "34.07 %", "totalt": "100.00 %"}
-        calculate_sifo_expenses = CalculateSifoExpenses(data)
+        calculate_sifo_expenses = SifoExpensesProcess(data)
         assert calculate_sifo_expenses.expenses_shares == base_expenses_shares

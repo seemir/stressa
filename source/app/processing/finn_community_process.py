@@ -11,8 +11,8 @@ from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, InputOperation, Signal, Extract, Separate, Multiplex, OutputOperation
 
-from .people_sub_model import PeopleSubModel
-from .family_sub_model import FamilySubModel
+from .finn_people_sub_model import FinnPeopleSubModel
+from .finn_family_sub_model import FinnFamilySubModel
 
 
 class FinnCommunityProcess(Process):
@@ -178,7 +178,7 @@ class FinnCommunityProcess(Process):
 
         """
         people_signal = self.get_signal("separate_people_signal")
-        people_processing_operation = PeopleSubModel(people_signal.data)
+        people_processing_operation = FinnPeopleSubModel(people_signal.data)
 
         self.add_node(people_processing_operation)
         self.add_transition(people_signal, people_processing_operation, label="thread")
@@ -196,7 +196,7 @@ class FinnCommunityProcess(Process):
 
         """
         family_signal = self.get_signal("separate_family_signal")
-        family_processing_operation = FamilySubModel(family_signal.data)
+        family_processing_operation = FinnFamilySubModel(family_signal.data)
 
         self.add_node(family_processing_operation)
         self.add_transition(family_signal, family_processing_operation, label="thread")
@@ -247,6 +247,6 @@ class FinnCommunityProcess(Process):
 
         self.add_node(output_operation)
         self.add_transition(multiplexed_community_statistics, output_operation)
-        # self.print_pdf()
+        self.print_pdf()
 
         return multiplexed_community_statistics.data

@@ -13,7 +13,7 @@ from .engine import Process, InputOperation, Signal, Extract, \
     Restructure, RestructurePois, Multiplex, OutputOperation
 
 
-class FamilyDataProcessing(Process):
+class FinnFamilyDataProcessing(Process):
     """
     Implementation of processing of family statistics
 
@@ -480,6 +480,6 @@ class FamilyDataProcessing(Process):
         output_operation = OutputOperation("Processed Family Statistics")
         self.add_node(output_operation)
         self.add_transition(multiplexed_family_statistics, output_operation)
-        # self.print_pdf()
+        self.print_pdf()
 
         return multiplexed_family_statistics.data

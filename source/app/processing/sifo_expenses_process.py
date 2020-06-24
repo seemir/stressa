@@ -15,9 +15,9 @@ from .engine import Process, Signal, ValidateFamily, ScrapeSifoBaseExpenses, Ext
     OutputOperation, OutputSignal, InputOperation
 
 
-class CalculateSifoExpenses(Process):
+class SifoExpensesProcess(Process):
     """
-    Process for the calculation of the SIFO expenses with shares of total expenses
+    Process for the calculation of SIFO expenses with shares of total expenses
 
     """
 
@@ -203,4 +203,4 @@ class CalculateSifoExpenses(Process):
 
         self.add_transition(output_operation, self.get_signal("output_base_expenses"))
         self.add_transition(output_operation, self.get_signal("output_shares"))
-        # self.print_pdf()
+        self.print_pdf()

@@ -14,7 +14,7 @@ from .engine import Process, InputOperation, Signal, ValidatePostalCode, ScrapeP
     OutputSignal, OutputOperation
 
 
-class PostalCodeExtraction(Process):
+class PostenPostalCodeExtraction(Process):
     """
     Process for extracting Norwegian Postal Code Information from Postens public
     address search
@@ -135,4 +135,5 @@ class PostalCodeExtraction(Process):
         output_signal = OutputSignal(postal_code_info.data, desc="Postal Code Information")
         self.add_signal(output_signal, "output_data")
         self.add_transition(output_operation, output_signal)
+
         return postal_code_info.data

@@ -13,7 +13,7 @@ from .engine import Process, InputOperation, Signal, Extract, \
     Restructure, RestructurePois, Multiplex, OutputOperation
 
 
-class PeopleDataProcessing(Process):
+class FinnPeopleDataProcessing(Process):
     """
     Implementation of processing of people statistics
 
@@ -327,6 +327,6 @@ class PeopleDataProcessing(Process):
 
         self.add_node(output_operation)
         self.add_transition(multiplexed_people_statistics, output_operation)
-        # self.print_pdf()
+        self.print_pdf()
 
         return multiplexed_people_statistics.data

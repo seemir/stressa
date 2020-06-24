@@ -109,8 +109,5 @@ venv.bak/
 # db
 *.sqlite
 
-# pdf
-*.pdf
-
 # JSON
 *.json

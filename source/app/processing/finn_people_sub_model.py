@@ -9,11 +9,11 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Tracking, Debugger
 
-from .people_data_processing import PeopleDataProcessing
+from .finn_people_data_processing import FinnPeopleDataProcessing
 from .engine import SubModel
 
 
-class PeopleSubModel(SubModel):
+class FinnPeopleSubModel(SubModel):
     """
     Sub model that handles the PeopleDataProcess
 
@@ -31,7 +31,7 @@ class PeopleSubModel(SubModel):
 
         """
         Assertor.assert_data_types([people_data], [dict])
-        self.name = PeopleDataProcessing.__name__
+        self.name = FinnPeopleDataProcessing.__name__
         super().__init__(name=self.name, desc="Processing Finn People Statistics")
         self.people_data = people_data
 
@@ -41,4 +41,4 @@ class PeopleSubModel(SubModel):
         method for running the sub model
 
         """
-        return PeopleDataProcessing(self.people_data).people_statistics
+        return FinnPeopleDataProcessing(self.people_data).people_statistics

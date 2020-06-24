@@ -8,6 +8,7 @@ Module with logic for Process superclass
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import os
 from threading import Thread
 from queue import Queue
 
@@ -223,4 +224,8 @@ class Process(Dot, ABC):
                 file_name = file_name + "-" + char.lower()
             else:
                 file_name = file_name + char
-        self.write_pdf(file_name[1:] + ".pdf")
+        upper_dir = os.path.dirname
+        procedure_dir = os.path.join(upper_dir(upper_dir(__file__)), "procedure")
+        if not os.path.exists(procedure_dir):
+            os.makedirs(procedure_dir)
+        self.write_pdf(procedure_dir + "/" + file_name[1:] + ".pdf")

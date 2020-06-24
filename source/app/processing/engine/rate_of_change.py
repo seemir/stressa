@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from pandas import DataFrame as DataFrame_
 
-from source.util import Assertor, Tracking
+from source.util import Assertor, Tracking, Debugger
 
 from .operation import Operation
 
@@ -38,7 +38,7 @@ class RateOfChange(Operation):
         super().__init__(name=self.name, desc="id: {}".format(desc))
         self.dataframe = dataframe
 
-    @Tracking
+    @Debugger
     def run(self):
         """
         method for running the operation

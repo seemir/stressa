@@ -12,7 +12,7 @@ from decimal import Decimal
 
 from PyQt5.QtCore import pyqtSlot, QObject
 
-from source.app import CalculateSifoExpenses
+from source.app import SifoExpensesProcess
 from source.util import Assertor
 from source.domain import Money
 
@@ -63,7 +63,7 @@ class SifoModel(Model):
 
         Returns
         -------
-        out     : CalculateSifoExpenses
+        out     : SifoExpensesProcess
                   active SifoProcessing in SifoModel
         """
         return self._sifo_process
@@ -75,7 +75,7 @@ class SifoModel(Model):
 
         Parameters
         ----------
-        new_sifo_process       : CalculateSifoExpenses
+        new_sifo_process       : SifoExpensesProcess
                                  new SifoProcessing to be set in object
         """
         self._sifo_process = new_sifo_process
@@ -347,7 +347,7 @@ class SifoModel(Model):
             self.clear_results()
             if any("person" in key and len(val) > 1 for key, val in self.data.items()):
                 self.parent.ui.tab_widget_sifo.setCurrentIndex(1)
-                self.sifo_process = CalculateSifoExpenses(self.data)
+                self.sifo_process = SifoExpensesProcess(self.data)
                 self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
                                     data=self.sifo_process.base_expenses)
                 self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_2",

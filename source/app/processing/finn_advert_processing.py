@@ -8,7 +8,7 @@ Module for the processing of Finn advert information
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor, Profiling, Tracking, Debugger
+from source.util import Assertor, Profiling, Tracking, Debugger, LOGGER
 
 from .engine import Process, InputOperation, Signal, ScrapeFinnAdvertInfo, \
     ScrapeFinnOwnershipHistory, ScrapeFinnStatisticsInfo, Multiplex, OutputSignal, \
@@ -449,32 +449,37 @@ class FinnAdvertProcessing(Process):
         """
         try:
             views_development = self.get_signal("views_development")
+            try:
+                total = views_development.data["views_development"]["total_views"][::-1]
+                views_development.data["views_development"].update({"total_views": total})
 
-            total = views_development.data["views_development"]["total_views"][::-1]
-            views_development.data["views_development"].update({"total_views": total})
+                rate_of_change_operation = RateOfChange(
+                    views_development.data["views_development"],
+                    "Calculate Percentage Change in Advert Views")
 
-            rate_of_change_operation = RateOfChange(views_development.data["views_development"],
-                                                    "Calculate Percentage Change in Advert Views")
+                self.add_node(rate_of_change_operation)
+                self.add_transition(views_development, rate_of_change_operation, label="thread")
 
-            self.add_node(rate_of_change_operation)
-            self.add_transition(views_development, rate_of_change_operation, label="thread")
+                rate_of_change = rate_of_change_operation.run()
 
-            rate_of_change = rate_of_change_operation.run()
+                index = list(rate_of_change["total_views"].keys())
+                total = list(rate_of_change["total_views"].values())[::-1]
+                change = list(rate_of_change["Endring"].values())[::-1]
 
-            index = list(rate_of_change["total_views"].keys())
-            total = list(rate_of_change["total_views"].values())[::-1]
-            change = list(rate_of_change["Endring"].values())[::-1]
+                rate_of_change.update({"total_views": dict(zip(index, total))})
+                rate_of_change.update({"Endring": dict(zip(index, change))})
+                rate_of_change["change"] = rate_of_change["Endring"]
+                del rate_of_change["Endring"]
 
-            rate_of_change.update({"total_views": dict(zip(index, total))})
-            rate_of_change.update({"Endring": dict(zip(index, change))})
-            rate_of_change["change"] = rate_of_change["Endring"]
-            del rate_of_change["Endring"]
+                rate_of_change_signal = Signal({"views_development": rate_of_change},
+                                               "Percentage Change in Advert Views")
 
-            rate_of_change_signal = Signal({"views_development": rate_of_change},
-                                           "Percentage Change in Advert Views")
-
-            self.add_signal(rate_of_change_signal, "views_change_signal")
-            self.add_transition(rate_of_change_operation, rate_of_change_signal, label="thread")
+                self.add_signal(rate_of_change_signal, "views_change_signal")
+                self.add_transition(rate_of_change_operation, rate_of_change_signal, label="thread")
+            except Exception as no_view_statistics_error:
+                LOGGER.debug(
+                    "[{}.rate_of_change_1] No view statistics found!, exited with '{}'".format(
+                        self.__class__.__name__, no_view_statistics_error))
         except Exception as rate_of_change_exception:
             self.exception_queue.put(rate_of_change_exception)
 
@@ -495,7 +500,8 @@ class FinnAdvertProcessing(Process):
             process_community_data = process_community_data_operation.run()
 
             process_community_data_signal = Signal(process_community_data,
-                                                   "Processed Finn Community Statistics")
+                                                   "Processed Finn Community Statistics",
+                                                   prettify_keys=True, length=5)
             self.add_signal(process_community_data_signal, "processed_community_data")
             self.add_transition(process_community_data_operation, process_community_data_signal,
                                 label="thread")
@@ -546,18 +552,22 @@ class FinnAdvertProcessing(Process):
         """
         try:
             views_development = self.get_signal("views_change_signal")
+            try:
+                total = dict([[*views_development.data["views_development"].items()][3]])
+                accumulate_operation = Accumulate(total, "Calculate the Accumulated Sum of Views")
 
-            total = dict([[*views_development.data["views_development"].items()][3]])
-            accumulate_operation = Accumulate(total, "Calculate the Accumulated Sum of Views")
+                self.add_node(accumulate_operation)
+                self.add_transition(views_development, accumulate_operation, label="thread")
 
-            self.add_node(accumulate_operation)
-            self.add_transition(views_development, accumulate_operation, label="thread")
+                accumulate = accumulate_operation.run()
 
-            accumulate = accumulate_operation.run()
-
-            accumulate_signal = Signal(accumulate, "Accumulated Sum of Views")
-            self.add_signal(accumulate_signal, "accumulated_signal")
-            self.add_transition(accumulate_operation, accumulate_signal, label="thread")
+                accumulate_signal = Signal(accumulate, "Accumulated Sum of Views")
+                self.add_signal(accumulate_signal, "accumulated_signal")
+                self.add_transition(accumulate_operation, accumulate_signal, label="thread")
+            except Exception as no_view_statistics_error:
+                LOGGER.debug(
+                    "[{}.accumulate] Accumulate not possible!, exited with '{}'".format(
+                        self.__class__.__name__, no_view_statistics_error))
         except Exception as accumulate_exception:
             self.exception_queue.put(accumulate_exception)
 
@@ -606,19 +616,23 @@ class FinnAdvertProcessing(Process):
         try:
             views_development = self.get_signal("views_change_signal")
             accumulated = self.get_signal("accumulated_signal")
+            try:
+                multiplex_operation = Multiplex(
+                    [views_development.data["views_development"], accumulated],
+                    "Multiplex Accumulated Sum with Views Development")
+                self.add_node(multiplex_operation)
+                self.add_transition(views_development, multiplex_operation, label="thread")
+                self.add_transition(accumulated, multiplex_operation, label="thread")
 
-            multiplex_operation = Multiplex(
-                [views_development.data["views_development"], accumulated],
-                "Multiplex Accumulated Sum with Views Development")
-            self.add_node(multiplex_operation)
-            self.add_transition(views_development, multiplex_operation, label="thread")
-            self.add_transition(accumulated, multiplex_operation, label="thread")
-
-            multiplex = {"views_development": multiplex_operation.run()}
-            multiplex_signal = Signal(multiplex,
-                                      "Multiplexed Accumulated Sum with Views Development")
-            self.add_signal(multiplex_signal, "multiplex_views")
-            self.add_transition(multiplex_operation, multiplex_signal, label="thread")
+                multiplex = {"views_development": multiplex_operation.run()}
+                multiplex_signal = Signal(multiplex,
+                                          "Multiplexed Accumulated Sum with Views Development")
+                self.add_signal(multiplex_signal, "multiplex_views")
+                self.add_transition(multiplex_operation, multiplex_signal, label="thread")
+            except Exception as no_view_statistics_error:
+                LOGGER.debug(
+                    "[{}.multiplex_2] multiplex not possible!, exited with '{}'".format(
+                        self.__class__.__name__, no_view_statistics_error))
         except Exception as multiplex_exception:
             self.exception_queue.put(multiplex_exception)
 
@@ -692,4 +706,4 @@ class FinnAdvertProcessing(Process):
                                      prettify_keys=True, length=14)
         self.add_signal(output_signal, "output_multiplex_data")
         self.add_transition(output_operation, output_signal)
-        # self.print_pdf()
+        self.print_pdf()

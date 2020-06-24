@@ -9,11 +9,11 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Tracking, Debugger
 
-from .family_data_processing import FamilyDataProcessing
+from .finn_family_data_processing import FinnFamilyDataProcessing
 from .engine import SubModel
 
 
-class FamilySubModel(SubModel):
+class FinnFamilySubModel(SubModel):
     """
     Sub model that handles the FamilyDataProcess
 
@@ -31,7 +31,7 @@ class FamilySubModel(SubModel):
 
         """
         Assertor.assert_data_types([family_data], [dict])
-        self.name = FamilyDataProcessing.__name__
+        self.name = FinnFamilyDataProcessing.__name__
         super().__init__(name=self.name, desc="Processing Finn Family Statistics")
         self.family_data = family_data
 
@@ -41,4 +41,4 @@ class FamilySubModel(SubModel):
         method for running the sub model
 
         """
-        return FamilyDataProcessing(self.family_data).family_statistics
+        return FinnFamilyDataProcessing(self.family_data).family_statistics

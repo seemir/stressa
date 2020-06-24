@@ -380,7 +380,12 @@ class StatisticsModel(Model):
             else:
                 neighbourhood = ""
                 city = ""
-            city_area = self.data["city_area" + postfix]
+
+            if "city_area" + postfix in self.data.keys():
+                city_area = self.data["city_area" + postfix]
+            else:
+                city_area = ""
+
             if sum(city_area_dist) != 0:
                 dist_df = {"Gruppe": [], "Nabolag": [],
                            "By": []}
