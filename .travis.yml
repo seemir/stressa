@@ -27,7 +27,7 @@ script:
   - pytest --cov=source/ tests/
   - pylint source/ tests/
 
-# generate a coverage report to send to back to user
+# generate a coverage report to send back to the user
 after_success:
   - codecov
 
