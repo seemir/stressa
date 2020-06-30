@@ -14,6 +14,7 @@ from .scrape_sifo_base_expenses import ScrapeSifoBaseExpenses
 from .scrape_finn_advert_info import ScrapeFinnAdvertInfo
 from .scrape_postal_code_info import ScrapePostalCodeInfo
 from .validate_postal_code import ValidatePostalCode
+from .restructure_ratings import RestructureRatings
 from .add_row_to_dataframe import AddRowToDataFrame
 from .validate_finn_code import ValidateFinnCode
 from .extract_first_row import ExtractFirstRow

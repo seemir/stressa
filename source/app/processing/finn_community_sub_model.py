@@ -7,6 +7,8 @@ Module with the logic for the Community sub-process
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from typing import Union
+
 from source.util import Assertor, Tracking, Debugger
 
 from .engine import SubModel
@@ -20,7 +22,7 @@ class FinnCommunitySubModel(SubModel):
     """
 
     @Tracking
-    def __init__(self, community_json: dict):
+    def __init__(self, community_json: Union[dict, type(None)]):
         """
         Constructor / Instantiate the class.
 
@@ -30,7 +32,7 @@ class FinnCommunitySubModel(SubModel):
                               JSON object as dict with community statistics
 
         """
-        Assertor.assert_data_types([community_json], [dict])
+        Assertor.assert_data_types([community_json], [(dict, type(None))])
         self.name = FinnCommunityProcess.__name__
         super().__init__(name=self.name, desc="Processing Finn Community Statistics")
         self.community_json = community_json
@@ -41,4 +43,7 @@ class FinnCommunitySubModel(SubModel):
         method for running the sub model
 
         """
-        return FinnCommunityProcess(self.community_json).finn_community_statistics
+        community_data = None
+        if self.community_json:
+            community_data = FinnCommunityProcess(self.community_json).finn_community_statistics
+        return community_data

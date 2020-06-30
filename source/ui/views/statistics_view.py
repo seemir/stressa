@@ -116,7 +116,7 @@ class StatisticsView(QDialog):
             lambda: self.parent.history_view.add_finn_history(postfix))
         self.statistics_model.add_statistics_info(postfix)
         self.show_progress_bar()
-        self.showMaximized()
+        self.show()
 
     def update(self):
         """

@@ -37,13 +37,15 @@ class StatisticsModel(Model):
                         "hist_data_city_area", "hist_data_municipality", "views_development",
                         "hist_data_city_area_count", "hist_data_municipality_count",
                         "age_distribution", "info", "civil_status", "education", "income",
-                        "higheducation", "higheducation_location"]
+                        "higheducation", "higheducation_location", "family_composition",
+                        "age_distribution_children", "kindergardens", "kindergardens_location"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "views_development",
                   "accumulated", "change", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
                          "education_city_area", "education_city", "income_city_area",
-                         "income_city"]
+                         "income_city", "family_composition_city_area", "family_composition_city",
+                         "age_distribution_children_city_area", "age_distribution_children_city"]
 
     def __init__(self, parent: QObject):
         """
@@ -69,6 +71,12 @@ class StatisticsModel(Model):
         self.education_city_plot = None
         self.income_city_area_plot = None
         self.income_city_plot = None
+        self.family_composition_city_area_plot = None
+        self.family_composition_city_plot = None
+        self.age_dist_children_city_area_plot = None
+        self.age_dist_children_city_plot = None
+        self.families_with_children_city_area_plot = None
+        self.families_with_children_city_plot = None
 
     def add_statistics_info(self, postfix: str):
         """
@@ -108,6 +116,14 @@ class StatisticsModel(Model):
             elif key == "higheducation":
                 self.add_pois_table(postfix, key)
             elif key == "higheducation_location":
+                pass
+            elif key == "family_composition":
+                self.add_family_composition_chart(prefix, postfix, key)
+            elif key == "age_distribution_children":
+                self.add_age_dist_children_chart(prefix, postfix, key)
+            elif key == "kindergardens":
+                self.add_pois_table(postfix, key)
+            elif key == "kindergardens_location":
                 pass
             elif key == "info":
                 self.add_map(postfix, key, location="higheducation_location")
@@ -167,7 +183,8 @@ class StatisticsModel(Model):
                 self.parent.label_sales_municipality.setText("Salg (kommune)")
             elif key in ["hist_data_city_area", "hist_data_municipality", "views_development",
                          "age_distribution", "civil_status", "education", "income", "higheducation",
-                         "higheducation_location", "info"]:
+                         "higheducation_location", "info", "family_composition",
+                         "age_distribution_children", "kindergardens", "kindergardens_location"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -200,9 +217,22 @@ class StatisticsModel(Model):
                                         self.parent.ui.table_view_income)
         BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_income_city,
                                         self.parent.ui.table_view_income)
+
         self.parent.ui.table_view_higheducation.setModel(None)
         self.parent.ui.table_view_higheducation.clearSpans()
+        self.parent.ui.table_view_kindergardens.setModel(None)
+        self.parent.ui.table_view_kindergardens.clearSpans()
         self.parent.map_view.web_view_map.close()
+
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_family_composition_city_area,
+                                        self.parent.ui.table_view_family_composition)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_family_composition_city,
+                                        self.parent.ui.table_view_family_composition)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui.graphics_view_age_distribution_children_city_area,
+            self.parent.ui.table_view_age_distribution_children)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_age_distribution_children_city,
+                                        self.parent.ui.table_view_age_distribution_children)
 
     def add_sqm_dist_charts(self, prefix: str, postfix: str, key: str):
         """
@@ -387,7 +417,8 @@ class StatisticsModel(Model):
                 city_area = ""
 
             if sum(city_area_dist) != 0:
-                dist_df = {"Gruppe": [], "Nabolag": [],
+                dist_df = {"Gruppe": [],
+                           "Nabolag": [],
                            "By": []}
                 for keys, values in dist.items():
                     if keys == "Gruppe":
@@ -501,7 +532,7 @@ class StatisticsModel(Model):
 
         """
         self.add_dist_chart(prefix, postfix, key, "income_city_area", "income_city",
-                            "table_view_income", "Inntektsfordeling", "income_city_are_plot",
+                            "table_view_income", "Inntektsfordeling", "income_city_area_plot",
                             "income_city_plot", ignore_total=False)
 
     def add_pois_table(self, postfix: str, key: str):
@@ -520,13 +551,17 @@ class StatisticsModel(Model):
         if key + postfix in self.data.keys() and self.data[key + postfix]:
             pois_table_model = TableModel(DataFrame(self.data[key + postfix]))
             getattr(self.parent.ui, "table_view_" + key).setModel(pois_table_model)
-            getattr(self.parent.ui, "table_view_" + key).horizontalHeader().setSectionResizeMode(
+
+            getattr(self.parent.ui,
+                    "table_view_" + key).horizontalHeader().setSectionResizeMode(
                 0, QHeaderView.Fixed)
             getattr(self.parent.ui, "table_view_" + key).setColumnWidth(0, 175)
-            getattr(self.parent.ui, "table_view_" + key).horizontalHeader().setSectionResizeMode(
-                1, QHeaderView.ResizeToContents)
-            getattr(self.parent.ui, "table_view_" + key).horizontalHeader().setSectionResizeMode(
-                2, QHeaderView.ResizeToContents)
+            getattr(self.parent.ui,
+                    "table_view_" + key).horizontalHeader().setSectionResizeMode(
+                1, QHeaderView.Stretch)
+            getattr(self.parent.ui,
+                    "table_view_" + key).horizontalHeader().setSectionResizeMode(
+                2, QHeaderView.Stretch)
             getattr(self.parent.ui, "table_view_" + key).verticalHeader().setSectionResizeMode(
                 QHeaderView.ResizeToContents)
             getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)
@@ -557,4 +592,44 @@ class StatisticsModel(Model):
                 .show_map(coords=[lat, long],
                           web_engine_view=self.parent.map_view.web_view_map,
                           pop_up=html_table.html_table(),
-                          pois=self.data[location + postfix])
+                          pois=self.data[location + postfix]
+                          if location + postfix in self.data.keys() else "")
+
+    def add_family_composition_chart(self, prefix: str, postfix: str, key: str):
+        """
+        method for adding family composition chart to the statistics model
+
+        Parameters
+        ----------
+        prefix      : str
+                      name of prefix, i.e. "graphics"
+        postfix     : str
+                      index if used in naming of line_edits
+        key         : str
+                      name of label to change
+
+        """
+        self.add_dist_chart(prefix, postfix, key, "family_composition_city_area",
+                            "family_composition_city", "table_view_family_composition",
+                            "Familiefordeling", "family_composition_city_area_plot",
+                            "family_composition_city_plot", ignore_total=False)
+
+    def add_age_dist_children_chart(self, prefix, postfix, key):
+        """
+        method for adding age distribution children chart to the statistics model
+
+        Parameters
+        ----------
+        prefix      : str
+                      name of prefix, i.e. "graphics"
+        postfix     : str
+                      index if used in naming of line_edits
+        key         : str
+                      name of label to change
+
+        """
+        self.add_dist_chart(prefix, postfix, key, "age_distribution_children_city_area",
+                            "age_distribution_children_city",
+                            "table_view_age_distribution_children", "Aldersfordeling barn",
+                            "age_distribution_children_city_area_plot",
+                            "age_distribution_children_city", ignore_total=False)

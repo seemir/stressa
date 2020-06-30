@@ -10,7 +10,8 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, InputOperation, Signal, Extract, \
-    Restructure, RestructurePois, Multiplex, OutputOperation
+    Restructure, RestructurePois, Multiplex, OutputOperation, \
+    RestructureRatings
 
 
 class FinnFamilyDataProcessing(Process):
@@ -19,7 +20,7 @@ class FinnFamilyDataProcessing(Process):
 
     """
 
-    @Tracking
+    @Debugger
     def __init__(self, family_data: dict):
         """
         Constructor / Instantiate the class.
@@ -40,9 +41,12 @@ class FinnFamilyDataProcessing(Process):
 
         self.run_parallel([self.extract_9, self.restructure_1, self.restructure_2,
                            self.extract_10, self.restructure_3, self.extract_11,
-                           self.restructure_4, self.restructure_5])
+                           self.restructure_4])
 
-        self.multiplex()
+        self.run_parallel([self.multiplex_1, self.multiplex_2])
+        self.run_parallel([self.restructure_5, self.restructure_6])
+
+        self.multiplex_3()
         self.family_statistics = self.output_operation()
         self.end_process()
 
@@ -221,6 +225,7 @@ class FinnFamilyDataProcessing(Process):
             self.add_transition(input_signal_family_comp, family_composition_operation,
                                 label="thread")
             family_composition = family_composition_operation.run()
+
             family_composition_signal = Signal(family_composition, "Family Composition")
             self.add_signal(family_composition_signal, "family_composition")
             self.add_transition(family_composition_operation, family_composition_signal,
@@ -321,7 +326,7 @@ class FinnFamilyDataProcessing(Process):
             self.add_node(ratings_operation)
             self.add_transition(ratings_schools, ratings_operation, label="thread")
 
-            ratings = {"ratings_schools": ratings_operation.run()["score"]}
+            ratings = {"rating_schools": ratings_operation.run()["score"]}
 
             ratings_signal = Signal(ratings, "Ratings Score of School")
             self.add_signal(ratings_signal, "score_schools")
@@ -406,62 +411,133 @@ class FinnFamilyDataProcessing(Process):
 
     @Profiling
     @Debugger
+    def multiplex_1(self):
+        """
+        method for multiplexing all ratings statistics
+
+        """
+        try:
+            score_kindergardens = self.get_signal("score_kindergardens")
+            score_schools = self.get_signal("score_schools")
+
+            multiplex_operation = Multiplex([score_kindergardens, score_schools],
+                                            "Multiplex Ratings Information")
+            self.add_node(multiplex_operation)
+            self.add_transition(score_kindergardens, multiplex_operation, label="thread")
+            self.add_transition(score_schools, multiplex_operation, label="thread")
+
+            multiplex = {"ratings": multiplex_operation.run()}
+
+            multiplex_signal = Signal(multiplex, "Multiplexed Ratings")
+            self.add_signal(multiplex_signal, "ratings_multiplex")
+            self.add_transition(multiplex_operation, multiplex_signal, label="thread")
+        except Exception as multiplex_exception:
+            self.exception_queue.put(multiplex_exception)
+
+    @Profiling
+    @Debugger
+    def multiplex_2(self):
+        """
+        method for multiplexing family composition statistics
+
+        """
+        try:
+            family_composition = self.get_signal("family_composition")
+            families_with_children_rest = self.get_signal("families_with_children_rest")
+
+            multiplex_operation = Multiplex([family_composition, families_with_children_rest],
+                                            "Multiplex Composition Statistics")
+            self.add_node(multiplex_operation)
+            self.add_transition(family_composition, multiplex_operation, label="thread")
+            self.add_transition(families_with_children_rest, multiplex_operation, label="thread")
+
+            multiplex = multiplex_operation.run()
+            multiplex["family_composition"]["values"].append(
+                {"group": "Familier med barn",
+                 "percent": multiplex.copy()["families_with_children"]})
+            multiplex.pop("families_with_children")
+
+            multiplex_signal = Signal(multiplex, "Multiplexed Composition Statistics")
+            self.add_signal(multiplex_signal, "multiplex_composition")
+            self.add_transition(multiplex_operation, multiplex_signal, label="thread")
+        except Exception as multiplex_exception:
+            self.exception_queue.put(multiplex_exception)
+
+    @Profiling
+    @Debugger
     def restructure_5(self):
         """
         method for restructuring family composition
 
         """
         try:
-            family_composition = self.get_signal("family_composition")
+            composition_statistics = self.get_signal("multiplex_composition")
 
-            family_composition_rest_operation = Restructure(
-                family_composition.data["family_composition"],
-                "Restructure Family Composition")
-            self.add_node(family_composition_rest_operation)
-            self.add_transition(family_composition, family_composition_rest_operation,
-                                label="thread")
+            composition_rest_operation = Restructure(
+                composition_statistics.data["family_composition"],
+                "Restructure Composition Statistics")
+            self.add_node(composition_rest_operation)
+            self.add_transition(composition_statistics, composition_rest_operation, label="thread")
 
-            family_composition_rest = family_composition_rest_operation.run()
+            composition_rest = composition_rest_operation.run()
 
-            family_composition_rest_signal = Signal(family_composition_rest,
-                                                    "Restructured Family Composition")
-            self.add_signal(family_composition_rest_signal, "family_composition_rest")
+            composition_rest_signal = Signal(composition_rest,
+                                             "Restructured Composition Statistics")
+            self.add_signal(composition_rest_signal, "composition_rest")
 
-            self.add_transition(family_composition_rest_operation,
-                                family_composition_rest_signal, label="thread")
-
+            self.add_transition(composition_rest_operation, composition_rest_signal, label="thread")
         except Exception as restructuring_exception:
             self.exception_queue.put(restructuring_exception)
 
     @Profiling
     @Debugger
-    def multiplex(self):
+    def restructure_6(self):
+        """
+        method for restructuring ratings statistics
+
+        """
+        try:
+            ratings = self.get_signal("ratings_multiplex")
+            restructure_ratings_operation = RestructureRatings(ratings.data["ratings"],
+                                                               "Restructuring Ratings Information")
+            self.add_node(restructure_ratings_operation)
+            self.add_transition(ratings, restructure_ratings_operation, label="thread")
+
+            restructure_ratings = {"ratings": restructure_ratings_operation.run()}
+            restructure_ratings_signal = Signal(restructure_ratings,
+                                                "Restructured Ratings Information")
+
+            self.add_signal(restructure_ratings_signal, "ratings")
+            self.add_transition(restructure_ratings_operation, restructure_ratings_signal,
+                                label="thread")
+        except Exception as restructuring_exception:
+            self.exception_queue.put(restructuring_exception)
+
+    @Profiling
+    @Debugger
+    def multiplex_3(self):
         """
         method for multiplexing all family statistics to one dict
 
         """
-        families_with_children_rest = self.get_signal("families_with_children_rest")
         age_distribution_children_rest = self.get_signal("age_distribution_children_rest")
         schools_rest = self.get_signal("schools_rest")
-        score_schools = self.get_signal("score_schools")
+        ratings = self.get_signal("ratings")
         kindergardens_rest = self.get_signal("kindergardens_rest")
-        score_kindergardens = self.get_signal("score_kindergardens")
         highschools_rest = self.get_signal("highschools_rest")
-        family_composition_rest = self.get_signal("family_composition_rest")
+        composition_rest = self.get_signal("composition_rest")
 
         multiplex_operation = Multiplex(
-            [families_with_children_rest, age_distribution_children_rest, schools_rest,
-             score_schools, kindergardens_rest, score_kindergardens, highschools_rest,
-             family_composition_rest], "Multiplex Family Statistics")
+            [age_distribution_children_rest, schools_rest, ratings, kindergardens_rest,
+             highschools_rest, composition_rest], "Multiplex Family Statistics")
 
         self.add_node(multiplex_operation)
-        self.add_transition(families_with_children_rest, multiplex_operation)
         self.add_transition(age_distribution_children_rest, multiplex_operation)
+        self.add_transition(ratings, multiplex_operation)
         self.add_transition(schools_rest, multiplex_operation)
         self.add_transition(kindergardens_rest, multiplex_operation)
-        self.add_transition(score_kindergardens, multiplex_operation)
         self.add_transition(highschools_rest, multiplex_operation)
-        self.add_transition(family_composition_rest, multiplex_operation)
+        self.add_transition(composition_rest, multiplex_operation)
 
         multiplex = multiplex_operation.run()
         multiplex_signal = Signal(multiplex, "Multiplexed Family Statistics", prettify_keys=True,

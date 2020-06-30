@@ -501,7 +501,7 @@ class FinnAdvertProcessing(Process):
 
             process_community_data_signal = Signal(process_community_data,
                                                    "Processed Finn Community Statistics",
-                                                   prettify_keys=True, length=5)
+                                                   prettify_keys=True, length=6)
             self.add_signal(process_community_data_signal, "processed_community_data")
             self.add_transition(process_community_data_operation, process_community_data_signal,
                                 label="thread")
