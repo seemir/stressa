@@ -38,7 +38,7 @@ class MapModel(Model):
 
         if pois:
             for poi in pois:
-                pois_icon = CustomIcon(up(up(__file__)) + "/images/pois.png",
+                pois_icon = CustomIcon(up(up(__file__)) + "/images/university.png",
                                        icon_size=icon_size)
                 lat = poi["Breddegrad"]
                 long = poi["Lengdegrad"]
