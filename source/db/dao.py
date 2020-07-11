@@ -14,7 +14,9 @@ from pymongo import MongoClient
 
 from source.util import Assertor, LOGGER
 
-from .settings import DB_STRING
+# from .settings import DB_STRING
+
+DB_STRING = ""
 
 
 class Dao:

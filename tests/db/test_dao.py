@@ -8,6 +8,8 @@ Test module for the Data Access Object class
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import pytest as pt
+
 from source.db import Dao
 
 
@@ -25,6 +27,7 @@ class TestDao:
         """
         cls.dao = Dao()
 
+    @pt.mark.skip
     def test_is_instance_of_dao(self):
         """
         Test that dao is instance and subclass of Dao
