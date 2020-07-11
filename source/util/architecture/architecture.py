@@ -29,7 +29,10 @@ posten_logo = icons + "posten_logo.png"
 sifo_logo = icons + "sifo_logo.png"
 finansportalen_logo = icons + "finansportalen_logo.png"
 
-with Diagram(name=name, show=False, direction="TB", node_attr={"fontsize": font_size}):
+sqlite_logo = icons + "sqlite_logo.png"
+
+with Diagram(name=name, show=False, direction="TB", outformat="pdf",
+             node_attr={"fontsize": font_size}):
     users = User()
     bash = Bash("")
     main = Python("main")
@@ -58,7 +61,7 @@ with Diagram(name=name, show=False, direction="TB", node_attr={"fontsize": font_
     with Cluster("application layer (source/app)", graph_attr={"fontsize": font_size}):
         with Cluster("package: scrapers", graph_attr={"fontsize": font_size}):
             with Cluster("temp", graph_attr={"fontsize": font_size}):
-                cache = C("cache")
+                cache = Custom("cache", sqlite_logo)
             scrapers = Python("scrapers")
 
         with Cluster("package: processing", graph_attr={"fontsize": font_size}):

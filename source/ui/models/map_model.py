@@ -23,7 +23,8 @@ class MapModel(Model):
         super().__init__(parent)
 
     @staticmethod
-    def show_map(coords: list, web_engine_view: QWebEngineView, pop_up: str = None, pois=None):
+    def show_map(coords: list, web_engine_view: QWebEngineView, pop_up: str = None, university=None,
+                 kindergarden=None):
         icon_size = (40, 40)
         max_width = 400
         bytes_io = BytesIO()
@@ -36,13 +37,24 @@ class MapModel(Model):
         else:
             Marker(coords, icon=map_icon).add_to(map_builder)
 
-        if pois:
-            for poi in pois:
+        if university:
+            for pois in university:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/university.png",
                                        icon_size=icon_size)
-                lat = poi["Breddegrad"]
-                long = poi["Lengdegrad"]
-                pois_pop_up = Popup(CreateHtmlTable(poi).html_table(),
+                lat = pois["Breddegrad"]
+                long = pois["Lengdegrad"]
+                pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
+                                    max_width=max_width)
+                Marker(location=[lat, long], icon=pois_icon,
+                       popup=pois_pop_up).add_to(map_builder)
+
+        if kindergarden:
+            for pois in kindergarden:
+                pois_icon = CustomIcon(up(up(__file__)) + "/images/kindergarden.png",
+                                       icon_size=icon_size)
+                lat = pois["Breddegrad"]
+                long = pois["Lengdegrad"]
+                pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
                        popup=pois_pop_up).add_to(map_builder)

@@ -126,7 +126,8 @@ class StatisticsModel(Model):
             elif key == "kindergardens_location":
                 pass
             elif key == "info":
-                self.add_map(postfix, key, location="higheducation_location")
+                self.add_map(postfix, key, university="higheducation_location",
+                             kindergarden="kindergardens_location")
             else:
                 if key + postfix in self.data.keys():
                     self.add_statistics_label(key, postfix)
@@ -566,18 +567,20 @@ class StatisticsModel(Model):
                 QHeaderView.ResizeToContents)
             getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)
 
-    def add_map(self, postfix: str, keys: str, location: str):
+    def add_map(self, postfix: str, keys: str, university: str, kindergarden: str):
         """
         method for adding pois table
 
         Parameters
         ----------
-        postfix      : str
-                      index if used in naming of line_edits
-        keys         : str
-                       name of label to change
-        location     : str
-                       name of location data dict
+        postfix       : str
+                        index if used in naming of line_edits
+        keys          : str
+                        name of label to change
+        university    : str
+                        name of university data dict
+        kindergarden  : str
+                        name of kindergarden data dict
 
         """
         self.parent.map_view.web_view_map.close()
@@ -592,8 +595,10 @@ class StatisticsModel(Model):
                 .show_map(coords=[lat, long],
                           web_engine_view=self.parent.map_view.web_view_map,
                           pop_up=html_table.html_table(),
-                          pois=self.data[location + postfix]
-                          if location + postfix in self.data.keys() else "")
+                          university=self.data[university + postfix]
+                          if university + postfix in self.data.keys() else "",
+                          kindergarden=self.data[kindergarden + postfix]
+                          if kindergarden + postfix in self.data.keys() else "")
 
     def add_family_composition_chart(self, prefix: str, postfix: str, key: str):
         """
