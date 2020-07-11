@@ -7,51 +7,62 @@ Architecture diagram
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from diagrams import Cluster, Diagram, Edge
+import os
+
+from diagrams.aws.database import DocumentdbMongodbCompatibility
 from diagrams.programming.language import Python, C, Bash
+from diagrams.oci.storage import FilestorageGrey
+from diagrams import Cluster, Diagram, Edge
 from diagrams.oci.monitoring import Logging
 from diagrams.onprem.client import User
-from diagrams.oci.storage import Filestorage, FilestorageGrey
-from diagrams.aws.database import DocumentdbMongodbCompatibility
+from diagrams.custom import Custom
 
 from source.util import __version__
 
 name = "Stressa v." + __version__
+font_size = "14"
 
-with Diagram(name=name, show=False, direction="TB"):
+icons = os.path.dirname(os.path.abspath(__file__)) + "\\icons\\"
+ssb_logo = icons + "ssb_logo.png"
+finn_logo = icons + "finn_logo.png"
+posten_logo = icons + "posten_logo.png"
+sifo_logo = icons + "sifo_logo.png"
+finansportalen_logo = icons + "finansportalen_logo.png"
+
+with Diagram(name=name, show=False, direction="TB", node_attr={"fontsize": font_size}):
     users = User()
     bash = Bash("")
     main = Python("main")
 
-    with Cluster("presentation layer (source/ui)"):
-        with Cluster("package: views"):
+    with Cluster("presentation layer (source/ui)", graph_attr={"fontsize": font_size}):
+        with Cluster("package: views", graph_attr={"fontsize": font_size}):
             views = Python("views")
-            with Cluster("forms"):
+            with Cluster("forms", graph_attr={"fontsize": font_size}):
                 forms = FilestorageGrey("forms")
 
-            with Cluster("logs"):
+            with Cluster("logs", graph_attr={"fontsize": font_size}):
                 ui_log = Logging("ui")
 
-        with Cluster("package: models"):
+        with Cluster("package: models", graph_attr={"fontsize": font_size}):
             models = Python("models")
 
-        with Cluster("package: util"):
+        with Cluster("package: util", graph_attr={"fontsize": font_size}):
             ui_util = Python("util")
 
-        with Cluster("images"):
+        with Cluster("images", graph_attr={"fontsize": font_size}):
             images = FilestorageGrey("images")
 
-        with Cluster("package: graphics"):
+        with Cluster("package: graphics", graph_attr={"fontsize": font_size}):
             graphics = Python("graphics")
 
-    with Cluster("application layer (source/app)"):
-        with Cluster("package: scrapers"):
-            with Cluster("temp"):
+    with Cluster("application layer (source/app)", graph_attr={"fontsize": font_size}):
+        with Cluster("package: scrapers", graph_attr={"fontsize": font_size}):
+            with Cluster("temp", graph_attr={"fontsize": font_size}):
                 cache = C("cache")
             scrapers = Python("scrapers")
 
-        with Cluster("package: processing"):
-            with Cluster("package: engine"):
+        with Cluster("package: processing", graph_attr={"fontsize": font_size}):
+            with Cluster("package: engine", graph_attr={"fontsize": font_size}):
                 operations = Python("operations")
                 signals = Python("signals")
                 process = Python("process")
@@ -61,22 +72,27 @@ with Diagram(name=name, show=False, direction="TB"):
 
             processes = Python("processes")
 
-            with Cluster("procedure"):
+            with Cluster("procedure", graph_attr={"fontsize": font_size}):
                 procedure = FilestorageGrey("procedure")
 
-    with Cluster("domain layer (source/domain)"):
+    with Cluster("domain layer (source/domain)", graph_attr={"fontsize": font_size}):
         entities = Python("entities")
         values = Python("values")
 
-    with Cluster("persistence layer (source/db)"):
+    with Cluster("persistence layer (source/db)", graph_attr={"fontsize": font_size}):
         mongo_db = Python("dao")
 
-    with Cluster("cross-cutting layer (source/util)"):
-        with Cluster("logs"):
+    with Cluster("cross-cutting layer (source/util)", graph_attr={"fontsize": font_size}):
+        with Cluster("logs", graph_attr={"fontsize": font_size}):
             util_logs = Logging("app")
         logging = Python("logging")
         caching = Python("caching")
         profiling = Python("profiling")
+
+    with Cluster("API service", graph_attr={"fontsize": font_size}):
+        web = [Custom("Finn API", finn_logo), Custom("Posten \n Adressesøk API", posten_logo),
+               Custom("Finansportalen\n Grunndata\n XML Feed", finansportalen_logo),
+               Custom("SIFO API", sifo_logo), Custom("SSB API (pyjstat)", ssb_logo)]
 
     mongo_db_atlas = DocumentdbMongodbCompatibility("MongoDB Atlas:\n stressa-6pyxy.mongodb.net")
 
@@ -92,16 +108,6 @@ with Diagram(name=name, show=False, direction="TB"):
     models << processes
     graphics << values
 
-    processes << engine
-    processes << scrapers
-    processes >> procedure
-    processes << entities
-    operations << entities
-    operations << values
-    operations << sub_model
-    scrapers << entities
-    scrapers >> cache
-
     values >> entities
 
     mongo_db_atlas >> Edge(color="gray") << mongo_db
@@ -114,4 +120,16 @@ with Diagram(name=name, show=False, direction="TB"):
     logging >> operations
     caching >> scrapers
     profiling >> processes
+
+
+    processes << engine
+    processes << scrapers
+    processes >> procedure
+    processes << entities
+    operations << entities
+    operations << values
+    operations << sub_model
+    scrapers << entities
+    scrapers >> cache
+    web >> scrapers
 
