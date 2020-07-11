@@ -121,7 +121,6 @@ with Diagram(name=name, show=False, direction="TB", node_attr={"fontsize": font_
     caching >> scrapers
     profiling >> processes
 
-
     processes << engine
     processes << scrapers
     processes >> procedure
@@ -132,4 +131,3 @@ with Diagram(name=name, show=False, direction="TB", node_attr={"fontsize": font_
     scrapers << entities
     scrapers >> cache
     web >> scrapers
-
