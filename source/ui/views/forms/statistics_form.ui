@@ -2707,7 +2707,7 @@
              </property>
              <property name="minimumSize">
               <size>
-               <width>0</width>
+               <width>350</width>
                <height>0</height>
               </size>
              </property>
@@ -3425,7 +3425,7 @@
              </property>
              <property name="minimumSize">
               <size>
-               <width>0</width>
+               <width>350</width>
                <height>0</height>
               </size>
              </property>
@@ -3450,6 +3450,18 @@
                   <height>0</height>
                  </size>
                 </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
                </widget>
               </item>
              </layout>

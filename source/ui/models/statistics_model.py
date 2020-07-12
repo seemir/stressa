@@ -39,7 +39,7 @@ class StatisticsModel(Model):
                         "age_distribution", "info", "civil_status", "education", "income",
                         "higheducation", "higheducation_location", "family_composition",
                         "age_distribution_children", "kindergardens", "kindergardens_location",
-                        "schools", "schools_location"]
+                        "schools", "schools_location", "highschools", "highschools_location"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "views_development",
                   "accumulated", "change", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
@@ -130,9 +130,14 @@ class StatisticsModel(Model):
                 self.add_pois_table(postfix, key)
             elif key == "schools_location":
                 pass
+            elif key == "highschools":
+                self.add_pois_table(postfix, key)
+            elif key == "highschools_location":
+                pass
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
-                             kindergarden="kindergardens_location", schools="schools_location")
+                             kindergarden="kindergardens_location", schools="schools_location",
+                             highschools="highschools_location")
             else:
                 if key + postfix in self.data.keys():
                     self.add_statistics_label(key, postfix)
@@ -191,7 +196,7 @@ class StatisticsModel(Model):
                          "age_distribution", "civil_status", "education", "income", "higheducation",
                          "higheducation_location", "info", "family_composition",
                          "age_distribution_children", "kindergardens", "kindergardens_location",
-                         "schools", "schools_location"]:
+                         "schools", "schools_location", "highschools", "highschools_location"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -566,16 +571,17 @@ class StatisticsModel(Model):
             getattr(self.parent.ui,
                     "table_view_" + key).horizontalHeader().setSectionResizeMode(
                 1, QHeaderView.Fixed)
-            getattr(self.parent.ui, "table_view_" + key).setColumnWidth(1, 75)
+            getattr(self.parent.ui, "table_view_" + key).setColumnWidth(1, 65)
             getattr(self.parent.ui,
                     "table_view_" + key).horizontalHeader().setSectionResizeMode(
                 2, QHeaderView.Fixed)
-            getattr(self.parent.ui, "table_view_" + key).setColumnWidth(2, 75)
+            getattr(self.parent.ui, "table_view_" + key).setColumnWidth(2, 65)
             getattr(self.parent.ui, "table_view_" + key).verticalHeader().setSectionResizeMode(
                 QHeaderView.ResizeToContents)
             getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)
 
-    def add_map(self, postfix: str, keys: str, university: str, kindergarden: str, schools: str):
+    def add_map(self, postfix: str, keys: str, university: str, kindergarden: str, schools: str,
+                highschools: str):
         """
         method for adding pois table
 
@@ -591,6 +597,8 @@ class StatisticsModel(Model):
                         name of kindergarden data dict
         schools       : str
                         name of schools data dict
+        highschools   : str
+                        name of highschools data dict
 
         """
         self.parent.map_view.web_view_map.close()
@@ -610,7 +618,9 @@ class StatisticsModel(Model):
                           kindergarden=self.data[kindergarden + postfix]
                           if kindergarden + postfix in self.data.keys() else "",
                           schools=self.data[schools + postfix]
-                          if kindergarden + postfix in self.data.keys() else "")
+                          if kindergarden + postfix in self.data.keys() else "",
+                          highschools=self.data[highschools + postfix]
+                          if highschools + postfix in self.data.keys() else "")
 
     def add_family_composition_chart(self, prefix: str, postfix: str, key: str):
         """
