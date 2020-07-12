@@ -24,23 +24,19 @@ class MapModel(Model):
 
     @staticmethod
     def show_map(coords: list, web_engine_view: QWebEngineView, pop_up: str = None, university=None,
-                 kindergarden=None):
-        icon_size = (40, 40)
+                 kindergarden=None, schools=None):
+        icon_size = (45, 45)
+        small_icon = (40, 40)
         max_width = 400
         bytes_io = BytesIO()
         map_builder = Map(location=coords, tiles="CartoDB positron", zoom_start=16)
         map_icon = CustomIcon(up(up(__file__)) + "/images/marker.png",
                               icon_size=icon_size)
-        if pop_up:
-            Marker(coords, icon=map_icon, popup=Popup(pop_up, max_width=max_width)).add_to(
-                map_builder)
-        else:
-            Marker(coords, icon=map_icon).add_to(map_builder)
 
         if university:
             for pois in university:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/university.png",
-                                       icon_size=icon_size)
+                                       icon_size=small_icon)
                 lat = pois["Breddegrad"]
                 long = pois["Lengdegrad"]
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
@@ -51,13 +47,30 @@ class MapModel(Model):
         if kindergarden:
             for pois in kindergarden:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/kindergarden.png",
-                                       icon_size=icon_size)
+                                       icon_size=small_icon)
                 lat = pois["Breddegrad"]
                 long = pois["Lengdegrad"]
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
                        popup=pois_pop_up).add_to(map_builder)
+
+        if schools:
+            for pois in schools:
+                pois_icon = CustomIcon(up(up(__file__)) + "/images/schools.png",
+                                       icon_size=small_icon)
+                lat = pois["Breddegrad"]
+                long = pois["Lengdegrad"]
+                pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
+                                    max_width=max_width)
+                Marker(location=[lat, long], icon=pois_icon,
+                       popup=pois_pop_up).add_to(map_builder)
+
+        if pop_up:
+            Marker(coords, icon=map_icon, popup=Popup(pop_up, max_width=max_width)).add_to(
+                map_builder)
+        else:
+            Marker(coords, icon=map_icon).add_to(map_builder)
 
         TileLayer('OpenStreetMap').add_to(map_builder)
         TileLayer('Stamen Toner').add_to(map_builder)

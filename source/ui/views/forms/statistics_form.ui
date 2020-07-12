@@ -2707,7 +2707,7 @@
              </property>
              <property name="minimumSize">
               <size>
-               <width>315</width>
+               <width>0</width>
                <height>0</height>
               </size>
              </property>
@@ -2721,10 +2721,16 @@
               <item row="2" column="0">
                <widget class="QTableView" name="table_view_higheducation">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>330</width>
+                  <height>0</height>
+                 </size>
                 </property>
                 <property name="frameShape">
                  <enum>QFrame::Box</enum>
@@ -3419,7 +3425,7 @@
              </property>
              <property name="minimumSize">
               <size>
-               <width>315</width>
+               <width>0</width>
                <height>0</height>
               </size>
              </property>
@@ -3431,7 +3437,20 @@
              </property>
              <layout class="QGridLayout" name="gridLayout_11">
               <item row="2" column="0">
-               <widget class="QTableView" name="table_view_highschools"/>
+               <widget class="QTableView" name="table_view_highschools">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>330</width>
+                  <height>0</height>
+                 </size>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -3617,6 +3636,18 @@
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
                </widget>
               </item>
              </layout>
