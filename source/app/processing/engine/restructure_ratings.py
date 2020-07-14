@@ -72,10 +72,12 @@ class RestructureRatings(Restructure):
         city_column = ["", ""]
 
         for i, text in enumerate(neighborhood_text):
-            neighborhood_column.append("{} ({})".format(str(neighborhood_score[i]), text)) if \
-                text else neighborhood_column.append("NA")
-            city_column.append("{} ({})".format(str(city_score[i]), city_text[i])) if \
-                city_text[i] else city_column.append("NA")
+            if text and city_text[i]:
+                neighborhood_column.append("{} ({})".format(str(neighborhood_score[i]), text))
+                city_column.append("{} ({})".format(str(city_score[i]), city_text[i]))
+            else:
+                neighborhood_column.append("NA")
+                city_column.append("NA")
 
         neighborhood_column = neighborhood_column + [""]
         city_column = city_column + [""]
