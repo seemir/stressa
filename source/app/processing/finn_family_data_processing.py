@@ -20,7 +20,7 @@ class FinnFamilyDataProcessing(Process):
 
     """
 
-    @Debugger
+    @Tracking
     def __init__(self, family_data: dict):
         """
         Constructor / Instantiate the class.
@@ -321,16 +321,22 @@ class FinnFamilyDataProcessing(Process):
         """
         try:
             ratings_schools = self.get_signal("rating_schools")
+            if ratings_schools.data:
+                ratings_operation = Extract(ratings_schools.data["rating_schools"], "score")
+                self.add_node(ratings_operation)
+                self.add_transition(ratings_schools, ratings_operation, label="thread")
 
-            ratings_operation = Extract(ratings_schools.data["rating_schools"], "score")
-            self.add_node(ratings_operation)
-            self.add_transition(ratings_schools, ratings_operation, label="thread")
+                ratings = {"rating_schools": ratings_operation.run()["score"]}
 
-            ratings = {"rating_schools": ratings_operation.run()["score"]}
-
-            ratings_signal = Signal(ratings, "Ratings Score of School")
-            self.add_signal(ratings_signal, "score_schools")
-            self.add_transition(ratings_operation, ratings_signal, label="thread")
+                ratings_signal = Signal(ratings, "Ratings Score of School")
+                self.add_signal(ratings_signal, "score_schools")
+                self.add_transition(ratings_operation, ratings_signal, label="thread")
+            else:
+                ratings = {"rating_schools": {"text": "", "neighborhood": "", "city": "",
+                                              "cityName": "", "cityText": ""}}
+                ratings_signal = Signal(ratings, "Ratings Score of School")
+                self.add_signal(ratings_signal, "score_schools")
+                self.add_transition(ratings_schools, ratings_signal, label="thread")
         except Exception as restructuring_exception:
             self.exception_queue.put(restructuring_exception)
 
@@ -370,16 +376,23 @@ class FinnFamilyDataProcessing(Process):
         try:
             ratings_kindergarten = self.get_signal("rating_kindergardens")
 
-            ratings_operation = Extract(ratings_kindergarten.data["rating_kindergardens"], "score")
-            self.add_node(ratings_operation)
-            self.add_transition(ratings_kindergarten, ratings_operation, label="thread")
+            if ratings_kindergarten.data:
+                ratings_operation = Extract(ratings_kindergarten.data["rating_kindergardens"],
+                                            "score")
+                self.add_node(ratings_operation)
+                self.add_transition(ratings_kindergarten, ratings_operation, label="thread")
 
-            ratings = {"rating_kindergardens": ratings_operation.run()["score"]}
+                ratings = {"rating_kindergardens": ratings_operation.run()["score"]}
 
-            ratings_signal = Signal(ratings, "Ratings Score of Kindergartens")
-            self.add_signal(ratings_signal, "score_kindergardens")
-            self.add_transition(ratings_operation, ratings_signal, label="thread")
-
+                ratings_signal = Signal(ratings, "Ratings Score of Kindergartens")
+                self.add_signal(ratings_signal, "score_kindergardens")
+                self.add_transition(ratings_operation, ratings_signal, label="thread")
+            else:
+                ratings = {"rating_kindergardens": {"text": "", "neighborhood": "", "city": "",
+                                                    "cityName": "", "cityText": ""}}
+                ratings_signal = Signal(ratings, "Ratings Score of Kindergartens")
+                self.add_signal(ratings_signal, "score_kindergardens")
+                self.add_transition(ratings_kindergarten, ratings_signal, label="thread")
         except Exception as restructuring_exception:
             self.exception_queue.put(restructuring_exception)
 

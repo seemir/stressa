@@ -39,7 +39,8 @@ class StatisticsModel(Model):
                         "age_distribution", "info", "civil_status", "education", "income",
                         "higheducation", "higheducation_location", "family_composition",
                         "age_distribution_children", "kindergardens", "kindergardens_location",
-                        "schools", "schools_location", "highschools", "highschools_location"]
+                        "schools", "schools_location", "highschools", "highschools_location",
+                        "ratings"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "views_development",
                   "accumulated", "change", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
@@ -134,6 +135,8 @@ class StatisticsModel(Model):
                 self.add_pois_table(postfix, key)
             elif key == "highschools_location":
                 pass
+            elif key == "ratings":
+                self.add_pois_table(postfix, key, resize=True)
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
                              kindergarden="kindergardens_location", schools="schools_location",
@@ -196,7 +199,8 @@ class StatisticsModel(Model):
                          "age_distribution", "civil_status", "education", "income", "higheducation",
                          "higheducation_location", "info", "family_composition",
                          "age_distribution_children", "kindergardens", "kindergardens_location",
-                         "schools", "schools_location", "highschools", "highschools_location"]:
+                         "schools", "schools_location", "highschools", "highschools_location",
+                         "ratings"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -547,7 +551,7 @@ class StatisticsModel(Model):
                             "table_view_income", "Inntektsfordeling", "income_city_area_plot",
                             "income_city_plot", ignore_total=False)
 
-    def add_pois_table(self, postfix: str, key: str):
+    def add_pois_table(self, postfix: str, key: str, resize=False):
         """
         method for adding pois table
 
@@ -557,6 +561,8 @@ class StatisticsModel(Model):
                       index if used in naming of line_edits
         key         : str
                       name of label to change
+        resize      : bool
+                      boolean for widths in table to content
 
         """
         getattr(self.parent.ui, "table_view_" + key).setModel(None)
@@ -564,21 +570,29 @@ class StatisticsModel(Model):
             pois_table_model = TableModel(DataFrame(self.data[key + postfix]))
             getattr(self.parent.ui, "table_view_" + key).setModel(pois_table_model)
 
-            getattr(self.parent.ui,
-                    "table_view_" + key).horizontalHeader().setSectionResizeMode(
-                0, QHeaderView.Fixed)
-            getattr(self.parent.ui, "table_view_" + key).setColumnWidth(0, 180)
-            getattr(self.parent.ui,
-                    "table_view_" + key).horizontalHeader().setSectionResizeMode(
-                1, QHeaderView.Fixed)
-            getattr(self.parent.ui, "table_view_" + key).setColumnWidth(1, 65)
-            getattr(self.parent.ui,
-                    "table_view_" + key).horizontalHeader().setSectionResizeMode(
-                2, QHeaderView.Fixed)
-            getattr(self.parent.ui, "table_view_" + key).setColumnWidth(2, 65)
-            getattr(self.parent.ui, "table_view_" + key).verticalHeader().setSectionResizeMode(
-                QHeaderView.ResizeToContents)
-            getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)
+            if resize:
+                getattr(self.parent.ui,
+                        "table_view_" + key).horizontalHeader().setSectionResizeMode(
+                    0, QHeaderView.Stretch)
+                getattr(self.parent.ui, "table_view_" + key).verticalHeader().setSectionResizeMode(
+                    QHeaderView.ResizeToContents)
+                getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)
+            else:
+                getattr(self.parent.ui,
+                        "table_view_" + key).horizontalHeader().setSectionResizeMode(
+                    0, QHeaderView.Fixed)
+                getattr(self.parent.ui, "table_view_" + key).setColumnWidth(0, 180)
+                getattr(self.parent.ui,
+                        "table_view_" + key).horizontalHeader().setSectionResizeMode(
+                    1, QHeaderView.Fixed)
+                getattr(self.parent.ui, "table_view_" + key).setColumnWidth(1, 65)
+                getattr(self.parent.ui,
+                        "table_view_" + key).horizontalHeader().setSectionResizeMode(
+                    2, QHeaderView.Fixed)
+                getattr(self.parent.ui, "table_view_" + key).setColumnWidth(2, 65)
+                getattr(self.parent.ui, "table_view_" + key).verticalHeader().setSectionResizeMode(
+                    QHeaderView.ResizeToContents)
+                getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)
 
     def add_map(self, postfix: str, keys: str, university: str, kindergarden: str, schools: str,
                 highschools: str):

@@ -66,12 +66,18 @@ class RestructureRatings(Restructure):
                     elif key == "cityText":
                         city_text.append(value)
 
-        neighborhood_column = []
-        city_column = []
+        full_line = "------------------------"
+        group = ["Vurdering:", full_line, "Barnehage", "Skolene", ""]
+        neighborhood_column = ["", ""]
+        city_column = ["", ""]
 
         for i, text in enumerate(neighborhood_text):
-            neighborhood_column.append("{} ({})".format(str(neighborhood_score[i]), text))
-            city_column.append("{} ({})".format(str(city_score[i]), city_text[i]))
+            neighborhood_column.append("{} ({})".format(str(neighborhood_score[i]), text)) if \
+                text else neighborhood_column.append("NA")
+            city_column.append("{} ({})".format(str(city_score[i]), city_text[i])) if \
+                city_text[i] else city_column.append("NA")
 
-        return {"Gruppe": ["Barnehage", "Skolene"], "Nabolag": neighborhood_column,
-                "By": city_column}
+        neighborhood_column = neighborhood_column + [""]
+        city_column = city_column + [""]
+
+        return {"Gruppe": group, "Nabolag": neighborhood_column, "By": city_column}
