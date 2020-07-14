@@ -17,10 +17,10 @@ codecov==2.1.7
 colorama==0.4.3
 coverage==5.2
 DateTime==4.3
-diagrams==0.16.0
+diagrams==0.15.0
 dnspython==1.16.0
 folium==0.11.0
-graphviz==0.14.1
+graphviz==0.14
 helpdev==0.6.10
 hid==1.0.4
 html5lib==1.1

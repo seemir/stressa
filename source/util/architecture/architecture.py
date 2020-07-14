@@ -20,7 +20,7 @@ from diagrams.custom import Custom
 from source.util import __version__
 
 name = "Stressa v." + __version__
-font_size = "14"
+font_size = "16"
 
 icons = os.path.dirname(os.path.abspath(__file__)) + "\\icons\\"
 ssb_logo = icons + "ssb_logo.png"
@@ -93,11 +93,11 @@ with Diagram(name=name, show=False, direction="TB", outformat="pdf",
         profiling = Python("profiling")
 
     with Cluster("API service", graph_attr={"fontsize": font_size}):
-        web = [Custom("Finn API", finn_logo), Custom("Posten \n Adressesøk API", posten_logo),
+        web = [Custom("Finn API", finn_logo), Custom("\nPosten \n Adressesøk API", posten_logo),
                Custom("Finansportalen\n Grunndata\n XML Feed", finansportalen_logo),
                Custom("SIFO API", sifo_logo), Custom("SSB API (pyjstat)", ssb_logo)]
 
-    mongo_db_atlas = DocumentdbMongodbCompatibility("MongoDB Atlas:\n stressa-6pyxy.mongodb.net")
+    mongo_db_atlas = DocumentdbMongodbCompatibility("\nMongoDB Atlas:\n stressa-6pyxy.mongodb.net")
 
     users << bash << main << views
     bash << ui_log
