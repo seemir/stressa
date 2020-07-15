@@ -7,29 +7,15 @@ Architecture diagram
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import os
-
 from diagrams.aws.database import DocumentdbMongodbCompatibility
-from diagrams.programming.language import Python, C, Bash
+from diagrams.programming.language import Python, Bash
 from diagrams.oci.storage import FilestorageGrey
 from diagrams import Cluster, Diagram, Edge
 from diagrams.oci.monitoring import Logging
 from diagrams.onprem.client import User
-from diagrams.custom import Custom
 
-from source.util import __version__
-
-name = "Stressa v." + __version__
-font_size = "16"
-
-icons = os.path.dirname(os.path.abspath(__file__)) + "\\icons\\"
-ssb_logo = icons + "ssb_logo.png"
-finn_logo = icons + "finn_logo.png"
-posten_logo = icons + "posten_logo.png"
-sifo_logo = icons + "sifo_logo.png"
-finansportalen_logo = icons + "finansportalen_logo.png"
-
-sqlite_logo = icons + "sqlite_logo.png"
+from custom import Finansportalen, Finn, Posten, SIFO, Sqlite, SSB
+from settings import name, font_size
 
 with Diagram(name=name, show=False, direction="TB", outformat="pdf",
              node_attr={"fontsize": font_size}):
@@ -61,7 +47,7 @@ with Diagram(name=name, show=False, direction="TB", outformat="pdf",
     with Cluster("application layer (source/app)", graph_attr={"fontsize": font_size}):
         with Cluster("package: scrapers", graph_attr={"fontsize": font_size}):
             with Cluster("temp", graph_attr={"fontsize": font_size}):
-                cache = Custom("cache", sqlite_logo)
+                cache = Sqlite("cache")
             scrapers = Python("scrapers")
 
         with Cluster("package: processing", graph_attr={"fontsize": font_size}):
@@ -93,9 +79,9 @@ with Diagram(name=name, show=False, direction="TB", outformat="pdf",
         profiling = Python("profiling")
 
     with Cluster("API service", graph_attr={"fontsize": font_size}):
-        web = [Custom("Finn API", finn_logo), Custom("\nPosten \n Adressesøk API", posten_logo),
-               Custom("Finansportalen\n Grunndata\n XML Feed", finansportalen_logo),
-               Custom("SIFO API", sifo_logo), Custom("SSB API (pyjstat)", ssb_logo)]
+        web = [Finn("Finn API"), Posten("\nPosten \n Adressesøk API"),
+               Finansportalen("Finansportalen\n Grunndata\n XML Feed"),
+               SIFO("SIFO API"), SSB("SSB API (pyjstat)")]
 
     mongo_db_atlas = DocumentdbMongodbCompatibility("\nMongoDB Atlas:\n stressa-6pyxy.mongodb.net")
 
