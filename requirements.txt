@@ -18,7 +18,7 @@ colorama==0.4.3
 coverage==5.2
 DateTime==4.3
 diagrams==0.15.0
-dnspython==1.16.0
+dnspython==2.0.0
 folium==0.11.0
 graphviz==0.14
 helpdev==0.6.10
