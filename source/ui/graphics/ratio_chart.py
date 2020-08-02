@@ -60,6 +60,8 @@ class RatioChart(Chart):
         self.y_1, self.x = self.create_bins(x, y_1, bins=x)
         self.y_2, self.x = self.create_bins(x, y_2, bins=x)
 
+        self.x = self.x[:-1]
+
         self.labels = labels
         self.units = units if units else ("", "")
         self.precision = precision
@@ -72,7 +74,7 @@ class RatioChart(Chart):
 
         self.width = width
         self.label = TextItem()
-        self.bar_item_1 = BarGraphItem(x=self.x[:-1], height=self.ratio, width=self.width,
+        self.bar_item_1 = BarGraphItem(x=self.x, height=self.ratio, width=self.width,
                                        brush="#a8ccec")
         self.graphics_view.addItem(self.bar_item_1)
         self.configure_cross_hair()
@@ -82,7 +84,7 @@ class RatioChart(Chart):
         self.vertical_line = InfiniteLine(angle=90, movable=False, pen=pen)
         self.graphics_view.addItem(self.vertical_line)
 
-        self.graphics_view.plotItem.vb.setLimits(xMin=min(self.x), xMax=max(self.x))
+        self.graphics_view.plotItem.vb.setLimits(xMin=min(self.x) - width, xMax=max(self.x) + width)
         self.graphics_view.setMenuEnabled(False)
 
     def configure_cross_hair(self):
@@ -130,14 +132,15 @@ class RatioChart(Chart):
 
         """
         pos = evt[0]
-        x_val, y_val = self.move_vertical_lines(pos)
+        if self.graphics_view.sceneBoundingRect().contains(pos):
+            x_val, y_val = self.move_vertical_lines(pos)
 
-        percent = Percent(str(y_val / 100).replace("[", "").replace("]", ""))
+            percent = Percent(str(y_val / 100).replace("[", "").replace("]", ""))
 
-        if min(self.x) <= x_val <= max(self.x):
-            self.label.setHtml('<div style="text-align: center">'
-                               '<span style="font-size: 10pt">{}</span><br>'
-                               '<span style="font-size: 10pt">{} {}</span><br>'
-                               '<span style="font-size: 10pt">({})</span>'
-                               '</div>'.format(self.labels, Amount(str(x_val)).amount,
-                                               self.units[0], percent.value))
+            if min(self.x) <= x_val <= max(self.x):
+                self.label.setHtml('<div style="text-align: center">'
+                                   '<span style="font-size: 10pt">{}</span><br>'
+                                   '<span style="font-size: 10pt">{} {}</span><br>'
+                                   '<span style="font-size: 10pt">({})</span>'
+                                   '</div>'.format(self.labels, Amount(str(x_val)).amount,
+                                                   self.units[0], percent.value))

@@ -8,7 +8,6 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import numpy as np
-from numpy import array
 
 from pyqtgraph import BarGraphItem, PlotWidget, mkPen, InfiniteLine, SignalProxy, LinearRegionItem
 from PyQt5.QtGui import QBrush, QColor
@@ -28,7 +27,7 @@ class BarChart(Chart):
 
     def __init__(self, x_1: list, y_1: list, x_2: list, y_2: list, graphics_view_1: PlotWidget,
                  graphics_view_2: PlotWidget, labels: tuple, units=None, precision=0, width=1,
-                 average=None, create_bins=True, display=int, x_labels=None, highlight_bars=True):
+                 average=None, display=int, x_labels=None, highlight_bars=True):
         """
         Constructor / Instantiation of class
 
@@ -56,8 +55,6 @@ class BarChart(Chart):
                             width of any bars, default is 1
         average           : str
                             average
-        create_bins       : bool
-                            create bins boolean
         display           : type
                             display dtype for labels
         x_labels          : array-like
@@ -71,12 +68,11 @@ class BarChart(Chart):
             [list, list, list, list, PlotWidget, PlotWidget, tuple, (int, float),
              (type(None), str)])
         super().__init__()
-        if create_bins:
-            self.y_1, self.x_1 = self.create_bins(x_1, y_1, bins=x_1)
-            self.y_2, self.x_2 = self.create_bins(x_2, y_2, bins=x_2)
-        else:
-            self.y_1, self.x_1 = array(y_1), array(x_1 + [0])
-            self.y_2, self.x_2 = array(y_2), array(x_2 + [0])
+        self.y_1, self.x_1 = self.create_bins(x_1, y_1, bins=x_1)
+        self.y_2, self.x_2 = self.create_bins(x_2, y_2, bins=x_2)
+
+        self.x_1 = self.x_1[:-1]
+        self.x_2 = self.x_2[:-1]
 
         self.graphics_view_1 = graphics_view_1
         self.graphics_view_2 = graphics_view_2
@@ -85,9 +81,9 @@ class BarChart(Chart):
         if average:
             self.average = float(average)
 
-        self.bar_item_1 = BarGraphItem(x=self.x_1[:-1], height=self.y_1, width=width,
+        self.bar_item_1 = BarGraphItem(x=self.x_1, height=self.y_1, width=width,
                                        brush="#d2e5f5")
-        self.bar_item_2 = BarGraphItem(x=self.x_2[:-1], height=self.y_2, width=width,
+        self.bar_item_2 = BarGraphItem(x=self.x_2, height=self.y_2, width=width,
                                        brush="#d2e5f5")
 
         self.graphics_view_1.addItem(self.bar_item_1)
@@ -96,7 +92,7 @@ class BarChart(Chart):
         if average:
             self.draw_average_line()
 
-        self.cross_hair = DoubleCrossHair(self.x_1[:-1], self.y_1, self.x_2[:-1], self.y_2,
+        self.cross_hair = DoubleCrossHair(self.x_1, self.y_1, self.x_2, self.y_2,
                                           self.graphics_view_1, self.graphics_view_2, labels,
                                           self.units, precision, width, display=display,
                                           x_labels=x_labels, highlight_bars=highlight_bars)
@@ -141,7 +137,7 @@ class BarChart(Chart):
         brush = QBrush(QColor(0, 0, 255, 20))
 
         if sum(self.y_1) != 0:
-            average_1 = np.average(self.x_1[:-1], weights=self.y_1)
+            average_1 = np.average(self.x_1, weights=self.y_1)
             linear_region_1 = LinearRegionItem([average_1, self.average], movable=False,
                                                brush=brush)
             self.graphics_view_1.addItem(linear_region_1)
@@ -149,7 +145,7 @@ class BarChart(Chart):
             self.graphics_view_1.addItem(average_line_1)
 
         if sum(self.y_2) != 0:
-            average_2 = np.average(self.x_2[:-1], weights=self.y_2)
+            average_2 = np.average(self.x_2, weights=self.y_2)
             linear_region_2 = LinearRegionItem([average_2, self.average], movable=False,
                                                brush=brush)
             self.graphics_view_2.addItem(linear_region_2)
@@ -184,6 +180,4 @@ class BarChart(Chart):
 
         """
         self.cross_hair.mouse_moved(evt)
-        pos = evt[0]
-        if self.graphics_view_3 and self.graphics_view_3.sceneBoundingRect().contains(pos):
-            self.connection_chart.mouse_moved(evt)
+        self.connection_chart.mouse_moved(evt)

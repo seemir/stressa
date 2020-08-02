@@ -296,7 +296,7 @@ class StatisticsModel(Model):
                                            precision=-3, width=1000,
                                            average=self.data["sqm_price" + postfix].replace(
                                                " ", "").replace("kr/m²", ""))
-                self.ration_plot = RatioChart(list(city_area_sales.keys()),
+                self.ration_plot = RatioChart(list(municipality_sales.keys()),
                                               list(city_area_sales.values()),
                                               list(municipality_sales.values()),
                                               getattr(self.parent.ui, prefix + "ratio_statistics"),
