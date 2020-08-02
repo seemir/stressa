@@ -11,6 +11,7 @@ from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, InputOperation, Signal, Extract, Separate, Multiplex, OutputOperation
 
+from .finn_environment_sub_model import FinnEnvironmentSubModel
 from .finn_people_sub_model import FinnPeopleSubModel
 from .finn_family_sub_model import FinnFamilySubModel
 
@@ -40,10 +41,11 @@ class FinnCommunityProcess(Process):
 
         self.input_operation(self.community_json)
 
-        self.run_parallel([self.extract_1, self.extract_2, self.extract_3])
-        self.run_parallel([self.separate_1, self.separate_2, self.extract_4])
+        self.run_parallel([self.extract_1, self.extract_2, self.extract_3, self.extract_4])
+        self.run_parallel([self.separate_1, self.separate_2, self.extract_5, self.separate_3])
 
-        self.run_parallel([self.people_data_processing, self.family_data_processing])
+        self.run_parallel([self.people_data_processing, self.family_data_processing,
+                           self.environmental_data_processing])
 
         self.multiplex()
 
@@ -120,6 +122,24 @@ class FinnCommunityProcess(Process):
     @Debugger
     def extract_4(self):
         """
+        method for extracting environment information
+
+        """
+        input_signal = self.get_signal("input_signal")
+        extract_environment_operation = Extract(input_signal.data["nabolag"], "environment")
+        self.add_node(extract_environment_operation)
+        self.add_transition(input_signal, extract_environment_operation, label="thread")
+
+        extract_environment = extract_environment_operation.run()
+        extract_environment_signal = Signal(extract_environment, "Extract Environment Information")
+        self.add_signal(extract_environment_signal, "environment_signal")
+        self.add_transition(extract_environment_operation, extract_environment_signal,
+                            label="thread")
+
+    @Profiling
+    @Debugger
+    def extract_5(self):
+        """
         method for extracting info from general information
 
         """
@@ -137,7 +157,7 @@ class FinnCommunityProcess(Process):
     @Debugger
     def separate_1(self):
         """
-        method for separating list of dict to dict of dict
+        method for separating list of dict with people information to dict of dict
 
         """
         people_signal = self.get_signal("people_signal")
@@ -155,7 +175,7 @@ class FinnCommunityProcess(Process):
     @Debugger
     def separate_2(self):
         """
-        method for separating list of dict to dict of dict
+        method for separating list of dict with family information to dict of dict
 
         """
         people_signal = self.get_signal("family_signal")
@@ -168,6 +188,26 @@ class FinnCommunityProcess(Process):
         separate_signal = Signal(separate, "Separated Family Statistics", prettify_keys=True,
                                  length=5)
         self.add_signal(separate_signal, "separate_family_signal")
+        self.add_transition(separate_operation, separate_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def separate_3(self):
+        """
+        method for separating list of dict with environment information to dict of dict
+
+        """
+        environment_signal = self.get_signal("environment_signal")
+        separate_operation = Separate(environment_signal.data["environment"],
+                                      "Separate Out Environment Statistics")
+        self.add_node(separate_operation)
+        self.add_transition(environment_signal, separate_operation, label="thread")
+
+        separate = separate_operation.run()
+
+        separate_signal = Signal(separate, "Separated Environment Statistics", prettify_keys=True,
+                                 length=5)
+        self.add_signal(separate_signal, "separated_environment_signal")
         self.add_transition(separate_operation, separate_signal, label="thread")
 
     @Profiling
@@ -206,6 +246,28 @@ class FinnCommunityProcess(Process):
                                           prettify_keys=True, length=4)
         self.add_signal(family_processing_signal, "family_statistics_signal")
         self.add_transition(family_processing_operation, family_processing_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def environmental_data_processing(self):
+        """
+        sub model for processing finn environmental data
+
+        """
+        environmental_signal = self.get_signal("separated_environment_signal")
+        environmental_processing_operation = FinnEnvironmentSubModel(environmental_signal.data)
+
+        self.add_node(environmental_processing_operation)
+        self.add_transition(environmental_signal, environmental_processing_operation,
+                            label="thread")
+
+        environmental_processing = environmental_processing_operation.run()
+        environmental_processing_signal = Signal(environmental_processing,
+                                                 "Processed Environmental Statistics",
+                                                 prettify_keys=True, length=5)
+        self.add_signal(environmental_processing_signal, "environmental_statistics_signal")
+        self.add_transition(environmental_processing_operation, environmental_processing_signal,
+                            label="thread")
 
     @Profiling
     @Debugger

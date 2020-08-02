@@ -38,7 +38,7 @@ class FinnFamilySubModel(SubModel):
     @Debugger
     def run(self):
         """
-        method for running the sub model
+        method for running the family data sub model
 
         """
         return FinnFamilyDataProcessing(self.family_data).family_statistics

@@ -85,6 +85,7 @@ class ChangeBarChart(Chart):
 
         x_val = int(round(mouse_point.x()))
         x_idx = where(self.x == x_val)
+
         y_val = int(self.y[x_idx]) if self.y[x_idx] else 0
         self.vertical_line.setPos(x_val)
         limits = min(self.x) <= x_val <= max(self.x)

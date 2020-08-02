@@ -28,7 +28,7 @@ class FinnFamilyDataProcessing(Process):
         Parameters
         ----------
         family_data      : dict
-                           dict with people statistics
+                           dict with family statistics
 
         """
         super().__init__(name=self.__class__.__name__)
