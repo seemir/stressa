@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Profiling, Tracking, Debugger
 
-from .engine import Process, InputOperation, Signal, Extract
+from .engine import Process, InputOperation, Signal, Extract, Restructure
 
 
 class FinnEnvironmentProcess(Process):
@@ -36,6 +36,8 @@ class FinnEnvironmentProcess(Process):
                            self.extract_4, self.extract_5, self.extract_6,
                            self.extract_7, self.extract_8, self.extract_9,
                            self.extract_10])
+
+        self.restructure_1()
 
         self.output_operation()
         self.end_process()
@@ -69,6 +71,7 @@ class FinnEnvironmentProcess(Process):
             self.add_transition(input_signal, housing_stock_operation, label="thread")
 
             housing_stock = housing_stock_operation.run()
+
             housing_stock_signal = Signal(housing_stock, "Distribution of Housing")
             self.add_signal(housing_stock_signal, "housing_stock")
             self.add_transition(housing_stock_operation, housing_stock_signal, label="thread")
@@ -257,6 +260,27 @@ class FinnEnvironmentProcess(Process):
             self.add_transition(housing_prices_operation, housing_prices_signal, label="thread")
         except Exception as extract_exception:
             self.exception_queue.put(extract_exception)
+
+    @Profiling
+    @Debugger
+    def restructure_1(self):
+        """
+        method for restructuring housing stock
+
+        """
+        housing_stock = self.get_signal("housing_stock")
+        housing_stock_rest_operation = Restructure(housing_stock.data["housing_stock"],
+                                                   "Restructuring Housing Stock Statistics")
+        self.add_node(housing_stock_rest_operation)
+        self.add_transition(housing_stock, housing_stock_rest_operation)
+
+        housing_stock_rest = housing_stock_rest_operation.run()
+
+        housing_stock_rest_signal = Signal(housing_stock_rest,
+                                           "Restructured Housing Stock Statistics")
+
+        self.add_signal(housing_stock_rest_signal, "housing_stock_rest")
+        self.add_transition(housing_stock_rest_operation, housing_stock_rest_signal)
 
     @Profiling
     @Debugger

@@ -51,7 +51,7 @@ class Expenses(Entity):
 
         """
         try:
-            super(Expenses, self).__init__()
+            super().__init__()
             Assertor.assert_data_types([data], [dict])
             self._verdi = self.cast_expenses(data)
         except Exception as sifo_expenses_error:

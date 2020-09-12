@@ -32,7 +32,7 @@ class Mobile(Phone):
 
         """
         try:
-            super(Mobile, self).__init__(number)
+            super().__init__(number)
             self.validate_mobile_number(number)
             self._number = number
         except Exception as mobile_phone_error:
