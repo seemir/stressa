@@ -117,12 +117,13 @@ class TestSifo:
         Test that sifo_expenses method returns correct content
 
         """
-        correct_content = {'mat': '5290', 'klar': '1590', 'helse': '1320', 'fritid': '2480',
-                           'kollektivt': '1500', 'spedbarn': '0', 'stordriftsfordel': '1',
-                           'sumindivid': '12180', 'dagligvarer': '340', 'husholdsart': '400',
-                           'mobler': '400', 'medier': '2240', 'biler': '2420', 'barnehage': '0',
-                           'sfo': '0', 'sumhusholdning': '5800', 'totalt': '17980'}
+        correct_content = {'mat': '6750', 'klar': '1850', 'helse': '1330', 'fritid': '2900',
+                           'kollektivt': '1540', 'spedbarn': '0', 'stordriftsfordel': '1',
+                           'sumindivid': '14370', 'dagligvarer': '360', 'husholdsart': '420',
+                           'mobler': '470', 'medier': '1900', 'biler': '2650', 'barnehage': '0',
+                           'sfo': '0', 'sumhusholdning': '5800', 'totalt': '20170'}
         sifo_expenses = self.sifo.sifo_base_expenses()
+        print(sifo_expenses)
         assert sifo_expenses == correct_content
         assert "_id" not in sifo_expenses.keys()
 

@@ -119,12 +119,13 @@ class TestCalculateSifoExpenses:
 
         """
         data = {"person_1": {"alder_1": "20-50", "kjonn_1": "Mann"}}
-        base_expenses_shares = {"mat": "30.81 %", "klar": "8.10 %", "helse": "6.10 %",
-                                "fritid": "13.04 %", "kollektivt": "7.89 %",
-                                "spedbarn": "0.00 %", 'stordriftsfordel': '0.01 %',
-                                "sumindivid": "65.93 %", "dagligvarer": "2.84 %",
-                                "husholdsart": "3.89 %", "mobler": "3.79 %", "medier": "23.55 %",
-                                "biler": "0.00 %", "barnehage": "0.00 %", "sfo": "0.00 %",
-                                "sumhusholdning": "34.07 %", "totalt": "100.00 %"}
+        base_expenses_shares = {'mat': '35.36 %', 'klar': '8.60 %', 'helse': '5.70 %',
+                                'fritid': '14.01 %', 'kollektivt': '7.44 %', 'spedbarn': '0.00 %',
+                                'stordriftsfordel': '0.01 %', 'sumindivid': '71.11 %',
+                                'dagligvarer': '2.80 %', 'husholdsart': '3.67 %',
+                                'mobler': '4.06 %', 'medier': '18.36 %', 'biler': '0.00 %',
+                                'barnehage': '0.00 %', 'sfo': '0.00 %', 'sumhusholdning': '28.89 %',
+                                'totalt': '100.00 %'}
         calculate_sifo_expenses = SifoExpensesProcess(data)
+        print(calculate_sifo_expenses.expenses_shares)
         assert calculate_sifo_expenses.expenses_shares == base_expenses_shares
