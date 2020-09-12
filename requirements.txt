@@ -3,7 +3,7 @@ aiohttp==3.6.2
 astroid==2.4.2
 async-timeout==3.0.1
 atomicwrites==1.4.0
-attrs==20.1.0
+attrs==20.2.0
 beautifulsoup4==4.9.1
 branca==0.4.1
 brotlipy==0.7.0
