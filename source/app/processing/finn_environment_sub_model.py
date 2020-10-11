@@ -41,4 +41,4 @@ class FinnEnvironmentSubModel(SubModel):
         method for running the environmental data sub model
 
         """
-        FinnEnvironmentProcess(self.environmental_data)
+        return FinnEnvironmentProcess(self.environmental_data).environment_statistics

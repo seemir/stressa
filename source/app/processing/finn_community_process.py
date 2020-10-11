@@ -278,22 +278,24 @@ class FinnCommunityProcess(Process):
         """
         people_statistics = self.get_signal("people_statistics_signal")
         family_statistics = self.get_signal("family_statistics_signal")
+        environmental_statistics = self.get_signal("environmental_statistics_signal")
 
         info_signal = self.get_signal("info_signal")
 
         multiplex_operation = Multiplex(
-            [people_statistics.data, family_statistics.data, info_signal.data],
-            desc="Multiplex Finn Community Statistics")
+            [people_statistics.data, family_statistics.data, environmental_statistics,
+             info_signal.data], desc="Multiplex Finn Community Statistics")
         self.add_node(multiplex_operation)
 
         self.add_transition(people_statistics, multiplex_operation)
         self.add_transition(family_statistics, multiplex_operation)
+        self.add_transition(environmental_statistics, multiplex_operation)
         self.add_transition(info_signal, multiplex_operation)
 
         multiplex = multiplex_operation.run()
 
         multiplex_signal = Signal(multiplex, "Multiplexed Finn Community Statistics",
-                                  prettify_keys=True, length=6)
+                                  prettify_keys=True, length=7)
         self.add_signal(multiplex_signal, "multiplexed_finn_community_statistics")
         self.add_transition(multiplex_operation, multiplex_signal)
 

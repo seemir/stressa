@@ -511,16 +511,16 @@ class FinnFamilyDataProcessing(Process):
         """
         try:
             ratings = self.get_signal("ratings_multiplex")
-            restructure_ratings_operation = RestructureRatings(ratings.data["ratings"],
-                                                               "Restructuring Ratings Information")
+            restructure_ratings_operation = RestructureRatings(
+                ratings.data["ratings"], "Restructuring Family Rating Information")
             self.add_node(restructure_ratings_operation)
             self.add_transition(ratings, restructure_ratings_operation, label="thread")
 
-            restructure_ratings = {"ratings": restructure_ratings_operation.run()}
+            restructure_ratings = {"family_ratings": restructure_ratings_operation.run()}
             restructure_ratings_signal = Signal(restructure_ratings,
-                                                "Restructured Ratings Information")
+                                                "Restructured Family Rating Information")
 
-            self.add_signal(restructure_ratings_signal, "ratings")
+            self.add_signal(restructure_ratings_signal, "family_ratings")
             self.add_transition(restructure_ratings_operation, restructure_ratings_signal,
                                 label="thread")
         except Exception as restructuring_exception:
@@ -535,7 +535,7 @@ class FinnFamilyDataProcessing(Process):
         """
         age_distribution_children_rest = self.get_signal("age_distribution_children_rest")
         schools_rest = self.get_signal("schools_rest")
-        ratings = self.get_signal("ratings")
+        ratings = self.get_signal("family_ratings")
         kindergardens_rest = self.get_signal("kindergardens_rest")
         highschools_rest = self.get_signal("highschools_rest")
         composition_rest = self.get_signal("composition_rest")

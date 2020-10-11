@@ -9,7 +9,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Profiling, Tracking, Debugger
 
-from .engine import Process, InputOperation, Signal, Extract, Restructure
+from .engine import Process, InputOperation, Signal, Extract, Restructure, RestructureRatings, \
+    Multiplex, OutputOperation
 
 
 class FinnEnvironmentProcess(Process):
@@ -37,9 +38,13 @@ class FinnEnvironmentProcess(Process):
                            self.extract_7, self.extract_8, self.extract_9,
                            self.extract_10])
 
-        self.restructure_1()
+        self.run_parallel([self.restructure_1, self.restructure_2, self.restructure_3,
+                           self.restructure_4, self.restructure_5, self.restructure_6,
+                           self.restructure_7, self.restructure_8, self.restructure_9,
+                           self.restructure_10])
 
-        self.output_operation()
+        self.multiplex()
+        self.environment_statistics = self.output_operation()
         self.end_process()
 
     @Profiling
@@ -272,7 +277,7 @@ class FinnEnvironmentProcess(Process):
         housing_stock_rest_operation = Restructure(housing_stock.data["housing_stock"],
                                                    "Restructuring Housing Stock Statistics")
         self.add_node(housing_stock_rest_operation)
-        self.add_transition(housing_stock, housing_stock_rest_operation)
+        self.add_transition(housing_stock, housing_stock_rest_operation, label="thread")
 
         housing_stock_rest = housing_stock_rest_operation.run()
 
@@ -284,9 +289,244 @@ class FinnEnvironmentProcess(Process):
 
     @Profiling
     @Debugger
+    def restructure_2(self):
+        """
+        method for restructuring housing ownership
+
+        """
+        housing_ownership = self.get_signal("housing_ownership")
+        housing_ownership_rest_operation = Restructure(housing_ownership.data["housing_ownership"],
+                                                       "Restructuring Housing Ownership Statistics")
+        self.add_node(housing_ownership_rest_operation)
+        self.add_transition(housing_ownership, housing_ownership_rest_operation, label="thread")
+
+        housing_ownership_rest = housing_ownership_rest_operation.run()
+
+        housing_ownership_rest_signal = Signal(housing_ownership_rest,
+                                               "Restructured Housing Ownership Statistics")
+
+        self.add_signal(housing_ownership_rest_signal, "housing_ownership_rest")
+        self.add_transition(housing_ownership_rest_operation, housing_ownership_rest_signal)
+
+    @Profiling
+    @Debugger
+    def restructure_3(self):
+        """
+        method for restructuring safety rating
+
+        """
+        safety_rating = self.get_signal("safety_rating")
+        safety_rating_rest_operation = RestructureRatings(safety_rating.data["rating_safety"],
+                                                          "Restructuring Safety Rating")
+        self.add_node(safety_rating_rest_operation)
+        self.add_transition(safety_rating, safety_rating_rest_operation, label="thread")
+
+        safety_rating_rest = {"safety_rating": safety_rating_rest_operation.run()}
+
+        safety_rating_rest_signal = Signal(safety_rating_rest,
+                                           "Restructured Safety Rating Statistics")
+
+        self.add_signal(safety_rating_rest_signal, "safety_rating_rest")
+        self.add_transition(safety_rating_rest_operation, safety_rating_rest_signal)
+
+    @Profiling
+    @Debugger
+    def restructure_4(self):
+        """
+        method for restructuring noise rating
+
+        """
+        noise_rating = self.get_signal("noise_rating")
+        noise_rating_rest_operation = RestructureRatings(noise_rating.data["rating_noise"],
+                                                         "Restructuring Noise Rating")
+        self.add_node(noise_rating_rest_operation)
+        self.add_transition(noise_rating, noise_rating_rest_operation, label="thread")
+
+        noise_rating_rest = {"noise_rating": noise_rating_rest_operation.run()}
+
+        noise_rating_rest_signal = Signal(noise_rating_rest,
+                                          "Restructured Noise Rating Statistics")
+
+        self.add_signal(noise_rating_rest_signal, "noise_rating_rest")
+        self.add_transition(noise_rating_rest_operation, noise_rating_rest_signal)
+
+    @Profiling
+    @Debugger
+    def restructure_5(self):
+        """
+        method for restructuring environment rating
+
+        """
+        environment_rating = self.get_signal("environment_rating")
+        environment_rating_rest_operation = RestructureRatings(
+            environment_rating.data["rating_environment"], "Restructuring Environment Rating")
+        self.add_node(environment_rating_rest_operation)
+        self.add_transition(environment_rating, environment_rating_rest_operation, label="thread")
+
+        environment_rating_rest = {"environment_rating": environment_rating_rest_operation.run()}
+
+        environment_rating_rest_signal = Signal(environment_rating_rest,
+                                                "Restructured Environment Rating Statistics")
+
+        self.add_signal(environment_rating_rest_signal, "environment_rating_rest")
+        self.add_transition(environment_rating_rest_operation, environment_rating_rest_signal)
+
+    @Profiling
+    @Debugger
+    def restructure_6(self):
+        """
+        method for restructuring garden rating
+
+        """
+        gardens_rating = self.get_signal("gardens_rating")
+        garden_rating_rest_operation = RestructureRatings(
+            gardens_rating.data["rating_gardens"], "Restructuring Garden Rating")
+        self.add_node(garden_rating_rest_operation)
+        self.add_transition(gardens_rating, garden_rating_rest_operation, label="thread")
+
+        gardens_rating_rest = {"gardens_rating": garden_rating_rest_operation.run()}
+
+        gardens_rating_rest_signal = Signal(gardens_rating_rest,
+                                            "Restructured Garden Rating Statistics")
+
+        self.add_signal(gardens_rating_rest_signal, "gardens_rating_rest")
+        self.add_transition(garden_rating_rest_operation, gardens_rating_rest_signal)
+
+    @Profiling
+    @Debugger
+    def restructure_7(self):
+        """
+        method for restructuring roads rating
+
+        """
+        roads_rating = self.get_signal("roads_rating")
+        roads_rating_rest_operation = RestructureRatings(
+            roads_rating.data["rating_roads"], "Restructuring Roads Rating")
+        self.add_node(roads_rating_rest_operation)
+        self.add_transition(roads_rating, roads_rating_rest_operation, label="thread")
+
+        roads_rating_rest = {"roads_rating": roads_rating_rest_operation.run()}
+
+        roads_rating_rest_signal = Signal(roads_rating_rest,
+                                          "Restructured Roads Rating Statistics")
+
+        self.add_signal(roads_rating_rest_signal, "roads_rating_rest")
+        self.add_transition(roads_rating_rest_operation, roads_rating_rest_signal)
+
+    @Profiling
+    @Debugger
+    def restructure_8(self):
+        """
+        method for restructuring Housing Area
+
+        """
+        housing_area = self.get_signal("housing_area")
+        housing_area_rest_operation = Restructure(
+            housing_area.data["housing_area"], "Restructuring Housing Area")
+        self.add_node(housing_area_rest_operation)
+        self.add_transition(housing_area, housing_area_rest_operation, label="thread")
+
+        housing_rating_rest = {"housing_area": housing_area_rest_operation.run()}
+        housing_rating_rest_signal = Signal(housing_rating_rest,
+                                            "Restructured Housing Area Statistics")
+
+        self.add_signal(housing_rating_rest_signal, "housing_rating_rest")
+        self.add_transition(housing_area_rest_operation, housing_rating_rest_signal)
+
+    @Profiling
+    @Debugger
+    def restructure_9(self):
+        """
+        method for restructuring Housing Age
+
+        """
+        housing_age = self.get_signal("housing_age")
+        housing_age_rest_operation = Restructure(housing_age.data["housing_age"],
+                                                 "Restructuring Housing Age")
+        self.add_node(housing_age_rest_operation)
+        self.add_transition(housing_age, housing_age_rest_operation, label="thread")
+
+        housing_age_rest = {"housing_age": housing_age_rest_operation.run()}
+        housing_age_rest_signal = Signal(housing_age_rest, "Restructured Housing Age")
+
+        self.add_signal(housing_age_rest_signal, "housing_age_rest")
+        self.add_transition(housing_age_rest_operation, housing_age_rest_signal)
+
+    @Profiling
+    @Debugger
+    def restructure_10(self):
+        """
+        method for restructuring Housing Prices
+
+        """
+        housing_prices = self.get_signal("housing_prices")
+        housing_prices_rest_operation = Restructure(housing_prices.data["housing_prices"],
+                                                    "Restructuring Housing Prices")
+        self.add_node(housing_prices_rest_operation)
+        self.add_transition(housing_prices, housing_prices_rest_operation, label="thread")
+
+        housing_prices_rest = {"housing_prices": housing_prices_rest_operation.run()}
+        housing_prices_rest_signal = Signal(housing_prices_rest, "Restructured Housing Prices")
+
+        self.add_signal(housing_prices_rest_signal, "housing_prices_rest")
+        self.add_transition(housing_prices_rest_operation, housing_prices_rest_signal)
+
+    @Profiling
+    @Debugger
+    def multiplex(self):
+        """
+        method for multiplexing all statistics information
+
+        """
+        housing_stock_rest = self.get_signal("housing_stock_rest")
+        housing_ownership_rest = self.get_signal("housing_ownership_rest")
+        safety_rating_rest = self.get_signal("safety_rating_rest")
+        noise_rating_rest = self.get_signal("noise_rating_rest")
+        environment_rating_rest = self.get_signal("environment_rating_rest")
+        gardens_rating_rest = self.get_signal("gardens_rating_rest")
+        roads_rating_rest = self.get_signal("roads_rating_rest")
+        housing_rating_rest = self.get_signal("housing_rating_rest")
+        housing_age_rest = self.get_signal("housing_age_rest")
+        housing_prices_rest = self.get_signal("housing_prices_rest")
+
+        multiplex_operation = Multiplex([housing_stock_rest.data, housing_ownership_rest.data,
+                                         safety_rating_rest.data, noise_rating_rest.data,
+                                         environment_rating_rest.data, gardens_rating_rest.data,
+                                         roads_rating_rest.data, housing_rating_rest.data,
+                                         housing_age_rest.data, housing_prices_rest.data],
+                                        desc="Multiplex Environment Statistics")
+
+        self.add_transition(housing_stock_rest, multiplex_operation)
+        self.add_transition(housing_ownership_rest, multiplex_operation)
+        self.add_transition(safety_rating_rest, multiplex_operation)
+        self.add_transition(noise_rating_rest, multiplex_operation)
+        self.add_transition(environment_rating_rest, multiplex_operation)
+        self.add_transition(gardens_rating_rest, multiplex_operation)
+        self.add_transition(roads_rating_rest, multiplex_operation)
+        self.add_transition(housing_rating_rest, multiplex_operation)
+        self.add_transition(housing_age_rest, multiplex_operation)
+        self.add_transition(housing_prices_rest, multiplex_operation)
+
+        self.add_node(multiplex_operation)
+
+        multiplex = multiplex_operation.run()
+        multiplex_signal = Signal(multiplex, "Multiplexed Environment Statistics",
+                                  prettify_keys=True, length=5)
+        self.add_signal(multiplex_signal, "multiplex_environment_statistics")
+
+        self.add_transition(multiplex_operation, multiplex_signal)
+
+    @Profiling
+    @Debugger
     def output_operation(self):
         """
         final operation of the process
 
         """
+        multiplexed_environment_statistics = self.get_signal("multiplex_environment_statistics")
+        output_operation = OutputOperation("Processed Environment Statistics")
+        self.add_node(output_operation)
+        self.add_transition(multiplexed_environment_statistics, output_operation)
         self.print_pdf()
+
+        return multiplexed_environment_statistics.data
