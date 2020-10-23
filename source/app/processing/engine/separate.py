@@ -67,6 +67,14 @@ class Separate(Operation):
                     output.update({"rating_schools": dictionary})
                 elif identifier == "1008":
                     output.update({"rating_kindergardens": dictionary})
+                elif identifier == "1009":
+                    output.update({"rating_hiking": dictionary})
+                elif identifier == "1010":
+                    output.update({"rating_public_transport": dictionary})
+                elif identifier == "2016":
+                    output.update({"rating_activity": dictionary})
+                elif identifier == "2019":
+                    output.update({"rating_serving": dictionary})
                 else:
                     output.update({identifier: dictionary})
             else:

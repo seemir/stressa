@@ -41,8 +41,10 @@ class FinnCommunityProcess(Process):
 
         self.input_operation(self.community_json)
 
-        self.run_parallel([self.extract_1, self.extract_2, self.extract_3, self.extract_4])
-        self.run_parallel([self.separate_1, self.separate_2, self.extract_5, self.separate_3])
+        self.run_parallel([self.extract_1, self.extract_2, self.extract_3, self.extract_4,
+                           self.extract_5, self.extract_6, self.extract_7])
+        self.run_parallel([self.separate_1, self.separate_2, self.extract_8, self.separate_3,
+                           self.separate_4, self.separate_5, self.separate_6])
 
         self.run_parallel([self.people_data_processing, self.family_data_processing,
                            self.environmental_data_processing])
@@ -140,6 +142,59 @@ class FinnCommunityProcess(Process):
     @Debugger
     def extract_5(self):
         """
+        method for extracting transportation info
+
+        """
+        input_signal = self.get_signal("input_signal")
+        extract_transportation_operation = Extract(input_signal.data["nabolag"], "transport")
+        self.add_node(extract_transportation_operation)
+        self.add_transition(input_signal, extract_transportation_operation, label="thread")
+
+        extract_transportation = extract_transportation_operation.run()
+        extract_transportation_signal = Signal(extract_transportation,
+                                               "Extract Transportation Information")
+        self.add_signal(extract_transportation_signal, "transportation_signal")
+        self.add_transition(extract_transportation_operation, extract_transportation_signal,
+                            label="thread")
+
+    @Profiling
+    @Debugger
+    def extract_6(self):
+        """
+        method for extracting leisure information
+
+        """
+        input_signal = self.get_signal("input_signal")
+        extract_leisure_operation = Extract(input_signal.data["nabolag"], "leisure")
+        self.add_node(extract_leisure_operation)
+        self.add_transition(input_signal, extract_leisure_operation, label="thread")
+
+        extract_leisure = extract_leisure_operation.run()
+        extract_leisure_signal = Signal(extract_leisure, "Extract Leisure Information")
+        self.add_signal(extract_leisure_signal, "leisure_signal")
+        self.add_transition(extract_leisure_operation, extract_leisure_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def extract_7(self):
+        """
+        method for extracting shopping information
+
+        """
+        input_signal = self.get_signal("input_signal")
+        extract_shopping_operation = Extract(input_signal.data["nabolag"], "shopping")
+        self.add_node(extract_shopping_operation)
+        self.add_transition(input_signal, extract_shopping_operation, label="thread")
+
+        extract_shopping = extract_shopping_operation.run()
+        extract_shopping_signal = Signal(extract_shopping, "Extract Shopping Information")
+        self.add_signal(extract_shopping_signal, "shopping_signal")
+        self.add_transition(extract_shopping_operation, extract_shopping_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def extract_8(self):
+        """
         method for extracting info from general information
 
         """
@@ -208,6 +263,66 @@ class FinnCommunityProcess(Process):
         separate_signal = Signal(separate, "Separated Environment Statistics", prettify_keys=True,
                                  length=5)
         self.add_signal(separate_signal, "separated_environment_signal")
+        self.add_transition(separate_operation, separate_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def separate_4(self):
+        """
+        method for separating list of dict with transportation information to dict of dict
+
+        """
+        transportation_signal = self.get_signal("transportation_signal")
+        separate_operation = Separate(transportation_signal.data["transport"],
+                                      "Separate Out Transportation Statistics")
+        self.add_node(separate_operation)
+        self.add_transition(transportation_signal, separate_operation, label="thread")
+
+        separate = separate_operation.run()
+
+        separate_signal = Signal(separate, "Separate Transportation Statistics", prettify_keys=True,
+                                 length=5)
+        self.add_signal(separate_signal, "separated_transportation_signal")
+        self.add_transition(separate_operation, separate_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def separate_5(self):
+        """
+        method for separating list of dict with leisure information to dict of dict
+
+        """
+        leisure_signal = self.get_signal("leisure_signal")
+        separate_operation = Separate(leisure_signal.data["leisure"],
+                                      "Separate Out Leisure Statistics")
+        self.add_node(separate_operation)
+        self.add_transition(leisure_signal, separate_operation, label="thread")
+
+        separate = separate_operation.run()
+
+        separate_signal = Signal(separate, "Separate Leisure Statistics", prettify_keys=True,
+                                 length=5)
+        self.add_signal(separate_signal, "separated_leisure_signal")
+        self.add_transition(separate_operation, separate_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def separate_6(self):
+        """
+        method for separating list of dict with shopping information to dict of dict
+
+        """
+        shopping_signal = self.get_signal("shopping_signal")
+        separate_operation = Separate(shopping_signal.data["shopping"],
+                                      "Separate Out Shopping Statistics")
+        self.add_node(separate_operation)
+        self.add_transition(shopping_signal, separate_operation, label="thread")
+
+        separate = separate_operation.run()
+
+        separate_signal = Signal(separate, "Separate Shopping Statistics", prettify_keys=True,
+                                 length=5)
+        self.add_signal(separate_signal, "separated_shopping_signal")
         self.add_transition(separate_operation, separate_signal, label="thread")
 
     @Profiling
