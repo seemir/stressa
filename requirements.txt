@@ -26,7 +26,7 @@ hid==1.0.4
 html5lib==1.1
 idna==2.9
 importlib-metadata==2.0.0
-iniconfig==1.0.1
+iniconfig==1.1.1
 isort==4.3.21
 Jinja2==2.11.2
 lazy-object-proxy==1.5.1
