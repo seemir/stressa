@@ -212,6 +212,25 @@ class Model(ABC):
             line_edit.setFocus()
 
     @pyqtSlot()
+    def clear_empty_line_edits(self, line_edit_name: str, line_edits: list, postfix: str):
+        """
+        method for clearing empty line edits
+
+        Parameters
+        ----------
+        line_edit_name  : str
+                          name of line_edit to get values from
+        line_edits      : list
+                          all line_edits to update values for based on input, see line_edit_name
+        postfix         : str
+                          index if used in naming of line_edits
+
+        """
+        line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name + postfix).text()
+        if not line_edit:
+            self.clear_line_edits(line_edits, postfix)
+
+    @pyqtSlot()
     def set_line_edits(self, line_edit_text: str, line_edits: list, obj: object = None,
                        method: str = None, postfix: str = None, data: dict = None):
         """

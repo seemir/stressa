@@ -70,7 +70,13 @@ class Separate(Operation):
                 elif identifier == "1009":
                     output.update({"rating_hiking": dictionary})
                 elif identifier == "1010":
-                    output.update({"rating_public_transport": dictionary})
+                    output.update({"rating_public_transportation": dictionary})
+                elif identifier == "1011":
+                    output.update({"rating_parking": dictionary})
+                elif identifier == "1012":
+                    output.update({"rating_traffic": dictionary})
+                elif identifier == "1013":
+                    output.update({"food_selection": dictionary})
                 elif identifier == "2016":
                     output.update({"rating_activity": dictionary})
                 elif identifier == "2019":

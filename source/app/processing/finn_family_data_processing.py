@@ -144,7 +144,7 @@ class FinnFamilyDataProcessing(Process):
             self.add_transition(input_signal_rating_schools, rating_school_operation,
                                 label="thread")
             ratings = rating_school_operation.run()
-            rating_school_signal = Signal(ratings, "Ratings of Schools")
+            rating_school_signal = Signal(ratings, "Schools Rating")
             self.add_signal(rating_school_signal, "rating_schools")
             self.add_transition(rating_school_operation, rating_school_signal, label="thread")
         except Exception as extract_exception:
@@ -184,7 +184,7 @@ class FinnFamilyDataProcessing(Process):
             self.add_transition(input_signal_rating_kindergarden, kindergarten_ratings_operation,
                                 label="thread")
             kindergarten_ratings = kindergarten_ratings_operation.run()
-            kindergarten_ratings_signal = Signal(kindergarten_ratings, "Ratings of Kindergardens")
+            kindergarten_ratings_signal = Signal(kindergarten_ratings, "Kindergarden Rating")
             self.add_signal(kindergarten_ratings_signal, "rating_kindergardens")
             self.add_transition(kindergarten_ratings_operation, kindergarten_ratings_signal,
                                 label="thread")

@@ -460,16 +460,23 @@ class FinnEnvironmentProcess(Process):
 
         """
         housing_prices = self.get_signal("housing_prices")
-        housing_prices_rest_operation = Restructure(housing_prices.data["housing_prices"],
-                                                    "Restructuring Housing Prices")
-        self.add_node(housing_prices_rest_operation)
-        self.add_transition(housing_prices, housing_prices_rest_operation, label="thread")
+        if housing_prices.data:
+            housing_prices_rest_operation = Restructure(housing_prices.data["housing_prices"],
+                                                        "Restructuring Housing Prices")
+            self.add_node(housing_prices_rest_operation)
+            self.add_transition(housing_prices, housing_prices_rest_operation, label="thread")
 
-        housing_prices_rest = {"housing_prices": housing_prices_rest_operation.run()}
-        housing_prices_rest_signal = Signal(housing_prices_rest, "Restructured Housing Prices")
+            housing_prices_rest = {"housing_prices": housing_prices_rest_operation.run()}
+            housing_prices_rest_signal = Signal(housing_prices_rest, "Restructured Housing Prices")
 
-        self.add_signal(housing_prices_rest_signal, "housing_prices_rest")
-        self.add_transition(housing_prices_rest_operation, housing_prices_rest_signal)
+            self.add_signal(housing_prices_rest_signal, "housing_prices_rest")
+            self.add_transition(housing_prices_rest_operation, housing_prices_rest_signal)
+        else:
+            housing_prices_rest = {"housing_prices": ""}
+            housing_prices_rest_signal = Signal(housing_prices_rest, "Restructured Housing Prices")
+
+            self.add_signal(housing_prices_rest_signal, "housing_prices_rest")
+            self.add_transition(housing_prices, housing_prices_rest_signal)
 
     @Profiling
     @Debugger

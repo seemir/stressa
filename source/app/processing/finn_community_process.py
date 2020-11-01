@@ -11,6 +11,7 @@ from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, InputOperation, Signal, Extract, Separate, Multiplex, OutputOperation
 
+from .finn_transportation_sub_model import FinnTransportationSubModel
 from .finn_environment_sub_model import FinnEnvironmentSubModel
 from .finn_people_sub_model import FinnPeopleSubModel
 from .finn_family_sub_model import FinnFamilySubModel
@@ -47,7 +48,7 @@ class FinnCommunityProcess(Process):
                            self.separate_4, self.separate_5, self.separate_6])
 
         self.run_parallel([self.people_data_processing, self.family_data_processing,
-                           self.environmental_data_processing])
+                           self.environmental_data_processing, self.transportation_data_processing])
 
         self.multiplex()
 
@@ -281,7 +282,7 @@ class FinnCommunityProcess(Process):
         separate = separate_operation.run()
 
         separate_signal = Signal(separate, "Separate Transportation Statistics", prettify_keys=True,
-                                 length=5)
+                                 length=4)
         self.add_signal(separate_signal, "separated_transportation_signal")
         self.add_transition(separate_operation, separate_signal, label="thread")
 
@@ -382,6 +383,27 @@ class FinnCommunityProcess(Process):
                                                  prettify_keys=True, length=5)
         self.add_signal(environmental_processing_signal, "environmental_statistics_signal")
         self.add_transition(environmental_processing_operation, environmental_processing_signal,
+                            label="thread")
+
+    @Profiling
+    @Debugger
+    def transportation_data_processing(self):
+        """
+        sub model for processing finn transportation data
+
+        """
+        transportation_signal = self.get_signal("separated_transportation_signal")
+        transportation_signal_operation = FinnTransportationSubModel(transportation_signal.data)
+
+        self.add_node(transportation_signal_operation)
+        self.add_transition(transportation_signal, transportation_signal_operation, label="thread")
+
+        transportation_processing = transportation_signal_operation.run()
+        transportation_processing_signal = Signal(transportation_processing,
+                                                  "Processed Transportation Statistics",
+                                                  prettify_keys=True, length=5)
+        self.add_signal(transportation_processing_signal, "transportation_statistics_signal")
+        self.add_transition(transportation_signal_operation, transportation_processing_signal,
                             label="thread")
 
     @Profiling

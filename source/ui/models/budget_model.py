@@ -36,40 +36,40 @@ class BudgetModel(Model):
         self.parent.ui.combo_box_interval_1.setFocus()
         self.parent.ui.combo_box_interval_1.activated.connect(
             lambda: self.set_combo_box_value("brutto_inntekt", "_1"))
-        self.parent.ui.line_edit_brutto_inntekt.editingFinished.connect(
+        self.parent.ui.line_edit_brutto_inntekt.textEdited.connect(
             lambda: self.set_value("brutto_inntekt", "_1"))
         self.parent.ui.combo_box_interval_2.activated.connect(
             lambda: self.set_combo_box_value("trygde_inntekt", "_2"))
-        self.parent.ui.line_edit_trygde_inntekt.editingFinished.connect(
+        self.parent.ui.line_edit_trygde_inntekt.textEdited.connect(
             lambda: self.set_value("trygde_inntekt", "_2"))
         self.parent.ui.combo_box_interval_3.activated.connect(
             lambda: self.set_combo_box_value("leieinntekt", "_3"))
-        self.parent.ui.line_edit_leieinntekt.editingFinished.connect(
+        self.parent.ui.line_edit_leieinntekt.textEdited.connect(
             lambda: self.set_value("leieinntekt", "_3"))
         self.parent.ui.combo_box_interval_4.activated.connect(
             lambda: self.set_combo_box_value("andre_inntekter", "_4"))
-        self.parent.ui.line_edit_andre_inntekter.editingFinished.connect(
+        self.parent.ui.line_edit_andre_inntekter.textEdited.connect(
             lambda: self.set_value("andre_inntekter", "_4"))
 
         self.parent.ui.combo_box_interval_5.activated.connect(
             lambda: self.set_combo_box_value("student_lan", "_5"))
-        self.parent.ui.line_edit_student_lan.editingFinished.connect(
+        self.parent.ui.line_edit_student_lan.textEdited.connect(
             lambda: self.set_value("student_lan", "_5"))
         self.parent.ui.combo_box_interval_6.activated.connect(
             lambda: self.set_combo_box_value("kreditt_gjeld", "_6"))
-        self.parent.ui.line_edit_kreditt_gjeld.editingFinished.connect(
+        self.parent.ui.line_edit_kreditt_gjeld.textEdited.connect(
             lambda: self.set_value("kreditt_gjeld", "_6"))
         self.parent.ui.combo_box_interval_7.activated.connect(
             lambda: self.set_combo_box_value("husleie", "_7"))
-        self.parent.ui.line_edit_husleie.editingFinished.connect(
+        self.parent.ui.line_edit_husleie.textEdited.connect(
             lambda: self.set_value("husleie", "_7"))
         self.parent.ui.combo_box_interval_8.activated.connect(
             lambda: self.set_combo_box_value("strom", "_8"))
-        self.parent.ui.line_edit_strom.editingFinished.connect(
+        self.parent.ui.line_edit_strom.textEdited.connect(
             lambda: self.set_value("strom", "_8"))
         self.parent.ui.combo_box_interval_9.activated.connect(
             lambda: self.set_combo_box_value("andre_utgifter", "_9"))
-        self.parent.ui.line_edit_andre_utgifter.editingFinished.connect(
+        self.parent.ui.line_edit_andre_utgifter.textEdited.connect(
             lambda: self.set_value("andre_utgifter", "_9"))
 
     def set_value(self, line_edit, postfix):
