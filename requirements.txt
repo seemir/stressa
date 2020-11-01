@@ -78,5 +78,5 @@ webencodings==0.5.1
 win32-setctime==1.0.1
 wrapt==1.12.1
 yarl==1.6.0
-zipp==3.3.1
+zipp==3.4.0
 zope.interface==5.1.2
