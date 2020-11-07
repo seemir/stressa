@@ -31,7 +31,7 @@ class FinnTransportationSubModel(SubModel):
 
         """
         Assertor.assert_data_types([transportation_data], [dict])
-        self.name = FinnTransportationDataProcessing.__name__
+        self.name = FinnTransportationProcessing.__name__
         super().__init__(name=self.name, desc="Processing Finn Transportation Statistics")
         self.transportation_data = transportation_data
 
@@ -41,4 +41,4 @@ class FinnTransportationSubModel(SubModel):
         method for running the transportation sub model
 
         """
-        return FinnTransportationDataProcessing(self.transportation_data).transportation_statistics
+        return FinnTransportationProcessing(self.transportation_data).transportation_statistics
