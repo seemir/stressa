@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Tracking, Debugger
 
-from .finn_transportation_data_processing import FinnTransportationDataProcessing
+from .finn_transportation_processing import FinnTransportationProcessing
 from .engine import SubModel
 
 
