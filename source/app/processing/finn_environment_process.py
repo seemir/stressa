@@ -316,18 +316,26 @@ class FinnEnvironmentProcess(Process):
 
         """
         safety_rating = self.get_signal("safety_rating")
-        safety_rating_rest_operation = RestructureRatings(safety_rating.data["rating_safety"],
-                                                          "Restructuring Safety Rating")
-        self.add_node(safety_rating_rest_operation)
-        self.add_transition(safety_rating, safety_rating_rest_operation, label="thread")
+        if safety_rating.data:
+            safety_rating_rest_operation = RestructureRatings(safety_rating.data["rating_safety"],
+                                                              "Restructuring Safety Rating")
+            self.add_node(safety_rating_rest_operation)
+            self.add_transition(safety_rating, safety_rating_rest_operation, label="thread")
 
-        safety_rating_rest = {"safety_rating": safety_rating_rest_operation.run()}
+            safety_rating_rest = {"safety_rating": safety_rating_rest_operation.run()}
 
-        safety_rating_rest_signal = Signal(safety_rating_rest,
-                                           "Restructured Safety Rating Statistics")
+            safety_rating_rest_signal = Signal(safety_rating_rest,
+                                               "Restructured Safety Rating Statistics")
 
-        self.add_signal(safety_rating_rest_signal, "safety_rating_rest")
-        self.add_transition(safety_rating_rest_operation, safety_rating_rest_signal)
+            self.add_signal(safety_rating_rest_signal, "safety_rating_rest")
+            self.add_transition(safety_rating_rest_operation, safety_rating_rest_signal)
+        else:
+            safety_rating_rest = {"safety_rating": ""}
+            safety_rating_rest_signal = Signal(safety_rating_rest,
+                                               "Restructured Safety Rating Statistics")
+
+            self.add_signal(safety_rating_rest_signal, "safety_rating_rest")
+            self.add_transition(safety_rating, safety_rating_rest_signal)
 
     @Profiling
     @Debugger
@@ -337,18 +345,25 @@ class FinnEnvironmentProcess(Process):
 
         """
         noise_rating = self.get_signal("noise_rating")
-        noise_rating_rest_operation = RestructureRatings(noise_rating.data["rating_noise"],
-                                                         "Restructuring Noise Rating")
-        self.add_node(noise_rating_rest_operation)
-        self.add_transition(noise_rating, noise_rating_rest_operation, label="thread")
+        if noise_rating.data:
+            noise_rating_rest_operation = RestructureRatings(noise_rating.data["rating_noise"],
+                                                             "Restructuring Noise Rating")
+            self.add_node(noise_rating_rest_operation)
+            self.add_transition(noise_rating, noise_rating_rest_operation, label="thread")
 
-        noise_rating_rest = {"noise_rating": noise_rating_rest_operation.run()}
+            noise_rating_rest = {"noise_rating": noise_rating_rest_operation.run()}
+            noise_rating_rest_signal = Signal(noise_rating_rest,
+                                              "Restructured Noise Rating Statistics")
 
-        noise_rating_rest_signal = Signal(noise_rating_rest,
-                                          "Restructured Noise Rating Statistics")
+            self.add_signal(noise_rating_rest_signal, "noise_rating_rest")
+            self.add_transition(noise_rating_rest_operation, noise_rating_rest_signal)
+        else:
+            noise_rating_rest = {"noise_rating": ""}
+            noise_rating_rest_signal = Signal(noise_rating_rest,
+                                              "Restructured Noise Rating Statistics")
 
-        self.add_signal(noise_rating_rest_signal, "noise_rating_rest")
-        self.add_transition(noise_rating_rest_operation, noise_rating_rest_signal)
+            self.add_signal(noise_rating_rest_signal, "noise_rating_rest")
+            self.add_transition(noise_rating, noise_rating_rest_signal)
 
     @Profiling
     @Debugger
@@ -358,18 +373,28 @@ class FinnEnvironmentProcess(Process):
 
         """
         environment_rating = self.get_signal("environment_rating")
-        environment_rating_rest_operation = RestructureRatings(
-            environment_rating.data["rating_environment"], "Restructuring Environment Rating")
-        self.add_node(environment_rating_rest_operation)
-        self.add_transition(environment_rating, environment_rating_rest_operation, label="thread")
+        if environment_rating.data:
+            environment_rating_rest_operation = RestructureRatings(
+                environment_rating.data["rating_environment"], "Restructuring Environment Rating")
+            self.add_node(environment_rating_rest_operation)
+            self.add_transition(environment_rating, environment_rating_rest_operation,
+                                label="thread")
 
-        environment_rating_rest = {"environment_rating": environment_rating_rest_operation.run()}
+            environment_rating_rest = {
+                "environment_rating": environment_rating_rest_operation.run()}
+            environment_rating_rest_signal = Signal(environment_rating_rest,
+                                                    "Restructured Environment Rating Statistics")
 
-        environment_rating_rest_signal = Signal(environment_rating_rest,
-                                                "Restructured Environment Rating Statistics")
+            self.add_signal(environment_rating_rest_signal, "environment_rating_rest")
+            self.add_transition(environment_rating_rest_operation, environment_rating_rest_signal)
+        else:
+            environment_rating_rest = {
+                "environment_rating": ""}
+            environment_rating_rest_signal = Signal(environment_rating_rest,
+                                                    "Restructured Environment Rating Statistics")
 
-        self.add_signal(environment_rating_rest_signal, "environment_rating_rest")
-        self.add_transition(environment_rating_rest_operation, environment_rating_rest_signal)
+            self.add_signal(environment_rating_rest_signal, "environment_rating_rest")
+            self.add_transition(environment_rating, environment_rating_rest_signal)
 
     @Profiling
     @Debugger
@@ -379,18 +404,25 @@ class FinnEnvironmentProcess(Process):
 
         """
         gardens_rating = self.get_signal("gardens_rating")
-        garden_rating_rest_operation = RestructureRatings(
-            gardens_rating.data["rating_gardens"], "Restructuring Garden Rating")
-        self.add_node(garden_rating_rest_operation)
-        self.add_transition(gardens_rating, garden_rating_rest_operation, label="thread")
+        if gardens_rating.data:
+            garden_rating_rest_operation = RestructureRatings(
+                gardens_rating.data["rating_gardens"], "Restructuring Garden Rating")
+            self.add_node(garden_rating_rest_operation)
+            self.add_transition(gardens_rating, garden_rating_rest_operation, label="thread")
 
-        gardens_rating_rest = {"gardens_rating": garden_rating_rest_operation.run()}
+            gardens_rating_rest = {"gardens_rating": garden_rating_rest_operation.run()}
+            gardens_rating_rest_signal = Signal(gardens_rating_rest,
+                                                "Restructured Garden Rating Statistics")
 
-        gardens_rating_rest_signal = Signal(gardens_rating_rest,
-                                            "Restructured Garden Rating Statistics")
+            self.add_signal(gardens_rating_rest_signal, "gardens_rating_rest")
+            self.add_transition(garden_rating_rest_operation, gardens_rating_rest_signal)
+        else:
+            gardens_rating_rest = {"gardens_rating": ""}
+            gardens_rating_rest_signal = Signal(gardens_rating_rest,
+                                                "Restructured Garden Rating Statistics")
 
-        self.add_signal(gardens_rating_rest_signal, "gardens_rating_rest")
-        self.add_transition(garden_rating_rest_operation, gardens_rating_rest_signal)
+            self.add_signal(gardens_rating_rest_signal, "gardens_rating_rest")
+            self.add_transition(gardens_rating, gardens_rating_rest_signal)
 
     @Profiling
     @Debugger
@@ -400,18 +432,25 @@ class FinnEnvironmentProcess(Process):
 
         """
         roads_rating = self.get_signal("roads_rating")
-        roads_rating_rest_operation = RestructureRatings(
-            roads_rating.data["rating_roads"], "Restructuring Roads Rating")
-        self.add_node(roads_rating_rest_operation)
-        self.add_transition(roads_rating, roads_rating_rest_operation, label="thread")
+        if roads_rating.data:
+            roads_rating_rest_operation = RestructureRatings(
+                roads_rating.data["rating_roads"], "Restructuring Roads Rating")
+            self.add_node(roads_rating_rest_operation)
+            self.add_transition(roads_rating, roads_rating_rest_operation, label="thread")
 
-        roads_rating_rest = {"roads_rating": roads_rating_rest_operation.run()}
+            roads_rating_rest = {"roads_rating": roads_rating_rest_operation.run()}
+            roads_rating_rest_signal = Signal(roads_rating_rest,
+                                              "Restructured Roads Rating Statistics")
 
-        roads_rating_rest_signal = Signal(roads_rating_rest,
-                                          "Restructured Roads Rating Statistics")
+            self.add_signal(roads_rating_rest_signal, "roads_rating_rest")
+            self.add_transition(roads_rating_rest_operation, roads_rating_rest_signal)
+        else:
+            roads_rating_rest = {"roads_rating": ""}
+            roads_rating_rest_signal = Signal(roads_rating_rest,
+                                              "Restructured Roads Rating Statistics")
 
-        self.add_signal(roads_rating_rest_signal, "roads_rating_rest")
-        self.add_transition(roads_rating_rest_operation, roads_rating_rest_signal)
+            self.add_signal(roads_rating_rest_signal, "roads_rating_rest")
+            self.add_transition(roads_rating, roads_rating_rest_signal)
 
     @Profiling
     @Debugger

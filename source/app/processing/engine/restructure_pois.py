@@ -34,7 +34,7 @@ class RestructurePois(Restructure):
         super().__init__(data=data, desc=desc)
 
     @Tracking
-    def run(self):
+    def run(self, col_name="institusjon"):
         """
         method for running operation
 
@@ -57,7 +57,7 @@ class RestructurePois(Restructure):
                             lat = list(values.values())[0]
                             long = list(values.values())[1]
                             pois_location.append(
-                                {"Institusjon": name, "Breddegrad": lat, "Lengdegrad": long})
+                                {col_name: name, "Breddegrad": lat, "Lengdegrad": long})
                         elif keys == "distances":
                             if "unit" in values.keys():
                                 for key, value in values.items():
@@ -83,7 +83,7 @@ class RestructurePois(Restructure):
                                                                      duration_drive, distance_drive,
                                                                      pois_location)
         identifier = self.data.copy()["id"].lower()
-        return {identifier: {"Institusjon": inst_col, "Distanse": dist_col,
+        return {identifier: {col_name: inst_col, "Distanse": dist_col,
                              "Tid": dur_col}, identifier + "_location": pois_location}
 
     @staticmethod

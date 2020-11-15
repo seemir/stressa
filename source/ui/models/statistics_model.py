@@ -420,9 +420,13 @@ class StatisticsModel(Model):
             city_dist = dist["By"][:-2] if ignore_total else dist["By"]
             dist_range = list(range(len(city_area_dist)))
             if "info" + postfix in self.data.keys():
-                neighbourhood = self.data["info" + postfix]["neighborhood"]["name"] \
-                    .replace("-", " - ")
-                city = self.data["info" + postfix]["neighborhood"]["city"]
+                if self.data["info" + postfix]["neighborhood"]:
+                    neighbourhood = self.data["info" + postfix]["neighborhood"]["name"] \
+                        .replace("-", " - ")
+                    city = self.data["info" + postfix]["neighborhood"]["city"]
+                else:
+                    neighbourhood = self.data["info" + postfix]["census"].replace("-", " - ")
+                    city = self.data["info" + postfix]["city"].replace("-", " - ")
             else:
                 neighbourhood = ""
                 city = ""

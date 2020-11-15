@@ -41,4 +41,5 @@ class FinnTransportationSubModel(SubModel):
         method for running the transportation sub model
 
         """
-        return FinnTransportationProcessing(self.transportation_data).transportation_statistics
+        finn_transportation_processing = FinnTransportationProcessing(self.transportation_data)
+        return finn_transportation_processing.transportation_statistics
