@@ -9,13 +9,13 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Tracking, Debugger
 
-from .finn_transportation_processing import FinnTransportationProcessing
+from .finn_transportation_process import FinnTransportationProcess
 from .engine import SubModel
 
 
 class FinnTransportationSubModel(SubModel):
     """
-    Sub mode that handles the Transportation statistics from Finn ads
+    Sub model that handles the Transportation statistics from Finn ads
 
     """
 
@@ -31,7 +31,7 @@ class FinnTransportationSubModel(SubModel):
 
         """
         Assertor.assert_data_types([transportation_data], [dict])
-        self.name = FinnTransportationProcessing.__name__
+        self.name = FinnTransportationProcess.__name__
         super().__init__(name=self.name, desc="Processing Finn Transportation Statistics")
         self.transportation_data = transportation_data
 
@@ -41,5 +41,5 @@ class FinnTransportationSubModel(SubModel):
         method for running the transportation sub model
 
         """
-        finn_transportation_processing = FinnTransportationProcessing(self.transportation_data)
+        finn_transportation_processing = FinnTransportationProcess(self.transportation_data)
         return finn_transportation_processing.transportation_statistics

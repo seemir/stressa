@@ -13,7 +13,7 @@ from .engine import Process, InputOperation, Signal, Extract, RestructurePois, R
     Restructure, Multiplex, OutputOperation
 
 
-class FinnTransportationProcessing(Process):
+class FinnTransportationProcess(Process):
     """
     Process for handling transportation data from Finn advert
 
@@ -44,6 +44,8 @@ class FinnTransportationProcessing(Process):
         self.multiplex()
 
         self.transportation_statistics = self.output_operation()
+
+        self.end_process()
 
     @Profiling
     @Tracking

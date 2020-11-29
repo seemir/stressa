@@ -9,10 +9,12 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Profiling, Tracking, Debugger
 
-from .engine import Process, InputOperation, Signal, Extract, Separate, Multiplex, OutputOperation
+from .engine import Process, InputOperation, Signal, Extract, Separate, Multiplex, \
+    OutputOperation
 
 from .finn_transportation_sub_model import FinnTransportationSubModel
 from .finn_environment_sub_model import FinnEnvironmentSubModel
+from .finn_leisure_sub_model import FinnLeisureSubModel
 from .finn_people_sub_model import FinnPeopleSubModel
 from .finn_family_sub_model import FinnFamilySubModel
 
@@ -48,7 +50,8 @@ class FinnCommunityProcess(Process):
                            self.separate_4, self.separate_5, self.separate_6])
 
         self.run_parallel([self.people_data_processing, self.family_data_processing,
-                           self.environmental_data_processing, self.transportation_data_processing])
+                           self.environmental_data_processing, self.transportation_data_processing,
+                           self.leisure_data_processing])
 
         self.multiplex()
 
@@ -281,7 +284,8 @@ class FinnCommunityProcess(Process):
 
         separate = separate_operation.run()
 
-        separate_signal = Signal(separate, "Separate Transportation Statistics", prettify_keys=True,
+        separate_signal = Signal(separate, "Separated Transportation Statistics",
+                                 prettify_keys=True,
                                  length=4)
         self.add_signal(separate_signal, "separated_transportation_signal")
         self.add_transition(separate_operation, separate_signal, label="thread")
@@ -301,7 +305,7 @@ class FinnCommunityProcess(Process):
 
         separate = separate_operation.run()
 
-        separate_signal = Signal(separate, "Separate Leisure Statistics", prettify_keys=True,
+        separate_signal = Signal(separate, "Separated Leisure Statistics", prettify_keys=True,
                                  length=5)
         self.add_signal(separate_signal, "separated_leisure_signal")
         self.add_transition(separate_operation, separate_signal, label="thread")
@@ -321,7 +325,7 @@ class FinnCommunityProcess(Process):
 
         separate = separate_operation.run()
 
-        separate_signal = Signal(separate, "Separate Shopping Statistics", prettify_keys=True,
+        separate_signal = Signal(separate, "Separated Shopping Statistics", prettify_keys=True,
                                  length=5)
         self.add_signal(separate_signal, "separated_shopping_signal")
         self.add_transition(separate_operation, separate_signal, label="thread")
@@ -408,6 +412,25 @@ class FinnCommunityProcess(Process):
 
     @Profiling
     @Debugger
+    def leisure_data_processing(self):
+        """
+        sub model for processing finn leisure data
+
+        """
+        leisure_signal = self.get_signal("separated_leisure_signal")
+        leisure_signal_operation = FinnLeisureSubModel(leisure_signal.data)
+
+        self.add_node(leisure_signal_operation)
+        self.add_transition(leisure_signal, leisure_signal_operation, label="thread")
+
+        leisure_processing = leisure_signal_operation.run()
+        leisure_processing_signal = Signal(leisure_processing, "Processed Leisure Statistics",
+                                           prettify_keys=True, length=5)
+        self.add_signal(leisure_processing_signal, "leisure_statistics_signal")
+        self.add_transition(leisure_signal_operation, leisure_processing_signal, label="thread")
+
+    @Profiling
+    @Debugger
     def multiplex(self):
         """
         multiplex all processed data
@@ -419,10 +442,12 @@ class FinnCommunityProcess(Process):
         family_statistics = self.get_signal("family_statistics_signal")
         environmental_statistics = self.get_signal("environmental_statistics_signal")
         transportation_statistics = self.get_signal("transportation_statistics_signal")
+        leisure_statistics = self.get_signal("leisure_statistics_signal")
 
         multiplex_operation = Multiplex(
             [info_signal.data, people_statistics.data, family_statistics.data,
-             environmental_statistics.data, transportation_statistics.data],
+             environmental_statistics.data, transportation_statistics.data,
+             leisure_statistics.data],
             desc="Multiplex Finn Community Statistics")
         self.add_node(multiplex_operation)
 
@@ -431,6 +456,7 @@ class FinnCommunityProcess(Process):
         self.add_transition(family_statistics, multiplex_operation)
         self.add_transition(environmental_statistics, multiplex_operation)
         self.add_transition(transportation_statistics, multiplex_operation)
+        self.add_transition(leisure_statistics, multiplex_operation)
 
         multiplex = multiplex_operation.run()
 
