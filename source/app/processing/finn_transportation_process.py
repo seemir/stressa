@@ -224,7 +224,7 @@ class FinnTransportationProcess(Process):
                                 label="thread")
 
             transportation_rating_rest = {
-                "transportation_ration": transportation_rating_rest_operation.run()}
+                "transportation_rating": transportation_rating_rest_operation.run()}
             transportation_rating_rest_signal = Signal(transportation_rating_rest,
                                                        "Restructured Transportation Rating")
 
