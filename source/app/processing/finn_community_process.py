@@ -14,6 +14,7 @@ from .engine import Process, InputOperation, Signal, Extract, Separate, Multiple
 
 from .finn_transportation_sub_model import FinnTransportationSubModel
 from .finn_environment_sub_model import FinnEnvironmentSubModel
+from .finn_shopping_sub_model import FinnShoppingSubModel
 from .finn_leisure_sub_model import FinnLeisureSubModel
 from .finn_people_sub_model import FinnPeopleSubModel
 from .finn_family_sub_model import FinnFamilySubModel
@@ -50,8 +51,8 @@ class FinnCommunityProcess(Process):
                            self.separate_4, self.separate_5, self.separate_6])
 
         self.run_parallel([self.people_data_processing, self.family_data_processing,
-                           self.environmental_data_processing, self.transportation_data_processing,
-                           self.leisure_data_processing])
+                           self.environmental_process, self.transportation_process,
+                           self.leisure_processing, self.shopping_process])
 
         self.multiplex()
 
@@ -369,7 +370,7 @@ class FinnCommunityProcess(Process):
 
     @Profiling
     @Debugger
-    def environmental_data_processing(self):
+    def environmental_process(self):
         """
         sub model for processing finn environmental data
 
@@ -391,7 +392,7 @@ class FinnCommunityProcess(Process):
 
     @Profiling
     @Debugger
-    def transportation_data_processing(self):
+    def transportation_process(self):
         """
         sub model for processing finn transportation data
 
@@ -412,7 +413,7 @@ class FinnCommunityProcess(Process):
 
     @Profiling
     @Debugger
-    def leisure_data_processing(self):
+    def leisure_processing(self):
         """
         sub model for processing finn leisure data
 
@@ -431,6 +432,25 @@ class FinnCommunityProcess(Process):
 
     @Profiling
     @Debugger
+    def shopping_process(self):
+        """
+        sub model for processing finn shopping data
+
+        """
+        shopping_signal = self.get_signal("separated_shopping_signal")
+        shopping_signal_operation = FinnShoppingSubModel(shopping_signal.data)
+
+        self.add_node(shopping_signal_operation)
+        self.add_transition(shopping_signal, shopping_signal_operation, label="thread")
+
+        shopping_processing = shopping_signal_operation.run()
+        shopping_processing_signal = Signal(shopping_processing, "Processed Shopping Statistics",
+                                            prettify_keys=True, length=5)
+        self.add_signal(shopping_processing_signal, "shopping_statistics_signal")
+        self.add_transition(shopping_signal_operation, shopping_processing_signal, label="thread")
+
+    @Profiling
+    @Debugger
     def multiplex(self):
         """
         multiplex all processed data
@@ -443,11 +463,12 @@ class FinnCommunityProcess(Process):
         environmental_statistics = self.get_signal("environmental_statistics_signal")
         transportation_statistics = self.get_signal("transportation_statistics_signal")
         leisure_statistics = self.get_signal("leisure_statistics_signal")
+        shopping_statistics = self.get_signal("shopping_statistics_signal")
 
         multiplex_operation = Multiplex(
             [info_signal.data, people_statistics.data, family_statistics.data,
              environmental_statistics.data, transportation_statistics.data,
-             leisure_statistics.data],
+             leisure_statistics.data, shopping_statistics.data],
             desc="Multiplex Finn Community Statistics")
         self.add_node(multiplex_operation)
 
@@ -457,6 +478,7 @@ class FinnCommunityProcess(Process):
         self.add_transition(environmental_statistics, multiplex_operation)
         self.add_transition(transportation_statistics, multiplex_operation)
         self.add_transition(leisure_statistics, multiplex_operation)
+        self.add_transition(shopping_statistics, multiplex_operation)
 
         multiplex = multiplex_operation.run()
 

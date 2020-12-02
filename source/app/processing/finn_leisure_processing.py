@@ -56,8 +56,7 @@ class FinnLeisureProcessing(Process):
         input_operation = InputOperation("Leisure Statistics")
         self.add_node(input_operation)
 
-        input_signal = Signal(data, desc="Leisure Statistics",
-                              prettify_keys=True, length=4)
+        input_signal = Signal(data, desc="Leisure Statistics", prettify_keys=True, length=4)
         self.add_signal(input_signal, "input_signal")
         self.add_transition(input_operation, input_signal)
 

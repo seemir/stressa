@@ -15,7 +15,7 @@ from .engine import SubModel
 
 class FinnLeisureSubModel(SubModel):
     """
-    Sum-model that handles the Leisure statistics in relation to a real-estate on Finn
+    Sub-model that handles the Leisure statistics in relation to a real-estate on Finn
 
     """
 
