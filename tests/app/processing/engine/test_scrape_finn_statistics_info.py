@@ -59,11 +59,3 @@ class TestScrapeFinnStatisticsInfo:
         assert self.scrape_finn_statistics_info.desc == "from: '{}\\<[finn_code]\\>' " \
                                                         "\\n id: Scrape FINN Statistics " \
                                                         "Info".format(FINN_STAT_URL)
-
-    def test_scrape_finn_statistics_info_run_method(self):
-        """
-        Test the run method in ScrapeFinnStatisticsInfo operation
-
-        """
-        statistics_info = self.scrape_finn_statistics_info.run()
-        assert statistics_info["sqm_price"] == '106 700 kr/m²'
