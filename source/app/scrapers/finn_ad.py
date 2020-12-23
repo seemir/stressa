@@ -58,6 +58,11 @@ class FinnAd(Finn):
                 ad_response = requests.get(FINN_AD_URL + "{}".format(self.finn_code),
                                            timeout=TIMEOUT)
                 ad_status_code = ad_response.status_code
+                if ad_status_code == 404:
+                    ad_response = requests.get(
+                        FINN_AD_URL.replace('homes', 'newbuildings') + "{}".format(self.finn_code),
+                        timeout=TIMEOUT)
+                    ad_status_code = ad_response.status_code
                 elapsed = self.elapsed_time(start)
                 LOGGER.info(
                     "HTTP status code -> ADVERT: [{}: {}] -> elapsed: {}".format(
