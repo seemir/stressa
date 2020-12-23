@@ -28,21 +28,18 @@ class StatisticsModel(Model):
     Implementation of the Statistics model for which all the Finn based statistics logic is stored
 
     """
-    _statistics_keys = ["finnkode", "first_published", "location", "property_type", "price_range",
-                        "prisantydning", "fellesgjeld", "totalpris", "sqm_price",
-                        "city_area_sqm_price", "municipality_sqm_price", "size_range", "primrrom",
-                        "bruttoareal", "ad_of_the_week", "normal_traffic", "totalviews",
-                        "latestemailcount", "currentfavorites", "city_area_sqm_price",
-                        "municipality_sqm_price", "city_area", "municipality",
-                        "hist_data_city_area", "hist_data_municipality", "views_development",
+    _statistics_keys = ["finnkode", "firstpublished", "edited", "prisantydning", "fellesgjeld",
+                        "totalpris", "sqm_price", "city_area_sqm_price", "municipality_sqm_price",
+                        "primrrom", "bruttoareal", "views", "emails", "favorites",
+                        "city_area_sqm_price", "municipality_sqm_price", "city_area",
+                        "municipality", "hist_data_city_area", "hist_data_municipality",
                         "hist_data_city_area_count", "hist_data_municipality_count",
                         "age_distribution", "info", "civil_status", "education", "income",
                         "higheducation", "higheducation_location", "family_composition",
                         "age_distribution_children", "kindergardens", "kindergardens_location",
                         "schools", "schools_location", "highschools", "highschools_location",
                         "family_ratings"]
-    _ad_charts = ["hist_data_city_area", "hist_data_municipality", "views_development",
-                  "accumulated", "change", "ratio_statistics"]
+    _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
                          "education_city_area", "education_city", "income_city_area",
@@ -62,8 +59,6 @@ class StatisticsModel(Model):
         Assertor.assert_data_types([parent], [QObject])
         super().__init__(parent)
         self.sales_plot = None
-        self.view_plot = None
-        self.change_plot = None
         self.ration_plot = None
         self.age_dist_city_area_plot = None
         self.age_dist_city_plot = None
@@ -105,8 +100,6 @@ class StatisticsModel(Model):
                 self.add_sqm_dist_charts(prefix, postfix, key)
             elif key == "hist_data_city_area":
                 pass
-            elif key == "views_development":
-                self.add_views_statistics(prefix, postfix, key)
             elif key == "age_distribution":
                 self.add_age_dist_chart(prefix, postfix, key)
             elif key == "civil_status":
@@ -213,8 +206,6 @@ class StatisticsModel(Model):
         """
         BarChart.clear_graphics(self.parent.ui.graphics_view_hist_data_city_area)
         BarChart.clear_graphics(self.parent.ui.graphics_view_hist_data_municipality)
-        DoubleBarChart.clear_graphics(self.parent.graphics_view_views_development)
-        DoubleBarChart.clear_graphics(self.parent.graphics_view_accumulated)
         RatioChart.clear_graphics(self.parent.ui.graphics_view_ratio_statistics)
         BarChartWithLine.clear_graphics(
             self.parent.ui.graphics_view_age_distribution_city_area,
@@ -355,28 +346,6 @@ class StatisticsModel(Model):
         else:
             getattr(self.parent.ui, "line_edit_" + key).setText(
                 self.data[key + postfix])
-
-    def add_views_statistics(self, prefix, postfix, key):
-        """
-        method for adding views statistics
-
-        Parameters
-        ----------
-        prefix      : str
-                      name of prefix, i.e. "graphics"
-        postfix     : str
-                      index if used in naming of line_edits
-        key         : str
-                      name of label to change
-
-        """
-        DoubleBarChart.clear_graphics(
-            getattr(self.parent.ui, prefix + "views_development"))
-        DoubleBarChart.clear_graphics(
-            getattr(self.parent.ui, prefix + "accumulated"))
-        ChangeBarChart.clear_graphics(getattr(self.parent.ui, prefix + "change"))
-        if key + postfix in self.data.keys() and self.data[key + postfix]:
-            self.add_view_charts(prefix, postfix)
 
     def add_dist_chart(self, prefix: str, postfix: str, key: str, plot_name_1: str,
                        plot_name_2: str, table_name: str, dist_name: str, dist_var_1: str,

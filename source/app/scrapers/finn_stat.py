@@ -107,14 +107,14 @@ class FinnStat(Finn):
 
             view_statistics_total = json.loads(
                 stat_soup.find("script", attrs={"id": "ad-summary"}
-                               ).contents[0])[self.finn_code]
+                               ).contents[0])[0]
             view_statistics_detail = json.loads(
                 stat_soup.find("script", attrs={"id": "ad"}).contents[0])
             area_sales_statistics = json.loads(
                 stat_soup.find("script", attrs={"id": "area-sales"}).contents[0])
 
             info.update(self.extract_view_statistics(view_statistics_total, info))
-            info.update(self.extract_detail_view_statistics(view_statistics_detail, info))
+            info.update(self.extract_published_statistics(view_statistics_detail, info))
             info.update(self.extract_area_sales_statistics(area_sales_statistics, info))
 
             if all(name in info.keys() for name in ["hist_data_city_area",
@@ -166,12 +166,12 @@ class FinnStat(Finn):
         """
         Assertor.assert_data_types([total_view_statistics, info], [dict, dict])
         for prop, value in total_view_statistics.items():
-            if isinstance(value, (int, float)):
+            if isinstance(value, (int, float)) and prop.lower() != 'adid':
                 info.update({prop.lower(): Amount(str(value)).amount})
         return info
 
     @Tracking
-    def extract_detail_view_statistics(self, detail_view_statistics: dict, info: dict):
+    def extract_published_statistics(self, detail_view_statistics: dict, info: dict):
         """
         method for extracting the detail view statistics
 
@@ -190,62 +190,15 @@ class FinnStat(Finn):
         """
         Assertor.assert_data_types([detail_view_statistics, info], [dict, dict])
         for prop, value in detail_view_statistics.items():
-            if prop.lower() == "ad":
-                if "firstPublished" in value.keys():
-                    pub = datetime.fromisoformat(value["firstPublished"][:-1])
-                    date = datetime.strptime(str(pub), "%Y-%m-%d %H:%M:%S").strftime(
-                        "%d. %b %Y %H:%M")
-                    info.update(
-                        {"first_published": str(date).lower() + " ({} dager siden)".format(
-                            (datetime.today() - pub).days)})
-                    info.update({
-                        "published": datetime.strptime(str(pub), "%Y-%m-%d %H:%M:%S").strftime(
-                            "%d.%m.%Y")})
-            elif prop.lower() == "views":
-                organic = {}
-                effect = {}
-                total = {}
-                views_development = {"views_development": {}}
-                for key, val in value.items():
-                    if len(val) == 2:
-                        effect.update({key: list(val.values())[0]})
-                        organic.update({key: list(val.values())[1]})
-                        total.update({key: list(val.values())[0] + list(val.values())[1]})
-                    elif len(val) == 1:
-                        effect.update({key: 0})
-                        organic.update({key: list(val.values())[0]})
-                        total.update({key: list(val.values())[0]})
-                    else:
-                        effect.update({key: 0})
-                        organic.update({key: 0})
-                        total.update({key: 0})
-
-                views_development["views_development"].update(
-                    {"dates": list(dict(sorted(organic.items())).keys())})
-                views_development["views_development"].update(
-                    {"organic_views": list(dict(sorted(organic.items())).values())})
-                views_development["views_development"].update(
-                    {"effect_views": list(dict(sorted(effect.items())).values())})
-                views_development["views_development"].update(
-                    {"total_views": list(dict(sorted(total.items())).values())})
-                info.update(views_development)
-
-            elif prop.lower() == "totals":
-                for key, val in value.items():
-                    info.update({key.lower(): Amount(str(val)).amount})
-            elif prop.lower() == "performance":
-                if "description" in value.keys():
-                    for key, val in value["description"].items():
-                        if key.lower() == "price":
-                            info.update(
-                                {"price_range": val.replace("kr\xa0", "").replace(",00",
-                                                                                  " kr").strip()})
-                        elif key.lower() == "published":
-                            pass
-                        elif key.lower() == "size":
-                            info.update({"size_range": val.replace(" -", " m² -") + " m²"})
-                        else:
-                            info.update({key.lower(): val})
+            if prop.lower() in ('firstpublished', 'edited'):
+                pub = datetime.fromisoformat(value)
+                date = datetime.strptime(str(pub), "%Y-%m-%d %H:%M:%S").strftime(
+                    "%d.%m.%Y %H:%M")
+                info.update(
+                    {prop.lower(): str(date).lower() + " ({} dager siden)".format(
+                        (datetime.today() - pub).days)})
+                if prop.lower() == 'firstpublished':
+                    info.update({'published': date})
         return info
 
     @Tracking

@@ -58,6 +58,6 @@ class CheckNewestDate(Operation):
         """
         newest = False
         if self.date_1 and self.date_2:
-            newest = datetime.strptime(self.date_1, "%d.%m.%Y") < datetime.strptime(self.date_2,
-                                                                                    "%d.%m.%Y")
+            newest = datetime.strptime(self.date_1, "%d.%m.%Y %H:%M") < datetime.strptime(
+                self.date_2, "%d.%m.%Y")
         return newest
