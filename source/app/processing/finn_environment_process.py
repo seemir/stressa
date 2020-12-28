@@ -318,7 +318,8 @@ class FinnEnvironmentProcess(Process):
         safety_rating = self.get_signal("safety_rating")
         if safety_rating.data:
             safety_rating_rest_operation = RestructureRatings(safety_rating.data["rating_safety"],
-                                                              "Restructuring Safety Rating")
+                                                              "Restructuring Safety Rating",
+                                                              key="Trygghet")
             self.add_node(safety_rating_rest_operation)
             self.add_transition(safety_rating, safety_rating_rest_operation, label="thread")
 
@@ -347,7 +348,8 @@ class FinnEnvironmentProcess(Process):
         noise_rating = self.get_signal("noise_rating")
         if noise_rating.data:
             noise_rating_rest_operation = RestructureRatings(noise_rating.data["rating_noise"],
-                                                             "Restructuring Noise Rating")
+                                                             "Restructuring Noise Rating",
+                                                             key="Støynivå")
             self.add_node(noise_rating_rest_operation)
             self.add_transition(noise_rating, noise_rating_rest_operation, label="thread")
 

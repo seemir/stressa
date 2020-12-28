@@ -516,7 +516,7 @@ class FinnFamilyDataProcessing(Process):
             self.add_node(restructure_ratings_operation)
             self.add_transition(ratings, restructure_ratings_operation, label="thread")
 
-            restructure_ratings = {"family_ratings": restructure_ratings_operation.run()}
+            restructure_ratings = {"family_rating": restructure_ratings_operation.run()}
             restructure_ratings_signal = Signal(restructure_ratings,
                                                 "Restructured Family Rating Information")
 

@@ -38,7 +38,7 @@ class StatisticsModel(Model):
                         "higheducation", "higheducation_location", "family_composition",
                         "age_distribution_children", "kindergardens", "kindergardens_location",
                         "schools", "schools_location", "highschools", "highschools_location",
-                        "family_ratings"]
+                        "family_rating", "safety_rating", "noise_rating"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
@@ -128,7 +128,11 @@ class StatisticsModel(Model):
                 self.add_pois_table(postfix, key)
             elif key == "highschools_location":
                 pass
-            elif key == "family_ratings":
+            elif key == "family_rating":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "safety_rating":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "noise_rating":
                 self.add_pois_table(postfix, key, resize=True)
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
@@ -193,7 +197,7 @@ class StatisticsModel(Model):
                          "higheducation_location", "info", "family_composition",
                          "age_distribution_children", "kindergardens", "kindergardens_location",
                          "schools", "schools_location", "highschools", "highschools_location",
-                         "family_ratings"]:
+                         "family_rating", "safety_rating", "noise_rating"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()

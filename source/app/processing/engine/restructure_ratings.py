@@ -19,7 +19,7 @@ class RestructureRatings(Restructure):
     """
 
     @Tracking
-    def __init__(self, data: dict, desc: str):
+    def __init__(self, data: dict, desc: str, key=None):
         """
         Constructor / Instantiate the class.
 
@@ -32,6 +32,7 @@ class RestructureRatings(Restructure):
 
         """
         super().__init__(data=data, desc=desc)
+        self.key = key if key else ""
 
     @Tracking
     def run(self):
@@ -65,11 +66,26 @@ class RestructureRatings(Restructure):
                         city_score.append(value)
                     elif key == "cityText":
                         city_text.append(value)
+            elif keys == "score":
+                for key, value in values.items():
+                    if key == "text":
+                        neighborhood_text.append(value)
+                    elif key == "neighborhood":
+                        neighborhood_score.append(value)
+                    elif key == "city":
+                        city_score.append(value)
+                    elif key == "cityText":
+                        city_text.append(value)
 
-        full_line = "------------------------"
-        group = ["Vurdering:", full_line, "Barnehage", "Skolene", ""]
-        neighborhood_column = ["", ""]
-        city_column = ["", ""]
+        full_line = "-------------"
+        if self.key:
+            group = ["Vurdering:", full_line, self.key, ""]
+            neighborhood_column = ["", ""]
+            city_column = ["", ""]
+        else:
+            group = ["Vurdering:", full_line, "Barnehage", "Skolene", ""]
+            neighborhood_column = ["", ""]
+            city_column = ["", ""]
 
         for i, text in enumerate(neighborhood_text):
             if text and city_text[i]:
