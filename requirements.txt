@@ -15,7 +15,7 @@ chardet==3.0.4
 click==7.1.2
 codecov==2.1.11
 colorama==0.4.4
-coverage==5.3.1
+coverage==5.4
 DateTime==4.3
 diagrams==0.15.0
 dnspython==2.0.0
