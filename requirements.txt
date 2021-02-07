@@ -41,7 +41,7 @@ more-itertools==8.6.0
 multidict==4.7.6
 numpy==1.20.0
 packaging==20.8
-pandas==1.2.0
+pandas==1.2.1
 pip-autoremove==0.9.1
 pluggy==0.13.1
 prettytable==0.7.2
