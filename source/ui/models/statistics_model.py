@@ -38,7 +38,8 @@ class StatisticsModel(Model):
                         "higheducation", "higheducation_location", "family_composition",
                         "age_distribution_children", "kindergardens", "kindergardens_location",
                         "schools", "schools_location", "highschools", "highschools_location",
-                        "family_rating", "safety_rating", "noise_rating"]
+                        "family_rating", "safety_rating", "noise_rating", "environment_rating",
+                        "gardens_rating", "roads_rating"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
@@ -134,6 +135,12 @@ class StatisticsModel(Model):
                 self.add_pois_table(postfix, key, resize=True)
             elif key == "noise_rating":
                 self.add_pois_table(postfix, key, resize=True)
+            elif key == "environment_rating":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "gardens_rating":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "roads_rating":
+                self.add_pois_table(postfix, key, resize=True)
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
                              kindergarden="kindergardens_location", schools="schools_location",
@@ -197,7 +204,8 @@ class StatisticsModel(Model):
                          "higheducation_location", "info", "family_composition",
                          "age_distribution_children", "kindergardens", "kindergardens_location",
                          "schools", "schools_location", "highschools", "highschools_location",
-                         "family_rating", "safety_rating", "noise_rating"]:
+                         "family_rating", "safety_rating", "noise_rating", "environment_rating",
+                         "gardens_rating", "roads_rating"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -548,12 +556,18 @@ class StatisticsModel(Model):
             getattr(self.parent.ui, "table_view_" + key).setModel(pois_table_model)
 
             if resize:
+                getattr(self.parent.ui, "table_view_" + key).verticalHeader().setSectionResizeMode(
+                    QHeaderView.ResizeToContents)
                 getattr(self.parent.ui,
                         "table_view_" + key).horizontalHeader().setSectionResizeMode(
                     0, QHeaderView.Stretch)
-                getattr(self.parent.ui, "table_view_" + key).verticalHeader().setSectionResizeMode(
-                    QHeaderView.ResizeToContents)
-                getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)
+                getattr(self.parent.ui,
+                        "table_view_" + key).horizontalHeader().setSectionResizeMode(
+                    1, QHeaderView.ResizeToContents)
+                getattr(self.parent.ui,
+                        "table_view_" + key).horizontalHeader().setSectionResizeMode(
+                    2, QHeaderView.ResizeToContents)
+                getattr(self.parent.ui, "table_view_" + key).setWordWrap(False)
             else:
                 getattr(self.parent.ui,
                         "table_view_" + key).horizontalHeader().setSectionResizeMode(

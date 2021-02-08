@@ -377,13 +377,15 @@ class FinnEnvironmentProcess(Process):
         environment_rating = self.get_signal("environment_rating")
         if environment_rating.data:
             environment_rating_rest_operation = RestructureRatings(
-                environment_rating.data["rating_environment"], "Restructuring Environment Rating")
+                environment_rating.data["rating_environment"], "Restructuring Environment Rating",
+                key="Bomiljø")
             self.add_node(environment_rating_rest_operation)
             self.add_transition(environment_rating, environment_rating_rest_operation,
                                 label="thread")
 
             environment_rating_rest = {
                 "environment_rating": environment_rating_rest_operation.run()}
+
             environment_rating_rest_signal = Signal(environment_rating_rest,
                                                     "Restructured Environment Rating Statistics")
 
@@ -408,7 +410,7 @@ class FinnEnvironmentProcess(Process):
         gardens_rating = self.get_signal("gardens_rating")
         if gardens_rating.data:
             garden_rating_rest_operation = RestructureRatings(
-                gardens_rating.data["rating_gardens"], "Restructuring Garden Rating")
+                gardens_rating.data["rating_gardens"], "Restructuring Garden Rating", key="Hager")
             self.add_node(garden_rating_rest_operation)
             self.add_transition(gardens_rating, garden_rating_rest_operation, label="thread")
 
@@ -436,7 +438,7 @@ class FinnEnvironmentProcess(Process):
         roads_rating = self.get_signal("roads_rating")
         if roads_rating.data:
             roads_rating_rest_operation = RestructureRatings(
-                roads_rating.data["rating_roads"], "Restructuring Roads Rating")
+                roads_rating.data["rating_roads"], "Restructuring Roads Rating", key="Veier")
             self.add_node(roads_rating_rest_operation)
             self.add_transition(roads_rating, roads_rating_rest_operation, label="thread")
 
