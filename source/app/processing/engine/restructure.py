@@ -74,8 +74,8 @@ class Restructure(Operation):
                                 group.append("Husholdninger")
                             else:
                                 group.append(
-                                    self._categories[val] if val in self._categories.keys()
-                                    else val)
+                                    self._categories[val].capitalize()
+                                    if val in self._categories.keys() else val.capitalize())
                         elif key in ("percent", "total"):
                             for prop, elem in val.items():
                                 if prop == "neighborhood":
@@ -84,5 +84,6 @@ class Restructure(Operation):
                                     city.append(elem)
         data = {self.data.copy()["id"].lower(): {"Gruppe": group,
                                                  "Nabolag": neighborhood,
-                                                 "By": city}}
+                                                 "By": city if city else [0 for _ in range(
+                                                     len(neighborhood))]}}
         return data

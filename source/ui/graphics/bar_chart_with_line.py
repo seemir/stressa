@@ -8,6 +8,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from numpy import percentile, insert, array
+import warnings
 
 from pyqtgraph import BarGraphItem, PlotDataItem, PlotWidget, TextItem, mkPen
 from PyQt5.QtWidgets import QTableView
@@ -15,6 +16,8 @@ from PyQt5.QtCore import Qt
 
 from source.util import Assertor
 from .chart import Chart
+
+warnings.filterwarnings('ignore')
 
 
 class BarChartWithLine(Chart):

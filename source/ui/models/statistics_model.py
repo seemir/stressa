@@ -39,13 +39,15 @@ class StatisticsModel(Model):
                         "age_distribution_children", "kindergardens", "kindergardens_location",
                         "schools", "schools_location", "highschools", "highschools_location",
                         "family_rating", "safety_rating", "noise_rating", "environment_rating",
-                        "gardens_rating", "roads_rating"]
+                        "gardens_rating", "roads_rating", "housing_stock", "housing_ownership"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
                          "education_city_area", "education_city", "income_city_area",
                          "income_city", "family_composition_city_area", "family_composition_city",
-                         "age_distribution_children_city_area", "age_distribution_children_city"]
+                         "age_distribution_children_city_area", "age_distribution_children_city",
+                         "housing_stock_city_area", "housing_stock_city",
+                         "housing_ownership_city_area", "housing_ownership_city"]
 
     def __init__(self, parent: QObject):
         """
@@ -75,6 +77,10 @@ class StatisticsModel(Model):
         self.age_dist_children_city_plot = None
         self.families_with_children_city_area_plot = None
         self.families_with_children_city_plot = None
+        self.housing_stock_city_area_plot = None
+        self.housing_stock_city_plot = None
+        self.housing_ownership_city_area_plot = None
+        self.housing_ownership_city_plot = None
 
     def add_statistics_info(self, postfix: str):
         """
@@ -141,6 +147,10 @@ class StatisticsModel(Model):
                 self.add_pois_table(postfix, key, resize=True)
             elif key == "roads_rating":
                 self.add_pois_table(postfix, key, resize=True)
+            elif key == "housing_stock":
+                self.add_housing_stock_chart(prefix, postfix, key)
+            elif key == "housing_ownership":
+                self.add_housing_ownership_chart(prefix, postfix, key)
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
                              kindergarden="kindergardens_location", schools="schools_location",
@@ -205,7 +215,7 @@ class StatisticsModel(Model):
                          "age_distribution_children", "kindergardens", "kindergardens_location",
                          "schools", "schools_location", "highschools", "highschools_location",
                          "family_rating", "safety_rating", "noise_rating", "environment_rating",
-                         "gardens_rating", "roads_rating"]:
+                         "gardens_rating", "roads_rating", "housing_stock", "housing_ownership"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -252,6 +262,14 @@ class StatisticsModel(Model):
             self.parent.ui.table_view_age_distribution_children)
         BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_age_distribution_children_city,
                                         self.parent.ui.table_view_age_distribution_children)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_stock_city_area,
+                                        self.parent.ui.table_view_housing_stock)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_stock_city,
+                                        self.parent.ui.table_view_housing_stock)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_ownership_city_area,
+                                        self.parent.ui.table_view_housing_ownership)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_ownership_city,
+                                        self.parent.ui.table_view_housing_ownership)
 
     def add_sqm_dist_charts(self, prefix: str, postfix: str, key: str):
         """
@@ -664,4 +682,42 @@ class StatisticsModel(Model):
                             "age_distribution_children_city",
                             "table_view_age_distribution_children", "Aldersfordeling barn",
                             "age_distribution_children_city_area_plot",
-                            "age_distribution_children_city", ignore_total=False)
+                            "age_distribution_children_city_plot", ignore_total=False)
+
+    def add_housing_stock_chart(self, prefix, postfix, key):
+        """
+        method for adding housing stock chart to the statistics model
+
+        Parameters
+        ----------
+        prefix      : str
+                      name of prefix, i.e. "graphics"
+        postfix     : str
+                      index if used in naming of line_edits
+        key         : str
+                      name of label to change
+
+        """
+        self.add_dist_chart(prefix, postfix, key, "housing_stock_city_area", "housing_stock_city",
+                            "table_view_housing_stock", "Boligmasse",
+                            "housing_stock_city_area_plot", "housing_stock_city_plot",
+                            ignore_total=False)
+
+    def add_housing_ownership_chart(self, prefix, postfix, key):
+        """
+        method for adding housing stock chart to the statistics model
+
+        Parameters
+        ----------
+        prefix      : str
+                      name of prefix, i.e. "graphics"
+        postfix     : str
+                      index if used in naming of line_edits
+        key         : str
+                      name of label to change
+
+        """
+        self.add_dist_chart(prefix, postfix, key, "housing_ownership_city_area",
+                            "housing_ownership_city", "table_view_housing_ownership",
+                            "Bolig eierskap", "housing_ownership_city_area_plot",
+                            "housing_ownership_city_plot", ignore_total=False)
