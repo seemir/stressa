@@ -34,7 +34,17 @@ class Restructure(Operation):
                    "500000-800000": "500K - 800K", "800000+": "800K+",
                    "CouplesWithChildren": "Par med barn", "CouplesWithoutChildren": "Par uten barn",
                    "SingleWithChildren": "Single med barn", "MultiFamilies": "Flerfamilie",
-                   "SingleWithoutChildren": "Single uten barn"}
+                   "SingleWithoutChildren": "Single uten barn",
+                   "owns": "Eier",
+                   "rents": "Leier",
+                   "0-60": "0 - 60 m\u00b2",
+                   "60-120": "60 m\u00b2 - 120 m\u00b2",
+                   "120-200": "120 m\u00b2 - 200 m\u00b2",
+                   "200+": "200 m\u00b2+",
+                   "0-10": "0 år - 10 år",
+                   "10-30": "10 år - 30 år",
+                   "30-50": "30 år - 50 år",
+                   "50+": "50+ år"}
 
     @Tracking
     def __init__(self, data: dict, desc: str):

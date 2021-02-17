@@ -3588,7 +3588,48 @@
            <string>Bomiljø</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_16">
-           <item row="1" column="1">
+           <item row="0" column="2">
+            <widget class="QFrame" name="frame_map_button_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Plain</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_17">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="push_button_show_in_map_4">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>35</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Vis i kart</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/map.svg</normaloff>:/img/map.svg</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="1" column="2">
             <widget class="QFrame" name="frame_environment_rating">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -3734,48 +3775,7 @@
              </layout>
             </widget>
            </item>
-           <item row="0" column="1">
-            <widget class="QFrame" name="frame_map_button_3">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Plain</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_17">
-              <item row="0" column="0">
-               <widget class="QPushButton" name="push_button_show_in_map_4">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>35</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Vis i kart</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/map.svg</normaloff>:/img/map.svg</iconset>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="0" rowspan="2">
+           <item row="0" column="1" rowspan="2">
             <widget class="QFrame" name="frame_environment">
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
@@ -3784,25 +3784,33 @@
               <enum>QFrame::Plain</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_13">
-              <item row="0" column="4">
-               <widget class="QGraphicsView" name="graphicsView_4"/>
+              <item row="5" column="3">
+               <widget class="PlotWidget" name="graphics_view_housing_age_city">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
               </item>
-              <item row="0" column="5">
-               <widget class="QGraphicsView" name="graphicsView_5"/>
-              </item>
-              <item row="0" column="3">
-               <widget class="QGraphicsView" name="graphicsView_3"/>
-              </item>
-              <item row="1" column="5">
+              <item row="5" column="6">
                <widget class="QGraphicsView" name="graphicsView_10"/>
               </item>
+              <item row="2" column="6" rowspan="2">
+               <widget class="QTableView" name="tableView"/>
+              </item>
+              <item row="6" column="6" rowspan="2">
+               <widget class="QTableView" name="tableView_5"/>
+              </item>
               <item row="1" column="3">
-               <widget class="QGraphicsView" name="graphicsView_8"/>
+               <widget class="PlotWidget" name="graphics_view_housing_area_city">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
               </item>
-              <item row="1" column="4">
-               <widget class="QGraphicsView" name="graphicsView_9"/>
+              <item row="1" column="6">
+               <widget class="QGraphicsView" name="graphicsView_5"/>
               </item>
-              <item row="2" column="1">
+              <item row="2" column="5" rowspan="2">
                <widget class="QTableView" name="table_view_housing_stock">
                 <property name="alternatingRowColors">
                  <bool>true</bool>
@@ -3818,38 +3826,20 @@
                 </attribute>
                </widget>
               </item>
-              <item row="2" column="2">
-               <widget class="QTableView" name="table_view_housing_ownership">
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
+              <item row="5" column="5">
+               <widget class="PlotWidget" name="graphics_view_housing_ownership_city_area">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
                 </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-                <property name="gridStyle">
-                 <enum>Qt::DotLine</enum>
-                </property>
-                <attribute name="horizontalHeaderHighlightSections">
-                 <bool>false</bool>
-                </attribute>
                </widget>
               </item>
-              <item row="2" column="3">
-               <widget class="QTableView" name="tableView_3"/>
-              </item>
-              <item row="2" column="4">
-               <widget class="QTableView" name="tableView_4"/>
-              </item>
-              <item row="2" column="5">
-               <widget class="QTableView" name="tableView_5"/>
-              </item>
-              <item row="0" column="0">
+              <item row="1" column="1">
                <widget class="PlotWidget" name="graphics_view_housing_stock_city">
                 <property name="enabled">
                  <bool>true</bool>
                 </property>
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
@@ -3868,7 +3858,85 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
+              <item row="6" column="5" rowspan="2">
+               <widget class="QTableView" name="table_view_housing_ownership">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="1" column="5">
+               <widget class="PlotWidget" name="graphics_view_housing_stock_city_area">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Sunken</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="2">
+               <widget class="PlotWidget" name="graphics_view_housing_area_city_area">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+                <property name="interactive">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="2" colspan="2">
+               <widget class="QTableView" name="table_view_housing_area">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="5" column="2">
+               <widget class="PlotWidget" name="graphics_view_housing_age_city_area">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+                <property name="interactive">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="2" colspan="2">
+               <widget class="QTableView" name="table_view_housing_age">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="5" column="1">
                <widget class="PlotWidget" name="graphics_view_housing_ownership_city">
                 <property name="enabled">
                  <bool>true</bool>
@@ -3881,23 +3949,6 @@
                 </property>
                 <property name="interactive">
                  <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1" colspan="2">
-               <widget class="PlotWidget" name="graphics_view_housing_ownership_city_area">
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1" colspan="2">
-               <widget class="PlotWidget" name="graphics_view_housing_stock_city_area">
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Sunken</enum>
                 </property>
                </widget>
               </item>
@@ -5242,25 +5293,25 @@
   <tabstop>push_button_show_in_map_3</tabstop>
   <tabstop>tab_widget_statistics</tabstop>
   <tabstop>graphics_view_housing_stock_city</tabstop>
+  <tabstop>graphics_view_housing_area_city_area</tabstop>
+  <tabstop>graphics_view_housing_area_city</tabstop>
   <tabstop>graphics_view_housing_stock_city_area</tabstop>
-  <tabstop>graphicsView_3</tabstop>
-  <tabstop>graphicsView_4</tabstop>
   <tabstop>graphicsView_5</tabstop>
   <tabstop>push_button_show_in_map_4</tabstop>
-  <tabstop>graphics_view_housing_ownership_city</tabstop>
-  <tabstop>graphics_view_housing_ownership_city_area</tabstop>
-  <tabstop>graphicsView_8</tabstop>
-  <tabstop>graphicsView_9</tabstop>
-  <tabstop>graphicsView_10</tabstop>
   <tabstop>table_view_safety_rating</tabstop>
+  <tabstop>table_view_housing_area</tabstop>
+  <tabstop>table_view_housing_stock</tabstop>
+  <tabstop>tableView</tabstop>
   <tabstop>table_view_noise_rating</tabstop>
   <tabstop>table_view_environment_rating</tabstop>
-  <tabstop>table_view_housing_stock</tabstop>
-  <tabstop>table_view_housing_ownership</tabstop>
-  <tabstop>tableView_3</tabstop>
-  <tabstop>tableView_4</tabstop>
-  <tabstop>tableView_5</tabstop>
+  <tabstop>graphics_view_housing_age_city_area</tabstop>
+  <tabstop>graphics_view_housing_age_city</tabstop>
+  <tabstop>graphics_view_housing_ownership_city_area</tabstop>
+  <tabstop>graphicsView_10</tabstop>
   <tabstop>table_view_gardens_rating</tabstop>
+  <tabstop>table_view_housing_age</tabstop>
+  <tabstop>table_view_housing_ownership</tabstop>
+  <tabstop>tableView_5</tabstop>
   <tabstop>table_view_roads_rating</tabstop>
  </tabstops>
  <resources>

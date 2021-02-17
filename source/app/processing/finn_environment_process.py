@@ -469,11 +469,11 @@ class FinnEnvironmentProcess(Process):
         self.add_node(housing_area_rest_operation)
         self.add_transition(housing_area, housing_area_rest_operation, label="thread")
 
-        housing_rating_rest = {"housing_area": housing_area_rest_operation.run()}
-        housing_rating_rest_signal = Signal(housing_rating_rest,
+        housing_area_rest = housing_area_rest_operation.run()
+        housing_rating_rest_signal = Signal(housing_area_rest,
                                             "Restructured Housing Area Statistics")
 
-        self.add_signal(housing_rating_rest_signal, "housing_rating_rest")
+        self.add_signal(housing_rating_rest_signal, "housing_area_rest")
         self.add_transition(housing_area_rest_operation, housing_rating_rest_signal)
 
     @Profiling
@@ -489,7 +489,7 @@ class FinnEnvironmentProcess(Process):
         self.add_node(housing_age_rest_operation)
         self.add_transition(housing_age, housing_age_rest_operation, label="thread")
 
-        housing_age_rest = {"housing_age": housing_age_rest_operation.run()}
+        housing_age_rest = housing_age_rest_operation.run()
         housing_age_rest_signal = Signal(housing_age_rest, "Restructured Housing Age")
 
         self.add_signal(housing_age_rest_signal, "housing_age_rest")
@@ -509,7 +509,7 @@ class FinnEnvironmentProcess(Process):
             self.add_node(housing_prices_rest_operation)
             self.add_transition(housing_prices, housing_prices_rest_operation, label="thread")
 
-            housing_prices_rest = {"housing_prices": housing_prices_rest_operation.run()}
+            housing_prices_rest = housing_prices_rest_operation.run()
             housing_prices_rest_signal = Signal(housing_prices_rest, "Restructured Housing Prices")
 
             self.add_signal(housing_prices_rest_signal, "housing_prices_rest")
@@ -535,14 +535,14 @@ class FinnEnvironmentProcess(Process):
         environment_rating_rest = self.get_signal("environment_rating_rest")
         gardens_rating_rest = self.get_signal("gardens_rating_rest")
         roads_rating_rest = self.get_signal("roads_rating_rest")
-        housing_rating_rest = self.get_signal("housing_rating_rest")
+        housing_area_rest = self.get_signal("housing_area_rest")
         housing_age_rest = self.get_signal("housing_age_rest")
         housing_prices_rest = self.get_signal("housing_prices_rest")
 
         multiplex_operation = Multiplex([housing_stock_rest.data, housing_ownership_rest.data,
                                          safety_rating_rest.data, noise_rating_rest.data,
                                          environment_rating_rest.data, gardens_rating_rest.data,
-                                         roads_rating_rest.data, housing_rating_rest.data,
+                                         roads_rating_rest.data, housing_area_rest.data,
                                          housing_age_rest.data, housing_prices_rest.data],
                                         desc="Multiplex Environment Statistics")
 
@@ -553,7 +553,7 @@ class FinnEnvironmentProcess(Process):
         self.add_transition(environment_rating_rest, multiplex_operation)
         self.add_transition(gardens_rating_rest, multiplex_operation)
         self.add_transition(roads_rating_rest, multiplex_operation)
-        self.add_transition(housing_rating_rest, multiplex_operation)
+        self.add_transition(housing_area_rest, multiplex_operation)
         self.add_transition(housing_age_rest, multiplex_operation)
         self.add_transition(housing_prices_rest, multiplex_operation)
 
