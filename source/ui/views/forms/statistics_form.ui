@@ -2253,7 +2253,55 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_5">
+              <item row="0" column="0">
+               <widget class="PlotWidget" name="graphics_view_education_city_area">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="PlotWidget" name="graphics_view_income_city_area">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="4">
+               <widget class="PlotWidget" name="graphics_view_civil_status_city">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="PlotWidget" name="graphics_view_age_distribution_city_area">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="PlotWidget" name="graphics_view_education_city">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
               <item row="2" column="1">
+               <widget class="PlotWidget" name="graphics_view_age_distribution_city">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="0" colspan="2">
                <widget class="QTableView" name="table_view_age_distribution">
                 <property name="alternatingRowColors">
                  <bool>true</bool>
@@ -2272,7 +2320,46 @@
                 </attribute>
                </widget>
               </item>
-              <item row="2" column="2">
+              <item row="1" column="0" colspan="2">
+               <widget class="QTableView" name="table_view_education">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::SingleSelection</enum>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="PlotWidget" name="graphics_view_income_city">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="3">
+               <widget class="PlotWidget" name="graphics_view_civil_status_city_area">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="3" colspan="2">
                <widget class="QTableView" name="table_view_income">
                 <property name="alternatingRowColors">
                  <bool>true</bool>
@@ -2291,7 +2378,7 @@
                 </attribute>
                </widget>
               </item>
-              <item row="2" column="3">
+              <item row="3" column="3" colspan="2">
                <widget class="QTableView" name="table_view_civil_status">
                 <property name="minimumSize">
                  <size>
@@ -2314,93 +2401,6 @@
                 <attribute name="horizontalHeaderHighlightSections">
                  <bool>false</bool>
                 </attribute>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="PlotWidget" name="graphics_view_age_distribution_city_area">
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="PlotWidget" name="graphics_view_education_city_area">
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="PlotWidget" name="graphics_view_income_city_area">
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="PlotWidget" name="graphics_view_education_city">
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="3">
-               <widget class="PlotWidget" name="graphics_view_civil_status_city_area">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="PlotWidget" name="graphics_view_age_distribution_city">
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="PlotWidget" name="graphics_view_income_city">
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QTableView" name="table_view_education">
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-                <property name="selectionMode">
-                 <enum>QAbstractItemView::SingleSelection</enum>
-                </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-                <property name="gridStyle">
-                 <enum>Qt::DotLine</enum>
-                </property>
-                <attribute name="horizontalHeaderHighlightSections">
-                 <bool>false</bool>
-                </attribute>
-               </widget>
-              </item>
-              <item row="1" column="3">
-               <widget class="PlotWidget" name="graphics_view_civil_status_city">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
                </widget>
               </item>
              </layout>
@@ -2872,167 +2872,6 @@
            <string>Familie</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_14">
-           <item row="0" column="2">
-            <widget class="QFrame" name="frame_map_button_2">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_10">
-              <item row="0" column="0">
-               <widget class="QPushButton" name="push_button_show_in_map_3">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>35</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Vis i kart</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/map.svg</normaloff>:/img/map.svg</iconset>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="0" column="0" rowspan="2">
-            <widget class="QFrame" name="frame_family">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>0</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_12">
-              <item row="5" column="1">
-               <widget class="QTableView" name="table_view_age_distribution_children">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-                <property name="gridStyle">
-                 <enum>Qt::DotLine</enum>
-                </property>
-                <attribute name="horizontalHeaderHighlightSections">
-                 <bool>false</bool>
-                </attribute>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QTableView" name="table_view_family_composition">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-                <property name="gridStyle">
-                 <enum>Qt::DotLine</enum>
-                </property>
-                <attribute name="horizontalHeaderHighlightSections">
-                 <bool>false</bool>
-                </attribute>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="PlotWidget" name="graphics_view_family_composition_city_area">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="0">
-               <widget class="PlotWidget" name="graphics_view_family_composition_city">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="PlotWidget" name="graphics_view_age_distribution_children_city_area">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="3" column="1">
-               <widget class="PlotWidget" name="graphics_view_age_distribution_children_city">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
            <item row="1" column="2">
             <widget class="QFrame" name="frame_highschools">
              <property name="sizePolicy">
@@ -3158,6 +2997,177 @@
                 <attribute name="horizontalHeaderHighlightSections">
                  <bool>false</bool>
                 </attribute>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QFrame" name="frame_map_button_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_10">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="push_button_show_in_map_3">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>35</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Vis i kart</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/map.svg</normaloff>:/img/map.svg</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="0" rowspan="2">
+            <widget class="QFrame" name="frame_family">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_12">
+              <item row="5" column="0" colspan="2">
+               <widget class="QTableView" name="table_view_family_composition">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="5" column="2" colspan="2">
+               <widget class="QTableView" name="table_view_age_distribution_children">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="PlotWidget" name="graphics_view_age_distribution_children_city">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="PlotWidget" name="graphics_view_family_composition_city">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="PlotWidget" name="graphics_view_age_distribution_children_city_area">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="PlotWidget" name="graphics_view_family_composition_city_area">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0" colspan="4">
+               <widget class="QFrame" name="frame_whitespace">
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
                </widget>
               </item>
              </layout>
@@ -5266,32 +5276,28 @@
   <tabstop>graphics_view_hist_data_city_area</tabstop>
   <tabstop>graphics_view_hist_data_municipality</tabstop>
   <tabstop>graphics_view_ratio_statistics</tabstop>
+  <tabstop>tab_widget_statistics</tabstop>
   <tabstop>graphics_view_education_city_area</tabstop>
   <tabstop>graphics_view_education_city</tabstop>
-  <tabstop>table_view_education</tabstop>
-  <tabstop>graphics_view_age_distribution_city_area</tabstop>
-  <tabstop>graphics_view_age_distribution_city</tabstop>
-  <tabstop>table_view_age_distribution</tabstop>
   <tabstop>graphics_view_income_city_area</tabstop>
   <tabstop>graphics_view_income_city</tabstop>
-  <tabstop>table_view_income</tabstop>
-  <tabstop>graphics_view_civil_status_city_area</tabstop>
-  <tabstop>graphics_view_civil_status_city</tabstop>
-  <tabstop>table_view_civil_status</tabstop>
   <tabstop>push_button_show_in_map_2</tabstop>
   <tabstop>table_view_higheducation</tabstop>
-  <tabstop>graphics_view_family_composition_city_area</tabstop>
-  <tabstop>graphics_view_family_composition_city</tabstop>
-  <tabstop>table_view_family_composition</tabstop>
-  <tabstop>graphics_view_age_distribution_children_city_area</tabstop>
-  <tabstop>graphics_view_age_distribution_children_city</tabstop>
-  <tabstop>table_view_age_distribution_children</tabstop>
+  <tabstop>table_view_education</tabstop>
+  <tabstop>table_view_income</tabstop>
+  <tabstop>graphics_view_age_distribution_city_area</tabstop>
+  <tabstop>graphics_view_age_distribution_city</tabstop>
+  <tabstop>graphics_view_civil_status_city_area</tabstop>
+  <tabstop>graphics_view_civil_status_city</tabstop>
+  <tabstop>table_view_age_distribution</tabstop>
+  <tabstop>table_view_civil_status</tabstop>
+  <tabstop>push_button_show_in_map_3</tabstop>
   <tabstop>table_view_family_rating</tabstop>
   <tabstop>table_view_kindergardens</tabstop>
   <tabstop>table_view_schools</tabstop>
+  <tabstop>table_view_family_composition</tabstop>
+  <tabstop>table_view_age_distribution_children</tabstop>
   <tabstop>table_view_highschools</tabstop>
-  <tabstop>push_button_show_in_map_3</tabstop>
-  <tabstop>tab_widget_statistics</tabstop>
   <tabstop>graphics_view_housing_stock_city</tabstop>
   <tabstop>graphics_view_housing_area_city_area</tabstop>
   <tabstop>graphics_view_housing_area_city</tabstop>
@@ -5303,11 +5309,12 @@
   <tabstop>table_view_housing_stock</tabstop>
   <tabstop>tableView</tabstop>
   <tabstop>table_view_noise_rating</tabstop>
-  <tabstop>table_view_environment_rating</tabstop>
+  <tabstop>graphics_view_housing_ownership_city</tabstop>
   <tabstop>graphics_view_housing_age_city_area</tabstop>
   <tabstop>graphics_view_housing_age_city</tabstop>
   <tabstop>graphics_view_housing_ownership_city_area</tabstop>
   <tabstop>graphicsView_10</tabstop>
+  <tabstop>table_view_environment_rating</tabstop>
   <tabstop>table_view_gardens_rating</tabstop>
   <tabstop>table_view_housing_age</tabstop>
   <tabstop>table_view_housing_ownership</tabstop>
