@@ -54,6 +54,7 @@ class StatisticsView(QDialog):
         self.ui.push_button_show_in_map_1.clicked.connect(self.map_view.show)
         self.ui.push_button_show_in_map_2.clicked.connect(self.map_view.show)
         self.ui.push_button_show_in_map_3.clicked.connect(self.map_view.show)
+        self.ui.push_button_show_in_map_4.clicked.connect(self.map_view.show)
 
     @property
     def parent(self):

@@ -3801,24 +3801,12 @@
                 </property>
                </widget>
               </item>
-              <item row="5" column="6">
-               <widget class="QGraphicsView" name="graphicsView_10"/>
-              </item>
-              <item row="2" column="6" rowspan="2">
-               <widget class="QTableView" name="tableView"/>
-              </item>
-              <item row="6" column="6" rowspan="2">
-               <widget class="QTableView" name="tableView_5"/>
-              </item>
               <item row="1" column="3">
                <widget class="PlotWidget" name="graphics_view_housing_area_city">
                 <property name="frameShape">
                  <enum>QFrame::Box</enum>
                 </property>
                </widget>
-              </item>
-              <item row="1" column="6">
-               <widget class="QGraphicsView" name="graphicsView_5"/>
               </item>
               <item row="2" column="5" rowspan="2">
                <widget class="QTableView" name="table_view_housing_stock">
@@ -3834,13 +3822,6 @@
                 <attribute name="horizontalHeaderHighlightSections">
                  <bool>false</bool>
                 </attribute>
-               </widget>
-              </item>
-              <item row="5" column="5">
-               <widget class="PlotWidget" name="graphics_view_housing_ownership_city_area">
-                <property name="frameShape">
-                 <enum>QFrame::Box</enum>
-                </property>
                </widget>
               </item>
               <item row="1" column="1">
@@ -3866,22 +3847,6 @@
                 <property name="interactive">
                  <bool>false</bool>
                 </property>
-               </widget>
-              </item>
-              <item row="6" column="5" rowspan="2">
-               <widget class="QTableView" name="table_view_housing_ownership">
-                <property name="alternatingRowColors">
-                 <bool>true</bool>
-                </property>
-                <property name="selectionBehavior">
-                 <enum>QAbstractItemView::SelectRows</enum>
-                </property>
-                <property name="gridStyle">
-                 <enum>Qt::DotLine</enum>
-                </property>
-                <attribute name="horizontalHeaderHighlightSections">
-                 <bool>false</bool>
-                </attribute>
                </widget>
               </item>
               <item row="1" column="5">
@@ -3960,6 +3925,59 @@
                 <property name="interactive">
                  <bool>false</bool>
                 </property>
+               </widget>
+              </item>
+              <item row="1" column="6">
+               <widget class="PlotWidget" name="graphics_view_housing_ownership_city_area">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="6">
+               <widget class="QTableView" name="table_view_housing_ownership">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="5" column="6">
+               <widget class="PlotWidget" name="graphics_view_housing_prices_city">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="5">
+               <widget class="PlotWidget" name="graphics_view_housing_prices_city_area">
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="5" colspan="2">
+               <widget class="QTableView" name="table_view_housing_prices">
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
                </widget>
               </item>
              </layout>
@@ -5291,34 +5309,35 @@
   <tabstop>graphics_view_civil_status_city</tabstop>
   <tabstop>table_view_age_distribution</tabstop>
   <tabstop>table_view_civil_status</tabstop>
+  <tabstop>graphics_view_family_composition_city_area</tabstop>
+  <tabstop>graphics_view_family_composition_city</tabstop>
+  <tabstop>graphics_view_age_distribution_children_city_area</tabstop>
+  <tabstop>graphics_view_age_distribution_children_city</tabstop>
   <tabstop>push_button_show_in_map_3</tabstop>
   <tabstop>table_view_family_rating</tabstop>
   <tabstop>table_view_kindergardens</tabstop>
-  <tabstop>table_view_schools</tabstop>
   <tabstop>table_view_family_composition</tabstop>
   <tabstop>table_view_age_distribution_children</tabstop>
+  <tabstop>table_view_schools</tabstop>
   <tabstop>table_view_highschools</tabstop>
   <tabstop>graphics_view_housing_stock_city</tabstop>
   <tabstop>graphics_view_housing_area_city_area</tabstop>
   <tabstop>graphics_view_housing_area_city</tabstop>
   <tabstop>graphics_view_housing_stock_city_area</tabstop>
-  <tabstop>graphicsView_5</tabstop>
+  <tabstop>graphics_view_housing_ownership_city_area</tabstop>
   <tabstop>push_button_show_in_map_4</tabstop>
   <tabstop>table_view_safety_rating</tabstop>
   <tabstop>table_view_housing_area</tabstop>
   <tabstop>table_view_housing_stock</tabstop>
-  <tabstop>tableView</tabstop>
+  <tabstop>table_view_housing_ownership</tabstop>
   <tabstop>table_view_noise_rating</tabstop>
+  <tabstop>table_view_environment_rating</tabstop>
   <tabstop>graphics_view_housing_ownership_city</tabstop>
   <tabstop>graphics_view_housing_age_city_area</tabstop>
   <tabstop>graphics_view_housing_age_city</tabstop>
-  <tabstop>graphics_view_housing_ownership_city_area</tabstop>
-  <tabstop>graphicsView_10</tabstop>
-  <tabstop>table_view_environment_rating</tabstop>
   <tabstop>table_view_gardens_rating</tabstop>
   <tabstop>table_view_housing_age</tabstop>
-  <tabstop>table_view_housing_ownership</tabstop>
-  <tabstop>tableView_5</tabstop>
+  <tabstop>table_view_housing_prices</tabstop>
   <tabstop>table_view_roads_rating</tabstop>
  </tabstops>
  <resources>

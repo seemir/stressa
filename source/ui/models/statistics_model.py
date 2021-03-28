@@ -40,7 +40,7 @@ class StatisticsModel(Model):
                         "schools", "schools_location", "highschools", "highschools_location",
                         "family_rating", "safety_rating", "noise_rating", "environment_rating",
                         "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
-                        "housing_area", "housing_age"]
+                        "housing_area", "housing_age", "housing_prices"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
@@ -50,7 +50,7 @@ class StatisticsModel(Model):
                          "housing_stock_city_area", "housing_stock_city",
                          "housing_ownership_city_area", "housing_ownership_city",
                          "housing_area_city_area", "housing_area_city", "housing_age_city_area",
-                         "housing_age_city"]
+                         "housing_age_city", "housing_prices_city_area", "housing_prices_city"]
 
     def __init__(self, parent: QObject):
         """
@@ -88,6 +88,8 @@ class StatisticsModel(Model):
         self.housing_area_city_plot = None
         self.housing_age_city_area_plot = None
         self.housing_age_city_plot = None
+        self.housing_prices_city_area_plot = None
+        self.housing_prices_city_plot = None
 
     def add_statistics_info(self, postfix: str):
         """
@@ -162,6 +164,8 @@ class StatisticsModel(Model):
                 self.add_housing_area_chart(prefix, postfix, key)
             elif key == "housing_age":
                 self.add_housing_age_chart(prefix, postfix, key)
+            elif key == "housing_prices":
+                self.add_housing_prices_chart(prefix, postfix, key)
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
                              kindergarden="kindergardens_location", schools="schools_location",
@@ -227,7 +231,7 @@ class StatisticsModel(Model):
                          "schools", "schools_location", "highschools", "highschools_location",
                          "family_rating", "safety_rating", "noise_rating", "environment_rating",
                          "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
-                         "housing_area", "housing_age"]:
+                         "housing_area", "housing_age", "housing_prices"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -290,6 +294,10 @@ class StatisticsModel(Model):
                                         self.parent.ui.table_view_housing_age)
         BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_age_city,
                                         self.parent.ui.table_view_housing_age)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_prices_city_area,
+                                        self.parent.ui.table_view_housing_prices)
+        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_prices_city,
+                                        self.parent.ui.table_view_housing_prices)
 
     def add_sqm_dist_charts(self, prefix: str, postfix: str, key: str):
         """
@@ -778,3 +786,22 @@ class StatisticsModel(Model):
         self.add_dist_chart(prefix, postfix, key, "housing_age_city_area", "housing_age_city",
                             "table_view_housing_age", "Bolig alder", "housing_age_city_area_plot",
                             "housing_age_city_plot", ignore_total=False)
+
+    def add_housing_prices_chart(self, prefix, postfix, key):
+        """
+        method for adding housing prices chart to the statistics model
+
+        Parameters
+        ----------
+        prefix      : str
+                      name of prefix, i.e. "graphics"
+        postfix     : str
+                      index if used in naming of line_edits
+        key         : str
+                      name of label to change
+
+        """
+        self.add_dist_chart(prefix, postfix, key, "housing_prices_city_area", "housing_prices_city",
+                            "table_view_housing_prices", "Bolig priser",
+                            "housing_prices_city_area_plot", "housing_prices_city_plot",
+                            ignore_total=False)
