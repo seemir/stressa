@@ -108,8 +108,8 @@ class FinnStat(Finn):
             info.update(self.extract_area_sales_statistics(stat_data, info))
             info.update(self.calculate_sqm_price_areas(info))
 
-            with open('stat_data.json', 'w', encoding='utf-8') as file:
-                json.dump(info, file, ensure_ascii=False, indent=4)
+            # with open('stat_data.json', 'w', encoding='utf-8') as file:
+            #     json.dump(info, file, ensure_ascii=False, indent=4)
 
             LOGGER.success("'housing_stat_information' successfully retrieved")
 

@@ -28,7 +28,7 @@ class FinnModel(Model):
     _finn_keys = ["finnkode", "status", "sistendret", "referanse", "finn_adresse",
                   "prisantydning", "formuesverdi", "fellesgjeld", "felleskostmnd",
                   "omkostninger", "kommunaleavg", "totalpris", "fellesformue",
-                  "boligtype", "eieform", "etasje", "bygger", "soverom", "rom",
+                  "boligtype", "eieformbolig", "etasje", "bygger", "soverom", "rom",
                   "renovertr", "primrrom", "bruttoareal", "energimerking",
                   "tomteareal", "sqm_price"]
 
