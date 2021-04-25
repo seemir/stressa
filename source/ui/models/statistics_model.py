@@ -30,9 +30,9 @@ class StatisticsModel(Model):
     """
     _statistics_keys = ["finnkode", "firstpublished", "edited", "prisantydning", "fellesgjeld",
                         "totalpris", "sqm_price", "city_area_sqm_price", "municipality_sqm_price",
-                        "primrrom", "bruttoareal", "views", "emails", "favorites",
-                        "city_area_sqm_price", "municipality_sqm_price", "city_area",
-                        "municipality", "hist_data_city_area", "hist_data_municipality",
+                        "primrrom", "bruttoareal", "views", "city_area_sqm_price",
+                        "municipality_sqm_price", "city_area", "municipality",
+                        "hist_data_city_area", "hist_data_municipality",
                         "hist_data_city_area_count", "hist_data_municipality_count",
                         "age_distribution", "info", "civil_status", "education", "income",
                         "higheducation", "higheducation_location", "family_composition",

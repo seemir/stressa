@@ -99,34 +99,17 @@ class FinnStat(Finn):
             # with open('content.html', 'w', encoding='utf-8') as file:
             #     file.write(stat_soup.prettify())
 
-            sq_price = \
-                json.loads(stat_soup.find("script", attrs={"id": "area-prices"}).contents[0])[
-                    "price"]
+            stat_data = json.loads(
+                stat_soup.find("script", attrs={"type": "application/json"}).contents[0])
 
-            info.update({"sqm_price": Amount(str(sq_price)).amount + " kr/m²"})
+            info.update(self.extract_sqm_price(stat_data, info))
+            info.update(self.extract_view_statistics(stat_data, info))
+            info.update(self.extract_published_statistics(stat_data, info))
+            info.update(self.extract_area_sales_statistics(stat_data, info))
+            info.update(self.calculate_sqm_price_areas(info))
 
-            view_statistics_total = json.loads(
-                stat_soup.find("script", attrs={"id": "ad-summary"}
-                               ).contents[0])[0]
-            view_statistics_detail = json.loads(
-                stat_soup.find("script", attrs={"id": "ad"}).contents[0])
-            area_sales_statistics = json.loads(
-                stat_soup.find("script", attrs={"id": "area-sales"}).contents[0])
-
-            info.update(self.extract_view_statistics(view_statistics_total, info))
-            info.update(self.extract_published_statistics(view_statistics_detail, info))
-            info.update(self.extract_area_sales_statistics(area_sales_statistics, info))
-
-            if all(name in info.keys() for name in ["hist_data_city_area",
-                                                    "hist_data_municipality"]):
-                info.update(
-                    {"city_area_sqm_price": self.calculate_average(
-                        info["hist_data_city_area"]) + " kr/m²"})
-                info.update({"municipality_sqm_price": self.calculate_average(
-                    info["hist_data_municipality"]) + " kr/m²"})
-
-            # with open('stat_data.json', 'w', encoding='utf-8') as file:
-            #     json.dump(info, file, ensure_ascii=False, indent=4)
+            with open('stat_data.json', 'w', encoding='utf-8') as file:
+                json.dump(info, file, ensure_ascii=False, indent=4)
 
             LOGGER.success("'housing_stat_information' successfully retrieved")
 
@@ -145,6 +128,32 @@ class FinnStat(Finn):
         self.save_json(self.housing_stat_information(), file_dir, file_prefix="HousingStatInfo_")
         LOGGER.success(
             "'housing_stat_information' successfully parsed to JSON at '{}'".format(file_dir))
+
+    @Tracking
+    def extract_sqm_price(self, sql_price_statistics: dict, info: dict):
+        """
+        method for extracting square meter price
+
+        Parameters
+        ----------
+        sql_price_statistics : dict
+                               dictionary with square meter price
+        info                 : dict
+                               dictionary to store results
+
+        """
+        Assertor.assert_data_types([sql_price_statistics, info], [dict, dict])
+        for prop, value in sql_price_statistics.items():
+            if prop.lower() == 'props':
+                for pro, val in value.items():
+                    if pro.lower() == 'pageprops':
+                        for pr_name, vl_name in val.items():
+                            if pr_name.lower() == 'areasales':
+                                for name, inf in vl_name.items():
+                                    if isinstance(inf, (int, float)) and name.lower() == 'price':
+                                        info.update(
+                                            {'sqm_price': Amount(str(inf)).amount + " kr/m²"})
+        return info
 
     @Tracking
     def extract_view_statistics(self, total_view_statistics: dict, info: dict):
@@ -166,8 +175,13 @@ class FinnStat(Finn):
         """
         Assertor.assert_data_types([total_view_statistics, info], [dict, dict])
         for prop, value in total_view_statistics.items():
-            if isinstance(value, (int, float)) and prop.lower() != 'adid':
-                info.update({prop.lower(): Amount(str(value)).amount})
+            if prop.lower() == 'props':
+                for pro, val in value.items():
+                    if pro.lower() == 'pageprops':
+                        for pr_name, vl_name in val.items():
+                            if isinstance(vl_name,
+                                          (int, float)) and pr_name.lower() == 'totalclicks':
+                                info.update({"views": Amount(str(vl_name)).amount})
         return info
 
     @Tracking
@@ -190,15 +204,23 @@ class FinnStat(Finn):
         """
         Assertor.assert_data_types([detail_view_statistics, info], [dict, dict])
         for prop, value in detail_view_statistics.items():
-            if prop.lower() in ('firstpublished', 'edited'):
-                pub = datetime.fromisoformat(value)
-                date = datetime.strptime(str(pub), "%Y-%m-%d %H:%M:%S").strftime(
-                    "%d.%m.%Y %H:%M")
-                info.update(
-                    {prop.lower(): str(date).lower() + " ({} dager siden)".format(
-                        (datetime.today() - pub).days)})
-                if prop.lower() == 'firstpublished':
-                    info.update({'published': date})
+            if prop.lower() == 'props':
+                for pro, val in value.items():
+                    if pro.lower() == 'pageprops':
+                        for pr_name, vl_name in val.items():
+                            if pr_name.lower() == 'ad':
+                                for sub_prop, sub_val in vl_name.items():
+                                    if sub_prop.lower() in ('firstpublished', 'edited'):
+                                        pub = datetime.fromisoformat(sub_val)
+                                        date = datetime.strptime(str(pub),
+                                                                 "%Y-%m-%d %H:%M:%S").strftime(
+                                            "%d.%m.%Y %H:%M")
+                                        info.update(
+                                            {sub_prop.lower(): str(
+                                                date).lower() + " ({} dager siden)".format(
+                                                (datetime.today() - pub).days)})
+                                        if sub_prop.lower() == 'firstpublished':
+                                            info.update({'published': date})
         return info
 
     @Tracking
@@ -219,30 +241,60 @@ class FinnStat(Finn):
                                   dictionary with results
 
         """
-        Assertor.assert_data_types([areal_sales_statistics, info], [list, dict])
+        Assertor.assert_data_types([areal_sales_statistics, info], [dict, dict])
         historical_data_names = ["hist_data_city_area", "hist_data_municipality"]
         location_name = ["city_area", "municipality"]
-        for i, data in enumerate(areal_sales_statistics):
-            if len(areal_sales_statistics) == 3:
-                if i == 0:
-                    continue
-                i -= 1
-            for prop, value in data.items():
-                if prop.lower() == "locationdetails":
-                    if value:
-                        if "name" in value[0]:
-                            info.update({location_name[i]: value[0]["name"]})
-                elif prop.lower() == "histdata":
-                    historical_values = {}
-                    for key, val in value.items():
-                        historical_values.update({int(key): int(val)})
-                    info.update({historical_data_names[i]: historical_values})
-                    info.update(
-                        {historical_data_names[i] + "_count": Amount(
-                            str(sum(historical_values.values()))).amount})
-            if all(name in info.keys() for name in historical_data_names):
-                self.harmonize_data_sets(info)
+        for prop, value in areal_sales_statistics.items():
+            if prop.lower() == 'props':
+                for pro, val in value.items():
+                    if pro.lower() == 'pageprops':
+                        for pr_name, vl_name in val.items():
+                            if pr_name.lower() == 'locationhistory':
+                                for i, data in enumerate(vl_name):
+                                    if len(areal_sales_statistics) == 3:
+                                        if i == 0:
+                                            continue
+                                        i -= 1
+                                    for prop_val, value_name in data.items():
+                                        if prop_val.lower() == "locationdetails":
+                                            if value_name:
+                                                if "name" in value_name[0]:
+                                                    info.update(
+                                                        {location_name[i]: value_name[0]["name"]})
+                                        elif prop_val.lower() == "histdata":
+                                            historical_values = {}
+                                            for ke_val, va_name in value_name.items():
+                                                historical_values.update(
+                                                    {int(ke_val): int(va_name)})
+                                            info.update(
+                                                {historical_data_names[i]: historical_values})
+                                            info.update(
+                                                {historical_data_names[i] + "_count": Amount(
+                                                    str(sum(historical_values.values()))).amount})
+        if all(name in info.keys() for name in historical_data_names):
+            self.harmonize_data_sets(info)
         return info
+
+    @Tracking
+    def calculate_sqm_price_areas(self, info: dict):
+        """
+        method for calculating sqm price in city area and municipality
+
+        Parameters
+        ----------
+        info                    : dict
+                                  dictionary to store results
+
+        """
+        Assertor.assert_data_types([info], [dict])
+        if all(name in info.keys() for name in ["hist_data_city_area",
+                                                "hist_data_municipality"]):
+            info.update(
+                {"city_area_sqm_price": self.calculate_average(
+                    info["hist_data_city_area"]) + " kr/m²"})
+            info.update({"municipality_sqm_price": self.calculate_average(
+                info["hist_data_municipality"]) + " kr/m²"})
+            return info
 
     @Tracking
     def harmonize_data_sets(self, info):
@@ -260,8 +312,8 @@ class FinnStat(Finn):
 
         """
         if sum(list(info["hist_data_municipality"].values())) > 15000:
-            mean = np.mean(list(info["hist_data_municipality"].keys()))
-            std = np.std(list(info["hist_data_municipality"].keys()))
+            mean = np.nanmean(list(info["hist_data_municipality"].keys()))
+            std = np.nanstd(list(info["hist_data_municipality"].keys()))
             upper = mean + std * 1.5
             lower = mean - std * 1.5
             for key, val in info["hist_data_municipality"].copy().items():

@@ -14,7 +14,7 @@ import os
 
 FINN_AD_URL = "https://finn.no/realestate/homes/ad.html?finnkode="
 FINN_OWNER_URL = "https://finn.no/realestate/ownershiphistory.html?finnkode="
-FINN_STAT_URL = "https://finn.no/pulse/pricepersqm?finnkode="
+FINN_STAT_URL = "https://www.finn.no/prisstatistikk/"
 FINN_COMMUNITY_URL = "https://profil.nabolag.no/"
 
 PORTALEN_URL = "https://finansportalen.no/feed/v3/bank/boliglan.atom"
