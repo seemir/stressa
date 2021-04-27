@@ -83,9 +83,10 @@ class MapModel(Model):
         else:
             Marker(coords, icon=map_icon).add_to(map_builder)
 
-        TileLayer('OpenStreetMap').add_to(map_builder)
         TileLayer('Stamen Toner').add_to(map_builder)
         TileLayer('Stamen Terrain').add_to(map_builder)
+        TileLayer('Stamen Watercolor').add_to(map_builder)
+        TileLayer('CartoDB dark_matter').add_to(map_builder)
         LayerControl().add_to(map_builder)
         map_builder.save(bytes_io, close_file=False)
         web_engine_view.setHtml(bytes_io.getvalue().decode())
