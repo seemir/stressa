@@ -34,7 +34,7 @@ class RestructurePois(Restructure):
         super().__init__(data=data, desc=desc)
 
     @Tracking
-    def run(self, col_name="institusjon"):
+    def run(self, col_name="Institusjon"):
         """
         method for running operation
 
