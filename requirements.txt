@@ -21,7 +21,7 @@ diagrams==0.19.1
 dnspython==2.1.0
 folium==0.12.1
 graphviz==0.13.2
-helpdev==0.6.10
+helpdev==0.7.1
 hid==1.0.4
 html5lib==1.1
 idna==2.9
