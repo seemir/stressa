@@ -58,7 +58,7 @@ PyQt5-sip==12.8.0
 PyQt5-stubs==5.14.2.2
 pyqtgraph==0.11.1
 PyQtWebEngine==5.15.0
-pytest==6.2.3
+pytest==6.2.4
 pytest-cov==2.12.1
 python-dateutil==2.8.1
 python-dotenv==0.17.1
