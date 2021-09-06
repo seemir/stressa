@@ -20,7 +20,7 @@ DateTime==4.3
 diagrams==0.19.1
 dnspython==2.1.0
 folium==0.12.1
-graphviz==0.13.2
+graphviz==0.17
 helpdev==0.6.10
 hid==1.0.4
 html5lib==1.1
