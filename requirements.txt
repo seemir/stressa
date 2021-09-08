@@ -10,7 +10,7 @@ brotlipy==0.7.0
 bs4==0.0.1
 cchardet==2.1.7
 certifi==2021.5.30
-cffi==1.14.5
+cffi==1.14.6
 chardet==4.0.0
 click==7.1.2
 codecov==2.1.11
@@ -70,7 +70,7 @@ six==1.15.0
 soupsieve==2.1
 toml==0.10.2
 typed-ast==1.4.3
-typing-extensions==3.10.0.0
+typing-extensions==3.10.0.2
 untangle==1.1.1
 urllib3==1.26.5
 wcwidth==0.2.5
