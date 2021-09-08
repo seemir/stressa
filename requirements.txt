@@ -10,7 +10,7 @@ brotlipy==0.7.0
 bs4==0.0.1
 cchardet==2.1.7
 certifi==2021.5.30
-cffi==1.14.5
+cffi==1.14.6
 chardet==4.0.0
 click==7.1.2
 codecov==2.1.11
@@ -30,7 +30,7 @@ iniconfig==1.1.1
 isort==4.3.21
 Jinja2==2.11.3
 lazy-object-proxy==1.5.2
-llvmlite==0.31.0
+llvmlite==0.37.0
 loguru==0.5.1
 lxml==4.6.3
 MarkupSafe==2.0.1
