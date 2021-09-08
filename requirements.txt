@@ -4,7 +4,7 @@ astroid==2.5.6
 async-timeout==3.0.1
 atomicwrites==1.4.0
 attrs==20.3.0
-beautifulsoup4==4.9.3
+beautifulsoup4==4.10.0
 branca==0.4.1
 brotlipy==0.7.0
 bs4==0.0.1
