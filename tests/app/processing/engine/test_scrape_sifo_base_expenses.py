@@ -58,6 +58,7 @@ class TestScrapeSifoBaseExpenses:
         assert scraper.name == ScrapeSifoBaseExpenses.__name__
         assert scraper.data == self.family
 
+    @pt.mark.skip
     def test_scrape_sifo_base_expenses_run_method(self):
         """
         Test the run method in ScrapeSifoBaseExpenses operation

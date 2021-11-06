@@ -27,10 +27,6 @@ script:
   - pytest --cov=source/ tests/
   - pylint source/ tests/
 
-# Codecov token for private repos
-env:
-    - CODECOV_TOKEN=47f5790a-7a89-4c39-994f-f9a1d2c08f16
-
 # generate a coverage report to send back to the user
 after_success:
   - codecov

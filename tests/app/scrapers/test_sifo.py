@@ -103,6 +103,7 @@ class TestSifo:
         with pt.raises(TrackingError):
             self.sifo.response()
 
+    @pt.mark.skip
     def test_sifo_response_received(self):
         """
         Test HTTP response 200 is received and of correct type, i.e. response_seek_wrapper
@@ -112,6 +113,7 @@ class TestSifo:
         assert response.code == 200
         assert isinstance(response, response_seek_wrapper)
 
+    @pt.mark.skip
     def test_sifo_expenses_method(self):
         """
         Test that sifo_expenses method returns correct content
@@ -151,6 +153,7 @@ class TestSifo:
         with pt.raises(Exception):
             self.sifo.sifo_base_expenses()
 
+    @pt.mark.skip
     @mock.patch("xml.etree.ElementTree", mock.MagicMock(return_value={}))
     def test_include_id_in_sifo_expenses_method(self):
         """
