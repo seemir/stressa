@@ -28,7 +28,7 @@ idna==3.3
 importlib-metadata==3.4.0
 iniconfig==1.1.1
 isort==5.10.0
-Jinja2==2.11.3
+Jinja2==3.0.2
 lazy-object-proxy==1.5.2
 llvmlite==0.31.0
 loguru==0.5.1
