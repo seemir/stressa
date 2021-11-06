@@ -14,8 +14,8 @@ import xml.etree.ElementTree as Et
 from http.client import responses
 from urllib.error import URLError
 
-from source.domain import Family
 from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Tracking
+from source.domain import Family
 
 from .settings import SIFO_URL, SIFO_FORM, TIMEOUT
 from .scraper import Scraper
@@ -82,7 +82,7 @@ class Sifo(Scraper):
         try:
             start = time()
             self._browser.open(SIFO_URL, timeout=TIMEOUT)
-            self._browser.select_form(SIFO_FORM)
+            self._browser.select_form(nr=SIFO_FORM)
             for prop, value in self.family.sifo_properties().items():
                 if prop == 'inntekt':
                     self._browser[prop] = value
