@@ -40,7 +40,7 @@ importlib-metadata==3.4.0
 iniconfig==1.1.1
 isort==5.10.0
 jdcal==1.4.1
-Jinja2==2.11.3
+Jinja2==3.0.3
 kiwisolver==1.2.0
 lazy-object-proxy==1.5.2
 llvmlite==0.31.0
