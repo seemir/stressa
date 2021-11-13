@@ -11,7 +11,7 @@ branca==0.4.1
 brotlipy==0.7.0
 bs4==0.0.1
 cchardet==2.1.7
-certifi==2021.5.30
+certifi==2021.10.8
 cffi==1.15.0
 chardet==4.0.0
 charset-normalizer==2.0.4
@@ -97,7 +97,7 @@ tomli==1.2.2
 typed-ast==1.4.3
 typing==3.7.4.1
 typing-extensions==3.10.0.0
-tzlocal==2.1
+tzlocal==4.1
 untangle==1.1.1
 urllib3==1.26.5
 wcwidth==0.2.5
