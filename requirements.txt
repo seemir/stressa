@@ -11,7 +11,7 @@ branca==0.4.1
 brotlipy==0.7.0
 bs4==0.0.1
 cchardet==2.1.7
-certifi==2021.5.30
+certifi==2021.10.8
 cffi==1.15.0
 chardet==4.0.0
 charset-normalizer==2.0.4
@@ -31,7 +31,7 @@ folium==0.12.1
 frozenlist==1.2.0
 geographiclib==1.50
 geopy==1.21.0
-graphviz==0.13.2
+graphviz==0.18
 helpdev==0.6.10
 hid==1.0.4
 html5lib==1.1
