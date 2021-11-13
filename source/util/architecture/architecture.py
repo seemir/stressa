@@ -7,19 +7,22 @@ Architecture diagram
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from diagrams.aws.database import DocumentdbMongodbCompatibility
-from diagrams.programming.language import Python, Bash
-from diagrams.oci.storage import FilestorageGrey
-from diagrams import Cluster, Diagram, Edge
-from diagrams.oci.monitoring import Logging
-from diagrams.onprem.client import User
 
-from custom import Finansportalen, Finn, Posten, SIFO, Sqlite, SSB
-from settings import name, font_size
+from diagrams.programming.language import Python, Bash
+from diagrams.onprem.client import User, Client
+from diagrams.oci.storage import FileStorage
+from diagrams import Cluster, Diagram, Edge
+from diagrams.oci.governance import Logging
+
+
+from source.util.architecture.custom import Finansportalen, Finn, Posten, SIFO, Sqlite, SSB
+from source.util.architecture.settings import name, font_size
 
 with Diagram(name=name, show=False, direction="TB", outformat="pdf",
              node_attr={"fontsize": font_size}):
+
     users = User()
+    gui = Client()
     bash = Bash("")
     main = Python("main")
 
@@ -27,7 +30,7 @@ with Diagram(name=name, show=False, direction="TB", outformat="pdf",
         with Cluster("package: views", graph_attr={"fontsize": font_size}):
             views = Python("views")
             with Cluster("forms", graph_attr={"fontsize": font_size}):
-                forms = FilestorageGrey("forms")
+                forms = FileStorage("forms")
 
             with Cluster("logs", graph_attr={"fontsize": font_size}):
                 ui_log = Logging("ui")
@@ -39,7 +42,7 @@ with Diagram(name=name, show=False, direction="TB", outformat="pdf",
             ui_util = Python("util")
 
         with Cluster("images", graph_attr={"fontsize": font_size}):
-            images = FilestorageGrey("images")
+            images = FileStorage("images")
 
         with Cluster("package: graphics", graph_attr={"fontsize": font_size}):
             graphics = Python("graphics")
@@ -62,14 +65,14 @@ with Diagram(name=name, show=False, direction="TB", outformat="pdf",
             processes = Python("processes")
 
             with Cluster("procedure", graph_attr={"fontsize": font_size}):
-                procedure = FilestorageGrey("procedure")
+                procedure = FileStorage("procedure")
 
     with Cluster("domain layer (source/domain)", graph_attr={"fontsize": font_size}):
         entities = Python("entities")
         values = Python("values")
 
     with Cluster("persistence layer (source/db)", graph_attr={"fontsize": font_size}):
-        mongo_db = Python("dao")
+        dao = Python("dao")
 
     with Cluster("cross-cutting layer (source/util)", graph_attr={"fontsize": font_size}):
         with Cluster("logs", graph_attr={"fontsize": font_size}):
@@ -83,9 +86,8 @@ with Diagram(name=name, show=False, direction="TB", outformat="pdf",
                Finansportalen("Finansportalen\n Grunndata\n XML Feed"),
                SIFO("SIFO API"), SSB("SSB API (pyjstat)")]
 
-    mongo_db_atlas = DocumentdbMongodbCompatibility("\nMongoDB Atlas:\n stressa-6pyxy.mongodb.net")
-
-    users << bash << main << views
+    users >> bash << main << views
+    users << gui << bash
     bash << ui_log
 
     views << forms << images
@@ -99,8 +101,7 @@ with Diagram(name=name, show=False, direction="TB", outformat="pdf",
 
     values >> entities
 
-    mongo_db_atlas >> Edge(color="gray") << mongo_db
-    mongo_db << logging
+    dao << logging
 
     bash << util_logs
     logging >> util_logs

@@ -91,12 +91,12 @@ class Family(Entity):
         self.validate_income(income)
         self.validating_cars(cars)
 
-        self._familie_medlemmer = family_members
-        self._inntekt = str(income)
-        self._antall_biler = str(cars)
+        self._family_members = family_members
+        self._income = str(income)
+        self._cars = str(cars)
 
     @property
-    def familie_medlemmer(self):
+    def family_members(self):
         """
         family_members getter
 
@@ -106,10 +106,10 @@ class Family(Entity):
                       all active family_members
 
         """
-        return self._familie_medlemmer
+        return self._family_members
 
-    @familie_medlemmer.setter
-    def familie_medlemmer(self, new_members: list):
+    @family_members.setter
+    def family_members(self, new_members: list):
         """
         family_members setter
 
@@ -121,7 +121,7 @@ class Family(Entity):
 
         """
         self.validate_family_members(new_members)
-        self._familie_medlemmer = new_members
+        self._family_members = new_members
 
     @Tracking
     def add_family_members(self, family_members: (list, Male, Female)):
@@ -136,13 +136,13 @@ class Family(Entity):
         """
         if isinstance(family_members, list):
             all(Assertor.assert_data_types([member], [Male, Female]) for member in family_members)
-            self._familie_medlemmer.extend(family_members)
+            self._family_members.extend(family_members)
         else:
             Assertor.assert_data_types([family_members], [Male, Female])
-            self._familie_medlemmer.extend([family_members])
+            self._family_members.extend([family_members])
 
     @property
-    def inntekt(self):
+    def income(self):
         """
         income getter
 
@@ -152,10 +152,10 @@ class Family(Entity):
                       current gross yearly income
 
         """
-        return self._inntekt
+        return self._income
 
-    @inntekt.setter
-    def inntekt(self, income: (int, float, str)):
+    @income.setter
+    def income(self, income: (int, float, str)):
         """
         income setter
 
@@ -166,10 +166,10 @@ class Family(Entity):
 
         """
         self.validate_income(income)
-        self._inntekt = str(income)
+        self._income = str(income)
 
     @property
-    def antall_biler(self):
+    def cars(self):
         """
         cars setter
 
@@ -179,10 +179,10 @@ class Family(Entity):
                   number of cars in the family
 
         """
-        return self._antall_biler
+        return self._cars
 
-    @antall_biler.setter
-    def antall_biler(self, cars: (int, str)):
+    @cars.setter
+    def cars(self, cars: (int, str)):
         """
         cars setter
 
@@ -193,7 +193,7 @@ class Family(Entity):
 
         """
         self.validating_cars(cars)
-        self._antall_biler = str(cars)
+        self._cars = str(cars)
 
     @Tracking
     def sifo_properties(self):
@@ -207,7 +207,7 @@ class Family(Entity):
 
         """
         properties = dict(list(self.__dict__.items())[-2:])
-        for i, family_member in enumerate(self.familie_medlemmer):
+        for i, family_member in enumerate(self.family_members):
             for name, prop in family_member.__dict__.items():
                 if "_id" not in name:
                     properties.update({name + str(i): prop})

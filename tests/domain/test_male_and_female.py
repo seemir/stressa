@@ -40,7 +40,7 @@ class TestMaleAndFemale:
         """
         persons = {'m': Male(), 'k': Female()}
         for gender, person in persons.items():
-            assert person.kjonn == gender
+            assert person.gender == gender
 
     @staticmethod
     @pt.mark.parametrize('invalid_age', [(), [], {}])
@@ -53,9 +53,9 @@ class TestMaleAndFemale:
         persons = [Male(), Female()]
         for person in persons:
             with pt.raises(TypeError):
-                person.alder = invalid_age
+                person.age = invalid_age
             with pt.raises(TypeError):
-                person.barnehage = invalid_age
+                person.kindergarden = invalid_age
             with pt.raises(TypeError):
                 person.sfo = invalid_age
 
@@ -72,14 +72,14 @@ class TestMaleAndFemale:
         sfo = age in range(6, 14)
         for person in persons:
             if kinder_garden:
-                person.alder = age
-                person.barnehage = '1'
-                assert person.alder == str(age)
-                assert person.barnehage == '1'
+                person.age = age
+                person.kindergarden = '1'
+                assert person.age == str(age)
+                assert person.kindergarden == '1'
             elif sfo:
-                person.alder = age
+                person.age = age
                 person.sfo = '1'
-                assert person.alder == str(age)
+                assert person.age == str(age)
                 assert person.sfo == '1'
             else:
                 with pt.raises(ValueError):
@@ -97,10 +97,10 @@ class TestMaleAndFemale:
         female = Female()
         pregnancy = age in range(19, 51)
         if pregnancy:
-            female.alder = age
-            female.gravid = '1'
-            assert female.alder == str(age)
-            assert female.gravid == '1'
+            female.age = age
+            female.pregnant = '1'
+            assert female.age == str(age)
+            assert female.pregnant == '1'
         else:
             with pt.raises(ValueError):
                 female.__class__(age, pregnant='1')

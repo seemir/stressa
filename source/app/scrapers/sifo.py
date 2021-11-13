@@ -84,7 +84,7 @@ class Sifo(Scraper):
             self._browser.open(SIFO_URL, timeout=TIMEOUT)
             self._browser.select_form(nr=SIFO_FORM)
             for prop, value in self.family.sifo_properties().items():
-                if prop == 'inntekt':
+                if prop == 'income':
                     self._browser[prop] = value
                 else:
                     self._browser[prop] = [value]

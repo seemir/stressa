@@ -56,7 +56,7 @@ class TestFamily:
 
         """
         with pt.raises(TrackingError):
-            self.family.familie_medlemmer = invalid_arg
+            self.family.family_members = invalid_arg
 
     @staticmethod
     @pt.mark.parametrize('invalid_arg', [True, 'test', 90210, 90210.0, ('test', 'test'), {}])
@@ -76,9 +76,9 @@ class TestFamily:
 
         """
         with pt.raises(TrackingError):
-            self.family.inntekt = invalid_arg
+            self.family.income = invalid_arg
         with pt.raises(TrackingError):
-            self.family.antall_biler = invalid_arg
+            self.family.cars = invalid_arg
 
     @pt.mark.parametrize('negative_income', [-1094400, -1094400.0, '-1094400', '-1094400.0'])
     @pt.mark.parametrize('negative_cars', [-1, '-1'])
@@ -89,9 +89,9 @@ class TestFamily:
 
         """
         with pt.raises(TrackingError):
-            self.family.inntekt = negative_income
+            self.family.income = negative_income
         with pt.raises(TrackingError):
-            self.family.antall_biler = negative_cars
+            self.family.cars = negative_cars
 
     @pt.mark.parametrize('inntekt', [594400, 594400, '594400', '594400'])
     @pt.mark.parametrize('antall_biler', [0, '0'])
@@ -103,13 +103,13 @@ class TestFamily:
         family = self.family
         new_family = [Male(25), Female(24)]
 
-        family.familie_medlemmer = new_family
-        family.inntekt = inntekt
-        family.antall_biler = antall_biler
+        family.family_members = new_family
+        family.income = inntekt
+        family.cars = antall_biler
 
-        assert family.familie_medlemmer == new_family
-        assert family.inntekt == str(inntekt)
-        assert family.antall_biler == str(antall_biler)
+        assert family.family_members == new_family
+        assert family.income == str(inntekt)
+        assert family.cars == str(antall_biler)
 
     @staticmethod
     @pt.mark.parametrize('inntekt', [594400, 594400, '594400', '594400'])
@@ -122,9 +122,9 @@ class TestFamily:
         new_family = [Male(25), Female(24)]
         family = Family(new_family, inntekt, antall_biler)
 
-        assert family.familie_medlemmer == new_family
-        assert family.inntekt == str(inntekt)
-        assert family.antall_biler == str(antall_biler)
+        assert family.family_members == new_family
+        assert family.income == str(inntekt)
+        assert family.cars == str(antall_biler)
 
     def test_add_family_members_method(self):
         """
@@ -134,11 +134,11 @@ class TestFamily:
         family = self.family
         children = [Male(age=12), Female(age=10)]
         family.add_family_members(children)
-        assert len(family.familie_medlemmer) == 4
+        assert len(family.family_members) == 4
 
         child = Male(age=5)
         family.add_family_members(child)
-        assert len(family.familie_medlemmer) == 5
+        assert len(family.family_members) == 5
 
     @staticmethod
     def test_get_properties_method():
@@ -148,7 +148,7 @@ class TestFamily:
         """
         family = [Male(age=48), Female(age=45, pregnant='1'), Female(age=17), Male(age=13, sfo='1'),
                   Female(age=5, kinder_garden='1')]
-        properties = {'inntekt': '1489000', 'antall_biler': '2'}
+        properties = {'income': '1489000', 'cars': '2'}
         for i, member in enumerate(family):
             for key, value in member.__dict__.items():
                 if "_id" not in key:

@@ -76,13 +76,13 @@ class Person(Entity):
         if self.sifo_age(age) not in ('9', '13') and sfo == '1':
             raise ValueError("only persons between 6-13 years can attend sfo")
 
-        self._kjonn = sex
-        self._alder = self.sifo_age(age)
-        self._barnehage = kinder_garden
+        self._gender = sex
+        self._age = self.sifo_age(age)
+        self._kindergarden = kinder_garden
         self._sfo = sfo
 
     @property
-    def kjonn(self):
+    def gender(self):
         """
         gender/sex getter
 
@@ -92,10 +92,10 @@ class Person(Entity):
                   gender/sex of the active Person object
 
         """
-        return self._kjonn
+        return self._gender
 
     @property
-    def alder(self):
+    def age(self):
         """
         age getter
 
@@ -105,10 +105,10 @@ class Person(Entity):
                   SIFO compatible age str
 
         """
-        return self._alder
+        return self._age
 
-    @alder.setter
-    def alder(self, age: Union[int, float, str]):
+    @age.setter
+    def age(self, age: Union[int, float, str]):
         """
         age setter
 
@@ -119,10 +119,10 @@ class Person(Entity):
 
         """
         Assertor.assert_data_types([age], [(float, int, str)])
-        self._alder = self.sifo_age(age)
+        self._age = self.sifo_age(age)
 
     @property
-    def barnehage(self):
+    def kindergarden(self):
         """
         kinder_garden status getter
 
@@ -132,10 +132,10 @@ class Person(Entity):
                       kids in kinder_garden, '1' true or '0' false
 
         """
-        return self._barnehage
+        return self._kindergarden
 
-    @barnehage.setter
-    def barnehage(self, kinder_garden: str):
+    @kindergarden.setter
+    def kindergarden(self, kinder_garden: str):
         """
         kinder_garden status setter
 
@@ -147,7 +147,7 @@ class Person(Entity):
         """
         Assertor.assert_data_types([kinder_garden], [str])
         Assertor.assert_arguments([kinder_garden], [{"kinder_garden": ('0', '1')}])
-        self._barnehage = kinder_garden
+        self._kindergarden = kinder_garden
 
     @property
     def sfo(self):
