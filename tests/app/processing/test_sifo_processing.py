@@ -30,7 +30,6 @@ class TestCalculateSifoExpenses:
         cls.data = {"person_1": {"alder_1": "20-50", "kjonn_1": "Mann"},
                     "person_2": {"alder_2": "20-50", "gravid_2": "Ja", "kjonn_2": "Kvinne"}}
 
-    @pt.mark.skip
     def test_calculate_sifo_expenses_is_instance_of_process(self):
         """
         Test that CalculateSifoExpenses is instance and subclass of SifoProcessing
@@ -42,7 +41,6 @@ class TestCalculateSifoExpenses:
             assert issubclass(calculate_sifo_expenses.__class__, parent)
 
     @staticmethod
-    @pt.mark.skip
     def test_class_variables():
         """
         Test that all the class variables are correct in the object
@@ -61,7 +59,6 @@ class TestCalculateSifoExpenses:
         with pt.raises(TrackingError):
             SifoExpensesProcess(invalid_data)
 
-    @pt.mark.skip
     def test_set_signal_method(self):
         """
         Test the set_signal method
@@ -76,7 +73,6 @@ class TestCalculateSifoExpenses:
         calculate_sifo_expenses.signal = {"new_data": signal}
         assert calculate_sifo_expenses.signal == {"new_data": signal}
 
-    @pt.mark.skip
     @pt.mark.parametrize('invalid_signal', [True, 'test', 90210, 90210.0, ('test', 'test')])
     def test_invalid_signals_raises_typeerror(self, invalid_signal):
         """
@@ -87,7 +83,6 @@ class TestCalculateSifoExpenses:
         with pt.raises(TypeError):
             calculate_sifo_expenses.signal = invalid_signal
 
-    @pt.mark.skip
     def test_get_signal_method(self):
         """
         Test that the get_signal() method returns correct signal
@@ -104,7 +99,6 @@ class TestCalculateSifoExpenses:
         assert calculate_sifo_expenses.get_signal("new_data").keys == signal.remove_quotation(
             list(new_data.keys()))
 
-    @pt.mark.skip
     @staticmethod
     def test_get_signal_method_with_none():
         """
@@ -118,7 +112,6 @@ class TestCalculateSifoExpenses:
         calculate_sifo_expenses = SifoExpensesProcess(new_data)
         assert not calculate_sifo_expenses.get_signal("new_data")
 
-    @pt.mark.skip
     @staticmethod
     def test_base_expenses_shares_getter():
         """
@@ -126,13 +119,12 @@ class TestCalculateSifoExpenses:
 
         """
         data = {"person_1": {"alder_1": "20-50", "kjonn_1": "Mann"}}
-        base_expenses_shares = {'mat': '35.36 %', 'klar': '8.60 %', 'helse': '5.70 %',
-                                'fritid': '14.01 %', 'kollektivt': '7.44 %', 'spedbarn': '0.00 %',
-                                'stordriftsfordel': '0.01 %', 'sumindivid': '71.11 %',
-                                'dagligvarer': '2.80 %', 'husholdsart': '3.67 %',
-                                'mobler': '4.06 %', 'medier': '18.36 %', 'biler': '0.00 %',
-                                'barnehage': '0.00 %', 'sfo': '0.00 %', 'sumhusholdning': '28.89 %',
-                                'totalt': '100.00 %'}
+        base_expenses_shares = {'barnehage': '0.00 %', 'biler': '0.00 %', 'dagligvarer': '2.90 %',
+                                'fritid': '14.13 %', 'helse': '6.55 %', 'husholdsart': '3.74 %',
+                                'klar': '8.33 %', 'kollektivt': '7.44 %', 'mat': '34.25 %',
+                                'medier': '18.44 %', 'mobler': '4.21 %', 'sfo': '0.00 %',
+                                'spedbarn': '0.00 %', 'sumhusholdning': '29.29 %',
+                                'sumindivid': '70.71 %', 'totalt': '100.00 %'}
         calculate_sifo_expenses = SifoExpensesProcess(data)
         print(calculate_sifo_expenses.expenses_shares)
         assert calculate_sifo_expenses.expenses_shares == base_expenses_shares

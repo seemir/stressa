@@ -13,12 +13,12 @@ import os
 import json
 
 from uuid import UUID
-from urllib.error import URLError
+from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
+from requests import Response
 
 import mock
 import pytest as pt
 from mechanize import Browser
-from mechanize._response import response_seek_wrapper
 
 from source.domain import Female, Family, Male
 from source.util import TrackingError
@@ -85,7 +85,7 @@ class TestSifo:
         self.sifo.family = new_family
         assert self.sifo.family == new_family
 
-    @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("timed out")))
+    @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectTimeout("timed out")))
     def test_response_throws_time_out_error_for_read_timeout(self):
         """
         Test that response method throws TrackingError if URLError("timed out")
@@ -94,7 +94,7 @@ class TestSifo:
         with pt.raises(TrackingError):
             self.sifo.response()
 
-    @mock.patch("mechanize.Browser.open", mock.MagicMock(side_effect=URLError("")))
+    @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectError))
     def test_response_throws_no_connection_error(self):
         """
         Test that response method throws TrackingError if URLError("")
@@ -103,27 +103,25 @@ class TestSifo:
         with pt.raises(TrackingError):
             self.sifo.response()
 
-    @pt.mark.skip
     def test_sifo_response_received(self):
         """
         Test HTTP response 200 is received and of correct type, i.e. response_seek_wrapper
 
         """
         response = self.sifo.response()
-        assert response.code == 200
-        assert isinstance(response, response_seek_wrapper)
+        assert response.status_code == 200
+        assert isinstance(response, Response)
 
-    @pt.mark.skip
     def test_sifo_expenses_method(self):
         """
         Test that sifo_expenses method returns correct content
 
         """
-        correct_content = {'mat': '6750', 'klar': '1850', 'helse': '1330', 'fritid': '2900',
-                           'kollektivt': '1540', 'spedbarn': '0', 'stordriftsfordel': '1',
-                           'sumindivid': '14370', 'dagligvarer': '360', 'husholdsart': '420',
-                           'mobler': '470', 'medier': '1900', 'biler': '2650', 'barnehage': '0',
-                           'sfo': '0', 'sumhusholdning': '5800', 'totalt': '20170'}
+        correct_content = {'barnehage': '0', 'biler': '2608', 'dagligvarer': '390',
+                           'fritid': '3020', 'helse': '1580', 'husholdsart': '430', 'klar': '1850',
+                           'kollektivt': '1590', 'mat': '6760', 'medier': '1970', 'mobler': '490',
+                           'sfo': '0', 'spedbarn': '0', 'sumhusholdning': '5888',
+                           'sumindivid': '14800', 'totalt': '20688'}
         sifo_expenses = self.sifo.sifo_base_expenses()
         print(sifo_expenses)
         assert sifo_expenses == correct_content
@@ -153,8 +151,6 @@ class TestSifo:
         with pt.raises(Exception):
             self.sifo.sifo_base_expenses()
 
-    @pt.mark.skip
-    @mock.patch("xml.etree.ElementTree", mock.MagicMock(return_value={}))
     def test_include_id_in_sifo_expenses_method(self):
         """
         Test that '_id' is included in output from sifo_expenses() method

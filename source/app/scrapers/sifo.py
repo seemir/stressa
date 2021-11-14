@@ -10,14 +10,14 @@ __email__ = 'samir.adrik@gmail.com'
 
 from time import time
 
-import xml.etree.ElementTree as Et
 from http.client import responses
 from urllib.error import URLError
+import requests
 
 from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Tracking
 from source.domain import Family
 
-from .settings import SIFO_URL, SIFO_FORM, TIMEOUT
+from .settings import SIFO_URL, TIMEOUT
 from .scraper import Scraper
 
 
@@ -75,24 +75,25 @@ class Sifo(Scraper):
 
         Returns
         -------
-        out         : mechanize._response.response_seek_wrapper
+        out         : requests.Response
                       response with expenses information
 
         """
         try:
             start = time()
-            self._browser.open(SIFO_URL, timeout=TIMEOUT)
-            self._browser.select_form(nr=SIFO_FORM)
-            for prop, value in self.family.sifo_properties().items():
-                if prop == 'income':
-                    self._browser[prop] = value
-                else:
-                    self._browser[prop] = [value]
-            response = self._browser.submit()
+
+            parsed_sifo_url = SIFO_URL
+
+            for key, item in self.family.sifo_properties().items():
+                parsed_sifo_url = parsed_sifo_url + '&' + key + '=' + item
+
+            response = requests.post(url=parsed_sifo_url, timeout=TIMEOUT)
+            status_code = response.status_code
+
             elapsed = self.elapsed_time(start)
             LOGGER.info(
                 "HTTP status code -> SIFO: [{}: {}] -> elapsed: {}".format(
-                    response.code, responses[response.code], elapsed))
+                    status_code, responses[status_code], elapsed))
             return response
         except URLError as sifo_response_error:
             if str(sifo_response_error) == "<urlopen error timed out>":
@@ -116,19 +117,23 @@ class Sifo(Scraper):
 
         """
         LOGGER.info("trying to retrieve '{}'".format(self.sifo_base_expenses.__name__))
-        root = Et.fromstring(self.response().read())
 
-        expenses = {}
-        for child in root:
-            expenses.update({child.tag: child.text.strip().replace(".", "")})
-
-        keys = list(expenses.keys())[-17:]
-        values = list(expenses.values())[-17:]
+        response_json = self.response().json()['utgifter']
 
         sifo_expenses = {}
+        sifo_expenses.update(response_json['individspesifikke'])
+        sifo_expenses.update({'sumindivid': response_json['sumindivid']})
+        sifo_expenses.update(response_json['husholdsspesifikke'])
+        sifo_expenses.update({'sumhusholdning': response_json['sumhusholdning']})
+        sifo_expenses.update({'totalt': response_json['totalt']})
+        sifo_expenses = {key: str(val) for key, val in sifo_expenses.items()}
+
         if include_id:
             sifo_expenses.update({'_id': self.family.id_})
-        sifo_expenses.update(dict(zip(keys, values)))
+
+        # import json
+        # with open('sifo_data.json', 'w', encoding='utf-8') as file:
+        #     json.dump(sifo_expenses, file, ensure_ascii=False, indent=4)
 
         LOGGER.success("'{}' successfully retrieved".format(self.sifo_base_expenses.__name__))
         return sifo_expenses

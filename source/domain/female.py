@@ -47,12 +47,12 @@ class Female(Person):
                 raise ValueError(
                     "[{}] pregnancy at this age is not possible".format(self.__class__.__name__))
 
-            self._pregnant = pregnant
+            self._gravid = pregnant
         except Exception as female_exception:
             raise female_exception
 
     @property
-    def pregnant(self):
+    def gravid(self):
         """
         pregnancy status getter
 
@@ -62,10 +62,10 @@ class Female(Person):
                   pregnancy str
 
         """
-        return self._pregnant
+        return self._gravid
 
-    @pregnant.setter
-    def pregnant(self, pregnant: str):
+    @gravid.setter
+    def gravid(self, pregnant: str):
         """
         pregnancy setter
 
@@ -77,4 +77,4 @@ class Female(Person):
         """
         Assertor.assert_data_types([pregnant], [str])
         Assertor.assert_arguments([pregnant], [{"pregnant": ('0', '1')}])
-        self._pregnant = pregnant
+        self._gravid = pregnant

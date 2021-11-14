@@ -58,16 +58,14 @@ class TestScrapeSifoBaseExpenses:
         assert scraper.name == ScrapeSifoBaseExpenses.__name__
         assert scraper.data == self.family
 
-    @pt.mark.skip
     def test_scrape_sifo_base_expenses_run_method(self):
         """
         Test the run method in ScrapeSifoBaseExpenses operation
 
         """
         scraper = ScrapeSifoBaseExpenses(self.family)
-        assert scraper.run() == {'mat': '6750', 'klar': '1850', 'helse': '1330', 'fritid': '2900',
-                                 'kollektivt': '1540', 'spedbarn': '0', 'stordriftsfordel': '1',
-                                 'sumindivid': '14370', 'dagligvarer': '360', 'husholdsart': '420',
-                                 'mobler': '470', 'medier': '1900', 'biler': '2650',
-                                 'barnehage': '0', 'sfo': '0', 'sumhusholdning': '5800',
-                                 'totalt': '20170'}
+        assert scraper.run() == {'barnehage': '0', 'biler': '2608', 'dagligvarer': '390',
+                                 'fritid': '3020', 'helse': '1580', 'husholdsart': '430',
+                                 'klar': '1850', 'kollektivt': '1590', 'mat': '6760',
+                                 'medier': '1970', 'mobler': '490', 'sfo': '0', 'spedbarn': '0',
+                                 'sumhusholdning': '5888', 'sumindivid': '14800', 'totalt': '20688'}
