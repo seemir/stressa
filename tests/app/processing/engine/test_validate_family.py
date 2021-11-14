@@ -26,10 +26,10 @@ class TestValidateFamily:
         Executed before all tests
 
         """
-        cls.data = {"person_1": {"alder_1": "20-50", "kjonn_1": "Mann"},
-                    "person_2": {"alder_2": "20-50", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
-                    "person_3": {"alder_3": "6-9", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
-                    "person_4": {"alder_4": "3", "barnehage_4": "Ja", "kjonn_4": "Mann"},
+        cls.data = {"person_1": {"alder_1": "20-30 år", "kjonn_1": "Mann"},
+                    "person_2": {"alder_2": "20-30 år", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
+                    "person_3": {"alder_3": "6-9 år", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
+                    "person_4": {"alder_4": "3 år", "barnehage_4": "Ja", "kjonn_4": "Mann"},
                     "antall_biler": "1", "brutto_arsinntekt": "1 260 000 kr"}
 
     def test_validate_family_is_instance_of_operation(self):
@@ -50,9 +50,10 @@ class TestValidateFamily:
         """
         sfo_arg = {"Nei": "0", "Halvdag": "1", "Heldag": "2"}
         barnehage_arg = {"Nei": "0", "Ja": "1"}
-        sifo_age = {"0-5 mnd": 0.41, "6-11 mnd": 0.91, "1": 1, "2": 2, "3": 3, "4-5": 5,
-                    "6-9": 9, "10-13": 13, "14-17": 17, "18-19": 19, "20-50": 50, "51-60": 60,
-                    "61-66": 66, "eldre enn 66": 75}
+        sifo_age = {'0-5 mnd': 0.41, '1 år': 1, '10-13 år': 13, '14-17 år': 17, '18-19 år': 19,
+                    '2 år': 2, '20-30 år': 30, '3 år': 3, '31-50 år': 50, '4-5 år': 5,
+                    '51-60 år': 60, '6-11 mnd': 0.91, '6-9 år': 9, '61-66 år': 66, '67-73 år': 74,
+                    'eldre enn 74 år': 999}
 
         assert ValidateFamily.sifo_arg == sifo_age
         assert ValidateFamily.barnehage_arg == barnehage_arg

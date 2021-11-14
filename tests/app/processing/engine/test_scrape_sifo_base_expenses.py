@@ -66,6 +66,6 @@ class TestScrapeSifoBaseExpenses:
         scraper = ScrapeSifoBaseExpenses(self.family)
         assert scraper.run() == {'barnehage': '0', 'biler': '2608', 'dagligvarer': '390',
                                  'fritid': '3020', 'helse': '1580', 'husholdsart': '430',
-                                 'klar': '1850', 'kollektivt': '1590', 'mat': '6760',
+                                 'klar': '1850', 'kollektivt': '1590', 'mat': '7170',
                                  'medier': '1970', 'mobler': '490', 'sfo': '0', 'spedbarn': '0',
-                                 'sumhusholdning': '5888', 'sumindivid': '14800', 'totalt': '20688'}
+                                 'sumhusholdning': '5888', 'sumindivid': '15210', 'totalt': '21098'}

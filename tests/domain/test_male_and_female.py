@@ -95,7 +95,7 @@ class TestMaleAndFemale:
 
         """
         female = Female()
-        pregnancy = age in range(19, 51)
+        pregnancy = age in range(17, 51)
         if pregnancy:
             female.alder = age
             female.gravid = '1'

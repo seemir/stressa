@@ -19,9 +19,10 @@ class ValidateFamily(Operation):
     Implementation of Populate Family Entity operation
 
     """
-    sifo_arg = {"0-5 mnd": 0.41, "6-11 mnd": 0.91, "1": 1, "2": 2, "3": 3, "4-5": 5,
-                "6-9": 9, "10-13": 13, "14-17": 17, "18-19": 19, "20-50": 50, "51-60": 60,
-                "61-66": 66, "eldre enn 66": 75}
+    sifo_arg = {"0-5 mnd": 0.41, "6-11 mnd": 0.91, "1 år": 1, "2 år": 2, "3 år": 3, "4-5 år": 5,
+                "6-9 år": 9, "10-13 år": 13, "14-17 år": 17, "18-19 år": 19, "20-30 år": 30,
+                "31-50 år": 50, "51-60 år": 60, "61-66 år": 66, "67-73 år": 74,
+                "eldre enn 74 år": 999}
     barnehage_arg = {"Nei": "0", "Ja": "1"}
     sfo_arg = {"Nei": "0", "Halvdag": "1", "Heldag": "2"}
 

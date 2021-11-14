@@ -43,8 +43,8 @@ class Person(Entity):
             raise TypeError("invalid numeric str, got '{}'".format(exp))
 
         Assertor.assert_non_negative([age])
-        sifo_yrs = [0.41, 0.91, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75]
-        return str(sifo_yrs[bisect_left(sifo_yrs, age)]) if age <= 75 else str(75)
+        sifo_yrs = [0.41, 0.91, 1, 2, 3, 5, 9, 13, 17, 19, 30, 50, 60, 66, 74, 999]
+        return str(sifo_yrs[bisect_left(sifo_yrs, age)]) if age <= 999 else str(999)
 
     def __init__(self, sex: str = 'm', age: Union[int, float, str] = 0, kinder_garden: str = '0',
                  sfo: str = '0'):

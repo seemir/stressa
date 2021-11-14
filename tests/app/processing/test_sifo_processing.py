@@ -27,8 +27,8 @@ class TestCalculateSifoExpenses:
         Executed before all tests
 
         """
-        cls.data = {"person_1": {"alder_1": "20-50", "kjonn_1": "Mann"},
-                    "person_2": {"alder_2": "20-50", "gravid_2": "Ja", "kjonn_2": "Kvinne"}}
+        cls.data = {"person_1": {"alder_1": "20-30 år", "kjonn_1": "Mann"},
+                    "person_2": {"alder_2": "20-30 år", "gravid_2": "Ja", "kjonn_2": "Kvinne"}}
 
     def test_calculate_sifo_expenses_is_instance_of_process(self):
         """
@@ -105,10 +105,10 @@ class TestCalculateSifoExpenses:
         Test that the get_signal() method returns None if no signal is present in process object
 
         """
-        new_data = {"person_1": {"alder_1": "20-50", "kjonn_1": "Mann"},
-                    "person_2": {"alder_2": "20-50", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
-                    "person_3": {"alder_3": "6-9", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
-                    "person_4": {"alder_4": "3", "barnehage_4": "Ja", "kjonn_4": "Mann"}}
+        new_data = {"person_1": {"alder_1": "20-30 år", "kjonn_1": "Mann"},
+                    "person_2": {"alder_2": "20-30 år", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
+                    "person_3": {"alder_3": "6-9 år", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
+                    "person_4": {"alder_4": "3 år", "barnehage_4": "Ja", "kjonn_4": "Mann"}}
         calculate_sifo_expenses = SifoExpensesProcess(new_data)
         assert not calculate_sifo_expenses.get_signal("new_data")
 
@@ -118,13 +118,13 @@ class TestCalculateSifoExpenses:
         Test that the expenses_shares getter
 
         """
-        data = {"person_1": {"alder_1": "20-50", "kjonn_1": "Mann"}}
-        base_expenses_shares = {'barnehage': '0.00 %', 'biler': '0.00 %', 'dagligvarer': '2.90 %',
-                                'fritid': '14.13 %', 'helse': '6.55 %', 'husholdsart': '3.74 %',
-                                'klar': '8.33 %', 'kollektivt': '7.44 %', 'mat': '34.25 %',
-                                'medier': '18.44 %', 'mobler': '4.21 %', 'sfo': '0.00 %',
-                                'spedbarn': '0.00 %', 'sumhusholdning': '29.29 %',
-                                'sumindivid': '70.71 %', 'totalt': '100.00 %'}
+        data = {"person_1": {"alder_1": "20-30 år", "kjonn_1": "Mann"}}
+        base_expenses_shares = {'barnehage': '0.00 %', 'biler': '0.00 %', 'dagligvarer': '2.84 %',
+                                'fritid': '13.83 %', 'helse': '6.41 %', 'husholdsart': '3.66 %',
+                                'klar': '8.15 %', 'kollektivt': '7.28 %', 'mat': '35.64 %',
+                                'medier': '18.05 %', 'mobler': '4.12 %', 'sfo': '0.00 %',
+                                'spedbarn': '0.00 %', 'sumhusholdning': '28.68 %',
+                                'sumindivid': '71.32 %', 'totalt': '100.00 %'}
         calculate_sifo_expenses = SifoExpensesProcess(data)
         print(calculate_sifo_expenses.expenses_shares)
         assert calculate_sifo_expenses.expenses_shares == base_expenses_shares
