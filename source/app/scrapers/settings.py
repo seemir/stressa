@@ -24,7 +24,7 @@ PORTALEN_ENTRY = "{http://www.w3.org/2005/Atom}entry"
 POSTEN_URL = "https://adressesok.posten.no/nb/postal_codes/search?utf8=%E2%9C%93&q="
 POSTEN_FORM = "q"
 
-SIFO_URL = "https://kalkulator.referansebudsjett.no/php/resultat_as_json.php?select_year=2021"
+SIFO_URL = "https://kalkulator.referansebudsjett.no/php/resultat_as_json.php?"
 
 SSB_URL = "https://data.ssb.no/api/v0/no/table/10748"
 

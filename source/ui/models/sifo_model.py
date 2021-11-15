@@ -24,6 +24,7 @@ class SifoModel(Model):
     Implementation of the Sifo Model with logic for all SIFO calculations
 
     """
+    _select_year = ["", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013"]
     _kjonn = ["", "Mann", "Kvinne"]
     _alder = ["", "0-5 mnd", "6-11 mnd", "1 år", "2 år", "3 år", "4-5 år",
               "6-9 år", "10-13 år", "14-17 år", "18-19 år", "20-30 år", "31-50 år", "51-60 år",
@@ -47,6 +48,7 @@ class SifoModel(Model):
         """
         Assertor.assert_data_types([parent], [QObject])
         super(SifoModel, self).__init__(parent)
+        self.parent.ui.combo_box_select_year.addItems(self._select_year)
         for num in range(1, 8):
             getattr(self.parent.ui, "combo_box_kjonn_" + str(num)).addItems(
                 self._kjonn)
@@ -89,6 +91,15 @@ class SifoModel(Model):
         self.parent.ui.line_edit_brutto_arsinntekt.editingFinished.connect(
             lambda: self.set_line_edit("brutto_arsinntekt", Money, "value",
                                        clearing=self.clear_results))
+
+    @pyqtSlot()
+    def set_budget_year(self):
+        """
+        method for setting the budget year
+
+        """
+        self.parent.ui.combo_box_select_year.activated.connect(
+            lambda: self.set_combo_box("select_year"))
 
     @pyqtSlot()
     def set_gender(self):
@@ -208,9 +219,9 @@ class SifoModel(Model):
         alder = getattr(ui, "combo_box_alder" + postfix).currentText()
         kvinne = getattr(ui, "combo_box_kjonn" + postfix).currentText() == "Kvinne"
 
-        barnehage = (alder in ["1", "2", "3", "4-5"])
-        sfo = (alder in ["6-9", "10-13"])
-        gravid = (kvinne and (alder in ["14-17", "18-19", "20-50"]))
+        barnehage = (alder in ["1 år", "2 år", "3 år", "4-5 år"])
+        sfo = (alder in ["6-9 år", "10-13 år"])
+        gravid = (kvinne and (alder in ["14-17 år", "18-19 år", "20-30 år", "31-50 år"]))
 
         if barnehage:
             self._extra_info = "barnehage" + postfix
@@ -371,6 +382,7 @@ class SifoModel(Model):
         self.set_age()
         self.set_extra_info()
         self.set_cars()
+        self.set_budget_year()
 
     @pyqtSlot()
     def clear_results(self):
@@ -386,6 +398,7 @@ class SifoModel(Model):
         method for clearing all information from SIFO dialog
 
         """
+        self.parent.ui.combo_box_select_year.setCurrentIndex(0)
         for combo_box in range(1, 8):
             getattr(self.parent.ui, "combo_box_kjonn_" + str(combo_box)).setCurrentIndex(0)
             getattr(self.parent.ui, "combo_box_alder_" + str(combo_box)).setCurrentIndex(0)

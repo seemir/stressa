@@ -38,7 +38,7 @@ class TestSifo:
 
         """
         family_members = [Male(age=45), Female(age=40)]
-        cls.family = Family(family_members, income=850000, cars=1)
+        cls.family = Family(family_members, income=850000, cars=1, select_year=2021)
         cls.sifo = Sifo(cls.family)
 
     def test_sifo_is_instance_of_scraper(self):
@@ -81,7 +81,8 @@ class TestSifo:
 
         """
         assert self.sifo.family == self.family
-        new_family = Family([Female(age=40), Female(age=13, sfo='1'), Male(age=10, sfo='1')])
+        new_family = Family([Female(age=40), Female(age=13, sfo='1'), Male(age=10, sfo='1')],
+                            select_year=2021)
         self.sifo.family = new_family
         assert self.sifo.family == new_family
 

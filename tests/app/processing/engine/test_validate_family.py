@@ -30,7 +30,7 @@ class TestValidateFamily:
                     "person_2": {"alder_2": "20-30 år", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
                     "person_3": {"alder_3": "6-9 år", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
                     "person_4": {"alder_4": "3 år", "barnehage_4": "Ja", "kjonn_4": "Mann"},
-                    "antall_biler": "1", "brutto_arsinntekt": "1 260 000 kr"}
+                    "antall_biler": "1", "brutto_arsinntekt": "1 260 000 kr", "select_year": "2021"}
 
     def test_validate_family_is_instance_of_operation(self):
         """

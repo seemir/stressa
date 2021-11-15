@@ -58,6 +58,21 @@ class Family(Entity):
         Assertor.assert_non_negative([income], msg="Only non-negative 'income' accepted")
 
     @Tracking
+    def validate_select_year(self, select_year: Union[int, str]):
+        """
+        method for validating selected budget year
+
+        Parameters
+        ----------
+        select_year     : int, str
+                          budget year
+
+        """
+        if not select_year:
+            raise ValueError("Expected a 'budget year', got '{}' "
+                             "".format(select_year.__class__.__name__))
+
+    @Tracking
     def validating_cars(self, cars: Union[int, str]):
         """
         method for validating that number of cars is non-negative
@@ -72,7 +87,7 @@ class Family(Entity):
         Assertor.assert_non_negative([cars], msg="Only non-negative 'numbers of cars'")
 
     def __init__(self, family_members: list = None, income: Union[int, float, str] = 0,
-                 cars: Union[int, str] = 0):
+                 cars: Union[int, str] = 0, select_year: Union[int, str] = None):
         """
         Constructor / Instantiate the class
 
@@ -84,16 +99,20 @@ class Family(Entity):
                           gross yearly income
         cars            : int, str
                           number of cars in the family
+        select_year     : int, str
+                          budget year
 
         """
         super().__init__()
         self.validate_family_members(family_members)
         self.validate_income(income)
         self.validating_cars(cars)
+        self.validate_select_year(select_year)
 
         self._familie_medlemmer = family_members
         self._inntekt = str(income)
         self._antall_biler = str(cars)
+        self._select_year = str(select_year)
 
     @property
     def familie_medlemmer(self):
@@ -195,6 +214,19 @@ class Family(Entity):
         self.validating_cars(cars)
         self._antall_biler = str(cars)
 
+    @property
+    def select_year(self):
+        """
+        select uear getter
+
+        Returns
+        -------
+        out     : int, str
+                  selected budget year
+
+        """
+        return self._select_year
+
     @Tracking
     def sifo_properties(self):
         """
@@ -206,7 +238,8 @@ class Family(Entity):
                   dictionary of all active properties
 
         """
-        properties = dict(list(self.__dict__.items())[-2:])
+        properties = dict(list(self.__dict__.items())[-3:])
+
         for i, family_member in enumerate(self.familie_medlemmer):
             for name, prop in family_member.__dict__.items():
                 if "_id" not in name:

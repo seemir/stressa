@@ -84,8 +84,10 @@ class Sifo(Scraper):
 
             parsed_sifo_url = SIFO_URL
 
+            print(self.family.sifo_properties())
+
             for key, item in self.family.sifo_properties().items():
-                parsed_sifo_url = parsed_sifo_url + '&' + key + '=' + item
+                parsed_sifo_url = parsed_sifo_url + key + '=' + item + '&'
 
             response = requests.post(url=parsed_sifo_url, timeout=TIMEOUT)
             status_code = response.status_code
@@ -118,7 +120,7 @@ class Sifo(Scraper):
         """
         LOGGER.info("trying to retrieve '{}'".format(self.sifo_base_expenses.__name__))
 
-        response_json = self.response().json()['utgifter']
+        response_json = self.response().json()["utgifter"]
 
         sifo_expenses = {}
         sifo_expenses.update(response_json['individspesifikke'])

@@ -30,7 +30,7 @@ class TestFamily:
 
         """
         cls.family_members = [Male(age=39), Female(age=40)]
-        cls.family = Family(cls.family_members)
+        cls.family = Family(cls.family_members, select_year=2021)
 
     @classmethod
     def teardown(cls):
@@ -120,7 +120,7 @@ class TestFamily:
 
         """
         new_family = [Male(25), Female(24)]
-        family = Family(new_family, inntekt, antall_biler)
+        family = Family(new_family, inntekt, antall_biler, select_year=2021)
 
         assert family.familie_medlemmer == new_family
         assert family.inntekt == str(inntekt)
@@ -148,13 +148,14 @@ class TestFamily:
         """
         family = [Male(age=48), Female(age=45, pregnant='1'), Female(age=17), Male(age=13, sfo='1'),
                   Female(age=5, kinder_garden='1')]
-        properties = {'inntekt': '1489000', 'antall_biler': '2'}
+        properties = {'inntekt': '1489000', 'antall_biler': '2', 'select_year': '2021'}
         for i, member in enumerate(family):
             for key, value in member.__dict__.items():
                 if "_id" not in key:
                     properties.update({key[1:] + str(i): value})
 
-        fam = Family(family, income=1489000, cars=2)
+        fam = Family(family, income=1489000, cars=2, select_year=2021)
+
         assert fam.sifo_properties() == properties
 
     def test_that_id_not_in_sifo_properties(self):
