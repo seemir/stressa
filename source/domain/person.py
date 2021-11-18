@@ -47,7 +47,7 @@ class Person(Entity):
         return str(sifo_yrs[bisect_left(sifo_yrs, age)]) if age <= 999 else str(999)
 
     def __init__(self, sex: str = 'm', age: Union[int, float, str] = 0, kinder_garden: str = '0',
-                 sfo: str = '0'):
+                 sfo: str = '0', student: str = '0'):
         """
         Constructor / Instantiate the class
 
@@ -76,10 +76,14 @@ class Person(Entity):
         if self.sifo_age(age) not in ('9', '13') and sfo == '1':
             raise ValueError("only persons between 6-13 years can attend sfo")
 
+        if self.sifo_age(age) != '30' and student == '1':
+            raise ValueError("only persons between 20-30 years can be students")
+
         self._kjonn = sex
         self._alder = self.sifo_age(age)
         self._barnehage = kinder_garden
         self._sfo = sfo
+        self._student = student
 
     @property
     def kjonn(self):
@@ -176,3 +180,31 @@ class Person(Entity):
         Assertor.assert_data_types([_sfo], [str])
         Assertor.assert_arguments([_sfo], [{"sfo": ('0', '1')}])
         self._sfo = _sfo
+
+    @property
+    def student(self):
+        """
+        student getter
+
+        Returns
+        -------
+        out         : str
+                      active student str in Person object
+
+        """
+        return self._student
+
+    @student.setter
+    def student(self, _student: str):
+        """
+        student setter
+
+        Parameters
+        ----------
+        _student       : str
+                         new student str
+
+        """
+        Assertor.assert_data_types([_student], [str])
+        Assertor.assert_arguments([_student], [{"student": ('0', '1')}])
+        self._student = _student

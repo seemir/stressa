@@ -31,6 +31,7 @@ class SifoModel(Model):
               "61-66 år", "67-73 år", "eldre enn 74 år"]
     _barnehage = ["", "Nei", "Ja"]
     _sfo = ["", "Nei", "Halvdag", "Heldag"]
+    _student = ["", "Nei", "Ja"]
     _antall_biler = ["", "1", "2", "3", "4"]
     _sifo_expenses = ['mat', 'klar', 'helse', 'fritid', 'kollektivt', 'spedbarn', 'sumindivid',
                       'dagligvarer', 'husholdsart', 'mobler', 'medier', 'biler', 'barnehage',
@@ -222,6 +223,7 @@ class SifoModel(Model):
         barnehage = (alder in ["1 år", "2 år", "3 år", "4-5 år"])
         sfo = (alder in ["6-9 år", "10-13 år"])
         gravid = (kvinne and (alder in ["14-17 år", "18-19 år", "20-30 år", "31-50 år"]))
+        student = (alder == "20-30 år")
 
         if barnehage:
             self._extra_info = "barnehage" + postfix
@@ -229,6 +231,9 @@ class SifoModel(Model):
         elif sfo:
             self._extra_info = "sfo" + postfix
             self.show_extra_info("sfo", postfix, self._sfo) if show_info else ""
+        elif student:
+            self._extra_info = "student" + postfix
+            self.show_extra_info("student", postfix, self._student) if show_info else ""
         elif gravid:
             self._extra_info = "gravid" + postfix
             self.show_extra_info("gravid", postfix, self._barnehage) if show_info else ""
@@ -310,6 +315,7 @@ class SifoModel(Model):
         self.clear_data("barnehage" + postfix, "person" + postfix)
         self.clear_data("sfo" + postfix, "person" + postfix)
         self.clear_data("gravid" + postfix, "person" + postfix)
+        self.clear_data("student" + postfix, "person" + postfix)
 
     @pyqtSlot()
     def set_cars(self):

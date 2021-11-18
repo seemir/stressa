@@ -23,7 +23,7 @@ class ValidateFamily(Operation):
                 "6-9 år": 9, "10-13 år": 13, "14-17 år": 17, "18-19 år": 19, "20-30 år": 30,
                 "31-50 år": 50, "51-60 år": 60, "61-66 år": 66, "67-73 år": 74,
                 "eldre enn 74 år": 999}
-    barnehage_arg = {"Nei": "0", "Ja": "1"}
+    bool_arg = {"Nei": "0", "Ja": "1"}
     sfo_arg = {"Nei": "0", "Halvdag": "1", "Heldag": "2"}
 
     @Tracking
@@ -69,11 +69,13 @@ class ValidateFamily(Operation):
                     elif "kjonn" in prop:
                         gender = Male if "Mann" in value else Female
                     elif "barnehage" in prop:
-                        arg.update({"kinder_garden": self.barnehage_arg[value]})
+                        arg.update({"kinder_garden": self.bool_arg[value]})
                     elif "sfo" in prop:
                         arg.update({"sfo": self.sfo_arg[value]})
+                    elif "student" in prop:
+                        arg.update({"student": self.bool_arg[value]})
                     elif "gravid" in prop:
-                        arg.update({"pregnant": self.barnehage_arg[value]})
+                        arg.update({"pregnant": self.bool_arg[value]})
                 if gender and arg:
                     family_member = gender(**arg)
                     family_members.append(family_member)

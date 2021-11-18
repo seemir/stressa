@@ -22,7 +22,7 @@ class Female(Person):
     """
 
     def __init__(self, age: Union[int, float, str] = 0, kinder_garden: str = '0', sfo: str = '0',
-                 pregnant: str = '0'):
+                 pregnant: str = '0', student: str = '0'):
         """
         Constructor / Instantiate the class
 
@@ -36,11 +36,14 @@ class Female(Person):
                           After school programme, '1' true or '0' false
         pregnant        : str
                           Pregnant female, '1' true or '0' false
+        student         : str
+                          Student classification, '1' true or '0' false
 
         """
         try:
             super().__init__('k', age, kinder_garden, sfo)
-            Assertor.assert_data_types([age, kinder_garden, sfo], [(float, int, str), str, str])
+            Assertor.assert_data_types([age, kinder_garden, sfo, student],
+                                       [(float, int, str), str, str, str])
             Assertor.assert_arguments([pregnant], [{"pregnant": ('0', '1')}])
 
             if self.sifo_age(age) not in ('17', '19', '30', '50') and pregnant == '1':

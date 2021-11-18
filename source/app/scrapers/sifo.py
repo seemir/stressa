@@ -81,10 +81,7 @@ class Sifo(Scraper):
         """
         try:
             start = time()
-
             parsed_sifo_url = SIFO_URL
-
-            print(self.family.sifo_properties())
 
             for key, item in self.family.sifo_properties().items():
                 parsed_sifo_url = parsed_sifo_url + key + '=' + item + '&'

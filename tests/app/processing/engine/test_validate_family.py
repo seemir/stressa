@@ -56,7 +56,7 @@ class TestValidateFamily:
                     'eldre enn 74 år': 999}
 
         assert ValidateFamily.sifo_arg == sifo_age
-        assert ValidateFamily.barnehage_arg == barnehage_arg
+        assert ValidateFamily.bool_arg == barnehage_arg
         assert ValidateFamily.sfo_arg == sfo_arg
 
     @staticmethod
