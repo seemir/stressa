@@ -83,3 +83,12 @@ class ImagesView(QDialog):
 
         """
         self.images_model.next_image()
+
+    def clear_images(self):
+        """
+        method for clearing all images
+
+        """
+        self.ui.web_view_images.close()
+        self.images_model.images = []
+        self.images_model.current_image = 0

@@ -271,8 +271,7 @@ class StatisticsModel(Model):
         self.parent.ui.table_view_kindergardens.setModel(None)
         self.parent.ui.table_view_kindergardens.clearSpans()
         self.parent.map_view.web_view_map.close()
-        self.parent.images_view.web_view_images.close()
-        self.parent.images_view.images_model.current_image = 0
+        self.parent.images_view.clear_images()
 
         BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_family_composition_city_area,
                                         self.parent.ui.table_view_family_composition)

@@ -25,26 +25,24 @@ class ImagesModel(Model):
 
     def next_image(self):
         number_of_images = len(self.images)
-        if abs(self.current_image) < number_of_images - 1:
-            print('number of images: ' + str(number_of_images))
-            print('current image: ' + str(self.current_image))
-            self.current_image += 1
-            self.browser.setUrl(QUrl(self.images[self.current_image]))
-            self.browser.show()
-        else:
-            self.current_image = 0
-            self.browser.setUrl(QUrl(self.images[self.current_image]))
-            self.browser.show()
+        if self.images:
+            if abs(self.current_image) < number_of_images - 1:
+                self.current_image += 1
+                self.browser.setUrl(QUrl(self.images[self.current_image]))
+                self.browser.show()
+            else:
+                self.current_image = 0
+                self.browser.setUrl(QUrl(self.images[self.current_image]))
+                self.browser.show()
 
     def previous_image(self):
         number_of_images = len(self.images)
-        if abs(self.current_image) < number_of_images - 1:
-            print('number of images: ' + str(number_of_images))
-            print('current image: ' + str(self.current_image))
-            self.current_image -= 1
-            self.browser.setUrl(QUrl(self.images[self.current_image]))
-            self.browser.show()
-        else:
-            self.current_image = 0
-            self.browser.setUrl(QUrl(self.images[self.current_image]))
-            self.browser.show()
+        if self.images:
+            if abs(self.current_image) < number_of_images - 1:
+                self.current_image -= 1
+                self.browser.setUrl(QUrl(self.images[self.current_image]))
+                self.browser.show()
+            else:
+                self.current_image = 0
+                self.browser.setUrl(QUrl(self.images[self.current_image]))
+                self.browser.show()
