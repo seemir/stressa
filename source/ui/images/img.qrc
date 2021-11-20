@@ -1,6 +1,7 @@
 <RCC>
   <qresource prefix="img">
     <file>images.svg</file>
+    <file>forward.svg</file>
     <file>map.svg</file>
     <file>update.svg</file>
     <file>analyze.svg</file>

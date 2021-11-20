@@ -16,6 +16,7 @@ from PyQt5.uic import loadUi
 
 from source.util import Assertor
 
+from .images_view import ImagesView
 from .meta_view import MetaView
 from .map_view import MapView
 
@@ -48,6 +49,7 @@ class StatisticsView(QDialog):
         self._statistics_model = StatisticsModel(self)
         self._meta_view = MetaView(self)
         self._map_view = MapView(self)
+        self._images_view = ImagesView(self)
 
         self.ui.push_button_meta_data.clicked.connect(self.meta_view.display)
         self.ui.push_button_oppdater.clicked.connect(self.update)
@@ -55,6 +57,8 @@ class StatisticsView(QDialog):
         self.ui.push_button_show_in_map_2.clicked.connect(self.map_view.show)
         self.ui.push_button_show_in_map_3.clicked.connect(self.map_view.show)
         self.ui.push_button_show_in_map_4.clicked.connect(self.map_view.show)
+
+        self.ui.push_button_images.clicked.connect(self.images_view.show)
 
     @property
     def parent(self):
@@ -107,6 +111,19 @@ class StatisticsView(QDialog):
 
         """
         return self._map_view
+
+    @property
+    def images_view(self):
+        """
+        ImagesView getter
+
+        Returns
+        -------
+        out     : ImagesView
+                  View with the images data for the Statistics view
+
+        """
+        return self._images_view
 
     def add_statistics_info(self, postfix):
         """
