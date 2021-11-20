@@ -17,6 +17,7 @@ from source.ui.graphics import BarChart, DoubleBarChart, ChangeBarChart, RatioCh
     BarChartWithLine
 from source.util import Assertor
 from source.domain import Amount, Percent
+from source.app import FINN_IMAGE_URL
 
 from ..util import CreateHtmlTable
 from .table_model import TableModel
@@ -40,7 +41,7 @@ class StatisticsModel(Model):
                         "schools", "schools_location", "highschools", "highschools_location",
                         "family_rating", "safety_rating", "noise_rating", "environment_rating",
                         "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
-                        "housing_area", "housing_age", "housing_prices"]
+                        "housing_area", "housing_age", "housing_prices", "images"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
@@ -166,6 +167,8 @@ class StatisticsModel(Model):
                 self.add_housing_age_chart(prefix, postfix, key)
             elif key == "housing_prices":
                 self.add_housing_prices_chart(prefix, postfix, key)
+            elif key == "images":
+                self.add_images(postfix, key)
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
                              kindergarden="kindergardens_location", schools="schools_location",
@@ -231,7 +234,7 @@ class StatisticsModel(Model):
                          "schools", "schools_location", "highschools", "highschools_location",
                          "family_rating", "safety_rating", "noise_rating", "environment_rating",
                          "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
-                         "housing_area", "housing_age", "housing_prices"]:
+                         "housing_area", "housing_age", "housing_prices", "images"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -268,6 +271,8 @@ class StatisticsModel(Model):
         self.parent.ui.table_view_kindergardens.setModel(None)
         self.parent.ui.table_view_kindergardens.clearSpans()
         self.parent.map_view.web_view_map.close()
+        self.parent.images_view.web_view_images.close()
+        self.parent.images_view.images_model.current_image = 0
 
         BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_family_composition_city_area,
                                         self.parent.ui.table_view_family_composition)
@@ -672,6 +677,22 @@ class StatisticsModel(Model):
                           if kindergarden + postfix in self.data.keys() else "",
                           highschools=self.data[highschools + postfix]
                           if highschools + postfix in self.data.keys() else "")
+
+    def add_images(self, postfix: str, keys: str):
+        """
+        method for adding images to statistics model
+
+        Parameters
+        ----------
+        postfix     : str
+                      index if used in naming of line_edits
+        keys          : str
+                        name of label to change
+
+        """
+        if keys + postfix in self.data.keys() and self.data[keys + postfix]:
+            images = [FINN_IMAGE_URL + element['uri'] for element in self.data[keys + postfix]]
+            self.parent.images_view.images_model.show_images(images)
 
     def add_family_composition_chart(self, prefix: str, postfix: str, key: str):
         """

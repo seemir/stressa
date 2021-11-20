@@ -870,13 +870,13 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QWebEngineView" name="web_view_image"/>
+       <widget class="QWebEngineView" name="web_view_images"/>
       </item>
      </layout>
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QPushButton" name="push_button_tilbake">
+    <widget class="QPushButton" name="push_button_back">
      <property name="minimumSize">
       <size>
        <width>0</width>
@@ -893,7 +893,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QPushButton" name="push_button_frem">
+    <widget class="QPushButton" name="push_button_forward">
      <property name="minimumSize">
       <size>
        <width>0</width>

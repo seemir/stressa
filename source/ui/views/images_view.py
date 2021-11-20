@@ -6,10 +6,12 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 
 from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.uic import loadUi
 
 from source.util import Assertor
+
+from ..models import ImagesModel
 
 
 class ImagesView(QDialog):
@@ -35,6 +37,10 @@ class ImagesView(QDialog):
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self._parent = parent
+        self._images_model = ImagesModel(self)
+
+        self.ui.push_button_forward.clicked.connect(self.next_image)
+        self.ui.push_button_back.clicked.connect(self.previous_image)
 
     @property
     def parent(self):
@@ -48,3 +54,32 @@ class ImagesView(QDialog):
 
         """
         return self._parent
+
+    @property
+    def images_model(self):
+        """
+        images_model getter
+
+        Returns
+        -------
+        out     : ImagesModel
+                  active ImagesModel in view
+
+        """
+        return self._images_model
+
+    @pyqtSlot()
+    def previous_image(self):
+        """
+        method for selecting previous image
+
+        """
+        self.images_model.previous_image()
+
+    @pyqtSlot()
+    def next_image(self):
+        """
+        method for selecting next image
+
+        """
+        self.images_model.next_image()
