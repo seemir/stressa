@@ -16,11 +16,14 @@ class ImagesModel(Model):
 
         self.browser = self.parent.ui.web_view_images
         self.images = []
+        self.descriptions = []
         self.current_image = 0
 
-    def show_images(self, images: list):
+    def show_images(self, images: list, descriptions: list):
         self.images = images
+        self.descriptions = descriptions
         self.browser.setUrl(QUrl(self.images[self.current_image]))
+        self.parent.ui.label_description.setText(self.descriptions[self.current_image])
         self.browser.show()
 
     def next_image(self):
@@ -29,10 +32,12 @@ class ImagesModel(Model):
             if abs(self.current_image) < number_of_images - 1:
                 self.current_image += 1
                 self.browser.setUrl(QUrl(self.images[self.current_image]))
+                self.parent.ui.label_description.setText(self.descriptions[self.current_image])
                 self.browser.show()
             else:
                 self.current_image = 0
                 self.browser.setUrl(QUrl(self.images[self.current_image]))
+                self.parent.ui.label_description.setText(self.descriptions[self.current_image])
                 self.browser.show()
 
     def previous_image(self):
@@ -41,8 +46,10 @@ class ImagesModel(Model):
             if abs(self.current_image) < number_of_images - 1:
                 self.current_image -= 1
                 self.browser.setUrl(QUrl(self.images[self.current_image]))
+                self.parent.ui.label_description.setText(self.descriptions[self.current_image])
                 self.browser.show()
             else:
                 self.current_image = 0
                 self.browser.setUrl(QUrl(self.images[self.current_image]))
+                self.parent.ui.label_description.setText(self.descriptions[self.current_image])
                 self.browser.show()

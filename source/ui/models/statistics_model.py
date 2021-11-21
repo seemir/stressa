@@ -690,8 +690,10 @@ class StatisticsModel(Model):
 
         """
         if keys + postfix in self.data.keys() and self.data[keys + postfix]:
+            descriptions = [element['description'] if 'description' in element.keys() else "" for
+                            element in self.data[keys + postfix]]
             images = [FINN_IMAGE_URL + element['uri'] for element in self.data[keys + postfix]]
-            self.parent.images_view.images_model.show_images(images)
+            self.parent.images_view.images_model.show_images(images, descriptions)
 
     def add_family_composition_chart(self, prefix: str, postfix: str, key: str):
         """

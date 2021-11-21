@@ -92,3 +92,4 @@ class ImagesView(QDialog):
         self.ui.web_view_images.close()
         self.images_model.images = []
         self.images_model.current_image = 0
+        self.ui.label_description.setText("")
