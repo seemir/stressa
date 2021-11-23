@@ -108,7 +108,8 @@ class FinnAd(Finn):
                                   attrs={"class": "u-capitalize status status--warning u-mb0"})
 
             info = {"finn_adresse": address.text, "prisantydning": price,
-                    "status": status.text.capitalize() if status else "Ikke solgt"}
+                    "status": status.text.strip().replace(r'\n', '').capitalize()
+                    if status else "Ikke solgt"}
             keys, values = list(key.get_text() for key in ad_soup.find_all(["th", "dt"])), \
                            list(value.get_text() for value in ad_soup.find_all(["td", "dd"]))
 
