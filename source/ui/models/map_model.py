@@ -6,7 +6,7 @@ __email__ = 'samir.adrik@gmail.com'
 from io import BytesIO
 from os.path import dirname as up
 
-from folium import Map, Marker, TileLayer, LayerControl, Popup
+from folium import Map, Marker, TileLayer, LayerControl, Popup, FeatureGroup
 from folium.features import CustomIcon
 
 from PyQt5.QtWebEngineWidgets import QWebEngineView
@@ -121,6 +121,52 @@ class MapModel(Model):
         TileLayer('http://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png',
                   attr='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> '
                        'contributors &amp; USGS', name='mtbmap').add_to(map_builder)
+
+        railway_feature = FeatureGroup('openrailwaymap', show=False)
+        TileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png',
+                  attr='Map data: &copy; <a href="https://www.openstreetmap.org/copyright'
+                       '">OpenStreetMap</a> contributors | Map style: &copy; <a href='
+                       '"https://www.OpenRailwayMap.org">OpenRailwayMap</a> (<a href='
+                       '"https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+                  name='openrailwaymap').add_to(railway_feature)
+        railway_feature.add_to(map_builder)
+
+        safecast_feature = FeatureGroup('safecast', show=False)
+        TileLayer('https://s3.amazonaws.com/te512.safecast.org/{z}/{x}/{y}.png',
+                  attr='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">'
+                       'OpenStreetMap</a> contributors | Map style: &copy; '
+                       '<a href="https://blog.safecast.org/about/">SafeCast</a> '
+                       '(<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+                  name='safecast').add_to(safecast_feature)
+        safecast_feature.add_to(map_builder)
+
+        trails_feature = FeatureGroup('waymarkedtrails_hiking', show=False)
+        TileLayer('https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png',
+                  attr='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">'
+                       'OpenStreetMap</a> contributors | Map style: &copy; '
+                       '<a href="https://waymarkedtrails.org">waymarkedtrails.org</a> '
+                       '(<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+                  name='waymarkedtrails_hiking').add_to(trails_feature)
+        trails_feature.add_to(map_builder)
+
+        cycling_feature = FeatureGroup('waymarkedtrails_cycling', show=False)
+        TileLayer('https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png',
+                  attr='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">'
+                       'OpenStreetMap</a> contributors | Map style: &copy; '
+                       '<a href="https://waymarkedtrails.org">waymarkedtrails.org</a> '
+                       '(<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+                  name='waymarkedtrails_cycling').add_to(cycling_feature)
+        cycling_feature.add_to(map_builder)
+
+        slopes_feature = FeatureGroup('waymarkedtrails_slopes', show=False)
+        TileLayer('https://tile.waymarkedtrails.org/slopes/{z}/{x}/{y}.png',
+                  attr='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">'
+                       'OpenStreetMap</a> contributors | Map style: &copy; '
+                       '<a href="https://waymarkedtrails.org">waymarkedtrails.org</a> '
+                       '(<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+                  name='waymarkedtrails_slopes').add_to(slopes_feature)
+        slopes_feature.add_to(map_builder)
+
         LayerControl().add_to(map_builder)
         map_builder.save(bytes_io, close_file=False)
         web_engine_view.setHtml(bytes_io.getvalue().decode())
