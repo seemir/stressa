@@ -41,7 +41,7 @@ class StatisticsModel(Model):
                         "schools", "schools_location", "highschools", "highschools_location",
                         "family_rating", "safety_rating", "noise_rating", "environment_rating",
                         "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
-                        "housing_area", "housing_age", "housing_prices", "images"]
+                        "housing_area", "housing_age", "housing_prices", "images", "transport"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
@@ -169,6 +169,8 @@ class StatisticsModel(Model):
                 self.add_housing_prices_chart(prefix, postfix, key)
             elif key == "images":
                 self.add_images(postfix, key)
+            elif key == "transport":
+                self.add_pois_table(postfix, key)
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
                              kindergarden="kindergardens_location", schools="schools_location",
@@ -234,7 +236,7 @@ class StatisticsModel(Model):
                          "schools", "schools_location", "highschools", "highschools_location",
                          "family_rating", "safety_rating", "noise_rating", "environment_rating",
                          "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
-                         "housing_area", "housing_age", "housing_prices", "images"]:
+                         "housing_area", "housing_age", "housing_prices", "images", "transport"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
