@@ -34,6 +34,7 @@ class MapModel(Model):
                               icon_size=icon_size)
 
         if university:
+            university_feature = FeatureGroup('hogskole_universitet', show=False)
             for pois in university:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/university.png",
                                        icon_size=small_icon)
@@ -42,9 +43,11 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(map_builder)
+                       popup=pois_pop_up).add_to(university_feature)
+            university_feature.add_to(map_builder)
 
         if kindergarden:
+            kindergarden_feature = FeatureGroup('barnehage', show=False)
             for pois in kindergarden:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/kindergarden.png",
                                        icon_size=small_icon)
@@ -53,9 +56,11 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(map_builder)
+                       popup=pois_pop_up).add_to(kindergarden_feature)
+            kindergarden_feature.add_to(map_builder)
 
         if schools:
+            schools_feature = FeatureGroup("barneskole", show=False)
             for pois in schools:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/schools.png",
                                        icon_size=small_icon)
@@ -64,9 +69,11 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(map_builder)
+                       popup=pois_pop_up).add_to(schools_feature)
+            schools_feature.add_to(map_builder)
 
         if highschools:
+            highschools_feature = FeatureGroup('vidregåendeskole', show=False)
             for pois in highschools:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/highschools.png",
                                        icon_size=small_icon)
@@ -75,9 +82,11 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(map_builder)
+                       popup=pois_pop_up).add_to(highschools_feature)
+            highschools_feature.add_to(map_builder)
 
         if transport:
+            transport_feature = FeatureGroup('holdeplass', show=False)
             for pois in transport:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/transport.png",
                                        icon_size=small_icon)
@@ -86,8 +95,8 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(map_builder)
-
+                       popup=pois_pop_up).add_to(transport_feature)
+            transport_feature.add_to(map_builder)
         if pop_up:
             Marker(coords, icon=map_icon, popup=Popup(pop_up, max_width=max_width)).add_to(
                 map_builder)
@@ -133,7 +142,7 @@ class MapModel(Model):
                   attr='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> '
                        'contributors &amp; USGS', name='mtbmap').add_to(map_builder)
 
-        railway_feature = FeatureGroup('openrailwaymap', show=False)
+        railway_feature = FeatureGroup('bane', show=False)
         TileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png',
                   attr='Map data: &copy; <a href="https://www.openstreetmap.org/copyright'
                        '">OpenStreetMap</a> contributors | Map style: &copy; <a href='
@@ -142,7 +151,7 @@ class MapModel(Model):
                   name='openrailwaymap').add_to(railway_feature)
         railway_feature.add_to(map_builder)
 
-        safecast_feature = FeatureGroup('safecast', show=False)
+        safecast_feature = FeatureGroup('miljø', show=False)
         TileLayer('https://s3.amazonaws.com/te512.safecast.org/{z}/{x}/{y}.png',
                   attr='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">'
                        'OpenStreetMap</a> contributors | Map style: &copy; '
@@ -151,7 +160,7 @@ class MapModel(Model):
                   name='safecast').add_to(safecast_feature)
         safecast_feature.add_to(map_builder)
 
-        trails_feature = FeatureGroup('waymarkedtrails_hiking', show=False)
+        trails_feature = FeatureGroup('turstil', show=False)
         TileLayer('https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png',
                   attr='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">'
                        'OpenStreetMap</a> contributors | Map style: &copy; '
@@ -160,7 +169,7 @@ class MapModel(Model):
                   name='waymarkedtrails_hiking').add_to(trails_feature)
         trails_feature.add_to(map_builder)
 
-        cycling_feature = FeatureGroup('waymarkedtrails_cycling', show=False)
+        cycling_feature = FeatureGroup('sykkelsti', show=False)
         TileLayer('https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png',
                   attr='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">'
                        'OpenStreetMap</a> contributors | Map style: &copy; '
@@ -169,7 +178,7 @@ class MapModel(Model):
                   name='waymarkedtrails_cycling').add_to(cycling_feature)
         cycling_feature.add_to(map_builder)
 
-        slopes_feature = FeatureGroup('waymarkedtrails_slopes', show=False)
+        slopes_feature = FeatureGroup('bakker', show=False)
         TileLayer('https://tile.waymarkedtrails.org/slopes/{z}/{x}/{y}.png',
                   attr='Map data: &copy; <a href="https://www.openstreetmap.org/copyright">'
                        'OpenStreetMap</a> contributors | Map style: &copy; '
