@@ -5386,6 +5386,7 @@
   <tabstop>push_button_show_in_map_1</tabstop>
   <tabstop>push_button_oppdater</tabstop>
   <tabstop>push_button_meta_data</tabstop>
+  <tabstop>push_button_images</tabstop>
   <tabstop>graphics_view_hist_data_city_area</tabstop>
   <tabstop>graphics_view_hist_data_municipality</tabstop>
   <tabstop>graphics_view_ratio_statistics</tabstop>
@@ -5430,10 +5431,14 @@
   <tabstop>graphics_view_housing_ownership_city</tabstop>
   <tabstop>graphics_view_housing_age_city_area</tabstop>
   <tabstop>graphics_view_housing_age_city</tabstop>
+  <tabstop>graphics_view_housing_prices_city_area</tabstop>
+  <tabstop>graphics_view_housing_prices_city</tabstop>
   <tabstop>table_view_gardens_rating</tabstop>
   <tabstop>table_view_housing_age</tabstop>
   <tabstop>table_view_housing_prices</tabstop>
   <tabstop>table_view_roads_rating</tabstop>
+  <tabstop>push_button_show_in_map_5</tabstop>
+  <tabstop>table_view_transport</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>
