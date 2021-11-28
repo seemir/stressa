@@ -49,34 +49,49 @@ class RestructurePois(Restructure):
         for prop, elements in self.data.items():
             if prop == "pois":
                 for element in elements:
-                    for keys, values in element.items():
-                        if keys == "name":
-                            institutions.append(values)
-                        elif keys == "coordinates":
-                            name = element["name"] if "name" in element.keys() else ""
-                            lat = list(values.values())[0]
-                            long = list(values.values())[1]
-                            pois_location.append(
-                                {col_name: name, "Breddegrad": lat, "Lengdegrad": long})
-                        elif keys == "distances":
-                            if "unit" in values.keys():
-                                for key, value in values.items():
-                                    distance = str(value) + " " + values["unit"] if value else "-"
-                                    if key == "air":
-                                        distance_air.append(distance)
-                                    elif key == "drive":
-                                        distance_drive.append(distance)
-                                    elif key == "walk":
-                                        distance_walk.append(distance)
-                        elif keys == "duration":
-                            if "unit" in values.keys():
-                                for key, value in values.items():
-                                    if key == "walk":
-                                        duration_walk.append(
-                                            str(int(round(value / 60))) + " min" if value else "-")
-                                    elif key == "drive":
-                                        duration_drive.append(
-                                            str(int(round(value / 60))) + " min" if value else "-")
+
+                    if "name" in element.keys():
+                        institutions.append(element["name"])
+
+                    if "coordinates" in element.keys():
+                        name = element["name"] if "name" in element.keys() else ""
+                        lat = element["coordinates"]["lat"]
+                        long = element["coordinates"]["long"]
+                        pois_location.append(
+                            {col_name: name, "Breddegrad": lat, "Lengdegrad": long})
+
+                    if "distances" in element.keys():
+                        air_distance = str(element["distances"]["air"]) \
+                            if element["distances"]["air"] else "0"
+                        walk_distance = str(element["distances"]["walk"]) \
+                            if element["distances"]["walk"] else "0"
+                        drive_distance = str(element["distances"]["drive"]) \
+                            if element["distances"]["drive"] else "0"
+                        unit = element["distances"]["unit"]
+
+                        distance_air.append(
+                            air_distance + " " + unit if air_distance != "0" else "-")
+                        distance_walk.append(
+                            walk_distance + " " + unit if walk_distance != "0" else "-")
+                        distance_drive.append(
+                            drive_distance + " " + unit if drive_distance != "0" else "-")
+
+                    if "duration" in element.keys():
+                        if "walk" in element["duration"].keys():
+                            walk_duration = element["duration"]["walk"] \
+                                if element["duration"]["walk"] else 0
+                            duration_walk.append(str(int(
+                                round(walk_duration / 60))) + " min" if walk_duration != 0 else "-")
+
+                        if "drive" in element["duration"].keys():
+                            drive_duration = element["duration"]["drive"] \
+                                if element["duration"]["drive"] else 0
+                            duration_drive.append(str(int(
+                                round(drive_duration / 60))) + " min" if drive_duration != 0
+                                                  else "-")
+                    else:
+                        duration_walk.append("-")
+                        duration_drive.append("-")
 
         inst_col, dist_col, dur_col, pois_location = self.check_data(institutions, distance_air,
                                                                      duration_walk, distance_walk,

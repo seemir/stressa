@@ -196,12 +196,14 @@ class FinnTransportationProcess(Process):
 
         """
         transport = self.get_signal("transport")
+
         transport_rest_operation = RestructurePois(transport.data["transport"],
                                                    "Restructure List of Transportation Offers")
         self.add_node(transport_rest_operation)
         self.add_transition(transport, transport_rest_operation, label="thread")
 
         transport_rest = transport_rest_operation.run(col_name="Holdeplass")
+
         transport_rest_signal = Signal(transport_rest, "Restructured List of Transportation Offers")
 
         self.add_signal(transport_rest_signal, "transport_rest")
@@ -218,13 +220,14 @@ class FinnTransportationProcess(Process):
         if rating_transportation.data:
             rating_transportation_rest_operation = RestructureRatings(
                 rating_transportation.data["rating_public_transportation"],
-                "Restructuring Transportation Rating")
+                "Restructuring Transportation Rating", key="Kollektivtilbud")
             self.add_node(rating_transportation_rest_operation)
             self.add_transition(rating_transportation, rating_transportation_rest_operation,
                                 label="thread")
 
             transportation_rating_rest = {
-                "rating_transportation": rating_transportation_rest_operation.run()}
+                "rating_public_transportation": rating_transportation_rest_operation.run()}
+
             transportation_rating_rest_signal = Signal(transportation_rating_rest,
                                                        "Restructured Transportation Rating")
 
@@ -232,7 +235,7 @@ class FinnTransportationProcess(Process):
             self.add_transition(rating_transportation_rest_operation,
                                 transportation_rating_rest_signal)
         else:
-            transportation_rating_rest = {"rating_transportation": ""}
+            transportation_rating_rest = {"rating_public_transportation": ""}
             transportation_rating_rest_signal = Signal(transportation_rating_rest,
                                                        "Restructured Transportation Rating")
 
@@ -288,7 +291,8 @@ class FinnTransportationProcess(Process):
         parking_rating = self.get_signal("rating_parking")
         if parking_rating.data:
             parking_rating_rest_operation = RestructureRatings(
-                parking_rating.data["rating_parking"], "Restructuring Parking Rating")
+                parking_rating.data["rating_parking"], "Restructuring Parking Rating",
+                key="Gateparkering")
             self.add_node(parking_rating_rest_operation)
             self.add_transition(parking_rating, parking_rating_rest_operation, label="thread")
 
@@ -314,7 +318,8 @@ class FinnTransportationProcess(Process):
         traffic_rating = self.get_signal("rating_traffic")
         if traffic_rating.data:
             traffic_rating_rest_operation = RestructureRatings(
-                traffic_rating.data["rating_traffic"], "Restructuring Traffic Rating")
+                traffic_rating.data["rating_traffic"], "Restructuring Traffic Rating",
+                key="Trafikk")
             self.add_node(traffic_rating_rest_operation)
             self.add_transition(traffic_rating, traffic_rating_rest_operation, label="thread")
 
@@ -351,7 +356,7 @@ class FinnTransportationProcess(Process):
             self.add_transition(city_bikes_rest_operation, city_bikes_rest_signal)
         else:
             city_bikes_rest = {"bysykler": ""}
-            city_bikes_rest_signal = Signal(city_bikes_rest, "Restructured Traffic Rating")
+            city_bikes_rest_signal = Signal(city_bikes_rest, "Restructured City Bikes Statistics")
 
             self.add_signal(city_bikes_rest_signal, "bysykler_rest")
             self.add_transition(city_bikes, city_bikes_rest_signal)
