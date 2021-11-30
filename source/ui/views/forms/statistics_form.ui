@@ -4391,48 +4391,7 @@
            <string>Transport</string>
           </attribute>
           <layout class="QGridLayout" name="gridLayout_20">
-           <item row="0" column="1">
-            <widget class="QFrame" name="frame_map_button_4">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::NoFrame</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_18">
-              <item row="0" column="0">
-               <widget class="QPushButton" name="push_button_show_in_map_5">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>35</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Vis i kart</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/map.svg</normaloff>:/img/map.svg</iconset>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item row="1" column="1">
+           <item row="1" column="2">
             <widget class="QFrame" name="frame_transport_pois">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
@@ -4493,7 +4452,48 @@
              </layout>
             </widget>
            </item>
-           <item row="0" column="0" rowspan="2">
+           <item row="0" column="2">
+            <widget class="QFrame" name="frame_map_button_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_18">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="push_button_show_in_map_5">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>35</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Vis i kart</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/map.svg</normaloff>:/img/map.svg</iconset>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="1" rowspan="2">
             <widget class="QFrame" name="frame_transport_rating">
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
@@ -4501,7 +4501,7 @@
              <property name="frameShadow">
               <enum>QFrame::Raised</enum>
              </property>
-             <layout class="QGridLayout" name="gridLayout_21">
+             <layout class="QGridLayout" name="gridLayout_22">
               <item row="0" column="0">
                <widget class="QTableView" name="table_view_rating_public_transportation">
                 <property name="sizePolicy">
@@ -4536,8 +4536,8 @@
                 </attribute>
                </widget>
               </item>
-              <item row="2" column="0">
-               <widget class="QTableView" name="table_view_rating_parking">
+              <item row="0" column="1">
+               <widget class="QTableView" name="table_view_rating_traffic">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
@@ -4571,7 +4571,7 @@
                </widget>
               </item>
               <item row="1" column="0">
-               <widget class="QTableView" name="table_view_rating_traffic">
+               <widget class="QTableView" name="table_view_rating_parking">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                   <horstretch>0</horstretch>
@@ -4592,6 +4592,135 @@
                 </property>
                 <property name="alternatingRowColors">
                  <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QTableView" name="table_view_primarytransport">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+              <item row="2" column="0" colspan="2">
+               <widget class="QTableView" name="table_view_rating_bysykler">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionBehavior">
+                 <enum>QAbstractItemView::SelectRows</enum>
+                </property>
+                <property name="gridStyle">
+                 <enum>Qt::DotLine</enum>
+                </property>
+                <attribute name="horizontalHeaderHighlightSections">
+                 <bool>false</bool>
+                </attribute>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item row="0" column="0" rowspan="2">
+            <widget class="QFrame" name="frame_ladepunkt">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>350</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_21">
+              <item row="0" column="0">
+               <widget class="QTableView" name="table_view_ladepunkt">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>330</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="frameShape">
+                 <enum>QFrame::Box</enum>
+                </property>
+                <property name="sizeAdjustPolicy">
+                 <enum>QAbstractScrollArea::AdjustToContents</enum>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="selectionMode">
+                 <enum>QAbstractItemView::ExtendedSelection</enum>
                 </property>
                 <property name="selectionBehavior">
                  <enum>QAbstractItemView::SelectRows</enum>

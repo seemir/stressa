@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, InputOperation, Signal, Extract, RestructurePois, RestructureRatings, \
-    Restructure, Multiplex, OutputOperation
+    Restructure, RestructureScore, Multiplex, OutputOperation
 
 
 class FinnTransportationProcess(Process):
@@ -250,9 +250,9 @@ class FinnTransportationProcess(Process):
 
         """
         primary_transport = self.get_signal("primary_transportation")
-        primary_transport_rest_operation = Restructure(primary_transport.data["primarytransport"],
-                                                       "Restructure Primary Transportation\n "
-                                                       "Statistics")
+        primary_transport_rest_operation = RestructureScore(
+            primary_transport.data["primarytransport"],
+            "Restructure Primary Transportation\n Statistics", key="Primære transportmidel")
         self.add_node(primary_transport_rest_operation)
         self.add_transition(primary_transport, primary_transport_rest_operation, label="thread")
 
@@ -270,14 +270,15 @@ class FinnTransportationProcess(Process):
 
         """
         ladepunkt = self.get_signal("charging")
-        ladepunkt_rest_operation = Restructure(ladepunkt.data["ladepunkt"],
-                                               "Restructure Charging Point Statistics")
+
+        ladepunkt_rest_operation = RestructurePois(ladepunkt.data["ladepunkt"],
+                                                   "Restructure List of Charging\n Point Places")
         self.add_node(ladepunkt_rest_operation)
         self.add_transition(ladepunkt, ladepunkt_rest_operation, label="thread")
 
-        ladepunkt_rest = ladepunkt_rest_operation.run()
+        ladepunkt_rest = ladepunkt_rest_operation.run(col_name="Ladeplass")
         ladepunkt_rest_signal = Signal(ladepunkt_rest,
-                                       "Restructured Charging Point\n Statistics")
+                                       "Restructured List of Charging\n Point Places")
         self.add_signal(ladepunkt_rest_signal, "charging_rest")
         self.add_transition(ladepunkt_rest_operation, ladepunkt_rest_signal)
 

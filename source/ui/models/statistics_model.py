@@ -42,7 +42,8 @@ class StatisticsModel(Model):
                         "family_rating", "safety_rating", "noise_rating", "environment_rating",
                         "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
                         "housing_area", "housing_age", "housing_prices", "images", "transport",
-                        "transport_location"]
+                        "transport_location", "rating_public_transportation", "rating_parking",
+                        "rating_traffic", "primarytransport", "ladepunkt"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
@@ -174,6 +175,16 @@ class StatisticsModel(Model):
                 self.add_images(postfix, key)
             elif key == "transport":
                 self.add_pois_table(postfix, key)
+            elif key == "rating_public_transportation":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "rating_parking":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "rating_traffic":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "primarytransport":
+                self.add_pois_table(postfix, key, resize=True, score=True)
+            elif key == "ladepunkt":
+                self.add_pois_table(postfix, key)
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
                              kindergarden="kindergardens_location", schools="schools_location",
@@ -240,7 +251,8 @@ class StatisticsModel(Model):
                          "family_rating", "safety_rating", "noise_rating", "environment_rating",
                          "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
                          "housing_area", "housing_age", "housing_prices", "images", "transport",
-                         "transport_location"]:
+                         "transport_location", "rating_public_transportation", "rating_parking",
+                         "rating_traffic", "primarytransport", "ladepunkt"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -594,7 +606,7 @@ class StatisticsModel(Model):
                             "table_view_income", "Inntektsfordeling", "income_city_area_plot",
                             "income_city_plot", ignore_total=False)
 
-    def add_pois_table(self, postfix: str, key: str, resize=False):
+    def add_pois_table(self, postfix: str, key: str, resize=False, score=False):
         """
         method for adding pois table
 
@@ -622,9 +634,10 @@ class StatisticsModel(Model):
                 getattr(self.parent.ui,
                         "table_view_" + key).horizontalHeader().setSectionResizeMode(
                     1, QHeaderView.ResizeToContents)
-                getattr(self.parent.ui,
-                        "table_view_" + key).horizontalHeader().setSectionResizeMode(
-                    2, QHeaderView.ResizeToContents)
+                if not score:
+                    getattr(self.parent.ui,
+                            "table_view_" + key).horizontalHeader().setSectionResizeMode(
+                        2, QHeaderView.ResizeToContents)
                 getattr(self.parent.ui, "table_view_" + key).setWordWrap(False)
             else:
                 getattr(self.parent.ui,
@@ -635,10 +648,11 @@ class StatisticsModel(Model):
                         "table_view_" + key).horizontalHeader().setSectionResizeMode(
                     1, QHeaderView.Fixed)
                 getattr(self.parent.ui, "table_view_" + key).setColumnWidth(1, 65)
-                getattr(self.parent.ui,
-                        "table_view_" + key).horizontalHeader().setSectionResizeMode(
-                    2, QHeaderView.Fixed)
-                getattr(self.parent.ui, "table_view_" + key).setColumnWidth(2, 65)
+                if not score:
+                    getattr(self.parent.ui,
+                            "table_view_" + key).horizontalHeader().setSectionResizeMode(
+                        2, QHeaderView.Fixed)
+                    getattr(self.parent.ui, "table_view_" + key).setColumnWidth(2, 65)
                 getattr(self.parent.ui, "table_view_" + key).verticalHeader().setSectionResizeMode(
                     QHeaderView.ResizeToContents)
                 getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)

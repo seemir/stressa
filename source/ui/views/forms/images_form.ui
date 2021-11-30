@@ -883,7 +883,13 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>30</height>
+          <height>50</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>50</height>
          </size>
         </property>
         <property name="text">
@@ -891,6 +897,9 @@
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
