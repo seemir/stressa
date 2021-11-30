@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, InputOperation, Signal, Extract, RestructurePois, RestructureRatings, \
-    Restructure, RestructureScore, Multiplex, OutputOperation
+    RestructureScore, Multiplex, OutputOperation
 
 
 class FinnTransportationProcess(Process):
