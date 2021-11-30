@@ -10,8 +10,6 @@ __email__ = 'samir.adrik@gmail.com'
 
 from uuid import uuid4
 
-from pymongo import MongoClient
-
 from source.util import Assertor, LOGGER
 
 # from .settings import DB_STRING
@@ -36,7 +34,7 @@ class Dao:
         try:
             LOGGER.info("trying to create '{}'".format(self.__class__.__name__))
             self._id_str = str(uuid4())
-            self._client = MongoClient(DB_STRING)
+            self._client = None
             self._db = None
             self._collection = None
             LOGGER.success(
