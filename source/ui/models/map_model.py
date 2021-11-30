@@ -24,7 +24,7 @@ class MapModel(Model):
 
     @staticmethod
     def show_map(coords: list, web_engine_view: QWebEngineView, pop_up: str = None, university=None,
-                 kindergarden=None, schools=None, highschools=None, transport=None):
+                 kindergarden=None, schools=None, highschools=None, transport=None, charging=None):
         icon_size = (45, 45)
         small_icon = (40, 40)
         max_width = 400
@@ -97,6 +97,20 @@ class MapModel(Model):
                 Marker(location=[lat, long], icon=pois_icon,
                        popup=pois_pop_up).add_to(transport_feature)
             transport_feature.add_to(map_builder)
+
+        if charging:
+            charging_feature = FeatureGroup('ladeplass', show=False)
+            for pois in charging:
+                pois_icon = CustomIcon(up(up(__file__)) + "/images/charging.png",
+                                       icon_size=small_icon)
+                lat = pois["Breddegrad"]
+                long = pois["Lengdegrad"]
+                pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
+                                    max_width=max_width)
+                Marker(location=[lat, long], icon=pois_icon,
+                       popup=pois_pop_up).add_to(charging_feature)
+            charging_feature.add_to(map_builder)
+
         if pop_up:
             Marker(coords, icon=map_icon, popup=Popup(pop_up, max_width=max_width)).add_to(
                 map_builder)

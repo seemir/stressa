@@ -34,7 +34,7 @@ class Dao:
         try:
             LOGGER.info("trying to create '{}'".format(self.__class__.__name__))
             self._id_str = str(uuid4())
-            self._client = None
+            self._client = {"foo": "bar"}
             self._db = None
             self._collection = None
             LOGGER.success(
