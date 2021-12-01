@@ -186,7 +186,7 @@ class StatisticsModel(Model):
             elif key == "primarytransport":
                 self.add_pois_table(postfix, key, resize=True, score=True)
             elif key == "ladepunkt":
-                self.add_pois_table(postfix, key)
+                self.add_pois_table(postfix, key, resize=True)
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
                              kindergarden="kindergardens_location", schools="schools_location",
