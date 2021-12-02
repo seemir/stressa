@@ -341,23 +341,25 @@ class FinnTransportationProcess(Process):
     def restructure_7(self):
         """
         restructure city bikes statistics
-
+0
         """
         city_bikes = self.get_signal("bysykler")
         if city_bikes.data:
-            city_bikes_rest_operation = RestructureRatings(
-                city_bikes.data["bysykler"], "Restructuring City Bikes Statistics")
+            city_bikes_rest_operation = RestructurePois(
+                city_bikes.data["bysykler"], "Restructuring List of City Bikes Offers")
             self.add_node(city_bikes_rest_operation)
             self.add_transition(city_bikes, city_bikes_rest_operation, label="thread")
 
-            city_bikes_rest = {"bysykler": city_bikes_rest_operation.run()}
-            city_bikes_rest_signal = Signal(city_bikes_rest, "Restructured City Bikes Statistics")
+            city_bikes_rest = city_bikes_rest_operation.run(col_name="Bysykkel plass")
+            city_bikes_rest_signal = Signal(city_bikes_rest,
+                                            "Restructured List of City Bikes Offers")
 
             self.add_signal(city_bikes_rest_signal, "bysykler_rest")
             self.add_transition(city_bikes_rest_operation, city_bikes_rest_signal)
         else:
-            city_bikes_rest = {"bysykler": ""}
-            city_bikes_rest_signal = Signal(city_bikes_rest, "Restructured City Bikes Statistics")
+            city_bikes_rest = {"bysykler": "", "bysykler_location": ""}
+            city_bikes_rest_signal = Signal(city_bikes_rest,
+                                            "Restructured List of City Bikes Offers")
 
             self.add_signal(city_bikes_rest_signal, "bysykler_rest")
             self.add_transition(city_bikes, city_bikes_rest_signal)

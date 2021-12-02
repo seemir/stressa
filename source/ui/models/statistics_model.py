@@ -43,7 +43,8 @@ class StatisticsModel(Model):
                         "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
                         "housing_area", "housing_age", "housing_prices", "images", "transport",
                         "transport_location", "rating_public_transportation", "rating_parking",
-                        "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location"]
+                        "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location",
+                        "bysykler", "bysykler_location"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
@@ -187,11 +188,15 @@ class StatisticsModel(Model):
                 self.add_pois_table(postfix, key, resize=True, score=True)
             elif key == "ladepunkt":
                 self.add_pois_table(postfix, key, resize=True)
+            elif key == "bysykler":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "bysykler_location":
+                pass
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
                              kindergarden="kindergardens_location", schools="schools_location",
                              highschools="highschools_location", transport="transport_location",
-                             charging="ladepunkt_location")
+                             charging="ladepunkt_location", bicycle="bysykler_location")
             else:
                 if key + postfix in self.data.keys():
                     self.add_statistics_label(key, postfix)
@@ -255,7 +260,8 @@ class StatisticsModel(Model):
                          "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
                          "housing_area", "housing_age", "housing_prices", "images", "transport",
                          "transport_location", "rating_public_transportation", "rating_parking",
-                         "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location"]:
+                         "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location",
+                         "bysykler", "bysykler_location"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -661,7 +667,7 @@ class StatisticsModel(Model):
                 getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)
 
     def add_map(self, postfix: str, keys: str, university: str, kindergarden: str, schools: str,
-                highschools: str, transport: str, charging: str):
+                highschools: str, transport: str, charging: str, bicycle: str):
         """
         method for adding pois table
 
@@ -683,6 +689,8 @@ class StatisticsModel(Model):
                         name of transport data dict
         charging      : str
                         name of charging data dict
+        bicycle       : str
+                        name of bicycle data dict
 
         """
         self.parent.map_view.web_view_map.close()
@@ -702,13 +710,15 @@ class StatisticsModel(Model):
                           kindergarden=self.data[kindergarden + postfix]
                           if kindergarden + postfix in self.data.keys() else "",
                           schools=self.data[schools + postfix]
-                          if kindergarden + postfix in self.data.keys() else "",
+                          if schools + postfix in self.data.keys() else "",
                           highschools=self.data[highschools + postfix]
                           if highschools + postfix in self.data.keys() else "",
                           transport=self.data[transport + postfix]
                           if transport + postfix in self.data.keys() else "",
                           charging=self.data[charging + postfix]
-                          if transport + postfix in self.data.keys() else "")
+                          if charging + postfix in self.data.keys() else "",
+                          bicycle=self.data[bicycle + postfix]
+                          if bicycle + postfix in self.data.keys() else "")
 
     def add_images(self, postfix: str, keys: str):
         """
