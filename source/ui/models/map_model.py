@@ -25,7 +25,7 @@ class MapModel(Model):
     @staticmethod
     def show_map(coords: list, web_engine_view: QWebEngineView, pop_up: str = None, university=None,
                  kindergarden=None, schools=None, highschools=None, transport=None, charging=None,
-                 bicycle=None, groceries=None):
+                 bicycle=None, groceries=None, services=None):
         icon_size = (45, 45)
         small_icon = (40, 40)
         max_width = 400
@@ -137,6 +137,19 @@ class MapModel(Model):
                 Marker(location=[lat, long], icon=pois_icon,
                        popup=pois_pop_up).add_to(groceries_feature)
             groceries_feature.add_to(map_builder)
+
+        if services:
+            services_feature = FeatureGroup('varer', show=False)
+            for pois in services:
+                pois_icon = CustomIcon(up(up(__file__)) + "/images/services.png",
+                                       icon_size=small_icon)
+                lat = pois["Breddegrad"]
+                long = pois["Lengdegrad"]
+                pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
+                                    max_width=max_width)
+                Marker(location=[lat, long], icon=pois_icon,
+                       popup=pois_pop_up).add_to(services_feature)
+            services_feature.add_to(map_builder)
 
         if pop_up:
             Marker(coords, icon=map_icon, popup=Popup(pop_up, max_width=max_width)).add_to(
