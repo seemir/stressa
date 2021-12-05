@@ -44,7 +44,7 @@ class StatisticsModel(Model):
                         "housing_area", "housing_age", "housing_prices", "images", "transport",
                         "transport_location", "rating_public_transportation", "rating_parking",
                         "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location",
-                        "bysykler", "bysykler_location"]
+                        "bysykler", "bysykler_location", "groceries", "groceries_location"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
@@ -192,11 +192,16 @@ class StatisticsModel(Model):
                 self.add_pois_table(postfix, key, resize=True)
             elif key == "bysykler_location":
                 pass
+            elif key == "groceries":
+                self.add_pois_table(postfix, key)
+            elif key == "groceries_location":
+                pass
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
                              kindergarden="kindergardens_location", schools="schools_location",
                              highschools="highschools_location", transport="transport_location",
-                             charging="ladepunkt_location", bicycle="bysykler_location")
+                             charging="ladepunkt_location", bicycle="bysykler_location",
+                             groceries="groceries_location")
             else:
                 if key + postfix in self.data.keys():
                     self.add_statistics_label(key, postfix)
@@ -261,7 +266,7 @@ class StatisticsModel(Model):
                          "housing_area", "housing_age", "housing_prices", "images", "transport",
                          "transport_location", "rating_public_transportation", "rating_parking",
                          "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location",
-                         "bysykler", "bysykler_location"]:
+                         "bysykler", "bysykler_location", "groceries", "groceries_location"]:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -667,7 +672,7 @@ class StatisticsModel(Model):
                 getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)
 
     def add_map(self, postfix: str, keys: str, university: str, kindergarden: str, schools: str,
-                highschools: str, transport: str, charging: str, bicycle: str):
+                highschools: str, transport: str, charging: str, bicycle: str, groceries: str):
         """
         method for adding pois table
 
@@ -691,6 +696,8 @@ class StatisticsModel(Model):
                         name of charging data dict
         bicycle       : str
                         name of bicycle data dict
+        groceries     : str
+                        name of groceries data dict
 
         """
         self.parent.map_view.web_view_map.close()
@@ -718,7 +725,9 @@ class StatisticsModel(Model):
                           charging=self.data[charging + postfix]
                           if charging + postfix in self.data.keys() else "",
                           bicycle=self.data[bicycle + postfix]
-                          if bicycle + postfix in self.data.keys() else "")
+                          if bicycle + postfix in self.data.keys() else "",
+                          groceries=self.data[groceries + postfix]
+                          if groceries + postfix in self.data.keys() else "")
 
     def add_images(self, postfix: str, keys: str):
         """
