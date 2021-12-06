@@ -45,7 +45,8 @@ class StatisticsModel(Model):
                         "transport_location", "rating_public_transportation", "rating_parking",
                         "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location",
                         "bysykler", "bysykler_location", "groceries", "groceries_location",
-                        "services", "services_location"]
+                        "services", "services_location", "rating_food_selection", "sport",
+                        "rating_activity", "rating_serving", "rating_hiking", "sport_location"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
@@ -56,6 +57,19 @@ class StatisticsModel(Model):
                          "housing_ownership_city_area", "housing_ownership_city",
                          "housing_area_city_area", "housing_area_city", "housing_age_city_area",
                          "housing_age_city", "housing_prices_city_area", "housing_prices_city"]
+    _ignore_clear_keys = ["hist_data_city_area", "hist_data_municipality", "views_development",
+                          "age_distribution", "civil_status", "education", "income",
+                          "higheducation", "higheducation_location", "info", "family_composition",
+                          "age_distribution_children", "kindergardens", "kindergardens_location",
+                          "schools", "schools_location", "highschools", "highschools_location",
+                          "family_rating", "safety_rating", "noise_rating", "environment_rating",
+                          "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
+                          "housing_area", "housing_age", "housing_prices", "images", "transport",
+                          "transport_location", "rating_public_transportation", "rating_parking",
+                          "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location",
+                          "bysykler", "bysykler_location", "groceries", "groceries_location",
+                          "services", "services_location", "rating_food_selection", "sport",
+                          "rating_activity", "rating_serving", "rating_hiking", "sport_location"]
 
     def __init__(self, parent: QObject):
         """
@@ -198,15 +212,28 @@ class StatisticsModel(Model):
             elif key == "groceries_location":
                 pass
             elif key == "services":
-                self.add_pois_table(postfix, key)
+                self.add_pois_table(postfix, key, resize=True)
             elif key == "services_location":
+                pass
+            elif key == "rating_food_selection":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "sport":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "rating_activity":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "rating_serving":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "rating_hiking":
+                self.add_pois_table(postfix, key, resize=True)
+            elif key == "sport_location":
                 pass
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
                              kindergarden="kindergardens_location", schools="schools_location",
                              highschools="highschools_location", transport="transport_location",
                              charging="ladepunkt_location", bicycle="bysykler_location",
-                             groceries="groceries_location", services="services_location")
+                             groceries="groceries_location", services="services_location",
+                             sports="sport_location")
             else:
                 if key + postfix in self.data.keys():
                     self.add_statistics_label(key, postfix)
@@ -261,18 +288,7 @@ class StatisticsModel(Model):
             elif key == "municipality":
                 self.parent.label_municipality_sqm_price.setText("KMP (kommune)")
                 self.parent.label_sales_municipality.setText("Salg (kommune)")
-            elif key in ["hist_data_city_area", "hist_data_municipality", "views_development",
-                         "age_distribution", "civil_status", "education", "income", "higheducation",
-                         "higheducation_location", "info", "family_composition",
-                         "age_distribution_children", "kindergardens", "kindergardens_location",
-                         "schools", "schools_location", "highschools", "highschools_location",
-                         "family_rating", "safety_rating", "noise_rating", "environment_rating",
-                         "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
-                         "housing_area", "housing_age", "housing_prices", "images", "transport",
-                         "transport_location", "rating_public_transportation", "rating_parking",
-                         "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location",
-                         "bysykler", "bysykler_location", "groceries", "groceries_location",
-                         "services", "services_location"]:
+            elif key in self._ignore_clear_keys:
                 continue
             else:
                 getattr(self.parent.ui, "line_edit_" + key).clear()
@@ -673,7 +689,7 @@ class StatisticsModel(Model):
 
     def add_map(self, postfix: str, keys: str, university: str, kindergarden: str, schools: str,
                 highschools: str, transport: str, charging: str, bicycle: str, groceries: str,
-                services: str):
+                services: str, sports: str):
         """
         method for adding pois table
 
@@ -701,6 +717,8 @@ class StatisticsModel(Model):
                         name of groceries data dict
         services      : str
                         name of services data dict
+        sports        : str
+                        name of sports data dict
 
         """
         self.parent.map_view.web_view_map.close()
@@ -732,7 +750,9 @@ class StatisticsModel(Model):
                           groceries=self.data[groceries + postfix]
                           if groceries + postfix in self.data.keys() else "",
                           services=self.data[services + postfix]
-                          if services + postfix in self.data.keys() else "")
+                          if services + postfix in self.data.keys() else "",
+                          sports=self.data[sports + postfix]
+                          if sports + postfix in self.data.keys() else "")
 
     def add_images(self, postfix: str, keys: str):
         """

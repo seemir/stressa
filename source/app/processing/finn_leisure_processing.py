@@ -162,7 +162,8 @@ class FinnLeisureProcessing(Process):
         activity_rating = self.get_signal("rating_activity")
         if activity_rating.data:
             activity_rating_rest_operation = RestructureRatings(
-                activity_rating.data["rating_activity"], "Restructuring Activity Rating")
+                activity_rating.data["rating_activity"], "Restructuring Activity Rating",
+                key="Aktivitet")
             self.add_node(activity_rating_rest_operation)
             self.add_transition(activity_rating, activity_rating_rest_operation, label="thread")
 
@@ -190,7 +191,8 @@ class FinnLeisureProcessing(Process):
         serving_rating = self.get_signal("rating_serving")
         if serving_rating.data:
             serving_rating_rest_operation = RestructureRatings(
-                serving_rating.data["rating_serving"], "Restructuring Serving Rating")
+                serving_rating.data["rating_serving"], "Restructuring Serving Rating",
+                key="Serveringssted")
             self.add_node(serving_rating_rest_operation)
             self.add_transition(serving_rating, serving_rating_rest_operation, label="thread")
 
@@ -216,7 +218,8 @@ class FinnLeisureProcessing(Process):
         hiking_rating = self.get_signal("rating_hiking")
         if hiking_rating.data:
             hiking_rating_rest_operation = RestructureRatings(
-                hiking_rating.data["rating_hiking"], "Restructuring Hiking Rating")
+                hiking_rating.data["rating_hiking"], "Restructuring Hiking Rating",
+                key="Turmuligheter")
             self.add_node(hiking_rating_rest_operation)
             self.add_transition(hiking_rating, hiking_rating_rest_operation, label="thread")
 

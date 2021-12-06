@@ -26,7 +26,7 @@ class MapModel(Model):
     @staticmethod
     def show_map(coords: list, web_engine_view: QWebEngineView, pop_up: str = None, university=None,
                  kindergarden=None, schools=None, highschools=None, transport=None, charging=None,
-                 bicycle=None, groceries=None, services=None):
+                 bicycle=None, groceries=None, services=None, sports=None):
         icon_size = (45, 45)
         small_icon = (40, 40)
         max_width = 400
@@ -144,6 +144,18 @@ class MapModel(Model):
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
                        popup=pois_pop_up).add_to(shops_cluster)
+
+        if sports:
+            sports_cluster = MarkerCluster(name='sportsaktiviteter', show=False).add_to(map_builder)
+            for pois in sports:
+                pois_icon = CustomIcon(up(up(__file__)) + "/images/sports.png",
+                                       icon_size=small_icon)
+                lat = pois["Breddegrad"]
+                long = pois["Lengdegrad"]
+                pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
+                                    max_width=max_width)
+                Marker(location=[lat, long], icon=pois_icon,
+                       popup=pois_pop_up).add_to(sports_cluster)
 
         if pop_up:
             Marker(coords, icon=map_icon, popup=Popup(pop_up, max_width=max_width)).add_to(

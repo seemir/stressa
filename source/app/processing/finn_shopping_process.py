@@ -141,7 +141,8 @@ class FinnShoppingProcess(Process):
         rating_food_selection = self.get_signal("rating_food_selection")
         if rating_food_selection.data:
             rating_food_selection_operation = RestructureRatings(
-                rating_food_selection.data["food_selection"], "Restructuring Food Selection Rating")
+                rating_food_selection.data["food_selection"], "Restructuring Food Selection Rating",
+                key="Matutvalg")
             self.add_node(rating_food_selection_operation)
             self.add_transition(rating_food_selection, rating_food_selection_operation,
                                 label="thread")
