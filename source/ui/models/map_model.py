@@ -7,6 +7,7 @@ from io import BytesIO
 from os.path import dirname as up
 
 from folium import Map, Marker, TileLayer, LayerControl, Popup, FeatureGroup
+from folium.plugins import MarkerCluster
 from folium.features import CustomIcon
 
 from PyQt5.QtWebEngineWidgets import QWebEngineView
@@ -35,7 +36,7 @@ class MapModel(Model):
                               icon_size=icon_size)
 
         if kindergarden:
-            kindergarden_feature = FeatureGroup('barnehage', show=False)
+            kindergarden_cluster = MarkerCluster(name='barnehage', show=False).add_to(map_builder)
             for pois in kindergarden:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/kindergarden.png",
                                        icon_size=small_icon)
@@ -44,11 +45,10 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(kindergarden_feature)
-            kindergarden_feature.add_to(map_builder)
+                       popup=pois_pop_up).add_to(kindergarden_cluster)
 
         if schools:
-            schools_feature = FeatureGroup("barneskole", show=False)
+            schools_cluster = MarkerCluster(name="barneskole", show=False).add_to(map_builder)
             for pois in schools:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/schools.png",
                                        icon_size=small_icon)
@@ -57,11 +57,11 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(schools_feature)
-            schools_feature.add_to(map_builder)
+                       popup=pois_pop_up).add_to(schools_cluster)
 
         if highschools:
-            highschools_feature = FeatureGroup('vidregåendeskole', show=False)
+            highschools_cluster = MarkerCluster(name='vidregåendeskole', show=False).add_to(
+                map_builder)
             for pois in highschools:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/highschools.png",
                                        icon_size=small_icon)
@@ -70,11 +70,11 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(highschools_feature)
-            highschools_feature.add_to(map_builder)
+                       popup=pois_pop_up).add_to(highschools_cluster)
 
         if university:
-            university_feature = FeatureGroup('hogskole_universitet', show=False)
+            university_cluster = MarkerCluster(name='hogskole_universitet', show=False).add_to(
+                map_builder)
             for pois in university:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/university.png",
                                        icon_size=small_icon)
@@ -83,11 +83,10 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(university_feature)
-            university_feature.add_to(map_builder)
+                       popup=pois_pop_up).add_to(university_cluster)
 
         if transport:
-            transport_feature = FeatureGroup('holdeplass', show=False)
+            transport_cluster = MarkerCluster(name='holdeplass', show=False).add_to(map_builder)
             for pois in transport:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/transport.png",
                                        icon_size=small_icon)
@@ -96,11 +95,10 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(transport_feature)
-            transport_feature.add_to(map_builder)
+                       popup=pois_pop_up).add_to(transport_cluster)
 
         if charging:
-            charging_feature = FeatureGroup('ladeplass', show=False)
+            charging_cluster = MarkerCluster(name='ladeplass', show=False).add_to(map_builder)
             for pois in charging:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/charging.png",
                                        icon_size=small_icon)
@@ -109,11 +107,10 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(charging_feature)
-            charging_feature.add_to(map_builder)
+                       popup=pois_pop_up).add_to(charging_cluster)
 
         if bicycle:
-            bicyle_feature = FeatureGroup('bysykler', show=False)
+            bicyle_cluster = MarkerCluster(name='bysykler', show=False).add_to(map_builder)
             for pois in bicycle:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/bicycle.png",
                                        icon_size=small_icon)
@@ -122,11 +119,11 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(bicyle_feature)
-            bicyle_feature.add_to(map_builder)
+                       popup=pois_pop_up).add_to(bicyle_cluster)
+
+        shops_cluster = MarkerCluster(name="butikker", show=False).add_to(map_builder)
 
         if groceries:
-            groceries_feature = FeatureGroup('dagligvarebutikk', show=False)
             for pois in groceries:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/groceries.png",
                                        icon_size=small_icon)
@@ -135,11 +132,9 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(groceries_feature)
-            groceries_feature.add_to(map_builder)
+                       popup=pois_pop_up).add_to(shops_cluster)
 
         if services:
-            services_feature = FeatureGroup('varer', show=False)
             for pois in services:
                 pois_icon = CustomIcon(up(up(__file__)) + "/images/services.png",
                                        icon_size=small_icon)
@@ -148,8 +143,7 @@ class MapModel(Model):
                 pois_pop_up = Popup(CreateHtmlTable(pois).html_table(),
                                     max_width=max_width)
                 Marker(location=[lat, long], icon=pois_icon,
-                       popup=pois_pop_up).add_to(services_feature)
-            services_feature.add_to(map_builder)
+                       popup=pois_pop_up).add_to(shops_cluster)
 
         if pop_up:
             Marker(coords, icon=map_icon, popup=Popup(pop_up, max_width=max_width)).add_to(
