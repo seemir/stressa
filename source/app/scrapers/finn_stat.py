@@ -213,9 +213,14 @@ class FinnStat(Finn):
                                 for sub_prop, sub_val in vl_name.items():
                                     if sub_prop.lower() in ('firstpublished', 'edited'):
                                         pub = datetime.fromisoformat(sub_val)
-                                        date = datetime.strptime(str(pub),
-                                                                 "%Y-%m-%d %H:%M:%S").strftime(
-                                            "%d.%m.%Y %H:%M")
+                                        try:
+                                            date = datetime.strptime(str(pub),
+                                                                     "%Y-%m-%d %H:%M:%S").strftime(
+                                                "%d.%m.%Y %H:%M")
+                                        except ValueError:
+                                            date = datetime.strptime(str(pub),
+                                                                     "%Y-%m-%d %H:%M:%S.%f") \
+                                                .strftime("%d.%m.%Y %H:%M")
                                         info.update(
                                             {sub_prop.lower(): str(
                                                 date).lower() + " ({} dager siden)".format(

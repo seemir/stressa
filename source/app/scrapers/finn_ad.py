@@ -110,6 +110,7 @@ class FinnAd(Finn):
             info = {"finn_adresse": address.text, "prisantydning": price,
                     "status": status.text.strip().replace(r'\n', '').capitalize()
                     if status else "Ikke solgt"}
+
             keys, values = list(key.get_text() for key in ad_soup.find_all(["th", "dt"])), \
                            list(value.get_text() for value in ad_soup.find_all(["td", "dd"]))
 
@@ -119,8 +120,23 @@ class FinnAd(Finn):
                 if (key and len(key) > 3) or key == "rom":
                     info.update({key: val})
 
-            # with open('advert_data.json', 'w', encoding='utf-8') as file:
-            #     json.dump(info, file, ensure_ascii=False, indent=4)
+            list_desk = "list-descriptive u-col-count2 u-mb0"
+            visninger = []
+            for key in ad_soup.find_all("dl", attrs={"class": list_desk}):
+                visninger.append(key.get_text().strip().replace("\n", " ").replace("\xa0", " ")
+                                 .replace("     ", " kl: "))
+
+            unique_visninger = list(set(visninger))[::-1]
+            final_visninger = {"forste_visning": "", "andre_visning": ""}
+
+            if unique_visninger:
+                if len(unique_visninger) == 1:
+                    final_visninger.update({"forste_visning": unique_visninger[0]})
+                else:
+                    final_visninger.update({"forste_visning": unique_visninger[0],
+                                            "andre_visning": unique_visninger[1]})
+
+            info.update(final_visninger)
 
             LOGGER.success("'housing_ad_information' successfully retrieved")
             return info
@@ -133,9 +149,14 @@ class FinnAd(Finn):
     @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):
         """
-        save advert information to JSON file
+                save
+                advert
+                information
+                to
+                JSON
+                file
 
-        """
+                """
         Assertor.assert_data_types([file_dir], [str])
         self.save_json(self.housing_ad_information(), file_dir, file_prefix="HousingAdInfo_")
         LOGGER.success(

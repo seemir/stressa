@@ -46,7 +46,8 @@ class StatisticsModel(Model):
                         "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location",
                         "bysykler", "bysykler_location", "groceries", "groceries_location",
                         "services", "services_location", "rating_food_selection", "sport",
-                        "rating_activity", "rating_serving", "rating_hiking", "sport_location"]
+                        "rating_activity", "rating_serving", "rating_hiking", "sport_location",
+                        "forste_visning", "andre_visning"]
     _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
