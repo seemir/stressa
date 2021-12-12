@@ -29,4 +29,6 @@ SIFO_URL = "https://kalkulator.referansebudsjett.no/php/resultat_as_json.php?"
 
 SSB_URL = "https://data.ssb.no/api/v0/no/table/10748"
 
+SKATTEETATEN_URL = "https://skatteberegning.app.skatteetaten.no/"
+
 TIMEOUT = 15

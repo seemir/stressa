@@ -7,7 +7,6 @@ Implementation of scarper against Finn.no housing ad search
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-# import json
 from time import time
 import re
 from http.client import responses
