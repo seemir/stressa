@@ -8,95 +8,84 @@ Implementation of scaper against Skatteetaten tax calculator
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-# from source.util import Assertor, LOGGER, Tracking
-#
-# from .scraper import Scraper
-#
-#
-# class Skatteetaten(Scraper):
-#     """
-#     Class that produces estimated total Taxes for a given year
-#
-#     """
-#
-#     def __init__(self, year: str, civil_status: str, year_of_birth: str, part_living: str,
-#                  finnmark: str):
-#         """
-#         Constructor / Instantiate the class
-#
-#         Parameters
-#         ----------
-#
-#
-#         """
-#         try:
-#             super().__init__()
-#             Assertor.assert_data_types([year, civil_status, year_of_birth, part_living, finnmark],
-#                                        [str, str, str, str, str])
-#             self.year = year
-#             self.civil_status = year
-#             self.year_of_birth = year_of_birth
-#             self.part_living = part_living
-#             self.finnmark = finnmark
-#
-#             LOGGER.success(
-#                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
-#         except Exception as skatteetaten_exception:
-#             LOGGER.exception(skatteetaten_exception)
-#             raise skatteetaten_exception
-#
-# import json
-#
-# with open('skatteetaten_form.json') as json_file:
-#     data = json.load(json_file)
-#
-# full_data = data["skatteberegningsgrunnlagV6"]["skattegrunnlagsobjekt"] + \
-#             data["ektefelle"]["skatteberegningsgrunnlagV6"]["skattegrunnlagsobjekt"]
-#
-# tax_dict = []
-#
-# for elements in full_data:
-#     element_dict = {}
-#     for key, value in elements.items():
-#         if key == "temakategori":
-#             element_dict.update({key: value})
-#         if key == "temaunderkategori":
-#             element_dict.update({key: value})
-#         if key == "postnummer":
-#             element_dict.update({key: value})
-#         if key == "ledetekst":
-#             element_dict.update({key: value})
-#         if key == "beloep":
-#             element_dict.update({key: value})
-#     tax_dict.append(element_dict)
-#
-# arbeidTrygdPensjon = 0
-# bankLaanForsikring = 0
-# boligOgEiendeler = 0
-# familieOgHelse = 0
-# finans = 0
-# naering = 0
-#
-# for element in sorted(tax_dict, key=lambda i: i['temakategori']):
-#     if element["temakategori"] == "arbeidTrygdPensjon":
-#         arbeidTrygdPensjon += 1
-#     if element["temakategori"] == "bankLaanForsikring":
-#         bankLaanForsikring += 1
-#     if element["temakategori"] == "boligOgEiendeler":
-#         boligOgEiendeler += 1
-#     if element["temakategori"] == "familieOgHelse":
-#         familieOgHelse += 1
-#     if element["temakategori"] == "finans":
-#         finans += 1
-#     if element["temakategori"] == "naering":
-#         naering += 1
-#
-# print("arbeidTrygdPensjon ", arbeidTrygdPensjon)
-# print("bankLaanForsikring ", bankLaanForsikring)
-# print("boligOgEiendeler   ", boligOgEiendeler)
-# print("familieOgHelse     ", familieOgHelse)
-# print("finans             ", finans)
-# print("naering            ", naering)
-# print("total              ",
-#       sum([arbeidTrygdPensjon, bankLaanForsikring, boligOgEiendeler, familieOgHelse, finans,
-#            naering]))
+import json
+from http.client import responses
+
+import requests
+from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
+
+from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Tracking
+
+from source.app.scrapers.settings import SKATTEETATEN_URL, TIMEOUT
+from source.app.scrapers import Scraper
+
+
+class Skatteetaten(Scraper):
+    """
+    Class that produces estimated total Taxes for a given year
+
+    """
+
+    def __init__(self, year: str, income: str, age: str):
+        """
+        Constructor / Instantiate the class
+
+        Parameters
+        ----------
+
+
+        """
+        try:
+            super().__init__()
+            Assertor.assert_data_types([year, income], [str, str])
+
+            self.income = income
+            self.year = year
+            self.age = age
+            self.url = SKATTEETATEN_URL + self.year
+
+            LOGGER.success(
+                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
+        except Exception as skatteetaten_exception:
+            LOGGER.exception(skatteetaten_exception)
+            raise skatteetaten_exception
+
+    @Tracking
+    def payload(self):
+        """
+        method for generating payload str
+
+        """
+        with open('form_data/payload.json') as json_file:
+            json_data = json.load(json_file)
+        return json.dumps(json_data).replace("loennsinntektNaturalytelseMvBelop",
+                                             self.income).replace(
+            "alderIInntektsaarVerdi", self.age)
+
+    @Tracking
+    def response(self):
+        """
+        submits and gets response for skatteetaten request
+
+        Returns
+        -------
+        out     : requests.models.Response
+                  response with interest rate information
+
+        """
+        try:
+            try:
+                response = requests.post(url=self.url, data=self.payload(), timeout=TIMEOUT)
+                status_code = response.status_code
+                LOGGER.info(
+                    "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
+                return response
+            except ConnectTimeout as ssb_timeout_error:
+                raise TimeOutError(
+                    "Timeout occurred - please try again later or contact system administrator, "
+                    "exited with '{}'".format(ssb_timeout_error))
+        except ConnectError as ssb_response_error:
+            raise NoConnectionError(
+                "Failed HTTP request - please insure that internet access is provided to the "
+                "client or contact system administrator, exited with '{}'".format(
+                    ssb_response_error))
