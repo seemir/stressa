@@ -19,6 +19,7 @@ posten_logo = icons + "posten_logo.png"
 sifo_logo = icons + "sifo_logo.png"
 finansportalen_logo = icons + "finansportalen_logo.png"
 sqlite_logo = icons + "sqlite_logo.png"
+skatteetaten_logo = icons + "skatteetaten_logo.png"
 
 
 class Finansportalen(Custom):
@@ -49,3 +50,8 @@ class Sqlite(Custom):
 class SSB(Custom):
     def __init__(self, label):
         super().__init__(label=label, icon_path=ssb_logo)
+
+
+class Skatteetaten(Custom):
+    def __init__(self, label):
+        super().__init__(label=label, icon_path=skatteetaten_logo)

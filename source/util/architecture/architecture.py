@@ -7,20 +7,18 @@ Architecture diagram
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-
 from diagrams.programming.language import Python, Bash
 from diagrams.onprem.client import User, Client
 from diagrams.oci.storage import FileStorage
 from diagrams import Cluster, Diagram, Edge
 from diagrams.oci.governance import Logging
 
-
-from source.util.architecture.custom import Finansportalen, Finn, Posten, SIFO, Sqlite, SSB
+from source.util.architecture.custom import Finansportalen, Finn, Posten, SIFO, Sqlite, SSB, \
+    Skatteetaten
 from source.util.architecture.settings import name, font_size
 
 with Diagram(name=name, show=False, direction="TB", outformat="pdf",
              node_attr={"fontsize": font_size}):
-
     users = User()
     gui = Client()
     bash = Bash("")
@@ -84,7 +82,7 @@ with Diagram(name=name, show=False, direction="TB", outformat="pdf",
     with Cluster("API service", graph_attr={"fontsize": font_size}):
         web = [Finn("Finn API"), Posten("\nPosten \n Adressesøk API"),
                Finansportalen("Finansportalen\n Grunndata\n XML Feed"),
-               SIFO("SIFO API"), SSB("SSB API (pyjstat)")]
+               SIFO("SIFO API"), SSB("SSB API (pyjstat)"), Skatteetaten("\nSkatte- \nkalkulator API")]
 
     users >> bash << main << views
     users << gui << bash
