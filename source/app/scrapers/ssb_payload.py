@@ -211,7 +211,7 @@ class SsbPayload:
                   payload against SSB table nr. 10748
 
         """
-        with open(os.path.dirname(__file__) + '\\payloads\\ssb_payload.json') as json_file:
+        with open(os.path.dirname(__file__) + '/payloads/ssb_payload.json') as json_file:
             json_data = json.load(json_file)
 
         return json.loads(
