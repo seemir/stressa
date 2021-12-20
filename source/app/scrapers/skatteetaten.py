@@ -8,6 +8,8 @@ Implementation of scaper against Skatteetaten tax calculator
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import os
+
 import json
 from http.client import responses
 
@@ -26,7 +28,7 @@ class Skatteetaten(Scraper):
 
     """
 
-    def __init__(self, year: str, income: str, age: str):
+    def __init__(self, age: str, income: str):
         """
         Constructor / Instantiate the class
 
@@ -37,11 +39,11 @@ class Skatteetaten(Scraper):
         """
         try:
             super().__init__()
-            Assertor.assert_data_types([year, income], [str, str])
+            Assertor.assert_data_types([age, income], [str, str])
 
-            self.income = income
-            self.year = year
             self.age = age
+            self.income = income
+            self.year = 2022
             self.url = SKATTEETATEN_URL + self.year
 
             LOGGER.success(
@@ -56,11 +58,11 @@ class Skatteetaten(Scraper):
         method for generating payload str
 
         """
-        with open('form_data/payload.json') as json_file:
+        with open(os.path.dirname(__file__) + '\\payloads\\skatteetaten_payload.json') as json_file:
             json_data = json.load(json_file)
-        return json.dumps(json_data).replace("loennsinntektNaturalytelseMvBelop",
-                                             self.income).replace(
-            "alderIInntektsaarVerdi", self.age)
+        return json.dumps(json_data) \
+            .replace("loennsinntektNaturalytelseMvBelop", self.income) \
+            .replace("alderIInntektsaarVerdi", self.age)
 
     @Tracking
     def response(self):

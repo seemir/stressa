@@ -87,7 +87,7 @@ class Ssb(Scraper):
         """
         try:
             try:
-                response = requests.post(url=SSB_URL, json=self._payload.payload(), timeout=TIMEOUT)
+                response = requests.post(url=SSB_URL, json=self.payload.payload(), timeout=TIMEOUT)
                 status_code = response.status_code
                 LOGGER.info(
                     "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))

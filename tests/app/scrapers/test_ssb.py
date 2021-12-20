@@ -100,6 +100,19 @@ class TestSsb:
         assert response.status_code == 200
         assert isinstance(response, Response)
 
+    def test_identical_ssb_payload(self):
+        """
+        Test that the set payload is correct
+
+        """
+        assert self.payload.payload() == {
+            'query': [{'code': 'Utlanstype', 'selection': {'filter': 'item', 'values': ['70']}},
+                      {'code': 'Sektor', 'selection': {'filter': 'item', 'values': ['04b']}},
+                      {'code': 'Rentebinding',
+                       'selection': {'filter': 'item', 'values': ['08', '12', '10', '11', '06']}},
+                      {'code': 'Tid', 'selection': {'filter': 'item', 'values': ['2019M08']}}],
+            'response': {'format': 'json-stat2'}}
+
     def test_ssb_interest_rates_method(self):
         """
         Test that ssb_interest_rates method return correct content

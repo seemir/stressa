@@ -8,6 +8,9 @@ Standard payload for public API query against SSB market interest rates for mort
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import os
+import json
+
 from datetime import datetime as dt, timedelta
 
 from source.util import LOGGER, Assertor
@@ -208,14 +211,12 @@ class SsbPayload:
                   payload against SSB table nr. 10748
 
         """
-        return \
-            {
-                "query": [
-                    {"code": "Utlanstype",
-                     "selection": {"filter": "item", "values": self.utlanstype}},
-                    {"code": "Sektor", "selection": {"filter": "item", "values": self.sektor}},
-                    {"code": "Rentebinding",
-                     "selection": {"filter": "item", "values": self.rentebinding}},
-                    {"code": "Tid", "selection": {"filter": "item", "values": self.tid}}],
-                "response": {"format": "json-stat2"}
-            }
+        with open(os.path.dirname(__file__) + '\\payloads\\ssb_payload.json') as json_file:
+            json_data = json.load(json_file)
+
+        return json.loads(
+            json.dumps(json_data)
+                .replace("UtlanstypeVerdi", "".join(self.utlanstype))
+                .replace("SektorVerdi", "".join(self.sektor))
+                .replace("RentebindingVerdi", '", "'.join(self.rentebinding))
+                .replace("".join("TidVerdi"), "".join(self.tid)))
