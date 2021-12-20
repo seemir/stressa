@@ -1,0 +1,43 @@
+{
+  "query": [
+    {
+      "code": "Utlanstype",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "UtlanstypeVerdi"
+        ]
+      }
+    },
+    {
+      "code": "Sektor",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "SektorVerdi"
+        ]
+      }
+    },
+    {
+      "code": "Rentebinding",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "RentebindingVerdi"
+        ]
+      }
+    },
+    {
+      "code": "Tid",
+      "selection": {
+        "filter": "item",
+        "values": [
+          "TidVerdi"
+        ]
+      }
+    }
+  ],
+  "response": {
+    "format": "json-stat2"
+  }
+}

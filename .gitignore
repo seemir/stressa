@@ -108,6 +108,3 @@ venv.bak/
 
 # db
 *.sqlite
-
-# JSON
-*.json

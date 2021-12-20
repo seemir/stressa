@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1075</width>
-    <height>400</height>
+    <width>1148</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>1075</width>
-    <height>400</height>
+    <width>1100</width>
+    <height>450</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -459,45 +459,442 @@
   <property name="modal">
    <bool>false</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QScrollArea" name="scroll_area_budget">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QScrollArea" name="scrollArea">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
-     <widget class="QWidget" name="scroll_area_widget_contents_budget">
+     <widget class="QWidget" name="scrollAreaWidgetContents">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1057</width>
-        <height>382</height>
+        <width>1130</width>
+        <height>432</height>
        </rect>
       </property>
-      <layout class="QGridLayout" name="gridLayout_3">
-       <item row="0" column="0" alignment="Qt::AlignLeft">
-        <widget class="QFrame" name="frame_budget">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>0</height>
-          </size>
-         </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="WindowText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>220</red>
+            <green>231</green>
+            <blue>243</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Light">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Midlight">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>237</red>
+            <green>243</green>
+            <blue>249</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Dark">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>110</red>
+            <green>115</green>
+            <blue>121</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Mid">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>147</red>
+            <green>154</green>
+            <blue>162</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Text">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="BrightText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>220</red>
+            <green>231</green>
+            <blue>243</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Shadow">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="AlternateBase">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>237</red>
+            <green>243</green>
+            <blue>249</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ToolTipBase">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>220</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ToolTipText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="WindowText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>220</red>
+            <green>231</green>
+            <blue>243</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Light">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Midlight">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>237</red>
+            <green>243</green>
+            <blue>249</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Dark">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>110</red>
+            <green>115</green>
+            <blue>121</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Mid">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>147</red>
+            <green>154</green>
+            <blue>162</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Text">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="BrightText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>220</red>
+            <green>231</green>
+            <blue>243</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Shadow">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="AlternateBase">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>237</red>
+            <green>243</green>
+            <blue>249</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ToolTipBase">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>220</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ToolTipText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="WindowText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>110</red>
+            <green>115</green>
+            <blue>121</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>220</red>
+            <green>231</green>
+            <blue>243</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Light">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Midlight">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>237</red>
+            <green>243</green>
+            <blue>249</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Dark">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>110</red>
+            <green>115</green>
+            <blue>121</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Mid">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>147</red>
+            <green>154</green>
+            <blue>162</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Text">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>110</red>
+            <green>115</green>
+            <blue>121</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="BrightText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ButtonText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>110</red>
+            <green>115</green>
+            <blue>121</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Base">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>220</red>
+            <green>231</green>
+            <blue>243</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Window">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>220</red>
+            <green>231</green>
+            <blue>243</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="Shadow">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="AlternateBase">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>220</red>
+            <green>231</green>
+            <blue>243</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ToolTipBase">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>220</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="ToolTipText">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>0</red>
+            <green>0</green>
+            <blue>0</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_8">
+       <item row="0" column="0">
+        <widget class="QTabWidget" name="tab_widget_budget">
          <property name="palette">
           <palette>
            <active>
@@ -913,422 +1310,1227 @@
            </disabled>
           </palette>
          </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>8</pointsize>
-          </font>
+         <property name="tabShape">
+          <enum>QTabWidget::Rounded</enum>
          </property>
-         <property name="autoFillBackground">
-          <bool>true</bool>
+         <property name="currentIndex">
+          <number>0</number>
          </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
+         <property name="documentMode">
+          <bool>false</bool>
          </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
+         <property name="tabBarAutoHide">
+          <bool>false</bool>
          </property>
-         <layout class="QGridLayout" name="gridLayout_2">
-          <item row="0" column="0" colspan="6">
-           <widget class="QFrame" name="frame_budget_whitespace_3">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="3" colspan="2">
-           <widget class="QPushButton" name="push_button_exporter">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::TabFocus</enum>
-            </property>
-            <property name="text">
-             <string>Exporter</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../images/img.qrc">
-              <normaloff>:/img/export.svg</normaloff>:/img/export.svg</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="3">
-           <widget class="QLabel" name="label_student_lan">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Student lån</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_student_lan</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="2">
-           <widget class="QLineEdit" name="line_edit_brutto_inntekt">
-            <property name="minimumSize">
-             <size>
-              <width>230</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="5">
-           <widget class="QPushButton" name="push_button_tom_skjema">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::TabFocus</enum>
-            </property>
-            <property name="text">
-             <string>Tøm skjema</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../images/img.qrc">
-              <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="4">
-           <widget class="QComboBox" name="combo_box_interval_5">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>0</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="4">
-           <widget class="QComboBox" name="combo_box_interval_6"/>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="combo_box_interval_1">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>0</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="5">
-           <widget class="QLineEdit" name="line_edit_student_lan">
-            <property name="minimumSize">
-             <size>
-              <width>230</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QComboBox" name="combo_box_interval_2"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_brutto_inntekter">
-            <property name="minimumSize">
-             <size>
-              <width>120</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Bruttoinntekt</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_brutto_inntekt</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_trygde_inntekt">
-            <property name="text">
-             <string>Trygd</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_trygde_inntekt</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="2">
-           <widget class="QLineEdit" name="line_edit_trygde_inntekt">
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_leieinntekt">
-            <property name="text">
-             <string>Leieinntekt</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_leieinntekt</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="3">
-           <widget class="QLabel" name="label_husleie">
-            <property name="text">
-             <string>Husleie</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_husleie</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="3">
-           <widget class="QLabel" name="label_kreditt_gjeld">
-            <property name="text">
-             <string>Kreditt gjeld</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_kreditt_gjeld</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QRadioButton" name="radio_button_skattefrie_inntekt">
-            <property name="text">
-             <string>Skattefri leieinntekt</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="5">
-           <widget class="QLineEdit" name="line_edit_kreditt_gjeld">
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="4">
-           <widget class="QComboBox" name="combo_box_interval_7"/>
-          </item>
-          <item row="3" column="1">
-           <widget class="QComboBox" name="combo_box_interval_3"/>
-          </item>
-          <item row="3" column="5">
-           <widget class="QLineEdit" name="line_edit_husleie">
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="2">
-           <widget class="QLineEdit" name="line_edit_leieinntekt">
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLabel" name="label_notat">
-            <property name="font">
-             <font>
-              <pointsize>6</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>*Verdi per måned</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="3" colspan="2">
-           <widget class="QPushButton" name="push_button_avbryt">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::TabFocus</enum>
-            </property>
-            <property name="text">
-             <string>Avbryt</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../images/img.qrc">
-              <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="2">
-           <widget class="QLineEdit" name="line_edit_personinntekt">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="label_personinntekt">
-            <property name="text">
-             <string>Personinntekt*</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="5">
-           <widget class="QLineEdit" name="line_edit_sum_utgifter">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="3">
-           <widget class="QLabel" name="label_total_person_utgifter">
-            <property name="text">
-             <string>Sum utgifter*</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_andre_inntekter">
-            <property name="text">
-             <string>Andre inntekter</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="5">
-           <widget class="QPushButton" name="push_button_budget_meta_data">
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::TabFocus</enum>
-            </property>
-            <property name="text">
-             <string>Metadata</string>
-            </property>
-            <property name="icon">
-             <iconset resource="../../images/img.qrc">
-              <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="2">
-           <widget class="QLineEdit" name="line_edit_andre_inntekter">
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QComboBox" name="combo_box_interval_4"/>
-          </item>
-          <item row="4" column="3">
-           <widget class="QLabel" name="label_strom">
-            <property name="text">
-             <string>Strøm</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_strom</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="5">
-           <widget class="QLineEdit" name="line_edit_strom">
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="4">
-           <widget class="QComboBox" name="combo_box_interval_8"/>
-          </item>
-          <item row="5" column="4">
-           <widget class="QComboBox" name="combo_box_interval_9"/>
-          </item>
-          <item row="5" column="5">
-           <widget class="QLineEdit" name="line_edit_andre_utgifter">
-            <property name="clearButtonEnabled">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="3">
-           <widget class="QLabel" name="label_andre_utgifter">
-            <property name="text">
-             <string>Andre utgifter</string>
-            </property>
-            <property name="buddy">
-             <cstring>line_edit_andre_utgifter</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="0" colspan="6">
-           <widget class="QFrame" name="frame_budget_whitespace_2">
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1" colspan="5">
-           <widget class="QFrame" name="frame_budget_whitespace_1">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="frameShape">
-             <enum>QFrame::StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-             <enum>QFrame::Raised</enum>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QWidget" name="tab_primarsoker">
+          <property name="palette">
+           <palette>
+            <active>
+             <colorrole role="WindowText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Button">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>231</red>
+                <green>243</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Light">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Midlight">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>243</red>
+                <green>249</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Dark">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>115</red>
+                <green>121</green>
+                <blue>127</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Mid">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>154</red>
+                <green>162</green>
+                <blue>170</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Text">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="BrightText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ButtonText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Window">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>231</red>
+                <green>243</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Shadow">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="AlternateBase">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>243</red>
+                <green>249</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ToolTipBase">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>220</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ToolTipText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </active>
+            <inactive>
+             <colorrole role="WindowText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Button">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>231</red>
+                <green>243</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Light">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Midlight">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>243</red>
+                <green>249</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Dark">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>115</red>
+                <green>121</green>
+                <blue>127</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Mid">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>154</red>
+                <green>162</green>
+                <blue>170</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Text">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="BrightText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ButtonText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Window">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>231</red>
+                <green>243</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Shadow">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="AlternateBase">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>243</red>
+                <green>249</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ToolTipBase">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>220</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ToolTipText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </inactive>
+            <disabled>
+             <colorrole role="WindowText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>115</red>
+                <green>121</green>
+                <blue>127</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Button">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>231</red>
+                <green>243</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Light">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Midlight">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>243</red>
+                <green>249</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Dark">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>115</red>
+                <green>121</green>
+                <blue>127</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Mid">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>154</red>
+                <green>162</green>
+                <blue>170</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Text">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>115</red>
+                <green>121</green>
+                <blue>127</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="BrightText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ButtonText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>115</red>
+                <green>121</green>
+                <blue>127</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Base">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>231</red>
+                <green>243</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Window">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>231</red>
+                <green>243</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="Shadow">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="AlternateBase">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>231</red>
+                <green>243</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ToolTipBase">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>220</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="ToolTipText">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </disabled>
+           </palette>
+          </property>
+          <attribute name="title">
+           <string>Primærsøker</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_7">
+           <item row="10" column="0" colspan="6">
+            <widget class="QFrame" name="frame_budget_whitespace_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="6">
+            <widget class="QFrame" name="frame_budget_whitespace_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_brutto_inntekter">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Bruttoinntekt</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_brutto_inntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLineEdit" name="line_edit_brutto_inntekt">
+             <property name="minimumSize">
+              <size>
+               <width>230</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_trygde_inntekt">
+             <property name="text">
+              <string>Trygd</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_trygde_inntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLineEdit" name="line_edit_trygde_inntekt">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="combo_box_interval_1">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <widget class="QComboBox" name="combo_box_interval_5">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="QLineEdit" name="line_edit_student_lan">
+             <property name="minimumSize">
+              <size>
+               <width>230</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLabel" name="label_student_lan">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Student lån</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_student_lan</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="combo_box_interval_2"/>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLabel" name="label_kreditt_gjeld">
+             <property name="text">
+              <string>Kreditt gjeld</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_kreditt_gjeld</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4">
+            <widget class="QComboBox" name="combo_box_interval_6"/>
+           </item>
+           <item row="2" column="5">
+            <widget class="QLineEdit" name="line_edit_kreditt_gjeld">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="5">
+            <widget class="QPushButton" name="push_button_tom_skjema">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="text">
+              <string>Tøm skjema</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../images/img.qrc">
+               <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="5">
+            <widget class="QPushButton" name="push_button_budget_meta_data">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="text">
+              <string>Metadata</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../images/img.qrc">
+               <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="5">
+            <widget class="QLineEdit" name="line_edit_andre_utgifter">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLabel" name="label_husleie">
+             <property name="text">
+              <string>Husleie</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_husleie</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <widget class="QRadioButton" name="radio_button_skattefrie_inntekt">
+             <property name="text">
+              <string>Skattefri leieinntekt</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="3" colspan="2">
+            <widget class="QPushButton" name="push_button_avbryt">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="text">
+              <string>Avbryt</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../images/img.qrc">
+               <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="5">
+            <widget class="QLineEdit" name="line_edit_sum_utgifter">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLabel" name="label_strom">
+             <property name="text">
+              <string>Strøm</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_strom</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="combo_box_interval_3"/>
+           </item>
+           <item row="4" column="1">
+            <widget class="QComboBox" name="combo_box_interval_4"/>
+           </item>
+           <item row="4" column="2">
+            <widget class="QLineEdit" name="line_edit_andre_inntekter">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLineEdit" name="line_edit_leieinntekt">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="4">
+            <widget class="QComboBox" name="combo_box_interval_8"/>
+           </item>
+           <item row="4" column="5">
+            <widget class="QLineEdit" name="line_edit_strom">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3">
+            <widget class="QLabel" name="label_andre_utgifter">
+             <property name="text">
+              <string>Andre utgifter</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_andre_utgifter</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="4">
+            <widget class="QComboBox" name="combo_box_interval_7"/>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_leieinntekt">
+             <property name="text">
+              <string>Leieinntekt</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_leieinntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="4">
+            <widget class="QComboBox" name="combo_box_interval_9"/>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_andre_inntekter">
+             <property name="text">
+              <string>Andre inntekter</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="label_personinntekt">
+             <property name="text">
+              <string>Personinntekt per måned</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="2">
+            <widget class="QLineEdit" name="line_edit_personinntekt">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="3" colspan="2">
+            <widget class="QPushButton" name="push_button_exporter">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="text">
+              <string>Exporter</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../images/img.qrc">
+               <normaloff>:/img/export.svg</normaloff>:/img/export.svg</iconset>
+             </property>
+             <property name="default">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="3">
+            <widget class="QLabel" name="label_total_person_utgifter">
+             <property name="text">
+              <string>Sum utgifter*</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="5">
+            <widget class="QLineEdit" name="line_edit_husleie">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QFrame" name="frame_budget_whitespace_1">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_sekundarsoker">
+          <attribute name="title">
+           <string>Sekundærsøker</string>
+          </attribute>
+          <layout class="QGridLayout" name="gridLayout_6">
+           <item row="1" column="2">
+            <widget class="QLineEdit" name="line_edit_brutto_inntekt_7">
+             <property name="minimumSize">
+              <size>
+               <width>230</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="5">
+            <widget class="QLineEdit" name="line_edit_student_lan_7">
+             <property name="minimumSize">
+              <size>
+               <width>230</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="label_leieinntekt_7">
+             <property name="text">
+              <string>Leieinntekt</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_leieinntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="5">
+            <widget class="QLineEdit" name="line_edit_strom_7">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="2">
+            <widget class="QRadioButton" name="radio_button_skattefrie_inntekt_7">
+             <property name="text">
+              <string>Skattefri leieinntekt</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="3">
+            <widget class="QLabel" name="label_andre_utgifter_7">
+             <property name="text">
+              <string>Andre utgifter</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_andre_utgifter</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="5">
+            <widget class="QLineEdit" name="line_edit_kreditt_gjeld_7">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0" colspan="6">
+            <widget class="QFrame" name="frame_budget_whitespace_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>20</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="combo_box_interval_56">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="4">
+            <widget class="QComboBox" name="combo_box_interval_55">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="QLineEdit" name="line_edit_leieinntekt_7">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_brutto_inntekter_7">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Bruttoinntekt</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_brutto_inntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="2">
+            <widget class="QLineEdit" name="line_edit_andre_inntekter_7">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="3">
+            <widget class="QLabel" name="label_strom_7">
+             <property name="text">
+              <string>Strøm</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_strom</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_trygde_inntekt_7">
+             <property name="text">
+              <string>Trygd</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_trygde_inntekt</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="combo_box_interval_60"/>
+           </item>
+           <item row="2" column="3">
+            <widget class="QLabel" name="label_kreditt_gjeld_7">
+             <property name="text">
+              <string>Kreditt gjeld</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_kreditt_gjeld</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="4">
+            <widget class="QComboBox" name="combo_box_interval_62"/>
+           </item>
+           <item row="3" column="4">
+            <widget class="QComboBox" name="combo_box_interval_63"/>
+           </item>
+           <item row="3" column="1">
+            <widget class="QComboBox" name="combo_box_interval_61"/>
+           </item>
+           <item row="2" column="2">
+            <widget class="QLineEdit" name="line_edit_trygde_inntekt_7">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="5">
+            <widget class="QLineEdit" name="line_edit_husleie_7">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLabel" name="label_andre_inntekter_7">
+             <property name="text">
+              <string>Andre inntekter</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="3">
+            <widget class="QLabel" name="label_husleie_7">
+             <property name="text">
+              <string>Husleie</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_husleie</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QComboBox" name="combo_box_interval_59"/>
+           </item>
+           <item row="4" column="4">
+            <widget class="QComboBox" name="combo_box_interval_57"/>
+           </item>
+           <item row="1" column="3">
+            <widget class="QLabel" name="label_student_lan_7">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Student lån</string>
+             </property>
+             <property name="buddy">
+              <cstring>line_edit_student_lan</cstring>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLabel" name="label_personinntekt_7">
+             <property name="text">
+              <string>Personinntekt per måned</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="5">
+            <widget class="QPushButton" name="push_button_tom_skjema_7">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="text">
+              <string>Tøm skjema</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../images/img.qrc">
+               <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0" colspan="6">
+            <widget class="QFrame" name="frame_budget_whitespace_5">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="5">
+            <widget class="QLineEdit" name="line_edit_sum_utgifter_7">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="2">
+            <widget class="QLineEdit" name="line_edit_personinntekt_7">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="5">
+            <widget class="QLineEdit" name="line_edit_andre_utgifter_7">
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="3" colspan="2">
+            <widget class="QPushButton" name="push_button_exporter_7">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="text">
+              <string>Exporter</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../images/img.qrc">
+               <normaloff>:/img/export.svg</normaloff>:/img/export.svg</iconset>
+             </property>
+             <property name="default">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="3">
+            <widget class="QLabel" name="label_total_person_utgifter_7">
+             <property name="text">
+              <string>Sum utgifter*</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="3" colspan="2">
+            <widget class="QPushButton" name="push_button_avbryt_7">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="text">
+              <string>Avbryt</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../images/img.qrc">
+               <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="5">
+            <widget class="QPushButton" name="push_button_budget_meta_data_7">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::TabFocus</enum>
+             </property>
+             <property name="text">
+              <string>Metadata</string>
+             </property>
+             <property name="icon">
+              <iconset resource="../../images/img.qrc">
+               <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="4">
+            <widget class="QComboBox" name="combo_box_interval_58"/>
+           </item>
+           <item row="7" column="0">
+            <widget class="QFrame" name="frame_budget_whitespace_6">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Raised</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -1338,7 +2540,8 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>scroll_area_budget</tabstop>
+  <tabstop>scrollArea</tabstop>
+  <tabstop>tab_widget_budget</tabstop>
   <tabstop>combo_box_interval_1</tabstop>
   <tabstop>line_edit_brutto_inntekt</tabstop>
   <tabstop>combo_box_interval_2</tabstop>
@@ -1364,6 +2567,31 @@
   <tabstop>push_button_tom_skjema</tabstop>
   <tabstop>push_button_avbryt</tabstop>
   <tabstop>push_button_budget_meta_data</tabstop>
+  <tabstop>combo_box_interval_56</tabstop>
+  <tabstop>line_edit_brutto_inntekt_7</tabstop>
+  <tabstop>combo_box_interval_60</tabstop>
+  <tabstop>line_edit_trygde_inntekt_7</tabstop>
+  <tabstop>combo_box_interval_61</tabstop>
+  <tabstop>line_edit_leieinntekt_7</tabstop>
+  <tabstop>combo_box_interval_59</tabstop>
+  <tabstop>line_edit_andre_inntekter_7</tabstop>
+  <tabstop>radio_button_skattefrie_inntekt_7</tabstop>
+  <tabstop>line_edit_personinntekt_7</tabstop>
+  <tabstop>combo_box_interval_55</tabstop>
+  <tabstop>line_edit_student_lan_7</tabstop>
+  <tabstop>combo_box_interval_62</tabstop>
+  <tabstop>line_edit_kreditt_gjeld_7</tabstop>
+  <tabstop>combo_box_interval_63</tabstop>
+  <tabstop>line_edit_husleie_7</tabstop>
+  <tabstop>combo_box_interval_57</tabstop>
+  <tabstop>line_edit_strom_7</tabstop>
+  <tabstop>combo_box_interval_58</tabstop>
+  <tabstop>line_edit_andre_utgifter_7</tabstop>
+  <tabstop>line_edit_sum_utgifter_7</tabstop>
+  <tabstop>push_button_exporter_7</tabstop>
+  <tabstop>push_button_tom_skjema_7</tabstop>
+  <tabstop>push_button_avbryt_7</tabstop>
+  <tabstop>push_button_budget_meta_data_7</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>
