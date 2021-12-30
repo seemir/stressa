@@ -14,6 +14,7 @@ import json
 from http.client import responses
 
 import requests
+from typing import Union
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Tracking
@@ -28,22 +29,26 @@ class Skatteetaten(Scraper):
 
     """
 
-    def __init__(self, age: str, income: str):
+    def __init__(self, age: Union[str, int], income: Union[str, int, float]):
         """
         Constructor / Instantiate the class
 
         Parameters
         ----------
-
+        age         : str, int
+                      age of individual
+        income      : str, int, float
+                      income of individual
 
         """
+
         try:
             super().__init__()
-            Assertor.assert_data_types([age, income], [str, str])
+            Assertor.assert_data_types([age, income], [(str, int), (str, int, float)])
 
-            self.age = age
-            self.income = income
-            self.year = 2022
+            self.age = str(age + 1)
+            self.income = str(income)
+            self.year = str(2022)
             self.url = SKATTEETATEN_URL + self.year
 
             LOGGER.success(
@@ -91,3 +96,70 @@ class Skatteetaten(Scraper):
                 "Failed HTTP request - please insure that internet access is provided to the "
                 "client or contact system administrator, exited with '{}'".format(
                     ssb_response_error))
+
+    @Tracking
+    def tax_information(self):
+        """
+        method for getting tax dict given information passed to class
+
+        Returns
+        -------
+        out     : dict
+                  tax information given information passed through class
+
+        """
+        tax_dict = self.response().json()
+        tax_info = {}
+
+        for keys, values in tax_dict.items():
+            if keys == "hovedperson":
+                for key, value in values.items():
+                    if key == "beregnetSkattV4":
+                        for tag, val in value.items():
+                            if tag == "skatteklasse":
+                                tax_info.update({tag: val})
+                            elif tag == "skatteregnskapskommune":
+                                tax_info.update({tag: val})
+                            elif tag == "informasjonTilSkattelister":
+                                tax_info.update({"nettoinntekt": str(val["nettoinntekt"])})
+                                tax_info.update({"nettoformue": str(val["nettoformue"])})
+                                tax_info.update({"beregnetSkatt": str(val["beregnetSkatt"])})
+                            elif tag == "beregnetSkattFoerSkattefradrag":
+                                tax_info.update(
+                                    {tag: {"grunnlag": str(val["grunnlag"]),
+                                           "beloep": str(val["beloep"])}})
+                            elif tag == "beregnetSkatt":
+                                tax_info.update(
+                                    {tag: {"grunnlag": str(val["grunnlag"]),
+                                           "beloep": str(val["beloep"])}})
+                            elif tag == "skattOgAvgift":
+                                for sub_tag, sub_val in val.items():
+                                    if sub_tag in ["formuesskattTilStat",
+                                                   "inntektsskattTilKommune",
+                                                   "inntektsskattTilFylkeskommune",
+                                                   "inntektsskattTilKommuneOgFylkeskommune",
+                                                   "formuesskattTilKommune",
+                                                   "fellesskatt", "trinnskatt",
+                                                   "trygdeavgiftAvLoennsinntekt",
+                                                   "sumTrygdeavgift"]:
+                                        tax_info.update(
+                                            {sub_tag: {"grunnlag": str(sub_val["grunnlag"]),
+                                                       "beloep": str(sub_val["beloep"])}})
+                    elif key == "beregningsgrunnlagV4":
+                        for tag, val in value.items():
+                            if tag == "beregningsgrunnlagsobjekt":
+                                for element in val:
+                                    tax_info.update(
+                                        {element["tekniskNavn"]: str(element["beloep"])})
+                    elif key == "summertSkattegrunnlagForVisningV7":
+                        for tag, val in value.items():
+                            if tag == "skattegrunnlagsobjekt":
+                                for element in val:
+                                    tax_info.update(
+                                        {element["tekniskNavn"]: str(element["beloep"])})
+        return tax_info
+
+
+skatteetaten = Skatteetaten(32, 671000)
+
+print(skatteetaten.tax_information())
