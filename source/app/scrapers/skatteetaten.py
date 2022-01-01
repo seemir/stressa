@@ -9,12 +9,12 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import os
+from typing import Union
 
 import json
 from http.client import responses
 
 import requests
-from typing import Union
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Tracking
