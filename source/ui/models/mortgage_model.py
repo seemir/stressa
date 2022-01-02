@@ -114,28 +114,28 @@ class MortgageModel(Model):
             lambda: self.set_line_edit("fax_2", Phone, "format_number"))
 
         # budget information
-        self.parent.ui.line_edit_brutto_inntekt.editingFinished.connect(
-            lambda: self.set_line_edit("brutto_inntekt", Money, "value"))
-        self.parent.ui.line_edit_trygde_inntekt.editingFinished.connect(
-            lambda: self.set_line_edit("trygde_inntekt", Money, "value"))
-        self.parent.ui.line_edit_leieinntekt.editingFinished.connect(
-            lambda: self.set_line_edit("leieinntekt", Money, "value"))
+        self.parent.ui.line_edit_brutto_inntekt_1.editingFinished.connect(
+            lambda: self.set_line_edit("brutto_inntekt_1", Money, "value"))
+        self.parent.ui.line_edit_trygde_inntekt_1.editingFinished.connect(
+            lambda: self.set_line_edit("trygde_inntekt_1", Money, "value"))
+        self.parent.ui.line_edit_leieinntekt_1.editingFinished.connect(
+            lambda: self.set_line_edit("leieinntekt_1", Money, "value"))
         self.parent.ui.line_edit_total_skatt.editingFinished.connect(
             lambda: self.set_line_edit("total_skatt", Money, "value"))
         self.parent.ui.line_edit_total_netto.editingFinished.connect(
             lambda: self.set_line_edit("total_netto", Money, "value"))
         self.parent.ui.line_edit_netto_likviditet.editingFinished.connect(
             lambda: self.set_line_edit("netto_likviditet", Money, "value"))
-        self.parent.ui.line_edit_student_lan.editingFinished.connect(
-            lambda: self.set_line_edit("student_lan", Money, "value"))
-        self.parent.ui.line_edit_kreditt_gjeld.editingFinished.connect(
-            lambda: self.set_line_edit("kreditt_gjeld", Money, "value"))
-        self.parent.ui.line_edit_husleie.editingFinished.connect(
-            lambda: self.set_line_edit("husleie", Money, "value"))
-        self.parent.ui.line_edit_strom.editingFinished.connect(
-            lambda: self.set_line_edit("strom", Money, "value"))
-        self.parent.ui.line_edit_andre_utgifter.editingFinished.connect(
-            lambda: self.set_line_edit("andre_utgifter", Money, "value"))
+        self.parent.ui.line_edit_student_lan_1.editingFinished.connect(
+            lambda: self.set_line_edit("student_lan_1", Money, "value"))
+        self.parent.ui.line_edit_kreditt_gjeld_1.editingFinished.connect(
+            lambda: self.set_line_edit("kreditt_gjeld_1", Money, "value"))
+        self.parent.ui.line_edit_husleie_1.editingFinished.connect(
+            lambda: self.set_line_edit("husleie_1", Money, "value"))
+        self.parent.ui.line_edit_strom_1.editingFinished.connect(
+            lambda: self.set_line_edit("strom_1", Money, "value"))
+        self.parent.ui.line_edit_andre_utgifter_1.editingFinished.connect(
+            lambda: self.set_line_edit("andre_utgifter_1", Money, "value"))
         self.parent.ui.line_edit_sifo_utgifter.editingFinished.connect(
             lambda: self.set_line_edit("sifo_utgifter", Money, "value"))
         self.parent.ui.line_edit_totale_utgifter.editingFinished.connect(
@@ -168,11 +168,10 @@ class MortgageModel(Model):
                                "poststed", "kommune", "fylke", "epost", "mobil_tlf",
                                "privat_tlf", "jobb_tlf", "fax"], postfix="_2")
         self.clear_line_edits(["brutto_inntekt", "trygde_inntekt", "leieinntekt",
-                               "personinntekt", "total_skatt", "total_netto",
-                               "netto_likviditet", "student_lan", "kreditt_gjeld",
-                               "husleie", "strom", "andre_utgifter", "sum_utgifter",
-                               "sifo_utgifter", "totale_utgifter", "likviditetsgrad",
-                               "egenkapital"])
+                               "personinntekt", "student_lan", "kreditt_gjeld",
+                               "husleie", "strom", "andre_utgifter", "sum_utgifter"], postfix="_1")
+        self.clear_line_edits(["total_skatt", "sifo_utgifter", "total_netto", "totale_utgifter",
+                               "netto_likviditet", "likviditetsgrad", "egenkapital"])
         self.clear_combo_boxes(["kjonn_1", "kjonn_2", "lanetype", "intervall", "laneperiode"])
         self.clear_date_edits(["fodselsdato_1", "fodselsdato_2", "startdato"])
         self.parent.budget_view.clear_all()

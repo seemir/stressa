@@ -22,6 +22,8 @@ from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Track
 from source.app.scrapers.settings import SKATTEETATEN_URL, TIMEOUT
 from source.app.scrapers import Scraper
 
+from source.domain import Money
+
 
 class Skatteetaten(Scraper):
     """
@@ -121,17 +123,20 @@ class Skatteetaten(Scraper):
                             elif tag == "skatteregnskapskommune":
                                 tax_info.update({tag: val})
                             elif tag == "informasjonTilSkattelister":
-                                tax_info.update({"nettoinntekt": str(val["nettoinntekt"])})
-                                tax_info.update({"nettoformue": str(val["nettoformue"])})
-                                tax_info.update({"beregnetSkatt": str(val["beregnetSkatt"])})
+                                tax_info.update(
+                                    {"nettoinntekt": Money(str(val["nettoinntekt"])).value()})
+                                tax_info.update(
+                                    {"nettoformue": Money(str(val["nettoformue"])).value()})
+                                tax_info.update(
+                                    {"beregnetSkatt": Money(str(val["beregnetSkatt"])).value()})
                             elif tag == "beregnetSkattFoerSkattefradrag":
                                 tax_info.update(
-                                    {tag: {"grunnlag": str(val["grunnlag"]),
-                                           "beloep": str(val["beloep"])}})
+                                    {tag: {"grunnlag": Money(str(val["grunnlag"])).value(),
+                                           "beloep": Money(str(val["beloep"])).value()}})
                             elif tag == "beregnetSkatt":
                                 tax_info.update(
-                                    {tag: {"grunnlag": str(val["grunnlag"]),
-                                           "beloep": str(val["beloep"])}})
+                                    {tag: {"grunnlag": Money(str(val["grunnlag"])).value(),
+                                           "beloep": Money(str(val["beloep"])).value()}})
                             elif tag == "skattOgAvgift":
                                 for sub_tag, sub_val in val.items():
                                     if sub_tag in ["formuesskattTilStat",
@@ -143,23 +148,27 @@ class Skatteetaten(Scraper):
                                                    "trygdeavgiftAvLoennsinntekt",
                                                    "sumTrygdeavgift"]:
                                         tax_info.update(
-                                            {sub_tag: {"grunnlag": str(sub_val["grunnlag"]),
-                                                       "beloep": str(sub_val["beloep"])}})
+                                            {sub_tag: {
+                                                "grunnlag": Money(str(sub_val["grunnlag"])).value(),
+                                                "beloep": Money(str(sub_val["beloep"])).value()}})
                     elif key == "beregningsgrunnlagV4":
                         for tag, val in value.items():
                             if tag == "beregningsgrunnlagsobjekt":
                                 for element in val:
                                     tax_info.update(
-                                        {element["tekniskNavn"]: str(element["beloep"])})
+                                        {element["tekniskNavn"]: Money(
+                                            str(element["beloep"])).value()})
                     elif key == "summertSkattegrunnlagForVisningV7":
                         for tag, val in value.items():
                             if tag == "skattegrunnlagsobjekt":
                                 for element in val:
                                     tax_info.update(
-                                        {element["tekniskNavn"]: str(element["beloep"])})
+                                        {element["tekniskNavn"]: Money(
+                                            str(element["beloep"])).value()})
         return tax_info
 
 
 skatteetaten = Skatteetaten(32, 671000)
 
-print(skatteetaten.tax_information())
+# with open('tax_data.json', 'w', encoding='utf-8') as file:
+#     json.dump(skatteetaten.tax_information(), file, ensure_ascii=False, indent=4)

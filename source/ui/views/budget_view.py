@@ -43,10 +43,10 @@ class BudgetView(QDialog):
 
         self._budget_model = BudgetModel(self)
 
-        self.ui.push_button_exporter.clicked.connect(self.export)
-        self.ui.push_button_tom_skjema.clicked.connect(self.clear_all)
-        self.ui.push_button_budget_meta_data.clicked.connect(self.meta_view.display)
-        self.ui.push_button_avbryt.clicked.connect(self.close)
+        self.ui.push_button_exporter_1.clicked.connect(self.export)
+        self.ui.push_button_tom_skjema_1.clicked.connect(self.clear_all)
+        self.ui.push_button_budget_meta_data_1.clicked.connect(self.meta_view.display)
+        self.ui.push_button_avbryt_1.clicked.connect(self.close)
 
     @property
     def parent(self):
@@ -113,8 +113,8 @@ class BudgetView(QDialog):
     @pyqtSlot()
     def clear_all(self):
         self.parent.mortgage_model.clear_line_edits(self.budget_model.budget_posts)
-        for combo_box in range(1, 9):
+        for combo_box in range(1, 19):
             getattr(self.ui, "combo_box_interval_" + str(combo_box)).setCurrentIndex(0)
         self.budget_model.clear_line_edits(self.budget_model.budget_posts)
-        self.ui.radio_button_skattefrie_inntekt.setChecked(False)
+        self.ui.radio_button_skattefrie_inntekt_1.setChecked(False)
         self.ui.combo_box_interval_1.setFocus()
