@@ -24,7 +24,7 @@ coverage==6.2
 cycler==0.10.0
 DateTime==4.3
 diagrams==0.19.1
-dnspython==2.1.0
+dnspython==2.2.1
 et-xmlfile==1.0.1
 expiringdict==1.2.0
 folium==0.12.1
