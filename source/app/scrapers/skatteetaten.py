@@ -11,9 +11,10 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 from typing import Union
 
-import json
 from http.client import responses
+from datetime import date
 
+import json
 import requests
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
@@ -31,7 +32,14 @@ class Skatteetaten(Scraper):
 
     """
 
-    def __init__(self, age: Union[str, int], income: Union[str, int, float]):
+    tax_version_mapping = {'2022': ('skatteberegningsgrunnlagV7', 'skattepliktV9'),
+                           '2021': ('skatteberegningsgrunnlagV6', 'skattepliktV8'),
+                           '2020': ('skattegrunnlagV6', 'skattepliktV7'),
+                           '2019': ('skattegrunnlagV5', 'skattepliktV6'),
+                           '2018': ('skattegrunnlagV5', 'skattepliktV5')}
+
+    def __init__(self, age: Union[str, int], income: Union[str, int, float],
+                 year: Union[str, int] = date.today().year):
         """
         Constructor / Instantiate the class
 
@@ -46,11 +54,14 @@ class Skatteetaten(Scraper):
 
         try:
             super().__init__()
-            Assertor.assert_data_types([age, income], [(str, int), (str, int, float)])
+            Assertor.assert_data_types([age, income, year],
+                                       [(str, int), (str, int, float), (int, str)])
+            Assertor.assert_arguments([str(year)],
+                                      [{'year': ('2018', '2019', '2020', '2021', '2022')}])
 
             self.age = str(age + 1)
             self.income = str(income)
-            self.year = str(2022)
+            self.year = str(2022) if not year else str(year)
             self.url = SKATTEETATEN_URL + self.year
 
             LOGGER.success(
@@ -68,6 +79,8 @@ class Skatteetaten(Scraper):
         with open(os.path.dirname(__file__) + '\\payloads\\skatteetaten_payload.json') as json_file:
             json_data = json.load(json_file)
         return json.dumps(json_data) \
+            .replace("skatteberegningsgrunnlagVersjon", self.tax_version_mapping[self.year][0]) \
+            .replace("skattepliktVersjon", self.tax_version_mapping[self.year][1]) \
             .replace("loennsinntektNaturalytelseMvBelop", self.income) \
             .replace("alderIInntektsaarVerdi", self.age)
 
@@ -116,7 +129,7 @@ class Skatteetaten(Scraper):
         for keys, values in tax_dict.items():
             if keys == "hovedperson":
                 for key, value in values.items():
-                    if key == "beregnetSkattV4":
+                    if any(key == "beregnetSkatt" + version for version in ['V2', 'V3', 'V4']):
                         for tag, val in value.items():
                             if tag == "skatteklasse":
                                 tax_info.update({tag: val})
@@ -158,7 +171,8 @@ class Skatteetaten(Scraper):
                                     tax_info.update(
                                         {element["tekniskNavn"]: Money(
                                             str(element["beloep"])).value()})
-                    elif key == "summertSkattegrunnlagForVisningV7":
+                    elif any(key == "summertSkattegrunnlagForVisning" + version for version in
+                             ['V4', 'V5', 'V6', 'V7']):
                         for tag, val in value.items():
                             if tag == "skattegrunnlagsobjekt":
                                 for element in val:
@@ -166,9 +180,3 @@ class Skatteetaten(Scraper):
                                         {element["tekniskNavn"]: Money(
                                             str(element["beloep"])).value()})
         return tax_info
-
-
-skatteetaten = Skatteetaten(32, 671000)
-
-# with open('tax_data.json', 'w', encoding='utf-8') as file:
-#     json.dump(skatteetaten.tax_information(), file, ensure_ascii=False, indent=4)

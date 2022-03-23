@@ -1,86 +1,85 @@
 {
-  "skatteberegningsgrunnlagV7": {
+  "skatteberegningsgrunnlagVersjon": {
     "skattegrunnlagsobjekt": [
       {
-        "ledetekst": "Lønn og naturalytelser med mer",
-        "brukIKalkulator": "BrukesDirekte",
-        "temakategori": "arbeidTrygdPensjon",
-        "sorteringsNoekkel": "020101",
-        "beloep": "loennsinntektNaturalytelseMvBelop",
-        "postnummer": "2.1.1",
         "tekniskNavn": "loennsinntektNaturalytelseMv",
+        "temakategori": "arbeidTrygdPensjon",
         "temaunderkategori": "loennsinntekter",
-        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml",
-        "id": "qz12h5sK4"
+        "sorteringsNoekkel": "020101",
+        "postnummer": "2.1.1",
+        "brukIKalkulator": "BrukesDirekte",
+        "ledetekst": "Lønn og naturalytelser med mer",
+        "id": "V1vbb1zy4",
+        "beloep": "671000",
+        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
-        "ledetekst": "Renter av bankinnskudd",
-        "brukIKalkulator": "BrukesDirekte",
-        "temakategori": "bankLaanForsikring",
-        "sorteringsNoekkel": "030101",
-        "beloep": "",
-        "postnummer": "3.1.1",
         "tekniskNavn": "opptjenteRenter",
+        "temakategori": "bankLaanForsikring",
         "temaunderkategori": "bankInntekt",
-        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml",
-        "id": "zUJMHVeOuz"
+        "sorteringsNoekkel": "030101",
+        "postnummer": "3.1.1",
+        "brukIKalkulator": "BrukesDirekte",
+        "ledetekst": "Renter av bankinnskudd",
+        "id": "GfPN4ir-gs",
+        "beloep": "",
+        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
-        "ledetekst": "Renter av gjeld",
-        "brukIKalkulator": "BrukesDirekte",
-        "temakategori": "bankLaanForsikring",
-        "sorteringsNoekkel": "030301",
-        "beloep": "",
-        "postnummer": "3.3.1",
         "tekniskNavn": "paaloepteRenter",
+        "temakategori": "bankLaanForsikring",
         "temaunderkategori": "bankLaanForsikringFradrag",
-        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml",
-        "id": "rMncRDObAq"
+        "sorteringsNoekkel": "030301",
+        "postnummer": "3.3.1",
+        "brukIKalkulator": "BrukesDirekte",
+        "ledetekst": "Renter av gjeld",
+        "id": "PaQ2XVcU3b",
+        "beloep": "",
+        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
-        "verdiFoerVerdsettingsrabattForFastEiendom": 0,
-        "ledetekst": "Primærbolig",
-        "brukIKalkulator": "BrukesDirekte",
-        "temakategori": "boligOgEiendeler",
-        "sorteringsNoekkel": "040302",
-        "beloep": 0,
-        "postnummer": "4.3.2",
         "tekniskNavn": "formuesverdiForPrimaerbolig",
+        "temakategori": "boligOgEiendeler",
         "temaunderkategori": "boligEindelerFormue",
-        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml",
-        "id": "NR1HynBm_O"
+        "sorteringsNoekkel": "040302",
+        "postnummer": "4.3.2",
+        "brukIKalkulator": "BrukesDirekte",
+        "ledetekst": "Primærbolig",
+        "id": "8zqDrPpLMu",
+        "beloep": "",
+        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
-        "ledetekst": "Bankinnskudd",
-        "brukIKalkulator": "BrukesDirekte",
-        "temakategori": "bankLaanForsikring",
-        "sorteringsNoekkel": "040101",
-        "beloep": "",
-        "postnummer": "4.1.1",
         "tekniskNavn": "innskudd",
+        "temakategori": "bankLaanForsikring",
         "temaunderkategori": "bankLaanForsikringFormue",
-        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml",
-        "id": "UmQq7pcEij"
+        "sorteringsNoekkel": "040101",
+        "postnummer": "4.1.1",
+        "brukIKalkulator": "BrukesDirekte",
+        "ledetekst": "Bankinnskudd",
+        "id": "czeyAY4t7j",
+        "beloep": "",
+        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
-        "ledetekst": "Gjeld til kredittinstitusjoner",
-        "brukIKalkulator": "BrukesDirekte",
-        "temakategori": "bankLaanForsikring",
-        "sorteringsNoekkel": "040801",
-        "beloep": "",
-        "postnummer": "4.8.1",
         "tekniskNavn": "gjeld",
+        "temakategori": "bankLaanForsikring",
         "temaunderkategori": "bankLaanForsikringGjeld",
-        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml",
-        "id": "gNKcFbyTnL"
+        "sorteringsNoekkel": "040801",
+        "postnummer": "4.8.1",
+        "brukIKalkulator": "BrukesDirekte",
+        "ledetekst": "Gjeld til kredittinstitusjoner",
+        "id": "3qaTKD65xO",
+        "beloep": "",
+        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       }
     ]
   },
-  "skattepliktV9": {
+  "skattepliktVersjon": {
     "skattesubjekt": {
       "personligSkattesubjekt": {
         "skattepliktTilNorge": "GLOBAL",
-        "alderIInntektsaar": "alderIInntektsaarVerdi",
+        "alderIInntektsaar": "32",
         "tolvdelVedArbeidsoppholdINorge": "12"
       },
       "skattested": "0402",

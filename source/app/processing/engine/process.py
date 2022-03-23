@@ -213,7 +213,7 @@ class Process(Dot, ABC):
         self.add_edge(transition)
 
     @Debugger
-    def print_pdf(self):
+    def print_pdf(self, output_format='pdf'):
         """
         method for printing a pdf with the procedure graph
 
@@ -228,4 +228,7 @@ class Process(Dot, ABC):
         procedure_dir = os.path.join(upper_dir(upper_dir(__file__)), "procedure")
         if not os.path.exists(procedure_dir):
             os.makedirs(procedure_dir)
-        self.write_pdf(procedure_dir + "/" + file_name[1:] + ".pdf")
+        if output_format == 'pdf':
+            self.write_pdf(procedure_dir + "/" + file_name[1:] + ".pdf")
+        elif output_format == 'png':
+            self.write_png(procedure_dir + "/" + file_name[1:] + ".png")

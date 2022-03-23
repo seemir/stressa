@@ -143,6 +143,6 @@ class TestFinnAdvertProcessing:
         finn_advert_processing = FinnAdvertProcessing(self.finn_code)
         for key, val in finn_advert_processing.multiplex_info_2.items():
             if key in results.keys():
-                if key == "sistendret":
+                if key in ("sistendret", "published"):
                     continue
                 assert results[key] == val
