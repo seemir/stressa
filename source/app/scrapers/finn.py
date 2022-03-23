@@ -10,11 +10,9 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import cache, Assertor, LOGGER, NotFoundError, Tracking
+from source.util import Assertor, LOGGER, NotFoundError, Tracking
 
 from .scraper import Scraper
-
-cache(__file__, "cache")
 
 
 class Finn(Scraper):

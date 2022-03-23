@@ -66,6 +66,7 @@ class TestScrapeFinnOwnershipHistory:
 
         """
         ownership_history = self.scrape_finn_ownership_history.run()
-        assert ownership_history["historikk"] == {'Tinglyst': {0: '30.06.1994'},
-                                                  'Boligtype': {0: 'Frittliggende enebolig'},
-                                                  'Pris': {0: '3\xa0950\xa0000 kr'}}
+        assert ownership_history["historikk"] == {
+            'Boligtype': {0: 'Frittliggende enebolig', 1: 'Frittliggende enebolig'},
+            'Pris': {0: '67\xa0000\xa0000 kr', 1: '3\xa0950\xa0000 kr'},
+            'Tinglyst': {0: '08.02.2022', 1: '30.06.1994'}}

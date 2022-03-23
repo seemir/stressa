@@ -131,16 +131,21 @@ class TestFinnAdvertProcessing:
                    'bruttoareal': '947 m²', 'formuesverdi': '9 283 581 kr', 'finnkode': '144857770',
                    'sistendret': '6. apr. 2020 02:07', 'referanse': '3180364', 'kommunenr': '301',
                    'gardsnr': '212', 'bruksnr': '522',
-                   'historikk': {'Tinglyst': {0: 'Prisantydning', 1: '30.06.1994'},
-                                 'Boligtype': {0: '-', 1: 'Frittliggende enebolig'},
-                                 'Pris': {0: '70 000 000 kr', 1: '3\xa0950\xa0000 kr'},
-                                 'Endring': {0: '1672.15 %', 1: ''}},
+                   'historikk': {
+                       'Boligtype': {0: '-', 1: '-', 2: 'Frittliggende enebolig',
+                                     3: 'Frittliggende enebolig'},
+                       'Endring': {0: '-4.29 %', 1: '4.48 %', 2: '1596.2 %', 3: ''},
+                       'Pris': {0: '67\xa0000\xa0000 kr', 1: '70 000 000 kr',
+                                2: '67\xa0000\xa0000 kr', 3: '3\xa0950\xa0000 kr'},
+                       'Tinglyst': {0: 'Salgspris (08.02.2022)', 1: 'Prisantydning',
+                                    2: '08.02.2022', 3: '30.06.1994'}},
                    'published': '12.04.2019 16:03', 'location': 'Uranienborg - Majorstuen',
                    'price_range': 'større eller lik 70\xa0000\xa0000 kr',
                    'size_range': 'større eller lik 650 m²', 'property_type': 'Enebolig',
                    'city_area': 'Uranienborg - Majorstuen', 'municipality': 'Oslo'}
 
         finn_advert_processing = FinnAdvertProcessing(self.finn_code)
+
         for key, val in finn_advert_processing.multiplex_info_2.items():
             if key in results.keys():
                 if key in ("sistendret", "published"):
