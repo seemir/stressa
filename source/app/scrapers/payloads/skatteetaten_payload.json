@@ -10,7 +10,7 @@
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Lønn og naturalytelser med mer",
         "id": "V1vbb1zy4",
-        "beloep": "671000",
+        "beloep": "loennsinntektNaturalytelseMvBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
@@ -22,7 +22,7 @@
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Renter av bankinnskudd",
         "id": "GfPN4ir-gs",
-        "beloep": "",
+        "beloep": "opptjenteRenterBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
@@ -34,7 +34,7 @@
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Renter av gjeld",
         "id": "PaQ2XVcU3b",
-        "beloep": "",
+        "beloep": "paaloepteRenterBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
@@ -46,7 +46,7 @@
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Primærbolig",
         "id": "8zqDrPpLMu",
-        "beloep": "",
+        "beloep": "formuesverdiForPrimaerboligBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
@@ -58,7 +58,7 @@
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Bankinnskudd",
         "id": "czeyAY4t7j",
-        "beloep": "",
+        "beloep": "innskuddBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
@@ -70,7 +70,7 @@
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Gjeld til kredittinstitusjoner",
         "id": "3qaTKD65xO",
-        "beloep": "",
+        "beloep": "gjeldBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       }
     ]
@@ -79,7 +79,7 @@
     "skattesubjekt": {
       "personligSkattesubjekt": {
         "skattepliktTilNorge": "GLOBAL",
-        "alderIInntektsaar": "32",
+        "alderIInntektsaar": "alderIInntektsaarVerdi",
         "tolvdelVedArbeidsoppholdINorge": "12"
       },
       "skattested": "0402",

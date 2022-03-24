@@ -38,31 +38,61 @@ class Skatteetaten(Scraper):
                            '2019': ('skattegrunnlagV5', 'skattepliktV6'),
                            '2018': ('skattegrunnlagV5', 'skattepliktV5')}
 
-    def __init__(self, age: Union[str, int], income: Union[str, int, float],
-                 year: Union[str, int] = date.today().year):
+    def __init__(self, age: Union[str, int],
+                 income: Union[str, int, float],
+                 tax_year: Union[str, int] = date.today().year,
+                 interest_income: Union[str, int, float] = 0,
+                 interest_cost: Union[str, int, float] = 0,
+                 value_of_real_estate: Union[str, int, float] = 0,
+                 bank_deposit: Union[str, int, float] = 0,
+                 debt: Union[str, int, float] = 0):
         """
         Constructor / Instantiate the class
 
         Parameters
         ----------
-        age         : str, int
-                      age of individual
-        income      : str, int, float
-                      income of individual
+        age                 : str, int
+                              age of individual
+        income              : str, int, float
+                              income of individual
+        tax_year            : str, int
+                              tax year to calculate taxes
+        interest_income     : str, int, float
+                              income of interest
+        interest_cost       : str, int, float
+                              cost of income
+        value_of_real_estate: str, int, float
+                              value of real-estate (if any applies)
+        bank_deposit        : str, int, float
+                              value of bank deposit
+        debt                : str, int, float
+                              total debt
 
         """
 
         try:
             super().__init__()
-            Assertor.assert_data_types([age, income, year],
-                                       [(str, int), (str, int, float), (int, str)])
-            Assertor.assert_arguments([str(year)],
+            Assertor.assert_data_types(
+                [age, income, tax_year, interest_income, interest_cost,
+                 value_of_real_estate, bank_deposit, debt],
+                [(str, int), (str, int, float), (int, str),
+                 (int, str, float), (int, str, float),
+                 (int, str, float), (int, str, float),
+                 (int, str, float)])
+            Assertor.assert_arguments([str(tax_year)],
                                       [{'year': ('2018', '2019', '2020', '2021', '2022')}])
 
             self.age = str(age + 1)
             self.income = str(income)
-            self.year = str(2022) if not year else str(year)
-            self.url = SKATTEETATEN_URL + self.year
+            self.tax_year = str(date.today().year) if not \
+                tax_year else str(tax_year)
+            self.interest_income = str(0) if not interest_income else str(interest_income)
+            self.interest_cost = str(0) if not interest_cost else str(interest_cost)
+            self.value_of_real_estate = str(0) if not value_of_real_estate \
+                else str(value_of_real_estate)
+            self.bank_deposit = str(0) if not bank_deposit else str(bank_deposit)
+            self.debt = str(0) if not debt else str(debt)
+            self.url = SKATTEETATEN_URL + self.tax_year
 
             LOGGER.success(
                 "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
@@ -79,10 +109,16 @@ class Skatteetaten(Scraper):
         with open(os.path.dirname(__file__) + '\\payloads\\skatteetaten_payload.json') as json_file:
             json_data = json.load(json_file)
         return json.dumps(json_data) \
-            .replace("skatteberegningsgrunnlagVersjon", self.tax_version_mapping[self.year][0]) \
-            .replace("skattepliktVersjon", self.tax_version_mapping[self.year][1]) \
+            .replace("alderIInntektsaarVerdi", self.age) \
             .replace("loennsinntektNaturalytelseMvBelop", self.income) \
-            .replace("alderIInntektsaarVerdi", self.age)
+            .replace("skatteberegningsgrunnlagVersjon",
+                     self.tax_version_mapping[self.tax_year][0]) \
+            .replace("skattepliktVersjon", self.tax_version_mapping[self.tax_year][1]) \
+            .replace("opptjenteRenterBelop", self.interest_income) \
+            .replace("paaloepteRenterBelop", self.interest_cost) \
+            .replace("formuesverdiForPrimaerboligBelop", self.value_of_real_estate) \
+            .replace("innskuddBelop", self.bank_deposit) \
+            .replace("gjeldBelop", self.debt)
 
     @Tracking
     def response(self):
