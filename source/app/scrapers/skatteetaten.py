@@ -19,11 +19,10 @@ import requests
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Tracking
-
-from source.app.scrapers.settings import SKATTEETATEN_URL, TIMEOUT
-from source.app.scrapers import Scraper
-
 from source.domain import Money
+
+from .settings import SKATTEETATEN_URL, TIMEOUT
+from .scraper import Scraper
 
 
 class Skatteetaten(Scraper):

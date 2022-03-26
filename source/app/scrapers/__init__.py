@@ -10,6 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from .finn_ownership import FinnOwnership
 from .finn_community import FinnCommunity
+from .skatteetaten import Skatteetaten
 from .ssb_payload import SsbPayload
 from .finn_stat import FinnStat
 from .portalen import Portalen

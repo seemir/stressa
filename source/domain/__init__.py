@@ -10,6 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from .expenses import Expenses
 from .currency import Currency
+from .tax_form import TaxForm
 from .address import Address
 from .percent import Percent
 from .family import Family
