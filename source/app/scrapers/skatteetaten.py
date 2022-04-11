@@ -81,7 +81,7 @@ class Skatteetaten(Scraper):
             Assertor.assert_arguments([str(tax_year)],
                                       [{'year': ('2018', '2019', '2020', '2021', '2022')}])
 
-            self.age = str(age + 1)
+            self.age = str(age)
             self.income = str(income)
             self.tax_year = str(date.today().year) if not \
                 tax_year else str(tax_year)

@@ -265,6 +265,28 @@ class TaxForm(Entity):
         self._interest_cost = new_interest_cost
 
     @property
+    def value_of_real_estate(self):
+        """
+        value_of_real_estate getter
+
+        Returns
+        -------
+        out         : str
+                      value_of_real_estate in taxform
+
+        """
+        return self._value_of_real_estate
+
+    @value_of_real_estate.setter
+    def value_of_real_estate(self, new_value_of_real_estate: Union[str, int, float]):
+        """
+        value_of_real_estate setter
+
+        """
+        self.validate_tax_form_values([new_value_of_real_estate])
+        self._value_of_real_estate = new_value_of_real_estate
+
+    @property
     def bank_deposit(self):
         """
         bank_deposit getter

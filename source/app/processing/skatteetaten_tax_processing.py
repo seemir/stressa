@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Tracking, Profiling
 
-from .engine import Process, Signal, InputOperation, ValidateTaxForm
+from .engine import Process, Signal, InputOperation, ValidateTaxForm, ScrapeSkatteetatenTaxinfo
 
 
 class SkatteetatenTaxProcessing(Process):
@@ -33,6 +33,8 @@ class SkatteetatenTaxProcessing(Process):
         super().__init__(name=__class__.__name__)
         self.input_operation({"data": tax_data})
         self.validate_tax_form()
+        self.scrape_skatteetaten_tax_info()
+
         self.output_operation()
         self.end_process()
 
@@ -75,6 +77,26 @@ class SkatteetatenTaxProcessing(Process):
         self.add_signal(populate_signal, "validated_tax_form")
 
         self.add_transition(validate_tax_form_operation, populate_signal)
+
+    @Profiling
+    @Tracking
+    def scrape_skatteetaten_tax_info(self):
+        """
+        method for scraping Skatteetaten tax info
+
+        """
+        validated_tax_form = self.get_signal("validated_tax_form")
+        scrape_skatteetaten_tax_info_operation = ScrapeSkatteetatenTaxinfo(validated_tax_form.data)
+        self.add_node(scrape_skatteetaten_tax_info_operation)
+
+        self.add_transition(validated_tax_form, scrape_skatteetaten_tax_info_operation)
+
+        skatteetaten_tax_info = scrape_skatteetaten_tax_info_operation.run()
+        skatteetaten_tax_info_signal = Signal(skatteetaten_tax_info, "Skatteetaten Tax Information",
+                                              prettify_keys=True, length=4)
+        self.add_signal(skatteetaten_tax_info_signal, "skattetaten_tax_info")
+
+        self.add_transition(scrape_skatteetaten_tax_info_operation, skatteetaten_tax_info_signal)
 
     @Profiling
     @Tracking

@@ -9,6 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from .scrape_finn_community_statistics import ScrapeFinnCommunityStatistics
 from .scrape_finn_ownership_history import ScrapeFinnOwnershipHistory
+from .scrape_skatteetaten_tax_info import ScrapeSkatteetatenTaxinfo
 from .scrape_finn_statistics_info import ScrapeFinnStatisticsInfo
 from .scrape_sifo_base_expenses import ScrapeSifoBaseExpenses
 from .scrape_finn_advert_info import ScrapeFinnAdvertInfo
