@@ -135,5 +135,6 @@ class PostenPostalCodeExtraction(Process):
         output_signal = OutputSignal(postal_code_info.data, desc="Postal Code Information")
         self.add_signal(output_signal, "output_data")
         self.add_transition(output_operation, output_signal)
+        self.print_pdf()
 
         return postal_code_info.data

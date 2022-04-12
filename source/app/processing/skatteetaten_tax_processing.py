@@ -10,7 +10,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Tracking, Profiling
 
-from .engine import Process, Signal, InputOperation, ValidateTaxForm, ScrapeSkatteetatenTaxinfo
+from .engine import Process, Signal, InputOperation, ValidateTaxForm, ScrapeSkatteetatenTaxinfo, \
+    OutputOperation, OutputSignal
 
 
 class SkatteetatenTaxProcessing(Process):
@@ -35,8 +36,21 @@ class SkatteetatenTaxProcessing(Process):
         self.validate_tax_form()
         self.scrape_skatteetaten_tax_info()
 
-        self.output_operation()
+        self._skatteetaten_tax_info = self.output_operation()
         self.end_process()
+
+    @property
+    def skatteetaten_tax_info(self):
+        """
+        skatteetaten tax info getter
+
+        Returns
+        -------
+        out         : dict
+                      dictionary with tax info
+
+        """
+        return self._skatteetaten_tax_info
 
     @Profiling
     @Tracking
@@ -94,7 +108,7 @@ class SkatteetatenTaxProcessing(Process):
         skatteetaten_tax_info = scrape_skatteetaten_tax_info_operation.run()
         skatteetaten_tax_info_signal = Signal(skatteetaten_tax_info, "Skatteetaten Tax Information",
                                               prettify_keys=True, length=4)
-        self.add_signal(skatteetaten_tax_info_signal, "skattetaten_tax_info")
+        self.add_signal(skatteetaten_tax_info_signal, "skatteetaten_tax_info")
 
         self.add_transition(scrape_skatteetaten_tax_info_operation, skatteetaten_tax_info_signal)
 
@@ -105,4 +119,16 @@ class SkatteetatenTaxProcessing(Process):
         final method call in process
 
         """
+        skatteetaten_tax_info = self.get_signal("skatteetaten_tax_info")
+        output_operation = OutputOperation("Skatteetaten Tax Information")
+        self.add_node(output_operation)
+        self.add_transition(skatteetaten_tax_info, output_operation)
+
+        output_signal = OutputSignal(skatteetaten_tax_info.data,
+                                     desc="Skatteetaten Tax Information", prettify_keys=True,
+                                     length=4)
+        self.add_signal(output_signal, "output_data")
+        self.add_transition(output_operation, output_signal)
         self.print_pdf()
+
+        return skatteetaten_tax_info.data
