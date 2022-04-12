@@ -77,8 +77,13 @@ class ValidateTaxForm(Operation):
             bank_deposit = self.tax_data["bank_deposit"]
         else:
             bank_deposit = 0
+        if "debt" in self.tax_data.keys():
+            debt = self.tax_data["debt"]
+        else:
+            debt = 0
 
         tax_form = TaxForm(age=age, income=income, tax_year=tax_year,
                            interest_income=interest_income, interest_cost=interest_cost,
-                           value_of_real_estate=value_of_real_estate, bank_deposit=bank_deposit)
+                           value_of_real_estate=value_of_real_estate, bank_deposit=bank_deposit,
+                           debt=debt)
         return tax_form
