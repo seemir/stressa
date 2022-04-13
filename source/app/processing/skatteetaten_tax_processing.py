@@ -8,10 +8,10 @@ Process for validating tax form
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.util import Assertor, Tracking, Profiling
+from source.util import Assertor, Tracking, Profiling, Debugger
 
 from .engine import Process, Signal, InputOperation, ValidateTaxForm, ScrapeSkatteetatenTaxinfo, \
-    OutputOperation, OutputSignal
+    OutputOperation, OutputSignal, Extract, Divide, Multiplex
 
 
 class SkatteetatenTaxProcessing(Process):
@@ -20,6 +20,7 @@ class SkatteetatenTaxProcessing(Process):
 
     """
 
+    @Tracking
     def __init__(self, tax_data: dict):
         """
         Constructor / Instantiate the class
@@ -35,6 +36,11 @@ class SkatteetatenTaxProcessing(Process):
         self.input_operation({"data": tax_data})
         self.validate_tax_form()
         self.scrape_skatteetaten_tax_info()
+
+        self.run_parallel([self.extract_1, self.extract_2, self.extract_3])
+        self.divide_1()
+        self.divide_2()
+        self.multiplex()
 
         self._skatteetaten_tax_info = self.output_operation()
         self.end_process()
@@ -53,7 +59,7 @@ class SkatteetatenTaxProcessing(Process):
         return self._skatteetaten_tax_info
 
     @Profiling
-    @Tracking
+    @Debugger
     def input_operation(self, data: dict):
         """
         method for retrieving information from Tax form and saving it to Tax processing object
@@ -74,7 +80,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(input_operation, input_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def validate_tax_form(self):
         """
         method for validating tax_form information
@@ -93,7 +99,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(validate_tax_form_operation, populate_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
     def scrape_skatteetaten_tax_info(self):
         """
         method for scraping Skatteetaten tax info
@@ -113,22 +119,154 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(scrape_skatteetaten_tax_info_operation, skatteetaten_tax_info_signal)
 
     @Profiling
-    @Tracking
+    @Debugger
+    def extract_1(self):
+        """
+        method for extracting total calculated taxes
+
+        """
+        skatteetaten_tax_info = self.get_signal("skatteetaten_tax_info")
+        total_tax_extract_operation = Extract(skatteetaten_tax_info.data, "beregnet_skatt")
+        self.add_node(total_tax_extract_operation)
+        self.add_transition(skatteetaten_tax_info, total_tax_extract_operation, label="thread")
+
+        total_tax_extract = total_tax_extract_operation.run()
+        total_tax_extract_signal = Signal(total_tax_extract, "Skatteetaten Total Tax")
+
+        self.add_signal(total_tax_extract_signal, "total_tax")
+        self.add_transition(total_tax_extract_operation, total_tax_extract_signal)
+
+    @Profiling
+    @Debugger
+    def extract_2(self):
+        """
+        method for extracting income basis
+
+        """
+        skatteetaten_tax_info = self.get_signal("skatteetaten_tax_info")
+        income_extract_operation = Extract(skatteetaten_tax_info.data,
+                                           "samlet_loennsinntekt_med_trygdeavgiftsplikt_"
+                                           "og_med_trekkplikt")
+        self.add_node(income_extract_operation)
+        self.add_transition(skatteetaten_tax_info, income_extract_operation, label="thread")
+
+        income_extract = income_extract_operation.run()
+        income_extract_signal = Signal(income_extract, "Skatteetaten Total Income Basis")
+
+        self.add_signal(income_extract_signal, "total_income")
+        self.add_transition(income_extract_operation, income_extract_signal)
+
+    @Profiling
+    @Debugger
+    def extract_3(self):
+        """
+        method for extracting total debt
+
+        """
+        skatteetaten_tax_info = self.get_signal("skatteetaten_tax_info")
+        debt_extract_operation = Extract(skatteetaten_tax_info.data, "samlet_gjeld")
+        self.add_node(debt_extract_operation)
+        self.add_transition(skatteetaten_tax_info, debt_extract_operation, label="thread")
+
+        debt_extract = debt_extract_operation.run()
+        debt_extract_signal = Signal(debt_extract, "Skatteetaten Total Debt")
+
+        self.add_signal(debt_extract_signal, "total_debt")
+        self.add_transition(debt_extract_operation, debt_extract_signal)
+
+    @Profiling
+    @Debugger
+    def divide_1(self):
+        """
+        method for calculating tax percentage
+
+        """
+
+        tax_percentage = Divide(
+            {"skatteprosent": self.get_signal("total_tax").data["beregnet_skatt"]["beloep"]},
+            self.get_signal("total_income").data,
+            "Calculate Tax Share of Total Monthly Income")
+        self.add_node(tax_percentage)
+
+        self.add_transition(self.get_signal("total_income"), tax_percentage, label="divisor")
+        self.add_transition(self.get_signal("total_tax"), tax_percentage, label="quantity")
+
+        tax_share_of_monthly_income = tax_percentage.run()
+        tax_share_of_monthly_income_signal = Signal(tax_share_of_monthly_income,
+                                                    "Tax Share of Total Monthly Income",
+                                                    prettify_keys=True, length=10)
+
+        self.add_signal(tax_share_of_monthly_income_signal, "tax_share_of_monthly_income")
+
+        self.add_transition(tax_percentage, tax_share_of_monthly_income_signal)
+
+    @Profiling
+    @Debugger
+    def divide_2(self):
+        """
+        method for calculating debt percentage
+
+        """
+
+        debt_level_operation = Divide(
+            {"gjeldsgrad": self.get_signal("total_debt").data["samlet_gjeld"]},
+            self.get_signal("total_income").data,
+            "Calculate Total Monthly Income Share of Debt")
+        self.add_node(debt_level_operation)
+
+        self.add_transition(self.get_signal("total_income"), debt_level_operation, label="divisor")
+        self.add_transition(self.get_signal("total_debt"), debt_level_operation, label="quantity")
+
+        debt_level = debt_level_operation.run(percent=False)
+        debt_level_signal = Signal(debt_level, "Total Monthly Income Share of Debt",
+                                   prettify_keys=True, length=10)
+
+        self.add_signal(debt_level_signal, "debt_level")
+        self.add_transition(debt_level_operation, debt_level_signal)
+
+    @Profiling
+    @Debugger
+    def multiplex(self):
+        """
+        method for multiplxing tax share with tax info
+
+        """
+        tax_share_of_monthly_income = self.get_signal("tax_share_of_monthly_income")
+        debt_level = self.get_signal("debt_level")
+        skatteetaten_tax_info = self.get_signal("skatteetaten_tax_info")
+
+        multiplex_operation = Multiplex(
+            [tax_share_of_monthly_income, debt_level, skatteetaten_tax_info],
+            "Multiplex Tax Information")
+
+        self.add_node(multiplex_operation)
+        self.add_transition(tax_share_of_monthly_income, multiplex_operation)
+        self.add_transition(debt_level, multiplex_operation)
+        self.add_transition(skatteetaten_tax_info, multiplex_operation)
+
+        multiplex = multiplex_operation.run()
+        multiplex_signal = Signal(multiplex, "Multiplexed Tax Information", prettify_keys=True,
+                                  length=4)
+        self.add_signal(multiplex_signal, "multiplex_tax_info")
+        self.add_transition(multiplex_operation, multiplex_signal)
+
+    @Profiling
+    @Debugger
     def output_operation(self):
         """
         final method call in process
 
         """
-        skatteetaten_tax_info = self.get_signal("skatteetaten_tax_info")
+        multiplex_tax_info = self.get_signal("multiplex_tax_info")
         output_operation = OutputOperation("Skatteetaten Tax Information")
         self.add_node(output_operation)
-        self.add_transition(skatteetaten_tax_info, output_operation)
+        self.add_transition(multiplex_tax_info, output_operation)
 
-        output_signal = OutputSignal(skatteetaten_tax_info.data,
+        output_signal = OutputSignal(multiplex_tax_info.data,
                                      desc="Skatteetaten Tax Information", prettify_keys=True,
                                      length=4)
         self.add_signal(output_signal, "output_data")
         self.add_transition(output_operation, output_signal)
         self.print_pdf()
 
-        return skatteetaten_tax_info.data
+        return multiplex_tax_info.data

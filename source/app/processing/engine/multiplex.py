@@ -55,4 +55,4 @@ class Multiplex(Operation):
                     signals.update(signal.data)
             elif signal:
                 signals.update(signal)
-        return signals
+        return dict(sorted(signals.items()))

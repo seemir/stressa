@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from decimal import Decimal
 
-from source.domain import Share
+from source.domain import Share, Amount
 from source.util import Assertor, Tracking
 
 from .operation import Operation
@@ -43,7 +43,7 @@ class Divide(Operation):
         self.denominator = denominator
 
     @Tracking
-    def run(self):
+    def run(self, percent=True):
         """
         method for running operation
 
@@ -58,5 +58,7 @@ class Divide(Operation):
             str(list(self.denominator.values())[0]).replace(" ", "").replace("kr", ""))
         for key, val in self.numerator.items():
             num = Decimal(val.replace(" ", "").replace("kr", ""))
-            shares.update({key: Share(num, den).value})
+            shares.update(
+                {key: Share(num, den).value if percent else str(round(
+                    float(Amount(str(num)) / Amount(str(den))), 2))})
         return shares

@@ -21,6 +21,53 @@ class ScrapeSkatteetatenTaxinfo(Operation):
 
     """
 
+    tax_value_mapping = {
+        "alminneligInntektFoerFordelingsfradrag": "alminnelig_inntekt_foer_fordelingsfradrag",
+        "alminneligInntektFoerSaerfradrag": "alminnelig_inntekt_foer_saerfradrag",
+        "beregnetSkatt": "beregnet_skatt",
+        "beregnetSkattFoerSkattefradrag": "beregnet_skatt_foer_skattefradrag",
+        "bruttoformue": "bruttoformue",
+        "ektefellenesSamledeVerdiFoerVerdsettingsrabattForAlleFormuesobjekter":
+            "ektefellenes_samlede_verdi_foer_verdsettingsrabatt_for_alle_formuesobjekter",
+        "fellesskatt": "fellesskatt",
+        "formuesskattTilKommune": "formuesskatt_til_kommune",
+        "formuesskattTilStat": "formuesskatt_til_stat",
+        "formuesverdiForPrimaerbolig": "formuesverdi_for_primaerbolig",
+        "formuesverdiSomPrimaerbolig": "formuesverdi_som_primaerbolig",
+        "gjeldIInnenlandskeBanker": "gjeld_i_innenlandske_banker",
+        "inntektsskattTilFylkeskommune": "inntektsskatt_til_fylkeskommune",
+        "inntektsskattTilKommune": "inntektsskatt_til_kommune",
+        "inntektsskattTilKommuneOgFylkeskommune": "inntektsskatt_til_kommune_og_fylkeskommune",
+        "minstefradragIInntekt": "minstefradrag_i_inntekt",
+        "nettoformue": "nettoformue",
+        "nettoinntekt": "nettoinntekt",
+        "personinntektFraLoennsinntekt": "personinntekt_fra_loennsinntekt",
+        "samledeOpptjenteRenterIInnenlandskeBanker":
+            "samlede_opptjente_renter_i_innenlandske_banker",
+        "samledePaaloepteRenterPaaGjeldIInnenlandskeBanker":
+            "samlede_paaloepte_renter_paa_gjeld_i_innenlandske_banker",
+        "samletGjeld": "samlet_gjeld",
+        "samletGrunnlagForInntektsskattTilKommuneOgFylkeskommuneStatsskattOgFellesskatt":
+            "samlet_grunnlag_for_inntektsskatt_til_kommune_og_fylkeskommune_statsskatt_"
+            "og_fellesskatt",
+        "samletInnskuddIInnenlandskeBanker": "samlet_innskudd_i_innenlandske_banker",
+        "samletLoennsinntektMedTrygdeavgiftspliktOgMedTrekkplikt":
+            "samlet_loennsinntekt_med_trygdeavgiftsplikt_og_med_trekkplikt",
+        "samletVerdiFoerVerdsettingsrabattForAlleFormuesobjekter":
+            "samlet_verdi_foer_verdsettingsrabatt_for_alle_formuesobjekter",
+        "samletVerdiFoerVerdsettingsrabattForPrimaerbolig":
+            "samlet_verdi_foer_verdsettingsrabatt_for_primaerbolig",
+        "skatteklasse": "skatteklasse",
+        "skatteregnskapskommune": "skatteregnskapskommune",
+        "sumFradragIAlminneligInntekt": "sum_fradrag_i_alminnelig_inntekt",
+        "sumInntekterIAlminneligInntektFoerFordelingsfradrag":
+            "sum_inntekter_i_alminnelig_inntekt_foer_fordelingsfradrag",
+        "sumMinstefradrag": "sum_minstefradrag",
+        "sumTrygdeavgift": "sum_trygdeavgift",
+        "trinnskatt": "trinnskatt",
+        "trygdeavgiftAvLoennsinntekt": "trygdeavgift_av_loennsinntekt"
+    }
+
     @Tracking
     def __init__(self, tax_form: TaxForm):
         """
@@ -57,4 +104,8 @@ class ScrapeSkatteetatenTaxinfo(Operation):
                                 value_of_real_estate=self.tax_form.value_of_real_estate,
                                 bank_deposit=self.tax_form.bank_deposit,
                                 debt=self.tax_form.debt)
-        return dict(sorted(tax_info.tax_information().items()))
+        final_tax_info = {}
+        for key, value in dict(sorted(tax_info.tax_information().items())).items():
+            if key in self.tax_value_mapping.keys():
+                final_tax_info.update({self.tax_value_mapping[key]: value})
+        return final_tax_info
