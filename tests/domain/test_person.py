@@ -74,3 +74,20 @@ class TestPerson:
         """
         for limit in [yrs - 0.05, yrs]:
             assert self.person.sifo_age(limit) == str(yrs)
+
+    def test_student_criteria(self):
+        """
+        Test student criteria, i.e. only a person between 20-30 can be students
+
+        """
+        with pt.raises(ValueError):
+            Person(sex='m', age=32, student='1')
+
+    @pt.mark.parametrize('student', ['0', '1'])
+    def test_student_setter(self, student):
+        """
+        Test student setter
+
+        """
+        self.person.student = student
+        assert self.person.student == student

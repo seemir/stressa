@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from typing import Union
 
-from source.util import Assertor, Tracking
+from source.util import Assertor, Debugger
 
 from .entity import Entity
 from .female import Female
@@ -23,8 +23,8 @@ class Family(Entity):
 
     """
 
-    @Tracking
-    def validate_family_members(self, family_members: list):
+    @staticmethod
+    def validate_family_members(family_members: list):
         """
         Validate the family_members object. In this implementation a Family has the following
         characteristics:
@@ -43,8 +43,8 @@ class Family(Entity):
         for family_member in family_members:
             Assertor.assert_data_types([family_member], [(Male, Female)])
 
-    @Tracking
-    def validate_income(self, income: Union[int, float, str]):
+    @staticmethod
+    def validate_income(income: Union[int, float, str]):
         """
         method for validating that income is non-negative
 
@@ -57,8 +57,8 @@ class Family(Entity):
         Assertor.assert_data_types([income], [(int, float, str)])
         Assertor.assert_non_negative([income], msg="Only non-negative 'income' accepted")
 
-    @Tracking
-    def validate_select_year(self, select_year: Union[int, str]):
+    @staticmethod
+    def validate_select_year(select_year: Union[int, str]):
         """
         method for validating selected budget year
 
@@ -72,8 +72,8 @@ class Family(Entity):
             raise ValueError("Expected a 'budget year', got '{}' "
                              "".format(select_year.__class__.__name__))
 
-    @Tracking
-    def validating_cars(self, cars: Union[int, str]):
+    @staticmethod
+    def validating_cars(cars: Union[int, str]):
         """
         method for validating that number of cars is non-negative
 
@@ -142,7 +142,7 @@ class Family(Entity):
         self.validate_family_members(new_members)
         self._familie_medlemmer = new_members
 
-    @Tracking
+    @Debugger
     def add_family_members(self, family_members: (list, Male, Female)):
         """
         Append a list Male or Female family_member to family_members
@@ -217,7 +217,7 @@ class Family(Entity):
     @property
     def select_year(self):
         """
-        select uear getter
+        select year getter
 
         Returns
         -------
@@ -227,7 +227,16 @@ class Family(Entity):
         """
         return self._select_year
 
-    @Tracking
+    @select_year.setter
+    def select_year(self, new_year):
+        """
+        select year setter
+
+        """
+        self.validate_select_year(new_year)
+        self._select_year = new_year
+
+    @Debugger
     def sifo_properties(self):
         """
         return all active sifo compatible properties and values in a dictionary

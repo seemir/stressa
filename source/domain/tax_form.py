@@ -12,7 +12,7 @@ from typing import Union
 
 from datetime import date
 
-from source.util import Assertor, Tracking
+from source.util import Assertor, Debugger
 
 from source.domain.entity import Entity
 
@@ -29,8 +29,8 @@ class TaxForm(Entity):
                            '2019': ('skattegrunnlagV5', 'skattepliktV6'),
                            '2018': ('skattegrunnlagV5', 'skattepliktV5')}
 
-    @Tracking
-    def validate_tax_year(self, tax_year: Union[int, float, str]):
+    @staticmethod
+    def validate_tax_year(tax_year: Union[int, float, str]):
         """
         Method for validating tax, i.e. insure that year is of
         correct datatype and in calculation range
@@ -41,12 +41,12 @@ class TaxForm(Entity):
                           year to be validated
 
         """
-        Assertor.assert_data_types([tax_year], [int, float, str])
+        Assertor.assert_data_types([tax_year], [(int, float, str)])
         Assertor.assert_arguments([str(tax_year)],
-                                  [{'year': tuple(self.tax_version_mapping.keys())}])
+                                  [{'year': tuple(TaxForm.tax_version_mapping.keys())}])
 
-    @Tracking
-    def validate_age(self, age: Union[int, float, str]):
+    @staticmethod
+    def validate_age(age: Union[int, float, str]):
         """
         Method for validating age of individual
 
@@ -56,11 +56,11 @@ class TaxForm(Entity):
                         age to be validated
 
         """
-        Assertor.assert_data_types([age], [int, float, str])
+        Assertor.assert_data_types([age], [(int, float, str)])
         Assertor.assert_non_negative(age, "Only non-negative 'age' accepted")
 
-    @Tracking
-    def validate_tax_form_values(self, values: list):
+    @staticmethod
+    def validate_tax_form_values(values: list):
         """
         Method for validating numeric values
 
@@ -71,7 +71,7 @@ class TaxForm(Entity):
 
         """
         for value in values:
-            Assertor.assert_data_types([value], [int, float, str])
+            Assertor.assert_data_types([value], [(int, float, str)])
             Assertor.assert_non_negative(value, "Tax form values cannot be negative")
 
     def __init__(self, age: Union[str, int],
@@ -154,7 +154,7 @@ class TaxForm(Entity):
 
         """
         self.validate_age(new_age)
-        self._age = new_age
+        self._age = str(new_age)
 
     @property
     def income(self):
@@ -181,7 +181,7 @@ class TaxForm(Entity):
 
         """
         self.validate_tax_form_values([new_income])
-        self._income = new_income
+        self._income = str(new_income)
 
     @property
     def tax_year(self):
@@ -208,7 +208,7 @@ class TaxForm(Entity):
 
         """
         self.validate_tax_form_values([new_tax_year])
-        self._tax_year = new_tax_year
+        self._tax_year = str(new_tax_year)
 
     @property
     def interest_income(self):
@@ -235,7 +235,7 @@ class TaxForm(Entity):
 
         """
         self.validate_tax_form_values([new_interest_income])
-        self._interest_income = new_interest_income
+        self._interest_income = str(new_interest_income)
 
     @property
     def interest_cost(self):
@@ -262,7 +262,7 @@ class TaxForm(Entity):
 
         """
         self.validate_tax_form_values([new_interest_cost])
-        self._interest_cost = new_interest_cost
+        self._interest_cost = str(new_interest_cost)
 
     @property
     def value_of_real_estate(self):
@@ -284,7 +284,7 @@ class TaxForm(Entity):
 
         """
         self.validate_tax_form_values([new_value_of_real_estate])
-        self._value_of_real_estate = new_value_of_real_estate
+        self._value_of_real_estate = str(new_value_of_real_estate)
 
     @property
     def bank_deposit(self):
@@ -311,7 +311,7 @@ class TaxForm(Entity):
 
         """
         self.validate_tax_form_values([new_bank_deposit])
-        self._bank_deposit = new_bank_deposit
+        self._bank_deposit = str(new_bank_deposit)
 
     @property
     def debt(self):
@@ -338,9 +338,9 @@ class TaxForm(Entity):
 
         """
         self.validate_tax_form_values([new_debt])
-        self._debt = new_debt
+        self._debt = str(new_debt)
 
-    @Tracking
+    @Debugger
     def tax_form_properties(self):
         """
         returns all active tax form properties
@@ -351,11 +351,10 @@ class TaxForm(Entity):
                       dictionary of all active properties
 
         """
-        pre_properties = dict(list(self.__dict__.items()))
-        post_properties = {name[:1]: value for name, value in pre_properties.items() if
-                           name != '_id'}
-        post_properties.update({'tax_year_config': self.tax_version_mapping[self.tax_year]})
-        return post_properties
+        properties = dict(list(self.__dict__.items()))
+        del properties['_id']
+        properties.update({'tax_year_config': self.tax_version_mapping[self.tax_year]})
+        return properties
 
     @staticmethod
     def rules():

@@ -13,7 +13,6 @@ from abc import ABC
 
 import pytest as pt
 
-from source.util import TrackingError
 from source.domain import Family, Female, Entity, Male
 
 
@@ -52,45 +51,45 @@ class TestFamily:
     @pt.mark.parametrize('invalid_arg', [True, 'test', 90210, 90210.0, ('test', 'test'), {}])
     def test_family_members_type_are_list(self, invalid_arg):
         """
-        Test that Family object raises TrackingError if family_members argument are invalid
+        Test that Family object raises TypeError if family_members argument are invalid
 
         """
-        with pt.raises(TrackingError):
+        with pt.raises(TypeError):
             self.family.familie_medlemmer = invalid_arg
 
     @staticmethod
     @pt.mark.parametrize('invalid_arg', [True, 'test', 90210, 90210.0, ('test', 'test'), {}])
     def test_family_members_type_are_list_constructor(invalid_arg):
         """
-        Test that Family object raises TrackingError if family_members argument are invalid
+        Test that Family object raises TypeError if family_members argument are invalid
 
         """
-        with pt.raises(TrackingError):
+        with pt.raises(TypeError):
             Family(invalid_arg, income=invalid_arg, cars=invalid_arg)
 
     @pt.mark.parametrize('invalid_arg', [(), {}, []])
     def test_income_and_cars_tracking_error_for_invalid_arguments(self, invalid_arg):
         """
-        TrackingError raised when invalid income and cars argument types passed into Family class
+        TypeError raised when invalid income and cars argument types passed into Family class
         through setter
 
         """
-        with pt.raises(TrackingError):
+        with pt.raises(TypeError):
             self.family.inntekt = invalid_arg
-        with pt.raises(TrackingError):
+        with pt.raises(TypeError):
             self.family.antall_biler = invalid_arg
 
     @pt.mark.parametrize('negative_income', [-1094400, -1094400.0, '-1094400', '-1094400.0'])
     @pt.mark.parametrize('negative_cars', [-1, '-1'])
     def test_income_and_cars_cannot_be_negative(self, negative_income, negative_cars):
         """
-        Test that TrackingError is raised if negative values for income and cars are passed into
+        Test that ValueError is raised if negative values for income and cars are passed into
         Family class through constructor or setter
 
         """
-        with pt.raises(TrackingError):
+        with pt.raises(ValueError):
             self.family.inntekt = negative_income
-        with pt.raises(TrackingError):
+        with pt.raises(ValueError):
             self.family.antall_biler = negative_cars
 
     @pt.mark.parametrize('inntekt', [594400, 594400, '594400', '594400'])
@@ -182,3 +181,21 @@ class TestFamily:
                  "sfo_criteria", "pregnant_criteria"]
         assert Family.rules() == ", ".join(rules).replace("'", "")
         assert self.family.rules() == ", ".join(rules).replace("'", "")
+
+    @pt.mark.parametrize('invalid_year', ['', None, (), {}, []])
+    def test_validate_select_year(self, invalid_year):
+        """
+        Test validate_select_year method in Family object
+
+        """
+        with pt.raises(ValueError):
+            self.family.validate_select_year(invalid_year)
+
+    @pt.mark.parametrize('year', ['2022', '2021'])
+    def test_select_year_setter(self, year):
+        """
+        Test select year setter in Family object
+
+        """
+        self.family.select_year = year
+        assert self.family.select_year == year
