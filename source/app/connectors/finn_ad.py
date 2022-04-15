@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Implementation of scarper against Finn.no housing ad search
+Implementation of connector against Finn.no housing ad search
 
 """
 
@@ -23,7 +23,7 @@ from .finn import Finn
 
 class FinnAd(Finn):
     """
-    Scraper that scrapes housing ad information from Finn.no given a Finn-code
+    Connector that retrieves housing ad information from Finn.no given a Finn-code
 
     """
 
@@ -148,14 +148,9 @@ class FinnAd(Finn):
     @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):
         """
-                save
-                advert
-                information
-                to
-                JSON
-                file
+        save advert information to JSON file
 
-                """
+        """
         Assertor.assert_data_types([file_dir], [str])
         self.save_json(self.housing_ad_information(), file_dir, file_prefix="HousingAdInfo_")
         LOGGER.success(

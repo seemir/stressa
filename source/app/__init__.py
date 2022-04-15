@@ -8,5 +8,5 @@ Entrance to app layer for import statements
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from .scrapers import *
+from .connectors import *
 from .processing import *

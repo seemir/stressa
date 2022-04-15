@@ -1,21 +1,22 @@
 # -*- coding: utf-8 -*-
 """
-Module with logic for the Scrape Finn Statistics information
+Module with logic for the connector Finn advert information
 
 """
+
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Tracking
 
-from ...scrapers import FinnStat, FINN_STAT_URL
+from ...connectors import FinnAd, FINN_AD_URL
 
 from .operation import Operation
 
 
-class ScrapeFinnStatisticsInfo(Operation):
+class FinnAdvertInfoConnector(Operation):
     """
-    Operation that scrapes Finn Statistics history information
+    Operation that retrieves Finn advert information
 
     """
 
@@ -27,13 +28,13 @@ class ScrapeFinnStatisticsInfo(Operation):
         Parameters
         ----------
         finn_code       : str
-                          finn_code for ad to scrape information from
+                          finn_code for advert to connector
 
         """
         Assertor.assert_data_types([finn_code], [str])
         super().__init__(name=self.__class__.__name__,
-                         desc="from: '{}\\<[finn_code]\\>' \\n id: Scrape FINN Statistics "
-                              "Info".format(FINN_STAT_URL))
+                         desc="from: '{}\\<[finn_code]\\>' \\n id: "
+                              "FINN Advert Info Connector".format(FINN_AD_URL))
         self.finn_code = finn_code
 
     @Tracking
@@ -43,9 +44,9 @@ class ScrapeFinnStatisticsInfo(Operation):
 
         Returns
         -------
-        dict        : dict
-                      dictionary with all finn statitics information
+        out         : dict
+                      dictionary with all finn advert information
 
         """
-        finn_stat_info = FinnStat(self.finn_code)
-        return finn_stat_info.housing_stat_information()
+        finn_ad_info = FinnAd(self.finn_code)
+        return finn_ad_info.housing_ad_information()

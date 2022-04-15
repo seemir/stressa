@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test module for the Ssb scraper object
+Test module for the Ssb connector object
 
 """
 
@@ -19,13 +19,13 @@ from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 import pytest as pt
 import mock
 
-from source.app import Ssb, SsbPayload, Scraper
+from source.app import Ssb, SsbPayload, Connector
 from source.util import TrackingError
 
 
 class TestSsb:
     """
-    Test cases for the Ssb scraper object
+    Test cases for the Ssb connector object
 
     """
 
@@ -38,14 +38,14 @@ class TestSsb:
         cls.payload = SsbPayload(tid=["2019M08"])
         cls.ssb = Ssb(cls.payload)
 
-    def test_ssb_is_instance_of_scraper(self):
+    def test_ssb_is_instance_of_connector(self):
         """
-        Test that Ssb objects are instances of Ssb class and subclass of Scraper
+        Test that Ssb objects are instances of Ssb class and subclass of connector
 
         """
         assert isinstance(self.ssb, Ssb)
-        assert isinstance(self.ssb, Scraper)
-        assert issubclass(self.ssb.__class__, Scraper)
+        assert isinstance(self.ssb, Connector)
+        assert issubclass(self.ssb.__class__, Connector)
 
     @staticmethod
     @pt.mark.parametrize("invalid_payload_type", [90210, 90210.0, True, [], (), {}])
@@ -59,7 +59,7 @@ class TestSsb:
 
     def test_ssb_has_uuid4_compatible_id(self):
         """
-        Test Ssb scraper has uuid4 compatible ids
+        Test Ssb connector has uuid4 compatible ids
 
         """
         assert UUID(str(self.ssb.id_))
@@ -67,7 +67,7 @@ class TestSsb:
     @pt.mark.parametrize("payload", [SsbPayload(rentebinding=["08"])])
     def test_payload_gets_set(self, payload):
         """
-        Test that payload gets set in Ssb scraper object
+        Test that payload gets set in Ssb connector object
 
         """
         self.ssb.payload = payload
@@ -123,7 +123,7 @@ class TestSsb:
                            '3 år - 5 år': '2.8', 'over 5 år': '2.9'}
         assert self.ssb.ssb_interest_rates() == correct_content
 
-    @mock.patch("source.app.scrapers.ssb.Ssb.response", mock.MagicMock(return_value=""))
+    @mock.patch("source.app.connectors.ssb.Ssb.response", mock.MagicMock(return_value=""))
     def test_ssb_interest_rates_throws_exception(self):
         """
         Patch that mocks Ssb.response() method to return '' and accordingly
@@ -133,7 +133,7 @@ class TestSsb:
         with pt.raises(TrackingError):
             self.ssb.ssb_interest_rates()
 
-    @mock.patch("source.app.scrapers.ssb.Ssb.ssb_interest_rates", mock.MagicMock(return_value=""))
+    @mock.patch("source.app.connectors.ssb.Ssb.ssb_interest_rates", mock.MagicMock(return_value=""))
     def test_to_json(self):
         """
         Test that staticmethod to_json() produces json file with correct content

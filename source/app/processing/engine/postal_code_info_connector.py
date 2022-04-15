@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module with logic for the Scrape Posten Postal code information
+Module with logic for the Posten Postal code information connector
 
 """
 
@@ -9,14 +9,14 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Tracking
 
-from ...scrapers import POSTEN_URL, Posten
+from ...connectors import POSTEN_URL, Posten
 
 from .operation import Operation
 
 
-class ScrapePostalCodeInfo(Operation):
+class PostalCodeInfoConnector(Operation):
     """
-    Operation that scrapes Postal Code from Norwegian Postal Code Information from Postens
+    Operation that retrieves Postal Code from Norwegian Postal Code Information from Postens
     public address search
 
     """
@@ -29,13 +29,13 @@ class ScrapePostalCodeInfo(Operation):
         Parameters
         ----------
         postal_code       : str
-                         postal_code for advert to scrape information from
+                            postal_code for advert to retrieve information from
 
         """
         Assertor.assert_data_types([postal_code], [str])
         self.name = self.__class__.__name__
         super().__init__(name=self.name,
-                         desc="from: '{}' \\n id: Scrape Postal Code Info".format(
+                         desc="from: '{}' \\n id: Postal Code Info Connector".format(
                              POSTEN_URL))
         self.postal_code = postal_code
 

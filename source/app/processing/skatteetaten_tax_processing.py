@@ -10,8 +10,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Tracking, Profiling, Debugger
 
-from .engine import Process, Signal, InputOperation, ValidateTaxForm, ScrapeSkatteetatenTaxinfo, \
-    OutputOperation, OutputSignal, Extract, Divide, Multiplex
+from .engine import Process, Signal, InputOperation, ValidateTaxForm, \
+    SkatteetatenTaxInfoConnector, OutputOperation, OutputSignal, Extract, Divide, Multiplex
 
 
 class SkatteetatenTaxProcessing(Process):
@@ -35,7 +35,7 @@ class SkatteetatenTaxProcessing(Process):
         super().__init__(name=__class__.__name__)
         self.input_operation({"data": tax_data})
         self.validate_tax_form()
-        self.scrape_skatteetaten_tax_info()
+        self.skatteetaten_tax_info_connector()
 
         self.run_parallel([self.extract_1, self.extract_2, self.extract_3])
         self.divide_1()
@@ -100,23 +100,24 @@ class SkatteetatenTaxProcessing(Process):
 
     @Profiling
     @Debugger
-    def scrape_skatteetaten_tax_info(self):
+    def skatteetaten_tax_info_connector(self):
         """
-        method for scraping Skatteetaten tax info
+        method for retrieve Skatteetaten tax info
 
         """
         validated_tax_form = self.get_signal("validated_tax_form")
-        scrape_skatteetaten_tax_info_operation = ScrapeSkatteetatenTaxinfo(validated_tax_form.data)
-        self.add_node(scrape_skatteetaten_tax_info_operation)
+        skatteetaten_tax_info_connector_operation = SkatteetatenTaxInfoConnector(
+            validated_tax_form.data)
+        self.add_node(skatteetaten_tax_info_connector_operation)
 
-        self.add_transition(validated_tax_form, scrape_skatteetaten_tax_info_operation)
+        self.add_transition(validated_tax_form, skatteetaten_tax_info_connector_operation)
 
-        skatteetaten_tax_info = scrape_skatteetaten_tax_info_operation.run()
+        skatteetaten_tax_info = skatteetaten_tax_info_connector_operation.run()
         skatteetaten_tax_info_signal = Signal(skatteetaten_tax_info, "Skatteetaten Tax Information",
                                               prettify_keys=True, length=4)
         self.add_signal(skatteetaten_tax_info_signal, "skatteetaten_tax_info")
 
-        self.add_transition(scrape_skatteetaten_tax_info_operation, skatteetaten_tax_info_signal)
+        self.add_transition(skatteetaten_tax_info_connector_operation, skatteetaten_tax_info_signal)
 
     @Profiling
     @Debugger

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Implementation of scarper against Finn.no housing statistics search
+Implementation of connector against Finn.no housing statistics search
 
 """
 
@@ -30,7 +30,7 @@ from .finn import Finn
 
 class FinnStat(Finn):
     """
-    Scraper that scrapes housing statistics information from Finn.no given a Finn-code
+    Connector that retrieves housing statistics information from Finn.no given a Finn-code
 
     """
 

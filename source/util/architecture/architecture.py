@@ -46,10 +46,10 @@ with Diagram(name=name, show=False, direction="TB", outformat="pdf",
             graphics = Python("graphics")
 
     with Cluster("application layer (source/app)", graph_attr={"fontsize": font_size}):
-        with Cluster("package: scrapers", graph_attr={"fontsize": font_size}):
+        with Cluster("package: connectors", graph_attr={"fontsize": font_size}):
             with Cluster("temp", graph_attr={"fontsize": font_size}):
                 cache = Sqlite("cache")
-            scrapers = Python("scrapers")
+            connectors = Python("connectors")
 
         with Cluster("package: processing", graph_attr={"fontsize": font_size}):
             with Cluster("package: engine", graph_attr={"fontsize": font_size}):
@@ -104,18 +104,18 @@ with Diagram(name=name, show=False, direction="TB", outformat="pdf",
     bash << util_logs
     logging >> util_logs
     logging >> processes
-    logging >> scrapers
+    logging >> connectors
     logging >> operations
-    caching >> scrapers
+    caching >> connectors
     profiling >> processes
 
     processes << engine
-    processes << scrapers
+    processes << connectors
     processes >> procedure
     processes << entities
     operations << entities
     operations << values
     operations << sub_model
-    scrapers << entities
-    scrapers >> cache
-    web >> scrapers
+    connectors << entities
+    connectors >> cache
+    web >> connectors

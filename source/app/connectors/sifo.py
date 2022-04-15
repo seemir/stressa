@@ -1,7 +1,7 @@
 # -*- coding: windows-1252 -*-
 
 """
-Implementation of scaper against sifo budget calculator
+Implementation of connector against sifo budget calculator
 
 """
 
@@ -18,10 +18,10 @@ from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Track
 from source.domain import Family
 
 from .settings import SIFO_URL, TIMEOUT
-from .scraper import Scraper
+from .connector import Connector
 
 
-class Sifo(Scraper):
+class Sifo(Connector):
     """
     Class that produces SIFO expenses given family information
 

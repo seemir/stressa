@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test module for all Scraper tests
+Test module for all Connector tests
 
 """
 
@@ -14,23 +14,23 @@ import os
 
 import pytest as pt
 
-from source.app import Scraper
+from source.app import Connector
 
 
-class TestScraper:
+class TestConnector:
     """
-    Test case for Scraper abstract base class
+    Test case for Connector abstract base class
 
     """
 
     @staticmethod
-    def test_scraper_base_class_cannot_be_instantiated():
+    def test_connector_base_class_cannot_be_instantiated():
         """
-        Test that scraper base class cannot be instantiated
+        Test that connector base class cannot be instantiated
 
         """
         with pt.raises(TypeError):
-            Scraper()
+            Connector()
 
     @staticmethod
     @pt.mark.parametrize("file_content", [{"foo": "bar"}])
@@ -41,7 +41,7 @@ class TestScraper:
         """
         current_dir = os.path.dirname(__file__)
         file_dir = os.path.join(current_dir, "report", "json")
-        Scraper.save_json(file_content, file_dir=file_dir)
+        Connector.save_json(file_content, file_dir=file_dir)
         with open(os.path.join(file_dir, os.listdir(file_dir)[-1])) as json_file:
             data = json.load(json_file)
             assert data == file_content
@@ -56,4 +56,4 @@ class TestScraper:
 
         """
         with pt.raises(OSError):
-            Scraper.save_json(file_object, file_dir=invalid_file_dir)
+            Connector.save_json(file_object, file_dir=invalid_file_dir)

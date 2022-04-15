@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test module for the Scraper against FinnOwnership.no housing search
+Test module for the connectorr against FinnOwnership.no housing search
 
 """
 
@@ -18,13 +18,13 @@ from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 import pytest as pt
 
-from source.app import FinnOwnership, Scraper
+from source.app import FinnOwnership, Connector
 from source.util import TrackingError
 
 
 class TestFinnOwnership:
     """
-    Test cases for the FinnOwnership scraper
+    Test cases for the FinnOwnership connectorr
 
     """
 
@@ -36,12 +36,12 @@ class TestFinnOwnership:
         """
         cls.finn_ownership = FinnOwnership("144857770")
 
-    def test_finn_ownership_is_instance_of_scraper(self):
+    def test_finn_ownership_is_instance_of_connectorr(self):
         """
-        Test that FinnOwnership object is instance and subclass of Scraper
+        Test that FinnOwnership object is instance and subclass of connectorr
 
         """
-        for parent in [FinnOwnership, Scraper]:
+        for parent in [FinnOwnership, Connector]:
             assert isinstance(self.finn_ownership, parent)
             assert issubclass(self.finn_ownership.__class__, parent)
 
@@ -69,7 +69,7 @@ class TestFinnOwnership:
 
     def test_finn_ownership_has_uuid4_compatible_id(self):
         """
-        Test FinnOwnership scraper has uuid4 compatible ids
+        Test FinnOwnership connectorr has uuid4 compatible ids
 
         """
         assert UUID(str(self.finn_ownership.id_))
@@ -104,7 +104,7 @@ class TestFinnOwnership:
             finn_ownership.ownership_response()
 
     @staticmethod
-    @mock.patch("source.app.scrapers.finn_ownership.FinnOwnership.ownership_response",
+    @mock.patch("source.app.connectors.finn_ownership.FinnOwnership.ownership_response",
                 mock.MagicMock(return_value=None))
     def test_housing_ownership_information_throws_not_found_error_if_none_response():
         """
@@ -115,7 +115,7 @@ class TestFinnOwnership:
         finn_ownership = FinnOwnership("144857770")
         finn_ownership.housing_ownership_information()
 
-    @mock.patch("source.app.scrapers.finn_ownership.FinnOwnership.ownership_response",
+    @mock.patch("source.app.connectors.finn_ownership.FinnOwnership.ownership_response",
                 mock.MagicMock(side_effect=ValueError("this is a test")))
     def test_housing_ownership_information_throws_exception(self):
         """
@@ -125,7 +125,7 @@ class TestFinnOwnership:
         with pt.raises(TrackingError):
             self.finn_ownership.housing_ownership_information()
 
-    @mock.patch("source.app.scrapers.finn_ownership.FinnOwnership.housing_ownership_information",
+    @mock.patch("source.app.connectors.finn_ownership.FinnOwnership.housing_ownership_information",
                 mock.MagicMock(return_value=""))
     def test_to_json(self):
         """

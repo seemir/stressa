@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test module for Posten scraper
+Test module for Posten connector
 
 """
 
@@ -18,25 +18,25 @@ import pytest as pt
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from source.util import TrackingError
-from source.app import Posten, Scraper
+from source.app import Posten, Connector
 
 
 class TestPosten:
     """
-    Test cases for Posten scraper
+    Test cases for Posten connector
 
     """
 
     @staticmethod
-    def test_posten_is_instance_of_scraper():
+    def test_posten_is_instance_of_connector():
         """
-        Test that Posten scraper is instance and subclass of Scraper
+        Test that Posten connector is instance and subclass of connector
 
         """
         posten = Posten("0010")
         assert isinstance(posten, Posten)
-        assert isinstance(posten, Scraper)
-        assert issubclass(posten.__class__, Scraper)
+        assert isinstance(posten, Connector)
+        assert issubclass(posten.__class__, Connector)
 
     @staticmethod
     @pt.mark.parametrize("invalid_postal_code_type", [90210, 90210.0, True, [], (), {}])
@@ -51,7 +51,7 @@ class TestPosten:
     @staticmethod
     def test_posten_has_uuid4_compatible_id():
         """
-        Test Posten scraper has uuid4 compatible ids
+        Test Posten connector has uuid4 compatible ids
 
         """
         posten = Posten("0010")
@@ -61,7 +61,7 @@ class TestPosten:
     @pt.mark.parametrize("postal_code", ["0010", "0018", "0021", "0026", "0027"])
     def test_postal_code_gets_set(postal_code):
         """
-        Test that postal code gets set in Posten scraper object
+        Test that postal code gets set in Posten connector object
 
         """
         posten = Posten("0010")
@@ -124,7 +124,7 @@ class TestPosten:
             posten.response()
 
     @staticmethod
-    @mock.patch("source.app.scrapers.posten.Posten.response", mock.MagicMock(return_value=""))
+    @mock.patch("source.app.connectors.posten.Posten.response", mock.MagicMock(return_value=""))
     def test_postal_code_info_throws_not_found_error():
         """
         Patch that mocks Posten.response() method to return '' and accordingly
@@ -136,7 +136,7 @@ class TestPosten:
             posten.postal_code_info()
 
     @staticmethod
-    @mock.patch("source.app.scrapers.posten.Posten.postal_code_info",
+    @mock.patch("source.app.connectors.posten.Posten.postal_code_info",
                 mock.MagicMock(return_value=""))
     def test_to_json():
         """

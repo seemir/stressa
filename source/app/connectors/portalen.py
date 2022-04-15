@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Implementation of scaper against finansportalen.no xml feed
+Implementation of connector against finansportalen.no xml feed
 
 """
 
@@ -18,15 +18,14 @@ from requests.exceptions import ReadTimeout, ConnectionError as ConnectError
 from source.util import LOGGER, cache, NoConnectionError, TimeOutError, NotFoundError, Tracking
 
 from .settings import PORTALEN_URL, PORTALEN_CRED, PORTALEN_ENTRY, TIMEOUT
-from .scraper import Scraper
+from .connector import Connector
 
 cache(__file__, "cache")
 
 
-class Portalen(Scraper):
+class Portalen(Connector):
     """
-    Scraper that scrapes information from finansportalen.no mortgage
-    applications calculator
+    Connector that retrieves information from finansportalen.no mortgage XML feed
 
     """
 

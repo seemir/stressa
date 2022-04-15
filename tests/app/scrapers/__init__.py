@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Web subpackage, i.e. all tests from scrapers logic is stored here
+Web subpackage, i.e. all tests from connectors logic is stored here
 
 """
 

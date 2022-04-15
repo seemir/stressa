@@ -91,13 +91,14 @@ class TestFinnAdvertProcessing:
         finn_advert_processing.signal = {"new_finn_code": signal}
         assert finn_advert_processing.get_signal("new_finn_code") == signal
 
-    @mock.patch("source.app.processing.engine.scrape_finn_advert_info.ScrapeFinnAdvertInfo.run",
+    @mock.patch(
+        "source.app.processing.engine.finn_advert_info_connector.FinnAdvertInfoConnector.run",
+        mock.MagicMock(side_effect=ValueError("this is a test")))
+    @mock.patch("source.app.processing.engine.finn_ownership_history_connector."
+                "FinnOwnershipHistoryConnector.run",
                 mock.MagicMock(side_effect=ValueError("this is a test")))
-    @mock.patch("source.app.processing.engine.scrape_finn_ownership_history."
-                "ScrapeFinnOwnershipHistory.run",
-                mock.MagicMock(side_effect=ValueError("this is a test")))
-    @mock.patch("source.app.processing.engine.scrape_finn_statistics_info."
-                "ScrapeFinnStatisticsInfo.run",
+    @mock.patch("source.app.processing.engine.finn_statistics_info_connector."
+                "FinnStatisticsInfoConnector.run",
                 mock.MagicMock(side_effect=ValueError("this is a test")))
     def test_threading_exception_method(self):
         """

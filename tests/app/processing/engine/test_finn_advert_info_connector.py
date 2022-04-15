@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Test module for the scrape_finn_advert_info operation
+Test module for the connector_finn_advert_info operation
 
 """
 
@@ -9,13 +9,13 @@ __email__ = 'samir.adrik@gmail.com'
 
 import pytest as pt
 
-from source.app import Operation, ScrapeFinnAdvertInfo, FINN_AD_URL
+from source.app import Operation, FinnAdvertInfoConnector, FINN_AD_URL
 from source.util import TrackingError
 
 
-class TestScrapeFinnAdvertInfo:
+class TestFinnAdvertInfoConnector:
     """
-    Test cases for the ScrapeFinnAdvertInfo
+    Test cases for the FinnAdvertInfoConnector
 
     """
 
@@ -26,41 +26,43 @@ class TestScrapeFinnAdvertInfo:
 
         """
         cls.finn_code = "144857770"
-        cls.scrape_finn_advert_info = ScrapeFinnAdvertInfo(cls.finn_code)
+        cls.connector_finn_advert_info = FinnAdvertInfoConnector(cls.finn_code)
 
-    def test_scrape_finn_advert_info_is_instance_of_operation(self):
+    def test_connector_finn_advert_info_is_instance_of_operation(self):
         """
-        Test that ScrapeFinnAdvertInfo is instance and subclass of Operation
+        Test that FinnAdvertInfoConnector is instance and subclass of Operation
 
         """
-        for parent in [ScrapeFinnAdvertInfo, Operation]:
-            assert isinstance(self.scrape_finn_advert_info, parent)
-            assert issubclass(self.scrape_finn_advert_info.__class__, parent)
+        for parent in [FinnAdvertInfoConnector, Operation]:
+            assert isinstance(self.connector_finn_advert_info, parent)
+            assert issubclass(self.connector_finn_advert_info.__class__, parent)
 
     @staticmethod
     @pt.mark.parametrize('invalid_finn_code', [True, 90210, 90210.0, ('test', 'test'), {}])
     def test_invalid_args_raises_tracking_error(invalid_finn_code):
         """
-        Test that ScrapeFinnAdvertInfo object raises TrackingError if finn_code argument are invalid
+        Test that FinnAdvertInfoConnector object raises TrackingError if finn_code argument
+        are invalid
 
         """
         with pt.raises(TrackingError):
-            ScrapeFinnAdvertInfo(invalid_finn_code)
+            FinnAdvertInfoConnector(invalid_finn_code)
 
     def test_arguments_gets_set_in_object(self):
         """
-        Test that arguments gets set in the ScrapeFinnAdvertInfo object
+        Test that arguments gets set in the FinnAdvertInfoConnector object
 
         """
-        assert self.scrape_finn_advert_info.name == self.scrape_finn_advert_info.__class__.__name__
-        assert self.scrape_finn_advert_info.finn_code == self.finn_code
-        assert self.scrape_finn_advert_info.desc == "from: '{}\\<[finn_code]\\>' " \
-                                                    "\\n id: Scrape FINN Advert " \
-                                                    "Info".format(FINN_AD_URL)
+        assert self.connector_finn_advert_info.name == self.connector_finn_advert_info.__class__. \
+            __name__
+        assert self.connector_finn_advert_info.finn_code == self.finn_code
+        assert self.connector_finn_advert_info.desc == "from: '{}\\<[finn_code]\\>' " \
+                                                       "\\n id: FINN Advert Info " \
+                                                       "Connector".format(FINN_AD_URL)
 
-    def test_scrape_finn_advert_info_run_method(self):
+    def test_connector_finn_advert_info_run_method(self):
         """
-        Test the run method in ScrapeFinnAdvertInfo operation
+        Test the run method in FinnAdvertInfoConnector operation
 
         """
         results = {'finn_adresse': 'Sigyns gate 3, 0260 Oslo',
@@ -80,7 +82,7 @@ class TestScrapeFinnAdvertInfo:
                    'finnkode': '144857770',
                    'sistendret': '6. apr. 2020 02:07',
                    'referanse': '3180364'}
-        for key, val in self.scrape_finn_advert_info.run().items():
+        for key, val in self.connector_finn_advert_info.run().items():
             if key in results.keys():
                 if key == "sistendret":
                     continue

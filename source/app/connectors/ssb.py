@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Implementation of scaper against ssb market interest rates for mortgage applications
+Implementation of connector against ssb market interest rates for mortgage applications
 
 """
 
@@ -17,10 +17,10 @@ from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Track
 
 from .settings import SSB_URL, TIMEOUT
 from .ssb_payload import SsbPayload
-from .scraper import Scraper
+from .connector import Connector
 
 
-class Ssb(Scraper):
+class Ssb(Connector):
     """
     Interest rates from SSB table nr. 10748
 

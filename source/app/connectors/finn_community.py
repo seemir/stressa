@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module containing logic for scraper against "nabolag" profiles of Finn ad
+Module containing logic for connector against "nabolag" profiles of Finn ad
 
 """
 
@@ -25,7 +25,7 @@ from .finn import Finn
 
 class FinnCommunity(Finn):
     """
-    Scraper that scrapes statistics about the community in vicinity to address of Finn ad
+    Connector that retrieves statistics about the community in vicinity to address of Finn ad
 
     """
 

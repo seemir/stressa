@@ -7,13 +7,13 @@ Workflow engine for controlling and documenting all calculations in application
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from .scrape_finn_community_statistics import ScrapeFinnCommunityStatistics
-from .scrape_finn_ownership_history import ScrapeFinnOwnershipHistory
-from .scrape_skatteetaten_tax_info import ScrapeSkatteetatenTaxinfo
-from .scrape_finn_statistics_info import ScrapeFinnStatisticsInfo
-from .scrape_sifo_base_expenses import ScrapeSifoBaseExpenses
-from .scrape_finn_advert_info import ScrapeFinnAdvertInfo
-from .scrape_postal_code_info import ScrapePostalCodeInfo
+from .finn_community_statistics_connector import FinnCommunityStatisticsConnector
+from .finn_ownership_history_connector import FinnOwnershipHistoryConnector
+from .skatteetaten_tax_info_connector import SkatteetatenTaxInfoConnector
+from .finn_statistics_info_connector import FinnStatisticsInfoConnector
+from .sifo_base_expenses_connector import SifoBaseExpensesConnector
+from .finn_advert_info_connector import FinnAdvertInfoConnector
+from .postal_code_info_connector import PostalCodeInfoConnector
 from .validate_postal_code import ValidatePostalCode
 from .restructure_ratings import RestructureRatings
 from .add_row_to_dataframe import AddRowToDataFrame

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Implementation of scaper against Skatteetaten tax calculator
+Implementation of connector against Skatteetaten tax calculator
 
 """
 
@@ -22,10 +22,10 @@ from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, Track
 from source.domain import Money
 
 from .settings import SKATTEETATEN_URL, TIMEOUT
-from .scraper import Scraper
+from .connector import Connector
 
 
-class Skatteetaten(Scraper):
+class Skatteetaten(Connector):
     """
     Class that produces estimated total Taxes for a given year
 

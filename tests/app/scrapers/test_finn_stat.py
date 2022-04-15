@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test module for the Scraper against FinnStat.no housing search
+Test module for the connector against FinnStat.no housing search
 
 """
 
@@ -21,13 +21,13 @@ from aiohttp.client_exceptions import ClientConnectionError
 import pytest as pt
 import mock
 
-from source.app import FinnStat, Scraper
+from source.app import FinnStat, Connector
 from source.util import TimeOutError, TrackingError, NoConnectionError
 
 
 class TestFinnStat:
     """
-    Test cases for the FinnStat scraper
+    Test cases for the FinnStat connector
 
     """
 
@@ -39,12 +39,12 @@ class TestFinnStat:
         """
         cls.finn_stat = FinnStat("144857770")
 
-    def test_finn_stat_is_instance_of_scraper(self):
+    def test_finn_stat_is_instance_of_connector(self):
         """
-        Test that FinnStat object is instance and subclass of Scraper
+        Test that FinnStat object is instance and subclass of connector
 
         """
-        for parent in [FinnStat, Scraper]:
+        for parent in [FinnStat, Connector]:
             assert isinstance(self.finn_stat, parent)
             assert issubclass(self.finn_stat.__class__, parent)
 
@@ -72,7 +72,7 @@ class TestFinnStat:
 
     def test_finn_stat_has_uuid4_compatible_id(self):
         """
-        Test FinnStat scraper has uuid4 compatible ids
+        Test FinnStat connector has uuid4 compatible ids
 
         """
         assert UUID(str(self.finn_stat.id_))
@@ -109,7 +109,7 @@ class TestFinnStat:
             asyncio.run(finn_stat.stat_response())
 
     @staticmethod
-    @mock.patch("source.app.scrapers.finn_stat.FinnStat.stat_response",
+    @mock.patch("source.app.connectors.finn_stat.FinnStat.stat_response",
                 mock.MagicMock(return_value=None))
     def test_housing_stat_information_throws_tracking_error_if_none_response():
         """
@@ -120,7 +120,7 @@ class TestFinnStat:
             finn_stat = FinnStat("144857770")
             finn_stat.housing_stat_information()
 
-    @mock.patch("source.app.scrapers.finn_stat.FinnStat.stat_response",
+    @mock.patch("source.app.connectors.finn_stat.FinnStat.stat_response",
                 mock.MagicMock(side_effect=ValueError("this is a test")))
     def test_housing_stat_information_throws_exception(self):
         """
@@ -130,7 +130,7 @@ class TestFinnStat:
         with pt.raises(TrackingError):
             self.finn_stat.housing_stat_information()
 
-    @mock.patch("source.app.scrapers.finn_stat.FinnStat.housing_stat_information",
+    @mock.patch("source.app.connectors.finn_stat.FinnStat.housing_stat_information",
                 mock.MagicMock(return_value=""))
     def test_to_json(self):
         """

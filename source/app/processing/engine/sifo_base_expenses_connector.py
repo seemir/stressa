@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Module for operation of Scraping SIFO base expenses
+Module for operation of SIFO base expenses connector
 
 """
 
@@ -11,12 +11,12 @@ __email__ = 'samir.adrik@gmail.com'
 from source.domain import Family
 from source.util import Assertor, Tracking
 
-from ...scrapers import SIFO_URL, Sifo
+from ...connectors import SIFO_URL, Sifo
 
 from .operation import Operation
 
 
-class ScrapeSifoBaseExpenses(Operation):
+class SifoBaseExpensesConnector(Operation):
     """
     Implementation of operation
 
@@ -36,7 +36,7 @@ class ScrapeSifoBaseExpenses(Operation):
         self.name = self.__class__.__name__
         Assertor.assert_data_types([data], [Family])
         super().__init__(name=self.name,
-                         desc="from: '{}' \\n id: Scrape SIFO Base Expenses".format(SIFO_URL))
+                         desc="from: '{}' \\n id: SIFO Base Expenses Connector".format(SIFO_URL))
         self.data = data
 
     @Tracking

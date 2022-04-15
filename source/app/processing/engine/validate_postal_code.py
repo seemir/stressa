@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Tracking
 
-from ...scrapers import Posten
+from ...connectors import Posten
 
 from .operation import Operation
 

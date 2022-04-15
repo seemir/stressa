@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module with logic for Scraping Skatteetaten Tax Info
+Module with logic for Skatteetaten Tax Info Connector
 
 """
 
@@ -10,18 +10,18 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util import Assertor, Tracking
 from source.domain import TaxForm
 
-from ...scrapers import Skatteetaten, SKATTEETATEN_URL
+from ...connectors import Skatteetaten, SKATTEETATEN_URL
 
 from .operation import Operation
 
 
-class ScrapeSkatteetatenTaxinfo(Operation):
+class SkatteetatenTaxInfoConnector(Operation):
     """
-    Operation that scrapes Skatteetaten Tax info
+    Operation that retrieves Skatteetaten Tax info
 
     """
 
-    tax_value_mapping = {
+    _tax_value_mapping = {
         "alminneligInntektFoerFordelingsfradrag": "alminnelig_inntekt_foer_fordelingsfradrag",
         "alminneligInntektFoerSaerfradrag": "alminnelig_inntekt_foer_saerfradrag",
         "beregnetSkatt": "beregnet_skatt",
@@ -81,7 +81,7 @@ class ScrapeSkatteetatenTaxinfo(Operation):
         """
         Assertor.assert_data_types([tax_form], [TaxForm])
         super().__init__(name=self.__class__.__name__,
-                         desc="from: '{}\\{}' \n id: Scrape Skatteetaten Tax Info".format(
+                         desc="from: '{}\\{}' \n id: Skatteetaten Tax Info Connector".format(
                              SKATTEETATEN_URL, tax_form.tax_year))
         self.tax_form = tax_form
 
@@ -106,6 +106,6 @@ class ScrapeSkatteetatenTaxinfo(Operation):
                                 debt=self.tax_form.debt)
         final_tax_info = {}
         for key, value in dict(sorted(tax_info.tax_information().items())).items():
-            if key in self.tax_value_mapping.keys():
-                final_tax_info.update({self.tax_value_mapping[key]: value})
+            if key in self._tax_value_mapping.keys():
+                final_tax_info.update({self._tax_value_mapping[key]: value})
         return final_tax_info

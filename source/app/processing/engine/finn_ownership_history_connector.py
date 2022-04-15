@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module with logic for the Scrape Finn Community Statistics
+Module with logic for the Finn Ownership history information connector
 
 """
 
@@ -9,14 +9,14 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Tracking
 
+from ...connectors import FinnOwnership, FINN_OWNER_URL
+
 from .operation import Operation
 
-from ...scrapers import FinnCommunity, FINN_COMMUNITY_URL
 
-
-class ScrapeFinnCommunityStatistics(Operation):
+class FinnOwnershipHistoryConnector(Operation):
     """
-    Operation that scrapes Finn Community Statistics
+    Operation that retrieve Finn Ownership history information
 
     """
 
@@ -28,14 +28,14 @@ class ScrapeFinnCommunityStatistics(Operation):
         Parameters
         ----------
         finn_code       : str
-                          finn_code of ad to scrape Statistics from
+                          finn_code for ad to retrieve information from
 
         """
         self.name = self.__class__.__name__
         Assertor.assert_data_types([finn_code], [str])
-        super().__init__(name=self.name,
-                         desc="from: '{}\\<[finn_code]\\>' \\n id: Scrape FINN Community "
-                              "Statistics".format(FINN_COMMUNITY_URL))
+        super().__init__(name=self.__class__.__name__,
+                         desc="from: '{}\\<[finn_code]\\>' \\n id: FINN Ownership "
+                              "History Connector".format(FINN_OWNER_URL))
         self.finn_code = finn_code
 
     @Tracking
@@ -49,5 +49,5 @@ class ScrapeFinnCommunityStatistics(Operation):
                       dictionary with all finn ownership information
 
         """
-        finn_community_statistics = FinnCommunity(self.finn_code)
-        return finn_community_statistics.community_stat_information()
+        finn_owner_history = FinnOwnership(self.finn_code)
+        return finn_owner_history.housing_ownership_information()

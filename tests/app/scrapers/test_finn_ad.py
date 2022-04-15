@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test module for the Scraper against FinnAd.no housing search
+Test module for the Connector against FinnAd.no housing search
 
 """
 
@@ -18,13 +18,13 @@ from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 import pytest as pt
 
-from source.app import FinnAd, Scraper
+from source.app import FinnAd, Connector
 from source.util import TrackingError
 
 
 class TestFinnAd:
     """
-    Test cases for the FinnAd scraper
+    Test cases for the FinnAd connector
 
     """
 
@@ -36,12 +36,12 @@ class TestFinnAd:
         """
         cls.finn_ad = FinnAd("144857770")
 
-    def test_finn_ad_is_instance_of_scraper(self):
+    def test_finn_ad_is_instance_of_connector(self):
         """
-        Test that FinnAd object is instance and subclass of Scraper
+        Test that FinnAd object is instance and subclass of Connector
 
         """
-        for parent in [FinnAd, Scraper]:
+        for parent in [FinnAd, Connector]:
             assert isinstance(self.finn_ad, parent)
             assert issubclass(self.finn_ad.__class__, parent)
 
@@ -68,7 +68,7 @@ class TestFinnAd:
 
     def test_finn_ad_has_uuid4_compatible_id(self):
         """
-        Test FinnAd scraper has uuid4 compatible ids
+        Test FinnAd connector has uuid4 compatible ids
 
         """
         assert UUID(str(self.finn_ad.id_))
@@ -103,7 +103,7 @@ class TestFinnAd:
             finn_ad.ad_response()
 
     @staticmethod
-    @mocker.patch("source.app.scrapers.finn_ad.FinnAd.ad_response",
+    @mocker.patch("source.app.connectors.finn_ad.FinnAd.ad_response",
                   mocker.MagicMock(return_value=None))
     def test_housing_ad_information_throws_not_found_error_if_none_response():
         """
@@ -114,7 +114,7 @@ class TestFinnAd:
             finn_ad = FinnAd("144857770")
             finn_ad.housing_ad_information()
 
-    @mocker.patch("source.app.scrapers.finn_ad.FinnAd.housing_ad_information",
+    @mocker.patch("source.app.connectors.finn_ad.FinnAd.housing_ad_information",
                   mocker.MagicMock(return_value=""))
     def test_to_json(self):
         """

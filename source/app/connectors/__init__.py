@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-All reference to Scraper objects in this subpackage
+All reference to Connector objects in this subpackage
 
 """
 
@@ -14,7 +14,7 @@ from .skatteetaten import Skatteetaten
 from .ssb_payload import SsbPayload
 from .finn_stat import FinnStat
 from .portalen import Portalen
-from .scraper import Scraper
+from .connector import Connector
 from .finn_ad import FinnAd
 from .posten import Posten
 from .settings import *

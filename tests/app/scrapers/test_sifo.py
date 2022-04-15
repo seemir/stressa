@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test module for Sifo scraper class
+Test module for Sifo connector class
 
 """
 
@@ -22,12 +22,12 @@ from mechanize import Browser
 
 from source.domain import Female, Family, Male
 from source.util import TrackingError
-from source.app import Scraper, Sifo
+from source.app import Connector, Sifo
 
 
 class TestSifo:
     """
-    Test cases for Sifo scraper
+    Test cases for Sifo connector
 
     """
 
@@ -41,18 +41,18 @@ class TestSifo:
         cls.family = Family(family_members, income=850000, cars=1, select_year=2021)
         cls.sifo = Sifo(cls.family)
 
-    def test_sifo_is_instance_of_scraper(self):
+    def test_sifo_is_instance_of_connector(self):
         """
-        Test that Sifo scraper is instance and subclass of Scraper
+        Test that Sifo connector is instance and subclass of Connector
 
         """
         assert isinstance(self.sifo, Sifo)
-        assert isinstance(self.sifo, Scraper)
-        assert issubclass(self.sifo.__class__, Scraper)
+        assert isinstance(self.sifo, Connector)
+        assert issubclass(self.sifo.__class__, Connector)
 
     def test_sifo_has_browser_object_as_attribute(self):
         """
-        Test that Sifo scraper has Browser object
+        Test that Sifo connector has Browser object
 
         """
         assert isinstance(self.sifo.browser, Browser)
@@ -70,7 +70,7 @@ class TestSifo:
 
     def test_sifo_has_uuid4_compatible_id(self):
         """
-        Test sifo scraper has uuid4 compatible ids
+        Test sifo connector has uuid4 compatible ids
 
         """
         assert UUID(str(self.sifo.id_))
@@ -128,7 +128,8 @@ class TestSifo:
         assert sifo_expenses == correct_content
         assert "_id" not in sifo_expenses.keys()
 
-    @mock.patch("source.app.scrapers.sifo.Sifo.sifo_base_expenses", mock.MagicMock(return_value=""))
+    @mock.patch("source.app.connectors.sifo.Sifo.sifo_base_expenses",
+                mock.MagicMock(return_value=""))
     def test_to_json(self):
         """
         Test that staticmethod to_json() produces json file with correct content
@@ -142,7 +143,7 @@ class TestSifo:
             assert data == ""
         shutil.rmtree(os.path.join(current_dir, "report"), ignore_errors=True)
 
-    @mock.patch("source.app.scrapers.sifo.Sifo.response", mock.MagicMock(return_value=""))
+    @mock.patch("source.app.connectors.sifo.Sifo.response", mock.MagicMock(return_value=""))
     def test_sifo_expenses_raises_exception(self):
         """
         Test that sifo_base_expenses() method raises exception if no response received
@@ -159,7 +160,7 @@ class TestSifo:
         """
         assert "_id" in self.sifo.sifo_base_expenses(include_id=True).keys()
 
-    def test_sifo_scraper_id_is_uuid4(self):
+    def test_sifo_connector_id_is_uuid4(self):
         """
         Test that sifo id is uuid4 compatible
 

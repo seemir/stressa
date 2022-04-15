@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util import Assertor, Tracking
 
 from .operation import Operation
-from ...scrapers import Finn
+from ...connectors import Finn
 
 
 class ValidateFinnCode(Operation):

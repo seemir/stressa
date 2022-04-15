@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Profiling, Tracking
 
-from .engine import Process, InputOperation, Signal, ValidatePostalCode, ScrapePostalCodeInfo, \
+from .engine import Process, InputOperation, Signal, ValidatePostalCode, PostalCodeInfoConnector, \
     OutputSignal, OutputOperation
 
 
@@ -37,7 +37,7 @@ class PostenPostalCodeExtraction(Process):
         Assertor.assert_data_types([postal_code], [str])
         self.input_operation({"postal_code": postal_code})
         self.validate_postal_code()
-        self.scrape_postal_code_info()
+        self.postal_code_info_connector()
 
         self._postal_code_info = self.output_operation()
         self.end_process()
@@ -102,23 +102,23 @@ class PostenPostalCodeExtraction(Process):
 
     @Profiling
     @Tracking
-    def scrape_postal_code_info(self):
+    def postal_code_info_connector(self):
         """
-        method for scraping Norwegian Postal Code Information from Postens public address search
+        method for retrieve Norwegian Postal Code Information from Postens public address search
 
         """
         validated_postal_code = self.get_signal("validated_postal_code")
-        scrape_postal_code_operation = ScrapePostalCodeInfo(
+        postal_code_connector_operation = PostalCodeInfoConnector(
             validated_postal_code.data["postal_code"])
-        self.add_node(scrape_postal_code_operation)
+        self.add_node(postal_code_connector_operation)
 
-        self.add_transition(validated_postal_code, scrape_postal_code_operation)
+        self.add_transition(validated_postal_code, postal_code_connector_operation)
 
-        postal_code_info = scrape_postal_code_operation.run()
+        postal_code_info = postal_code_connector_operation.run()
         postal_code_info_signal = Signal(postal_code_info, "Postal Code Information")
         self.add_signal(postal_code_info_signal, "postal_code_info")
 
-        self.add_transition(scrape_postal_code_operation, postal_code_info_signal)
+        self.add_transition(postal_code_connector_operation, postal_code_info_signal)
 
     @Profiling
     @Tracking

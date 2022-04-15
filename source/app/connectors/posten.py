@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Implementation of scaper against posten.no postal code search
+Implementation of connector against posten.no postal code search
 
 """
 
@@ -19,12 +19,12 @@ from bs4 import BeautifulSoup
 
 from source.util import Assertor, LOGGER, NotFoundError, NoConnectionError, TimeOutError, Tracking
 from .settings import POSTEN_URL, TIMEOUT
-from .scraper import Scraper
+from .connector import Connector
 
 
-class Posten(Scraper):
+class Posten(Connector):
     """
-    Posten.no postboks search scraper
+    Posten.no postboks search connector
 
     """
 
@@ -164,11 +164,11 @@ class Posten(Scraper):
     @staticmethod
     def rules():
         """
-        list of all rules in this scraper
+        list of all rules in this connector
 
         Returns
         -------
         out         : list
-                      all rules in scraper
+                      all rules in connector
         """
         return ", ".join(["only_numeric_values", "max_len_four"]).replace("'", "")

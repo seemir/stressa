@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Implementation of base Scraper class
+Implementation of base Connector class
 
 """
 
@@ -21,9 +21,9 @@ from mechanize import Browser
 from source.util import Assertor, LOGGER
 
 
-class Scraper(ABC):
+class Connector(ABC):
     """
-    Scraper superclass
+    Connector superclass
 
     """
 

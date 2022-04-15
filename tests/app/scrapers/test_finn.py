@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Test module for the Scraper against Finn.no housing search
+Test module for the connectorr against Finn.no housing search
 
 """
 
@@ -18,7 +18,7 @@ from source.util import TrackingError
 
 class TestFinn:
     """
-    Test cases for the Finn scraper
+    Test cases for the Finn connectorr
 
     """
 
@@ -30,9 +30,9 @@ class TestFinn:
         """
         cls.finn = Finn("144857770")
 
-    def test_finn_is_instance_of_scraper(self):
+    def test_finn_is_instance_of_connectorr(self):
         """
-        Test that Finn object is instance and subclass of Scraper
+        Test that Finn object is instance and subclass of connectorr
 
         """
         assert isinstance(self.finn, Finn)
@@ -60,7 +60,7 @@ class TestFinn:
 
     def test_finn_has_uuid4_compatible_id(self):
         """
-        Test Finn scraper has uuid4 compatible ids
+        Test Finn connectorr has uuid4 compatible ids
 
         """
         assert UUID(str(self.finn.id_))

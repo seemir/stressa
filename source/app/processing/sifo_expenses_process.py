@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 from source.domain import Expenses
 from source.util import Assertor, Profiling, Tracking
 
-from .engine import Process, Signal, ValidateFamily, ScrapeSifoBaseExpenses, Extract, Divide, \
+from .engine import Process, Signal, ValidateFamily, SifoBaseExpensesConnector, Extract, Divide, \
     OutputOperation, OutputSignal, InputOperation
 
 
@@ -37,7 +37,7 @@ class SifoExpensesProcess(Process):
         Assertor.assert_data_types([data], [dict])
         self.input_operation({"data": data})
         self.validate_family()
-        self._base_expenses = self.scrape_sifo_base_expenses()
+        self._base_expenses = self.sifo_base_expenses_connector()
         self.extract()
         self._expenses_shares = self.divide()
         self.output_operation()
@@ -110,9 +110,9 @@ class SifoExpensesProcess(Process):
 
     @Profiling
     @Tracking
-    def scrape_sifo_base_expenses(self):
+    def sifo_base_expenses_connector(self):
         """
-        method for scraping SIFO base expenses
+        method for retrieving SIFO base expenses
 
         Returns
         -------
@@ -121,17 +121,17 @@ class SifoExpensesProcess(Process):
 
         """
         validated_family = self.get_signal("validated_family")
-        sifo_scraper_operation = ScrapeSifoBaseExpenses(validated_family.data)
-        self.add_node(sifo_scraper_operation)
+        sifo_connector_operation = SifoBaseExpensesConnector(validated_family.data)
+        self.add_node(sifo_connector_operation)
 
-        self.add_transition(validated_family, sifo_scraper_operation)
+        self.add_transition(validated_family, sifo_connector_operation)
 
-        sifo_base_expenses = Expenses(sifo_scraper_operation.run())
+        sifo_base_expenses = Expenses(sifo_connector_operation.run())
         sifo_base_expenses_signal = Signal(sifo_base_expenses.verdi, "SIFO Base Expenses",
                                            prettify_keys=True, length=10)
         self.add_signal(sifo_base_expenses_signal, "sifo_base_expenses")
 
-        self.add_transition(sifo_scraper_operation, sifo_base_expenses_signal)
+        self.add_transition(sifo_connector_operation, sifo_base_expenses_signal)
         return sifo_base_expenses.verdi
 
     @Profiling

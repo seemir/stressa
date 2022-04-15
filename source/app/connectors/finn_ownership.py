@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Implementation of scarper against Finn.no housing ownership history search
+Implementation of connector against Finn.no housing ownership history search
 
 """
 
@@ -23,7 +23,7 @@ from .finn import Finn
 
 class FinnOwnership(Finn):
     """
-    Scraper that scrapes housing ownership history from Finn.no given a Finn-code
+    Connector that retrieves housing ownership history from Finn.no given a Finn-code
 
     """
 

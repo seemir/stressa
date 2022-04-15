@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-Implementation of scarper against Finn.no housing search
+Implementation of connector against Finn.no housing search
 
 """
 
@@ -12,12 +12,12 @@ import re
 
 from source.util import Assertor, LOGGER, NotFoundError, Tracking
 
-from .scraper import Scraper
+from .connector import Connector
 
 
-class Finn(Scraper):
+class Finn(Connector):
     """
-    Scraper that scrapes housing information from Finn.no given a Finn-code
+    Connector that extracts housing information from Finn.no given a Finn-code
 
     """
 
@@ -70,12 +70,12 @@ class Finn(Scraper):
     @staticmethod
     def rules():
         """
-        list of all rules in this scraper
+        list of all rules in this connector
 
         Returns
         -------
         out         : list
-                      all rules in scraper
+                      all rules in connector
         """
         return ", ".join(
             ["only_numeric_values", "starts_with_one", "max_len_eight_or_nine"]).replace("'", "")
