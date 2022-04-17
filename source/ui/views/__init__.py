@@ -16,5 +16,6 @@ from .budget_view import BudgetView
 from .error_view import ErrorView
 from .sifo_view import SifoView
 from .home_view import HomeView
+from .tax_view import TaxView
 from .map_view import MapView
 from .resources import *

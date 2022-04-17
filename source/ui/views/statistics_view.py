@@ -53,6 +53,7 @@ class StatisticsView(QDialog):
 
         self.ui.push_button_meta_data.clicked.connect(self.meta_view.display)
         self.ui.push_button_oppdater.clicked.connect(self.update)
+        self.ui.push_button_avbryt.clicked.connect(self.close)
         self.ui.push_button_show_in_map_1.clicked.connect(self.map_view.show)
         self.ui.push_button_show_in_map_2.clicked.connect(self.map_view.show)
         self.ui.push_button_show_in_map_3.clicked.connect(self.map_view.show)

@@ -146,6 +146,11 @@ class BudgetModel(Model):
         self.parent.ui.line_edit_andre_utgifter_2.textEdited.connect(
             lambda: self.set_value("andre_utgifter", "_2", "_22"))
 
+        self.parent.ui.radio_button_skattefrie_inntekt_1.toggled.connect(
+            lambda: self.set_radio_button("skattefrie_inntekt_1"))
+        self.parent.ui.radio_button_skattefrie_inntekt_2.toggled.connect(
+            lambda: self.set_radio_button("skattefrie_inntekt_2"))
+
     def set_value(self, line_edit, postfix, combofix):
         if getattr(self.parent.ui, "line_edit_" + line_edit + postfix).text():
             self.set_line_edit(line_edit + postfix, Money, "value")
@@ -283,6 +288,13 @@ class BudgetModel(Model):
                              "andre_utgifter_total")
         self.set_total_value(sum_expenses_1, sum_expenses_2, "sum_utgifter_1", "sum_utgifter_2",
                              "sum_utgifter_total")
+
+    def set_radio_button(self, radio_button):
+        if getattr(self.parent.ui, "radio_button_" + radio_button).isChecked():
+            self.data.update(
+                {radio_button: True})
+        elif radio_button in self.data.keys():
+            del self.data[radio_button]
 
     def set_total_value(self, val_1, val_2, line_edit_1, line_edit_2, total_name):
         if getattr(self.parent.ui, "line_edit_" + line_edit_1).text() or \

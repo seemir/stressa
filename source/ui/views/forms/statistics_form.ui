@@ -1676,23 +1676,6 @@
                 </property>
                </widget>
               </item>
-              <item row="20" column="0" colspan="3">
-               <widget class="QPushButton" name="push_button_images">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Bilder</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/images.svg</normaloff>:/img/images.svg</iconset>
-                </property>
-               </widget>
-              </item>
               <item row="15" column="2">
                <widget class="QLineEdit" name="line_edit_forste_visning">
                 <property name="enabled">
@@ -1718,6 +1701,46 @@
                <widget class="QLineEdit" name="line_edit_andre_visning">
                 <property name="enabled">
                  <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="20" column="2">
+               <widget class="QPushButton" name="push_button_avbryt">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>230</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Avbryt</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="20" column="0">
+               <widget class="QPushButton" name="push_button_images">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Bilder</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/images.svg</normaloff>:/img/images.svg</iconset>
                 </property>
                </widget>
               </item>
@@ -5366,6 +5389,7 @@
   <tabstop>push_button_oppdater</tabstop>
   <tabstop>push_button_meta_data</tabstop>
   <tabstop>push_button_images</tabstop>
+  <tabstop>push_button_avbryt</tabstop>
   <tabstop>graphics_view_hist_data_city_area</tabstop>
   <tabstop>graphics_view_hist_data_municipality</tabstop>
   <tabstop>graphics_view_ratio_statistics</tabstop>

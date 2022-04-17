@@ -333,7 +333,7 @@ class SifoModel(Model):
 
         """
         self.parent.ui.line_edit_brutto_arsinntekt.setText(self.calculate_yearly_income(
-            self.parent.parent.ui.line_edit_brutto_inntekt_1.text()))
+            self.parent.parent.ui.line_edit_brutto_inntekt_total.text()))
 
     @pyqtSlot()
     def calculate_yearly_income(self, monthly_income: str):

@@ -12,8 +12,8 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 # import ctypes
 
-from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtCore import pyqtSlot
 from PyQt5.uic import loadUi
 
 from ..models import MortgageModel, FinnModel, HomeModel
@@ -24,8 +24,10 @@ from .budget_view import BudgetView
 from .error_view import ErrorView
 from .sifo_view import SifoView
 from .meta_view import MetaView
+from .tax_view import TaxView
 
 from . import resources
+
 
 # myappid = 'Stressa.stressa.ui.version'
 # ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
@@ -47,6 +49,7 @@ class HomeView(QMainWindow):
 
         self._error_view = ErrorView(self)
         self._budget_view = BudgetView(self)
+        self._tax_view = TaxView(self)
         self._sifo_view = SifoView(self)
         self._history_view = HistoryView(self)
         self._meta_view = MetaView(self)
@@ -61,6 +64,7 @@ class HomeView(QMainWindow):
         self._budget_view.budget_info()
 
         self.ui.push_button_budsjett.clicked.connect(self.budget_view.display)
+        self.ui.push_button_skatt.clicked.connect(self.tax_view.display)
         self.ui.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
 
         self._home_model = HomeModel(self)
@@ -93,6 +97,19 @@ class HomeView(QMainWindow):
 
         """
         return self._budget_view
+
+    @property
+    def tax_view(self):
+        """
+        TaxView getter
+
+        Returns
+        -------
+        out     : TaxView
+                  Active TaxView in the HomeView
+
+        """
+        return self._tax_view
 
     @property
     def sifo_view(self):
