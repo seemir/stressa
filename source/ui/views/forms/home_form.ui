@@ -2257,7 +2257,7 @@
                      <string>Husleie</string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_husleie_1</cstring>
+                     <cstring>line_edit_husleie_total</cstring>
                     </property>
                    </widget>
                   </item>
@@ -2267,12 +2267,12 @@
                      <string>Andre utgifter</string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_andre_utgifter_1</cstring>
+                     <cstring>line_edit_andre_utgifter_total</cstring>
                     </property>
                    </widget>
                   </item>
                   <item row="8" column="3">
-                   <widget class="QLineEdit" name="line_edit_sum_utgifter_1">
+                   <widget class="QLineEdit" name="line_edit_sum_utgifter_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2297,12 +2297,12 @@
                      <string>Leieinntekter</string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_leieinntekt_1</cstring>
+                     <cstring>line_edit_leieinntekt_total</cstring>
                     </property>
                    </widget>
                   </item>
                   <item row="7" column="3">
-                   <widget class="QLineEdit" name="line_edit_andre_utgifter_1">
+                   <widget class="QLineEdit" name="line_edit_andre_utgifter_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2359,7 +2359,7 @@
                    </widget>
                   </item>
                   <item row="2" column="3">
-                   <widget class="QLineEdit" name="line_edit_student_lan_1">
+                   <widget class="QLineEdit" name="line_edit_student_lan_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2375,7 +2375,7 @@
                    </widget>
                   </item>
                   <item row="3" column="3">
-                   <widget class="QLineEdit" name="line_edit_kreditt_gjeld_1">
+                   <widget class="QLineEdit" name="line_edit_kreditt_gjeld_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2396,7 +2396,7 @@
                      <string>Bruttoinntekt</string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_brutto_inntekt_1</cstring>
+                     <cstring>line_edit_brutto_inntekt_total</cstring>
                     </property>
                    </widget>
                   </item>
@@ -2406,12 +2406,12 @@
                      <string>Trygd</string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_trygde_inntekt_1</cstring>
+                     <cstring>line_edit_trygde_inntekt_total</cstring>
                     </property>
                    </widget>
                   </item>
                   <item row="4" column="3">
-                   <widget class="QLineEdit" name="line_edit_husleie_1">
+                   <widget class="QLineEdit" name="line_edit_husleie_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2421,7 +2421,7 @@
                    </widget>
                   </item>
                   <item row="4" column="1">
-                   <widget class="QLineEdit" name="line_edit_leieinntekt_1">
+                   <widget class="QLineEdit" name="line_edit_leieinntekt_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2431,7 +2431,7 @@
                    </widget>
                   </item>
                   <item row="3" column="1">
-                   <widget class="QLineEdit" name="line_edit_trygde_inntekt_1">
+                   <widget class="QLineEdit" name="line_edit_trygde_inntekt_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2441,7 +2441,7 @@
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="line_edit_brutto_inntekt_1">
+                   <widget class="QLineEdit" name="line_edit_brutto_inntekt_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2462,7 +2462,7 @@
                      <string>Kreditt gjeld</string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_kreditt_gjeld_1</cstring>
+                     <cstring>line_edit_kreditt_gjeld_total</cstring>
                     </property>
                    </widget>
                   </item>
@@ -2530,15 +2530,8 @@
                     </property>
                    </widget>
                   </item>
-                  <item row="7" column="0">
-                   <widget class="QLabel" name="label_personinntekt">
-                    <property name="text">
-                     <string>Personinntekt</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="6" column="1">
-                   <widget class="QLineEdit" name="line_edit_andre_inntekter_1">
+                   <widget class="QLineEdit" name="line_edit_andre_inntekter_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2580,14 +2573,7 @@
                      <string>Student lån</string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_student_lan_1</cstring>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="7" column="1">
-                   <widget class="QLineEdit" name="line_edit_personinntekt_1">
-                    <property name="enabled">
-                     <bool>false</bool>
+                     <cstring>line_edit_student_lan_total</cstring>
                     </property>
                    </widget>
                   </item>
@@ -2623,7 +2609,7 @@
                    </widget>
                   </item>
                   <item row="5" column="1">
-                   <widget class="QLineEdit" name="line_edit_renteinntekter_1">
+                   <widget class="QLineEdit" name="line_edit_renteinntekter_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2635,12 +2621,12 @@
                      <string>Strøm</string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_strom_1</cstring>
+                     <cstring>line_edit_strom_total</cstring>
                     </property>
                    </widget>
                   </item>
                   <item row="5" column="3">
-                   <widget class="QLineEdit" name="line_edit_strom_1">
+                   <widget class="QLineEdit" name="line_edit_strom_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2657,7 +2643,21 @@
                    </widget>
                   </item>
                   <item row="6" column="3">
-                   <widget class="QLineEdit" name="line_edit_rentekostnader_1">
+                   <widget class="QLineEdit" name="line_edit_rentekostnader_total">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="0">
+                   <widget class="QLabel" name="label_personinntekt">
+                    <property name="text">
+                     <string>Personinntekt</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="1">
+                   <widget class="QLineEdit" name="line_edit_personinntekt_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -11580,22 +11580,22 @@
   <tabstop>line_edit_jobb_tlf_2</tabstop>
   <tabstop>line_edit_fax_2</tabstop>
   <tabstop>push_button_budsjett</tabstop>
-  <tabstop>line_edit_brutto_inntekt_1</tabstop>
-  <tabstop>line_edit_trygde_inntekt_1</tabstop>
-  <tabstop>line_edit_leieinntekt_1</tabstop>
-  <tabstop>line_edit_renteinntekter_1</tabstop>
-  <tabstop>line_edit_andre_inntekter_1</tabstop>
-  <tabstop>line_edit_personinntekt_1</tabstop>
+  <tabstop>line_edit_brutto_inntekt_total</tabstop>
+  <tabstop>line_edit_trygde_inntekt_total</tabstop>
+  <tabstop>line_edit_leieinntekt_total</tabstop>
+  <tabstop>line_edit_renteinntekter_total</tabstop>
+  <tabstop>line_edit_andre_inntekter_total</tabstop>
+  <tabstop>line_edit_personinntekt_total</tabstop>
   <tabstop>push_button_skatt</tabstop>
   <tabstop>line_edit_total_skatt</tabstop>
   <tabstop>line_edit_total_netto</tabstop>
-  <tabstop>line_edit_student_lan_1</tabstop>
-  <tabstop>line_edit_kreditt_gjeld_1</tabstop>
-  <tabstop>line_edit_husleie_1</tabstop>
-  <tabstop>line_edit_strom_1</tabstop>
-  <tabstop>line_edit_rentekostnader_1</tabstop>
-  <tabstop>line_edit_andre_utgifter_1</tabstop>
-  <tabstop>line_edit_sum_utgifter_1</tabstop>
+  <tabstop>line_edit_student_lan_total</tabstop>
+  <tabstop>line_edit_kreditt_gjeld_total</tabstop>
+  <tabstop>line_edit_husleie_total</tabstop>
+  <tabstop>line_edit_strom_total</tabstop>
+  <tabstop>line_edit_rentekostnader_total</tabstop>
+  <tabstop>line_edit_andre_utgifter_total</tabstop>
+  <tabstop>line_edit_sum_utgifter_total</tabstop>
   <tabstop>push_button_sifo_utgifter</tabstop>
   <tabstop>line_edit_sifo_utgifter</tabstop>
   <tabstop>line_edit_totale_utgifter</tabstop>
