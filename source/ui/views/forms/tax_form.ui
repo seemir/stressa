@@ -2180,12 +2180,15 @@
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QLineEdit" name="line_edit_age">
+               <widget class="QLineEdit" name="line_edit_alder">
                 <property name="minimumSize">
                  <size>
                   <width>230</width>
                   <height>20</height>
                  </size>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -2197,10 +2200,18 @@
                </widget>
               </item>
               <item row="10" column="3">
-               <widget class="QLineEdit" name="line_edit_debt"/>
+               <widget class="QLineEdit" name="line_edit_gjeld">
+                <property name="clearButtonEnabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
               <item row="9" column="3">
-               <widget class="QLineEdit" name="line_edit_bank_deposit"/>
+               <widget class="QLineEdit" name="line_edit_bankinnskudd">
+                <property name="clearButtonEnabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
               </item>
               <item row="10" column="2">
                <widget class="QLabel" name="label_debt">
@@ -2381,12 +2392,15 @@
                </widget>
               </item>
               <item row="8" column="3">
-               <widget class="QLineEdit" name="line_edit_value_of_real_etate">
+               <widget class="QLineEdit" name="line_edit_verdi_primarbolig">
                 <property name="minimumSize">
                  <size>
                   <width>230</width>
                   <height>20</height>
                  </size>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -2532,16 +2546,16 @@
   <tabstop>scrollArea</tabstop>
   <tabstop>tab_widget_skattekalkulator</tabstop>
   <tabstop>combo_box_tax_year</tabstop>
-  <tabstop>line_edit_age</tabstop>
+  <tabstop>line_edit_alder</tabstop>
   <tabstop>line_edit_brutto_inntekt_total</tabstop>
   <tabstop>line_edit_trygde_inntekt_total</tabstop>
   <tabstop>line_edit_leieinntekt_total</tabstop>
   <tabstop>line_edit_renteinntekter_total</tabstop>
   <tabstop>line_edit_andre_inntekter_total</tabstop>
   <tabstop>line_edit_rentekostnader_total</tabstop>
-  <tabstop>line_edit_value_of_real_etate</tabstop>
-  <tabstop>line_edit_bank_deposit</tabstop>
-  <tabstop>line_edit_debt</tabstop>
+  <tabstop>line_edit_verdi_primarbolig</tabstop>
+  <tabstop>line_edit_bankinnskudd</tabstop>
+  <tabstop>line_edit_gjeld</tabstop>
   <tabstop>line_edit_personinntekt_total</tabstop>
   <tabstop>line_edit_total_formue</tabstop>
   <tabstop>push_button_utregning</tabstop>

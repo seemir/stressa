@@ -6,6 +6,7 @@ __email__ = 'samir.adrik@gmail.com'
 from PyQt5.QtCore import QObject
 
 from source.util import Assertor
+from source.domain import Money
 
 from .model import Model
 
@@ -34,5 +35,19 @@ class TaxModel(Model):
         self.parent.ui.combo_box_tax_year.setFocus()
         self.parent.ui.combo_box_tax_year.activated.connect(
             lambda: self.set_combo_box("tax_year", key_name="skatte_aar"))
+        self.parent.ui.line_edit_alder.textEdited.connect(
+            lambda: self.set_line_edit("alder"))
+        self.parent.ui.line_edit_verdi_primarbolig.textEdited.connect(
+            lambda: self.set_value('verdi_primarbolig'))
+        self.parent.ui.line_edit_bankinnskudd.textEdited.connect(
+            lambda: self.set_value('bankinnskudd'))
+        self.parent.ui.line_edit_gjeld.textEdited.connect(
+            lambda: self.set_value('gjeld'))
         self.set_line_edits("", line_edits=self.total_posts,
                             data=self.parent.parent.budget_view.budget_model.data)
+
+    def set_value(self, line_edit):
+        if getattr(self.parent.ui, "line_edit_" + line_edit).text():
+            self.set_line_edit(line_edit, Money, "value")
+        else:
+            self.clear_line_edit(line_edit)

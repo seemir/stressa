@@ -295,8 +295,11 @@ class Model(ABC):
                                         (str, type(None)), (object, type(None))])
             line_edit_text = line_edit.text().strip() if not data else data
             new_value = line_edit_text not in self.data.values()
-            if line_edit_text and new_value:
+            if line_edit_text and new_value and obj:
                 output = getattr(obj(line_edit_text), method)() if not data else data
+                self.data.update({line_edit_name: output})
+            elif line_edit_text and new_value and not obj:
+                output = line_edit_text
                 self.data.update({line_edit_name: output})
             elif line_edit_text and not new_value:
                 output = line_edit_text
