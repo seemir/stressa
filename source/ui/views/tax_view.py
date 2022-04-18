@@ -86,6 +86,11 @@ class TaxView(QDialog):
         """
         return self._meta_view
 
+    @property
+    def tax_model(self):
+        return self._tax_model
+
     @pyqtSlot()
     def display(self):
+        self.tax_model.tax_info()
         self.show()

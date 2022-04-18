@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>820</width>
-    <height>470</height>
+    <height>560</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>820</width>
-    <height>470</height>
+    <height>560</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -478,9 +478,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-108</y>
+        <y>0</y>
         <width>784</width>
-        <height>403</height>
+        <height>448</height>
        </rect>
       </property>
       <property name="palette">
@@ -2172,137 +2172,44 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_3">
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_age">
+              <item row="6" column="2">
+               <widget class="QLabel" name="label_interest_cost">
                 <property name="text">
-                 <string>Alder (primærsøker)</string>
+                 <string>Rentekostnader</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_income">
-                <property name="text">
-                 <string>Bruttoinntekt</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="0">
-               <widget class="QLabel" name="label_interest_income">
-                <property name="text">
-                 <string>Renteinntekter</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="1">
-               <widget class="QLineEdit" name="line_edit_interest_income_total">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="1">
-               <widget class="QLineEdit" name="line_edit_personinntekt_total">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_tax_year">
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="line_edit_age">
                 <property name="minimumSize">
                  <size>
-                  <width>120</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Skatteår</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="0">
-               <widget class="QLabel" name="label_rent_income">
-                <property name="text">
-                 <string>Leieinntekter</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="1">
-               <widget class="QLineEdit" name="line_edit_rent_income_total">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="1">
-               <widget class="QLineEdit" name="line_edit_trygd_total">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="0">
-               <widget class="QLabel" name="label_trydg">
-                <property name="text">
-                 <string>Trygd</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="1">
-               <widget class="QLineEdit" name="line_edit_other_income_total">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="0">
-               <widget class="QLabel" name="label_whitespace_1">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
+                  <width>230</width>
                   <height>20</height>
                  </size>
                 </property>
-                <property name="text">
-                 <string/>
+               </widget>
+              </item>
+              <item row="6" column="3">
+               <widget class="QLineEdit" name="line_edit_rentekostnader_total">
+                <property name="enabled">
+                 <bool>false</bool>
                 </property>
                </widget>
               </item>
-              <item row="13" column="0" colspan="2">
-               <widget class="QPushButton" name="push_button_meta_data">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
+              <item row="10" column="3">
+               <widget class="QLineEdit" name="line_edit_debt"/>
+              </item>
+              <item row="9" column="3">
+               <widget class="QLineEdit" name="line_edit_bank_deposit"/>
+              </item>
+              <item row="10" column="2">
+               <widget class="QLabel" name="label_debt">
                 <property name="text">
-                 <string>Metadata</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
+                 <string>Gjeld</string>
                 </property>
                </widget>
               </item>
-              <item row="13" column="2" colspan="2">
-               <widget class="QPushButton" name="push_button_avbryt">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Avbryt</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="12" column="0" colspan="2">
+              <item row="16" column="0" colspan="2">
                <widget class="QPushButton" name="push_button_utregning">
                 <property name="minimumSize">
                  <size>
@@ -2319,7 +2226,55 @@
                 </property>
                </widget>
               </item>
-              <item row="12" column="2" colspan="2">
+              <item row="17" column="2" colspan="2">
+               <widget class="QPushButton" name="push_button_avbryt">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Avbryt</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="1">
+               <widget class="QLineEdit" name="line_edit_andre_inntekter_total">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="17" column="0" colspan="2">
+               <widget class="QPushButton" name="push_button_meta_data">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Metadata</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="0">
+               <widget class="QLabel" name="label_other_income">
+                <property name="text">
+                 <string>Andre innteker</string>
+                </property>
+               </widget>
+              </item>
+              <item row="16" column="2" colspan="2">
                <widget class="QPushButton" name="push_button_tom_skjema">
                 <property name="minimumSize">
                  <size>
@@ -2339,43 +2294,62 @@
               <item row="0" column="1">
                <widget class="QComboBox" name="combo_box_tax_year"/>
               </item>
-              <item row="10" column="0">
-               <widget class="QLabel" name="label_other_income">
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="line_edit_trygde_inntekt_total">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="line_edit_leieinntekt_total">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_trydg">
                 <property name="text">
-                 <string>Andre innteker</string>
+                 <string>Trygd</string>
                 </property>
                </widget>
               </item>
-              <item row="4" column="1">
-               <widget class="QLineEdit" name="line_edit_age">
-                <property name="minimumSize">
-                 <size>
-                  <width>230</width>
-                  <height>20</height>
-                 </size>
+              <item row="8" column="0">
+               <widget class="QLabel" name="label_rent_income">
+                <property name="text">
+                 <string>Leieinntekter</string>
                 </property>
                </widget>
               </item>
-              <item row="11" column="0" colspan="4">
-               <widget class="QLabel" name="label_whitespace_2">
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="line_edit_brutto_inntekt_total">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="1">
+               <widget class="QLineEdit" name="line_edit_renteinntekter_total">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_tax_year">
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
+                  <width>120</width>
                   <height>0</height>
                  </size>
                 </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>20</height>
-                 </size>
-                </property>
                 <property name="text">
-                 <string/>
+                 <string>Skatteår</string>
                 </property>
                </widget>
               </item>
-              <item row="14" column="0" colspan="4">
+              <item row="18" column="0" colspan="4">
                <widget class="QFrame" name="frame_whitespace">
                 <property name="frameShape">
                  <enum>QFrame::NoFrame</enum>
@@ -2385,32 +2359,36 @@
                 </property>
                </widget>
               </item>
-              <item row="6" column="2">
-               <widget class="QLabel" name="label_interest_cost">
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_age">
                 <property name="text">
-                 <string>Rentekostnader</string>
+                 <string>Alder (primærsøker)</string>
                 </property>
                </widget>
               </item>
-              <item row="6" column="3">
-               <widget class="QLineEdit" name="line_edit_interest_cost_total">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="2">
-               <widget class="QLabel" name="label_debt">
+              <item row="9" column="0">
+               <widget class="QLabel" name="label_interest_income">
                 <property name="text">
-                 <string>Gjeld</string>
+                 <string>Renteinntekter</string>
                 </property>
                </widget>
               </item>
-              <item row="10" column="3">
-               <widget class="QLineEdit" name="line_edit_debt"/>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_income">
+                <property name="text">
+                 <string>Bruttoinntekt</string>
+                </property>
+               </widget>
               </item>
-              <item row="9" column="3">
-               <widget class="QLineEdit" name="line_edit_bank_deposit"/>
+              <item row="8" column="3">
+               <widget class="QLineEdit" name="line_edit_value_of_real_etate">
+                <property name="minimumSize">
+                 <size>
+                  <width>230</width>
+                  <height>20</height>
+                 </size>
+                </property>
+               </widget>
               </item>
               <item row="9" column="2">
                <widget class="QLabel" name="label_bank_deposit">
@@ -2432,13 +2410,100 @@
                 </property>
                </widget>
               </item>
-              <item row="8" column="3">
-               <widget class="QLineEdit" name="line_edit_value_of_real_etate">
-                <property name="minimumSize">
+              <item row="13" column="0">
+               <widget class="QLabel" name="label_personinntekt_total">
+                <property name="text">
+                 <string>Personinntekt</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="1">
+               <widget class="QLineEdit" name="line_edit_personinntekt_total">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="2">
+               <widget class="QLabel" name="label_total_formue">
+                <property name="text">
+                 <string>Total formue</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="3">
+               <widget class="QLineEdit" name="line_edit_total_formue">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0" colspan="4">
+               <widget class="QLabel" name="label_whitespace_1">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
                  <size>
-                  <width>230</width>
+                  <width>16777215</width>
                   <height>20</height>
                  </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="0" colspan="4">
+               <widget class="QLabel" name="label_whitespace_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="15" column="0" colspan="4">
+               <widget class="QLabel" name="label_whitespace_3">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
                 </property>
                </widget>
               </item>
@@ -2468,11 +2533,17 @@
   <tabstop>tab_widget_skattekalkulator</tabstop>
   <tabstop>combo_box_tax_year</tabstop>
   <tabstop>line_edit_age</tabstop>
+  <tabstop>line_edit_brutto_inntekt_total</tabstop>
+  <tabstop>line_edit_trygde_inntekt_total</tabstop>
+  <tabstop>line_edit_leieinntekt_total</tabstop>
+  <tabstop>line_edit_renteinntekter_total</tabstop>
+  <tabstop>line_edit_andre_inntekter_total</tabstop>
+  <tabstop>line_edit_rentekostnader_total</tabstop>
+  <tabstop>line_edit_value_of_real_etate</tabstop>
+  <tabstop>line_edit_bank_deposit</tabstop>
+  <tabstop>line_edit_debt</tabstop>
   <tabstop>line_edit_personinntekt_total</tabstop>
-  <tabstop>line_edit_trygd_total</tabstop>
-  <tabstop>line_edit_rent_income_total</tabstop>
-  <tabstop>line_edit_interest_income_total</tabstop>
-  <tabstop>line_edit_other_income_total</tabstop>
+  <tabstop>line_edit_total_formue</tabstop>
   <tabstop>push_button_utregning</tabstop>
   <tabstop>push_button_tom_skjema</tabstop>
   <tabstop>push_button_meta_data</tabstop>
