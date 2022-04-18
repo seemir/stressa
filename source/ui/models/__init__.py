@@ -12,3 +12,4 @@ from .home_model import HomeModel
 from .finn_model import FinnModel
 from .sifo_model import SifoModel
 from .map_model import MapModel
+from .tax_model import TaxModel

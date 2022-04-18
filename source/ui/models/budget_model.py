@@ -38,7 +38,11 @@ class BudgetModel(Model):
         Assertor.assert_data_types([parent], [QObject])
         for num in range(1, 23):
             getattr(self.parent.ui, "combo_box_interval_" + str(num)).addItems(
-                self._interval.keys())
+                self.interval.keys())
+
+    @property
+    def interval(self):
+        return self._interval
 
     @property
     def primary_posts(self):

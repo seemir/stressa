@@ -12,6 +12,9 @@ from PyQt5.QtCore import Qt
 
 from source.util import Assertor
 
+from .meta_view import MetaView
+from ..models import TaxModel
+
 
 class TaxView(QDialog):
     """
@@ -35,6 +38,53 @@ class TaxView(QDialog):
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/tax_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+
+        self._error_view = self.parent.error_view
+        self._meta_view = MetaView(self)
+
+        self._tax_model = TaxModel(self)
+
+        self.ui.push_button_meta_data.clicked.connect(self.meta_view.display)
+        self.ui.push_button_avbryt.clicked.connect(self.close)
+
+    @property
+    def parent(self):
+        """
+        parent getter
+
+        Returns
+        -------
+        out     : QObject
+                  active parent view for the SifoView
+
+        """
+        return self._parent
+
+    @property
+    def error_view(self):
+        """
+        ErrorView getter
+
+        Returns
+        -------
+        out     : QObject
+                  active ErrorView in the SifoView
+
+        """
+        return self._error_view
+
+    @property
+    def meta_view(self):
+        """
+        MetaView getter
+
+        Returns
+        -------
+        out     : MetaView
+                  View with the metadata for the SifoView
+
+        """
+        return self._meta_view
 
     @pyqtSlot()
     def display(self):
