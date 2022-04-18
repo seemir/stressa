@@ -78,4 +78,5 @@ class Finn(Connector):
                       all rules in connector
         """
         return ", ".join(
-            ["only_numeric_values", "starts_with_one", "max_len_eight_or_nine"]).replace("'", "")
+            ["only_numeric_values", "starts_with_one_or_two",
+             "max_len_eight_or_nine"]).replace("'", "")
