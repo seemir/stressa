@@ -44,6 +44,7 @@ class TaxView(QDialog):
 
         self._tax_model = TaxModel(self)
 
+        self.ui.push_button_tom_skjema.clicked.connect(self.clear_all)
         self.ui.push_button_meta_data.clicked.connect(self.meta_view.display)
         self.ui.push_button_avbryt.clicked.connect(self.close)
 
@@ -94,3 +95,14 @@ class TaxView(QDialog):
     def display(self):
         self.tax_model.tax_info()
         self.show()
+
+    @pyqtSlot()
+    def clear_all(self):
+        self.ui.combo_box_tax_year.setCurrentIndex(0)
+        self.tax_model.clear_line_edit("alder")
+        self.tax_model.clear_line_edits(self.tax_model.total_posts)
+        self.tax_model.clear_line_edit("verdi_primarbolig")
+        self.tax_model.clear_line_edit("bankinnskudd")
+        self.tax_model.clear_line_edit("gjeld")
+        self.tax_model.clear_line_edit("netto_formue")
+        self.ui.combo_box_tax_year.setFocus()

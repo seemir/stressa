@@ -36,5 +36,6 @@ from .sub_model import SubModel
 from .separate import Separate
 from .process import Process
 from .extract import Extract
+from .flatten import Flatten
 from .signal import Signal
 from .divide import Divide

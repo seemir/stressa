@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util import Assertor, Tracking, Profiling, Debugger
 
 from .engine import Process, Signal, InputOperation, ValidateTaxForm, \
-    SkatteetatenTaxInfoConnector, OutputOperation, OutputSignal, Extract, Divide, Multiplex
+    SkatteetatenTaxInfoConnector, OutputOperation, OutputSignal, Extract, Divide, Multiplex, Flatten
 
 
 class SkatteetatenTaxProcessing(Process):
@@ -41,6 +41,7 @@ class SkatteetatenTaxProcessing(Process):
         self.divide_1()
         self.divide_2()
         self.multiplex()
+        self.flatten()
 
         self._skatteetaten_tax_info = self.output_operation()
         self.end_process()
@@ -253,21 +254,42 @@ class SkatteetatenTaxProcessing(Process):
 
     @Profiling
     @Debugger
+    def flatten(self):
+        """
+        method for flattening multiplexed data
+
+        """
+        multiplex_tax_info = self.get_signal("multiplex_tax_info")
+
+        flatten_operation = Flatten(multiplex_tax_info.data, "Flatten Multiplexed Tax Information")
+        self.add_node(flatten_operation)
+        self.add_transition(multiplex_tax_info, flatten_operation)
+
+        flatten = flatten_operation.run()
+
+        flatten_signal = Signal(flatten, "Flattened Multiplexed Tax Information",
+                                prettify_keys=True, length=4)
+
+        self.add_signal(flatten_signal, "flatten_multiplex_tax_info")
+        self.add_transition(flatten_operation, flatten_signal)
+
+    @Profiling
+    @Debugger
     def output_operation(self):
         """
         final method call in process
 
         """
-        multiplex_tax_info = self.get_signal("multiplex_tax_info")
+        flatten_multiplex_tax_info = self.get_signal("flatten_multiplex_tax_info")
         output_operation = OutputOperation("Skatteetaten Tax Information")
         self.add_node(output_operation)
-        self.add_transition(multiplex_tax_info, output_operation)
+        self.add_transition(flatten_multiplex_tax_info, output_operation)
 
-        output_signal = OutputSignal(multiplex_tax_info.data,
+        output_signal = OutputSignal(flatten_multiplex_tax_info.data,
                                      desc="Skatteetaten Tax Information", prettify_keys=True,
                                      length=4)
         self.add_signal(output_signal, "output_data")
         self.add_transition(output_operation, output_signal)
         self.print_pdf()
 
-        return multiplex_tax_info.data
+        return flatten_multiplex_tax_info.data

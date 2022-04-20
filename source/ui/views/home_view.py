@@ -58,6 +58,7 @@ class HomeView(QMainWindow):
         self._sifo_model = self.sifo_view.sifo_model
         self._mortgage_model = MortgageModel(self)
         self._finn_model = FinnModel(self)
+        self._budget_model = self.budget_view.budget_model
 
         self._mortgage_model.mortgage_info()
         self._finn_model.finn_info()
@@ -214,6 +215,19 @@ class HomeView(QMainWindow):
 
         """
         return self._sifo_model
+
+    @property
+    def budget_model(self):
+        """
+        BudgetModel getter
+
+        Returns
+        -------
+        out     : BudgetModel
+                  Active BudgetModel in the BudgetView
+
+        """
+        return self._budget_model
 
     @pyqtSlot()
     def info_tab(self):
