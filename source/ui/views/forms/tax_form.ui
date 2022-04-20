@@ -478,7 +478,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-153</y>
         <width>784</width>
         <height>448</height>
        </rect>
@@ -2441,12 +2441,12 @@
               <item row="13" column="2">
                <widget class="QLabel" name="label_total_formue">
                 <property name="text">
-                 <string>Total formue</string>
+                 <string>Netto formue</string>
                 </property>
                </widget>
               </item>
               <item row="13" column="3">
-               <widget class="QLineEdit" name="line_edit_total_formue">
+               <widget class="QLineEdit" name="line_edit_netto_formue">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -2557,7 +2557,7 @@
   <tabstop>line_edit_bankinnskudd</tabstop>
   <tabstop>line_edit_gjeld</tabstop>
   <tabstop>line_edit_personinntekt_total</tabstop>
-  <tabstop>line_edit_total_formue</tabstop>
+  <tabstop>line_edit_netto_formue</tabstop>
   <tabstop>push_button_utregning</tabstop>
   <tabstop>push_button_tom_skjema</tabstop>
   <tabstop>push_button_meta_data</tabstop>

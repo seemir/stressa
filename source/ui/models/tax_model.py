@@ -3,6 +3,8 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from decimal import Decimal
+
 from PyQt5.QtCore import QObject
 
 from source.util import Assertor
@@ -43,6 +45,8 @@ class TaxModel(Model):
             lambda: self.set_value('bankinnskudd'))
         self.parent.ui.line_edit_gjeld.textEdited.connect(
             lambda: self.set_value('gjeld'))
+        self.parent.ui.line_edit_netto_formue.textEdited.connect(
+            lambda: self.set_value('netto_formue'))
         self.set_line_edits("", line_edits=self.total_posts,
                             data=self.parent.parent.budget_view.budget_model.data)
 
@@ -51,3 +55,24 @@ class TaxModel(Model):
             self.set_line_edit(line_edit, Money, "value")
         else:
             self.clear_line_edit(line_edit)
+        self.net_wealth()
+
+    def net_wealth(self):
+        verdi_bolig = self.parent.ui.line_edit_verdi_primarbolig.text()
+        bankinnskudd = self.parent.ui.line_edit_bankinnskudd.text()
+        gjeld = self.parent.ui.line_edit_gjeld.text()
+        net_wealth = self.calculate_net_wealth("netto_formue", verdi_bolig, bankinnskudd, gjeld)
+        if net_wealth != "0" or not net_wealth:
+            self.set_line_edit("netto_formue", data=Money(str(net_wealth)).value())
+        else:
+            self.clear_line_edit("netto_formue")
+
+    def calculate_net_wealth(self, line_edit: str, real_estate: str, bank_deposit: str, debt: str):
+        net_wealth = (Decimal(real_estate.replace(" ", "").replace("kr", "")) if real_estate else
+                      Decimal("0")) + (
+                         Decimal(bank_deposit.replace(" ", "").replace("kr", "")) if bank_deposit
+                         else Decimal("0")) - (
+                         Decimal(debt.replace(" ", "").replace("kr", "")) if debt else
+                         Decimal("0"))
+        self.data.update({line_edit: Money(str(net_wealth)).value()})
+        return str(net_wealth)
