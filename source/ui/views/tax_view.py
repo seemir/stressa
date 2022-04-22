@@ -101,6 +101,9 @@ class TaxView(QDialog):
         self.ui.combo_box_tax_year.setCurrentIndex(0)
         self.tax_model.clear_line_edit("alder")
         self.tax_model.clear_line_edits(self.tax_model.total_posts)
+
+        self.tax_model.clear_line_edit("fagforeningskontigent")
+        self.tax_model.clear_line_edit("bsu")
         self.tax_model.clear_line_edit("verdi_primarbolig")
         self.tax_model.clear_line_edit("bankinnskudd")
         self.tax_model.clear_line_edit("gjeld")

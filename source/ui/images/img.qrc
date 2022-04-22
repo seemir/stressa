@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="img">
+    <file>sifo.png</file>
+    <file>skatteetaten.png</file>
     <file>images.svg</file>
     <file>forward.svg</file>
     <file>map.svg</file>

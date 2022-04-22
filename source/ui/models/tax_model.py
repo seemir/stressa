@@ -39,6 +39,11 @@ class TaxModel(Model):
             lambda: self.set_combo_box("tax_year", key_name="skatte_aar"))
         self.parent.ui.line_edit_alder.textEdited.connect(
             lambda: self.set_line_edit("alder"))
+
+        self.parent.ui.line_edit_fagforeningskontigent.textEdited.connect(
+            lambda: self.set_value('fagforeningskontigent'))
+        self.parent.ui.line_edit_bsu.textEdited.connect(
+            lambda: self.set_value('bsu'))
         self.parent.ui.line_edit_verdi_primarbolig.textEdited.connect(
             lambda: self.set_value('verdi_primarbolig'))
         self.parent.ui.line_edit_bankinnskudd.textEdited.connect(
