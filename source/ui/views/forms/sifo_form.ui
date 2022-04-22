@@ -474,7 +474,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-299</y>
+        <y>-338</y>
         <width>874</width>
         <height>682</height>
        </rect>
@@ -2612,7 +2612,7 @@
                </widget>
               </item>
               <item row="0" column="0">
-               <widget class="QFrame" name="frame">
+               <widget class="QFrame" name="frame_logo">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -2633,10 +2633,10 @@
                 </property>
                 <layout class="QGridLayout" name="gridLayout">
                  <item row="0" column="0">
-                  <widget class="QLabel" name="label">
+                  <widget class="QLabel" name="label_logo">
                    <property name="maximumSize">
                     <size>
-                     <width>160</width>
+                     <width>170</width>
                      <height>110</height>
                     </size>
                    </property>
