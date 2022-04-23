@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>830</width>
-    <height>960</height>
+    <height>940</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>830</width>
-    <height>960</height>
+    <height>940</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -898,7 +898,7 @@
         <x>0</x>
         <y>0</y>
         <width>783</width>
-        <height>806</height>
+        <height>776</height>
        </rect>
       </property>
       <property name="palette">
@@ -4962,7 +4962,7 @@
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>5</height>
+                  <height>1</height>
                  </size>
                 </property>
                 <property name="text">
@@ -4994,25 +4994,6 @@
                   <width>230</width>
                   <height>16777215</height>
                  </size>
-                </property>
-               </widget>
-              </item>
-              <item row="13" column="0">
-               <widget class="QLabel" name="label_whitespace_7">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>1</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string/>
                 </property>
                </widget>
               </item>
@@ -5128,32 +5109,6 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="line_edit_skatteregnskapskommune">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QLineEdit" name="line_edit_skatteklasse">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
               <item row="19" column="1">
                <widget class="QLabel" name="label_grunnlag">
                 <property name="sizePolicy">
@@ -5189,32 +5144,6 @@
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_skatteklasse">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Skatteklasse</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_skatteregnskapskommune">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Skatteregnskapskommune</string>
                 </property>
                </widget>
               </item>
@@ -5497,6 +5426,64 @@
                 </property>
                </widget>
               </item>
+              <item row="0" column="2">
+               <widget class="QLineEdit" name="line_edit_skatteklasse">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="line_edit_skatteregnskapskommune">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_skatteregnskapskommune_skatteklasse">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Skatteregnskapskommune / Skatteklasse</string>
+                </property>
+               </widget>
+              </item>
+              <item row="13" column="0" colspan="3">
+               <widget class="QLabel" name="label_whitespace_7">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>1</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>
@@ -5532,8 +5519,8 @@
   <tabstop>push_button_tom_skjema</tabstop>
   <tabstop>push_button_meta_data</tabstop>
   <tabstop>push_button_avbryt</tabstop>
-  <tabstop>line_edit_skatteklasse</tabstop>
   <tabstop>line_edit_skatteregnskapskommune</tabstop>
+  <tabstop>line_edit_skatteklasse</tabstop>
   <tabstop>line_edit_samlet_gjeld</tabstop>
   <tabstop>line_edit_personinntekt_fra_loennsinntekt</tabstop>
   <tabstop>line_edit_samlede_opptjente_renter_i_innenlandske_banker</tabstop>
