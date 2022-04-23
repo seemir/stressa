@@ -46,8 +46,12 @@ class TaxView(QDialog):
 
         self.ui.push_button_utregning.clicked.connect(self.calculate_tax_income)
         self.ui.push_button_tom_skjema.clicked.connect(self.clear_all)
-        self.ui.push_button_meta_data.clicked.connect(self.meta_view.display)
-        self.ui.push_button_avbryt.clicked.connect(self.close)
+        self.ui.push_button_meta_data_1.clicked.connect(self.meta_view.display)
+        self.ui.push_button_avbryt_1.clicked.connect(self.close)
+
+        self.ui.push_button_tilbake.clicked.connect(self.back)
+        self.ui.push_button_meta_data_2.clicked.connect(self.meta_view.display)
+        self.ui.push_button_avbryt_2.clicked.connect(self.close)
 
     @property
     def parent(self):
@@ -97,6 +101,13 @@ class TaxView(QDialog):
         self.tax_model.tax_info()
         self.show()
 
+    def back(self):
+        """
+        method for returning for results page to input page
+
+        """
+        self.ui.tab_widget_skattekalkulator.setCurrentIndex(0)
+
     @pyqtSlot()
     def calculate_tax_income(self):
         self.tax_model.calculate_tax_income()
@@ -104,13 +115,16 @@ class TaxView(QDialog):
     @pyqtSlot()
     def clear_all(self):
         self.ui.combo_box_tax_year.setCurrentIndex(0)
+        self.tax_model.clear_combo_boxes(["skatte_aar"])
         self.tax_model.clear_line_edit("alder")
+        self.tax_model.clear_line_edit("fagforeningskontigent")
         self.tax_model.clear_line_edits(self.tax_model.total_posts)
 
-        self.tax_model.clear_line_edit("fagforeningskontigent")
         self.tax_model.clear_line_edit("bsu")
         self.tax_model.clear_line_edit("verdi_primarbolig")
         self.tax_model.clear_line_edit("bankinnskudd")
         self.tax_model.clear_line_edit("gjeld")
         self.tax_model.clear_line_edit("netto_formue")
+
+        self.tax_model.clear_line_edits(self.tax_model.tax_output)
         self.ui.combo_box_tax_year.setFocus()
