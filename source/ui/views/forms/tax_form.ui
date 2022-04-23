@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>830</width>
-    <height>650</height>
+    <height>960</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,7 +19,7 @@
   <property name="minimumSize">
    <size>
     <width>830</width>
-    <height>650</height>
+    <height>960</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -896,9 +896,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-177</y>
+        <y>0</y>
         <width>783</width>
-        <height>553</height>
+        <height>806</height>
        </rect>
       </property>
       <property name="palette">
@@ -2590,201 +2590,17 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_3">
-              <item row="7" column="0">
-               <widget class="QLabel" name="label_trydg">
+              <item row="11" column="2">
+               <widget class="QLabel" name="label_debt">
                 <property name="text">
-                 <string>Trygd</string>
+                 <string>Gjeld</string>
                 </property>
                </widget>
               </item>
-              <item row="7" column="1">
-               <widget class="QLineEdit" name="line_edit_trygde_inntekt_total">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="20" column="0" colspan="4">
-               <widget class="QFrame" name="frame_whitespace_1">
-                <property name="frameShape">
-                 <enum>QFrame::NoFrame</enum>
-                </property>
-                <property name="frameShadow">
-                 <enum>QFrame::Raised</enum>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_tax_year">
-                <property name="minimumSize">
-                 <size>
-                  <width>120</width>
-                  <height>0</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Skatteår</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_age">
-                <property name="text">
-                 <string>Alder (primærsøker)</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_income">
-                <property name="text">
-                 <string>Bruttoinntekt</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="1">
-               <widget class="QLineEdit" name="line_edit_brutto_inntekt_total">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="1">
-               <widget class="QLineEdit" name="line_edit_leieinntekt_total">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="0">
-               <widget class="QLabel" name="label_other_income">
-                <property name="text">
-                 <string>Andre innteker</string>
-                </property>
-               </widget>
-              </item>
-              <item row="19" column="2" colspan="2">
-               <widget class="QPushButton" name="push_button_avbryt">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Avbryt</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="18" column="0" colspan="2">
-               <widget class="QPushButton" name="push_button_utregning">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Utregning</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/show.svg</normaloff>:/img/show.svg</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="3">
-               <widget class="QLineEdit" name="line_edit_rentekostnader_total">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="2">
-               <widget class="QLabel" name="label_interest_cost">
-                <property name="text">
-                 <string>Rentekostnader</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="line_edit_alder">
-                <property name="minimumSize">
-                 <size>
-                  <width>230</width>
-                  <height>20</height>
-                 </size>
-                </property>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="line_edit_fagforeningskontigent">
                 <property name="clearButtonEnabled">
                  <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="18" column="2" colspan="2">
-               <widget class="QPushButton" name="push_button_tom_skjema">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Tøm skjema</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QComboBox" name="combo_box_tax_year"/>
-              </item>
-              <item row="19" column="0" colspan="2">
-               <widget class="QPushButton" name="push_button_meta_data">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Metadata</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
-                </property>
-               </widget>
-              </item>
-              <item row="15" column="0">
-               <widget class="QLabel" name="label_personinntekt_total">
-                <property name="text">
-                 <string>Personinntekt</string>
-                </property>
-               </widget>
-              </item>
-              <item row="15" column="1">
-               <widget class="QLineEdit" name="line_edit_personinntekt_total">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="15" column="3">
-               <widget class="QLineEdit" name="line_edit_netto_formue">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="15" column="2">
-               <widget class="QLabel" name="label_total_formue">
-                <property name="text">
-                 <string>Netto formue</string>
                 </property>
                </widget>
               </item>
@@ -2838,22 +2654,10 @@
                 </property>
                </widget>
               </item>
-              <item row="5" column="0" colspan="4">
-               <widget class="QLabel" name="label_whitespace_6">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_bsu">
                 <property name="text">
-                 <string/>
+                 <string>Årlig BSU sparing</string>
                 </property>
                </widget>
               </item>
@@ -2883,25 +2687,203 @@
                 </property>
                </widget>
               </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label">
+              <item row="0" column="1">
+               <widget class="QComboBox" name="combo_box_tax_year"/>
+              </item>
+              <item row="19" column="0" colspan="2">
+               <widget class="QPushButton" name="push_button_meta_data">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
                 <property name="text">
-                 <string>Årlig BSU sparing</string>
+                 <string>Metadata</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
                 </property>
                </widget>
               </item>
-              <item row="3" column="1">
-               <widget class="QLineEdit" name="line_edit_fagforeningskontigent"/>
-              </item>
-              <item row="11" column="2">
-               <widget class="QLabel" name="label_debt">
+              <item row="18" column="2" colspan="2">
+               <widget class="QPushButton" name="push_button_tom_skjema">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
                 <property name="text">
-                 <string>Gjeld</string>
+                 <string>Tøm skjema</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
                 </property>
                </widget>
               </item>
-              <item row="4" column="1">
-               <widget class="QLineEdit" name="line_edit_bsu"/>
+              <item row="15" column="0">
+               <widget class="QLabel" name="label_personinntekt_total">
+                <property name="text">
+                 <string>Personinntekt</string>
+                </property>
+               </widget>
+              </item>
+              <item row="15" column="3">
+               <widget class="QLineEdit" name="line_edit_netto_formue">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="15" column="2">
+               <widget class="QLabel" name="label_total_formue">
+                <property name="text">
+                 <string>Netto formue</string>
+                </property>
+               </widget>
+              </item>
+              <item row="15" column="1">
+               <widget class="QLineEdit" name="line_edit_personinntekt_total">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
+               <widget class="QLabel" name="label_trydg">
+                <property name="text">
+                 <string>Trygd</string>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="line_edit_trygde_inntekt_total">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_age">
+                <property name="text">
+                 <string>Alder (primærsøker)</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_tax_year">
+                <property name="minimumSize">
+                 <size>
+                  <width>120</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Skatteår</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_income">
+                <property name="text">
+                 <string>Bruttoinntekt</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="line_edit_brutto_inntekt_total">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QLabel" name="label_other_income">
+                <property name="text">
+                 <string>Andre innteker</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="1">
+               <widget class="QLineEdit" name="line_edit_leieinntekt_total">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="19" column="2" colspan="2">
+               <widget class="QPushButton" name="push_button_avbryt">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Avbryt</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="2">
+               <widget class="QLabel" name="label_interest_cost">
+                <property name="text">
+                 <string>Rentekostnader</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="line_edit_alder">
+                <property name="minimumSize">
+                 <size>
+                  <width>230</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="3">
+               <widget class="QLineEdit" name="line_edit_rentekostnader_total">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="18" column="0" colspan="2">
+               <widget class="QPushButton" name="push_button_utregning">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Utregning</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/show.svg</normaloff>:/img/show.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="20" column="0" colspan="4">
+               <widget class="QFrame" name="frame_whitespace_1">
+                <property name="frameShape">
+                 <enum>QFrame::NoFrame</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
+                </property>
+               </widget>
               </item>
               <item row="8" column="2">
                <widget class="QLabel" name="label_value_of_real_estate">
@@ -2913,13 +2895,6 @@
                 </property>
                 <property name="text">
                  <string>Verdi primærbolig</string>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="2">
-               <widget class="QLabel" name="label_bank_deposit">
-                <property name="text">
-                 <string>Bankinnskudd</string>
                 </property>
                </widget>
               </item>
@@ -2937,16 +2912,17 @@
                 </property>
                </widget>
               </item>
-              <item row="8" column="3">
-               <widget class="QLineEdit" name="line_edit_verdi_primarbolig">
-                <property name="minimumSize">
-                 <size>
-                  <width>230</width>
-                  <height>20</height>
-                 </size>
-                </property>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="line_edit_bsu">
                 <property name="clearButtonEnabled">
                  <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="2">
+               <widget class="QLabel" name="label_bank_deposit">
+                <property name="text">
+                 <string>Bankinnskudd</string>
                 </property>
                </widget>
               </item>
@@ -2964,13 +2940,6 @@
                 </property>
                </widget>
               </item>
-              <item row="8" column="0">
-               <widget class="QLabel" name="label_rent_income">
-                <property name="text">
-                 <string>Leieinntekter</string>
-                </property>
-               </widget>
-              </item>
               <item row="10" column="0">
                <widget class="QLabel" name="label_interest_income">
                 <property name="text">
@@ -2978,8 +2947,53 @@
                 </property>
                </widget>
               </item>
-              <item row="0" column="3" rowspan="5">
+              <item row="8" column="0">
+               <widget class="QLabel" name="label_rent_income">
+                <property name="text">
+                 <string>Leieinntekter</string>
+                </property>
+               </widget>
+              </item>
+              <item row="8" column="3">
+               <widget class="QLineEdit" name="line_edit_verdi_primarbolig">
+                <property name="minimumSize">
+                 <size>
+                  <width>230</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="clearButtonEnabled">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0" colspan="3">
+               <widget class="QLabel" name="label_whitespace_6">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="3" rowspan="6">
                <widget class="QFrame" name="frame_logo">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
                 <property name="palette">
                  <palette>
                   <active>
@@ -2995,8 +3009,8 @@
                    <colorrole role="Button">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>231</red>
+                      <green>243</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3013,8 +3027,8 @@
                    <colorrole role="Midlight">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>243</red>
+                      <green>249</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3022,8 +3036,8 @@
                    <colorrole role="Dark">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>127</red>
-                      <green>127</green>
+                      <red>115</red>
+                      <green>121</green>
                       <blue>127</blue>
                      </color>
                     </brush>
@@ -3031,8 +3045,8 @@
                    <colorrole role="Mid">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>170</red>
-                      <green>170</green>
+                      <red>154</red>
+                      <green>162</green>
                       <blue>170</blue>
                      </color>
                     </brush>
@@ -3076,8 +3090,8 @@
                    <colorrole role="Window">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>231</red>
+                      <green>243</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3094,8 +3108,8 @@
                    <colorrole role="AlternateBase">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>243</red>
+                      <green>249</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3132,8 +3146,8 @@
                    <colorrole role="Button">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>231</red>
+                      <green>243</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3150,8 +3164,8 @@
                    <colorrole role="Midlight">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>243</red>
+                      <green>249</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3159,8 +3173,8 @@
                    <colorrole role="Dark">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>127</red>
-                      <green>127</green>
+                      <red>115</red>
+                      <green>121</green>
                       <blue>127</blue>
                      </color>
                     </brush>
@@ -3168,8 +3182,8 @@
                    <colorrole role="Mid">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>170</red>
-                      <green>170</green>
+                      <red>154</red>
+                      <green>162</green>
                       <blue>170</blue>
                      </color>
                     </brush>
@@ -3213,8 +3227,8 @@
                    <colorrole role="Window">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>231</red>
+                      <green>243</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3231,8 +3245,8 @@
                    <colorrole role="AlternateBase">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>243</red>
+                      <green>249</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3260,8 +3274,8 @@
                    <colorrole role="WindowText">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>127</red>
-                      <green>127</green>
+                      <red>115</red>
+                      <green>121</green>
                       <blue>127</blue>
                      </color>
                     </brush>
@@ -3269,8 +3283,8 @@
                    <colorrole role="Button">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>231</red>
+                      <green>243</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3287,8 +3301,8 @@
                    <colorrole role="Midlight">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>243</red>
+                      <green>249</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3296,8 +3310,8 @@
                    <colorrole role="Dark">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>127</red>
-                      <green>127</green>
+                      <red>115</red>
+                      <green>121</green>
                       <blue>127</blue>
                      </color>
                     </brush>
@@ -3305,8 +3319,8 @@
                    <colorrole role="Mid">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>170</red>
-                      <green>170</green>
+                      <red>154</red>
+                      <green>162</green>
                       <blue>170</blue>
                      </color>
                     </brush>
@@ -3314,8 +3328,8 @@
                    <colorrole role="Text">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>127</red>
-                      <green>127</green>
+                      <red>115</red>
+                      <green>121</green>
                       <blue>127</blue>
                      </color>
                     </brush>
@@ -3332,8 +3346,8 @@
                    <colorrole role="ButtonText">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>127</red>
-                      <green>127</green>
+                      <red>115</red>
+                      <green>121</green>
                       <blue>127</blue>
                      </color>
                     </brush>
@@ -3341,8 +3355,8 @@
                    <colorrole role="Base">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>231</red>
+                      <green>243</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3350,8 +3364,8 @@
                    <colorrole role="Window">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>231</red>
+                      <green>243</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3368,8 +3382,8 @@
                    <colorrole role="AlternateBase">
                     <brush brushstyle="SolidPattern">
                      <color alpha="255">
-                      <red>255</red>
-                      <green>255</green>
+                      <red>231</red>
+                      <green>243</green>
                       <blue>255</blue>
                      </color>
                     </brush>
@@ -3399,7 +3413,7 @@
                  <bool>true</bool>
                 </property>
                 <property name="frameShape">
-                 <enum>QFrame::StyledPanel</enum>
+                 <enum>QFrame::NoFrame</enum>
                 </property>
                 <property name="frameShadow">
                  <enum>QFrame::Plain</enum>
@@ -3409,9 +3423,12 @@
                   <widget class="QLabel" name="label_logo">
                    <property name="maximumSize">
                     <size>
-                     <width>110</width>
-                     <height>110</height>
+                     <width>120</width>
+                     <height>120</height>
                     </size>
+                   </property>
+                   <property name="frameShape">
+                    <enum>QFrame::StyledPanel</enum>
                    </property>
                    <property name="text">
                     <string/>
@@ -4282,310 +4299,41 @@
               <enum>QFrame::Raised</enum>
              </property>
              <layout class="QGridLayout" name="gridLayout_6">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_skatteklasse">
-                <property name="maximumSize">
+              <item row="32" column="1">
+               <widget class="QPushButton" name="push_btton_tom_skjema">
+                <property name="minimumSize">
                  <size>
-                  <width>16777215</width>
-                  <height>20</height>
+                  <width>0</width>
+                  <height>40</height>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Skatteklasse</string>
+                 <string>Tilbake</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/back.svg</normaloff>:/img/back.svg</iconset>
                 </property>
                </widget>
               </item>
-              <item row="5" column="1">
-               <widget class="QLabel" name="label_grunnlag">
-                <property name="maximumSize">
+              <item row="32" column="2">
+               <widget class="QPushButton" name="push_button_eksport">
+                <property name="minimumSize">
                  <size>
-                  <width>16777215</width>
-                  <height>20</height>
+                  <width>0</width>
+                  <height>40</height>
                  </size>
                 </property>
                 <property name="text">
-                 <string>Grunnlag</string>
+                 <string>Eksport</string>
                 </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
-                </property>
-               </widget>
-              </item>
-              <item row="5" column="2">
-               <widget class="QLabel" name="label_belop">
-                <property name="text">
-                 <string>Beløp</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignCenter</set>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/export.svg</normaloff>:/img/export.svg</iconset>
                 </property>
                </widget>
               </item>
-              <item row="6" column="1">
-               <widget class="QLineEdit" name="line_edit_formuesskatt_til_stat_grunnlag">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="0">
-               <widget class="QLabel" name="label_formueskatt_stat">
-                <property name="text">
-                 <string>Formueskatt stat</string>
-                </property>
-               </widget>
-              </item>
-              <item row="6" column="2">
-               <widget class="QLineEdit" name="line_edit_formuesskatt_til_stat_beloep">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="2">
-               <widget class="QLineEdit" name="line_edit_formuesskatt_til_kommune_beloep">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="0">
-               <widget class="QLabel" name="label_formueskatt_kommune">
-                <property name="text">
-                 <string>Formueskatt kommune</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="2">
-               <widget class="QLineEdit" name="line_edit_inntektsskatt_til_kommune_beloep">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="1">
-               <widget class="QLineEdit" name="line_edit_inntektsskatt_til_fylkeskommune_grunnlag">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="7" column="1">
-               <widget class="QLineEdit" name="line_edit_formuesskatt_til_kommune_grunnlag">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="0">
-               <widget class="QLabel" name="label_inntektskatt_kommune">
-                <property name="text">
-                 <string>Inntektsskatt til kommune</string>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="0">
-               <widget class="QLabel" name="label_inntektsskatt_fylkeskommune">
-                <property name="text">
-                 <string>Inntektsskatt til fylkeskommune</string>
-                </property>
-               </widget>
-              </item>
-              <item row="8" column="1">
-               <widget class="QLineEdit" name="line_edit_inntektsskatt_til_kommune_grunnlag">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="0">
-               <widget class="QLabel" name="label_trinnskatt">
-                <property name="text">
-                 <string>Trinnskatt</string>
-                </property>
-               </widget>
-              </item>
-              <item row="12" column="0">
-               <widget class="QLabel" name="label_trygdeavgift">
-                <property name="text">
-                 <string>Trygdeavgift</string>
-                </property>
-               </widget>
-              </item>
-              <item row="12" column="2">
-               <widget class="QLineEdit" name="line_edit_sum_trygdeavgift_beloep">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="1">
-               <widget class="QLineEdit" name="line_edit_trinnskatt_grunnlag">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="12" column="1">
-               <widget class="QLineEdit" name="line_edit_sum_trygdeavgift_grunnlag">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="9" column="2">
-               <widget class="QLineEdit" name="line_edit_inntektsskatt_til_fylkeskommune_beloep">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="2">
-               <widget class="QLineEdit" name="line_edit_fellesskatt_beloep">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="1">
-               <widget class="QLineEdit" name="line_edit_fellesskatt_grunnlag">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="10" column="0">
-               <widget class="QLabel" name="label_fellesskatt">
-                <property name="text">
-                 <string>Fellesskatt</string>
-                </property>
-               </widget>
-              </item>
-              <item row="11" column="2">
-               <widget class="QLineEdit" name="line_edit_trinnskatt_beloep">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="14" column="0">
-               <widget class="QLabel" name="label_beregnet_skatt">
-                <property name="text">
-                 <string>Bereget skatt</string>
-                </property>
-               </widget>
-              </item>
-              <item row="14" column="2">
-               <widget class="QLineEdit" name="line_edit_beregnet_skatt_beloep">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="14" column="1">
-               <widget class="QLineEdit" name="line_edit_beregnet_skatt_grunnlag">
-                <property name="enabled">
-                 <bool>false</bool>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>230</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
-              <item row="16" column="0" colspan="3">
+              <item row="34" column="0" colspan="3">
                <widget class="QFrame" name="frame_whitespace_2">
                 <property name="palette">
                  <palette>
@@ -5013,8 +4761,27 @@
                 </property>
                </widget>
               </item>
-              <item row="15" column="2">
-               <widget class="QLineEdit" name="line_edit_skatteprosent">
+              <item row="8" column="0">
+               <widget class="QLabel" name="label_whitespace_4">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>1</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="29" column="2">
+               <widget class="QLineEdit" name="line_edit_sum_skattefradrag_beloep">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -5026,8 +4793,8 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="1">
-               <widget class="QLineEdit" name="line_edit_sum_minstefradrag">
+              <item row="10" column="1">
+               <widget class="QLineEdit" name="line_edit_samlede_paaloepte_renter_paa_gjeld_i_innenlandske_banker">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -5039,7 +4806,21 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="0">
+              <item row="12" column="0">
+               <widget class="QLabel" name="label_sum_fradrag_i_alminnelig_inntekt">
+                <property name="text">
+                 <string>Sum fradrag i alminnelig inntekt</string>
+                </property>
+               </widget>
+              </item>
+              <item row="10" column="0">
+               <widget class="QLabel" name="label_samlede_paaloepte_renter_paa_gjeld_i_innenlandske_banker">
+                <property name="text">
+                 <string>Samlede påløpte renter på gjeld</string>
+                </property>
+               </widget>
+              </item>
+              <item row="9" column="0">
                <widget class="QLabel" name="label_minstefradrag">
                 <property name="maximumSize">
                  <size>
@@ -5052,25 +4833,182 @@
                 </property>
                </widget>
               </item>
-              <item row="4" column="0">
-               <widget class="QLabel" name="label_whitespace_4">
+              <item row="9" column="1">
+               <widget class="QLineEdit" name="line_edit_sum_minstefradrag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="12" column="1">
+               <widget class="QLineEdit" name="line_edit_sum_fradrag_i_alminnelig_inntekt">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="1">
+               <widget class="QLineEdit" name="line_edit_fradrag_for_fagforeningskontingent">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="11" column="0">
+               <widget class="QLabel" name="label_fagforeningskontingent">
+                <property name="text">
+                 <string>Fradrag for fagforeningskontingent</string>
+                </property>
+               </widget>
+              </item>
+              <item row="23" column="2">
+               <widget class="QLineEdit" name="line_edit_inntektsskatt_til_fylkeskommune_beloep">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="30" column="1">
+               <widget class="QLineEdit" name="line_edit_beregnet_skatt_grunnlag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="26" column="1">
+               <widget class="QLineEdit" name="line_edit_sum_trygdeavgift_grunnlag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="26" column="2">
+               <widget class="QLineEdit" name="line_edit_sum_trygdeavgift_beloep">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="31" column="2">
+               <widget class="QLineEdit" name="line_edit_skatteprosent">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="25" column="1">
+               <widget class="QLineEdit" name="line_edit_trinnskatt_grunnlag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_whitespace_8">
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>20</height>
+                  <height>5</height>
                  </size>
                 </property>
                 <property name="text">
                  <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="26" column="0">
+               <widget class="QLabel" name="label_trygdeavgift">
+                <property name="text">
+                 <string>Trygdeavgift</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="0">
+               <widget class="QLabel" name="label_sum_inntekter_i_alminnelig_inntekt_foer_fordelingsfradrag">
+                <property name="text">
+                 <string>Alminnelig inntekt før fordelingsfradrag</string>
+                </property>
+               </widget>
+              </item>
+              <item row="6" column="1">
+               <widget class="QLineEdit" name="line_edit_sum_inntekter_i_alminnelig_inntekt_foer_fordelingsfradrag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
                 </property>
                </widget>
               </item>
               <item row="13" column="0">
-               <widget class="QLabel" name="label_whitespace_5">
-                <property name="maximumSize">
+               <widget class="QLabel" name="label_whitespace_7">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
                  <size>
-                  <width>16777215</width>
-                  <height>20</height>
+                  <width>0</width>
+                  <height>1</height>
                  </size>
                 </property>
                 <property name="text">
@@ -5078,7 +5016,106 @@
                 </property>
                </widget>
               </item>
-              <item row="15" column="0">
+              <item row="5" column="1">
+               <widget class="QLineEdit" name="line_edit_samlede_opptjente_renter_i_innenlandske_banker">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="5" column="0">
+               <widget class="QLabel" name="label_samlede_opptjente_renter_i_innenlandske_banker">
+                <property name="text">
+                 <string>Samlede opptjente renter</string>
+                </property>
+               </widget>
+              </item>
+              <item row="24" column="0">
+               <widget class="QLabel" name="label_fellesskatt">
+                <property name="text">
+                 <string>Fellesskatt</string>
+                </property>
+               </widget>
+              </item>
+              <item row="30" column="0">
+               <widget class="QLabel" name="label_beregnet_skatt">
+                <property name="text">
+                 <string>Bereget skatt</string>
+                </property>
+               </widget>
+              </item>
+              <item row="25" column="2">
+               <widget class="QLineEdit" name="line_edit_trinnskatt_beloep">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="24" column="2">
+               <widget class="QLineEdit" name="line_edit_fellesskatt_beloep">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="24" column="1">
+               <widget class="QLineEdit" name="line_edit_fellesskatt_grunnlag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="30" column="2">
+               <widget class="QLineEdit" name="line_edit_beregnet_skatt_beloep">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="27" column="0">
+               <widget class="QLabel" name="label_whitespace_5">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>1</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+               </widget>
+              </item>
+              <item row="31" column="0">
                <widget class="QLabel" name="label_skatteprosent">
                 <property name="maximumSize">
                  <size>
@@ -5104,19 +5141,6 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_skatteregnskapskommune">
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Skatteregnskapskommune</string>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="1">
                <widget class="QLineEdit" name="line_edit_skatteklasse">
                 <property name="enabled">
@@ -5130,7 +5154,263 @@
                 </property>
                </widget>
               </item>
+              <item row="19" column="1">
+               <widget class="QLabel" name="label_grunnlag">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Grunnlag</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="19" column="2">
+               <widget class="QLabel" name="label_belop">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Beløp</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_skatteklasse">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Skatteklasse</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_skatteregnskapskommune">
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>20</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Skatteregnskapskommune</string>
+                </property>
+               </widget>
+              </item>
+              <item row="21" column="0">
+               <widget class="QLabel" name="label_formueskatt_kommune">
+                <property name="text">
+                 <string>Formueskatt kommune</string>
+                </property>
+               </widget>
+              </item>
+              <item row="20" column="1">
+               <widget class="QLineEdit" name="line_edit_formuesskatt_til_stat_grunnlag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="20" column="2">
+               <widget class="QLineEdit" name="line_edit_formuesskatt_til_stat_beloep">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="22" column="2">
+               <widget class="QLineEdit" name="line_edit_inntektsskatt_til_kommune_beloep">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="20" column="0">
+               <widget class="QLabel" name="label_formueskatt_stat">
+                <property name="text">
+                 <string>Formueskatt stat</string>
+                </property>
+               </widget>
+              </item>
+              <item row="22" column="1">
+               <widget class="QLineEdit" name="line_edit_inntektsskatt_til_kommune_grunnlag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="21" column="1">
+               <widget class="QLineEdit" name="line_edit_formuesskatt_til_kommune_grunnlag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="21" column="2">
+               <widget class="QLineEdit" name="line_edit_formuesskatt_til_kommune_beloep">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="23" column="1">
+               <widget class="QLineEdit" name="line_edit_inntektsskatt_til_fylkeskommune_grunnlag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="22" column="0">
+               <widget class="QLabel" name="label_inntektskatt_kommune">
+                <property name="text">
+                 <string>Inntektsskatt til kommune</string>
+                </property>
+               </widget>
+              </item>
+              <item row="23" column="0">
+               <widget class="QLabel" name="label_inntektsskatt_fylkeskommune">
+                <property name="text">
+                 <string>Inntektsskatt til fylkeskommune</string>
+                </property>
+               </widget>
+              </item>
+              <item row="25" column="0">
+               <widget class="QLabel" name="label_trinnskatt">
+                <property name="text">
+                 <string>Trinnskatt</string>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_personinntekt_fra_loennsinntekt">
+                <property name="text">
+                 <string>Personinntekt fra lønnsinntekt</string>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <widget class="QLineEdit" name="line_edit_samlet_gjeld">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
               <item row="3" column="0">
+               <widget class="QLabel" name="label_samlet_gjeld">
+                <property name="text">
+                 <string>Samlet gjeld</string>
+                </property>
+               </widget>
+              </item>
+              <item row="28" column="1">
+               <widget class="QLineEdit" name="line_edit_beregnet_skatt_foer_skattefradrag_grunnlag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <widget class="QLineEdit" name="line_edit_personinntekt_fra_loennsinntekt">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="1">
+               <widget class="QLineEdit" name="line_edit_gjeldsgrad">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="7" column="0">
                <widget class="QLabel" name="label_gjeldsgrad">
                 <property name="maximumSize">
                  <size>
@@ -5143,8 +5423,15 @@
                 </property>
                </widget>
               </item>
-              <item row="3" column="1">
-               <widget class="QLineEdit" name="line_edit_gjeldsgrad">
+              <item row="29" column="0">
+               <widget class="QLabel" name="label_sum_skattefradrag">
+                <property name="text">
+                 <string>Skattefradrag</string>
+                </property>
+               </widget>
+              </item>
+              <item row="28" column="2">
+               <widget class="QLineEdit" name="line_edit_beregnet_skatt_foer_skattefradrag_beloep">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -5153,6 +5440,60 @@
                   <width>230</width>
                   <height>16777215</height>
                  </size>
+                </property>
+               </widget>
+              </item>
+              <item row="29" column="1">
+               <widget class="QLineEdit" name="line_edit_sum_skattefradrag_grunnlag">
+                <property name="enabled">
+                 <bool>false</bool>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>230</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item row="28" column="0">
+               <widget class="QLabel" name="label_beregnet_skatt_foer_skattefradrag">
+                <property name="text">
+                 <string>Bereget skatt før skattefradrag</string>
+                </property>
+               </widget>
+              </item>
+              <item row="33" column="1">
+               <widget class="QPushButton" name="push_button_metadata">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Metadata</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="33" column="2">
+               <widget class="QPushButton" name="pushButton_avbryt">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Avbryt</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/cancel.svg</normaloff>:/img/cancel.svg</iconset>
                 </property>
                </widget>
               </item>
@@ -5193,8 +5534,15 @@
   <tabstop>push_button_avbryt</tabstop>
   <tabstop>line_edit_skatteklasse</tabstop>
   <tabstop>line_edit_skatteregnskapskommune</tabstop>
-  <tabstop>line_edit_sum_minstefradrag</tabstop>
+  <tabstop>line_edit_samlet_gjeld</tabstop>
+  <tabstop>line_edit_personinntekt_fra_loennsinntekt</tabstop>
+  <tabstop>line_edit_samlede_opptjente_renter_i_innenlandske_banker</tabstop>
+  <tabstop>line_edit_sum_inntekter_i_alminnelig_inntekt_foer_fordelingsfradrag</tabstop>
   <tabstop>line_edit_gjeldsgrad</tabstop>
+  <tabstop>line_edit_sum_minstefradrag</tabstop>
+  <tabstop>line_edit_samlede_paaloepte_renter_paa_gjeld_i_innenlandske_banker</tabstop>
+  <tabstop>line_edit_fradrag_for_fagforeningskontingent</tabstop>
+  <tabstop>line_edit_sum_fradrag_i_alminnelig_inntekt</tabstop>
   <tabstop>line_edit_formuesskatt_til_stat_grunnlag</tabstop>
   <tabstop>line_edit_formuesskatt_til_stat_beloep</tabstop>
   <tabstop>line_edit_formuesskatt_til_kommune_grunnlag</tabstop>
@@ -5209,9 +5557,17 @@
   <tabstop>line_edit_trinnskatt_beloep</tabstop>
   <tabstop>line_edit_sum_trygdeavgift_grunnlag</tabstop>
   <tabstop>line_edit_sum_trygdeavgift_beloep</tabstop>
+  <tabstop>line_edit_beregnet_skatt_foer_skattefradrag_grunnlag</tabstop>
+  <tabstop>line_edit_beregnet_skatt_foer_skattefradrag_beloep</tabstop>
+  <tabstop>line_edit_sum_skattefradrag_grunnlag</tabstop>
+  <tabstop>line_edit_sum_skattefradrag_beloep</tabstop>
   <tabstop>line_edit_beregnet_skatt_grunnlag</tabstop>
   <tabstop>line_edit_beregnet_skatt_beloep</tabstop>
   <tabstop>line_edit_skatteprosent</tabstop>
+  <tabstop>push_btton_tom_skjema</tabstop>
+  <tabstop>push_button_eksport</tabstop>
+  <tabstop>push_button_metadata</tabstop>
+  <tabstop>pushButton_avbryt</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

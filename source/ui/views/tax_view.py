@@ -44,6 +44,7 @@ class TaxView(QDialog):
 
         self._tax_model = TaxModel(self)
 
+        self.ui.push_button_utregning.clicked.connect(self.calculate_tax_income)
         self.ui.push_button_tom_skjema.clicked.connect(self.clear_all)
         self.ui.push_button_meta_data.clicked.connect(self.meta_view.display)
         self.ui.push_button_avbryt.clicked.connect(self.close)
@@ -95,6 +96,10 @@ class TaxView(QDialog):
     def display(self):
         self.tax_model.tax_info()
         self.show()
+
+    @pyqtSlot()
+    def calculate_tax_income(self):
+        self.tax_model.calculate_tax_income()
 
     @pyqtSlot()
     def clear_all(self):

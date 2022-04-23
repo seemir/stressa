@@ -8,6 +8,8 @@ Module for operation for validating tax information in tax form
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from datetime import date
+
 from source.util import Assertor, Tracking
 from source.domain import TaxForm
 
@@ -49,41 +51,49 @@ class ValidateTaxForm(Operation):
                       Skatteetaten compatible TaxForm object with all necessary tax information
 
         """
-        if "age" in self.tax_data.keys():
-            age = self.tax_data["age"]
+        if "alder" in self.tax_data.keys():
+            age = self.tax_data["alder"]
         else:
             age = 0
-        if "income" in self.tax_data.keys():
-            income = self.tax_data["income"]
+        if "brutto_inntekt_total" in self.tax_data.keys():
+            income = self.tax_data["brutto_inntekt_total"]
         else:
             income = 0
-        if "tax_year" in self.tax_data.keys():
-            tax_year = self.tax_data["tax_year"]
+        if "skatte_aar" in self.tax_data.keys():
+            tax_year = self.tax_data["skatte_aar"]
         else:
-            tax_year = 0
-        if "interst_income" in self.tax_data.keys():
-            interest_income = self.tax_data["interest_income"]
+            tax_year = date.today().year
+        if "renteinntekter_total" in self.tax_data.keys():
+            interest_income = self.tax_data["renteinntekter_total"]
         else:
             interest_income = 0
-        if "interst_cost" in self.tax_data.keys():
-            interest_cost = self.tax_data["interest_cost"]
+        if "rentekostnader_total" in self.tax_data.keys():
+            interest_cost = self.tax_data["rentekostnader_total"]
         else:
             interest_cost = 0
-        if "value_of_real_estate" in self.tax_data.keys():
-            value_of_real_estate = self.tax_data["value_of_real_estate"]
+        if "verdi_primarbolig" in self.tax_data.keys():
+            value_of_real_estate = self.tax_data["verdi_primarbolig"]
         else:
             value_of_real_estate = 0
-        if "bank_deposit" in self.tax_data.keys():
-            bank_deposit = self.tax_data["bank_deposit"]
+        if "bankinnskudd" in self.tax_data.keys():
+            bank_deposit = self.tax_data["bankinnskudd"]
         else:
             bank_deposit = 0
-        if "debt" in self.tax_data.keys():
-            debt = self.tax_data["debt"]
+        if "gjeld" in self.tax_data.keys():
+            debt = self.tax_data["gjeld"]
         else:
             debt = 0
+        if "fagforeningskontigent" in self.tax_data.keys():
+            union_fee = self.tax_data["fagforeningskontigent"]
+        else:
+            union_fee = 0
+        if "bsu" in self.tax_data.keys():
+            bsu = self.tax_data["bsu"]
+        else:
+            bsu = 0
 
         tax_form = TaxForm(age=age, income=income, tax_year=tax_year,
                            interest_income=interest_income, interest_cost=interest_cost,
                            value_of_real_estate=value_of_real_estate, bank_deposit=bank_deposit,
-                           debt=debt)
+                           debt=debt, union_fee=union_fee, bsu=bsu)
         return tax_form

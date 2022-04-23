@@ -72,6 +72,32 @@
         "id": "3qaTKD65xO",
         "beloep": "gjeldBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
+      },
+      {
+        "tekniskNavn": "betaltFagforeningskontingent",
+        "temakategori": "arbeidTrygdPensjon",
+        "temaunderkategori": "arbeidOgPensjonFradrag",
+        "sorteringsNoekkel": "030211",
+        "postnummer": "3.2.11",
+        "brukIKalkulator": "BrukesDirekte",
+        "ledetekst": "Fagforeningskontingent",
+        "id": "jvPclVgJr",
+        "beloep": "betaltFagforeningskontingentBelop",
+        "autofokus": true,
+        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
+      },
+      {
+        "tekniskNavn": "beloepSpartIBSUIInntektsaar",
+        "temakategori": "bankLaanForsikring",
+        "temaunderkategori": "bankinnskudd",
+        "sorteringsNoekkel": "010501",
+        "postnummer": "1.5.1",
+        "brukIKalkulator": "BrukesDirekte",
+        "ledetekst": "BSU sparebeløp i år",
+        "id": "dq5RUyOkq",
+        "beloep": "beloepSpartIBSUIInntektsaarBelop",
+        "autofokus": true,
+        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       }
     ]
   },

@@ -147,8 +147,8 @@ class SkatteetatenTaxProcessing(Process):
         """
         skatteetaten_tax_info = self.get_signal("skatteetaten_tax_info")
         income_extract_operation = Extract(skatteetaten_tax_info.data,
-                                           "samlet_loennsinntekt_med_trygdeavgiftsplikt_"
-                                           "og_med_trekkplikt")
+                                           "sum_inntekter_i_alminnelig_inntekt_foer_"
+                                           "fordelingsfradrag")
         self.add_node(income_extract_operation)
         self.add_transition(skatteetaten_tax_info, income_extract_operation, label="thread")
 

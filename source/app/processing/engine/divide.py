@@ -56,6 +56,7 @@ class Divide(Operation):
         shares = {}
         den = Decimal(
             str(list(self.denominator.values())[0]).replace(" ", "").replace("kr", ""))
+        den = den if den != 0 else Decimal("1")
         for key, val in self.numerator.items():
             num = Decimal(val.replace(" ", "").replace("kr", ""))
             shares.update(

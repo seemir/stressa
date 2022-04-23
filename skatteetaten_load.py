@@ -7,9 +7,11 @@ import json
 
 from source.app import SkatteetatenTaxProcessing
 
-tax_form = {"tax_year": 2022, "income": 671000, "age": 32}
+tax_form = {"skatte_aar": 2022, "brutto_inntekt_total": 671000, "alder": 32,
+            "fagforeningskontigent": 2250, "bsu": 25000, "rentekostnader_total": 11500,
+            "renteinntekter_total": 15000}
 
-tax_data = SkatteetatenTaxProcessing(tax_data=tax_form)
+tax_data = SkatteetatenTaxProcessing(tax_form)
 
 with open('skatteetaten.json', 'w') as fp:
     json.dump(tax_data.skatteetaten_tax_info, fp, indent=4)

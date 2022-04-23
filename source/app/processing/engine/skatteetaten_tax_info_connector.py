@@ -34,7 +34,9 @@ class SkatteetatenTaxInfoConnector(Operation):
         "formuesskattTilStat": "formuesskatt_til_stat",
         "formuesverdiForPrimaerbolig": "formuesverdi_for_primaerbolig",
         "formuesverdiSomPrimaerbolig": "formuesverdi_som_primaerbolig",
+        "fradragForFagforeningskontingent": "fradrag_for_fagforeningskontingent",
         "gjeldIInnenlandskeBanker": "gjeld_i_innenlandske_banker",
+        "innbetaltBeloepPaaBSUKontoIInntektsaar": "innbetalt_beloep_paa_bsu_konto_i_inntektsaar",
         "inntektsskattTilFylkeskommune": "inntektsskatt_til_fylkeskommune",
         "inntektsskattTilKommune": "inntektsskatt_til_kommune",
         "inntektsskattTilKommuneOgFylkeskommune": "inntektsskatt_til_kommune_og_fylkeskommune",
@@ -63,6 +65,7 @@ class SkatteetatenTaxInfoConnector(Operation):
         "sumInntekterIAlminneligInntektFoerFordelingsfradrag":
             "sum_inntekter_i_alminnelig_inntekt_foer_fordelingsfradrag",
         "sumMinstefradrag": "sum_minstefradrag",
+        "sumSkattefradrag": "sum_skattefradrag",
         "sumTrygdeavgift": "sum_trygdeavgift",
         "trinnskatt": "trinnskatt",
         "trygdeavgiftAvLoennsinntekt": "trygdeavgift_av_loennsinntekt"
@@ -103,7 +106,10 @@ class SkatteetatenTaxInfoConnector(Operation):
                                 interest_cost=self.tax_form.interest_cost,
                                 value_of_real_estate=self.tax_form.value_of_real_estate,
                                 bank_deposit=self.tax_form.bank_deposit,
-                                debt=self.tax_form.debt)
+                                debt=self.tax_form.debt,
+                                union_fee=self.tax_form.union_fee,
+                                bsu=self.tax_form.bsu)
+
         final_tax_info = {}
         for key, value in dict(sorted(tax_info.tax_information().items())).items():
             if key in self._tax_value_mapping.keys():

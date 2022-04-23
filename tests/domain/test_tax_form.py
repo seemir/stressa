@@ -143,14 +143,19 @@ class TestTaxForm:
         Test get properties method in tax_form class
 
         """
-        assert self.tax_form.tax_form_properties() == {'_age': '34', '_income': '560000',
-                                                       '_tax_year': '2022', '_interest_income': '0',
+        assert self.tax_form.tax_form_properties() == {'_age': '34',
+                                                       '_bank_deposit': '0',
+                                                       '_bsu': '0',
+                                                       '_debt': '0',
+                                                       '_income': '560000',
                                                        '_interest_cost': '0',
+                                                       '_interest_income': '0',
+                                                       '_tax_year': '2022',
+                                                       '_union_fee': '0',
                                                        '_value_of_real_estate': '0',
-                                                       '_bank_deposit': '0', '_debt': '0',
                                                        'tax_year_config': (
-                                                           'skatteberegningsgrunnlagV7',
-                                                           'skattepliktV9')}
+                                                       'skatteberegningsgrunnlagV7',
+                                                       'skattepliktV9')}
 
     def test_that_id_not_in_tax_form_properties(self):
         """

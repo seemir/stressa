@@ -81,7 +81,9 @@ class TaxForm(Entity):
                  interest_cost: Union[str, int, float] = 0,
                  value_of_real_estate: Union[str, int, float] = 0,
                  bank_deposit: Union[str, int, float] = 0,
-                 debt: Union[str, int, float] = 0):
+                 debt: Union[str, int, float] = 0,
+                 union_fee: Union[str, int, float] = 0,
+                 bsu: Union[str, int, float] = 0):
 
         """
         Constructor / Instantiate the class
@@ -104,6 +106,10 @@ class TaxForm(Entity):
                               value of bank deposit
         debt                : str, int, float
                               total debt
+        union_fee           : str, int, float
+                              yearly union_fee
+        bsu                 : str, int, float
+                              yearly bsu savings
 
         """
 
@@ -112,7 +118,8 @@ class TaxForm(Entity):
 
             self.validate_age(age)
             self.validate_tax_form_values(
-                [income, interest_income, interest_cost, value_of_real_estate, bank_deposit, debt])
+                [income, interest_income, interest_cost, value_of_real_estate, bank_deposit, debt,
+                 union_fee, bsu])
             self.validate_tax_year(tax_year)
 
             self._age = str(age)
@@ -125,6 +132,8 @@ class TaxForm(Entity):
                 else str(value_of_real_estate)
             self._bank_deposit = str(0) if not bank_deposit else str(bank_deposit)
             self._debt = str(0) if not debt else str(debt)
+            self._union_fee = str(0) if not union_fee else str(union_fee)
+            self._bsu = str(0) if not bsu else str(bsu)
 
         except Exception as tax_form_exception:
             raise tax_form_exception
@@ -339,6 +348,60 @@ class TaxForm(Entity):
         """
         self.validate_tax_form_values([new_debt])
         self._debt = str(new_debt)
+
+    @property
+    def union_fee(self):
+        """
+        union_fee getter
+
+        Returns
+        -------
+        out         : str
+                      active union_fee in taxform
+
+        """
+        return self._union_fee
+
+    @union_fee.setter
+    def union_fee(self, new_union_fee: Union[str, int, float]):
+        """
+        union_fee setter
+
+        Parameters
+        ----------
+        new_union_fee  : str, int, float
+                         new union_fee to set in object
+
+        """
+        self.validate_tax_form_values([new_union_fee])
+        self._debt = str(new_union_fee)
+
+    @property
+    def bsu(self):
+        """
+        bsu getter
+
+        Returns
+        -------
+        out         : str
+                      active bsu in taxform
+
+        """
+        return self._bsu
+
+    @bsu.setter
+    def bsu(self, new_bsu: Union[str, int, float]):
+        """
+        new_bsu setter
+
+        Parameters
+        ----------
+        new_bsu  : str, int, float
+                   new bsu to set in object
+
+        """
+        self.validate_tax_form_values([new_bsu])
+        self._bsu = str(new_bsu)
 
     @Debugger
     def tax_form_properties(self):

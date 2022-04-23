@@ -44,7 +44,9 @@ class Skatteetaten(Connector):
                  interest_cost: Union[str, int, float] = 0,
                  value_of_real_estate: Union[str, int, float] = 0,
                  bank_deposit: Union[str, int, float] = 0,
-                 debt: Union[str, int, float] = 0):
+                 debt: Union[str, int, float] = 0,
+                 union_fee: Union[str, int, float] = 0,
+                 bsu: Union[str, int, float] = 0):
         """
         Constructor / Instantiate the class
 
@@ -66,6 +68,10 @@ class Skatteetaten(Connector):
                               value of bank deposit
         debt                : str, int, float
                               total debt
+        union_fee           : str, int, float
+                              yearly union fee
+        bsu                 : str, int, float
+                              yearly bsu savings
 
         """
 
@@ -73,8 +79,9 @@ class Skatteetaten(Connector):
             super().__init__()
             Assertor.assert_data_types(
                 [age, income, tax_year, interest_income, interest_cost,
-                 value_of_real_estate, bank_deposit, debt],
+                 value_of_real_estate, bank_deposit, debt, union_fee, bsu],
                 [(str, int), (str, int, float), (int, str),
+                 (int, str, float), (int, str, float),
                  (int, str, float), (int, str, float),
                  (int, str, float), (int, str, float),
                  (int, str, float)])
@@ -91,6 +98,8 @@ class Skatteetaten(Connector):
                 else str(value_of_real_estate)
             self.bank_deposit = str(0) if not bank_deposit else str(bank_deposit)
             self.debt = str(0) if not debt else str(debt)
+            self.union_fee = str(0) if not union_fee else str(union_fee)
+            self.bsu = str(0) if not bsu else str(bsu)
             self.url = SKATTEETATEN_URL + self.tax_year
 
             LOGGER.success(
@@ -117,7 +126,9 @@ class Skatteetaten(Connector):
             .replace("paaloepteRenterBelop", self.interest_cost) \
             .replace("formuesverdiForPrimaerboligBelop", self.value_of_real_estate) \
             .replace("innskuddBelop", self.bank_deposit) \
-            .replace("gjeldBelop", self.debt)
+            .replace("gjeldBelop", self.debt) \
+            .replace("betaltFagforeningskontingentBelop", self.union_fee) \
+            .replace("beloepSpartIBSUIInntektsaarBelop", self.bsu)
 
     @Tracking
     def response(self):
@@ -177,11 +188,8 @@ class Skatteetaten(Connector):
                                     {"nettoformue": Money(str(val["nettoformue"])).value()})
                                 tax_info.update(
                                     {"beregnetSkatt": Money(str(val["beregnetSkatt"])).value()})
-                            elif tag == "beregnetSkattFoerSkattefradrag":
-                                tax_info.update(
-                                    {tag: {"grunnlag": Money(str(val["grunnlag"])).value(),
-                                           "beloep": Money(str(val["beloep"])).value()}})
-                            elif tag == "beregnetSkatt":
+                            elif tag in ["beregnetSkattFoerSkattefradrag", "sumSkattefradrag",
+                                         "beregnetSkatt"]:
                                 tax_info.update(
                                     {tag: {"grunnlag": Money(str(val["grunnlag"])).value(),
                                            "beloep": Money(str(val["beloep"])).value()}})

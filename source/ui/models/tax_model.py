@@ -7,6 +7,7 @@ from decimal import Decimal
 
 from PyQt5.QtCore import QObject
 
+from source.app import SkatteetatenTaxProcessing
 from source.util import Assertor
 from source.domain import Money
 
@@ -18,6 +19,24 @@ class TaxModel(Model):
     _total_posts = ["brutto_inntekt_total", "trygde_inntekt_total", "leieinntekt_total",
                     "renteinntekter_total", "andre_inntekter_total", "personinntekt_total",
                     "rentekostnader_total"]
+    _tax_input = ["skatte_aar", "alder", "fagforeningskontigent", "bsu", "rentekostnader_total",
+                  "verdi_primarbolig", "bankinnskudd", "gjeld"]
+    _tax_output = ["beregnet_skatt_grunnlag", "beregnet_skatt_beloep",
+                   "beregnet_skatt_foer_skattefradrag_grunnlag",
+                   "beregnet_skatt_foer_skattefradrag_beloep", "fellesskatt_grunnlag",
+                   "fellesskatt_beloep", "formuesskatt_til_kommune_grunnlag",
+                   "formuesskatt_til_kommune_beloep", "formuesskatt_til_stat_grunnlag",
+                   "formuesskatt_til_stat_beloep", "fradrag_for_fagforeningskontingent",
+                   "gjeldsgrad", "inntektsskatt_til_fylkeskommune_grunnlag",
+                   "inntektsskatt_til_fylkeskommune_beloep", "inntektsskatt_til_kommune_grunnlag",
+                   "inntektsskatt_til_kommune_beloep", "personinntekt_fra_loennsinntekt",
+                   "samlet_gjeld", "samlede_paaloepte_renter_paa_gjeld_i_innenlandske_banker",
+                   "samlede_opptjente_renter_i_innenlandske_banker", "skatteklasse",
+                   "skatteprosent", "skatteregnskapskommune", "sum_fradrag_i_alminnelig_inntekt",
+                   "sum_inntekter_i_alminnelig_inntekt_foer_fordelingsfradrag", "sum_minstefradrag",
+                   "sum_skattefradrag_grunnlag", "sum_skattefradrag_beloep",
+                   "sum_trygdeavgift_grunnlag", "sum_trygdeavgift_beloep",
+                   "trinnskatt_grunnlag", "trinnskatt_beloep"]
 
     def __init__(self, parent: QObject):
         super().__init__(parent)
@@ -32,6 +51,14 @@ class TaxModel(Model):
     @property
     def total_posts(self):
         return self._total_posts
+
+    @property
+    def tax_input(self):
+        return self._tax_input
+
+    @property
+    def tax_output(self):
+        return self._tax_output
 
     def tax_info(self):
         self.parent.ui.combo_box_tax_year.setFocus()
@@ -81,3 +108,25 @@ class TaxModel(Model):
                          Decimal("0"))
         self.data.update({line_edit: Money(str(net_wealth)).value()})
         return str(net_wealth)
+
+    def calculate_tax_income(self):
+        if "brutto_inntekt_total" in self.data.keys() and "skatte_aar" in self.data.keys() and \
+                "alder" in self.data.keys():
+            self.clear_line_edits(self.tax_output)
+            self.parent.ui.tab_widget_skattekalkulator.setCurrentIndex(1)
+            tax_form = {key: val.replace(" ", "").replace("kr", "") for key, val in
+                        self.data.items() if key in self.tax_input}
+            tax_form.update(
+                {'brutto_inntekt_total': (Money(self.data["brutto_inntekt_total"]) * Money("12"))
+                    .replace(" ", "")})
+            if 'renteinntekter_total' in self.data.keys():
+                tax_form.update({'renteinntekter_total': (
+                        Money(self.data["renteinntekter_total"]) * Money("12"))
+                                .replace(" ", "")})
+            if 'rentekostnader_total' in self.data.keys():
+                tax_form.update({'rentekostnader_total': (
+                        Money(self.data["rentekostnader_total"]) * Money("12"))
+                                .replace(" ", "")})
+
+            tax_data = SkatteetatenTaxProcessing(tax_data=tax_form).skatteetaten_tax_info
+            self.set_line_edits("", line_edits=self.tax_output, data=tax_data)
