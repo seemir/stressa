@@ -83,7 +83,7 @@ class ValidateFamily(Operation):
                 income = val.replace(" kr", "").replace(" ", "")
             elif "antall_biler" in key:
                 cars = val
-            elif "select_year" in key:
+            elif "budsjett_aar" in key:
                 select_year = val
         family_income = income if income else 0
         family_num_cars = cars if cars else 0

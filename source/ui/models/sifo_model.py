@@ -24,7 +24,7 @@ class SifoModel(Model):
     Implementation of the Sifo Model with logic for all SIFO calculations
 
     """
-    _select_year = ["", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013"]
+    _budsjett_aar = ["", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013"]
     _kjonn = ["", "Mann", "Kvinne"]
     _alder = ["", "0-5 mnd", "6-11 mnd", "1 år", "2 år", "3 år", "4-5 år",
               "6-9 år", "10-13 år", "14-17 år", "18-19 år", "20-30 år", "31-50 år", "51-60 år",
@@ -49,7 +49,7 @@ class SifoModel(Model):
         """
         Assertor.assert_data_types([parent], [QObject])
         super(SifoModel, self).__init__(parent)
-        self.parent.ui.combo_box_select_year.addItems(self._select_year)
+        self.parent.ui.combo_box_budsjett_aar.addItems(self._budsjett_aar)
         for num in range(1, 8):
             getattr(self.parent.ui, "combo_box_kjonn_" + str(num)).addItems(
                 self._kjonn)
@@ -94,13 +94,13 @@ class SifoModel(Model):
                                        clearing=self.clear_results))
 
     @pyqtSlot()
-    def set_budget_year(self):
+    def set_budsjett_aar(self):
         """
         method for setting the budget year
 
         """
-        self.parent.ui.combo_box_select_year.activated.connect(
-            lambda: self.set_combo_box("select_year"))
+        self.parent.ui.combo_box_budsjett_aar.activated.connect(
+            lambda: self.set_combo_box("budsjett_aar"))
 
     @pyqtSlot()
     def set_gender(self):
@@ -362,7 +362,8 @@ class SifoModel(Model):
         """
         try:
             self.clear_results()
-            if any("person" in key and len(val) > 1 for key, val in self.data.items()):
+            if "budsjett_aar" in self.data.keys() and any("person" in key and len(val) > 1 for
+                                                          key, val in self.data.items()):
                 self.parent.ui.tab_widget_sifo.setCurrentIndex(1)
                 self.sifo_process = SifoExpensesProcess(self.data)
                 self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
@@ -388,7 +389,7 @@ class SifoModel(Model):
         self.set_age()
         self.set_extra_info()
         self.set_cars()
-        self.set_budget_year()
+        self.set_budsjett_aar()
 
     @pyqtSlot()
     def clear_results(self):
@@ -404,7 +405,7 @@ class SifoModel(Model):
         method for clearing all information from SIFO dialog
 
         """
-        self.parent.ui.combo_box_select_year.setCurrentIndex(0)
+        self.parent.ui.combo_box_budsjett_aar.setCurrentIndex(0)
         for combo_box in range(1, 8):
             getattr(self.parent.ui, "combo_box_kjonn_" + str(combo_box)).setCurrentIndex(0)
             getattr(self.parent.ui, "combo_box_alder_" + str(combo_box)).setCurrentIndex(0)

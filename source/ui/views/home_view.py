@@ -10,7 +10,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import os
-# import ctypes
+import ctypes
 
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtCore import pyqtSlot
@@ -28,9 +28,8 @@ from .tax_view import TaxView
 
 from . import resources
 
-
-# myappid = 'Stressa.stressa.ui.version'
-# ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+myappid = 'Stressa.stressa.ui.version'
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 
 class HomeView(QMainWindow):
@@ -54,6 +53,7 @@ class HomeView(QMainWindow):
         self._history_view = HistoryView(self)
         self._meta_view = MetaView(self)
         self._statistics_view = StatisticsView(self)
+        self._home_model = HomeModel(self)
 
         self._sifo_model = self.sifo_view.sifo_model
         self._mortgage_model = MortgageModel(self)
@@ -63,12 +63,12 @@ class HomeView(QMainWindow):
         self._mortgage_model.mortgage_info()
         self._finn_model.finn_info()
         self._budget_view.budget_info()
+        self._home_model.liquidity_info()
 
         self.ui.push_button_budsjett.clicked.connect(self.budget_view.display)
         self.ui.push_button_skatt.clicked.connect(self.tax_view.display)
         self.ui.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
 
-        self._home_model = HomeModel(self)
         self.ui.push_button_home_meta_data.clicked.connect(self._meta_view.display)
         self.ui.push_button_tom_skjema.clicked.connect(self.home_model.clear_all)
         self.ui.action_logo.triggered.connect(self.info_tab)

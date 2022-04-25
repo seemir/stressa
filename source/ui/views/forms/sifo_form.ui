@@ -474,7 +474,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-387</y>
+        <y>0</y>
         <width>874</width>
         <height>682</height>
        </rect>
@@ -2504,7 +2504,7 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QComboBox" name="combo_box_select_year"/>
+            <widget class="QComboBox" name="combo_box_budsjett_aar"/>
            </item>
            <item row="0" column="0">
             <widget class="QLabel" name="label_budsjettaar">
@@ -3529,7 +3529,7 @@
  <tabstops>
   <tabstop>tab_widget_sifo</tabstop>
   <tabstop>scroll_area_sifo</tabstop>
-  <tabstop>combo_box_select_year</tabstop>
+  <tabstop>combo_box_budsjett_aar</tabstop>
   <tabstop>combo_box_kjonn_1</tabstop>
   <tabstop>combo_box_alder_1</tabstop>
   <tabstop>combo_box_tillegg_1</tabstop>
