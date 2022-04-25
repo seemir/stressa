@@ -2688,7 +2688,7 @@
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QComboBox" name="combo_box_tax_year"/>
+               <widget class="QComboBox" name="combo_box_skatte_aar"/>
               </item>
               <item row="19" column="0" colspan="2">
                <widget class="QPushButton" name="push_button_meta_data_1">
@@ -5549,7 +5549,7 @@
  <tabstops>
   <tabstop>scrollArea</tabstop>
   <tabstop>tab_widget_skattekalkulator</tabstop>
-  <tabstop>combo_box_tax_year</tabstop>
+  <tabstop>combo_box_skatte_aar</tabstop>
   <tabstop>line_edit_alder</tabstop>
   <tabstop>line_edit_fagforeningskontigent</tabstop>
   <tabstop>line_edit_bsu</tabstop>

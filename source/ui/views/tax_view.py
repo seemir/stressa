@@ -49,6 +49,7 @@ class TaxView(QDialog):
         self.ui.push_button_meta_data_1.clicked.connect(self.meta_view.display)
         self.ui.push_button_avbryt_1.clicked.connect(self.close)
 
+        self.ui.push_button_eksport.clicked.connect(self.export)
         self.ui.push_button_tilbake.clicked.connect(self.back)
         self.ui.push_button_meta_data_2.clicked.connect(self.meta_view.display)
         self.ui.push_button_avbryt_2.clicked.connect(self.close)
@@ -114,7 +115,7 @@ class TaxView(QDialog):
 
     @pyqtSlot()
     def clear_all(self):
-        self.ui.combo_box_tax_year.setCurrentIndex(0)
+        self.ui.combo_box_skatte_aar.setCurrentIndex(0)
         self.tax_model.clear_combo_boxes(["skatte_aar"])
         self.tax_model.clear_line_edit("alder")
         self.tax_model.clear_line_edit("fagforeningskontigent")
@@ -127,4 +128,17 @@ class TaxView(QDialog):
         self.tax_model.clear_line_edit("netto_formue")
 
         self.tax_model.clear_line_edits(self.tax_model.tax_output)
-        self.ui.combo_box_tax_year.setFocus()
+        self.ui.combo_box_skatte_aar.setFocus()
+
+    def export(self):
+        """
+        method for exporting Skatteetaten monthly tax value
+
+        """
+        monthly_tax_value = self.ui.line_edit_beregnet_skatt_per_mnd_beloep.text()
+        if monthly_tax_value:
+            self.parent.mortgage_model.set_line_edit("beregnet_skatt_per_mnd_beloep",
+                                                     data=monthly_tax_value)
+        else:
+            self.parent.mortgage_model.clear_line_edit("beregnet_skatt_per_mnd_beloep")
+        self.close()

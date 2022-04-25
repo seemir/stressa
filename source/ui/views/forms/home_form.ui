@@ -2467,7 +2467,7 @@
                    </widget>
                   </item>
                   <item row="10" column="1">
-                   <widget class="QLineEdit" name="line_edit_total_skatt">
+                   <widget class="QLineEdit" name="line_edit_beregnet_skatt_per_mnd_beloep">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -11587,7 +11587,7 @@
   <tabstop>line_edit_andre_inntekter_total</tabstop>
   <tabstop>line_edit_personinntekt_total</tabstop>
   <tabstop>push_button_skatt</tabstop>
-  <tabstop>line_edit_total_skatt</tabstop>
+  <tabstop>line_edit_beregnet_skatt_per_mnd_beloep</tabstop>
   <tabstop>line_edit_total_netto</tabstop>
   <tabstop>line_edit_student_lan_total</tabstop>
   <tabstop>line_edit_kreditt_gjeld_total</tabstop>

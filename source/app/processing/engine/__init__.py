@@ -39,3 +39,4 @@ from .extract import Extract
 from .flatten import Flatten
 from .signal import Signal
 from .divide import Divide
+from .factor import Factor

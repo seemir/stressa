@@ -8,10 +8,12 @@ Process for validating tax form
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from source.domain import Money
 from source.util import Assertor, Tracking, Profiling, Debugger
 
 from .engine import Process, Signal, InputOperation, ValidateTaxForm, \
-    SkatteetatenTaxInfoConnector, OutputOperation, OutputSignal, Extract, Divide, Multiplex, Flatten
+    SkatteetatenTaxInfoConnector, OutputOperation, OutputSignal, Extract, Divide, Multiplex, \
+    Flatten, Factor
 
 
 class SkatteetatenTaxProcessing(Process):
@@ -38,8 +40,8 @@ class SkatteetatenTaxProcessing(Process):
         self.skatteetaten_tax_info_connector()
 
         self.run_parallel([self.extract_1, self.extract_2, self.extract_3])
-        self.divide_1()
-        self.divide_2()
+        self.factor()
+        self.run_parallel([self.divide_1, self.divide_2, self.divide_3])
         self.multiplex()
         self.flatten()
 
@@ -178,6 +180,22 @@ class SkatteetatenTaxProcessing(Process):
 
     @Profiling
     @Debugger
+    def factor(self):
+        """
+        method for creating a factor
+
+        """
+        factor_operation = Factor("12", "Monthly factor conversion")
+        self.add_node(factor_operation)
+
+        factor = factor_operation.run()
+        factor_signal = Signal(factor, "Monthly factor")
+
+        self.add_signal(factor_signal, "monthly_factor")
+        self.add_transition(factor_operation, factor_signal)
+
+    @Profiling
+    @Debugger
     def divide_1(self):
         """
         method for calculating tax percentage
@@ -190,8 +208,8 @@ class SkatteetatenTaxProcessing(Process):
             "Calculate Tax Share of Total Monthly Income")
         self.add_node(tax_percentage)
 
-        self.add_transition(self.get_signal("total_income"), tax_percentage, label="divisor")
-        self.add_transition(self.get_signal("total_tax"), tax_percentage, label="quantity")
+        self.add_transition(self.get_signal("total_income"), tax_percentage, label="thread")
+        self.add_transition(self.get_signal("total_tax"), tax_percentage, label="thread")
 
         tax_share_of_monthly_income = tax_percentage.run()
         tax_share_of_monthly_income_signal = Signal(tax_share_of_monthly_income,
@@ -216,8 +234,8 @@ class SkatteetatenTaxProcessing(Process):
             "Calculate Total Monthly Income Share of Debt")
         self.add_node(debt_level_operation)
 
-        self.add_transition(self.get_signal("total_income"), debt_level_operation, label="divisor")
-        self.add_transition(self.get_signal("total_debt"), debt_level_operation, label="quantity")
+        self.add_transition(self.get_signal("total_income"), debt_level_operation, label="thread")
+        self.add_transition(self.get_signal("total_debt"), debt_level_operation, label="thread")
 
         debt_level = debt_level_operation.run(percent=False)
         debt_level_signal = Signal(debt_level, "Total Monthly Income Share of Debt",
@@ -228,23 +246,51 @@ class SkatteetatenTaxProcessing(Process):
 
     @Profiling
     @Debugger
+    def divide_3(self):
+        """
+        method for calculating monthly tax payment
+
+        """
+
+        monthly_tax_operation = Divide(
+            {"beregnet_skatt_per_mnd_beloep": self.get_signal("total_tax").data["beregnet_skatt"][
+                "beloep"]}, self.get_signal("monthly_factor").data,
+            "Calculate Total Monthly Tax Cost")
+        self.add_node(monthly_tax_operation)
+
+        self.add_transition(self.get_signal("total_tax"), monthly_tax_operation, label="thread")
+        self.add_transition(self.get_signal("monthly_factor"), monthly_tax_operation,
+                            label="thread")
+
+        monthly_tax = monthly_tax_operation.run(percent=False, money=True, rnd=0)
+
+        monthly_tax_signal = Signal(monthly_tax, "Total Monthly Tax Cost",
+                                    prettify_keys=True, length=10)
+
+        self.add_signal(monthly_tax_signal, "monthly_tax")
+        self.add_transition(monthly_tax_operation, monthly_tax_signal)
+
+    @Profiling
+    @Debugger
     def multiplex(self):
         """
-        method for multiplxing tax share with tax info
+        method for multiplexing tax share with tax info
 
         """
         tax_share_of_monthly_income = self.get_signal("tax_share_of_monthly_income")
         debt_level = self.get_signal("debt_level")
         skatteetaten_tax_info = self.get_signal("skatteetaten_tax_info")
+        monthly_tax = self.get_signal("monthly_tax")
 
         multiplex_operation = Multiplex(
-            [tax_share_of_monthly_income, debt_level, skatteetaten_tax_info],
+            [tax_share_of_monthly_income, debt_level, skatteetaten_tax_info, monthly_tax],
             "Multiplex Tax Information")
 
         self.add_node(multiplex_operation)
         self.add_transition(tax_share_of_monthly_income, multiplex_operation)
         self.add_transition(debt_level, multiplex_operation)
         self.add_transition(skatteetaten_tax_info, multiplex_operation)
+        self.add_transition(monthly_tax, multiplex_operation)
 
         multiplex = multiplex_operation.run()
         multiplex_signal = Signal(multiplex, "Multiplexed Tax Information", prettify_keys=True,

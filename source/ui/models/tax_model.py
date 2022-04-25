@@ -22,7 +22,7 @@ class TaxModel(Model):
     _tax_input = ["skatte_aar", "alder", "fagforeningskontigent", "bsu", "rentekostnader_total",
                   "verdi_primarbolig", "bankinnskudd", "gjeld"]
     _tax_output = ["beregnet_skatt_grunnlag", "beregnet_skatt_beloep",
-                   "beregnet_skatt_foer_skattefradrag_grunnlag",
+                   "beregnet_skatt_foer_skattefradrag_grunnlag", "beregnet_skatt_per_mnd_beloep",
                    "beregnet_skatt_foer_skattefradrag_beloep", "fellesskatt_grunnlag",
                    "fellesskatt_beloep", "formuesskatt_til_kommune_grunnlag",
                    "formuesskatt_til_kommune_beloep", "formuesskatt_til_stat_grunnlag",
@@ -42,7 +42,7 @@ class TaxModel(Model):
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QObject])
 
-        self.parent.ui.combo_box_tax_year.addItems(self.tax_year)
+        self.parent.ui.combo_box_skatte_aar.addItems(self.tax_year)
 
     @property
     def tax_year(self):
@@ -61,9 +61,9 @@ class TaxModel(Model):
         return self._tax_output
 
     def tax_info(self):
-        self.parent.ui.combo_box_tax_year.setFocus()
-        self.parent.ui.combo_box_tax_year.activated.connect(
-            lambda: self.set_combo_box("tax_year", key_name="skatte_aar"))
+        self.parent.ui.combo_box_skatte_aar.setFocus()
+        self.parent.ui.combo_box_skatte_aar.activated.connect(
+            lambda: self.set_combo_box("skatte_aar", key_name="skatte_aar"))
         self.parent.ui.line_edit_alder.textEdited.connect(
             lambda: self.set_line_edit("alder"))
 

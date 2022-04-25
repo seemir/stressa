@@ -120,8 +120,8 @@ class MortgageModel(Model):
             lambda: self.set_line_edit("trygde_inntekt_total", Money, "value"))
         self.parent.ui.line_edit_leieinntekt_total.editingFinished.connect(
             lambda: self.set_line_edit("leieinntekt_total", Money, "value"))
-        self.parent.ui.line_edit_total_skatt.editingFinished.connect(
-            lambda: self.set_line_edit("total_skatt", Money, "value"))
+        self.parent.ui.line_edit_beregnet_skatt_per_mnd_beloep.editingFinished.connect(
+            lambda: self.set_line_edit("beregnet_skatt_per_mnd_beloep", Money, "value"))
         self.parent.ui.line_edit_total_netto.editingFinished.connect(
             lambda: self.set_line_edit("total_netto", Money, "value"))
         self.parent.ui.line_edit_netto_likviditet.editingFinished.connect(
@@ -171,8 +171,9 @@ class MortgageModel(Model):
                                "personinntekt", "student_lan", "kreditt_gjeld",
                                "husleie", "strom", "andre_utgifter", "sum_utgifter"],
                               postfix="_total")
-        self.clear_line_edits(["total_skatt", "sifo_utgifter", "total_netto", "totale_utgifter",
-                               "netto_likviditet", "likviditetsgrad", "egenkapital"])
+        self.clear_line_edits(["beregnet_skatt_per_mnd_beloep", "sifo_utgifter", "total_netto",
+                               "totale_utgifter", "netto_likviditet", "likviditetsgrad",
+                               "egenkapital"])
         self.clear_combo_boxes(["kjonn_1", "kjonn_2", "lanetype", "intervall", "laneperiode"])
         self.clear_date_edits(["fodselsdato_1", "fodselsdato_2", "startdato"])
         self.parent.budget_view.clear_all()
