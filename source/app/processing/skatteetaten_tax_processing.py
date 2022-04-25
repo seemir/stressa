@@ -8,7 +8,6 @@ Process for validating tax form
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from source.domain import Money
 from source.util import Assertor, Tracking, Profiling, Debugger
 
 from .engine import Process, Signal, InputOperation, ValidateTaxForm, \

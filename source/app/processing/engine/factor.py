@@ -8,8 +8,6 @@ Operation to generating a factor object
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from typing import Union
-
 from source.util import Assertor, Tracking
 
 from .operation import Operation
