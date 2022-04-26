@@ -61,6 +61,7 @@ class TaxModel(Model):
         return self._tax_output
 
     def tax_info(self):
+        self.parent.ui.tab_widget_skattekalkulator.setCurrentIndex(0)
         self.parent.ui.combo_box_skatte_aar.setFocus()
         self.parent.ui.combo_box_skatte_aar.activated.connect(
             lambda: self.set_combo_box("skatte_aar", key_name="skatte_aar"))

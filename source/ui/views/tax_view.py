@@ -99,6 +99,7 @@ class TaxView(QDialog):
 
     @pyqtSlot()
     def display(self):
+
         self.tax_model.tax_info()
         self.show()
 
@@ -128,6 +129,8 @@ class TaxView(QDialog):
         self.tax_model.clear_line_edit("netto_formue")
 
         self.tax_model.clear_line_edits(self.tax_model.tax_output)
+        self.parent.mortgage_model.clear_line_edit("beregnet_skatt_per_mnd_beloep")
+
         self.ui.combo_box_skatte_aar.setFocus()
 
     def export(self):

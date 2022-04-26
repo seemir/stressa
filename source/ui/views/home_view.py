@@ -59,6 +59,7 @@ class HomeView(QMainWindow):
         self._mortgage_model = MortgageModel(self)
         self._finn_model = FinnModel(self)
         self._budget_model = self.budget_view.budget_model
+        self._tax_model = self.tax_view.tax_model
 
         self._mortgage_model.mortgage_info()
         self._finn_model.finn_info()
@@ -228,6 +229,19 @@ class HomeView(QMainWindow):
 
         """
         return self._budget_model
+
+    @property
+    def tax_model(self):
+        """
+        TaxModel getter
+
+        Returns
+        -------
+        out     : TaxModel
+                  Active TaxModel in the BudgetView
+
+        """
+        return self._tax_model
 
     @pyqtSlot()
     def info_tab(self):
