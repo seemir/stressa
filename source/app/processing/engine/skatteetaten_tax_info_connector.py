@@ -55,6 +55,8 @@ class SkatteetatenTaxInfoConnector(Operation):
         "samletInnskuddIInnenlandskeBanker": "samlet_innskudd_i_innenlandske_banker",
         "samletLoennsinntektMedTrygdeavgiftspliktOgMedTrekkplikt":
             "samlet_loennsinntekt_med_trygdeavgiftsplikt_og_med_trekkplikt",
+        "samletSkattepliktigOverskuddFraUtleieAvFastEiendom":
+            "samlet_skattepliktig_overskudd_fra_utleie_av_fast_eiendom",
         "samletVerdiFoerVerdsettingsrabattForAlleFormuesobjekter":
             "samlet_verdi_foer_verdsettingsrabatt_for_alle_formuesobjekter",
         "samletVerdiFoerVerdsettingsrabattForPrimaerbolig":
@@ -108,7 +110,9 @@ class SkatteetatenTaxInfoConnector(Operation):
                                 bank_deposit=self.tax_form.bank_deposit,
                                 debt=self.tax_form.debt,
                                 union_fee=self.tax_form.union_fee,
-                                bsu=self.tax_form.bsu)
+                                bsu=self.tax_form.bsu,
+                                other_income=self.tax_form.other_income,
+                                rental_income=self.tax_form.rental_income)
 
         final_tax_info = {}
         for key, value in dict(sorted(tax_info.tax_information().items())).items():

@@ -83,7 +83,9 @@ class TaxForm(Entity):
                  bank_deposit: Union[str, int, float] = 0,
                  debt: Union[str, int, float] = 0,
                  union_fee: Union[str, int, float] = 0,
-                 bsu: Union[str, int, float] = 0):
+                 bsu: Union[str, int, float] = 0,
+                 other_income: Union[str, int, float] = 0,
+                 rental_income: Union[str, int, float] = 0):
 
         """
         Constructor / Instantiate the class
@@ -110,6 +112,10 @@ class TaxForm(Entity):
                               yearly union_fee
         bsu                 : str, int, float
                               yearly bsu savings
+        other_income        : str, int, float
+                              other yearly income
+        rental_income       : str, int, float
+                              yearly rental income
 
         """
 
@@ -119,7 +125,7 @@ class TaxForm(Entity):
             self.validate_age(age)
             self.validate_tax_form_values(
                 [income, interest_income, interest_cost, value_of_real_estate, bank_deposit, debt,
-                 union_fee, bsu])
+                 union_fee, bsu, other_income, rental_income])
             self.validate_tax_year(tax_year)
 
             self._age = str(age)
@@ -134,6 +140,8 @@ class TaxForm(Entity):
             self._debt = str(0) if not debt else str(debt)
             self._union_fee = str(0) if not union_fee else str(union_fee)
             self._bsu = str(0) if not bsu else str(bsu)
+            self._other_income = str(0) if not other_income else str(other_income)
+            self._rental_income = str(0) if not rental_income else str(rental_income)
 
         except Exception as tax_form_exception:
             raise tax_form_exception
@@ -403,6 +411,60 @@ class TaxForm(Entity):
         self.validate_tax_form_values([new_bsu])
         self._bsu = str(new_bsu)
 
+    @property
+    def other_income(self):
+        """
+        other_income getter
+
+        Returns
+        -------
+        out         : str
+                      active other_income in taxform
+
+        """
+        return self._other_income
+
+    @other_income.setter
+    def other_income(self, new_other_income: Union[str, int, float]):
+        """
+        new_other_income setter
+
+        Parameters
+        ----------
+        new_other_income  : str, int, float
+                            new bsu to set in object
+
+        """
+        self.validate_tax_form_values([new_other_income])
+        self._bsu = str(new_other_income)
+
+    @property
+    def rental_income(self):
+        """
+        rental_income getter
+
+        Returns
+        -------
+        out         : str
+                      active rental_income in taxform
+
+        """
+        return self._rental_income
+
+    @rental_income.setter
+    def rental_income(self, new_rental_income: Union[str, int, float]):
+        """
+        new_rental_income setter
+
+        Parameters
+        ----------
+        new_rental_income  : str, int, float
+                             new bsu to set in object
+
+        """
+        self.validate_tax_form_values([new_rental_income])
+        self._bsu = str(new_rental_income)
+
     @Debugger
     def tax_form_properties(self):
         """
@@ -433,5 +495,6 @@ class TaxForm(Entity):
         return ", ".join(
             ['non_negative_age', 'non_negative_income', 'non_negative_interest_income',
              '\\nnon_negative_interest_cost', 'non_negative_value_of_real_estate',
-             'non_negative_bank_deposit', '\\nnon_negative_debt',
+             'non_negative_bank_deposit', '\\nnon_negative_debt', 'non_negative_bsu',
+             'non_negative_union_fee', 'non_negative_other_income',
              'tax_year_criteria']).replace("'", "")

@@ -91,9 +91,18 @@ class ValidateTaxForm(Operation):
             bsu = self.tax_data["bsu"]
         else:
             bsu = 0
+        if "andre_inntekter_total" in self.tax_data.keys():
+            other_income = self.tax_data["andre_inntekter_total"]
+        else:
+            other_income = 0
+        if "leieinntekt_total" in self.tax_data.keys():
+            rental_income = self.tax_data["leieinntekt_total"]
+        else:
+            rental_income = 0
 
         tax_form = TaxForm(age=age, income=income, tax_year=tax_year,
                            interest_income=interest_income, interest_cost=interest_cost,
                            value_of_real_estate=value_of_real_estate, bank_deposit=bank_deposit,
-                           debt=debt, union_fee=union_fee, bsu=bsu)
+                           debt=debt, union_fee=union_fee, bsu=bsu, other_income=other_income,
+                           rental_income=rental_income)
         return tax_form

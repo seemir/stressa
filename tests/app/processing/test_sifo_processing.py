@@ -29,7 +29,7 @@ class TestCalculateSifoExpenses:
         """
         cls.data = {"person_1": {"alder_1": "20-30 år", "kjonn_1": "Mann"},
                     "person_2": {"alder_2": "20-30 år", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
-                    "select_year": "2021"}
+                    "budsjett_aar": "2021"}
 
     def test_calculate_sifo_expenses_is_instance_of_process(self):
         """
@@ -110,7 +110,7 @@ class TestCalculateSifoExpenses:
                     "person_2": {"alder_2": "20-30 år", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
                     "person_3": {"alder_3": "6-9 år", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
                     "person_4": {"alder_4": "3 år", "barnehage_4": "Ja", "kjonn_4": "Mann"},
-                    "select_year": "2021"}
+                    "budsjett_aar": "2021"}
         calculate_sifo_expenses = SifoExpensesProcess(new_data)
         assert not calculate_sifo_expenses.get_signal("new_data")
 
@@ -120,7 +120,7 @@ class TestCalculateSifoExpenses:
         Test that the expenses_shares getter
 
         """
-        data = {"person_1": {"alder_1": "20-30 år", "kjonn_1": "Mann"}, "select_year": "2021"}
+        data = {"person_1": {"alder_1": "20-30 år", "kjonn_1": "Mann"}, "budsjett_aar": "2021"}
         base_expenses_shares = {'barnehage': '0.00 %', 'biler': '0.00 %', 'dagligvarer': '2.84 %',
                                 'fritid': '13.83 %', 'helse': '6.41 %', 'husholdsart': '3.66 %',
                                 'klar': '8.15 %', 'kollektivt': '7.28 %', 'mat': '35.64 %',

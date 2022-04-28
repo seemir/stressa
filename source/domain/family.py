@@ -69,7 +69,7 @@ class Family(Entity):
 
         """
         if not select_year:
-            raise ValueError("Expected a 'budget year', got '{}' "
+            raise ValueError("Expected a 'budsjett aar', got '{}' "
                              "".format(select_year.__class__.__name__))
 
     @staticmethod

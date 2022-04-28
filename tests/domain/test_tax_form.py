@@ -150,12 +150,14 @@ class TestTaxForm:
                                                        '_income': '560000',
                                                        '_interest_cost': '0',
                                                        '_interest_income': '0',
+                                                       '_other_income': '0',
+                                                       '_rental_income': '0',
                                                        '_tax_year': '2022',
                                                        '_union_fee': '0',
                                                        '_value_of_real_estate': '0',
                                                        'tax_year_config': (
-                                                       'skatteberegningsgrunnlagV7',
-                                                       'skattepliktV9')}
+                                                           'skatteberegningsgrunnlagV7',
+                                                           'skattepliktV9')}
 
     def test_that_id_not_in_tax_form_properties(self):
         """
@@ -177,8 +179,8 @@ class TestTaxForm:
         Test that rules are included in tax_form object
 
         """
-        rules = ['non_negative_age', 'non_negative_income', 'non_negative_interest_income',
-                 '\\nnon_negative_interest_cost', 'non_negative_value_of_real_estate',
-                 'non_negative_bank_deposit', '\\nnon_negative_debt',
-                 'tax_year_criteria']
+        rules = ['non_negative_age, non_negative_income, non_negative_interest_income, '
+                 '\\nnon_negative_interest_cost, non_negative_value_of_real_estate, '
+                 'non_negative_bank_deposit, \\nnon_negative_debt, non_negative_bsu, '
+                 'non_negative_union_fee, non_negative_other_income, tax_year_criteria']
         assert self.tax_form.rules() == ", ".join(rules).replace("'", "")

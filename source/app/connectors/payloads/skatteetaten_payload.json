@@ -74,6 +74,32 @@
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
+        "tekniskNavn": "annenArbeidsinntekt",
+        "temakategori": "arbeidTrygdPensjon",
+        "temaunderkategori": "loennsinntekter",
+        "sorteringsNoekkel": "020105",
+        "postnummer": "2.1.5",
+        "brukIKalkulator": "BrukesDirekte",
+        "ledetekst": "Annen arbeidsinntekt",
+        "id": "WTjOw5TZF",
+        "beloep": "annenArbeidsinntektBeloep",
+        "autofokus": true,
+        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
+      },
+      {
+        "tekniskNavn": "nettoinntektVedUtleieAvFastEiendomMv",
+        "temakategori": "boligOgEiendeler",
+        "temaunderkategori": "boligEindelerInntekt",
+        "sorteringsNoekkel": "020802",
+        "postnummer": "2.8.2",
+        "brukIKalkulator": "BrukesDirekte",
+        "ledetekst": "Utleie av fast eiendom",
+        "id": "BZPLQkrif",
+        "beloep": "nettoinntektVedUtleieAvFastEiendomMvBeloep",
+        "autofokus": true,
+        "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
+      },
+      {
         "tekniskNavn": "betaltFagforeningskontingent",
         "temakategori": "arbeidTrygdPensjon",
         "temaunderkategori": "arbeidOgPensjonFradrag",

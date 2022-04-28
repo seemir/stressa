@@ -46,7 +46,9 @@ class Skatteetaten(Connector):
                  bank_deposit: Union[str, int, float] = 0,
                  debt: Union[str, int, float] = 0,
                  union_fee: Union[str, int, float] = 0,
-                 bsu: Union[str, int, float] = 0):
+                 bsu: Union[str, int, float] = 0,
+                 other_income: Union[str, int, float] = 0,
+                 rental_income: Union[str, int, float] = 0):
         """
         Constructor / Instantiate the class
 
@@ -72,6 +74,10 @@ class Skatteetaten(Connector):
                               yearly union fee
         bsu                 : str, int, float
                               yearly bsu savings
+        other_income        : str, int, float
+                              other income to be taxed
+        rental_income       : str, int, float
+                              rental income
 
         """
 
@@ -79,8 +85,10 @@ class Skatteetaten(Connector):
             super().__init__()
             Assertor.assert_data_types(
                 [age, income, tax_year, interest_income, interest_cost,
-                 value_of_real_estate, bank_deposit, debt, union_fee, bsu],
+                 value_of_real_estate, bank_deposit, debt, union_fee, bsu, other_income,
+                 rental_income],
                 [(str, int), (str, int, float), (int, str),
+                 (int, str, float), (int, str, float),
                  (int, str, float), (int, str, float),
                  (int, str, float), (int, str, float),
                  (int, str, float), (int, str, float),
@@ -100,6 +108,8 @@ class Skatteetaten(Connector):
             self.debt = str(0) if not debt else str(debt)
             self.union_fee = str(0) if not union_fee else str(union_fee)
             self.bsu = str(0) if not bsu else str(bsu)
+            self.other_income = str(0) if not other_income else str(other_income)
+            self.rental_income = str(0) if not rental_income else str(rental_income)
             self.url = SKATTEETATEN_URL + self.tax_year
 
             LOGGER.success(
@@ -128,7 +138,9 @@ class Skatteetaten(Connector):
             .replace("innskuddBelop", self.bank_deposit) \
             .replace("gjeldBelop", self.debt) \
             .replace("betaltFagforeningskontingentBelop", self.union_fee) \
-            .replace("beloepSpartIBSUIInntektsaarBelop", self.bsu)
+            .replace("beloepSpartIBSUIInntektsaarBelop", self.bsu) \
+            .replace("annenArbeidsinntektBeloep", self.other_income) \
+            .replace("nettoinntektVedUtleieAvFastEiendomMvBeloep", self.rental_income)
 
     @Tracking
     def response(self):

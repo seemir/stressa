@@ -31,7 +31,8 @@ class TaxModel(Model):
                    "inntektsskatt_til_fylkeskommune_beloep", "inntektsskatt_til_kommune_grunnlag",
                    "inntektsskatt_til_kommune_beloep", "personinntekt_fra_loennsinntekt",
                    "samlet_gjeld", "samlede_paaloepte_renter_paa_gjeld_i_innenlandske_banker",
-                   "samlede_opptjente_renter_i_innenlandske_banker", "skatteklasse",
+                   "samlede_opptjente_renter_i_innenlandske_banker",
+                   "samlet_skattepliktig_overskudd_fra_utleie_av_fast_eiendom", "skatteklasse",
                    "skatteprosent", "skatteregnskapskommune", "sum_fradrag_i_alminnelig_inntekt",
                    "sum_inntekter_i_alminnelig_inntekt_foer_fordelingsfradrag", "sum_minstefradrag",
                    "sum_skattefradrag_grunnlag", "sum_skattefradrag_beloep",
@@ -128,6 +129,13 @@ class TaxModel(Model):
                 tax_form.update({'rentekostnader_total': (
                         Money(self.data["rentekostnader_total"]) * Money("12"))
                                 .replace(" ", "")})
-
+            if 'andre_inntekter_total' in self.data.keys():
+                tax_form.update({'andre_inntekter_total': (
+                        Money(self.data["andre_inntekter_total"]) * Money("12"))
+                                .replace(" ", "")})
+            if 'leieinntekt_total' in self.data.keys():
+                tax_form.update({'leieinntekt_total': (
+                        Money(self.data["leieinntekt_total"]) * Money("12"))
+                                .replace(" ", "")})
             tax_data = SkatteetatenTaxProcessing(tax_data=tax_form).skatteetaten_tax_info
             self.set_line_edits("", line_edits=self.tax_output, data=tax_data)

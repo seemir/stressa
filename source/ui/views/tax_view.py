@@ -99,7 +99,7 @@ class TaxView(QDialog):
 
     @pyqtSlot()
     def display(self):
-
+        self.tax_model.clear_line_edits(self.tax_model.total_posts)
         self.tax_model.tax_info()
         self.show()
 
