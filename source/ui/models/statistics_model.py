@@ -354,6 +354,25 @@ class StatisticsModel(Model):
         self.parent.map_view.web_view_map.close()
         self.parent.images_view.clear_images()
 
+        table_views = ["table_view_higheducation", "table_view_family_rating",
+                       "table_view_kindergardens", "table_view_schools", "table_view_highschools",
+                       "table_view_safety_rating", "table_view_noise_rating",
+                       "table_view_environment_rating", "table_view_gardens_rating",
+                       "table_view_roads_rating", "table_view_bysykler", "table_view_ladepunkt",
+                       "table_view_rating_parking", "table_view_primarytransport",
+                       "table_view_rating_public_transportation", "table_view_rating_traffic",
+                       "table_view_sport", "table_view_transport",
+                       "table_view_rating_food_selection", "table_view_rating_activity",
+                       "table_view_rating_serving", "table_view_rating_hiking",
+                       "table_view_services", "table_view_groceries"]
+
+        for table_view in table_views:
+            getattr(self.parent.ui, table_view).setModel(None)
+            getattr(self.parent.ui, table_view).clearSpans()
+
+        self.parent.ui.progress_bar_statistics.setTextVisible(False)
+        self.parent.ui.progress_bar_statistics.setValue(0)
+
     def add_sqm_dist_charts(self, prefix: str, postfix: str, key: str):
         """
         method for adding square meter distribution chart to the statistics model
