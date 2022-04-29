@@ -62,8 +62,6 @@ class TaxModel(Model):
         return self._tax_output
 
     def tax_info(self):
-        self.parent.ui.tab_widget_skattekalkulator.setCurrentIndex(0)
-        self.parent.ui.combo_box_skatte_aar.setFocus()
         self.parent.ui.combo_box_skatte_aar.activated.connect(
             lambda: self.set_combo_box("skatte_aar", key_name="skatte_aar"))
         self.parent.ui.line_edit_alder.textEdited.connect(
@@ -118,9 +116,19 @@ class TaxModel(Model):
             self.parent.ui.tab_widget_skattekalkulator.setCurrentIndex(1)
             tax_form = {key: val.replace(" ", "").replace("kr", "") for key, val in
                         self.data.items() if key in self.tax_input}
-            tax_form.update(
-                {'brutto_inntekt_total': (Money(self.data["brutto_inntekt_total"]) * Money("12"))
-                    .replace(" ", "")})
+            brutto_inntekt = Money(self.data["brutto_inntekt_total"]) * Money("12")
+
+            if "trygde_inntekt_total" in self.data.keys():
+                trygd = Money(self.data["trygde_inntekt_total"]) * Money("12")
+            else:
+                trygd = "0"
+
+            total_sub_income = Money(brutto_inntekt) + Money(trygd)
+
+            tax_form.update({'inntekt_total': total_sub_income.replace(" ", "").replace("kr", "")})
+
+            print(tax_form['inntekt_total'])
+
             if 'renteinntekter_total' in self.data.keys():
                 tax_form.update({'renteinntekter_total': (
                         Money(self.data["renteinntekter_total"]) * Money("12"))

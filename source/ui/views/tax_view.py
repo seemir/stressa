@@ -53,6 +53,7 @@ class TaxView(QDialog):
         self.ui.push_button_tilbake.clicked.connect(self.back)
         self.ui.push_button_meta_data_2.clicked.connect(self.meta_view.display)
         self.ui.push_button_avbryt_2.clicked.connect(self.close)
+        self.ui.push_button_tom_skjema_2.clicked.connect(self.clear_all)
 
     @property
     def parent(self):
@@ -99,6 +100,10 @@ class TaxView(QDialog):
 
     @pyqtSlot()
     def display(self):
+        self.ui.scroll_area_skatteetaten.verticalScrollBar().setValue(
+            self.ui.scroll_area_skatteetaten.verticalScrollBar().minimum())
+        self.ui.tab_widget_skattekalkulator.setCurrentIndex(0)
+        self.ui.combo_box_skatte_aar.setFocus()
         self.tax_model.clear_line_edits(self.tax_model.total_posts)
         self.tax_model.tax_info()
         self.show()
@@ -116,7 +121,11 @@ class TaxView(QDialog):
 
     @pyqtSlot()
     def clear_all(self):
+        self.ui.scroll_area_skatteetaten.verticalScrollBar().setValue(
+            self.ui.scroll_area_skatteetaten.verticalScrollBar().minimum())
         self.ui.combo_box_skatte_aar.setCurrentIndex(0)
+        self.ui.tab_widget_skattekalkulator.setCurrentIndex(0)
+        self.ui.combo_box_skatte_aar.setFocus()
         self.tax_model.clear_combo_boxes(["skatte_aar"])
         self.tax_model.clear_line_edit("alder")
         self.tax_model.clear_line_edit("fagforeningskontigent")

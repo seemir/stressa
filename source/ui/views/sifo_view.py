@@ -115,6 +115,9 @@ class SifoView(QDialog):
         Method for displaying SifoView
 
         """
+        self.ui.scroll_area_sifo.verticalScrollBar().setValue(
+            self.ui.scroll_area_sifo.verticalScrollBar().minimum())
+        self.ui.tab_widget_sifo.setCurrentIndex(0)
         self.sifo_model.sifo_info()
         self.show()
 
@@ -138,5 +141,8 @@ class SifoView(QDialog):
         self.ui.tab_widget_sifo.setCurrentIndex(0)
 
     def clear_all(self):
+        self.ui.scroll_area_sifo.verticalScrollBar().setValue(
+            self.ui.scroll_area_sifo.verticalScrollBar().minimum())
+        self.ui.tab_widget_sifo.setCurrentIndex(0)
         self.parent.mortgage_model.clear_line_edit("sifo_utgifter")
         self.sifo_model.clear_all()

@@ -52,7 +52,6 @@ class TestPortalen:
         """
         assert UUID(str(self.portalen.id_))
 
-    @pt.mark.skip
     def test_portalen_response_method(self):
         """
         Test that response method returns HTTP code 200: OK
@@ -62,7 +61,6 @@ class TestPortalen:
         assert response.status_code == 200
         assert isinstance(response, Response)
 
-    @pt.mark.skip
     def test_portalen_mortgage_offers_method(self):
         """
         Test the mortgage_offers in the Portalen connector by confirming that the

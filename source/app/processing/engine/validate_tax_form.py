@@ -55,8 +55,8 @@ class ValidateTaxForm(Operation):
             age = self.tax_data["alder"]
         else:
             age = 0
-        if "brutto_inntekt_total" in self.tax_data.keys():
-            income = self.tax_data["brutto_inntekt_total"]
+        if "inntekt_total" in self.tax_data.keys():
+            income = self.tax_data["inntekt_total"]
         else:
             income = 0
         if "skatte_aar" in self.tax_data.keys():

@@ -381,7 +381,6 @@ class SifoModel(Model):
 
         """
         self.hide_unused_combo_box()
-        self.parent.ui.tab_widget_sifo.setCurrentIndex(0)
         self.parent.ui.combo_box_kjonn_1.setFocus()
         self.set_income()
         self.set_yearly_income()

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1060</width>
-    <height>450</height>
+    <width>1050</width>
+    <height>470</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>1060</width>
-    <height>450</height>
+    <width>1050</width>
+    <height>470</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -462,6 +462,12 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
     <widget class="QScrollArea" name="scrollArea">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -473,8 +479,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1042</width>
-        <height>432</height>
+        <width>1032</width>
+        <height>452</height>
        </rect>
       </property>
       <property name="palette">
@@ -896,14 +902,14 @@
        <item row="0" column="0">
         <widget class="QTabWidget" name="tab_widget_budget">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>995</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
@@ -1934,7 +1940,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>40</height>
               </size>
              </property>
              <property name="focusPolicy">
@@ -1957,7 +1963,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>40</height>
               </size>
              </property>
              <property name="focusPolicy">
@@ -2167,7 +2173,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>40</height>
               </size>
              </property>
              <property name="focusPolicy">
@@ -2187,7 +2193,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>40</height>
               </size>
              </property>
              <property name="focusPolicy">
@@ -2285,7 +2291,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>40</height>
               </size>
              </property>
              <property name="focusPolicy">
@@ -2559,7 +2565,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>40</height>
               </size>
              </property>
              <property name="focusPolicy">
@@ -2619,7 +2625,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>40</height>
               </size>
              </property>
              <property name="focusPolicy">
@@ -2639,7 +2645,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>40</height>
               </size>
              </property>
              <property name="focusPolicy">
