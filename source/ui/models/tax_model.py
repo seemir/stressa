@@ -127,8 +127,6 @@ class TaxModel(Model):
 
             tax_form.update({'inntekt_total': total_sub_income.replace(" ", "").replace("kr", "")})
 
-            print(tax_form['inntekt_total'])
-
             if 'renteinntekter_total' in self.data.keys():
                 tax_form.update({'renteinntekter_total': (
                         Money(self.data["renteinntekter_total"]) * Money("12"))

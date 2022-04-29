@@ -125,7 +125,7 @@ class FinnAd(Finn):
                 visninger.append(key.get_text().strip().replace("\n", " ").replace("\xa0", " ")
                                  .replace("     ", " kl: "))
 
-            unique_visninger = list(set(visninger))[::-1]
+            unique_visninger = list(set(visninger))
             final_visninger = {"forste_visning": "", "andre_visning": ""}
 
             if unique_visninger:
@@ -136,6 +136,22 @@ class FinnAd(Finn):
                                             "andre_visning": unique_visninger[1]})
 
             info.update(final_visninger)
+
+            matrikkel = {}
+            for key in ad_soup.find_all("p"):
+                candidate = " ".join(key.get_text().split())
+                if "Kommunenr:" in candidate and "Gårdsnr:" in candidate and \
+                        "Bruksnr:" in candidate:
+                    mat_list = candidate.split()
+                    matrikkel.update({mat_list[i].replace(":", "").lower(): mat_list[i + 1] for i in
+                                      range(0, len(mat_list), 2)})
+                if "-navn" in candidate and "-orgnummer" in candidate and \
+                        "-andelsnummer" in candidate:
+                    mat_list = [val.strip().split(":") for val in key.get_text().split("\n") if val]
+                    matrikkel.update(
+                        {element[0].lower(): element[1].strip() for element in mat_list})
+
+            info.update({"matrikkel": matrikkel})
 
             LOGGER.success("'housing_ad_information' successfully retrieved")
             return info

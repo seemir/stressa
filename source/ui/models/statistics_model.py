@@ -527,7 +527,11 @@ class StatisticsModel(Model):
                     city = self.data["info" + postfix]["neighborhood"]["city"]
                 else:
                     neighbourhood = self.data["info" + postfix]["census"].replace("-", " - ")
-                    city = self.data["info" + postfix]["city"].replace("-", " - ")
+                    if "city" in self.data["info" + postfix].keys() and self.data["info" + postfix][
+                        "city"]:
+                        city = self.data["info" + postfix]["city"].replace("-", " - ")
+                    else:
+                        city = ""
             else:
                 neighbourhood = ""
                 city = ""
