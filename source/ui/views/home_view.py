@@ -19,6 +19,7 @@ from PyQt5.uic import loadUi
 from ..models import MortgageModel, FinnModel, HomeModel
 
 from .statistics_view import StatisticsView
+from .grunnboka_view import GrunnbokaView
 from .history_view import HistoryView
 from .budget_view import BudgetView
 from .error_view import ErrorView
@@ -27,6 +28,7 @@ from .meta_view import MetaView
 from .tax_view import TaxView
 
 from . import resources
+
 
 # myappid = 'Stressa.stressa.ui.version'
 # ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
@@ -51,6 +53,8 @@ class HomeView(QMainWindow):
         self._tax_view = TaxView(self)
         self._sifo_view = SifoView(self)
         self._history_view = HistoryView(self)
+        self._grunnboka_view = GrunnbokaView(self)
+
         self._meta_view = MetaView(self)
         self._statistics_view = StatisticsView(self)
         self._home_model = HomeModel(self)
@@ -151,6 +155,19 @@ class HomeView(QMainWindow):
 
         """
         return self._history_view
+
+    @property
+    def grunnboka_view(self):
+        """
+        GrunnbokaView getter
+
+        Returns
+        -------
+        out     : GrunnbokaView
+                  View with the link to the Grunnboka
+
+        """
+        return self._grunnboka_view
 
     @property
     def statistics_view(self):

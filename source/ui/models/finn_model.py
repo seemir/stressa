@@ -119,14 +119,20 @@ class FinnModel(Model):
         method for processing finn info
 
         """
+        print(postfix)
         finn_processing = FinnAdvertProcessing(finn_code)
         finn_data = finn_processing.multiplex_info_2
         self.finn_data = {key + postfix: val for key, val in finn_data.items()}
         self.set_line_edits("finnkode", self._finn_keys, postfix=postfix, data=finn_data)
+
         self.parent.statistics_view.statistics_model.add_statistics_info(postfix)
         self.data.update(self.parent.statistics_view.statistics_model.data)
+
         self.parent.history_view.history_model.add_finn_history(postfix)
         self.data.update(self.parent.history_view.history_model.data)
+
+        self.parent.grunnboka_view.grunnboka_model.add_grunnboka_data(postfix)
+        self.data.update(self.parent.grunnboka_view.grunnboka_model.data)
 
     @pyqtSlot()
     def clear_finn_info(self, postfix, force=False):
@@ -146,8 +152,10 @@ class FinnModel(Model):
         if not finn_code or force:
             self.clear_line_edits(["finnkode" + postfix])
             self.clear_line_edits(self._finn_keys, postfix)
-            self.parent.history_view.history_model.clear_finn_history(postfix)
             self.parent.statistics_view.statistics_model.clear_statistics_info(postfix)
+            self.parent.history_view.history_model.clear_finn_history(postfix)
+            self.parent.grunnboka_view.grunnboka_model.clear_grunnboka_data(postfix)
+
             getattr(self.parent.ui, "progress_bar" + postfix).setTextVisible(False)
             getattr(self.parent.ui, "progress_bar" + postfix).setValue(0)
 
@@ -178,12 +186,15 @@ class FinnModel(Model):
         self.parent.ui.tab_widget_finn.setCurrentIndex(0)
         self.clear_finn_info("_1", True)
         self.parent.history_view.history_model.clear_finn_history("_1")
+        self.parent.grunnboka_view.grunnboka_model.clear_grunnboka_data("_1")
         self.parent.statistics_view.statistics_model.clear_statistics_info("_1")
 
         self.clear_finn_info("_2", True)
+        self.parent.grunnboka_view.grunnboka_model.clear_grunnboka_data("_2")
         self.parent.history_view.history_model.clear_finn_history("_2")
         self.parent.statistics_view.statistics_model.clear_statistics_info("_2")
 
         self.clear_finn_info("_3", True)
+        self.parent.grunnboka_view.grunnboka_model.clear_grunnboka_data("_3")
         self.parent.history_view.history_model.clear_finn_history("_3")
         self.parent.statistics_view.statistics_model.clear_statistics_info("_3")

@@ -4,6 +4,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from .statistics_model import StatisticsModel
+from .grunnboka_model import GrunnbokaModel
 from .mortgage_model import MortgageModel
 from .history_model import HistoryModel
 from .images_model import ImagesModel

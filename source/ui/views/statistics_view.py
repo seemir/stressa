@@ -11,7 +11,7 @@ import os
 from random import randint
 
 from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtSlot
 from PyQt5.uic import loadUi
 
 from source.util import Assertor
@@ -60,6 +60,13 @@ class StatisticsView(QDialog):
         self.ui.push_button_show_in_map_4.clicked.connect(self.map_view.show)
         self.ui.push_button_show_in_map_5.clicked.connect(self.map_view.show)
         self.ui.push_button_show_in_map_6.clicked.connect(self.map_view.show)
+
+        self.postfix = None
+
+        self.ui.push_button_grunnboka.clicked.connect(
+            lambda: self.parent.grunnboka_view.add_grunnboka_data(self.postfix))
+        self.ui.push_button_eierskifte_historikk.clicked.connect(
+            lambda: self.parent.history_view.add_finn_history(self.postfix))
 
         self.ui.push_button_images.clicked.connect(self.images_view.show)
 
@@ -133,9 +140,8 @@ class StatisticsView(QDialog):
         method for displaying StatisticsView
 
         """
+        self.postfix = postfix
         self.ui.tab_widget_statistics.setCurrentIndex(0)
-        self.ui.push_button_eierskifte_historikk.clicked.connect(
-            lambda: self.parent.history_view.add_finn_history(postfix))
         self.statistics_model.add_statistics_info(postfix)
         self.show_progress_bar()
         self.show()

@@ -143,8 +143,8 @@ class FinnAd(Finn):
                 if "Kommunenr:" in candidate and "Gårdsnr:" in candidate and \
                         "Bruksnr:" in candidate:
                     mat_list = candidate.split()
-                    matrikkel.update({mat_list[i].replace(":", "").lower(): mat_list[i + 1] for i in
-                                      range(0, len(mat_list), 2)})
+                    matrikkel.update({mat_list[i].replace(":", "").replace("å", "a")
+                                     .lower(): mat_list[i + 1] for i in range(0, len(mat_list), 2)})
                 if "-navn" in candidate and "-orgnummer" in candidate and \
                         "-andelsnummer" in candidate:
                     mat_list = [val.strip().split(":") for val in key.get_text().split("\n") if val]

@@ -9,6 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from .statistics_view import StatisticsView
+from .grunnboka_view import GrunnbokaView
 from .history_view import HistoryView
 from .budget_view import BudgetView
 from .splash_view import SplashView
