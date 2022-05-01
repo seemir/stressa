@@ -119,7 +119,6 @@ class FinnModel(Model):
         method for processing finn info
 
         """
-        print(postfix)
         finn_processing = FinnAdvertProcessing(finn_code)
         finn_data = finn_processing.multiplex_info_2
         self.finn_data = {key + postfix: val for key, val in finn_data.items()}

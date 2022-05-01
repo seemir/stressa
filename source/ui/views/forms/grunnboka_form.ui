@@ -449,7 +449,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Eierskiftehistorikk</string>
+   <string>Grunnboka informasjon</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../images/img.qrc">

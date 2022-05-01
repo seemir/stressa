@@ -3,10 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import os
-import requests
-
-from PyQt5.QtCore import QObject, QUrl
+from PyQt5.QtCore import QObject
 
 from source.util import Assertor
 
@@ -19,8 +16,6 @@ class GrunnbokaModel(Model):
 
     def __init__(self, parent: QObject):
         super().__init__(parent)
-
-        self.browser = self.parent.ui.web_view_grunnboka
 
     def add_grunnboka_data(self, postfix: str):
         Assertor.assert_data_types([postfix], [str])
@@ -35,27 +30,14 @@ class GrunnbokaModel(Model):
         if "matrikkel" + postfix in self.data.keys():
             matrikkel = self.data["matrikkel" + postfix]
 
-            self.browser.setUrl(QUrl("https://seeiendom.kartverket.no/eiendom/0"
-                                     + matrikkel["kommunenr"] + "/"
-                                     + matrikkel["gardsnr"] + "/"
-                                     + matrikkel["bruksnr"] + "/0/0"))
-            up = os.path.dirname
-            download_path = up(up(os.path.abspath(__file__))) + '/grunnboker'
-            self.browser.page().profile().setDownloadPath(download_path)
-            self.browser.page().profile().downloadRequested.connect(
-                self.on_download_requested
-            )
-
             for value in self._grunnboka_keys:
-                getattr(self.parent.ui, "line_edit_" + value.replace("-", "_")).setText(
-                    matrikkel[value])
+                if value in matrikkel.keys():
+                    getattr(self.parent.ui, "line_edit_" + value.replace("-", "_")).setText(
+                        matrikkel[value])
 
         if "matrikkel" + postfix not in self.data.keys():
             for element in self._grunnboka_keys:
                 getattr(self.parent.ui, "line_edit_" + element.replace("-", "_")).setText("")
-
-    def on_download_requested(self, download):
-        download.accept()
 
     def clear_grunnboka_data(self, postfix):
         full_key = "matrikkel" + postfix
