@@ -49,8 +49,8 @@ class GrunnbokaView(QDialog):
         self.browser = self.ui.web_view_grunnboka
 
         up = os.path.dirname
-        download_path = up(up(os.path.abspath(__file__))) + '/grunnboker'
-        self.browser.page().profile().setDownloadPath(download_path)
+        self.download_path = up(up(os.path.abspath(__file__))) + '/grunnboker'
+        self.browser.page().profile().setDownloadPath(self.download_path)
         self.browser.page().profile().downloadRequested.connect(
             self.on_download
         )
