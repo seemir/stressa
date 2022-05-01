@@ -11,7 +11,8 @@ import os
 from threading import Thread
 
 from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.QtCore import pyqtSlot, Qt, QUrl, pyqtSignal
+from PyQt5.QtCore import pyqtSlot, Qt, QUrl
+from PyQt5.QtWebEngineWidgets import QWebEngineSettings
 from PyQt5.uic import loadUi
 
 from source.util import Assertor
@@ -24,8 +25,6 @@ class GrunnbokaView(QDialog):
     Implementation of model for Grunnboka view
 
     """
-
-    sig = pyqtSignal(int)
 
     def __init__(self, parent: QWidget):
         """
@@ -47,6 +46,8 @@ class GrunnbokaView(QDialog):
         self.thread = None
         self.matrikkel = None
         self.browser = self.ui.web_view_grunnboka
+        self.browser.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
+        self.browser.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
 
         up = os.path.dirname
         self.download_path = up(up(os.path.abspath(__file__))) + '/grunnboker'
@@ -55,10 +56,25 @@ class GrunnbokaView(QDialog):
             self.on_download
         )
 
+        self.ui.push_button_forhandsvisning_grunnboka.clicked.connect(self.view_grunnboka)
+
+    def view_grunnboka(self):
+        print(self.matrikkel)
+        if self.matrikkel and os.listdir(self.download_path):
+            candidate = self.matrikkel[list(self.matrikkel.keys())[-1]]
+            evaluater = os.listdir(self.download_path)[-1][-len(candidate) - 4:-4]
+
+            print(evaluater)
+            print(candidate)
+
+            if candidate == evaluater:
+                file = self.download_path + '\\' + os.listdir(self.download_path)[0]
+                self.browser.load(QUrl.fromUserInput(file))
+
     def on_download(self, download):
-        t = Thread(target=self.on_download_requested, args=(download,))
-        t.daemon = True
-        t.start()
+        thread = Thread(target=self.on_download_requested, args=(download,))
+        thread.daemon = True
+        thread.start()
 
     @property
     def grunnboka_model(self):
