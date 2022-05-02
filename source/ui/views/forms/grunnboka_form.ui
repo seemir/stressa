@@ -1027,7 +1027,11 @@
             </size>
            </property>
            <property name="text">
-            <string>Forhåndsvisning grunnboka</string>
+            <string>Forhåndsvis grunnboka</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../images/img.qrc">
+             <normaloff>:/img/preview.png</normaloff>:/img/preview.png</iconset>
            </property>
           </widget>
          </item>

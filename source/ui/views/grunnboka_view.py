@@ -10,10 +10,11 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 from threading import Thread
 
+from PyQt5.uic import loadUi
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QDialog, QWidget
 from PyQt5.QtCore import pyqtSlot, Qt, QUrl
 from PyQt5.QtWebEngineWidgets import QWebEngineSettings
-from PyQt5.uic import loadUi
 
 from source.util import Assertor
 
@@ -39,9 +40,17 @@ class GrunnbokaView(QDialog):
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QWidget])
         self.parent = parent
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/grunnboka_form.ui"), self)
+        up = os.path.dirname
+
+        self.ui = loadUi(os.path.join(up(__file__), "forms/grunnboka_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+
+        self.download_path = up(up(os.path.abspath(__file__))) + '/grunnboker'
+
+        self.ui.push_button_forhandsvisning_grunnboka.setIcon(
+            QIcon(up(up(os.path.abspath(__file__))) + '/images/preview.png'))
+
         self._grunnboka_model = GrunnbokaModel(self)
         self.thread = None
         self.matrikkel = None
@@ -49,8 +58,6 @@ class GrunnbokaView(QDialog):
         self.browser.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
         self.browser.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
 
-        up = os.path.dirname
-        self.download_path = up(up(os.path.abspath(__file__))) + '/grunnboker'
         self.browser.page().profile().setDownloadPath(self.download_path)
         self.browser.page().profile().downloadRequested.connect(
             self.on_download
@@ -59,17 +66,15 @@ class GrunnbokaView(QDialog):
         self.ui.push_button_forhandsvisning_grunnboka.clicked.connect(self.view_grunnboka)
 
     def view_grunnboka(self):
-        print(self.matrikkel)
-        if self.matrikkel and os.listdir(self.download_path):
+        if self.matrikkel or os.listdir(self.download_path):
             candidate = self.matrikkel[list(self.matrikkel.keys())[-1]]
-            evaluater = os.listdir(self.download_path)[-1][-len(candidate) - 4:-4]
-
-            print(evaluater)
-            print(candidate)
-
-            if candidate == evaluater:
-                file = self.download_path + '\\' + os.listdir(self.download_path)[0]
-                self.browser.load(QUrl.fromUserInput(file))
+            for file in os.listdir(self.download_path):
+                evaluator = file[-len(candidate) - 4:-4]
+                if candidate == evaluator:
+                    preview_file = self.download_path + '\\' + file
+                    self.browser.load(QUrl.fromUserInput(preview_file))
+        else:
+            self.browser.close()
 
     def on_download(self, download):
         thread = Thread(target=self.on_download_requested, args=(download,))

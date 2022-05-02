@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="img">
+    <file>preview.png</file>
     <file>grunnboka.svg</file>
     <file>sifo.png</file>
     <file>skatteetaten.png</file>
