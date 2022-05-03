@@ -54,12 +54,12 @@ class GrunnbokaView(QDialog):
         self._grunnboka_model = GrunnbokaModel(self)
         self.thread = None
         self.matrikkel = None
-        self.browser = self.ui.web_view_grunnboka
-        self.browser.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
-        self.browser.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
+        self.web_view = self.ui.web_view_grunnboka
+        self.web_view.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
+        self.web_view.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
 
-        self.browser.page().profile().setDownloadPath(self.download_path)
-        self.browser.page().profile().downloadRequested.connect(
+        self.web_view.page().profile().setDownloadPath(self.download_path)
+        self.web_view.page().profile().downloadRequested.connect(
             self.on_download
         )
 
@@ -72,14 +72,25 @@ class GrunnbokaView(QDialog):
                 evaluator = file[-len(candidate) - 4:-4]
                 if candidate == evaluator:
                     preview_file = self.download_path + '\\' + file
-                    self.browser.load(QUrl.fromUserInput(preview_file))
-        else:
-            self.browser.close()
+                    self.web_view.load(QUrl.fromUserInput(preview_file))
 
     def on_download(self, download):
-        thread = Thread(target=self.on_download_requested, args=(download,))
-        thread.daemon = True
-        thread.start()
+        if self.matrikkel or os.listdir(self.download_path):
+            candidate = self.matrikkel[list(self.matrikkel.keys())[-1]]
+            file_evaluator = [file[-len(candidate) - 4:-4] for file in
+                              os.listdir(self.download_path)]
+            if candidate in file_evaluator:
+                for file in os.listdir(self.download_path):
+                    evaluator = file[-len(candidate) - 4:-4]
+                    if candidate == evaluator:
+                        preview_file = self.download_path + '\\' + file
+                        self.web_view.load(QUrl.fromUserInput(preview_file))
+            else:
+                thread = Thread(target=self.on_download_requested, args=(download,))
+                thread.daemon = True
+                thread.start()
+        else:
+            self.web_view.close()
 
     @property
     def grunnboka_model(self):
@@ -109,11 +120,22 @@ class GrunnbokaView(QDialog):
         self.grunnboka_model.add_grunnboka_data(postfix)
         if "matrikkel" + postfix in self.grunnboka_model.data.keys():
             self.matrikkel = self.grunnboka_model.data["matrikkel" + postfix]
-
-            self.browser.setUrl(QUrl("https://seeiendom.kartverket.no/eiendom/0"
-                                     + self.matrikkel["kommunenr"] + "/"
-                                     + self.matrikkel["gardsnr"] + "/"
-                                     + self.matrikkel["bruksnr"] + "/0/0"))
+            candidate = self.matrikkel[list(self.matrikkel.keys())[-1]]
+            file_evaluator = [file[-len(candidate) - 4:-4] for file in
+                              os.listdir(self.download_path)]
+            if candidate in file_evaluator:
+                for file in os.listdir(self.download_path):
+                    evaluator = file[-len(candidate) - 4:-4]
+                    if candidate == evaluator:
+                        preview_file = self.download_path + '\\' + file
+                        self.web_view.load(QUrl.fromUserInput(preview_file))
+            else:
+                self.web_view.setUrl(QUrl("https://seeiendom.kartverket.no/eiendom/0"
+                                          + self.matrikkel["kommunenr"] + "/"
+                                          + self.matrikkel["gardsnr"] + "/"
+                                          + self.matrikkel["bruksnr"] + "/0/0"))
+        else:
+            self.web_view.close()
         self.show()
 
     def on_download_requested(self, download):
