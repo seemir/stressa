@@ -94,7 +94,7 @@ soupsieve==2.3
 timeout-decorator==0.4.1
 toml==0.10.2
 tomli==1.2.2
-typed-ast==1.4.3
+typed-ast==1.5.4
 typing==3.7.4.1
 typing-extensions==3.10.0.0
 tzlocal==2.1
