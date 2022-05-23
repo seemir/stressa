@@ -25,6 +25,7 @@ from .budget_view import BudgetView
 from .error_view import ErrorView
 from .sifo_view import SifoView
 from .meta_view import MetaView
+from .info_view import InfoView
 from .tax_view import TaxView
 
 from . import resources
@@ -57,8 +58,9 @@ class HomeView(QMainWindow):
 
         self._meta_view = MetaView(self)
         self._statistics_view = StatisticsView(self)
-        self._home_model = HomeModel(self)
+        self._info_view = InfoView(self)
 
+        self._home_model = HomeModel(self)
         self._sifo_model = self.sifo_view.sifo_model
         self._mortgage_model = MortgageModel(self)
         self._finn_model = FinnModel(self)
@@ -75,7 +77,8 @@ class HomeView(QMainWindow):
         self.ui.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
 
         self.ui.push_button_home_meta_data.clicked.connect(self._meta_view.display)
-        self.ui.push_button_tom_skjema.clicked.connect(self.home_model.clear_all)
+        self.ui.push_button_tom_skjema.clicked.connect(self.clear_all)
+        self.ui.push_button_avslutt.clicked.connect(self.avslutt)
         self.ui.action_logo.triggered.connect(self.info_tab)
 
     @property
@@ -90,6 +93,19 @@ class HomeView(QMainWindow):
 
         """
         return self._error_view
+
+    @property
+    def info_view(self):
+        """
+        InfoView getter
+
+        Returns
+        -------
+        out     : QObject
+                  active InfoView in class
+
+        """
+        return self._info_view
 
     @property
     def budget_view(self):
@@ -267,3 +283,27 @@ class HomeView(QMainWindow):
 
         """
         self.ui.tab_widget_home.setCurrentIndex(0)
+
+    @pyqtSlot()
+    def clear_all(self):
+        self.info_view.label_info_text.setText("Er du sikker på at vi vil tømme skjema?")
+        self.info_view.show()
+        self.info_view.push_button_apply.clicked.connect(self.apply_clearing)
+        self.info_view.push_button_cancel.clicked.connect(self.info_view.close)
+
+    @pyqtSlot()
+    def apply_clearing(self):
+        self.home_model.clear_all()
+        self.info_view.close()
+
+    @pyqtSlot()
+    def avslutt(self):
+        self.info_view.label_info_text.setText("Er du sikker på at vi vil avslutte?")
+        self.info_view.show()
+        self.info_view.push_button_apply.clicked.connect(self.avslutt_alt)
+        self.info_view.push_button_cancel.clicked.connect(self.info_view.close)
+
+    @pyqtSlot()
+    def avslutt_alt(self):
+        self.close()
+        self.info_view.close()

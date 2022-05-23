@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="img">
+    <file>info.png</file>
+    <file>check.png</file>
     <file>preview.png</file>
     <file>grunnboka.svg</file>
     <file>sifo.png</file>
