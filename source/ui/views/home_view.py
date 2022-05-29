@@ -10,6 +10,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import os
+import shutil
 # import ctypes
 
 from PyQt5.QtWidgets import QMainWindow
@@ -80,6 +81,10 @@ class HomeView(QMainWindow):
         self.ui.push_button_tom_skjema.clicked.connect(self.clear_all)
         self.ui.push_button_avslutt.clicked.connect(self.avslutt)
         self.ui.action_logo.triggered.connect(self.info_tab)
+
+    def closeEvent(self, event):
+        self.avslutt()
+        event.ignore()
 
     @property
     def error_view(self):
@@ -300,10 +305,20 @@ class HomeView(QMainWindow):
     def avslutt(self):
         self.info_view.label_info_text.setText("Er du sikker på at vi vil avslutte?")
         self.info_view.show()
-        self.info_view.push_button_apply.clicked.connect(self.avslutt_alt)
         self.info_view.push_button_cancel.clicked.connect(self.info_view.close)
+        self.info_view.push_button_apply.clicked.connect(self.avslutt_alt)
 
     @pyqtSlot()
     def avslutt_alt(self):
-        self.close()
+        self.delete_grunnboka_folder()
         self.info_view.close()
+        quit()
+
+    def delete_grunnboka_folder(self):
+        dirpath = self.grunnboka_view.download_path
+        for filename in os.listdir(dirpath):
+            filepath = os.path.join(dirpath, filename)
+            try:
+                shutil.rmtree(filepath)
+            except OSError:
+                os.remove(filepath)

@@ -910,45 +910,8 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
-         <item row="1" column="0">
-          <widget class="QLabel" name="label_gardsnr">
-           <property name="text">
-            <string>Gårdsnr</string>
-           </property>
-           <property name="buddy">
-            <cstring>line_edit_gardsnr</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="line_edit_gardsnr">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_bruksnr">
-           <property name="text">
-            <string>Bruksnr</string>
-           </property>
-           <property name="buddy">
-            <cstring>line_edit_bruksnr</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_borettslag_navn">
-           <property name="text">
-            <string>Borettslag-navn</string>
-           </property>
-           <property name="buddy">
-            <cstring>line_edit_borettslag_navn</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLineEdit" name="line_edit_borettslag_navn">
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="line_edit_bruksnr">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -970,17 +933,85 @@
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QLineEdit" name="line_edit_bruksnr">
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="line_edit_borettslag_navn">
            <property name="enabled">
             <bool>false</bool>
            </property>
           </widget>
          </item>
-         <item row="5" column="0">
+         <item row="7" column="1">
+          <widget class="QPushButton" name="push_button_forhandsvisning_grunnboka">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Forhåndsvis grunnboka</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../../images/img.qrc">
+             <normaloff>:/img/preview.png</normaloff>:/img/preview.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="0">
           <widget class="QLabel" name="label_borettslag_andelsnummer">
            <property name="text">
             <string>Borettslag-andelsnummer</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="line_edit_gardsnr">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_gardsnr">
+           <property name="text">
+            <string>Gårdsnr</string>
+           </property>
+           <property name="buddy">
+            <cstring>line_edit_gardsnr</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_bruksnr">
+           <property name="text">
+            <string>Bruksnr</string>
+           </property>
+           <property name="buddy">
+            <cstring>line_edit_bruksnr</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_borettslag_navn">
+           <property name="text">
+            <string>Borettslag-navn</string>
+           </property>
+           <property name="buddy">
+            <cstring>line_edit_borettslag_navn</cstring>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QLineEdit" name="line_edit_borettslag_orgnummer">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="6" column="1">
+          <widget class="QLineEdit" name="line_edit_borettslag_andelsnummer">
+           <property name="enabled">
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -997,29 +1028,29 @@
            </property>
           </widget>
          </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_seksjonsnr">
+         <item row="5" column="0">
+          <widget class="QLabel" name="label_borettslag_orgnr">
            <property name="text">
             <string>Borettslag-orgnummer</string>
            </property>
           </widget>
          </item>
-         <item row="4" column="1">
-          <widget class="QLineEdit" name="line_edit_borettslag_orgnummer">
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="line_edit_seksjonsnr">
            <property name="enabled">
             <bool>false</bool>
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
-          <widget class="QLineEdit" name="line_edit_borettslag_andelsnummer">
-           <property name="enabled">
-            <bool>false</bool>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_seksjonsnr">
+           <property name="text">
+            <string>Seksjonsnr</string>
            </property>
           </widget>
          </item>
-         <item row="6" column="1">
-          <widget class="QPushButton" name="push_button_forhandsvisning_grunnboka">
+         <item row="8" column="1">
+          <widget class="QPushButton" name="push_button_metadata">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -1027,11 +1058,11 @@
             </size>
            </property>
            <property name="text">
-            <string>Forhåndsvis grunnboka</string>
+            <string>Metadata</string>
            </property>
            <property name="icon">
             <iconset resource="../../images/img.qrc">
-             <normaloff>:/img/preview.png</normaloff>:/img/preview.png</iconset>
+             <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
            </property>
           </widget>
          </item>
@@ -1499,9 +1530,12 @@
   <tabstop>line_edit_kommunenr</tabstop>
   <tabstop>line_edit_gardsnr</tabstop>
   <tabstop>line_edit_bruksnr</tabstop>
+  <tabstop>line_edit_seksjonsnr</tabstop>
   <tabstop>line_edit_borettslag_navn</tabstop>
   <tabstop>line_edit_borettslag_orgnummer</tabstop>
   <tabstop>line_edit_borettslag_andelsnummer</tabstop>
+  <tabstop>push_button_forhandsvisning_grunnboka</tabstop>
+  <tabstop>web_view_grunnboka</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

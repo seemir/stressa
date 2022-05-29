@@ -11,11 +11,24 @@ from .model import Model
 
 
 class GrunnbokaModel(Model):
-    _grunnboka_keys = ['kommunenr', 'gardsnr', 'bruksnr', 'borettslag-navn', 'borettslag-orgnummer',
-                       'borettslag-andelsnummer']
+    _grunnboka_keys = ['kommunenr', 'gardsnr', 'bruksnr', 'seksjonsnr', 'borettslag-navn',
+                       'borettslag-orgnummer', 'borettslag-andelsnummer']
 
     def __init__(self, parent: QObject):
         super().__init__(parent)
+
+    @property
+    def grunnboka_keys(self):
+        """
+        Grunnboka getter
+
+        Returns
+        -------
+        out         : list
+                      active grunnboka keys list
+
+        """
+        return self._grunnboka_keys
 
     def add_grunnboka_data(self, postfix: str):
         Assertor.assert_data_types([postfix], [str])
@@ -30,18 +43,20 @@ class GrunnbokaModel(Model):
         if "matrikkel" + postfix in self.data.keys():
             matrikkel = self.data["matrikkel" + postfix]
 
-            for value in self._grunnboka_keys:
+            for value in self.grunnboka_keys:
                 if value in matrikkel.keys():
                     getattr(self.parent.ui, "line_edit_" + value.replace("-", "_")).setText(
                         matrikkel[value])
 
         if "matrikkel" + postfix not in self.data.keys():
-            for element in self._grunnboka_keys:
+            for element in self.grunnboka_keys:
                 getattr(self.parent.ui, "line_edit_" + element.replace("-", "_")).setText("")
 
     def clear_grunnboka_data(self, postfix):
         full_key = "matrikkel" + postfix
+        self.clear_line_edits([elem.replace("-", "_") for elem in self.grunnboka_keys])
         self.clear_finn_data(full_key)
+        self.parent.ui.web_view.close()
 
     def clear_finn_data(self, full_key):
         """

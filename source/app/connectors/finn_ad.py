@@ -150,6 +150,10 @@ class FinnAd(Finn):
                     mat_list = [val.strip().split(":") for val in key.get_text().split("\n") if val]
                     matrikkel.update(
                         {element[0].lower(): element[1].strip() for element in mat_list})
+                if "Seksjonsnr:" in candidate:
+                    mat_list = candidate.split()
+                    matrikkel.update({mat_list[i].replace(":", "").replace("å", "a")
+                                     .lower(): mat_list[i + 1] for i in range(0, len(mat_list), 2)})
 
             info.update({"matrikkel": matrikkel})
 

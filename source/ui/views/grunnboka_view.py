@@ -20,6 +20,8 @@ from source.util import Assertor
 
 from ..models import GrunnbokaModel
 
+from .meta_view import MetaView
+
 
 class GrunnbokaView(QDialog):
     """
@@ -45,15 +47,17 @@ class GrunnbokaView(QDialog):
         self.ui = loadUi(os.path.join(up(__file__), "forms/grunnboka_form.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
-
-        self.download_path = up(up(os.path.abspath(__file__))) + '/grunnboker'
-
         self.ui.push_button_forhandsvisning_grunnboka.setIcon(
             QIcon(up(up(os.path.abspath(__file__))) + '/images/preview.png'))
 
+        self.download_path = up(up(os.path.abspath(__file__))) + '/grunnboker'
+
         self._grunnboka_model = GrunnbokaModel(self)
-        self.thread = None
         self.matrikkel = None
+        self.thread = None
+
+        self._meta_view = MetaView(self)
+
         self.web_view = self.ui.web_view_grunnboka
         self.web_view.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
         self.web_view.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
@@ -64,6 +68,7 @@ class GrunnbokaView(QDialog):
         )
 
         self.ui.push_button_forhandsvisning_grunnboka.clicked.connect(self.view_grunnboka)
+        self.ui.push_button_metadata.clicked.connect(self.meta_view.display)
 
     def view_grunnboka(self):
         if self.matrikkel or os.listdir(self.download_path):
@@ -93,6 +98,19 @@ class GrunnbokaView(QDialog):
             self.web_view.close()
 
     @property
+    def meta_view(self):
+        """
+        MetaView getter
+
+        Returns
+        -------
+        out     : MetaView
+                  View with the metadata for the SifoView
+
+        """
+        return self._meta_view
+
+    @property
     def grunnboka_model(self):
         """
         GrunnbokaModel getter
@@ -120,6 +138,7 @@ class GrunnbokaView(QDialog):
         self.grunnboka_model.add_grunnboka_data(postfix)
         if "matrikkel" + postfix in self.grunnboka_model.data.keys():
             self.matrikkel = self.grunnboka_model.data["matrikkel" + postfix]
+
             candidate = self.matrikkel[list(self.matrikkel.keys())[-1]]
             file_evaluator = [file[-len(candidate) - 4:-4] for file in
                               os.listdir(self.download_path)]
@@ -130,12 +149,11 @@ class GrunnbokaView(QDialog):
                         preview_file = self.download_path + '\\' + file
                         self.web_view.load(QUrl.fromUserInput(preview_file))
             else:
-                self.web_view.setUrl(QUrl("https://seeiendom.kartverket.no/eiendom/0"
-                                          + self.matrikkel["kommunenr"] + "/"
-                                          + self.matrikkel["gardsnr"] + "/"
-                                          + self.matrikkel["bruksnr"] + "/0/0"))
-        else:
-            self.web_view.close()
+                url = "https://seeiendom.kartverket.no/eiendom/0" + self.matrikkel["kommunenr"] + \
+                      "/" + self.matrikkel["gardsnr"] + "/" + self.matrikkel["bruksnr"] + "/0/0"
+                self.web_view.setUrl(QUrl(url))
+                self.web_view.show()
+
         self.show()
 
     def on_download_requested(self, download):
