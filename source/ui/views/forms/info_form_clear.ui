@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>dialog_info</class>
- <widget class="QDialog" name="dialog_info">
+ <class>dialog_info_clear</class>
+ <widget class="QDialog" name="dialog_info_clear">
   <property name="windowModality">
    <enum>Qt::NonModal</enum>
   </property>
@@ -464,7 +464,7 @@
   </property>
   <layout class="QFormLayout" name="formLayout">
    <item row="0" column="0">
-    <widget class="QFrame" name="frame_info">
+    <widget class="QFrame" name="frame_info_clear">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -903,7 +903,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="0" column="0">
-       <widget class="QFrame" name="frame_label_info">
+       <widget class="QFrame" name="frame_label_info_clear">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
@@ -969,7 +969,7 @@
           </widget>
          </item>
          <item row="0" column="0" colspan="2">
-          <widget class="QScrollArea" name="scroll_area_info">
+          <widget class="QScrollArea" name="scroll_area_info_clear">
            <property name="minimumSize">
             <size>
              <width>0</width>
@@ -2258,7 +2258,7 @@
                 <enum>QFrame::Raised</enum>
                </property>
                <property name="text">
-                <string>TextLabel</string>
+                <string>Er du sikker på at vi vil tømme skjema?</string>
                </property>
                <property name="wordWrap">
                 <bool>true</bool>
@@ -2744,7 +2744,7 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>scroll_area_info</tabstop>
+  <tabstop>scroll_area_info_clear</tabstop>
   <tabstop>push_button_apply</tabstop>
   <tabstop>push_button_cancel</tabstop>
  </tabstops>

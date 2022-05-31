@@ -54,6 +54,7 @@ class GrunnbokaView(QDialog):
 
         self._grunnboka_model = GrunnbokaModel(self)
         self.matrikkel = None
+        self.postfix = None
         self.thread = None
 
         self._meta_view = MetaView(self)
@@ -71,13 +72,15 @@ class GrunnbokaView(QDialog):
         self.ui.push_button_metadata.clicked.connect(self.meta_view.display)
 
     def view_grunnboka(self):
-        if self.matrikkel or os.listdir(self.download_path):
-            candidate = self.matrikkel[list(self.matrikkel.keys())[-1]]
-            for file in os.listdir(self.download_path):
-                evaluator = file[-len(candidate) - 4:-4]
-                if candidate == evaluator:
-                    preview_file = self.download_path + '\\' + file
-                    self.web_view.load(QUrl.fromUserInput(preview_file))
+        if 'matrikkel' + self.postfix in self.grunnboka_model.data.keys():
+            if os.listdir(self.download_path):
+                candidate = self.matrikkel[list(self.matrikkel.keys())[-1]]
+                for file in os.listdir(self.download_path):
+                    evaluator = file[-len(candidate) - 4:-4]
+                    if candidate == evaluator:
+                        preview_file = self.download_path + '\\' + file
+                        self.web_view.load(QUrl.fromUserInput(preview_file))
+                        self.web_view.show()
 
     def on_download(self, download):
         if self.matrikkel or os.listdir(self.download_path):
@@ -135,6 +138,8 @@ class GrunnbokaView(QDialog):
 
         """
         Assertor.assert_data_types([postfix], [str])
+
+        self.postfix = postfix
         self.grunnboka_model.add_grunnboka_data(postfix)
         if "matrikkel" + postfix in self.grunnboka_model.data.keys():
             self.matrikkel = self.grunnboka_model.data["matrikkel" + postfix]
@@ -153,6 +158,8 @@ class GrunnbokaView(QDialog):
                       "/" + self.matrikkel["gardsnr"] + "/" + self.matrikkel["bruksnr"] + "/0/0"
                 self.web_view.setUrl(QUrl(url))
                 self.web_view.show()
+        else:
+            self.ui.web_view.close()
 
         self.show()
 

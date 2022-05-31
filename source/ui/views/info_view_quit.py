@@ -14,7 +14,7 @@ from PyQt5.uic import loadUi
 from source.util import Assertor
 
 
-class InfoView(QDialog):
+class InfoViewQuit(QDialog):
     """
     Info dialog window
 
@@ -34,7 +34,7 @@ class InfoView(QDialog):
         super().__init__(None)
         up = os.path.dirname
 
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/info_form.ui"), self)
+        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/info_form_quit.ui"), self)
         self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui.push_button_apply.setIcon(

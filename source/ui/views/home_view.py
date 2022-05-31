@@ -20,13 +20,15 @@ from PyQt5.uic import loadUi
 from ..models import MortgageModel, FinnModel, HomeModel
 
 from .statistics_view import StatisticsView
+from .info_view_clear import InfoViewClear
 from .grunnboka_view import GrunnbokaView
+from .info_view_quit import InfoViewQuit
 from .history_view import HistoryView
 from .budget_view import BudgetView
 from .error_view import ErrorView
 from .sifo_view import SifoView
 from .meta_view import MetaView
-from .info_view import InfoView
+
 from .tax_view import TaxView
 
 from . import resources
@@ -58,15 +60,17 @@ class HomeView(QMainWindow):
         self._grunnboka_view = GrunnbokaView(self)
 
         self._meta_view = MetaView(self)
+        self._info_view_quit = InfoViewQuit(self)
+        self._info_view_clear = InfoViewClear(self)
         self._statistics_view = StatisticsView(self)
-        self._info_view = InfoView(self)
 
         self._home_model = HomeModel(self)
-        self._sifo_model = self.sifo_view.sifo_model
-        self._mortgage_model = MortgageModel(self)
         self._finn_model = FinnModel(self)
-        self._budget_model = self.budget_view.budget_model
+        self._mortgage_model = MortgageModel(self)
+
         self._tax_model = self.tax_view.tax_model
+        self._sifo_model = self.sifo_view.sifo_model
+        self._budget_model = self.budget_view.budget_model
 
         self._mortgage_model.mortgage_info()
         self._finn_model.finn_info()
@@ -100,7 +104,7 @@ class HomeView(QMainWindow):
         return self._error_view
 
     @property
-    def info_view(self):
+    def info_view_quit(self):
         """
         InfoView getter
 
@@ -110,7 +114,20 @@ class HomeView(QMainWindow):
                   active InfoView in class
 
         """
-        return self._info_view
+        return self._info_view_quit
+
+    @property
+    def info_view_clear(self):
+        """
+        InfoView getter
+
+        Returns
+        -------
+        out     : QObject
+                  active InfoView in class
+
+        """
+        return self._info_view_clear
 
     @property
     def budget_view(self):
@@ -291,27 +308,25 @@ class HomeView(QMainWindow):
 
     @pyqtSlot()
     def clear_all(self):
-        self.info_view.label_info_text.setText("Er du sikker på at vi vil tømme skjema?")
-        self.info_view.show()
-        self.info_view.push_button_apply.clicked.connect(self.apply_clearing)
-        self.info_view.push_button_cancel.clicked.connect(self.info_view.close)
+        self.info_view_clear.show()
+        self.info_view_clear.push_button_apply.clicked.connect(self.apply_clearing)
+        self.info_view_clear.push_button_cancel.clicked.connect(self.info_view_quit.close)
 
     @pyqtSlot()
     def apply_clearing(self):
         self.home_model.clear_all()
-        self.info_view.close()
+        self.info_view_clear.close()
 
     @pyqtSlot()
     def avslutt(self):
-        self.info_view.label_info_text.setText("Er du sikker på at vi vil avslutte?")
-        self.info_view.show()
-        self.info_view.push_button_cancel.clicked.connect(self.info_view.close)
-        self.info_view.push_button_apply.clicked.connect(self.avslutt_alt)
+        self.info_view_quit.show()
+        self.info_view_quit.push_button_cancel.clicked.connect(self.info_view_quit.close)
+        self.info_view_quit.push_button_apply.clicked.connect(self.avslutt_alt)
 
     @pyqtSlot()
     def avslutt_alt(self):
         self.delete_grunnboka_folder()
-        self.info_view.close()
+        self.info_view_quit.close()
         quit()
 
     def delete_grunnboka_folder(self):
