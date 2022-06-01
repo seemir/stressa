@@ -310,7 +310,7 @@ class HomeView(QMainWindow):
     def clear_all(self):
         self.info_view_clear.show()
         self.info_view_clear.push_button_apply.clicked.connect(self.apply_clearing)
-        self.info_view_clear.push_button_cancel.clicked.connect(self.info_view_quit.close)
+        self.info_view_clear.push_button_cancel.clicked.connect(self.info_view_clear.close)
 
     @pyqtSlot()
     def apply_clearing(self):

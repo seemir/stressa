@@ -2718,7 +2718,7 @@
                    <string/>
                   </property>
                   <property name="pixmap">
-                   <pixmap resource="../../images/img.qrc">:/img/info.png</pixmap>
+                   <pixmap resource="../../images/img.qrc">:/img/erase.svg</pixmap>
                   </property>
                   <property name="scaledContents">
                    <bool>true</bool>

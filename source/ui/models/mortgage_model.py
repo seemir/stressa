@@ -152,7 +152,7 @@ class MortgageModel(Model):
             lambda: self.set_combo_box("laneperiode"))
         self.parent.ui.date_edit_startdato.editingFinished.connect(
             lambda: self.set_date_edit("startdato"))
-        self.parent.ui.line_edit_egenkapital.editingFinished.connect(
+        self.parent.ui.line_edit_egenkapital.textEdited.connect(
             lambda: self.set_line_edit("egenkapital", Money, "value"))
 
     @pyqtSlot()

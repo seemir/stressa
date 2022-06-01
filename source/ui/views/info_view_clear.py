@@ -8,7 +8,7 @@ from typing import Union
 
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import Qt, QObject
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtGui import QIcon
 from PyQt5.uic import loadUi
 
 from source.util import Assertor
@@ -39,7 +39,5 @@ class InfoViewClear(QDialog):
         self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui.push_button_apply.setIcon(
             QIcon(up(up(os.path.abspath(__file__))) + '/images/check.png'))
-        self.ui.label_info_icon.setPixmap(
-            QPixmap(up(up(os.path.abspath(__file__))) + '/images/info.png'))
 
         self.setWindowModality(Qt.ApplicationModal)
