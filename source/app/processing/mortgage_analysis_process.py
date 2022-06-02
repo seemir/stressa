@@ -46,7 +46,7 @@ class MortgageAnalysisProcess(Process):
 
         Returns
         -------
-        out         : dict
+        out         : Mortgage
                       active mortgage in object
 
         """

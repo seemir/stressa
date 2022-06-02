@@ -3,7 +3,7 @@
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from PyQt5.QtCore import QObject, pyqtSlot
+from PyQt5.QtCore import QObject
 
 from source.app import MortgageAnalysisProcess
 from source.domain import Mortgage
@@ -43,6 +43,9 @@ class AnalysisModel(Model):
 
         if all(element in self.data.keys() for element in Mortgage.requirements):
             self.parent.ui.tab_widget_home.setCurrentIndex(2)
+
+            mortgage_analysis = MortgageAnalysisProcess(self.data)
+            print(mortgage_analysis.mortgage().mortgage_data)
 
     def clear_all(self):
         self.data = {}

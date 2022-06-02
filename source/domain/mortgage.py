@@ -49,8 +49,7 @@ class Mortgage(Entity):
 
         """
         super().__init__()
-        self.validate_mortgage_information(data)
-        self._mortgage_data = data
+        self._mortgage_data = self.validate_mortgage_information(data)
 
     @property
     def mortgage_data(self):
@@ -76,8 +75,7 @@ class Mortgage(Entity):
                               new mortgage data
 
         """
-        Assertor.assert_data_types([new_mortgage_data], [dict])
-        self._mortgage_data = new_mortgage_data
+        self._mortgage_data = self.validate_mortgage_information(new_mortgage_data)
 
     @staticmethod
     def rules():
