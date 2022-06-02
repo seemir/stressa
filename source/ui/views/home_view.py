@@ -17,7 +17,7 @@ from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.uic import loadUi
 
-from ..models import MortgageModel, FinnModel, HomeModel
+from ..models import MortgageModel, FinnModel, HomeModel, AnalysisModel
 
 from .statistics_view import StatisticsView
 from .info_view_clear import InfoViewClear
@@ -67,6 +67,7 @@ class HomeView(QMainWindow):
         self._home_model = HomeModel(self)
         self._finn_model = FinnModel(self)
         self._mortgage_model = MortgageModel(self)
+        self._analysis_model = AnalysisModel(self)
 
         self._tax_model = self.tax_view.tax_model
         self._sifo_model = self.sifo_view.sifo_model
@@ -87,6 +88,10 @@ class HomeView(QMainWindow):
         self.ui.action_logo.triggered.connect(self.info_tab)
 
     def closeEvent(self, event):
+        """
+        handler of closeEvents
+
+        """
         self.avslutt()
         event.ignore()
 
@@ -232,6 +237,19 @@ class HomeView(QMainWindow):
 
         """
         return self._mortgage_model
+
+    @property
+    def analysis_model(self):
+        """
+        AnalysisModel getter
+
+        Returns
+        -------
+        out     : AnalysisModel
+                  active AnalysisModel in HomeView
+
+        """
+        return self._analysis_model
 
     @property
     def finn_model(self):

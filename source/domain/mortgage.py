@@ -19,8 +19,10 @@ class Mortgage(Entity):
 
     """
 
-    @staticmethod
-    def validate_mortgage_information(data: dict):
+    requirements = ['brutto_inntekt_total', 'egenkapital', 'intervall', 'laneperiode',
+                    'lanetype', 'netto_likviditet', 'startdato']
+
+    def validate_mortgage_information(self, data: dict):
         """
         method for validating mortgage information
 
@@ -31,10 +33,10 @@ class Mortgage(Entity):
 
         """
         Assertor.assert_data_types([data], [dict])
-        key_values = ['egenkapital', 'arsinntekt', 'nettolikviditet']
-        if not all(element in data.keys() for element in key_values):
-            raise ValueError("all element in '{}' must be supplied for mortgage".format(key_values))
-        return {key: val for key, val in data.items() if key in key_values}
+        if not all(element in data.keys() for element in self.requirements):
+            raise ValueError(
+                "all element in '{}' must be supplied for mortgage".format(self.requirements))
+        return {key: val for key, val in data.items() if key in self.requirements}
 
     def __init__(self, data: dict):
         """
@@ -88,4 +90,7 @@ class Mortgage(Entity):
                       dictionary with all the active rules in the entity
 
         """
-        return "mortgage contains ['egenkapital', 'arsinntekt', 'nettolikviditet']"
+        return "mortgage contains '{}'".format(
+            ", ".join(
+                ['brutto_inntekt_total', 'egenkapital', 'intervall', '\\nlaneperiode', 'lanetype',
+                 'netto_likviditet', 'startdato']).replace("'", ""))

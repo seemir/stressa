@@ -94,11 +94,11 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(input_signal, validate_tax_form_operation)
 
         tax_form = validate_tax_form_operation.run()
-        populate_signal = Signal(tax_form, "Validated Tax Form Information", prettify_keys=True,
+        tax_form_signal = Signal(tax_form, "Validated Tax Form Information", prettify_keys=True,
                                  length=6)
-        self.add_signal(populate_signal, "validated_tax_form")
+        self.add_signal(tax_form_signal, "validated_tax_form")
 
-        self.add_transition(validate_tax_form_operation, populate_signal)
+        self.add_transition(validate_tax_form_operation, tax_form_signal)
 
     @Profiling
     @Debugger

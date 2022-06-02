@@ -18,6 +18,7 @@ from .validate_postal_code import ValidatePostalCode
 from .restructure_ratings import RestructureRatings
 from .add_row_to_dataframe import AddRowToDataFrame
 from .validate_finn_code import ValidateFinnCode
+from .validate_mortgage import ValidateMortgage
 from .restructure_score import RestructureScore
 from .extract_first_row import ExtractFirstRow
 from .check_newest_date import CheckNewestDate

@@ -68,7 +68,7 @@ class MortgageModel(Model):
 
         self.parent.ui.line_edit_postnr_1.editingFinished.connect(
             lambda: self.update_line_edits("postnr", self._post_code, PostenPostalCodeExtraction,
-                                           "output_operation", postfix="_1"))
+                                           "postal_code_info", postfix="_1"))
 
         self.parent.ui.line_edit_postnr_1.textEdited.connect(
             lambda: self.clear_empty_line_edits("postnr", self._post_code, postfix="_1"))

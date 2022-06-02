@@ -40,6 +40,7 @@ class HomeModel(Model):
         self.parent.tax_view.clear_all()
         self.parent.sifo_view.clear_all()
         self.parent.finn_model.clear_all()
+        self.parent.analysis_model.clear_all()
 
         self.parent.ui.line_edit_fornavn_2.setFocus()
         self.parent.ui.tab_widget_lanesokere.setCurrentIndex(0)

@@ -8,6 +8,7 @@ Domain model implementation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from .mortgage import Mortgage
 from .expenses import Expenses
 from .currency import Currency
 from .tax_form import TaxForm

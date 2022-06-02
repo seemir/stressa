@@ -42,7 +42,6 @@ class PostenPostalCodeExtraction(Process):
         self._postal_code_info = self.output_operation()
         self.end_process()
 
-    @property
     def postal_code_info(self):
         """
         postal_code_info getter
