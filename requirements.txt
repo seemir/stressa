@@ -20,7 +20,7 @@ click==8.0.4
 codecov==2.1.12
 colorama==0.4.4
 console-progressbar==1.1.2
-coverage==6.2
+coverage==6.4.1
 cycler==0.10.0
 DateTime==4.3
 diagrams==0.19.1
