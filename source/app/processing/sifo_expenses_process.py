@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 from source.domain import Expenses
 from source.util import Assertor, Profiling, Tracking
 
-from .engine import Process, Signal, ValidateFamily, SifoBaseExpensesConnector, Extract, Divide, \
+from .engine import Process, Signal, ValidateFamily, SifoBaseExpensesConnector, Extract, Division, \
     OutputOperation, OutputSignal, InputOperation
 
 
@@ -165,7 +165,7 @@ class SifoExpensesProcess(Process):
 
         """
 
-        total_shares = Divide(self.base_expenses, self.get_signal("total_monthly_expenses").data,
+        total_shares = Division(self.base_expenses, self.get_signal("total_monthly_expenses").data,
                               "Calculate Shares of Total Monthly Expenses")
         self.add_node(total_shares)
 

@@ -18,6 +18,10 @@ class AnalysisModel(Model):
 
     """
 
+    _analysis_keys = ['arsinntekt', 'belaning', 'belaningsgrad', 'egenkapital_2',
+                      'egenkapital_andel',
+                      'netto_likviditet_2', 'total_ramme']
+
     def __init__(self, parent: QObject):
         """
         Constructor / Instantiation of class
@@ -33,6 +37,14 @@ class AnalysisModel(Model):
 
         self.parent.ui.push_button_analyse.clicked.connect(self.analyze_mortgage)
 
+    @property
+    def analysis_keys(self):
+        """
+        analysis keys getter
+
+        """
+        return self._analysis_keys
+
     def analyze_mortgage(self):
         """
         method for analyze mortgage
@@ -45,7 +57,9 @@ class AnalysisModel(Model):
             self.parent.ui.tab_widget_home.setCurrentIndex(2)
 
             mortgage_analysis = MortgageAnalysisProcess(self.data)
-            print(mortgage_analysis.mortgage())
+            self.set_line_edits(line_edit_text='', line_edits=self.analysis_keys,
+                                data=mortgage_analysis.mortgage())
 
     def clear_all(self):
         self.data = {}
+        self.clear_line_edits(self.analysis_keys)

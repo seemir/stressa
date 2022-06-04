@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util import Assertor, Tracking, Profiling, Debugger
 
 from .engine import Process, Signal, InputOperation, ValidateTaxForm, \
-    SkatteetatenTaxInfoConnector, OutputOperation, OutputSignal, Extract, Divide, Multiplex, \
+    SkatteetatenTaxInfoConnector, OutputOperation, OutputSignal, Extract, Division, Multiplex, \
     Flatten, Factor
 
 
@@ -201,7 +201,7 @@ class SkatteetatenTaxProcessing(Process):
 
         """
 
-        tax_percentage = Divide(
+        tax_percentage = Division(
             {"skatteprosent": self.get_signal("total_tax").data["beregnet_skatt"]["beloep"]},
             self.get_signal("total_income").data,
             "Calculate Tax Share of Total Monthly Income")
@@ -227,7 +227,7 @@ class SkatteetatenTaxProcessing(Process):
 
         """
 
-        debt_level_operation = Divide(
+        debt_level_operation = Division(
             {"gjeldsgrad": self.get_signal("total_debt").data["samlet_gjeld"]},
             self.get_signal("total_income").data,
             "Calculate Total Monthly Income Share of Debt")
@@ -251,7 +251,7 @@ class SkatteetatenTaxProcessing(Process):
 
         """
 
-        monthly_tax_operation = Divide(
+        monthly_tax_operation = Division(
             {"beregnet_skatt_per_mnd_beloep": self.get_signal("total_tax").data["beregnet_skatt"][
                 "beloep"]}, self.get_signal("monthly_factor").data,
             "Calculate Total Monthly Tax Cost")

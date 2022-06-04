@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Module with the Divide operation
+Module with the Subtraction operation
 
 """
 
@@ -15,9 +15,9 @@ from source.util import Assertor, Tracking
 from .operation import Operation
 
 
-class Multiply(Operation):
+class Subtraction(Operation):
     """
-    Operation for multiply two signals (assuming one is a factor)
+    Operation for subtracting two signals (assuming one is a factor)
 
     """
 
@@ -31,7 +31,7 @@ class Multiply(Operation):
         factor_1     : dict
                        quantity
         factor_2     : dict
-                       divisor assumed to be of length one
+                       quantity assumed to be of length one
         desc         : str
                        description
 
@@ -43,24 +43,26 @@ class Multiply(Operation):
         self.factor_2 = factor_2
 
     @Tracking
-    def run(self, money=False, rnd=2):
+    def run(self, money=False, percent=False, rnd=2):
         """
         method for running operation
 
         Returns
         -------
         out         : dict
-                      dictionary with multiple
+                      dictionary with subtraction
 
         """
-        multiple = {}
+        subtraction = {}
         factor_2 = Decimal(
-            str(list(self.factor_2.values())[0]).replace(" ", "").replace("kr", ""))
+            str(list(self.factor_2.values())
+                [0]).replace(" ", "").replace("kr", "").replace("%", ""))
         for key, val in self.factor_1.items():
             num = Decimal(val.replace(" ", "").replace("kr", ""))
 
-            base = round(float(str(Amount(str(num)) * Amount(str(factor_2))).replace(" ", "")), rnd)
-            multiply = str(base) if not money else Money(str(int(base))).value()
-            multiple.update({key: multiply})
+            base = round(float(str(Amount(str(num)) - Amount(str(factor_2))).replace(" ", "")), rnd)
+            subtract = str(base) if not money else Money(str(int(base))).value()
+            subtract = subtract if not percent else subtract + " %"
+            subtraction.update({key: subtract})
 
-        return multiple
+        return subtraction

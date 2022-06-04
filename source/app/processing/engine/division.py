@@ -15,7 +15,7 @@ from source.util import Assertor, Tracking
 from .operation import Operation
 
 
-class Divide(Operation):
+class Division(Operation):
     """
     Operation for dividing two signals (assuming one is a factor)
 

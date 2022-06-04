@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Test module for the divide operation
+Test module for the division operation
 
 """
 
@@ -9,13 +9,13 @@ __email__ = 'samir.adrik@gmail.com'
 
 import pytest as pt
 
-from source.app import Operation, Divide
+from source.app import Operation, Division
 from source.util import TrackingError
 
 
-class TestDivide:
+class TestDivision:
     """
-    Test cases for the Divide operation
+    Test cases for the division operation
 
     """
 
@@ -28,47 +28,47 @@ class TestDivide:
         cls.numerator = {"klar": "500 kr", "sko": "500 kr", "mat": "500 kr"}
         cls.denominator = {"total": "1 500 kr"}
         cls.desc = "Share of Total Expenses"
-        cls.divide = Divide(cls.numerator, cls.denominator, cls.desc)
+        cls.division = Division(cls.numerator, cls.denominator, cls.desc)
 
-    def test_divide_is_instance_of_operation(self):
+    def test_division_is_instance_of_operation(self):
         """
-        Test that Divide is instance and subclass of Operation
+        Test that division is instance and subclass of Operation
 
         """
-        for parent in [Divide, Operation]:
-            assert isinstance(self.divide, parent)
-            assert issubclass(self.divide.__class__, parent)
+        for parent in [Division, Operation]:
+            assert isinstance(self.division, parent)
+            assert issubclass(self.division.__class__, parent)
 
     @pt.mark.parametrize('invalid_num', [True, 'test', 90210, 90210.0, ('test', 'test')])
     @pt.mark.parametrize('invalid_desc', [True, 90210, 90210.0, ('test', 'test'), {}])
     def test_invalid_args_raises_tracking_error(self, invalid_num, invalid_desc):
         """
-        Test that Divide object raises TrackingError if numerator, denominator or desc
+        Test that division object raises TrackingError if numerator, denominator or desc
         argument are invalid
 
         """
         with pt.raises(TrackingError):
-            Divide(invalid_num, self.denominator, self.desc)
+            Division(invalid_num, self.denominator, self.desc)
         with pt.raises(TrackingError):
-            Divide(self.numerator, invalid_num, self.desc)
+            Division(self.numerator, invalid_num, self.desc)
         with pt.raises(TrackingError):
-            Divide(self.numerator, self.denominator, invalid_desc)
+            Division(self.numerator, self.denominator, invalid_desc)
 
     def test_arguments_gets_set_in_object(self):
         """
-        Test that arguments gets set in the Divide object
+        Test that arguments gets set in the division object
 
         """
-        divide = Divide(self.numerator, self.denominator, self.desc)
-        assert divide.numerator == self.numerator
-        assert divide.denominator == self.denominator
-        assert divide.desc == "id: " + self.desc
+        division = Division(self.numerator, self.denominator, self.desc)
+        assert division.numerator == self.numerator
+        assert division.denominator == self.denominator
+        assert division.desc == "id: " + self.desc
 
-    def test_divide_run_method(self):
+    def test_division_run_method(self):
         """
-        Test the run method in Divide operation
+        Test the run method in division operation
 
         """
-        divide = Divide(self.numerator, self.denominator, self.desc)
-        assert divide.run() == self.divide.run()
-        assert divide.run() == {'klar': '33.33 %', 'sko': '33.33 %', 'mat': '33.33 %'}
+        division = Division(self.numerator, self.denominator, self.desc)
+        assert division.run() == self.division.run()
+        assert division.run() == {'klar': '33.33 %', 'sko': '33.33 %', 'mat': '33.33 %'}
