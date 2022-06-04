@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from decimal import Decimal
 
-from source.domain import Share, Amount, Money
+from source.domain import Amount, Money
 from source.util import Assertor, Tracking
 
 from .operation import Operation
