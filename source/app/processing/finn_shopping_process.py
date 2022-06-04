@@ -129,7 +129,7 @@ class FinnShoppingProcess(Process):
         groceries_rest_signal = Signal(groceries_rest, "Restructured List of Groceries Stores")
 
         self.add_signal(groceries_rest_signal, "groceries_rest")
-        self.add_transition(groceries_rest_operation, groceries_rest_signal)
+        self.add_transition(groceries_rest_operation, groceries_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -154,14 +154,15 @@ class FinnShoppingProcess(Process):
 
             self.add_signal(rating_food_selection_rest_signal, "rating_food_selection_rest")
             self.add_transition(rating_food_selection_operation,
-                                rating_food_selection_rest_signal)
+                                rating_food_selection_rest_signal, label="thread")
         else:
             rating_food_selection_rest = {"rating_food_selection": ""}
             rating_food_selection_rest_signal = Signal(rating_food_selection_rest,
                                                        "Restructured Food Selection Rating")
 
             self.add_signal(rating_food_selection_rest_signal, "rating_food_selection_rest")
-            self.add_transition(rating_food_selection, rating_food_selection_rest_signal)
+            self.add_transition(rating_food_selection, rating_food_selection_rest_signal,
+                                label="thread")
 
     @Profiling
     @Debugger
@@ -180,7 +181,7 @@ class FinnShoppingProcess(Process):
         services_rest_signal = Signal(services_rest, "Restructured List of Services")
 
         self.add_signal(services_rest_signal, "services_rest")
-        self.add_transition(services_rest_operation, services_rest_signal)
+        self.add_transition(services_rest_operation, services_rest_signal, label="thread")
 
     @Profiling
     @Debugger

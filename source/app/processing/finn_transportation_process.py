@@ -207,7 +207,7 @@ class FinnTransportationProcess(Process):
         transport_rest_signal = Signal(transport_rest, "Restructured List of Transportation Offers")
 
         self.add_signal(transport_rest_signal, "transport_rest")
-        self.add_transition(transport_rest_operation, transport_rest_signal)
+        self.add_transition(transport_rest_operation, transport_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -233,14 +233,15 @@ class FinnTransportationProcess(Process):
 
             self.add_signal(transportation_rating_rest_signal, "rating_transportation_rest")
             self.add_transition(rating_transportation_rest_operation,
-                                transportation_rating_rest_signal)
+                                transportation_rating_rest_signal, label="thread")
         else:
             transportation_rating_rest = {"rating_public_transportation": ""}
             transportation_rating_rest_signal = Signal(transportation_rating_rest,
                                                        "Restructured Transportation Rating")
 
             self.add_signal(transportation_rating_rest_signal, "rating_transportation_rest")
-            self.add_transition(rating_transportation, transportation_rating_rest_signal)
+            self.add_transition(rating_transportation, transportation_rating_rest_signal,
+                                label="thread")
 
     @Profiling
     @Debugger
@@ -260,7 +261,8 @@ class FinnTransportationProcess(Process):
         primary_transport_rest_signal = Signal(primary_transport_rest,
                                                "Restructured Primary Transportation\n Statistics")
         self.add_signal(primary_transport_rest_signal, "primary_transportation_rest")
-        self.add_transition(primary_transport_rest_operation, primary_transport_rest_signal)
+        self.add_transition(primary_transport_rest_operation, primary_transport_rest_signal,
+                            label="thread")
 
     @Profiling
     @Debugger
@@ -280,7 +282,7 @@ class FinnTransportationProcess(Process):
         ladepunkt_rest_signal = Signal(ladepunkt_rest,
                                        "Restructured List of Charging\n Point Places")
         self.add_signal(ladepunkt_rest_signal, "charging_rest")
-        self.add_transition(ladepunkt_rest_operation, ladepunkt_rest_signal)
+        self.add_transition(ladepunkt_rest_operation, ladepunkt_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -301,13 +303,14 @@ class FinnTransportationProcess(Process):
             parking_rating_rest_signal = Signal(parking_rating_rest, "Restructured Parking Rating")
 
             self.add_signal(parking_rating_rest_signal, "rating_parking_rest")
-            self.add_transition(parking_rating_rest_operation, parking_rating_rest_signal)
+            self.add_transition(parking_rating_rest_operation, parking_rating_rest_signal,
+                                label="thread")
         else:
             parking_rating_rest = {"rating_parking": ""}
             parking_rating_rest_signal = Signal(parking_rating_rest, "Restructured Parking Rating")
 
             self.add_signal(parking_rating_rest_signal, "rating_parking_rest")
-            self.add_transition(parking_rating, parking_rating_rest_signal)
+            self.add_transition(parking_rating, parking_rating_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -328,13 +331,14 @@ class FinnTransportationProcess(Process):
             traffic_rating_rest_signal = Signal(traffic_rating_rest, "Restructured Traffic Rating")
 
             self.add_signal(traffic_rating_rest_signal, "rating_traffic_rest")
-            self.add_transition(traffic_rating_rest_operation, traffic_rating_rest_signal)
+            self.add_transition(traffic_rating_rest_operation, traffic_rating_rest_signal,
+                                label="thread")
         else:
             traffic_rating_rest = {"rating_traffic": ""}
             traffic_rating_rest_signal = Signal(traffic_rating_rest, "Restructured Traffic Rating")
 
             self.add_signal(traffic_rating_rest_signal, "rating_traffic_rest")
-            self.add_transition(traffic_rating, traffic_rating_rest_signal)
+            self.add_transition(traffic_rating, traffic_rating_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -355,14 +359,14 @@ class FinnTransportationProcess(Process):
                                             "Restructured List of City Bikes Offers")
 
             self.add_signal(city_bikes_rest_signal, "bysykler_rest")
-            self.add_transition(city_bikes_rest_operation, city_bikes_rest_signal)
+            self.add_transition(city_bikes_rest_operation, city_bikes_rest_signal, label="thread")
         else:
             city_bikes_rest = {"bysykler": "", "bysykler_location": ""}
             city_bikes_rest_signal = Signal(city_bikes_rest,
                                             "Restructured List of City Bikes Offers")
 
             self.add_signal(city_bikes_rest_signal, "bysykler_rest")
-            self.add_transition(city_bikes, city_bikes_rest_signal)
+            self.add_transition(city_bikes, city_bikes_rest_signal, label="thread")
 
     @Profiling
     @Debugger

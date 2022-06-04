@@ -150,7 +150,7 @@ class FinnLeisureProcessing(Process):
         sport_rest_signal = Signal(sport_rest, "Restructured List of Sports Offers")
 
         self.add_signal(sport_rest_signal, "sport_rest")
-        self.add_transition(sport_rest_operation, sport_rest_signal)
+        self.add_transition(sport_rest_operation, sport_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -172,14 +172,15 @@ class FinnLeisureProcessing(Process):
                                                  "Restructured Activity Rating")
 
             self.add_signal(activity_rating_rest_signal, "rating_activity_rest")
-            self.add_transition(activity_rating_rest_operation, activity_rating_rest_signal)
+            self.add_transition(activity_rating_rest_operation, activity_rating_rest_signal,
+                                label="thread")
         else:
             activity_rating_rest = {"rating_activity": ""}
             activity_rating_rest_signal = Signal(activity_rating_rest,
                                                  "Restructured Transportation Rating")
 
             self.add_signal(activity_rating_rest_signal, "rating_activity_rest")
-            self.add_transition(activity_rating, activity_rating_rest_signal)
+            self.add_transition(activity_rating, activity_rating_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -200,13 +201,14 @@ class FinnLeisureProcessing(Process):
             serving_rating_rest_signal = Signal(serving_rating_rest, "Restructured Serving Rating")
 
             self.add_signal(serving_rating_rest_signal, "rating_serving_rest")
-            self.add_transition(serving_rating_rest_operation, serving_rating_rest_signal)
+            self.add_transition(serving_rating_rest_operation, serving_rating_rest_signal,
+                                label="thread")
         else:
             serving_rating_rest = {"rating_serving": ""}
             serving_rating_rest_signal = Signal(serving_rating_rest, "Restructured Serving Rating")
 
             self.add_signal(serving_rating_rest_signal, "rating_serving_rest")
-            self.add_transition(serving_rating, serving_rating_rest_signal)
+            self.add_transition(serving_rating, serving_rating_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -227,13 +229,14 @@ class FinnLeisureProcessing(Process):
             hiking_rating_rest_signal = Signal(hiking_rating_rest, "Restructured Hiking Rating")
 
             self.add_signal(hiking_rating_rest_signal, "rating_hiking_rest")
-            self.add_transition(hiking_rating_rest_operation, hiking_rating_rest_signal)
+            self.add_transition(hiking_rating_rest_operation, hiking_rating_rest_signal,
+                                label="thread")
         else:
             hiking_rating_rest = {"rating_hiking": ""}
             hiking_rating_rest_signal = Signal(hiking_rating_rest, "Restructured Hiking Rating")
 
             self.add_signal(hiking_rating_rest_signal, "rating_hiking_rest")
-            self.add_transition(hiking_rating, hiking_rating_rest_signal)
+            self.add_transition(hiking_rating, hiking_rating_rest_signal, label="thread")
 
     @Profiling
     @Debugger

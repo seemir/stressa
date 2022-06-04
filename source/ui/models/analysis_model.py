@@ -45,7 +45,7 @@ class AnalysisModel(Model):
             self.parent.ui.tab_widget_home.setCurrentIndex(2)
 
             mortgage_analysis = MortgageAnalysisProcess(self.data)
-            print(mortgage_analysis.mortgage().mortgage_data)
+            print(mortgage_analysis.mortgage())
 
     def clear_all(self):
         self.data = {}

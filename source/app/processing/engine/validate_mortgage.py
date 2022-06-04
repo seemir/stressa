@@ -49,4 +49,5 @@ class ValidateMortgage(Operation):
                               Mortgage object with validated mortgage information
 
         """
-        return Mortgage(self.mortgage_data)
+        mortgage = Mortgage(self.mortgage_data)
+        return mortgage.mortgage_data

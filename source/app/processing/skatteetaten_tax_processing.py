@@ -137,7 +137,7 @@ class SkatteetatenTaxProcessing(Process):
         total_tax_extract_signal = Signal(total_tax_extract, "Skatteetaten Total Tax")
 
         self.add_signal(total_tax_extract_signal, "total_tax")
-        self.add_transition(total_tax_extract_operation, total_tax_extract_signal)
+        self.add_transition(total_tax_extract_operation, total_tax_extract_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -157,7 +157,7 @@ class SkatteetatenTaxProcessing(Process):
         income_extract_signal = Signal(income_extract, "Skatteetaten Total Income Basis")
 
         self.add_signal(income_extract_signal, "total_income")
-        self.add_transition(income_extract_operation, income_extract_signal)
+        self.add_transition(income_extract_operation, income_extract_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -175,7 +175,7 @@ class SkatteetatenTaxProcessing(Process):
         debt_extract_signal = Signal(debt_extract, "Skatteetaten Total Debt")
 
         self.add_signal(debt_extract_signal, "total_debt")
-        self.add_transition(debt_extract_operation, debt_extract_signal)
+        self.add_transition(debt_extract_operation, debt_extract_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -217,7 +217,7 @@ class SkatteetatenTaxProcessing(Process):
 
         self.add_signal(tax_share_of_monthly_income_signal, "tax_share_of_monthly_income")
 
-        self.add_transition(tax_percentage, tax_share_of_monthly_income_signal)
+        self.add_transition(tax_percentage, tax_share_of_monthly_income_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -241,7 +241,7 @@ class SkatteetatenTaxProcessing(Process):
                                    prettify_keys=True, length=10)
 
         self.add_signal(debt_level_signal, "debt_level")
-        self.add_transition(debt_level_operation, debt_level_signal)
+        self.add_transition(debt_level_operation, debt_level_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -267,7 +267,7 @@ class SkatteetatenTaxProcessing(Process):
                                     prettify_keys=True, length=10)
 
         self.add_signal(monthly_tax_signal, "monthly_tax")
-        self.add_transition(monthly_tax_operation, monthly_tax_signal)
+        self.add_transition(monthly_tax_operation, monthly_tax_signal, label="thread")
 
     @Profiling
     @Debugger

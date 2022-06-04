@@ -285,7 +285,7 @@ class FinnEnvironmentProcess(Process):
                                            "Restructured Housing Stock Statistics")
 
         self.add_signal(housing_stock_rest_signal, "housing_stock_rest")
-        self.add_transition(housing_stock_rest_operation, housing_stock_rest_signal)
+        self.add_transition(housing_stock_rest_operation, housing_stock_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -306,7 +306,8 @@ class FinnEnvironmentProcess(Process):
                                                "Restructured Housing Ownership Statistics")
 
         self.add_signal(housing_ownership_rest_signal, "housing_ownership_rest")
-        self.add_transition(housing_ownership_rest_operation, housing_ownership_rest_signal)
+        self.add_transition(housing_ownership_rest_operation, housing_ownership_rest_signal,
+                            label="thread")
 
     @Profiling
     @Debugger
@@ -329,14 +330,15 @@ class FinnEnvironmentProcess(Process):
                                                "Restructured Safety Rating Statistics")
 
             self.add_signal(safety_rating_rest_signal, "safety_rating_rest")
-            self.add_transition(safety_rating_rest_operation, safety_rating_rest_signal)
+            self.add_transition(safety_rating_rest_operation, safety_rating_rest_signal,
+                                label="thread")
         else:
             safety_rating_rest = {"safety_rating": ""}
             safety_rating_rest_signal = Signal(safety_rating_rest,
                                                "Restructured Safety Rating Statistics")
 
             self.add_signal(safety_rating_rest_signal, "safety_rating_rest")
-            self.add_transition(safety_rating, safety_rating_rest_signal)
+            self.add_transition(safety_rating, safety_rating_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -358,14 +360,15 @@ class FinnEnvironmentProcess(Process):
                                               "Restructured Noise Rating Statistics")
 
             self.add_signal(noise_rating_rest_signal, "noise_rating_rest")
-            self.add_transition(noise_rating_rest_operation, noise_rating_rest_signal)
+            self.add_transition(noise_rating_rest_operation, noise_rating_rest_signal,
+                                label="thread")
         else:
             noise_rating_rest = {"noise_rating": ""}
             noise_rating_rest_signal = Signal(noise_rating_rest,
                                               "Restructured Noise Rating Statistics")
 
             self.add_signal(noise_rating_rest_signal, "noise_rating_rest")
-            self.add_transition(noise_rating, noise_rating_rest_signal)
+            self.add_transition(noise_rating, noise_rating_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -390,7 +393,8 @@ class FinnEnvironmentProcess(Process):
                                                     "Restructured Environment Rating Statistics")
 
             self.add_signal(environment_rating_rest_signal, "environment_rating_rest")
-            self.add_transition(environment_rating_rest_operation, environment_rating_rest_signal)
+            self.add_transition(environment_rating_rest_operation, environment_rating_rest_signal,
+                                label="thread")
         else:
             environment_rating_rest = {
                 "environment_rating": ""}
@@ -398,7 +402,7 @@ class FinnEnvironmentProcess(Process):
                                                     "Restructured Environment Rating Statistics")
 
             self.add_signal(environment_rating_rest_signal, "environment_rating_rest")
-            self.add_transition(environment_rating, environment_rating_rest_signal)
+            self.add_transition(environment_rating, environment_rating_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -419,14 +423,15 @@ class FinnEnvironmentProcess(Process):
                                                 "Restructured Garden Rating Statistics")
 
             self.add_signal(gardens_rating_rest_signal, "gardens_rating_rest")
-            self.add_transition(garden_rating_rest_operation, gardens_rating_rest_signal)
+            self.add_transition(garden_rating_rest_operation, gardens_rating_rest_signal,
+                                label="thread")
         else:
             gardens_rating_rest = {"gardens_rating": ""}
             gardens_rating_rest_signal = Signal(gardens_rating_rest,
                                                 "Restructured Garden Rating Statistics")
 
             self.add_signal(gardens_rating_rest_signal, "gardens_rating_rest")
-            self.add_transition(gardens_rating, gardens_rating_rest_signal)
+            self.add_transition(gardens_rating, gardens_rating_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -447,14 +452,15 @@ class FinnEnvironmentProcess(Process):
                                               "Restructured Roads Rating Statistics")
 
             self.add_signal(roads_rating_rest_signal, "roads_rating_rest")
-            self.add_transition(roads_rating_rest_operation, roads_rating_rest_signal)
+            self.add_transition(roads_rating_rest_operation, roads_rating_rest_signal,
+                                label="thread")
         else:
             roads_rating_rest = {"roads_rating": ""}
             roads_rating_rest_signal = Signal(roads_rating_rest,
                                               "Restructured Roads Rating Statistics")
 
             self.add_signal(roads_rating_rest_signal, "roads_rating_rest")
-            self.add_transition(roads_rating, roads_rating_rest_signal)
+            self.add_transition(roads_rating, roads_rating_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -474,7 +480,7 @@ class FinnEnvironmentProcess(Process):
                                             "Restructured Housing Area Statistics")
 
         self.add_signal(housing_rating_rest_signal, "housing_area_rest")
-        self.add_transition(housing_area_rest_operation, housing_rating_rest_signal)
+        self.add_transition(housing_area_rest_operation, housing_rating_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -493,7 +499,7 @@ class FinnEnvironmentProcess(Process):
         housing_age_rest_signal = Signal(housing_age_rest, "Restructured Housing Age")
 
         self.add_signal(housing_age_rest_signal, "housing_age_rest")
-        self.add_transition(housing_age_rest_operation, housing_age_rest_signal)
+        self.add_transition(housing_age_rest_operation, housing_age_rest_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -513,13 +519,14 @@ class FinnEnvironmentProcess(Process):
             housing_prices_rest_signal = Signal(housing_prices_rest, "Restructured Housing Prices")
 
             self.add_signal(housing_prices_rest_signal, "housing_prices_rest")
-            self.add_transition(housing_prices_rest_operation, housing_prices_rest_signal)
+            self.add_transition(housing_prices_rest_operation, housing_prices_rest_signal,
+                                label="thread")
         else:
             housing_prices_rest = {"housing_prices": ""}
             housing_prices_rest_signal = Signal(housing_prices_rest, "Restructured Housing Prices")
 
             self.add_signal(housing_prices_rest_signal, "housing_prices_rest")
-            self.add_transition(housing_prices, housing_prices_rest_signal)
+            self.add_transition(housing_prices, housing_prices_rest_signal, label="thread")
 
     @Profiling
     @Debugger

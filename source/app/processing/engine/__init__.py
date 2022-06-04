@@ -34,6 +34,7 @@ from .accumulate import Accumulate
 from .operation import Operation
 from .multiplex import Multiplex
 from .sub_model import SubModel
+from .multiply import Multiply
 from .separate import Separate
 from .process import Process
 from .extract import Extract
