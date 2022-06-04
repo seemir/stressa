@@ -43,7 +43,7 @@ class Multiplication(Operation):
         self.factor_2 = factor_2
 
     @Tracking
-    def run(self, money=False, rnd=2):
+    def run(self, money=False, percent=False, rnd=0):
         """
         method for running operation
 
@@ -61,6 +61,7 @@ class Multiplication(Operation):
 
             base = round(float(str(Amount(str(num)) * Amount(str(factor_2))).replace(" ", "")), rnd)
             multiply = str(base) if not money else Money(str(int(base))).value()
+            multiply = multiply if not percent else multiply + ' %'
             multiple.update({key: multiply})
 
         return multiple

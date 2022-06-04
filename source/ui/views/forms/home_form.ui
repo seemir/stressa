@@ -10519,7 +10519,7 @@
                   <item row="2" column="2" rowspan="14">
                    <widget class="QGroupBox" name="group_box_boliglansforskriften">
                     <property name="title">
-                     <string>Krav fra Boliglånsforskriften (2020):</string>
+                     <string>Krav fra Boliglånsforskriften (2021):</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignCenter</set>
@@ -10558,7 +10558,7 @@
                       </widget>
                      </item>
                      <item row="3" column="0" colspan="2">
-                      <widget class="QLineEdit" name="line_edit_krav_egenkapitalandel">
+                      <widget class="QLineEdit" name="line_edit_krav_egenkapital_andel">
                        <property name="enabled">
                         <bool>false</bool>
                        </property>
@@ -12507,7 +12507,7 @@
   <tabstop>tab_widget_home</tabstop>
   <tabstop>line_edit_arsinntekt</tabstop>
   <tabstop>line_edit_krav_egenkapital</tabstop>
-  <tabstop>line_edit_krav_egenkapitalandel</tabstop>
+  <tabstop>line_edit_krav_egenkapital_andel</tabstop>
   <tabstop>line_edit_krav_belaningsgrad</tabstop>
  </tabstops>
  <resources>

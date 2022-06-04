@@ -38,12 +38,14 @@ class MortgageAnalysisProcess(Process):
         self.validate_mortgage()
 
         self.run_parallel([self.extract_1, self.extract_2, self.extract_3])
-        self.run_parallel([self.factor_1, self.factor_2, self.factor_3])
+        self.run_parallel([self.factor_1, self.factor_2, self.factor_3, self.factor_4])
         self.multiply_1()
         self.multiply_2()
         self.divide_1()
         self.subtraction_1()
         self.addition_1()
+        self.extract_4()
+        self.multiply_3()
 
         self.multiplex()
 
@@ -111,14 +113,14 @@ class MortgageAnalysisProcess(Process):
 
         """
         validated_mortgage = self.get_signal("validated_mortgage")
-        total_income_extract_operation = Extract(validated_mortgage.data, "brutto_inntekt_total")
+        total_income_extract_operation = Extract(validated_mortgage.data, "personinntekt_total")
         self.add_node(total_income_extract_operation)
         self.add_transition(validated_mortgage, total_income_extract_operation, label="thread")
 
         total_income_extract = total_income_extract_operation.run()
         total_income_extract_signal = Signal(total_income_extract, "Total Monthly Gross Income")
 
-        self.add_signal(total_income_extract_signal, "brutto_inntekt_total")
+        self.add_signal(total_income_extract_signal, "personinntekt_total")
         self.add_transition(total_income_extract_operation, total_income_extract_signal,
                             label="thread")
 
@@ -219,17 +221,17 @@ class MortgageAnalysisProcess(Process):
         """
 
         monthly_income_operation = Multiplication(
-            {'arsinntekt': self.get_signal("brutto_inntekt_total").data['brutto_inntekt_total']},
+            {'arsinntekt': self.get_signal("personinntekt_total").data['personinntekt_total']},
             self.get_signal("monthly_factor").data,
             "Calculate Total Yearly Income")
         self.add_node(monthly_income_operation)
 
-        self.add_transition(self.get_signal("brutto_inntekt_total"), monthly_income_operation,
+        self.add_transition(self.get_signal("personinntekt_total"), monthly_income_operation,
                             label="source")
         self.add_transition(self.get_signal("monthly_factor"), monthly_income_operation,
                             label="factor")
 
-        arsinntekt = monthly_income_operation.run(money=True, rnd=0)
+        arsinntekt = monthly_income_operation.run(money=True)
 
         arsinntekt_signal = Signal(arsinntekt, "Total Yearly Income", prettify_keys=True, length=10)
 
@@ -253,7 +255,7 @@ class MortgageAnalysisProcess(Process):
         self.add_transition(self.get_signal("mortgage_limit"), mortgage_limit_operation,
                             label="factor")
 
-        mortgage_limit = mortgage_limit_operation.run(money=True, rnd=0)
+        mortgage_limit = mortgage_limit_operation.run(money=True)
 
         mortgage_limit_signal = Signal(mortgage_limit, "Total Mortgage Limit", prettify_keys=True,
                                        length=10)
@@ -342,6 +344,71 @@ class MortgageAnalysisProcess(Process):
 
     @Profiling
     @Debugger
+    def extract_4(self):
+        """
+        method for extracting mortgage limit
+
+        """
+        mortgage_limit = self.get_signal("belaning")
+        extract_mortgage_limit_operation = Extract(mortgage_limit.data, "belaning")
+        self.add_node(extract_mortgage_limit_operation)
+        self.add_transition(mortgage_limit, extract_mortgage_limit_operation)
+
+        extract_mortgage_limit = extract_mortgage_limit_operation.run()
+        extract_mortgage_limit['krav_belaning'] = extract_mortgage_limit.pop('belaning')
+
+        extract_mortgage_signal = Signal(extract_mortgage_limit, "Required Mortgage Limit")
+
+        self.add_signal(extract_mortgage_signal, "krav_belaning")
+        self.add_transition(extract_mortgage_limit_operation, extract_mortgage_signal)
+
+    @Profiling
+    @Debugger
+    def factor_4(self):
+        """
+        method for creating a factor
+
+        """
+        factor_operation = Factor("0.15", "Required Equity Share")
+        self.add_node(factor_operation)
+
+        factor = factor_operation.run()
+        factor['krav_egenkapital_andel_verdi'] = factor.pop('factor')
+
+        factor_signal = Signal(factor, "Required Equity Share")
+
+        self.add_signal(factor_signal, "krav_egenkapital_andel_verdi")
+        self.add_transition(factor_operation, factor_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def multiply_3(self):
+        """
+        method for calculating required equity percent
+
+        """
+
+        equity_percent_operation = Multiplication(
+            {'krav_egenkapital_andel': self.get_signal("krav_egenkapital_andel_verdi").data[
+                'krav_egenkapital_andel_verdi']},
+            self.get_signal("full_financing").data, "Calculate Required Equity Share")
+        self.add_node(equity_percent_operation)
+
+        self.add_transition(self.get_signal("krav_egenkapital_andel_verdi"),
+                            equity_percent_operation, label="source")
+        self.add_transition(self.get_signal("full_financing"), equity_percent_operation,
+                            label="factor")
+
+        equity_percent = equity_percent_operation.run(percent=True)
+
+        equity_percent_signal = Signal(equity_percent, "Calculate Required Equity Share",
+                                       prettify_keys=True, length=10)
+
+        self.add_signal(equity_percent_signal, "krav_egenkapital_andel")
+        self.add_transition(equity_percent_operation, equity_percent_signal)
+
+    @Profiling
+    @Debugger
     def multiplex(self):
         """
         multiplex mortgage information
@@ -354,9 +421,12 @@ class MortgageAnalysisProcess(Process):
         equity_share = self.get_signal("egenkapital_andel")
         mortgage_share = self.get_signal("belaningsgrad")
         total_financing_frame = self.get_signal("total_ramme")
+        required_mortgage_limit = self.get_signal("krav_belaning")
+        required_equity_share = self.get_signal("krav_egenkapital_andel")
 
         multiplex_operation = Multiplex([equity, net_liquidity, yearly_income, mortgage_limit,
-                                         equity_share, mortgage_share, total_financing_frame],
+                                         equity_share, mortgage_share, total_financing_frame,
+                                         required_mortgage_limit, required_equity_share],
                                         "Multiplex Mortgage Information")
 
         self.add_node(multiplex_operation)
@@ -367,6 +437,8 @@ class MortgageAnalysisProcess(Process):
         self.add_transition(equity_share, multiplex_operation)
         self.add_transition(mortgage_share, multiplex_operation)
         self.add_transition(total_financing_frame, multiplex_operation)
+        self.add_transition(required_mortgage_limit, multiplex_operation)
+        self.add_transition(required_equity_share, multiplex_operation)
 
         multiplex = multiplex_operation.run()
         multiplex_signal = Signal(multiplex, "Multiplexed Mortgage Information", prettify_keys=True,
