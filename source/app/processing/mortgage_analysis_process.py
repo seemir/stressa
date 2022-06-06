@@ -37,15 +37,13 @@ class MortgageAnalysisProcess(Process):
         self.input_operation({"data": data})
         self.validate_mortgage()
 
-        self.run_parallel([self.extract_1, self.extract_2, self.extract_3])
-        self.run_parallel([self.factor_1, self.factor_2, self.factor_3, self.factor_4])
-        self.multiply_1()
-        self.multiply_2()
-        self.divide_1()
-        self.subtraction_1()
-        self.addition_1()
-        self.extract_4()
-        self.multiply_3()
+        self.run_parallel([self.extract_1, self.extract_2, self.extract_3, self.factor_1])
+        self.run_parallel([self.multiply_1, self.factor_2])
+
+        self.run_parallel([self.factor_3, self.factor_4, self.multiply_2])
+
+        self.run_parallel([self.divide_1, self.addition_1, self.extract_4, self.multiply_3])
+        self.run_parallel([self.subtraction_1, self.subtraction_2])
 
         self.multiplex()
 
@@ -227,16 +225,16 @@ class MortgageAnalysisProcess(Process):
         self.add_node(monthly_income_operation)
 
         self.add_transition(self.get_signal("personinntekt_total"), monthly_income_operation,
-                            label="source")
+                            label="thread")
         self.add_transition(self.get_signal("monthly_factor"), monthly_income_operation,
-                            label="factor")
+                            label="thread")
 
         arsinntekt = monthly_income_operation.run(money=True)
 
         arsinntekt_signal = Signal(arsinntekt, "Total Yearly Income", prettify_keys=True, length=10)
 
         self.add_signal(arsinntekt_signal, "arsinntekt")
-        self.add_transition(monthly_income_operation, arsinntekt_signal)
+        self.add_transition(monthly_income_operation, arsinntekt_signal, thread="thread")
 
     @Profiling
     @Debugger
@@ -251,9 +249,9 @@ class MortgageAnalysisProcess(Process):
             self.get_signal("mortgage_limit").data, "Calculate Total Mortgage Limit")
         self.add_node(mortgage_limit_operation)
 
-        self.add_transition(self.get_signal("arsinntekt"), mortgage_limit_operation, label="source")
+        self.add_transition(self.get_signal("arsinntekt"), mortgage_limit_operation, label="thread")
         self.add_transition(self.get_signal("mortgage_limit"), mortgage_limit_operation,
-                            label="factor")
+                            label="thread")
 
         mortgage_limit = mortgage_limit_operation.run(money=True)
 
@@ -261,7 +259,7 @@ class MortgageAnalysisProcess(Process):
                                        length=10)
 
         self.add_signal(mortgage_limit_signal, "belaning")
-        self.add_transition(mortgage_limit_operation, mortgage_limit_signal)
+        self.add_transition(mortgage_limit_operation, mortgage_limit_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -277,8 +275,8 @@ class MortgageAnalysisProcess(Process):
         self.add_node(equity_share_operation)
 
         self.add_transition(self.get_signal("egenkapital"), equity_share_operation,
-                            label="quantity")
-        self.add_transition(self.get_signal("belaning"), equity_share_operation, label="divisor")
+                            label="thread")
+        self.add_transition(self.get_signal("belaning"), equity_share_operation, label="thread")
 
         equity_share = equity_share_operation.run()
         equity_share_signal = Signal(equity_share, "Calculated Equity Share",
@@ -286,34 +284,7 @@ class MortgageAnalysisProcess(Process):
 
         self.add_signal(equity_share_signal, "egenkapital_andel")
 
-        self.add_transition(equity_share_operation, equity_share_signal)
-
-    @Profiling
-    @Debugger
-    def subtraction_1(self):
-        """
-        method for calculating mortgage share
-
-        """
-
-        mortgage_share_operation = Subtraction(
-            {"belaningsgrad": self.get_signal("full_financing").data['factor']},
-            self.get_signal("egenkapital_andel").data,
-            "Calculate Mortgage Share")
-        self.add_node(mortgage_share_operation)
-
-        self.add_transition(self.get_signal("egenkapital_andel"), mortgage_share_operation,
-                            label="factor")
-        self.add_transition(self.get_signal("full_financing"), mortgage_share_operation,
-                            label="source")
-
-        mortgage_share = mortgage_share_operation.run(percent=True)
-        mortgage_share_signal = Signal(mortgage_share, "Calculated Mortgage Share",
-                                       prettify_keys=True, length=10)
-
-        self.add_signal(mortgage_share_signal, "belaningsgrad")
-
-        self.add_transition(mortgage_share_operation, mortgage_share_signal)
+        self.add_transition(equity_share_operation, equity_share_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -330,9 +301,9 @@ class MortgageAnalysisProcess(Process):
         self.add_node(financing_frame_operation)
 
         self.add_transition(self.get_signal("egenkapital"), financing_frame_operation,
-                            label="factor")
+                            label="thread")
         self.add_transition(self.get_signal("belaning"), financing_frame_operation,
-                            label="source")
+                            label="thread")
 
         financing_frame = financing_frame_operation.run(money=True)
         financing_frame_signal = Signal(financing_frame, "Calculated Total Financing Frame",
@@ -340,7 +311,7 @@ class MortgageAnalysisProcess(Process):
 
         self.add_signal(financing_frame_signal, "total_ramme")
 
-        self.add_transition(financing_frame_operation, financing_frame_signal)
+        self.add_transition(financing_frame_operation, financing_frame_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -352,7 +323,7 @@ class MortgageAnalysisProcess(Process):
         mortgage_limit = self.get_signal("belaning")
         extract_mortgage_limit_operation = Extract(mortgage_limit.data, "belaning")
         self.add_node(extract_mortgage_limit_operation)
-        self.add_transition(mortgage_limit, extract_mortgage_limit_operation)
+        self.add_transition(mortgage_limit, extract_mortgage_limit_operation, label="thread")
 
         extract_mortgage_limit = extract_mortgage_limit_operation.run()
         extract_mortgage_limit['krav_belaning'] = extract_mortgage_limit.pop('belaning')
@@ -360,7 +331,8 @@ class MortgageAnalysisProcess(Process):
         extract_mortgage_signal = Signal(extract_mortgage_limit, "Required Mortgage Limit")
 
         self.add_signal(extract_mortgage_signal, "krav_belaning")
-        self.add_transition(extract_mortgage_limit_operation, extract_mortgage_signal)
+        self.add_transition(extract_mortgage_limit_operation, extract_mortgage_signal,
+                            label="thread")
 
     @Profiling
     @Debugger
@@ -395,9 +367,9 @@ class MortgageAnalysisProcess(Process):
         self.add_node(equity_percent_operation)
 
         self.add_transition(self.get_signal("krav_egenkapital_andel_verdi"),
-                            equity_percent_operation, label="source")
+                            equity_percent_operation, label="thread")
         self.add_transition(self.get_signal("full_financing"), equity_percent_operation,
-                            label="factor")
+                            label="thread")
 
         equity_percent = equity_percent_operation.run(percent=True)
 
@@ -405,7 +377,63 @@ class MortgageAnalysisProcess(Process):
                                        prettify_keys=True, length=10)
 
         self.add_signal(equity_percent_signal, "krav_egenkapital_andel")
-        self.add_transition(equity_percent_operation, equity_percent_signal)
+        self.add_transition(equity_percent_operation, equity_percent_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def subtraction_1(self):
+        """
+        method for calculating mortgage share
+
+        """
+
+        mortgage_share_operation = Subtraction(
+            {"belaningsgrad": self.get_signal("full_financing").data['factor']},
+            self.get_signal("egenkapital_andel").data,
+            "Calculate Mortgage Share")
+        self.add_node(mortgage_share_operation)
+
+        self.add_transition(self.get_signal("egenkapital_andel"), mortgage_share_operation,
+                            label="thread")
+        self.add_transition(self.get_signal("full_financing"), mortgage_share_operation,
+                            label="thread")
+
+        mortgage_share = mortgage_share_operation.run(percent=True)
+        mortgage_share_signal = Signal(mortgage_share, "Calculated Mortgage Share",
+                                       prettify_keys=True, length=10)
+
+        self.add_signal(mortgage_share_signal, "belaningsgrad")
+
+        self.add_transition(mortgage_share_operation, mortgage_share_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def subtraction_2(self):
+        """
+        method for calculating required mortgage share
+
+        """
+
+        required_mortgage_share_operation = Subtraction(
+            {"krav_belaningsgrad": self.get_signal("full_financing").data['factor']},
+            self.get_signal("krav_egenkapital_andel").data,
+            "Calculate Required Mortgage Share")
+        self.add_node(required_mortgage_share_operation)
+
+        self.add_transition(self.get_signal("krav_egenkapital_andel"),
+                            required_mortgage_share_operation, label="thread")
+        self.add_transition(self.get_signal("full_financing"), required_mortgage_share_operation,
+                            label="thread")
+
+        required_mortgage_share = required_mortgage_share_operation.run(percent=True)
+        required_mortgage_share_signal = Signal(required_mortgage_share,
+                                                "Calculated Required Mortgage Share",
+                                                prettify_keys=True, length=10)
+
+        self.add_signal(required_mortgage_share_signal, "krav_belaningsgrad")
+
+        self.add_transition(required_mortgage_share_operation, required_mortgage_share_signal,
+                            label="thread")
 
     @Profiling
     @Debugger
@@ -423,10 +451,12 @@ class MortgageAnalysisProcess(Process):
         total_financing_frame = self.get_signal("total_ramme")
         required_mortgage_limit = self.get_signal("krav_belaning")
         required_equity_share = self.get_signal("krav_egenkapital_andel")
+        required_mortgage_share = self.get_signal("krav_belaningsgrad")
 
         multiplex_operation = Multiplex([equity, net_liquidity, yearly_income, mortgage_limit,
                                          equity_share, mortgage_share, total_financing_frame,
-                                         required_mortgage_limit, required_equity_share],
+                                         required_mortgage_limit, required_equity_share,
+                                         required_mortgage_share],
                                         "Multiplex Mortgage Information")
 
         self.add_node(multiplex_operation)
@@ -439,6 +469,7 @@ class MortgageAnalysisProcess(Process):
         self.add_transition(total_financing_frame, multiplex_operation)
         self.add_transition(required_mortgage_limit, multiplex_operation)
         self.add_transition(required_equity_share, multiplex_operation)
+        self.add_transition(required_mortgage_share, multiplex_operation)
 
         multiplex = multiplex_operation.run()
         multiplex_signal = Signal(multiplex, "Multiplexed Mortgage Information", prettify_keys=True,

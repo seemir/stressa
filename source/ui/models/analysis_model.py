@@ -20,7 +20,7 @@ class AnalysisModel(Model):
 
     _analysis_keys = ['arsinntekt', 'belaning', 'belaningsgrad', 'egenkapital_2',
                       'egenkapital_andel', 'netto_likviditet_2', 'total_ramme', 'krav_belaning',
-                      'krav_egenkapital_andel']
+                      'krav_egenkapital_andel', 'krav_belaningsgrad']
 
     def __init__(self, parent: QObject):
         """
