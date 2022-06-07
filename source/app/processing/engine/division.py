@@ -55,10 +55,12 @@ class Division(Operation):
         """
         shares = {}
         den = Decimal(
-            str(list(self.denominator.values())[0]).replace(" ", "").replace("kr", ""))
+            str(list(self.denominator.values())
+                [0]).replace(" ", "").replace("kr", "").replace("%", ""))
         den = den if den != 0 else Decimal("1")
+
         for key, val in self.numerator.items():
-            num = Decimal(val.replace(" ", "").replace("kr", ""))
+            num = Decimal(val.replace(" ", "").replace("kr", "").replace("%", ""))
 
             base = round(float(str(Amount(str(num)) / Amount(str(den))).replace(" ", "")), rnd)
             ration = str(base) if not money else Money(str(int(base))).value()
