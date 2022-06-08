@@ -112,36 +112,42 @@ class TaxModel(Model):
     def calculate_tax_income(self):
         if "brutto_inntekt_total" in self.data.keys() and "skatte_aar" in self.data.keys() and \
                 "alder" in self.data.keys():
+
             self.clear_line_edits(self.tax_output)
             self.parent.ui.tab_widget_skattekalkulator.setCurrentIndex(1)
+
+            budget_model = self.parent.parent.budget_view.budget_model
+
             tax_form = {key: val.replace(" ", "").replace("kr", "") for key, val in
                         self.data.items() if key in self.tax_input}
-            brutto_inntekt = Money(self.data["brutto_inntekt_total"]) * Money("12")
 
-            if "trygde_inntekt_total" in self.data.keys():
-                trygd = Money(self.data["trygde_inntekt_total"]) * Money("12")
+            brutto_inntekt = Money(budget_model.data["brutto_inntekt_total_aar"])
+
+            if "trygde_inntekt_total_aar" in budget_model.data.keys():
+                trygd = Money(budget_model.data["trygde_inntekt_total_aar"]).value()
             else:
                 trygd = "0"
 
-            total_sub_income = Money(brutto_inntekt) + Money(trygd)
+            total_sub_income = Money(brutto_inntekt.value()) + Money(trygd)
 
             tax_form.update({'inntekt_total': total_sub_income.replace(" ", "").replace("kr", "")})
 
-            if 'renteinntekter_total' in self.data.keys():
-                tax_form.update({'renteinntekter_total': (
-                        Money(self.data["renteinntekter_total"]) * Money("12"))
-                                .replace(" ", "")})
-            if 'rentekostnader_total' in self.data.keys():
-                tax_form.update({'rentekostnader_total': (
-                        Money(self.data["rentekostnader_total"]) * Money("12"))
-                                .replace(" ", "")})
-            if 'andre_inntekter_total' in self.data.keys():
-                tax_form.update({'andre_inntekter_total': (
-                        Money(self.data["andre_inntekter_total"]) * Money("12"))
-                                .replace(" ", "")})
-            if 'leieinntekt_total' in self.data.keys():
-                tax_form.update({'leieinntekt_total': (
-                        Money(self.data["leieinntekt_total"]) * Money("12"))
-                                .replace(" ", "")})
+            if 'renteinntekter_total_aar' in budget_model.data.keys():
+                tax_form.update({'renteinntekter_total':
+                                     budget_model.data["renteinntekter_total_aar"]
+                                .replace(" ", "").replace("kr", "")})
+            if 'rentekostnader_total_aar' in budget_model.data.keys():
+                tax_form.update({'rentekostnader_total':
+                                     budget_model.data["rentekostnader_total_aar"]
+                                .replace(" ", "").replace("kr", "")})
+            if 'andre_inntekter_total_aar' in budget_model.data.keys():
+                tax_form.update({'andre_inntekter_total':
+                                     budget_model.data["andre_inntekter_total_aar"]
+                                .replace(" ", "").replace("kr", "")})
+            if 'leieinntekt_total_aar' in budget_model.data.keys():
+                tax_form.update({'leieinntekt_total':
+                                     budget_model.data["leieinntekt_total_aar"]
+                                .replace(" ", "").replace("kr", "")})
+
             tax_data = SkatteetatenTaxProcessing(tax_data=tax_form).skatteetaten_tax_info
             self.set_line_edits("", line_edits=self.tax_output, data=tax_data)

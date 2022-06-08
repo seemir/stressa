@@ -19,7 +19,7 @@ class Mortgage(Entity):
 
     """
 
-    requirements = ['personinntekt_total', 'egenkapital', 'intervall', 'laneperiode',
+    requirements = ['personinntekt_total_aar', 'egenkapital', 'intervall', 'laneperiode',
                     'lanetype', 'netto_likviditet', 'startdato']
 
     def validate_mortgage_information(self, data: dict):
@@ -90,5 +90,5 @@ class Mortgage(Entity):
         """
         return "mortgage contains '{}'".format(
             ", ".join(
-                ['personinntekt_total', 'egenkapital', 'intervall', '\\nlaneperiode', 'lanetype',
-                 'netto_likviditet', 'startdato']).replace("'", ""))
+                ['personinntekt_total_aar', 'egenkapital', 'intervall', '\\nlaneperiode',
+                 'lanetype', 'netto_likviditet', 'startdato']).replace("'", ""))

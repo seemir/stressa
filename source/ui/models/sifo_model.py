@@ -333,8 +333,9 @@ class SifoModel(Model):
         method for setting / formatting yearly gross income
 
         """
-        self.parent.ui.line_edit_brutto_arsinntekt.setText(self.calculate_yearly_income(
-            self.parent.parent.ui.line_edit_brutto_inntekt_total.text()))
+        if "personinntekt_total_aar" in self.parent.parent.budget_view.budget_model.data:
+            self.parent.ui.line_edit_brutto_arsinntekt.setText(
+                self.parent.parent.budget_view.budget_model.data["personinntekt_total_aar"])
 
     @pyqtSlot()
     def calculate_yearly_income(self, monthly_income: str):

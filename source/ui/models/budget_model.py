@@ -162,6 +162,7 @@ class BudgetModel(Model):
             self.clear_line_edit(line_edit + postfix)
             getattr(self.parent.ui, "combo_box_interval" + combofix).setCurrentIndex(0)
         self.monthly_value()
+        self.yearly_value()
 
     def set_combo_box_value(self, line_edit, postfix, combofix):
         if getattr(self.parent.ui, "combo_box_interval" + combofix).currentText():
@@ -169,6 +170,7 @@ class BudgetModel(Model):
         else:
             self.clear_line_edit(line_edit + postfix)
         self.monthly_value()
+        self.yearly_value()
 
     def monthly_value(self):
         parent = self.parent.ui
@@ -305,14 +307,146 @@ class BudgetModel(Model):
         self.set_total_value(sum_expenses_1, sum_expenses_2, "sum_utgifter_1", "sum_utgifter_2",
                              "sum_utgifter_total")
 
+    def yearly_value(self):
+        parent = self.parent.ui
+        brutto_income_1 = self.calculate_yearly_values(
+            "brutto_inntekt_aar_1", parent.line_edit_brutto_inntekt_1.text(),
+            self._interval[parent.combo_box_interval_1.currentText()])
+        trygd_income_1 = self.calculate_yearly_values(
+            "trygde_inntekt_aar_1", parent.line_edit_trygde_inntekt_1.text(),
+            self._interval[parent.combo_box_interval_2.currentText()])
+        if "skattefrie_inntekt_aar_1" in self.data.keys():
+            leie_income_1 = self.calculate_yearly_values(
+                "leieinntekt_aar_1", "0 kr",
+                self._interval[parent.combo_box_interval_3.currentText()])
+        else:
+            leie_income_1 = self.calculate_yearly_values(
+                "leieinntekt_aar_1", parent.line_edit_leieinntekt_1.text(),
+                self._interval[parent.combo_box_interval_3.currentText()])
+
+        interest_income_1 = self.calculate_yearly_values(
+            "renteinntekter_aar_1", parent.line_edit_renteinntekter_1.text(),
+            self._interval[parent.combo_box_interval_4.currentText()])
+        other_income_1 = self.calculate_yearly_values(
+            "andre_inntekter_aar_1", parent.line_edit_andre_inntekter_1.text(),
+            self._interval[parent.combo_box_interval_5.currentText()])
+
+        sum_income_1 = sum(
+            [brutto_income_1, trygd_income_1, leie_income_1, interest_income_1, other_income_1])
+        person_income_1 = Money(str(sum_income_1)).value() if sum_income_1 != 0 else ""
+        self.data.update({"personinntekt_aar_1": person_income_1})
+
+        brutto_income_2 = self.calculate_yearly_values(
+            "brutto_inntekt_aar_2", parent.line_edit_brutto_inntekt_2.text(),
+            self._interval[parent.combo_box_interval_12.currentText()])
+        trygd_income_2 = self.calculate_yearly_values(
+            "trygde_inntekt_aar_2", parent.line_edit_trygde_inntekt_2.text(),
+            self._interval[parent.combo_box_interval_13.currentText()])
+        if "skattefrie_inntekt_aar_2" in self.data.keys():
+            leie_income_2 = self.calculate_yearly_values(
+                "leieinntekt_aar_2", "0 kr",
+                self._interval[parent.combo_box_interval_14.currentText()])
+        else:
+            leie_income_2 = self.calculate_yearly_values(
+                "leieinntekt_aar_2", parent.line_edit_leieinntekt_2.text(),
+                self._interval[parent.combo_box_interval_14.currentText()])
+
+        interest_income_2 = self.calculate_yearly_values(
+            "renteinntekter_aar_2", parent.line_edit_renteinntekter_2.text(),
+            self._interval[parent.combo_box_interval_15.currentText()])
+        other_income_2 = self.calculate_yearly_values(
+            "andre_inntekter_aar_2", parent.line_edit_andre_inntekter_2.text(),
+            self._interval[parent.combo_box_interval_16.currentText()])
+
+        sum_income_2 = sum(
+            [brutto_income_2, trygd_income_2, leie_income_2, interest_income_2, other_income_2])
+        person_income_2 = Money(str(sum_income_2)).value() if sum_income_2 != 0 else ""
+        self.data.update({"personinntekt_aar_2": person_income_2})
+
+        student_loan_1 = self.calculate_yearly_values(
+            "student_lan_aar_1", parent.line_edit_student_lan_1.text(),
+            self._interval[parent.combo_box_interval_6.currentText()])
+        credit_debt_1 = self.calculate_yearly_values(
+            "kreditt_gjeld_aar_1", parent.line_edit_kreditt_gjeld_1.text(),
+            self._interval[parent.combo_box_interval_7.currentText()])
+        housing_rent_1 = self.calculate_yearly_values(
+            "husleie_aar_1", parent.line_edit_husleie_1.text(),
+            self._interval[parent.combo_box_interval_8.currentText()])
+        power_1 = self.calculate_yearly_values(
+            "strom_aar_1", parent.line_edit_strom_1.text(),
+            self._interval[parent.combo_box_interval_9.currentText()])
+        interest_cost_1 = self.calculate_yearly_values(
+            "rentekostnader_aar_1", parent.line_edit_rentekostnader_1.text(),
+            self._interval[parent.combo_box_interval_10.currentText()])
+        other_1 = self.calculate_yearly_values(
+            "andre_utgifter_aar_1", parent.line_edit_andre_utgifter_1.text(),
+            self._interval[parent.combo_box_interval_11.currentText()])
+
+        sum_expenses_1 = sum(
+            [student_loan_1, credit_debt_1, housing_rent_1, power_1, interest_cost_1, other_1])
+        person_expenses_1 = Money(str(sum_expenses_1)).value() if sum_expenses_1 != 0 else ""
+        self.data.update({"sum_utgifter_1": person_expenses_1})
+
+        student_loan_2 = self.calculate_yearly_values(
+            "student_lan_aar_2", parent.line_edit_student_lan_2.text(),
+            self._interval[parent.combo_box_interval_17.currentText()])
+        credit_debt_2 = self.calculate_yearly_values(
+            "kreditt_gjeld_aar_2", parent.line_edit_kreditt_gjeld_2.text(),
+            self._interval[parent.combo_box_interval_18.currentText()])
+        housing_rent_2 = self.calculate_yearly_values(
+            "husleie_aar_2", parent.line_edit_husleie_2.text(),
+            self._interval[parent.combo_box_interval_19.currentText()])
+        power_2 = self.calculate_yearly_values(
+            "strom_aar_2", parent.line_edit_strom_2.text(),
+            self._interval[parent.combo_box_interval_20.currentText()])
+        interest_cost_2 = self.calculate_yearly_values(
+            "rentekostnader_aar_2", parent.line_edit_rentekostnader_2.text(),
+            self._interval[parent.combo_box_interval_21.currentText()])
+        other_2 = self.calculate_yearly_values(
+            "andre_utgifter_aar_2", parent.line_edit_andre_utgifter_2.text(),
+            self._interval[parent.combo_box_interval_22.currentText()])
+
+        sum_expenses_2 = sum(
+            [student_loan_2, credit_debt_2, housing_rent_2, power_2, interest_cost_2, other_2])
+        person_expenses_2 = Money(str(sum_expenses_2)).value() if sum_expenses_2 != 0 else ""
+        self.data.update({"sum_utgifter_aar_2": person_expenses_2})
+
+        self.set_total_value(brutto_income_1, brutto_income_2, "brutto_inntekt_1",
+                             "brutto_inntekt_2", "brutto_inntekt_total_aar")
+        self.set_total_value(trygd_income_1, trygd_income_2, "trygde_inntekt_1",
+                             "trygde_inntekt_2", "trygde_inntekt_total_aar")
+        self.set_total_value(leie_income_1, leie_income_2, "leieinntekt_1", "leieinntekt_2",
+                             "leieinntekt_total_aar")
+        self.set_total_value(interest_income_1, interest_income_2, "renteinntekter_1",
+                             "renteinntekter_2", "renteinntekter_total_aar")
+        self.set_total_value(other_income_1, other_income_2, "andre_inntekter_1",
+                             "andre_inntekter_2", "andre_inntekter_total_aar")
+        self.set_total_value(person_income_1, person_income_2, "personinntekt_1", "personinntekt_2",
+                             "personinntekt_total_aar")
+        self.set_total_value(student_loan_1, student_loan_2, "student_lan_1", "student_lan_2",
+                             "student_lan_total_aar")
+        self.set_total_value(credit_debt_1, credit_debt_2, "kreditt_gjeld_1", "kreditt_gjeld_2",
+                             "kreditt_gjeld_total_aar")
+        self.set_total_value(housing_rent_1, housing_rent_2, "husleie_1", "husleie_2",
+                             "husleie_total_aar")
+        self.set_total_value(power_1, power_2, "strom_1", "strom_2", "strom_total_aar")
+        self.set_total_value(interest_cost_1, interest_cost_2, "rentekostnader_1",
+                             "rentekostnader_2", "rentekostnader_total_aar")
+        self.set_total_value(other_1, other_2, "andre_utgifter_1", "andre_utgifter_2",
+                             "andre_utgifter_total_aar")
+        self.set_total_value(sum_expenses_1, sum_expenses_2, "sum_utgifter_1", "sum_utgifter_2",
+                             "sum_utgifter_total_aar")
+
     def set_radio_button(self, radio_button):
         if getattr(self.parent.ui, "radio_button_" + radio_button).isChecked():
             self.data.update(
                 {radio_button: True})
             self.monthly_value()
+            self.yearly_value()
         elif radio_button in self.data.keys():
             del self.data[radio_button]
             self.monthly_value()
+            self.yearly_value()
 
     def set_total_value(self, val_1, val_2, line_edit_1, line_edit_2, total_name):
         if getattr(self.parent.ui, "line_edit_" + line_edit_1).text() or \
@@ -339,3 +473,16 @@ class BudgetModel(Model):
         else:
             monthly_values = round(Decimal("0"))
         return monthly_values
+
+    def calculate_yearly_values(self, line_edit: str, value: str, factor: str):
+        Assertor.assert_data_types([value, factor], [str, str])
+        if value and factor:
+            quantity = Decimal(value.replace(" ", "").replace("kr", "")) * Decimal(
+                factor.replace(" ", "").replace("kr", ""))
+            yearly_values = round(Decimal(quantity))
+            self.data.update({line_edit: Money(str(yearly_values)).value()})
+        elif value:
+            yearly_values = round(Decimal(value.replace(" ", "").replace("kr", "")))
+        else:
+            yearly_values = round(Decimal("0"))
+        return yearly_values

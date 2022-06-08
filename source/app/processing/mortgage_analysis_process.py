@@ -37,10 +37,10 @@ class MortgageAnalysisProcess(Process):
         self.input_operation({"data": data})
         self.validate_mortgage()
 
-        self.run_parallel([self.extract_1, self.extract_2, self.extract_3, self.factor_1])
-        self.run_parallel([self.multiply_1, self.factor_2, self.factor_3, self.factor_4])
+        self.run_parallel([self.extract_1, self.extract_2, self.extract_3, self.factor_1,
+                           self.factor_2, self.factor_3])
 
-        self.run_parallel([self.multiply_2, self.subtraction_1])
+        self.run_parallel([self.multiply_1, self.subtraction_1])
         self.run_parallel([self.addition_1, self.extract_4, self.division_1])
         self.run_parallel([self.division_2, self.division_3])
         self.run_parallel([self.subtraction_2, self.subtraction_3])
@@ -111,14 +111,16 @@ class MortgageAnalysisProcess(Process):
 
         """
         validated_mortgage = self.get_signal("validated_mortgage")
-        total_income_extract_operation = Extract(validated_mortgage.data, "personinntekt_total")
+        total_income_extract_operation = Extract(validated_mortgage.data, "personinntekt_total_aar")
         self.add_node(total_income_extract_operation)
         self.add_transition(validated_mortgage, total_income_extract_operation, label="thread")
 
         total_income_extract = total_income_extract_operation.run()
+        total_income_extract['arsinntekt_aar'] = total_income_extract.pop('personinntekt_total_aar')
+
         total_income_extract_signal = Signal(total_income_extract, "Total Monthly Gross Income")
 
-        self.add_signal(total_income_extract_signal, "personinntekt_total")
+        self.add_signal(total_income_extract_signal, "arsinntekt_aar")
         self.add_transition(total_income_extract_operation, total_income_extract_signal,
                             label="thread")
 
@@ -169,22 +171,6 @@ class MortgageAnalysisProcess(Process):
         method for creating a factor
 
         """
-        factor_operation = Factor("12", "Monthly factor conversion")
-        self.add_node(factor_operation)
-
-        factor = factor_operation.run()
-        factor_signal = Signal(factor, "Monthly factor")
-
-        self.add_signal(factor_signal, "monthly_factor")
-        self.add_transition(factor_operation, factor_signal, label="thread")
-
-    @Profiling
-    @Debugger
-    def factor_2(self):
-        """
-        method for creating a factor
-
-        """
         factor_operation = Factor("5", "Mortgage Limit")
         self.add_node(factor_operation)
 
@@ -196,7 +182,7 @@ class MortgageAnalysisProcess(Process):
 
     @Profiling
     @Debugger
-    def factor_3(self):
+    def factor_2(self):
         """
         method for creating a factor
 
@@ -214,42 +200,17 @@ class MortgageAnalysisProcess(Process):
     @Debugger
     def multiply_1(self):
         """
-        method for calculating yearly income
-
-        """
-
-        monthly_income_operation = Multiplication(
-            {'arsinntekt': self.get_signal("personinntekt_total").data['personinntekt_total']},
-            self.get_signal("monthly_factor").data,
-            "Calculate Total Yearly Income")
-        self.add_node(monthly_income_operation)
-
-        self.add_transition(self.get_signal("personinntekt_total"), monthly_income_operation,
-                            label="thread")
-        self.add_transition(self.get_signal("monthly_factor"), monthly_income_operation,
-                            label="thread")
-
-        arsinntekt = monthly_income_operation.run(money=True)
-
-        arsinntekt_signal = Signal(arsinntekt, "Total Yearly Income", prettify_keys=True, length=10)
-
-        self.add_signal(arsinntekt_signal, "arsinntekt")
-        self.add_transition(monthly_income_operation, arsinntekt_signal, thread="thread")
-
-    @Profiling
-    @Debugger
-    def multiply_2(self):
-        """
         method for calculating total mortgage limit
 
         """
 
         mortgage_limit_operation = Multiplication(
-            {'belaning': self.get_signal("arsinntekt").data['arsinntekt']},
+            {'belaning': self.get_signal("arsinntekt_aar").data['arsinntekt_aar']},
             self.get_signal("mortgage_limit").data, "Calculate Total Mortgage Limit")
         self.add_node(mortgage_limit_operation)
 
-        self.add_transition(self.get_signal("arsinntekt"), mortgage_limit_operation, label="thread")
+        self.add_transition(self.get_signal("arsinntekt_aar"), mortgage_limit_operation,
+                            label="thread")
         self.add_transition(self.get_signal("mortgage_limit"), mortgage_limit_operation,
                             label="thread")
 
@@ -336,7 +297,7 @@ class MortgageAnalysisProcess(Process):
 
     @Profiling
     @Debugger
-    def factor_4(self):
+    def factor_3(self):
         """
         method for creating a factor
 
@@ -509,7 +470,7 @@ class MortgageAnalysisProcess(Process):
         """
         equity = self.get_signal("egenkapital")
         net_liquidity = self.get_signal("netto_likviditet")
-        yearly_income = self.get_signal("arsinntekt")
+        yearly_income = self.get_signal("arsinntekt_aar")
         mortgage_limit = self.get_signal("belaning")
         equity_share = self.get_signal("egenkapital_andel")
         mortgage_share = self.get_signal("belaningsgrad")

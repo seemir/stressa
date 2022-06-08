@@ -18,7 +18,7 @@ class AnalysisModel(Model):
 
     """
 
-    _analysis_keys = ['arsinntekt', 'belaning', 'belaningsgrad', 'egenkapital_2',
+    _analysis_keys = ['arsinntekt_aar', 'belaning', 'belaningsgrad', 'egenkapital_2',
                       'egenkapital_andel', 'netto_likviditet_2', 'total_ramme', 'krav_belaning',
                       'krav_egenkapital_andel', 'krav_belaningsgrad', 'krav_total_ramme',
                       'krav_egenkapital']
@@ -51,6 +51,7 @@ class AnalysisModel(Model):
         method for analyze mortgage
 
         """
+        self.data.update(self.parent.budget_model.data)
         self.data.update(self.parent.mortgage_model.data)
         self.data.update(self.parent.home_model.data)
 

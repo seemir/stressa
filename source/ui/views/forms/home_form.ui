@@ -10659,7 +10659,7 @@
                    </widget>
                   </item>
                   <item row="2" column="1">
-                   <widget class="QLineEdit" name="line_edit_arsinntekt">
+                   <widget class="QLineEdit" name="line_edit_arsinntekt_aar">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -12505,7 +12505,7 @@
   <tabstop>push_button_home_meta_data</tabstop>
   <tabstop>push_button_avslutt</tabstop>
   <tabstop>tab_widget_home</tabstop>
-  <tabstop>line_edit_arsinntekt</tabstop>
+  <tabstop>line_edit_arsinntekt_aar</tabstop>
   <tabstop>line_edit_krav_egenkapital</tabstop>
   <tabstop>line_edit_krav_egenkapital_andel</tabstop>
   <tabstop>line_edit_krav_belaningsgrad</tabstop>
