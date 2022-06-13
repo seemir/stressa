@@ -10610,7 +10610,7 @@
                       </widget>
                      </item>
                      <item row="8" column="0" colspan="2">
-                      <widget class="QLineEdit" name="line_edit_krav_nettolividitet">
+                      <widget class="QLineEdit" name="line_edit_krav_nettolikviditet">
                        <property name="enabled">
                         <bool>false</bool>
                        </property>
