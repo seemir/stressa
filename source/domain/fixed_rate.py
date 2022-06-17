@@ -134,11 +134,15 @@ class FixedRate(Mortgage):
         """
         stress_rates = {round(self.periodical_payments(i, self.interval, self.period,
                                                        self.amount)): round(i, 3) for i in
-                        np.arange(0.01, 20.000, 0.01)}
-        if self.net_liquidity in stress_rates.keys():
-            stress_rate = stress_rates[self.net_liquidity]
+                        np.arange(0.01, 20.00, 0.01)}
+
+        net_liquidity = self.net_liquidity if self.interval == 12 else \
+            (self.net_liquidity * 12) / self.interval
+
+        if net_liquidity in stress_rates.keys():
+            stress_rate = stress_rates[net_liquidity]
         else:
-            diff_rates = {abs(self.net_liquidity - liquidity): rates for liquidity, rates in
+            diff_rates = {abs(net_liquidity - liquidity): rates for liquidity, rates in
                           stress_rates.items()}
             smallest_diff = min(diff_rates.keys())
             stress_rate = diff_rates[smallest_diff]
