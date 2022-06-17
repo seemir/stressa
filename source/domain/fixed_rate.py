@@ -129,15 +129,12 @@ class FixedRate(Mortgage):
 
     def calculate_stress_rate(self):
         """
-        method for calculating the max stress rate given
-        net liquidity
-
+        method for calculating the max stress rate
 
         """
-
         stress_rates = {round(self.periodical_payments(i, self.interval, self.period,
                                                        self.amount)): round(i, 3) for i in
-                        np.arange(0.0001, 20.000, 0.0001)}
+                        np.arange(0.01, 20.000, 0.01)}
         if self.net_liquidity in stress_rates.keys():
             stress_rate = stress_rates[self.net_liquidity]
         else:
@@ -145,4 +142,4 @@ class FixedRate(Mortgage):
                           stress_rates.items()}
             smallest_diff = min(diff_rates.keys())
             stress_rate = diff_rates[smallest_diff]
-        return stress_rate
+        return str(stress_rate) + ' %'

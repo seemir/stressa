@@ -11,7 +11,8 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, Signal, InputOperation, ValidateMortgage, OutputSignal, \
-    OutputOperation, Extract, Factor, Multiplication, Multiplex, Division, Subtraction, Addition
+    OutputOperation, Extract, Factor, Multiplication, Multiplex, Division, Subtraction, Addition, \
+    FixedStressTest
 
 
 class MortgageAnalysisProcess(Process):
@@ -37,8 +38,8 @@ class MortgageAnalysisProcess(Process):
         self.input_operation({"data": data})
         self.validate_mortgage()
 
-        self.run_parallel([self.extract_1, self.extract_2, self.extract_3, self.factor_1,
-                           self.factor_2, self.factor_3])
+        self.run_parallel([self.fixed_stress_test, self.extract_1, self.extract_2,
+                           self.extract_3, self.factor_1, self.factor_2, self.factor_3])
 
         self.run_parallel([self.multiply_1, self.subtraction_1])
         self.run_parallel([self.addition_1, self.extract_4, self.division_1])
@@ -102,6 +103,25 @@ class MortgageAnalysisProcess(Process):
         self.add_signal(mortgage_signal, "validated_mortgage")
 
         self.add_transition(validate_mortgage_operation, mortgage_signal)
+
+    @Profiling
+    @Debugger
+    def fixed_stress_test(self):
+        """
+        method for calculate fixed stress rate
+
+        """
+        mortgage_signal = self.get_signal("validated_mortgage")
+        fixed_stress_test_operation = FixedStressTest(mortgage_signal.data)
+        self.add_node(fixed_stress_test_operation)
+        self.add_transition(mortgage_signal, fixed_stress_test_operation, label="thread")
+
+        fixed_stress_test = fixed_stress_test_operation.run()
+        fixed_stress_test_signal = Signal(fixed_stress_test, "Fixed Stress Test")
+
+        self.add_signal(fixed_stress_test_signal, "fixed_stress_test")
+        self.add_transition(fixed_stress_test_operation,
+                            fixed_stress_test_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -468,6 +488,7 @@ class MortgageAnalysisProcess(Process):
         multiplex mortgage information
 
         """
+        fixed_stress_rate = self.get_signal("fixed_stress_test")
         equity = self.get_signal("egenkapital")
         net_liquidity = self.get_signal("netto_likviditet")
         yearly_income = self.get_signal("arsinntekt_aar")
@@ -481,14 +502,16 @@ class MortgageAnalysisProcess(Process):
         required_total_financing_frame = self.get_signal("krav_total_ramme")
         required_equity = self.get_signal("krav_egenkapital")
 
-        multiplex_operation = Multiplex([equity, net_liquidity, yearly_income, mortgage_limit,
-                                         equity_share, mortgage_share, total_financing_frame,
-                                         required_mortgage_limit, required_equity_share,
-                                         required_mortgage_share, required_total_financing_frame,
-                                         required_equity],
+        multiplex_operation = Multiplex([fixed_stress_rate, equity, net_liquidity, yearly_income,
+                                         mortgage_limit, equity_share, mortgage_share,
+                                         total_financing_frame, required_mortgage_limit,
+                                         required_equity_share, required_mortgage_share,
+                                         required_total_financing_frame, required_equity],
                                         "Multiplex Mortgage Information")
 
         self.add_node(multiplex_operation)
+
+        self.add_transition(fixed_stress_rate, multiplex_operation)
         self.add_transition(equity, multiplex_operation)
         self.add_transition(net_liquidity, multiplex_operation)
         self.add_transition(yearly_income, multiplex_operation)
