@@ -12,7 +12,7 @@ from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, Signal, InputOperation, ValidateMortgage, OutputSignal, \
     OutputOperation, Extract, Factor, Multiplication, Multiplex, Division, Subtraction, Addition, \
-    FixedStressTest, SerialStressTest, SsbConnector
+    FixedStressTest, SerialStressTest, SsbConnector, FixedPayment
 
 
 class MortgageAnalysisProcess(Process):
@@ -38,13 +38,13 @@ class MortgageAnalysisProcess(Process):
         self.input_operation({"data": data})
         self.validate_mortgage()
 
-        self.run_parallel([self.ssb_connector, self.fixed_stress_test, self.serial_stress_test,
-                           self.extract_1, self.extract_2, self.extract_3, self.factor_1,
-                           self.factor_2, self.factor_3])
+        self.run_parallel([self.fixed_stress_test, self.extract_1, self.serial_stress_test,
+                           self.extract_2, self.extract_3, self.factor_1, self.factor_2,
+                           self.factor_3, self.extract_4, self.extract_5])
 
-        self.run_parallel([self.multiply_1, self.subtraction_1, self.addition_2])
-        self.run_parallel([self.addition_1, self.extract_4, self.division_1])
-        self.run_parallel([self.division_2, self.division_3])
+        self.run_parallel([self.multiply_1, self.subtraction_1, self.ssb_connector])
+        self.run_parallel([self.addition_1, self.extract_6, self.division_1, self.addition_2])
+        self.run_parallel([self.division_2, self.division_3, self.fixed_payment])
         self.run_parallel([self.subtraction_2, self.subtraction_3])
 
         self.multiplex()
@@ -254,6 +254,42 @@ class MortgageAnalysisProcess(Process):
 
     @Profiling
     @Debugger
+    def extract_4(self):
+        """
+        method for extracting period
+
+        """
+        validated_mortgage = self.get_signal("validated_mortgage")
+        period_extract_operation = Extract(validated_mortgage.data, "laneperiode")
+        self.add_node(period_extract_operation)
+        self.add_transition(validated_mortgage, period_extract_operation, label="thread")
+
+        period_extract = period_extract_operation.run()
+        period_extract_signal = Signal(period_extract, "Period for Mortgage")
+
+        self.add_signal(period_extract_signal, "period")
+        self.add_transition(period_extract_operation, period_extract_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def extract_5(self):
+        """
+        method for extracting interval
+
+        """
+        validated_mortgage = self.get_signal("validated_mortgage")
+        interval_extract_operation = Extract(validated_mortgage.data, "intervall")
+        self.add_node(interval_extract_operation)
+        self.add_transition(validated_mortgage, interval_extract_operation, label="thread")
+
+        interval_extract = interval_extract_operation.run()
+        interval_extract_signal = Signal(interval_extract, "Interval for Mortgage")
+
+        self.add_signal(interval_extract_signal, "interval")
+        self.add_transition(interval_extract_operation, interval_extract_signal, label="thread")
+
+    @Profiling
+    @Debugger
     def multiply_1(self):
         """
         method for calculating total mortgage limit
@@ -277,6 +313,27 @@ class MortgageAnalysisProcess(Process):
 
         self.add_signal(mortgage_limit_signal, "belaning")
         self.add_transition(mortgage_limit_operation, mortgage_limit_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def extract_6(self):
+        """
+        method for extracting mortgage limit
+
+        """
+        mortgage_limit = self.get_signal("belaning")
+        extract_mortgage_limit_operation = Extract(mortgage_limit.data, "belaning")
+        self.add_node(extract_mortgage_limit_operation)
+        self.add_transition(mortgage_limit, extract_mortgage_limit_operation, label="thread")
+
+        extract_mortgage_limit = extract_mortgage_limit_operation.run()
+        extract_mortgage_limit['krav_belaning'] = extract_mortgage_limit.pop('belaning')
+
+        extract_mortgage_signal = Signal(extract_mortgage_limit, "Required Mortgage Limit")
+
+        self.add_signal(extract_mortgage_signal, "krav_belaning")
+        self.add_transition(extract_mortgage_limit_operation, extract_mortgage_signal,
+                            label="thread")
 
     @Profiling
     @Debugger
@@ -371,27 +428,6 @@ class MortgageAnalysisProcess(Process):
         self.add_signal(equity_share_signal, "egenkapital_andel")
 
         self.add_transition(equity_share_operation, equity_share_signal, label="thread")
-
-    @Profiling
-    @Debugger
-    def extract_4(self):
-        """
-        method for extracting mortgage limit
-
-        """
-        mortgage_limit = self.get_signal("belaning")
-        extract_mortgage_limit_operation = Extract(mortgage_limit.data, "belaning")
-        self.add_node(extract_mortgage_limit_operation)
-        self.add_transition(mortgage_limit, extract_mortgage_limit_operation, label="thread")
-
-        extract_mortgage_limit = extract_mortgage_limit_operation.run()
-        extract_mortgage_limit['krav_belaning'] = extract_mortgage_limit.pop('belaning')
-
-        extract_mortgage_signal = Signal(extract_mortgage_limit, "Required Mortgage Limit")
-
-        self.add_signal(extract_mortgage_signal, "krav_belaning")
-        self.add_transition(extract_mortgage_limit_operation, extract_mortgage_signal,
-                            label="thread")
 
     @Profiling
     @Debugger
@@ -561,6 +597,35 @@ class MortgageAnalysisProcess(Process):
 
     @Profiling
     @Debugger
+    def fixed_payment(self):
+        """
+        method for calculating fixed payment
+
+        """
+        interest = self.get_signal("required_fixed_rates")
+        period = self.get_signal("period")
+        interval = self.get_signal("interval")
+        amount = self.get_signal("krav_belaning")
+
+        fixed_payment_operation = FixedPayment(interest.data['krav_stresstest_annuitet'],
+                                               period.data['laneperiode'],
+                                               interval.data['intervall'],
+                                               amount.data['krav_belaning'])
+        self.add_node(fixed_payment_operation)
+
+        self.add_transition(interest, fixed_payment_operation, label="thread")
+        self.add_transition(period, fixed_payment_operation, label="thread")
+        self.add_transition(interval, fixed_payment_operation, label="thread")
+        self.add_transition(amount, fixed_payment_operation, label="thread")
+
+        fixed_payment = fixed_payment_operation.run()
+
+        fixed_payment_signal = Signal(fixed_payment, "Calculated Fixed Amount")
+        self.add_signal(fixed_payment_signal, "fixed_amount")
+        self.add_transition(fixed_payment_operation, fixed_payment_signal, label="thread")
+
+    @Profiling
+    @Debugger
     def multiplex(self):
         """
         multiplex mortgage information
@@ -582,6 +647,7 @@ class MortgageAnalysisProcess(Process):
         required_mortgage_share = self.get_signal("krav_belaningsgrad")
         required_total_financing_frame = self.get_signal("krav_total_ramme")
         required_equity = self.get_signal("krav_egenkapital")
+        fixed_amount = self.get_signal("fixed_amount")
 
         multiplex_operation = Multiplex([fixed_stress_rate, serial_stress_rate,
                                          required_fixed_rates, required_serial_rates, equity,
@@ -589,7 +655,8 @@ class MortgageAnalysisProcess(Process):
                                          mortgage_share, total_financing_frame,
                                          required_mortgage_limit, required_equity_share,
                                          required_mortgage_share, required_total_financing_frame,
-                                         required_equity], "Multiplex Mortgage Information")
+                                         required_equity, fixed_amount],
+                                        "Multiplex Mortgage Information")
 
         self.add_node(multiplex_operation)
 
@@ -609,6 +676,7 @@ class MortgageAnalysisProcess(Process):
         self.add_transition(required_mortgage_share, multiplex_operation)
         self.add_transition(required_total_financing_frame, multiplex_operation)
         self.add_transition(required_equity, multiplex_operation)
+        self.add_transition(fixed_amount, multiplex_operation)
 
         multiplex = multiplex_operation.run()
         multiplex_signal = Signal(multiplex, "Multiplexed Mortgage Information", prettify_keys=True,

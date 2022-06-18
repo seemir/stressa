@@ -22,6 +22,7 @@ class FixedStressTest(Operation):
     @Tracking
     def __init__(self, mortgage_data: dict):
         """
+        Constructor / Instantiate the class.
 
         Parameters
         ----------

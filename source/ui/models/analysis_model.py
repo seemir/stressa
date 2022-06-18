@@ -22,7 +22,7 @@ class AnalysisModel(Model):
                       'egenkapital_andel', 'netto_likviditet_2', 'total_ramme', 'krav_belaning',
                       'krav_egenkapital_andel', 'krav_belaningsgrad', 'krav_total_ramme',
                       'krav_egenkapital', 'stresstest_annuitet', 'stresstest_serie',
-                      'krav_stresstest_annuitet', 'krav_stresstest_serie']
+                      'krav_stresstest_annuitet', 'krav_stresstest_serie', 'krav_nettolikviditet']
 
     def __init__(self, parent: QObject):
         """

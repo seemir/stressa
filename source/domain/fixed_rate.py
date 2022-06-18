@@ -24,20 +24,20 @@ class FixedRate(Mortgage):
                          "Månedlig": 12, "Semi-månedlig": 24, "Annenhver uke": 26, "Ukentlig": 52}
 
     @staticmethod
-    def periodical_payments(interest_rate: float, interval: int, period: int,
-                            amount: Union[int, float]):
+    def periodical_payments(interest_rate: (float, str), interval: (int, str),
+                            period: (int, str), amount: Union[int, float, str]):
         """
         method for calculating the periodical payment in a fixed rate mortgage
 
         Parameters
         ----------
-        interest_rate   : float
+        interest_rate   : float, str
                           yearly interest rate
-        interval        : int
+        interval        : int, str
                           interval for which to pay
-        period          : int
+        period          : int, str
                           number of years for the mortgage
-        amount          : int, float
+        amount          : int, float, str
                           mortgage amount
 
         Returns
@@ -47,9 +47,22 @@ class FixedRate(Mortgage):
 
         """
         Assertor.assert_data_types([interest_rate, interval, period, amount],
-                                   [float, int, int, (int, float)])
+                                   [(float, str), (int, str), (int, str), (int, float, str)])
+
+        if isinstance(interest_rate, str):
+            interest_rate = float(interest_rate.replace(" %", "").replace(" ", ""))
+        if isinstance(interval, str):
+            interval = {"Årlig": 1, "Halvårlig": 2, "Kvartalsvis": 4, "Annenhver måned": 6,
+                        "Månedlig": 12, "Semi-månedlig": 24, "Annenhver uke": 26,
+                        "Ukentlig": 52}[interval]
+        if isinstance(period, str):
+            period = int(period.replace(" år", "").replace(" ", ""))
+        if isinstance(amount, str):
+            amount = float(amount.replace(" kr", "").replace(" ", ""))
+
         interest_foot = interest_rate / 100 / interval
-        return (interest_foot / (1 - (1 + interest_foot) ** -(interval * period))) * amount
+        return int(round((interest_foot / (1 - (1 + interest_foot) ** -(interval * period)))
+                         * amount))
 
     def __init__(self, data: dict):
         """

@@ -33,6 +33,7 @@ from .multiplication import Multiplication
 from .rate_of_change import RateOfChange
 from .output_signal import OutputSignal
 from .ssb_connector import SsbConnector
+from .fixed_payment import FixedPayment
 from .restructure import Restructure
 from .subtraction import Subtraction
 from .accumulate import Accumulate
