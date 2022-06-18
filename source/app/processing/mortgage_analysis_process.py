@@ -12,7 +12,7 @@ from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, Signal, InputOperation, ValidateMortgage, OutputSignal, \
     OutputOperation, Extract, Factor, Multiplication, Multiplex, Division, Subtraction, Addition, \
-    FixedStressTest
+    FixedStressTest, SerialStressTest, SsbConnector
 
 
 class MortgageAnalysisProcess(Process):
@@ -38,10 +38,11 @@ class MortgageAnalysisProcess(Process):
         self.input_operation({"data": data})
         self.validate_mortgage()
 
-        self.run_parallel([self.fixed_stress_test, self.extract_1, self.extract_2,
-                           self.extract_3, self.factor_1, self.factor_2, self.factor_3])
+        self.run_parallel([self.ssb_connector, self.fixed_stress_test, self.serial_stress_test,
+                           self.extract_1, self.extract_2, self.extract_3, self.factor_1,
+                           self.factor_2, self.factor_3])
 
-        self.run_parallel([self.multiply_1, self.subtraction_1])
+        self.run_parallel([self.multiply_1, self.subtraction_1, self.addition_2])
         self.run_parallel([self.addition_1, self.extract_4, self.division_1])
         self.run_parallel([self.division_2, self.division_3])
         self.run_parallel([self.subtraction_2, self.subtraction_3])
@@ -106,6 +107,22 @@ class MortgageAnalysisProcess(Process):
 
     @Profiling
     @Debugger
+    def ssb_connector(self):
+        """
+        method for getting ssb market interest rates
+
+        """
+        ssb_connector_operation = SsbConnector()
+        self.add_node(ssb_connector_operation)
+
+        ssb_connector = ssb_connector_operation.run()
+        ssb_connector_signal = Signal(ssb_connector, "SSB Market Interest Rates")
+        self.add_signal(ssb_connector_signal, "ssb_interest_rates")
+
+        self.add_transition(ssb_connector_operation, ssb_connector_signal, label="thread")
+
+    @Profiling
+    @Debugger
     def fixed_stress_test(self):
         """
         method for calculate fixed stress rate
@@ -122,6 +139,25 @@ class MortgageAnalysisProcess(Process):
         self.add_signal(fixed_stress_test_signal, "fixed_stress_test")
         self.add_transition(fixed_stress_test_operation,
                             fixed_stress_test_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def serial_stress_test(self):
+        """
+        method for calculate serial stress rate
+
+        """
+        mortgage_signal = self.get_signal("validated_mortgage")
+        serial_stress_test_operation = SerialStressTest(mortgage_signal.data)
+        self.add_node(serial_stress_test_operation)
+        self.add_transition(mortgage_signal, serial_stress_test_operation, label="thread")
+
+        serial_stress_test = serial_stress_test_operation.run()
+        serial_stress_test_signal = Signal(serial_stress_test, "Fixed Stress Test")
+
+        self.add_signal(serial_stress_test_signal, "serial_stress_test")
+        self.add_transition(serial_stress_test_operation,
+                            serial_stress_test_signal, label="thread")
 
     @Profiling
     @Debugger
@@ -268,6 +304,48 @@ class MortgageAnalysisProcess(Process):
         self.add_signal(financing_frame_signal, "total_ramme")
 
         self.add_transition(financing_frame_operation, financing_frame_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def addition_2(self):
+        """
+        method for calculating required interest rates
+
+        """
+
+        required_interest_rates_operation = Addition(
+            {"krav_stresstest_annuitet": self.get_signal("ssb_interest_rates").data[
+                'markedsrente']},
+            self.get_signal("mortgage_limit").data,
+            "Calculate Required Stress Rate")
+        self.add_node(required_interest_rates_operation)
+
+        self.add_transition(self.get_signal("ssb_interest_rates"),
+                            required_interest_rates_operation,
+                            label="thread")
+        self.add_transition(self.get_signal("mortgage_limit"), required_interest_rates_operation,
+                            label="thread")
+
+        required_fixed_interest_rates = required_interest_rates_operation.run(money=False,
+                                                                              percent=True)
+        required_serial_interest_rates = {
+            'krav_stresstest_serie': required_fixed_interest_rates['krav_stresstest_annuitet']}
+
+        fixed_required_interest_rates_signal = Signal(required_fixed_interest_rates,
+                                                      "Calculated Required Fixed Stress Rate",
+                                                      prettify_keys=True, length=10)
+        serial_required_interest_rates_signal = Signal(required_serial_interest_rates,
+                                                       "Calculated Required Serial Stress Rate",
+                                                       prettify_keys=True, length=10)
+
+        self.add_signal(fixed_required_interest_rates_signal, "required_fixed_rates")
+        self.add_signal(serial_required_interest_rates_signal, "required_serial_rates")
+
+        self.add_transition(required_interest_rates_operation, fixed_required_interest_rates_signal,
+                            label="thread")
+        self.add_transition(required_interest_rates_operation,
+                            serial_required_interest_rates_signal,
+                            label="thread")
 
     @Profiling
     @Debugger
@@ -489,6 +567,9 @@ class MortgageAnalysisProcess(Process):
 
         """
         fixed_stress_rate = self.get_signal("fixed_stress_test")
+        serial_stress_rate = self.get_signal("serial_stress_test")
+        required_fixed_rates = self.get_signal("required_fixed_rates")
+        required_serial_rates = self.get_signal("required_serial_rates")
         equity = self.get_signal("egenkapital")
         net_liquidity = self.get_signal("netto_likviditet")
         yearly_income = self.get_signal("arsinntekt_aar")
@@ -502,16 +583,20 @@ class MortgageAnalysisProcess(Process):
         required_total_financing_frame = self.get_signal("krav_total_ramme")
         required_equity = self.get_signal("krav_egenkapital")
 
-        multiplex_operation = Multiplex([fixed_stress_rate, equity, net_liquidity, yearly_income,
-                                         mortgage_limit, equity_share, mortgage_share,
-                                         total_financing_frame, required_mortgage_limit,
-                                         required_equity_share, required_mortgage_share,
-                                         required_total_financing_frame, required_equity],
-                                        "Multiplex Mortgage Information")
+        multiplex_operation = Multiplex([fixed_stress_rate, serial_stress_rate,
+                                         required_fixed_rates, required_serial_rates, equity,
+                                         net_liquidity, yearly_income, mortgage_limit, equity_share,
+                                         mortgage_share, total_financing_frame,
+                                         required_mortgage_limit, required_equity_share,
+                                         required_mortgage_share, required_total_financing_frame,
+                                         required_equity], "Multiplex Mortgage Information")
 
         self.add_node(multiplex_operation)
 
         self.add_transition(fixed_stress_rate, multiplex_operation)
+        self.add_transition(serial_stress_rate, multiplex_operation)
+        self.add_transition(required_fixed_rates, multiplex_operation)
+        self.add_transition(required_serial_rates, multiplex_operation)
         self.add_transition(equity, multiplex_operation)
         self.add_transition(net_liquidity, multiplex_operation)
         self.add_transition(yearly_income, multiplex_operation)

@@ -118,9 +118,7 @@ class TestSsb:
         Test that ssb_interest_rates method return correct content
 
         """
-        correct_content = {'inntil 3 måneder (flytende rente)': '2.85',
-                           'over 3 måneder (fast rente)': '2.8', '1 år - 3 år': '2.7',
-                           '3 år - 5 år': '2.8', 'over 5 år': '2.9'}
+        correct_content = {'markedsrente': '2.85'}
         assert self.ssb.ssb_interest_rates() == correct_content
 
     @mock.patch("source.app.connectors.ssb.Ssb.response", mock.MagicMock(return_value=""))

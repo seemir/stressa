@@ -21,6 +21,7 @@ from .person import Person
 from .female import Female
 from .amount import Amount
 from .mobile import Mobile
+from .serial import Serial
 from .share import Share
 from .money import Money
 from .email import Email

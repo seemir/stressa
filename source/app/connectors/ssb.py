@@ -119,7 +119,8 @@ class Ssb(Connector):
         keys = response["dimension"]["Rentebinding"]["category"]["label"].values()
         values = response["value"]
         LOGGER.success("'ssb_interest_rates' successfully retrieved")
-        return {key.lower(): str(val) for key, val in dict(zip(keys, values)).items()}
+        interest_rates = {key.lower(): str(val) for key, val in dict(zip(keys, values)).items()}
+        return {'markedsrente': interest_rates['inntil 3 måneder (flytende rente)']}
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/interest_rates"):

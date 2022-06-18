@@ -10510,7 +10510,7 @@
                    </widget>
                   </item>
                   <item row="10" column="0">
-                   <widget class="QLabel" name="label_maks_stress_rente">
+                   <widget class="QLabel" name="label_stresstest_annuitet">
                     <property name="text">
                      <string>Stresstest annuitet</string>
                     </property>
@@ -10623,7 +10623,7 @@
                       </widget>
                      </item>
                      <item row="9" column="0" colspan="2">
-                      <widget class="QLineEdit" name="line_edit_krav_stress_rente">
+                      <widget class="QLineEdit" name="line_edit_krav_stresstest_annuitet">
                        <property name="enabled">
                         <bool>false</bool>
                        </property>
@@ -10639,6 +10639,19 @@
                       <widget class="QLabel" name="label_whitespace_3">
                        <property name="text">
                         <string/>
+                       </property>
+                      </widget>
+                     </item>
+                     <item row="10" column="0">
+                      <widget class="QLineEdit" name="line_edit_krav_stresstest_serie">
+                       <property name="enabled">
+                        <bool>false</bool>
+                       </property>
+                       <property name="minimumSize">
+                        <size>
+                         <width>230</width>
+                         <height>0</height>
+                        </size>
                        </property>
                       </widget>
                      </item>
@@ -10766,6 +10779,20 @@
                    <widget class="QLabel" name="label_whitespace">
                     <property name="text">
                      <string/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="11" column="1">
+                   <widget class="QLineEdit" name="line_edit_stresstest_serie">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="11" column="0">
+                   <widget class="QLabel" name="label_stresstest_serie">
+                    <property name="text">
+                     <string>Stresstest serie</string>
                     </property>
                    </widget>
                   </item>
@@ -12506,9 +12533,22 @@
   <tabstop>push_button_avslutt</tabstop>
   <tabstop>tab_widget_home</tabstop>
   <tabstop>line_edit_arsinntekt_aar</tabstop>
+  <tabstop>line_edit_egenkapital_2</tabstop>
   <tabstop>line_edit_krav_egenkapital</tabstop>
+  <tabstop>line_edit_egenkapital_andel</tabstop>
   <tabstop>line_edit_krav_egenkapital_andel</tabstop>
+  <tabstop>line_edit_belaning</tabstop>
+  <tabstop>line_edit_krav_belaning</tabstop>
+  <tabstop>line_edit_belaningsgrad</tabstop>
   <tabstop>line_edit_krav_belaningsgrad</tabstop>
+  <tabstop>line_edit_total_ramme</tabstop>
+  <tabstop>line_edit_krav_total_ramme</tabstop>
+  <tabstop>line_edit_netto_likviditet_2</tabstop>
+  <tabstop>line_edit_krav_nettolikviditet</tabstop>
+  <tabstop>line_edit_stresstest_annuitet</tabstop>
+  <tabstop>line_edit_krav_stresstest_annuitet</tabstop>
+  <tabstop>line_edit_stresstest_serie</tabstop>
+  <tabstop>line_edit_krav_stresstest_serie</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>
