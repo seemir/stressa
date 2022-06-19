@@ -15,10 +15,12 @@ import shutil
 
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtGui import QIcon
 from PyQt5.uic import loadUi
 
 from ..models import MortgageModel, FinnModel, HomeModel, AnalysisModel
 
+from .restructure_view import RestructureView
 from .statistics_view import StatisticsView
 from .info_view_clear import InfoViewClear
 from .grunnboka_view import GrunnbokaView
@@ -50,7 +52,8 @@ class HomeView(QMainWindow):
 
         """
         super().__init__()
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/home_form.ui"), self)
+        up = os.path.dirname
+        self.ui = loadUi(os.path.join(up(__file__), "forms/home_form.ui"), self)
 
         self._error_view = ErrorView(self)
         self._budget_view = BudgetView(self)
@@ -63,6 +66,7 @@ class HomeView(QMainWindow):
         self._info_view_quit = InfoViewQuit(self)
         self._info_view_clear = InfoViewClear(self)
         self._statistics_view = StatisticsView(self)
+        self._restructure_view = RestructureView(self)
 
         self._home_model = HomeModel(self)
         self._finn_model = FinnModel(self)
@@ -87,6 +91,11 @@ class HomeView(QMainWindow):
         self.ui.push_button_avslutt.clicked.connect(self.avslutt)
         self.ui.action_logo.triggered.connect(self.info_tab)
 
+        self.ui.push_button_restructure.clicked.connect(self.restructure_view.display)
+
+        self.ui.push_button_restructure.setIcon(
+            QIcon(up(up(os.path.abspath(__file__))) + '/images/restructure.png'))
+
     def closeEvent(self, event):
         """
         handler of closeEvents
@@ -107,6 +116,19 @@ class HomeView(QMainWindow):
 
         """
         return self._error_view
+
+    @property
+    def restructure_view(self):
+        """
+        Restructure getter
+
+        Returns
+        -------
+        out     : QObject
+                  active Restructure in class
+
+        """
+        return self._restructure_view
 
     @property
     def info_view_quit(self):

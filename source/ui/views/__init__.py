@@ -8,6 +8,7 @@ Logic for views are stored in this subpackage
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from .restructure_view import RestructureView
 from .statistics_view import StatisticsView
 from .info_view_clear import InfoViewClear
 from .grunnboka_view import GrunnbokaView
