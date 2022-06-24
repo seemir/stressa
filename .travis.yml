@@ -1,5 +1,5 @@
-# route builds to Ubuntu 18.04 LTS, Bionic
-dist: bionic
+# operating system
+os: windows
 
 # only push requests to master
 if:
@@ -20,8 +20,6 @@ branches:
 
 # install dependencies
 install:
-  - pip install --upgrade pip
-  - pip install setuptools==62.6.0
   - pip install -r requirements.txt
 
 # scripts to run for build
