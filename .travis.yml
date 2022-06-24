@@ -20,7 +20,7 @@ branches:
 
 # install dependencies
 install:
-  - pip install setuptools
+  - pip install setuptools==62.6.0
   - pip install -r requirements.txt
 
 # scripts to run for build
