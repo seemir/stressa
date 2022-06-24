@@ -22,7 +22,6 @@ branches:
 install:
   - pip install --upgrade pip
   - pip install setuptools==62.6.0
-  - pip install ez_setup
   - pip install -r requirements.txt
 
 # scripts to run for build
