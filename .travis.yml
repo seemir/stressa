@@ -1,5 +1,8 @@
 # operating system
-os: windows
+os: linux
+
+# route builds to Ubuntu 18.04 LTS, Bionic
+dist: bionic
 
 # only push requests to master
 if:
