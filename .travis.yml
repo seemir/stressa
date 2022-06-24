@@ -21,8 +21,9 @@ branches:
 # install dependencies
 install:
   - python -m pip install --upgrade pip
-  - pip install setuptools==62.6.0
+  - pip install setuptools==46.0.0
   - pip install --upgrade setuptools
+  - pip install pyOpenSSL
   - pip install ez_setup
   - pip install unroll
   - easy_install -U setuptools
