@@ -20,6 +20,7 @@ branches:
 
 # install dependencies
 install:
+  - pip3 install –upgrade setuptools
   - pip3 install -r requirements.txt
 
 # scripts to run for build
