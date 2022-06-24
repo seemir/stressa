@@ -1,6 +1,3 @@
-# operating system
-os: linux
-
 # route builds to Ubuntu 18.04 LTS, Bionic
 dist: bionic
 
@@ -23,6 +20,12 @@ branches:
 
 # install dependencies
 install:
+  - pip install setuptools==62.6.0
+  - pip install --upgrade setuptools
+  - pip install ez_setup
+  - pip install unroll
+  - easy_install -U setuptools
+  - pip install unroll
   - pip install -r requirements.txt
 
 # scripts to run for build
