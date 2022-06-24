@@ -1667,7 +1667,11 @@
               </widget>
              </item>
              <item row="2" column="3">
-              <widget class="QLineEdit" name="line_edit_belaning"/>
+              <widget class="QLineEdit" name="line_edit_belaning">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
+               </property>
+              </widget>
              </item>
              <item row="5" column="0" colspan="2">
               <widget class="QPushButton" name="push_button_budget_meta_data">

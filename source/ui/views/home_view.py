@@ -18,7 +18,7 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QIcon
 from PyQt5.uic import loadUi
 
-from ..models import MortgageModel, FinnModel, HomeModel, AnalysisModel
+from ..models import MortgageModel, FinnModel, HomeModel, AnalysisModel, RestructureModel
 
 from .restructure_view import RestructureView
 from .statistics_view import StatisticsView
@@ -77,6 +77,7 @@ class HomeView(QMainWindow):
 
         self._analysis_model = AnalysisModel(self)
         self._restructure_view = RestructureView(self)
+        self._restructure_model = self.restructure_view.restructure_model
 
         self._mortgage_model.mortgage_info()
         self._finn_model.finn_info()
@@ -117,6 +118,19 @@ class HomeView(QMainWindow):
 
         """
         return self._error_view
+
+    @property
+    def restructure_model(self):
+        """
+        Restructure model getter
+
+        Returns
+        -------
+        out     : QObject
+                  active Restructure model in class
+
+        """
+        return self._restructure_model
 
     @property
     def restructure_view(self):
