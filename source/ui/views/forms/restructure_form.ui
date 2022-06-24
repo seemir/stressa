@@ -444,7 +444,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Budsjett</string>
+   <string>Restruktur</string>
   </property>
   <property name="windowIcon">
    <iconset resource="../../images/img.qrc">

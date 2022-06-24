@@ -79,11 +79,12 @@ class MetaView(QDialog):
                   dictionary with all metadata
 
         """
-        models = {"_mortgage_model": "låne_informasjon", "_budget_model": "budsjett_informasjon",
+        models = {"_mortgage_model": "låneinformasjon", "_budget_model": "budsjettinformasjon",
                   "_sifo_model": "sifo_informasjon", "_finn_model": "finn_informasjon",
-                  "_statistics_model": "statistikk_informasjon", "_tax_model": "skatte_informasjon",
+                  "_statistics_model": "statistikk_informasjon", "_tax_model": "skatteinformasjon",
                   "_home_model": "likviditets_informasjon",
-                  "_grunnboka_model": "grunnboka_informasjon"}
+                  "_grunnboka_model": "grunnboka_informasjon",
+                  "_restructure_model": "lånestruktur_informasjon"}
         meta_data = {}
         attr = [str(key) for key in list(self.parent.__dict__.keys())]
         for model, name in models.items():

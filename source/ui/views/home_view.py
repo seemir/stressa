@@ -66,16 +66,17 @@ class HomeView(QMainWindow):
         self._info_view_quit = InfoViewQuit(self)
         self._info_view_clear = InfoViewClear(self)
         self._statistics_view = StatisticsView(self)
-        self._restructure_view = RestructureView(self)
 
         self._home_model = HomeModel(self)
         self._finn_model = FinnModel(self)
         self._mortgage_model = MortgageModel(self)
-        self._analysis_model = AnalysisModel(self)
 
         self._tax_model = self.tax_view.tax_model
         self._sifo_model = self.sifo_view.sifo_model
         self._budget_model = self.budget_view.budget_model
+
+        self._analysis_model = AnalysisModel(self)
+        self._restructure_view = RestructureView(self)
 
         self._mortgage_model.mortgage_info()
         self._finn_model.finn_info()
