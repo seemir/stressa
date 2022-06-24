@@ -20,6 +20,7 @@ branches:
 
 # install dependencies
 install:
+  - python -m pip install --upgrade pip
   - pip install setuptools==62.6.0
   - pip install --upgrade setuptools
   - pip install ez_setup
