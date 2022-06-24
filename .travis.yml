@@ -23,7 +23,7 @@ branches:
 
 # install dependencies
 install:
-  - pip install -r requirements.txt --use-deprecated=backtrack-on-build-failures
+  - pip install -r requirements.txt --use-deprecated=legacy-resolver
 
 # scripts to run for build
 script:
