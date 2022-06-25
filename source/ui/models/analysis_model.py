@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Model with Analysis logic of mortgages
 
+"""
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
@@ -37,7 +40,7 @@ class AnalysisModel(Model):
         Assertor.assert_data_types([parent], [QObject])
         super().__init__(parent)
 
-        self.parent.ui.push_button_analyse.clicked.connect(self.analyze_mortgage)
+        self.parent.ui_form.push_button_analyse.clicked.connect(self.analyze_mortgage)
 
     @property
     def analysis_keys(self):
@@ -57,12 +60,16 @@ class AnalysisModel(Model):
         self.data.update(self.parent.home_model.data)
 
         if all(element in self.data.keys() for element in Mortgage.requirements):
-            self.parent.ui.tab_widget_home.setCurrentIndex(2)
+            self.parent.ui_form.tab_widget_home.setCurrentIndex(2)
 
             mortgage_analysis = MortgageAnalysisProcess(self.data)
             self.set_line_edits(line_edit_text='', line_edits=self.analysis_keys,
                                 data=mortgage_analysis.mortgage())
 
     def clear_all(self):
+        """
+        method for clearing model
+
+        """
         self.data = {}
         self.clear_line_edits(self.analysis_keys)

@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Module with logic for view for images from advert
 
+"""
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
@@ -32,15 +35,15 @@ class ImagesView(QDialog):
         """
         Assertor.assert_data_types([parent], [QWidget])
         super().__init__(parent)
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/images_form.ui"), self)
-        self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/images_form.ui"), self)
+        self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self._parent = parent
         self._images_model = ImagesModel(self)
 
-        self.ui.push_button_forward.clicked.connect(self.next_image)
-        self.ui.push_button_back.clicked.connect(self.previous_image)
+        self.ui_form.push_button_forward.clicked.connect(self.next_image)
+        self.ui_form.push_button_back.clicked.connect(self.previous_image)
 
     @property
     def parent(self):
@@ -89,7 +92,7 @@ class ImagesView(QDialog):
         method for clearing all images
 
         """
-        self.ui.web_view_images.close()
+        self.ui_form.web_view_images.close()
         self.images_model.images = []
         self.images_model.current_image = 0
-        self.ui.label_description.setText("")
+        self.ui_form.label_description.setText("")

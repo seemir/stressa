@@ -41,7 +41,6 @@ class HistoryModel(Model):
         self.keys = None
         self.values = None
         self.bar_plot = None
-        self.table_view_mapping = None
 
     @pyqtSlot()
     def add_finn_history(self, postfix: str):
@@ -68,12 +67,12 @@ class HistoryModel(Model):
         self.data.update(history_data)
         for key in self._finn_history_keys:
             if key == "historikk":
-                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_historikk,
-                                                self.parent.ui.table_view_historikk)
+                BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_historikk,
+                                                self.parent.ui_form.table_view_historikk)
                 if key + postfix in self.data.keys() and self.data["historikk" + postfix]:
                     # table
                     history_data_model = TableModel(DataFrame(self.data[key + postfix]))
-                    self.parent.ui.table_view_historikk.setModel(history_data_model)
+                    self.parent.ui_form.table_view_historikk.setModel(history_data_model)
 
                     # bar chart
                     history = self.data["historikk" + postfix]["Pris"]
@@ -86,22 +85,23 @@ class HistoryModel(Model):
                     status = grandparent.finn_model.data["status" + postfix]
                     self.bar_plot = BarChartWithLine(
                         self.keys, self.values,
-                        self.parent.ui.graphics_view_historikk,
-                        self.parent.ui.table_view_historikk,
+                        self.parent.ui_form.graphics_view_historikk,
+                        self.parent.ui_form.table_view_historikk,
                         legend='<div style="text-align: center">'
                                '<span style="font-size: 10pt">FINN kode:{}</span><br>'
                                '<span style="font-size: 10pt">Boligtype: {}</span><br>'
                                '<span style="font-size: 10pt">(Status: {})</span>'
                                '</div>'.format(finn_code, bolig_type, status))
-                    self.table_view_mapping = self.bar_plot.table_view_mapping()
+                    self.bar_plot.table_view_mapping()
             else:
-                getattr(self.parent.ui, "line_edit_" + key).clear()
+                getattr(self.parent.ui_form, "line_edit_" + key).clear()
                 if key + postfix in self.data.keys():
-                    getattr(self.parent.ui, "line_edit_" + key).setText(self.data[key + postfix])
+                    getattr(self.parent.ui_form, "line_edit_" + key).setText(
+                        self.data[key + postfix])
 
-        self.parent.ui.graphics_view_historikk.setMouseEnabled(x=False, y=False)
-        self.parent.ui.graphics_view_historikk.getAxis('left').setStyle(showValues=False)
-        self.parent.ui.graphics_view_historikk.getAxis('bottom').setStyle(showValues=False)
+        self.parent.ui_form.graphics_view_historikk.setMouseEnabled(x=False, y=False)
+        self.parent.ui_form.graphics_view_historikk.getAxis('left').setStyle(showValues=False)
+        self.parent.ui_form.graphics_view_historikk.getAxis('bottom').setStyle(showValues=False)
 
     @pyqtSlot()
     def clear_finn_history(self, postfix: str):
@@ -119,11 +119,11 @@ class HistoryModel(Model):
             full_key = key + postfix
             if key == "historikk":
                 self.clear_finn_data(full_key)
-                BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_historikk,
-                                                self.parent.ui.table_view_historikk)
+                BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_historikk,
+                                                self.parent.ui_form.table_view_historikk)
             else:
                 self.clear_finn_data(full_key)
-                getattr(self.parent.ui, "line_edit_" + key).clear()
+                getattr(self.parent.ui_form, "line_edit_" + key).clear()
 
     def clear_finn_data(self, full_key):
         """

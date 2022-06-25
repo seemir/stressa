@@ -81,7 +81,7 @@ class DoubleCrossHair(QObject):
         self.label_1 = TextItem()
         self.label_2 = TextItem()
         self.labels = labels
-        self.units = units if units else tuple(["" for _ in range(10)])
+        self.units = units if units else ("" for _ in range(10))
 
         if self.highlight_bars:
             self.plot_widget_1.addItem(self.vertical_line_1)

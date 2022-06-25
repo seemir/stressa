@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Module for restructure view
 
+"""
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
@@ -36,9 +39,9 @@ class RestructureView(QDialog):
         Assertor.assert_data_types([parent], [QWidget])
         super().__init__(parent)
         self._parent = parent
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/restructure_form.ui"), self)
-        self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/restructure_form.ui"), self)
+        self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
 
         self._error_view = self.parent.error_view
         self._meta_view = MetaView(self)
@@ -46,9 +49,9 @@ class RestructureView(QDialog):
         self._restructure_model = RestructureModel(self)
         self.restructure_model.restructure_info()
 
-        self.ui.push_button_budget_meta_data.clicked.connect(self.meta_view.display)
-        self.ui.push_button_avbryt.clicked.connect(self.close)
-        self.ui.push_button_tom_skjema.clicked.connect(self.restructure_model.clear_all)
+        self.ui_form.push_button_budget_meta_data.clicked.connect(self.meta_view.display)
+        self.ui_form.push_button_avbryt.clicked.connect(self.close)
+        self.ui_form.push_button_tom_skjema.clicked.connect(self.restructure_model.clear_all)
 
     @property
     def parent(self):
@@ -114,29 +117,29 @@ class RestructureView(QDialog):
 
         if "lanetype" in mortgage_model.keys() and "lanetype" not in \
                 self.restructure_model.data.keys():
-            self.ui.combo_box_lanetype.setCurrentText(mortgage_model["lanetype"])
+            self.ui_form.combo_box_lanetype.setCurrentText(mortgage_model["lanetype"])
             self.restructure_model.set_combo_box("lanetype")
         if "intervall" in mortgage_model.keys() and "intervall" not in \
                 self.restructure_model.data.keys():
-            self.ui.combo_box_intervall.setCurrentText(mortgage_model["intervall"])
+            self.ui_form.combo_box_intervall.setCurrentText(mortgage_model["intervall"])
             self.restructure_model.set_combo_box("intervall")
         if "laneperiode" in mortgage_model.keys() and "laneperiode" not in \
                 self.restructure_model.data.keys():
-            self.ui.combo_box_laneperiode.setCurrentText(mortgage_model["laneperiode"])
+            self.ui_form.combo_box_laneperiode.setCurrentText(mortgage_model["laneperiode"])
             self.restructure_model.set_combo_box("laneperiode")
         if "startdato" in mortgage_model.keys() and "startdato" not in \
                 self.restructure_model.data.keys():
             startdate = QDate.fromString(mortgage_model["startdato"], "dd.MM.yyyy")
-            self.ui.date_edit_startdato.setDate(startdate)
+            self.ui_form.date_edit_startdato.setDate(startdate)
             self.restructure_model.set_date_edit("startdato")
         if "egenkapital" in mortgage_model.keys() and "egenkapital" not in \
                 self.restructure_model.data.keys():
-            self.ui.line_edit_egenkapital.setText(mortgage_model["egenkapital"])
+            self.ui_form.line_edit_egenkapital.setText(mortgage_model["egenkapital"])
             self.restructure_model.set_line_edit("egenkapital", Money, "value")
         if "belaning" in analysis_model.keys() and "belaning" not in \
                 self.restructure_model.data.keys():
-            self.ui.line_edit_belaning.setText(analysis_model["belaning"])
+            self.ui_form.line_edit_belaning.setText(analysis_model["belaning"])
             self.restructure_model.set_line_edit("belaning", Money, "value")
 
-        self.ui.combo_box_lanetype.setFocus()
+        self.ui_form.combo_box_lanetype.setFocus()
         self.show()

@@ -47,15 +47,15 @@ class Chart(QObject):
         graphics_view.clear()
 
     @staticmethod
-    def create_bins(x: list, y: list, bins: list):
+    def create_bins(x_val: list, y_val: list, bins: list):
         """
         method for creating bins for bar char
 
         Parameters
         ----------
-        x       : list
+        x_val   : list
                   x-values
-        y       : list
+        y_val   : list
                   y-value
         bins    : list
                   bins
@@ -66,11 +66,11 @@ class Chart(QObject):
                   bins for bar chart
 
         """
-        Assertor.assert_data_types([x, y, bins], [list, list, list])
+        Assertor.assert_data_types([x_val, y_val, bins], [list, list, list])
         bin_array = []
-        for i, value in enumerate(x):
-            if y[i] != 0:
-                bin_array.append([value] * y[i])
+        for i, value in enumerate(x_val):
+            if y_val[i] != 0:
+                bin_array.append([value] * y_val[i])
             else:
                 bin_array.append([0])
         return np.histogram(list(chain(*bin_array)), bins=bins)

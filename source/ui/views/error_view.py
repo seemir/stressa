@@ -43,9 +43,9 @@ class ErrorView(QDialog):
         """
         Assertor.assert_data_types([parent], [(QObject, type(None))])
         super().__init__(None)
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/error_form.ui"), self)
-        self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/error_form.ui"), self)
+        self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.log_dir = os.path.join(os.path.dirname(__file__), "logs")
 
     def show_error(self, exception: Exception, meta: dict, trace_back=None):
@@ -66,7 +66,7 @@ class ErrorView(QDialog):
         if os.path.exists(self.log_dir):
             shutil.rmtree(self.log_dir)
         Assertor.assert_data_types([exception, meta], [Exception, dict])
-        self.ui.tab_widget_error.setCurrentIndex(0)
+        self.ui_form.tab_widget_error.setCurrentIndex(0)
         error_list = str(exception).split("->")
         error = error_list[-1].strip()
         tracking = []
@@ -77,12 +77,12 @@ class ErrorView(QDialog):
                 tracking.append("|\n")
                 tracking.append("|" + "__" * i * 2 + element + "\n")
 
-        self.ui.label_error_text.setText(error)
-        self.ui.plain_text_edit_tracking.setPlainText("".join(tracking))
-        self.ui.plain_text_edit_traceback.setPlainText(
+        self.ui_form.label_error_text.setText(error)
+        self.ui_form.plain_text_edit_tracking.setPlainText("".join(tracking))
+        self.ui_form.plain_text_edit_traceback.setPlainText(
             traceback.format_exc() if not trace_back else trace_back)
-        self.ui.plain_text_edit_log.setPlainText(self.read_log(exception))
-        self.ui.plain_text_edit_error_meta_data.setPlainText(
+        self.ui_form.plain_text_edit_log.setPlainText(self.read_log(exception))
+        self.ui_form.plain_text_edit_error_meta_data.setPlainText(
             json.dumps(meta, indent=4, ensure_ascii=False))
         self.show()
 

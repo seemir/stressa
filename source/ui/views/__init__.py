@@ -16,7 +16,6 @@ from .info_view_quit import InfoViewQuit
 from .history_view import HistoryView
 from .budget_view import BudgetView
 from .splash_view import SplashView
-from .budget_view import BudgetView
 from .error_view import ErrorView
 from .sifo_view import SifoView
 from .home_view import HomeView

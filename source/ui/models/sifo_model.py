@@ -49,14 +49,14 @@ class SifoModel(Model):
 
         """
         Assertor.assert_data_types([parent], [QObject])
-        super(SifoModel, self).__init__(parent)
-        self.parent.ui.combo_box_budsjett_aar.addItems(self._budsjett_aar)
+        super().__init__(parent=parent)
+        self.parent.ui_form.combo_box_budsjett_aar.addItems(self._budsjett_aar)
         for num in range(1, 8):
-            getattr(self.parent.ui, "combo_box_kjonn_" + str(num)).addItems(
+            getattr(self.parent.ui_form, "combo_box_kjonn_" + str(num)).addItems(
                 self._kjonn)
-            getattr(self.parent.ui, "combo_box_alder_" + str(num)).addItems(
+            getattr(self.parent.ui_form, "combo_box_alder_" + str(num)).addItems(
                 self._alder)
-        self.parent.ui.combo_box_antall_biler.addItems(self._antall_biler)
+        self.parent.ui_form.combo_box_antall_biler.addItems(self._antall_biler)
         self._sifo_process = None
         self._extra_info = None
 
@@ -90,7 +90,7 @@ class SifoModel(Model):
         method for setting / formatting gross income
 
         """
-        self.parent.ui.line_edit_brutto_arsinntekt.editingFinished.connect(
+        self.parent.ui_form.line_edit_brutto_arsinntekt.editingFinished.connect(
             lambda: self.set_line_edit("brutto_arsinntekt", Money, "value",
                                        clearing=self.clear_results))
 
@@ -100,7 +100,7 @@ class SifoModel(Model):
         method for setting the budget year
 
         """
-        self.parent.ui.combo_box_budsjett_aar.activated.connect(
+        self.parent.ui_form.combo_box_budsjett_aar.activated.connect(
             lambda: self.set_combo_box("budsjett_aar"))
 
     @pyqtSlot()
@@ -109,19 +109,19 @@ class SifoModel(Model):
         method for setting / formatting gender
 
         """
-        self.parent.ui.combo_box_kjonn_1.activated.connect(
+        self.parent.ui_form.combo_box_kjonn_1.activated.connect(
             lambda: self.set_age_and_gender("_1"))
-        self.parent.ui.combo_box_kjonn_2.activated.connect(
+        self.parent.ui_form.combo_box_kjonn_2.activated.connect(
             lambda: self.set_age_and_gender("_2"))
-        self.parent.ui.combo_box_kjonn_3.activated.connect(
+        self.parent.ui_form.combo_box_kjonn_3.activated.connect(
             lambda: self.set_age_and_gender("_3"))
-        self.parent.ui.combo_box_kjonn_4.activated.connect(
+        self.parent.ui_form.combo_box_kjonn_4.activated.connect(
             lambda: self.set_age_and_gender("_4"))
-        self.parent.ui.combo_box_kjonn_5.activated.connect(
+        self.parent.ui_form.combo_box_kjonn_5.activated.connect(
             lambda: self.set_age_and_gender("_5"))
-        self.parent.ui.combo_box_kjonn_6.activated.connect(
+        self.parent.ui_form.combo_box_kjonn_6.activated.connect(
             lambda: self.set_age_and_gender("_6"))
-        self.parent.ui.combo_box_kjonn_7.activated.connect(
+        self.parent.ui_form.combo_box_kjonn_7.activated.connect(
             lambda: self.set_age_and_gender("_7"))
 
     @pyqtSlot()
@@ -130,19 +130,19 @@ class SifoModel(Model):
         method for setting / formatting age
 
         """
-        self.parent.ui.combo_box_alder_1.activated.connect(
+        self.parent.ui_form.combo_box_alder_1.activated.connect(
             lambda: self.set_age_and_gender("_1"))
-        self.parent.ui.combo_box_alder_2.activated.connect(
+        self.parent.ui_form.combo_box_alder_2.activated.connect(
             lambda: self.set_age_and_gender("_2"))
-        self.parent.ui.combo_box_alder_3.activated.connect(
+        self.parent.ui_form.combo_box_alder_3.activated.connect(
             lambda: self.set_age_and_gender("_3"))
-        self.parent.ui.combo_box_alder_4.activated.connect(
+        self.parent.ui_form.combo_box_alder_4.activated.connect(
             lambda: self.set_age_and_gender("_4"))
-        self.parent.ui.combo_box_alder_5.activated.connect(
+        self.parent.ui_form.combo_box_alder_5.activated.connect(
             lambda: self.set_age_and_gender("_5"))
-        self.parent.ui.combo_box_alder_6.activated.connect(
+        self.parent.ui_form.combo_box_alder_6.activated.connect(
             lambda: self.set_age_and_gender("_6"))
-        self.parent.ui.combo_box_alder_7.activated.connect(
+        self.parent.ui_form.combo_box_alder_7.activated.connect(
             lambda: self.set_age_and_gender("_7"))
 
     @pyqtSlot()
@@ -151,19 +151,19 @@ class SifoModel(Model):
         method for setting extra info, i.e. kindergarten, sfo or pregnant
 
         """
-        self.parent.ui.combo_box_tillegg_1.activated.connect(
+        self.parent.ui_form.combo_box_tillegg_1.activated.connect(
             lambda: self.get_extra_info("tillegg", "person", "_1"))
-        self.parent.ui.combo_box_tillegg_2.activated.connect(
+        self.parent.ui_form.combo_box_tillegg_2.activated.connect(
             lambda: self.get_extra_info("tillegg", "person", "_2"))
-        self.parent.ui.combo_box_tillegg_3.activated.connect(
+        self.parent.ui_form.combo_box_tillegg_3.activated.connect(
             lambda: self.get_extra_info("tillegg", "person", "_3"))
-        self.parent.ui.combo_box_tillegg_4.activated.connect(
+        self.parent.ui_form.combo_box_tillegg_4.activated.connect(
             lambda: self.get_extra_info("tillegg", "person", "_4"))
-        self.parent.ui.combo_box_tillegg_5.activated.connect(
+        self.parent.ui_form.combo_box_tillegg_5.activated.connect(
             lambda: self.get_extra_info("tillegg", "person", "_5"))
-        self.parent.ui.combo_box_tillegg_6.activated.connect(
+        self.parent.ui_form.combo_box_tillegg_6.activated.connect(
             lambda: self.get_extra_info("tillegg", "person", "_6"))
-        self.parent.ui.combo_box_tillegg_7.activated.connect(
+        self.parent.ui_form.combo_box_tillegg_7.activated.connect(
             lambda: self.get_extra_info("tillegg", "person", "_7"))
 
     @pyqtSlot()
@@ -215,11 +215,11 @@ class SifoModel(Model):
 
         """
         Assertor.assert_data_types([postfix, show_info], [str, bool])
-        ui = self.parent.ui
+        ui_form = self.parent.ui_form
         self.clear_extra_data(postfix)
 
-        alder = getattr(ui, "combo_box_alder" + postfix).currentText()
-        kvinne = getattr(ui, "combo_box_kjonn" + postfix).currentText() == "Kvinne"
+        alder = getattr(ui_form, "combo_box_alder" + postfix).currentText()
+        kvinne = getattr(ui_form, "combo_box_kjonn" + postfix).currentText() == "Kvinne"
 
         barnehage = (alder in ["1 år", "2 år", "3 år", "4-5 år"])
         sfo = (alder in ["6-9 år", "10-13 år"])
@@ -228,16 +228,20 @@ class SifoModel(Model):
 
         if barnehage:
             self._extra_info = "barnehage" + postfix
-            self.show_extra_info("barnehage", postfix, self._barnehage) if show_info else ""
+            if show_info:
+                self.show_extra_info("barnehage", postfix, self._barnehage)
         elif sfo:
             self._extra_info = "sfo" + postfix
-            self.show_extra_info("sfo", postfix, self._sfo) if show_info else ""
+            if show_info:
+                self.show_extra_info("sfo", postfix, self._sfo)
         elif student:
             self._extra_info = "student" + postfix
-            self.show_extra_info("student", postfix, self._student) if show_info else ""
+            if show_info:
+                self.show_extra_info("student", postfix, self._student)
         elif gravid:
             self._extra_info = "gravid" + postfix
-            self.show_extra_info("gravid", postfix, self._barnehage) if show_info else ""
+            if show_info:
+                self.show_extra_info("gravid", postfix, self._barnehage)
         else:
             self.clear_extra_info(postfix)
 
@@ -257,13 +261,13 @@ class SifoModel(Model):
 
         """
         Assertor.assert_data_types([name, postfix, values], [str, str, list])
-        ui = self.parent.ui
+        ui_form = self.parent.ui_form
         name = name.capitalize() if name != "sfo" else name.upper()
-        getattr(ui, "label_tillegg" + postfix).setText(name + "?")
-        getattr(ui, "combo_box_tillegg" + postfix).show()
-        getattr(ui, "combo_box_tillegg" + postfix).setEnabled(True)
-        getattr(ui, "combo_box_tillegg" + postfix).clear()
-        getattr(ui, "combo_box_tillegg" + postfix).addItems(values)
+        getattr(ui_form, "label_tillegg" + postfix).setText(name + "?")
+        getattr(ui_form, "combo_box_tillegg" + postfix).show()
+        getattr(ui_form, "combo_box_tillegg" + postfix).setEnabled(True)
+        getattr(ui_form, "combo_box_tillegg" + postfix).clear()
+        getattr(ui_form, "combo_box_tillegg" + postfix).addItems(values)
 
     @pyqtSlot()
     def clear_extra_info(self, postfix: str):
@@ -277,12 +281,12 @@ class SifoModel(Model):
 
         """
         Assertor.assert_data_types([postfix], [str])
-        ui = self.parent.ui
+        ui_form = self.parent.ui_form
         self._extra_info = None
-        getattr(ui, "label_tillegg" + postfix).setText("")
-        getattr(ui, "combo_box_tillegg" + postfix).setCurrentIndex(0)
-        getattr(ui, "combo_box_tillegg" + postfix).setEnabled(False)
-        getattr(ui, "combo_box_tillegg" + postfix).hide()
+        getattr(ui_form, "label_tillegg" + postfix).setText("")
+        getattr(ui_form, "combo_box_tillegg" + postfix).setCurrentIndex(0)
+        getattr(ui_form, "combo_box_tillegg" + postfix).setEnabled(False)
+        getattr(ui_form, "combo_box_tillegg" + postfix).hide()
         self.clear_extra_data(postfix)
 
     @pyqtSlot()
@@ -291,14 +295,14 @@ class SifoModel(Model):
         method for hiding unused combo boxes
 
         """
-        ui = self.parent.ui
+        ui_form = self.parent.ui_form
         for i in range(1, 8):
             postfix = "_" + str(i)
-            if not getattr(ui, "combo_box_tillegg" + postfix).isEnabled():
-                getattr(ui, "label_tillegg" + postfix).setText("")
-                getattr(ui, "combo_box_tillegg" + postfix).setCurrentIndex(0)
-                getattr(ui, "combo_box_tillegg" + postfix).setEnabled(False)
-                getattr(ui, "combo_box_tillegg" + postfix).hide()
+            if not getattr(ui_form, "combo_box_tillegg" + postfix).isEnabled():
+                getattr(ui_form, "label_tillegg" + postfix).setText("")
+                getattr(ui_form, "combo_box_tillegg" + postfix).setCurrentIndex(0)
+                getattr(ui_form, "combo_box_tillegg" + postfix).setEnabled(False)
+                getattr(ui_form, "combo_box_tillegg" + postfix).hide()
                 self.clear_extra_data(postfix)
 
     @pyqtSlot()
@@ -324,7 +328,7 @@ class SifoModel(Model):
         method for setting / formatting number of cars in family
 
         """
-        self.parent.ui.combo_box_antall_biler.activated.connect(
+        self.parent.ui_form.combo_box_antall_biler.activated.connect(
             lambda: self.set_combo_box("antall_biler"))
 
     @pyqtSlot()
@@ -334,7 +338,7 @@ class SifoModel(Model):
 
         """
         if "personinntekt_total_aar" in self.parent.parent.budget_view.budget_model.data:
-            self.parent.ui.line_edit_brutto_arsinntekt.setText(
+            self.parent.ui_form.line_edit_brutto_arsinntekt.setText(
                 self.parent.parent.budget_view.budget_model.data["personinntekt_total_aar"])
 
     @pyqtSlot()
@@ -348,14 +352,16 @@ class SifoModel(Model):
 
         """
         Assertor.assert_data_types([monthly_income], [str])
-        yearly_income = self.parent.ui.line_edit_brutto_arsinntekt.text()
+        yearly_income = self.parent.ui_form.line_edit_brutto_arsinntekt.text()
+        final_income = None
         if monthly_income and not yearly_income:
             yearly_income_from_monthly = Money(
                 str(Decimal(monthly_income.replace(" kr", "").replace(" ", "")) * 12))
             self.data.update({"brutto_arsinntekt": yearly_income_from_monthly.value()})
-            return yearly_income_from_monthly.value()
+            final_income = yearly_income_from_monthly.value()
         else:
-            return yearly_income
+            final_income = yearly_income
+        return final_income
 
     def calculate_sifo_expenses(self):
         """
@@ -366,7 +372,7 @@ class SifoModel(Model):
             self.clear_results()
             if "budsjett_aar" in self.data.keys() and any("person" in key and len(val) > 1 for
                                                           key, val in self.data.items()):
-                self.parent.ui.tab_widget_sifo.setCurrentIndex(1)
+                self.parent.ui_form.tab_widget_sifo.setCurrentIndex(1)
                 self.sifo_process = SifoExpensesProcess(self.data)
                 self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
                                     data=self.sifo_process.base_expenses)
@@ -383,7 +389,7 @@ class SifoModel(Model):
 
         """
         self.hide_unused_combo_box()
-        self.parent.ui.combo_box_kjonn_1.setFocus()
+        self.parent.ui_form.combo_box_kjonn_1.setFocus()
         self.set_income()
         self.set_yearly_income()
         self.set_gender()
@@ -406,13 +412,13 @@ class SifoModel(Model):
         method for clearing all information from SIFO dialog
 
         """
-        self.parent.ui.combo_box_budsjett_aar.setCurrentIndex(0)
+        self.parent.ui_form.combo_box_budsjett_aar.setCurrentIndex(0)
         for combo_box in range(1, 8):
-            getattr(self.parent.ui, "combo_box_kjonn_" + str(combo_box)).setCurrentIndex(0)
-            getattr(self.parent.ui, "combo_box_alder_" + str(combo_box)).setCurrentIndex(0)
+            getattr(self.parent.ui_form, "combo_box_kjonn_" + str(combo_box)).setCurrentIndex(0)
+            getattr(self.parent.ui_form, "combo_box_alder_" + str(combo_box)).setCurrentIndex(0)
             self.clear_extra_info("_" + str(combo_box))
-        self.parent.ui.line_edit_brutto_arsinntekt.clear()
-        self.parent.ui.combo_box_antall_biler.setCurrentIndex(0)
+        self.parent.ui_form.line_edit_brutto_arsinntekt.clear()
+        self.parent.ui_form.combo_box_antall_biler.setCurrentIndex(0)
         self.clear_results()
         self.data = {}
-        self.parent.ui.combo_box_kjonn_1.setFocus()
+        self.parent.ui_form.combo_box_kjonn_1.setFocus()

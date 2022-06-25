@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Module containing all GIS related data from advert
+
+"""
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
@@ -19,14 +23,26 @@ from ..util import CreateHtmlTable
 
 
 class MapModel(Model):
+    """
+    Implementation of Map Model class
+
+    """
 
     def __init__(self, parent: QObject):
-        super().__init__(parent)
+        """
+        Constructor / Instantiating of class
+
+        """
+        super().__init__(parent=parent)
 
     @staticmethod
     def show_map(coords: list, web_engine_view: QWebEngineView, pop_up: str = None, university=None,
                  kindergarden=None, schools=None, highschools=None, transport=None, charging=None,
                  bicycle=None, groceries=None, services=None, sports=None):
+        """
+        method for showing map
+
+        """
         icon_size = (45, 45)
         small_icon = (40, 40)
         max_width = 400

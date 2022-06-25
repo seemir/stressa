@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Module containing front-end element for tax view
 
+"""
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
@@ -35,25 +38,25 @@ class TaxView(QDialog):
         Assertor.assert_data_types([parent], [QWidget])
         super().__init__(parent)
         self._parent = parent
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/tax_form.ui"), self)
-        self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/tax_form.ui"), self)
+        self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
 
         self._error_view = self.parent.error_view
         self._meta_view = MetaView(self)
 
         self._tax_model = TaxModel(self)
 
-        self.ui.push_button_utregning.clicked.connect(self.calculate_tax_income)
-        self.ui.push_button_tom_skjema.clicked.connect(self.clear_all)
-        self.ui.push_button_meta_data_1.clicked.connect(self.meta_view.display)
-        self.ui.push_button_avbryt_1.clicked.connect(self.close)
+        self.ui_form.push_button_utregning.clicked.connect(self.calculate_tax_income)
+        self.ui_form.push_button_tom_skjema.clicked.connect(self.clear_all)
+        self.ui_form.push_button_meta_data_1.clicked.connect(self.meta_view.display)
+        self.ui_form.push_button_avbryt_1.clicked.connect(self.close)
 
-        self.ui.push_button_eksport.clicked.connect(self.export)
-        self.ui.push_button_tilbake.clicked.connect(self.back)
-        self.ui.push_button_meta_data_2.clicked.connect(self.meta_view.display)
-        self.ui.push_button_avbryt_2.clicked.connect(self.close)
-        self.ui.push_button_tom_skjema_2.clicked.connect(self.clear_all)
+        self.ui_form.push_button_eksport.clicked.connect(self.export)
+        self.ui_form.push_button_tilbake.clicked.connect(self.back)
+        self.ui_form.push_button_meta_data_2.clicked.connect(self.meta_view.display)
+        self.ui_form.push_button_avbryt_2.clicked.connect(self.close)
+        self.ui_form.push_button_tom_skjema_2.clicked.connect(self.clear_all)
 
     @property
     def parent(self):
@@ -96,14 +99,22 @@ class TaxView(QDialog):
 
     @property
     def tax_model(self):
+        """
+        tax model getter
+
+        """
         return self._tax_model
 
     @pyqtSlot()
     def display(self):
-        self.ui.scroll_area_skatteetaten.verticalScrollBar().setValue(
-            self.ui.scroll_area_skatteetaten.verticalScrollBar().minimum())
-        self.ui.tab_widget_skattekalkulator.setCurrentIndex(0)
-        self.ui.combo_box_skatte_aar.setFocus()
+        """
+        method for displaying view data
+
+        """
+        self.ui_form.scroll_area_skatteetaten.verticalScrollBar().setValue(
+            self.ui_form.scroll_area_skatteetaten.verticalScrollBar().minimum())
+        self.ui_form.tab_widget_skattekalkulator.setCurrentIndex(0)
+        self.ui_form.combo_box_skatte_aar.setFocus()
         self.tax_model.clear_line_edits(self.tax_model.total_posts)
         self.tax_model.tax_info()
         self.show()
@@ -113,19 +124,28 @@ class TaxView(QDialog):
         method for returning for results page to input page
 
         """
-        self.ui.tab_widget_skattekalkulator.setCurrentIndex(0)
+        self.ui_form.tab_widget_skattekalkulator.setCurrentIndex(0)
 
     @pyqtSlot()
     def calculate_tax_income(self):
+        """
+        method for calculating tax income
+
+        """
         self.tax_model.calculate_tax_income()
 
     @pyqtSlot()
     def clear_all(self):
-        self.ui.scroll_area_skatteetaten.verticalScrollBar().setValue(
-            self.ui.scroll_area_skatteetaten.verticalScrollBar().minimum())
-        self.ui.combo_box_skatte_aar.setCurrentIndex(0)
-        self.ui.tab_widget_skattekalkulator.setCurrentIndex(0)
-        self.ui.combo_box_skatte_aar.setFocus()
+        """
+        method for clearing all data from model
+
+        """
+
+        self.ui_form.scroll_area_skatteetaten.verticalScrollBar().setValue(
+            self.ui_form.scroll_area_skatteetaten.verticalScrollBar().minimum())
+        self.ui_form.combo_box_skatte_aar.setCurrentIndex(0)
+        self.ui_form.tab_widget_skattekalkulator.setCurrentIndex(0)
+        self.ui_form.combo_box_skatte_aar.setFocus()
         self.tax_model.clear_combo_boxes(["skatte_aar"])
         self.tax_model.clear_line_edit("alder")
         self.tax_model.clear_line_edit("fagforeningskontigent")
@@ -140,14 +160,14 @@ class TaxView(QDialog):
         self.tax_model.clear_line_edits(self.tax_model.tax_output)
         self.parent.mortgage_model.clear_line_edit("beregnet_skatt_per_mnd_beloep")
 
-        self.ui.combo_box_skatte_aar.setFocus()
+        self.ui_form.combo_box_skatte_aar.setFocus()
 
     def export(self):
         """
         method for exporting Skatteetaten monthly tax value
 
         """
-        monthly_tax_value = self.ui.line_edit_beregnet_skatt_per_mnd_beloep.text()
+        monthly_tax_value = self.ui_form.line_edit_beregnet_skatt_per_mnd_beloep.text()
         if monthly_tax_value:
             self.parent.mortgage_model.set_line_edit("beregnet_skatt_per_mnd_beloep",
                                                      data=monthly_tax_value)

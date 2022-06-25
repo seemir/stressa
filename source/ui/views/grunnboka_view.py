@@ -42,15 +42,15 @@ class GrunnbokaView(QDialog):
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QWidget])
         self.parent = parent
-        up = os.path.dirname
+        dir_up = os.path.dirname
 
-        self.ui = loadUi(os.path.join(up(__file__), "forms/grunnboka_form.ui"), self)
-        self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
-        self.ui.push_button_forhandsvisning_grunnboka.setIcon(
-            QIcon(up(up(os.path.abspath(__file__))) + '/images/preview.png'))
+        self.ui_form = loadUi(os.path.join(dir_up(__file__), "forms/grunnboka_form.ui"), self)
+        self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.ui_form.push_button_forhandsvisning_grunnboka.setIcon(
+            QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/preview.png'))
 
-        self.download_path = up(up(os.path.abspath(__file__))) + '/grunnboker'
+        self.download_path = dir_up(dir_up(os.path.abspath(__file__))) + '/util/temp'
 
         self._grunnboka_model = GrunnbokaModel(self)
         self.matrikkel = None
@@ -59,7 +59,7 @@ class GrunnbokaView(QDialog):
 
         self._meta_view = MetaView(self)
 
-        self.web_view = self.ui.web_view_grunnboka
+        self.web_view = self.ui_form.web_view_grunnboka
         self.web_view.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
         self.web_view.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
 
@@ -68,10 +68,14 @@ class GrunnbokaView(QDialog):
             self.on_download
         )
 
-        self.ui.push_button_forhandsvisning_grunnboka.clicked.connect(self.view_grunnboka)
-        self.ui.push_button_metadata.clicked.connect(self.meta_view.display)
+        self.ui_form.push_button_forhandsvisning_grunnboka.clicked.connect(self.view_grunnboka)
+        self.ui_form.push_button_metadata.clicked.connect(self.meta_view.display)
 
     def view_grunnboka(self):
+        """
+        method for viewing grunnboka
+
+        """
         if 'matrikkel' + self.postfix in self.grunnboka_model.data.keys():
             if os.listdir(self.download_path):
                 candidate = self.matrikkel[list(self.matrikkel.keys())[-1]]
@@ -83,6 +87,15 @@ class GrunnbokaView(QDialog):
                         self.web_view.show()
 
     def on_download(self, download):
+        """
+        method for handling download requests
+
+        Parameters
+        ----------
+        download       : downloadRequest
+                         request for download
+
+        """
         if self.matrikkel or os.listdir(self.download_path):
             candidate = self.matrikkel[list(self.matrikkel.keys())[-1]]
             file_evaluator = [file[-len(candidate) - 4:-4] for file in
@@ -159,9 +172,13 @@ class GrunnbokaView(QDialog):
                 self.web_view.setUrl(QUrl(url))
                 self.web_view.show()
         else:
-            self.ui.web_view.close()
+            self.ui_form.web_view.close()
 
         self.show()
 
     def on_download_requested(self, download):
+        """
+        method for accepting download request
+
+        """
         download.accept()

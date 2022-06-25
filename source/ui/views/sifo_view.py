@@ -13,12 +13,10 @@ from PyQt5.QtWidgets import QDialog, QWidget
 from PyQt5.QtCore import Qt
 from PyQt5.uic import loadUi
 
-from ..models import SifoModel
 from source.util import Assertor
+from ..models import SifoModel
 
 from .meta_view import MetaView
-
-from . import resources
 
 
 class SifoView(QDialog):
@@ -39,24 +37,24 @@ class SifoView(QDialog):
         """
         Assertor.assert_data_types([parent], [QWidget])
         super().__init__(parent=parent)
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/sifo_form.ui"), self)
-        self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/sifo_form.ui"), self)
+        self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
 
         self._parent = parent
         self._sifo_model = SifoModel(self)
         self._error_view = self.parent.error_view
         self._meta_view = MetaView(self)
 
-        self.ui.push_button_sifo_meta_data.clicked.connect(self.meta_view.display)
-        self.ui.push_button_vis_resultatet.clicked.connect(self.sifo_model.calculate_sifo_expenses)
-        self.ui.push_button_tom_skjema_1.clicked.connect(self.clear_all)
-        self.ui.push_button_avbryt_1.clicked.connect(self.close)
-        self.ui.push_button_tom_skjema_2.clicked.connect(self.clear_all)
-        self.ui.push_button_avbryt_2.clicked.connect(self.close)
-        self.ui.push_button_tilbake.clicked.connect(self.back)
-        self.ui.push_button_eksporter.clicked.connect(self.export)
+        self.ui_form.push_button_sifo_meta_data.clicked.connect(self.meta_view.display)
+        self.ui_form.push_button_vis_resultatet.clicked.connect(self.sifo_model.calculate_sifo_expenses)
+        self.ui_form.push_button_tom_skjema_1.clicked.connect(self.clear_all)
+        self.ui_form.push_button_avbryt_1.clicked.connect(self.close)
+        self.ui_form.push_button_tom_skjema_2.clicked.connect(self.clear_all)
+        self.ui_form.push_button_avbryt_2.clicked.connect(self.close)
+        self.ui_form.push_button_tilbake.clicked.connect(self.back)
+        self.ui_form.push_button_eksporter.clicked.connect(self.export)
 
     @property
     def sifo_model(self):
@@ -115,9 +113,9 @@ class SifoView(QDialog):
         Method for displaying SifoView
 
         """
-        self.ui.scroll_area_sifo.verticalScrollBar().setValue(
-            self.ui.scroll_area_sifo.verticalScrollBar().minimum())
-        self.ui.tab_widget_sifo.setCurrentIndex(0)
+        self.ui_form.scroll_area_sifo.verticalScrollBar().setValue(
+            self.ui_form.scroll_area_sifo.verticalScrollBar().minimum())
+        self.ui_form.tab_widget_sifo.setCurrentIndex(0)
         self.sifo_model.sifo_info()
         self.show()
 
@@ -126,7 +124,7 @@ class SifoView(QDialog):
         method for exporting SIFO expenses to HomeView
 
         """
-        sifo_expenses = self.ui.line_edit_totalt_1.text()
+        sifo_expenses = self.ui_form.line_edit_totalt_1.text()
         if sifo_expenses:
             self.parent.mortgage_model.set_line_edit("sifo_utgifter", data=sifo_expenses)
         else:
@@ -138,11 +136,15 @@ class SifoView(QDialog):
         method for returning for results page to input page
 
         """
-        self.ui.tab_widget_sifo.setCurrentIndex(0)
+        self.ui_form.tab_widget_sifo.setCurrentIndex(0)
 
     def clear_all(self):
-        self.ui.scroll_area_sifo.verticalScrollBar().setValue(
-            self.ui.scroll_area_sifo.verticalScrollBar().minimum())
-        self.ui.tab_widget_sifo.setCurrentIndex(0)
+        """
+        method for clearing all data in sifo view
+
+        """
+        self.ui_form.scroll_area_sifo.verticalScrollBar().setValue(
+            self.ui_form.scroll_area_sifo.verticalScrollBar().minimum())
+        self.ui_form.tab_widget_sifo.setCurrentIndex(0)
         self.parent.mortgage_model.clear_line_edit("sifo_utgifter")
         self.sifo_model.clear_all()

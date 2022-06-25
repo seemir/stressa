@@ -86,6 +86,8 @@ class StatisticsModel(Model):
         super().__init__(parent)
         self.sales_plot = None
         self.ration_plot = None
+        self.view_plot = None
+        self.change_plot = None
         self.age_dist_city_area_plot = None
         self.age_dist_city_plot = None
         self.civil_status_city_area_plot = None
@@ -240,7 +242,7 @@ class StatisticsModel(Model):
                     self.add_statistics_label(key, postfix)
                 else:
                     if key not in ["municipality", "city_area"]:
-                        getattr(self.parent.ui, "line_edit_" + key).clear()
+                        getattr(self.parent.ui_form, "line_edit_" + key).clear()
         self.configure_charts(prefix)
 
     def configure_charts(self, prefix):
@@ -254,13 +256,13 @@ class StatisticsModel(Model):
 
         """
         for graphics_view in self._ad_charts + self._community_charts:
-            getattr(self.parent.ui, prefix + graphics_view).setMouseEnabled(x=False, y=False)
-            getattr(self.parent.ui, prefix + graphics_view).getAxis('left').setStyle(
+            getattr(self.parent.ui_form, prefix + graphics_view).setMouseEnabled(x=False, y=False)
+            getattr(self.parent.ui_form, prefix + graphics_view).getAxis('left').setStyle(
                 showValues=False)
-            getattr(self.parent.ui, prefix + graphics_view).getAxis('bottom').setStyle(
+            getattr(self.parent.ui_form, prefix + graphics_view).getAxis('bottom').setStyle(
                 showValues=False)
-            getattr(self.parent.ui, prefix + graphics_view).getViewBox().enableAutoRange()
-            getattr(self.parent.ui, prefix + graphics_view).setMenuEnabled(False)
+            getattr(self.parent.ui_form, prefix + graphics_view).getViewBox().enableAutoRange()
+            getattr(self.parent.ui_form, prefix + graphics_view).setMenuEnabled(False)
 
     def clear_statistics_info(self, postfix: str):
         """
@@ -292,7 +294,7 @@ class StatisticsModel(Model):
             elif key in self._ignore_clear_keys:
                 continue
             else:
-                getattr(self.parent.ui, "line_edit_" + key).clear()
+                getattr(self.parent.ui_form, "line_edit_" + key).clear()
             self.clear_charts()
 
     def clear_charts(self):
@@ -300,56 +302,59 @@ class StatisticsModel(Model):
         method for clearing charts
 
         """
-        BarChart.clear_graphics(self.parent.ui.graphics_view_hist_data_city_area)
-        BarChart.clear_graphics(self.parent.ui.graphics_view_hist_data_municipality)
-        RatioChart.clear_graphics(self.parent.ui.graphics_view_ratio_statistics)
+        BarChart.clear_graphics(self.parent.ui_form.graphics_view_hist_data_city_area)
+        BarChart.clear_graphics(self.parent.ui_form.graphics_view_hist_data_municipality)
+        RatioChart.clear_graphics(self.parent.ui_form.graphics_view_ratio_statistics)
         BarChartWithLine.clear_graphics(
-            self.parent.ui.graphics_view_age_distribution_city_area,
-            self.parent.ui.table_view_age_distribution)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_age_distribution_city,
-                                        self.parent.ui.table_view_age_distribution)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_civil_status_city_area,
-                                        self.parent.ui.table_view_civil_status)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_civil_status_city,
-                                        self.parent.ui.table_view_civil_status)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_education_city_area,
-                                        self.parent.ui.table_view_education)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_education_city,
-                                        self.parent.ui.table_view_education)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_income_city_area,
-                                        self.parent.ui.table_view_income)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_income_city,
-                                        self.parent.ui.table_view_income)
+            self.parent.ui_form.graphics_view_age_distribution_city_area,
+            self.parent.ui_form.table_view_age_distribution)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_age_distribution_city,
+                                        self.parent.ui_form.table_view_age_distribution)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_civil_status_city_area,
+                                        self.parent.ui_form.table_view_civil_status)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_civil_status_city,
+                                        self.parent.ui_form.table_view_civil_status)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_education_city_area,
+                                        self.parent.ui_form.table_view_education)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_education_city,
+                                        self.parent.ui_form.table_view_education)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_income_city_area,
+                                        self.parent.ui_form.table_view_income)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_income_city,
+                                        self.parent.ui_form.table_view_income)
 
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_family_composition_city_area,
-                                        self.parent.ui.table_view_family_composition)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_family_composition_city,
-                                        self.parent.ui.table_view_family_composition)
         BarChartWithLine.clear_graphics(
-            self.parent.ui.graphics_view_age_distribution_children_city_area,
-            self.parent.ui.table_view_age_distribution_children)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_age_distribution_children_city,
-                                        self.parent.ui.table_view_age_distribution_children)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_stock_city_area,
-                                        self.parent.ui.table_view_housing_stock)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_stock_city,
-                                        self.parent.ui.table_view_housing_stock)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_ownership_city_area,
-                                        self.parent.ui.table_view_housing_ownership)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_ownership_city,
-                                        self.parent.ui.table_view_housing_ownership)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_area_city_area,
-                                        self.parent.ui.table_view_housing_area)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_area_city,
-                                        self.parent.ui.table_view_housing_area)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_age_city_area,
-                                        self.parent.ui.table_view_housing_age)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_age_city,
-                                        self.parent.ui.table_view_housing_age)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_prices_city_area,
-                                        self.parent.ui.table_view_housing_prices)
-        BarChartWithLine.clear_graphics(self.parent.ui.graphics_view_housing_prices_city,
-                                        self.parent.ui.table_view_housing_prices)
+            self.parent.ui_form.graphics_view_family_composition_city_area,
+            self.parent.ui_form.table_view_family_composition)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_family_composition_city,
+                                        self.parent.ui_form.table_view_family_composition)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_age_distribution_children_city_area,
+            self.parent.ui_form.table_view_age_distribution_children)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_age_distribution_children_city,
+            self.parent.ui_form.table_view_age_distribution_children)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_stock_city_area,
+                                        self.parent.ui_form.table_view_housing_stock)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_stock_city,
+                                        self.parent.ui_form.table_view_housing_stock)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_housing_ownership_city_area,
+            self.parent.ui_form.table_view_housing_ownership)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_ownership_city,
+                                        self.parent.ui_form.table_view_housing_ownership)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_area_city_area,
+                                        self.parent.ui_form.table_view_housing_area)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_area_city,
+                                        self.parent.ui_form.table_view_housing_area)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_age_city_area,
+                                        self.parent.ui_form.table_view_housing_age)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_age_city,
+                                        self.parent.ui_form.table_view_housing_age)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_prices_city_area,
+                                        self.parent.ui_form.table_view_housing_prices)
+        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_prices_city,
+                                        self.parent.ui_form.table_view_housing_prices)
 
         self.parent.map_view.web_view_map.close()
         self.parent.images_view.clear_images()
@@ -367,11 +372,11 @@ class StatisticsModel(Model):
                        "table_view_services", "table_view_groceries"]
 
         for table_view in table_views:
-            getattr(self.parent.ui, table_view).setModel(None)
-            getattr(self.parent.ui, table_view).clearSpans()
+            getattr(self.parent.ui_form, table_view).setModel(None)
+            getattr(self.parent.ui_form, table_view).clearSpans()
 
-        self.parent.ui.progress_bar_statistics.setTextVisible(False)
-        self.parent.ui.progress_bar_statistics.setValue(0)
+        self.parent.ui_form.progress_bar_statistics.setTextVisible(False)
+        self.parent.ui_form.progress_bar_statistics.setValue(0)
 
     def add_sqm_dist_charts(self, prefix: str, postfix: str, key: str):
         """
@@ -389,9 +394,9 @@ class StatisticsModel(Model):
         """
         Assertor.assert_data_types([prefix, postfix], [str, str])
         BarChart.clear_graphics(
-            getattr(self.parent.ui, prefix + "hist_data_municipality"))
-        BarChart.clear_graphics(getattr(self.parent.ui, prefix + "hist_data_city_area"))
-        RatioChart.clear_graphics(self.parent.ui.graphics_view_ratio_statistics)
+            getattr(self.parent.ui_form, prefix + "hist_data_municipality"))
+        BarChart.clear_graphics(getattr(self.parent.ui_form, prefix + "hist_data_city_area"))
+        RatioChart.clear_graphics(self.parent.ui_form.graphics_view_ratio_statistics)
         if key + postfix in self.data.keys() and self.data[key + postfix]:
             if sum(list(self.data["hist_data_city_area" + postfix].values())) != 0:
                 city_area_sales = self.data["hist_data_city_area" + postfix]
@@ -411,9 +416,9 @@ class StatisticsModel(Model):
                                            list(city_area_sales.values()),
                                            list(municipality_sales.keys()),
                                            list(municipality_sales.values()),
-                                           getattr(self.parent.ui,
+                                           getattr(self.parent.ui_form,
                                                    prefix + "hist_data_city_area"),
-                                           getattr(self.parent.ui,
+                                           getattr(self.parent.ui_form,
                                                    prefix + "hist_data_municipality"),
                                            labels, units=(" kr/m²", " salg", " kr/m²", " salg"),
                                            precision=-3, width=1000,
@@ -422,11 +427,12 @@ class StatisticsModel(Model):
                 self.ration_plot = RatioChart(list(municipality_sales.keys()),
                                               list(city_area_sales.values()),
                                               list(municipality_sales.values()),
-                                              getattr(self.parent.ui, prefix + "ratio_statistics"),
+                                              getattr(self.parent.ui_form,
+                                                      prefix + "ratio_statistics"),
                                               "Forhold ({})".format(" / ".join(labels)),
                                               units=(" kr/m²", ""), precision=-3, width=1000)
                 self.sales_plot.connect(self.ration_plot,
-                                        self.parent.ui.graphics_view_ratio_statistics)
+                                        self.parent.ui_form.graphics_view_ratio_statistics)
 
     def add_view_charts(self, prefix: str, postfix: str):
         """
@@ -447,15 +453,16 @@ class StatisticsModel(Model):
         accumulated = list(self.data["views_development" + postfix]["accumulated"].values())
 
         self.view_plot = DoubleBarChart(dates, total, dates, organic, dates, accumulated,
-                                        getattr(self.parent.ui, prefix + "views_development"),
-                                        getattr(self.parent.ui, prefix + "accumulated"),
+                                        getattr(self.parent.ui_form, prefix + "views_development"),
+                                        getattr(self.parent.ui_form, prefix + "accumulated"),
                                         ("Klikk på annonsen (per dag)",
                                          "Klikk på annonsen (akkumulert)"),
                                         ("", " klikk", "", " klikk"))
-        self.change_plot = ChangeBarChart(dates, change, getattr(self.parent.ui, prefix + "change"),
+        self.change_plot = ChangeBarChart(dates, change,
+                                          getattr(self.parent.ui_form, prefix + "change"),
                                           labels="Klikk på annonsen (endring dag-til-dag)",
                                           units=("", " %"), x_labels=dates)
-        self.view_plot.connect(self.change_plot, getattr(self.parent.ui, prefix + "change"))
+        self.view_plot.connect(self.change_plot, getattr(self.parent.ui_form, prefix + "change"))
 
     def add_statistics_label(self, key: str, postfix: str):
         """
@@ -471,12 +478,12 @@ class StatisticsModel(Model):
         """
         Assertor.assert_data_types([key, postfix], [str, str])
         if key in ["city_area", "municipality"]:
-            getattr(self.parent.ui, "label_" + key + "_sqm_price").setText(
+            getattr(self.parent.ui_form, "label_" + key + "_sqm_price").setText(
                 "KMP ({})".format(self.data[key + postfix]))
-            getattr(self.parent.ui, "label_sales_" + key).setText(
+            getattr(self.parent.ui_form, "label_sales_" + key).setText(
                 "Salg ({})".format(self.data[key + postfix]))
         else:
-            getattr(self.parent.ui, "line_edit_" + key).setText(
+            getattr(self.parent.ui_form, "line_edit_" + key).setText(
                 self.data[key + postfix])
 
     def add_dist_chart(self, prefix: str, postfix: str, key: str, plot_name_1: str,
@@ -513,8 +520,8 @@ class StatisticsModel(Model):
                                     dist_name, dist_var_1, dist_var_2, ignore_total],
                                    [str, str, str, str, str, str, str, str, str, bool])
         BarChart.clear_graphics(
-            getattr(self.parent.ui, prefix + plot_name_1))
-        BarChart.clear_graphics(getattr(self.parent.ui, prefix + plot_name_2))
+            getattr(self.parent.ui_form, prefix + plot_name_1))
+        BarChart.clear_graphics(getattr(self.parent.ui_form, prefix + plot_name_2))
         if key + postfix in self.data.keys() and self.data[key + postfix]:
             dist = self.data[key + postfix]
             city_area_dist = dist["Nabolag"][:-2] if ignore_total else dist["Nabolag"]
@@ -558,14 +565,14 @@ class StatisticsModel(Model):
                                              enumerate(values)]
 
                 table_model = TableModel(DataFrame(dist_df))
-                getattr(self.parent.ui, table_name).setModel(table_model)
-                getattr(self.parent.ui, table_name).horizontalHeader().setSectionResizeMode(
+                getattr(self.parent.ui_form, table_name).setModel(table_model)
+                getattr(self.parent.ui_form, table_name).horizontalHeader().setSectionResizeMode(
                     QHeaderView.Stretch)
 
                 setattr(self, dist_var_1, BarChartWithLine(
                     dist_range, city_area_dist,
-                    getattr(self.parent.ui, prefix + plot_name_1),
-                    getattr(self.parent.ui, table_name),
+                    getattr(self.parent.ui_form, prefix + plot_name_1),
+                    getattr(self.parent.ui_form, table_name),
                     width=0.5, reverse=False,
                     legend='<div style="text-align: center">'
                            '<span style="font-size: 10pt">{}:</span><br>'
@@ -575,8 +582,8 @@ class StatisticsModel(Model):
 
                 setattr(self, dist_var_2, BarChartWithLine(
                     dist_range, city_dist,
-                    getattr(self.parent.ui, prefix + plot_name_2),
-                    getattr(self.parent.ui, table_name),
+                    getattr(self.parent.ui_form, prefix + plot_name_2),
+                    getattr(self.parent.ui_form, table_name),
                     width=0.5, reverse=False,
                     legend='<div style="text-align: center">'
                            '<span style="font-size: 10pt">{}:</span><br>'
@@ -674,42 +681,44 @@ class StatisticsModel(Model):
                       boolean for widths in table to content
 
         """
-        getattr(self.parent.ui, "table_view_" + key).setModel(None)
+        getattr(self.parent.ui_form, "table_view_" + key).setModel(None)
         if key + postfix in self.data.keys() and self.data[key + postfix]:
             pois_table_model = TableModel(DataFrame(self.data[key + postfix]))
-            getattr(self.parent.ui, "table_view_" + key).setModel(pois_table_model)
+            getattr(self.parent.ui_form, "table_view_" + key).setModel(pois_table_model)
 
             if resize:
-                getattr(self.parent.ui, "table_view_" + key).verticalHeader().setSectionResizeMode(
+                getattr(self.parent.ui_form,
+                        "table_view_" + key).verticalHeader().setSectionResizeMode(
                     QHeaderView.ResizeToContents)
-                getattr(self.parent.ui,
+                getattr(self.parent.ui_form,
                         "table_view_" + key).horizontalHeader().setSectionResizeMode(
                     0, QHeaderView.Stretch)
-                getattr(self.parent.ui,
+                getattr(self.parent.ui_form,
                         "table_view_" + key).horizontalHeader().setSectionResizeMode(
                     1, QHeaderView.ResizeToContents)
                 if not score:
-                    getattr(self.parent.ui,
+                    getattr(self.parent.ui_form,
                             "table_view_" + key).horizontalHeader().setSectionResizeMode(
                         2, QHeaderView.ResizeToContents)
-                getattr(self.parent.ui, "table_view_" + key).setWordWrap(False)
+                getattr(self.parent.ui_form, "table_view_" + key).setWordWrap(False)
             else:
-                getattr(self.parent.ui,
+                getattr(self.parent.ui_form,
                         "table_view_" + key).horizontalHeader().setSectionResizeMode(
                     0, QHeaderView.Fixed)
-                getattr(self.parent.ui, "table_view_" + key).setColumnWidth(0, 180)
-                getattr(self.parent.ui,
+                getattr(self.parent.ui_form, "table_view_" + key).setColumnWidth(0, 180)
+                getattr(self.parent.ui_form,
                         "table_view_" + key).horizontalHeader().setSectionResizeMode(
                     1, QHeaderView.Fixed)
-                getattr(self.parent.ui, "table_view_" + key).setColumnWidth(1, 65)
+                getattr(self.parent.ui_form, "table_view_" + key).setColumnWidth(1, 65)
                 if not score:
-                    getattr(self.parent.ui,
+                    getattr(self.parent.ui_form,
                             "table_view_" + key).horizontalHeader().setSectionResizeMode(
                         2, QHeaderView.Fixed)
-                    getattr(self.parent.ui, "table_view_" + key).setColumnWidth(2, 65)
-                getattr(self.parent.ui, "table_view_" + key).verticalHeader().setSectionResizeMode(
+                    getattr(self.parent.ui_form, "table_view_" + key).setColumnWidth(2, 65)
+                getattr(self.parent.ui_form,
+                        "table_view_" + key).verticalHeader().setSectionResizeMode(
                     QHeaderView.ResizeToContents)
-                getattr(self.parent.ui, "table_view_" + key).setWordWrap(True)
+                getattr(self.parent.ui_form, "table_view_" + key).setWordWrap(True)
 
     def add_map(self, postfix: str, keys: str, university: str, kindergarden: str, schools: str,
                 highschools: str, transport: str, charging: str, bicycle: str, groceries: str,

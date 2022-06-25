@@ -90,7 +90,7 @@ class Model(ABC):
         """
         try:
             Assertor.assert_data_types([date_edit_name], [str])
-            date_edit_text = getattr(self.parent.ui, "date_edit_" + date_edit_name).dateTime()
+            date_edit_text = getattr(self.parent.ui_form, "date_edit_" + date_edit_name).dateTime()
             self.data.update({date_edit_name: date_edit_text.toString("dd.MM.yyyy")})
         except Exception as set_date_edit_error:
             self.parent.error_view.show_error(set_date_edit_error, self.data)
@@ -109,8 +109,9 @@ class Model(ABC):
         Assertor.assert_data_types([date_edits], [list])
         date = QDateTime.fromString("01.01.2000", "dd.MM.yyyy")
         for date_edit in date_edits:
-            getattr(self.parent.ui, "date_edit_" + date_edit).setDateTime(date)
-            self.data.pop(date_edit) if date_edit in self.data.keys() else ""
+            getattr(self.parent.ui_form, "date_edit_" + date_edit).setDateTime(date)
+            if date_edit in self.data.keys():
+                self.data.pop(date_edit)
 
     @pyqtSlot()
     def set_combo_box(self, combo_box_name: str, common_key: str = None, key_name: str = None):
@@ -131,7 +132,7 @@ class Model(ABC):
             Assertor.assert_data_types([combo_box_name, common_key, key_name],
                                        [str, (type(None), str), (type(None), str)])
             combo_box_text = str(
-                getattr(self.parent.ui, "combo_box_" + combo_box_name).currentText())
+                getattr(self.parent.ui_form, "combo_box_" + combo_box_name).currentText())
             values = {key_name if key_name else combo_box_name: combo_box_text}
 
             if common_key and common_key not in self.data.keys():
@@ -141,17 +142,17 @@ class Model(ABC):
             else:
                 self.data.update(values)
 
-            for key, val in self.data.copy().items():
-                if isinstance(val, dict):
-                    self.data.update({key: dict(sorted(val.items()))})
+            for keys, vals in self.data.copy().items():
+                if isinstance(vals, dict):
+                    self.data.update({keys: dict(sorted(vals.items()))})
 
-            for key, val in self.data.copy().items():
-                if isinstance(val, dict):
-                    for k, v in val.copy().items():
-                        if not v:
-                            self.data[key].pop(k)
-                if not val:
-                    self.data.pop(key)
+            for keys, vals in self.data.copy().items():
+                if isinstance(vals, dict):
+                    for key, val in vals.copy().items():
+                        if not val:
+                            self.data[keys].pop(key)
+                if not vals:
+                    self.data.pop(keys)
         except Exception as set_combo_box_error:
             self.parent.error_view.show_error(set_combo_box_error)
 
@@ -168,7 +169,7 @@ class Model(ABC):
         """
         Assertor.assert_data_types([combo_boxes], [list])
         for combo_box in combo_boxes:
-            getattr(self.parent.ui, "combo_box_" + combo_box).setCurrentIndex(0)
+            getattr(self.parent.ui_form, "combo_box_" + combo_box).setCurrentIndex(0)
             self.set_combo_box(combo_box)
 
     @pyqtSlot()
@@ -194,7 +195,7 @@ class Model(ABC):
 
         """
         postfix = postfix if postfix else ""
-        line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name + postfix)
+        line_edit = getattr(self.parent.ui_form, "line_edit_" + line_edit_name + postfix)
         try:
             Assertor.assert_data_types([line_edit_name, line_edits, obj, method, postfix],
                                        [str, list, (type(None), object), (type(None), str),
@@ -226,7 +227,7 @@ class Model(ABC):
                           index if used in naming of line_edits
 
         """
-        line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name + postfix).text()
+        line_edit = getattr(self.parent.ui_form, "line_edit_" + line_edit_name + postfix).text()
         if not line_edit:
             self.clear_line_edits(line_edits, postfix)
 
@@ -288,7 +289,7 @@ class Model(ABC):
                           object for clearing data after exceptions
 
         """
-        line_edit = getattr(self.parent.ui, "line_edit_" + line_edit_name)
+        line_edit = getattr(self.parent.ui_form, "line_edit_" + line_edit_name)
         try:
             Assertor.assert_data_types([line_edit_name, obj, method, data, clearing],
                                        [str, (object, type(None)), (str, type(None)),
@@ -307,11 +308,11 @@ class Model(ABC):
             else:
                 output = ""
                 self.clear_line_edit(line_edit_name)
-            getattr(self.parent.ui, "line_edit_" + line_edit_name).setText(output)
+            getattr(self.parent.ui_form, "line_edit_" + line_edit_name).setText(output)
         except Exception as set_line_edit_error:
             self.parent.error_view.show_error(set_line_edit_error, self.data)
             self.clear_line_edit(line_edit_name)
-            getattr(self.parent.ui, "line_edit_" + line_edit_name).setFocus()
+            getattr(self.parent.ui_form, "line_edit_" + line_edit_name).setFocus()
             if clearing:
                 clearing()
 
@@ -332,7 +333,7 @@ class Model(ABC):
         for line_edit in line_edits:
             line_edit = "line_edit_" + (line_edit + postfix if postfix else line_edit)
             if line_edit in self.data.keys():
-                getattr(self.parent.ui, line_edit).setText(
+                getattr(self.parent.ui_form, line_edit).setText(
                     self.data[line_edit])
 
     @pyqtSlot()
@@ -367,10 +368,10 @@ class Model(ABC):
         Assertor.assert_data_types([line_edit_name], [str])
         line_edit = "line_edit_" + line_edit_name
         if line_edit_name in self.data.keys():
-            getattr(self.parent.ui, line_edit).clear()
+            getattr(self.parent.ui_form, line_edit).clear()
             self.data.pop(line_edit_name)
         else:
-            getattr(self.parent.ui, line_edit).clear()
+            getattr(self.parent.ui_form, line_edit).clear()
 
     @pyqtSlot()
     def clear_data(self, key_name: str, common_key: str):

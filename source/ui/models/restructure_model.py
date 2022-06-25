@@ -40,9 +40,9 @@ class RestructureModel(Model):
         Assertor.assert_data_types([parent], [QObject])
         super().__init__(parent)
 
-        self.parent.ui.combo_box_lanetype.addItems(self._lanetype)
-        self.parent.ui.combo_box_laneperiode.addItems(self._laneperiode)
-        self.parent.ui.combo_box_intervall.addItems(self._intervall)
+        self.parent.ui_form.combo_box_lanetype.addItems(self._lanetype)
+        self.parent.ui_form.combo_box_laneperiode.addItems(self._laneperiode)
+        self.parent.ui_form.combo_box_intervall.addItems(self._intervall)
 
     @pyqtSlot()
     def restructure_info(self):
@@ -50,17 +50,17 @@ class RestructureModel(Model):
         Method for retrieving and formatting all inputted restructured information
 
         """
-        self.parent.ui.combo_box_lanetype.activated.connect(
+        self.parent.ui_form.combo_box_lanetype.activated.connect(
             lambda: self.set_combo_box("lanetype"))
-        self.parent.ui.combo_box_intervall.activated.connect(
+        self.parent.ui_form.combo_box_intervall.activated.connect(
             lambda: self.set_combo_box("intervall"))
-        self.parent.ui.combo_box_laneperiode.activated.connect(
+        self.parent.ui_form.combo_box_laneperiode.activated.connect(
             lambda: self.set_combo_box("laneperiode"))
-        self.parent.ui.date_edit_startdato.editingFinished.connect(
+        self.parent.ui_form.date_edit_startdato.editingFinished.connect(
             lambda: self.set_date_edit("startdato"))
-        self.parent.ui.line_edit_egenkapital.textEdited.connect(
+        self.parent.ui_form.line_edit_egenkapital.textEdited.connect(
             lambda: self.set_line_edit("egenkapital", Money, "value"))
-        self.parent.ui.line_edit_belaning.textEdited.connect(
+        self.parent.ui_form.line_edit_belaning.textEdited.connect(
             lambda: self.set_line_edit("belaning", Money, "value"))
 
     def clear_all(self):

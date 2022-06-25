@@ -12,13 +12,14 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 import shutil
 # import ctypes
+import sys
 
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QIcon
 from PyQt5.uic import loadUi
 
-from ..models import MortgageModel, FinnModel, HomeModel, AnalysisModel, RestructureModel
+from ..models import MortgageModel, FinnModel, HomeModel, AnalysisModel
 
 from .restructure_view import RestructureView
 from .statistics_view import StatisticsView
@@ -32,8 +33,6 @@ from .sifo_view import SifoView
 from .meta_view import MetaView
 
 from .tax_view import TaxView
-
-from . import resources
 
 
 # myappid = 'Stressa.stressa.ui.version'
@@ -52,8 +51,8 @@ class HomeView(QMainWindow):
 
         """
         super().__init__()
-        up = os.path.dirname
-        self.ui = loadUi(os.path.join(up(__file__), "forms/home_form.ui"), self)
+        dir_up = os.path.dirname
+        self.ui_form = loadUi(os.path.join(dir_up(__file__), "forms/home_form.ui"), self)
 
         self._error_view = ErrorView(self)
         self._budget_view = BudgetView(self)
@@ -84,19 +83,19 @@ class HomeView(QMainWindow):
         self._budget_view.budget_info()
         self._home_model.liquidity_info()
 
-        self.ui.push_button_budsjett.clicked.connect(self.budget_view.display)
-        self.ui.push_button_skatt.clicked.connect(self.tax_view.display)
-        self.ui.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
+        self.ui_form.push_button_budsjett.clicked.connect(self.budget_view.display)
+        self.ui_form.push_button_skatt.clicked.connect(self.tax_view.display)
+        self.ui_form.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
 
-        self.ui.push_button_home_meta_data.clicked.connect(self._meta_view.display)
-        self.ui.push_button_tom_skjema.clicked.connect(self.clear_all)
-        self.ui.push_button_avslutt.clicked.connect(self.avslutt)
-        self.ui.action_logo.triggered.connect(self.info_tab)
+        self.ui_form.push_button_home_meta_data.clicked.connect(self._meta_view.display)
+        self.ui_form.push_button_tom_skjema.clicked.connect(self.clear_all)
+        self.ui_form.push_button_avslutt.clicked.connect(self.avslutt)
+        self.ui_form.action_logo.triggered.connect(self.info_tab)
 
-        self.ui.push_button_restructure.clicked.connect(self.restructure_view.display)
+        self.ui_form.push_button_restructure.clicked.connect(self.restructure_view.display)
 
-        self.ui.push_button_restructure.setIcon(
-            QIcon(up(up(os.path.abspath(__file__))) + '/images/restructure.png'))
+        self.ui_form.push_button_restructure.setIcon(
+            QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/restructure.png'))
 
     def closeEvent(self, event):
         """
@@ -359,35 +358,55 @@ class HomeView(QMainWindow):
         method for returning to info tab in HomeView
 
         """
-        self.ui.tab_widget_home.setCurrentIndex(0)
+        self.ui_form.tab_widget_home.setCurrentIndex(0)
 
     @pyqtSlot()
     def clear_all(self):
+        """
+        method for clearing all data
+
+        """
         self.info_view_clear.show()
         self.info_view_clear.push_button_apply.clicked.connect(self.apply_clearing)
         self.info_view_clear.push_button_cancel.clicked.connect(self.info_view_clear.close)
 
     @pyqtSlot()
     def apply_clearing(self):
+        """
+        method for applying clearing
+
+        """
         self.home_model.clear_all()
         self.info_view_clear.close()
 
     @pyqtSlot()
     def avslutt(self):
+        """
+        method for quiting app
+
+        """
         self.info_view_quit.show()
         self.info_view_quit.push_button_cancel.clicked.connect(self.info_view_quit.close)
         self.info_view_quit.push_button_apply.clicked.connect(self.avslutt_alt)
 
     @pyqtSlot()
     def avslutt_alt(self):
-        self.delete_grunnboka_folder()
-        self.info_view_quit.close()
-        quit()
+        """
+        method for quiting and deleting all data
 
-    def delete_grunnboka_folder(self):
-        dirpath = self.grunnboka_view.download_path
-        for filename in os.listdir(dirpath):
-            filepath = os.path.join(dirpath, filename)
+        """
+        self.delete_temp_folder()
+        self.info_view_quit.close()
+        sys.exit()
+
+    def delete_temp_folder(self):
+        """
+        method for deleting temp folder
+
+        """
+        dir_path = self.grunnboka_view.download_path
+        for filename in os.listdir(dir_path):
+            filepath = os.path.join(dir_path, filename)
             try:
                 shutil.rmtree(filepath)
             except OSError:

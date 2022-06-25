@@ -25,14 +25,14 @@ class RatioChart(Chart):
 
     """
 
-    def __init__(self, x: list, y_1: list, y_2: list, graphics_view: PlotWidget, labels: str,
+    def __init__(self, x_val: list, y_1: list, y_2: list, graphics_view: PlotWidget, labels: str,
                  units=None, x_labels=None, precision=0, width=0.4):
         """
         Constructor / Instantiate the class
 
         Parameters
         ----------
-        x               : list
+        x_val           : list
                           x-values
         y_1             : np.ndarray
                           y-values
@@ -53,14 +53,14 @@ class RatioChart(Chart):
 
         """
         Assertor.assert_data_types(
-            [x, y_1, y_2, graphics_view, labels, units, x_labels, precision, width],
+            [x_val, y_1, y_2, graphics_view, labels, units, x_labels, precision, width],
             [list, list, list, PlotWidget, str, (type(None), tuple), (type(None), list),
              (float, int), (float, int)])
         super().__init__()
-        self.y_1, self.x = self.create_bins(x, y_1, bins=x)
-        self.y_2, self.x = self.create_bins(x, y_2, bins=x)
+        self.y_1, self.x_val = self.create_bins(x_val, y_1, bins=x_val)
+        self.y_2, self.x_val = self.create_bins(x_val, y_2, bins=x_val)
 
-        self.x = self.x[:-1]
+        self.x_val = self.x_val[:-1]
 
         self.labels = labels
         self.units = units if units else ("", "")
@@ -74,7 +74,7 @@ class RatioChart(Chart):
 
         self.width = width
         self.label = TextItem()
-        self.bar_item_1 = BarGraphItem(x=self.x, height=self.ratio, width=self.width,
+        self.bar_item_1 = BarGraphItem(x=self.x_val, height=self.ratio, width=self.width,
                                        brush="#a8ccec")
         self.graphics_view.addItem(self.bar_item_1)
         self.configure_cross_hair()
@@ -84,7 +84,8 @@ class RatioChart(Chart):
         self.vertical_line = InfiniteLine(angle=90, movable=False, pen=pen)
         self.graphics_view.addItem(self.vertical_line)
 
-        self.graphics_view.plotItem.vb.setLimits(xMin=min(self.x) - width, xMax=max(self.x) + width)
+        self.graphics_view.plotItem.vb.setLimits(xMin=min(self.x_val) - width,
+                                                 xMax=max(self.x_val) + width)
         self.graphics_view.setMenuEnabled(False)
 
     def configure_cross_hair(self):
@@ -92,7 +93,7 @@ class RatioChart(Chart):
         method for configuring cross hair
 
         """
-        place = percentile(array(insert(self.x, 0, 0)), 2)
+        place = percentile(array(insert(self.x_val, 0, 0)), 2)
 
         self.label.setPos(place, int(abs(max(self.ratio, key=abs)) * 1.5))
         self.graphics_view.addItem(self.label)
@@ -105,11 +106,11 @@ class RatioChart(Chart):
         mouse_point = self.view_box.mapSceneToView(pos)
 
         x_val = int(round(mouse_point.x(), self.precision))
-        x_idx = where(self.x == x_val)
+        x_idx = where(self.x_val == x_val)
 
         y_val = self.ratio[x_idx] if self.ratio[x_idx] else 0
         self.vertical_line.setPos(x_val)
-        limits = min(self.x) <= x_val <= max(self.x)
+        limits = min(self.x_val) <= x_val <= max(self.x_val)
 
         if len(self.graphics_view.getViewBox().allChildren()) > 3 and limits:
             self.highlight_bar_items(x_val, y_val)
@@ -137,7 +138,7 @@ class RatioChart(Chart):
 
             percent = Percent(str(y_val / 100).replace("[", "").replace("]", ""))
 
-            if min(self.x) <= x_val <= max(self.x):
+            if min(self.x_val) <= x_val <= max(self.x_val):
                 self.label.setHtml('<div style="text-align: center">'
                                    '<span style="font-size: 10pt">{}</span><br>'
                                    '<span style="font-size: 10pt">{} {}</span><br>'

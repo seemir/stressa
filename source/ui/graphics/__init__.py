@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+init module for accessing chart types
+
+"""
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'

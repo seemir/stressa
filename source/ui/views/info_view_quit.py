@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Info view with quitting logic
+
+"""
 
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'

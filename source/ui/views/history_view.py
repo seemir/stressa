@@ -13,8 +13,9 @@ from PyQt5.QtWidgets import QDialog, QWidget, QHeaderView
 from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.uic import loadUi
 
-from ..models import HistoryModel
 from source.util import Assertor
+
+from ..models import HistoryModel
 
 
 class HistoryView(QDialog):
@@ -36,10 +37,12 @@ class HistoryView(QDialog):
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QWidget])
         self.parent = parent
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/history_form.ui"), self)
-        self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
-        self.ui.table_view_historikk.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/history_form.ui"),
+                              self)
+        self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.ui_form.table_view_historikk.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch)
         self._history_model = HistoryModel(self)
 
     @property

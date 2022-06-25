@@ -7,8 +7,9 @@ Module containing logic for the graphics know simply as BarChartWithLine
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from numpy import percentile, insert, array
 import warnings
+
+from numpy import percentile, insert, array
 
 from pyqtgraph import BarGraphItem, PlotDataItem, PlotWidget, TextItem, mkPen
 from PyQt5.QtWidgets import QTableView
@@ -26,16 +27,16 @@ class BarChartWithLine(Chart):
 
     """
 
-    def __init__(self, x: list, y: list, graphics_view: PlotWidget, table_view: QTableView,
+    def __init__(self, x_val: list, y_val: list, graphics_view: PlotWidget, table_view: QTableView,
                  legend: str = "", width=0.5, reverse=True):
         """
         Constructor / Instantiation of class
 
         Parameters
         ----------
-        x               : list
+        x_val           : list
                           x-values
-        y               : list
+        y_val           : list
                           y-values
         graphics_view   : PlotWidget
                           graphics view to place chart
@@ -49,29 +50,31 @@ class BarChartWithLine(Chart):
                           reverse selection in table
 
         """
-        Assertor.assert_data_types([x, y, graphics_view, table_view, legend, width],
+        Assertor.assert_data_types([x_val, y_val, graphics_view, table_view, legend, width],
                                    [list, list, PlotWidget, QTableView, str, (int, float)])
         super().__init__()
-        self.x = x
-        self.y = y
+        self.x_val = x_val
+        self.y_val = y_val
         self.graphics_view = graphics_view
         self.table_view = table_view
         self.label = TextItem()
         self.width = width
         self.reverse = reverse
 
-        place = percentile(insert(array(self.x), 0, 0), 2)
-        self.label.setPos(place, int(max(y) * 1.5))
+        place = percentile(insert(array(self.x_val), 0, 0), 2)
+        self.label.setPos(place, int(max(y_val) * 1.5))
 
         self.label.setHtml(legend)
         self.graphics_view.addItem(self.label, ignore_bounds=True)
 
-        self.bar_item = BarGraphItem(x=self.x, height=self.y, width=self.width, brush="#d2e5f5")
+        self.bar_item = BarGraphItem(x=self.x_val, height=self.y_val, width=self.width,
+                                     brush="#d2e5f5")
         self.graphics_view.addItem(self.bar_item)
         pen = mkPen(color="#d2e5f5", style=Qt.DotLine, width=2)
-        self.graphics_view.plot(x=self.x, y=self.y, pen=pen, symbol='+', symbolSize=14)
+        self.graphics_view.plot(x=self.x_val, y=self.y_val, pen=pen, symbol='+', symbolSize=14)
 
-        self.graphics_view.plotItem.vb.setLimits(xMin=min(self.x) - width, xMax=max(self.x) + width)
+        self.graphics_view.plotItem.vb.setLimits(xMin=min(self.x_val) - width,
+                                                 xMax=max(self.x_val) + width)
         self.graphics_view.setMenuEnabled(False)
         self.graphics_view.getViewBox().enableAutoRange()
 
@@ -89,14 +92,15 @@ class BarChartWithLine(Chart):
         """
         pen_1 = mkPen(color="#69a8de", style=Qt.DotLine, width=2)
         pen_2 = mkPen(color="#d2e5f5", style=Qt.DotLine, width=2)
-        bar_item = BarGraphItem(x=self.x, height=self.y, width=self.width, brush="#d2e5f5")
-        chart_item = PlotDataItem(x=self.x, y=self.y, pen=pen_1, symbol='+', symbolSize=14)
-        clear_line = PlotDataItem(x=self.x, y=self.y, pen=pen_2, symbol='+', symbolSize=14)
+        bar_item = BarGraphItem(x=self.x_val, height=self.y_val, width=self.width, brush="#d2e5f5")
+        chart_item = PlotDataItem(x=self.x_val, y=self.y_val, pen=pen_1, symbol='+', symbolSize=14)
+        clear_line = PlotDataItem(x=self.x_val, y=self.y_val, pen=pen_2, symbol='+', symbolSize=14)
 
-        if item.row() < len(self.x):
-            row = len(self.x) - 1 - item.row() if self.reverse else item.row()
+        if item.row() < len(self.x_val):
+            row = len(self.x_val) - 1 - item.row() if self.reverse else item.row()
 
-            clicked_item = BarGraphItem(x=[self.x[row]], height=self.y[row], width=self.width,
+            clicked_item = BarGraphItem(x=[self.x_val[row]], height=self.y_val[row],
+                                        width=self.width,
                                         brush="#69a8de")
             self.graphics_view.addItem(bar_item)
             self.graphics_view.addItem(clicked_item)

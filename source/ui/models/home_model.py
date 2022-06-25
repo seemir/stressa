@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 """
 Module with the logic of the Home model
 
@@ -23,6 +22,15 @@ class HomeModel(Model):
     """
 
     def __init__(self, parent):
+        """
+        Constructor / instantiation of class
+
+        Parameters
+        ----------
+        parent      : QMainWindow
+                      class of parent class
+
+        """
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QObject])
         self.data = self.parent.meta_view.get_all_meta_data()
@@ -30,9 +38,6 @@ class HomeModel(Model):
     def clear_all(self):
         """
         method for clearing all content in HomeView
-
-        Returns
-        -------
 
         """
         self.parent.mortgage_model.clear_all()
@@ -43,34 +48,42 @@ class HomeModel(Model):
         self.parent.analysis_model.clear_all()
         self.parent.restructure_model.clear_all()
 
-        self.parent.ui.line_edit_fornavn_2.setFocus()
-        self.parent.ui.tab_widget_lanesokere.setCurrentIndex(0)
-        self.parent.ui.line_edit_fornavn_1.setFocus()
+        self.parent.ui_form.line_edit_fornavn_2.setFocus()
+        self.parent.ui_form.tab_widget_lanesokere.setCurrentIndex(0)
+        self.parent.ui_form.line_edit_fornavn_1.setFocus()
 
     def liquidity_info(self):
-        self.parent.ui.line_edit_personinntekt_total.textChanged.connect(
+        """
+        method for calculating liquidity information
+
+        """
+        self.parent.ui_form.line_edit_personinntekt_total.textChanged.connect(
             self.calculate_net_income)
-        self.parent.ui.line_edit_beregnet_skatt_per_mnd_beloep.textChanged.connect(
+        self.parent.ui_form.line_edit_beregnet_skatt_per_mnd_beloep.textChanged.connect(
             self.calculate_net_income)
 
-        self.parent.ui.line_edit_sum_utgifter_total.textChanged.connect(
+        self.parent.ui_form.line_edit_sum_utgifter_total.textChanged.connect(
             self.calculate_total_costs)
-        self.parent.ui.line_edit_sifo_utgifter.textChanged.connect(
+        self.parent.ui_form.line_edit_sifo_utgifter.textChanged.connect(
             self.calculate_total_costs)
 
-        self.parent.ui.line_edit_total_netto.textChanged.connect(
+        self.parent.ui_form.line_edit_total_netto.textChanged.connect(
             self.calculate_net_liquidity)
-        self.parent.ui.line_edit_totale_utgifter.textChanged.connect(
+        self.parent.ui_form.line_edit_totale_utgifter.textChanged.connect(
             self.calculate_net_liquidity)
 
-        self.parent.ui.line_edit_personinntekt_total.textChanged.connect(
+        self.parent.ui_form.line_edit_personinntekt_total.textChanged.connect(
             self.calculate_liquidity_share)
-        self.parent.ui.line_edit_netto_likviditet.textChanged.connect(
+        self.parent.ui_form.line_edit_netto_likviditet.textChanged.connect(
             self.calculate_liquidity_share)
 
     def calculate_net_income(self):
-        person_income = self.parent.ui.line_edit_personinntekt_total.text()
-        tax_value = self.parent.ui.line_edit_beregnet_skatt_per_mnd_beloep.text()
+        """
+        method for calculating net income
+
+        """
+        person_income = self.parent.ui_form.line_edit_personinntekt_total.text()
+        tax_value = self.parent.ui_form.line_edit_beregnet_skatt_per_mnd_beloep.text()
 
         gross_income = Money(person_income if person_income else "0")
         tax_cost = Money(tax_value if tax_value else "0")
@@ -81,8 +94,12 @@ class HomeModel(Model):
             self.clear_line_edit("total_netto")
 
     def calculate_total_costs(self):
-        cost_value = self.parent.ui.line_edit_sum_utgifter_total.text()
-        sifo_value = self.parent.ui.line_edit_sifo_utgifter.text()
+        """
+        method for calculating total cost
+
+        """
+        cost_value = self.parent.ui_form.line_edit_sum_utgifter_total.text()
+        sifo_value = self.parent.ui_form.line_edit_sifo_utgifter.text()
 
         sum_cost = Money(cost_value if cost_value else "0")
         sifo_cost = Money(sifo_value if sifo_value else "0")
@@ -93,8 +110,12 @@ class HomeModel(Model):
             self.clear_line_edit("totale_utgifter")
 
     def calculate_net_liquidity(self):
-        total_net_value = self.parent.ui.line_edit_total_netto.text()
-        total_cost_value = self.parent.ui.line_edit_totale_utgifter.text()
+        """
+        method for calculating net liquidity
+
+        """
+        total_net_value = self.parent.ui_form.line_edit_total_netto.text()
+        total_cost_value = self.parent.ui_form.line_edit_totale_utgifter.text()
 
         total_net = Money(total_net_value if total_net_value else "0")
         total_cost = Money(total_cost_value if total_cost_value else "0")
@@ -106,8 +127,12 @@ class HomeModel(Model):
             self.clear_line_edit("netto_likviditet")
 
     def calculate_liquidity_share(self):
-        gross_income = self.parent.ui.line_edit_personinntekt_total.text()
-        net_liquidity = self.parent.ui.line_edit_netto_likviditet.text()
+        """
+        method for calculating share net liquidity
+
+        """
+        gross_income = self.parent.ui_form.line_edit_personinntekt_total.text()
+        net_liquidity = self.parent.ui_form.line_edit_netto_likviditet.text()
 
         gross_value = Money(gross_income if gross_income else "0")
         net_value = Money(net_liquidity if net_liquidity else "0")

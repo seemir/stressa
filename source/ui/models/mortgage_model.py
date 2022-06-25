@@ -42,11 +42,11 @@ class MortgageModel(Model):
         """
         Assertor.assert_data_types([parent], [QObject])
         super().__init__(parent)
-        self.parent.ui.combo_box_kjonn_1.addItems(self._kjonn)
-        self.parent.ui.combo_box_kjonn_2.addItems(self._kjonn)
-        self.parent.ui.combo_box_lanetype.addItems(self._lanetype)
-        self.parent.ui.combo_box_laneperiode.addItems(self._laneperiode)
-        self.parent.ui.combo_box_intervall.addItems(self._intervall)
+        self.parent.ui_form.combo_box_kjonn_1.addItems(self._kjonn)
+        self.parent.ui_form.combo_box_kjonn_2.addItems(self._kjonn)
+        self.parent.ui_form.combo_box_lanetype.addItems(self._lanetype)
+        self.parent.ui_form.combo_box_laneperiode.addItems(self._laneperiode)
+        self.parent.ui_form.combo_box_intervall.addItems(self._intervall)
 
     @pyqtSlot()
     def mortgage_info(self):
@@ -55,104 +55,104 @@ class MortgageModel(Model):
 
         """
         # contact information
-        self.parent.ui.line_edit_fornavn_1.editingFinished.connect(
+        self.parent.ui_form.line_edit_fornavn_1.editingFinished.connect(
             lambda: self.set_line_edit("fornavn_1", Name, "format_name"))
-        self.parent.ui.line_edit_etternavn_1.editingFinished.connect(
+        self.parent.ui_form.line_edit_etternavn_1.editingFinished.connect(
             lambda: self.set_line_edit("etternavn_1", Name, "format_name"))
-        self.parent.ui.combo_box_kjonn_1.activated.connect(
+        self.parent.ui_form.combo_box_kjonn_1.activated.connect(
             lambda: self.set_combo_box("kjonn_1"))
-        self.parent.ui.date_edit_fodselsdato_1.editingFinished.connect(
+        self.parent.ui_form.date_edit_fodselsdato_1.editingFinished.connect(
             lambda: self.set_date_edit("fodselsdato_1"))
-        self.parent.ui.line_edit_adresse_1.editingFinished.connect(
+        self.parent.ui_form.line_edit_adresse_1.editingFinished.connect(
             lambda: self.set_line_edit("adresse_1", Address, "format_address"))
 
-        self.parent.ui.line_edit_postnr_1.editingFinished.connect(
+        self.parent.ui_form.line_edit_postnr_1.editingFinished.connect(
             lambda: self.update_line_edits("postnr", self._post_code, PostenPostalCodeExtraction,
                                            "postal_code_info", postfix="_1"))
 
-        self.parent.ui.line_edit_postnr_1.textEdited.connect(
+        self.parent.ui_form.line_edit_postnr_1.textEdited.connect(
             lambda: self.clear_empty_line_edits("postnr", self._post_code, postfix="_1"))
 
-        self.parent.ui.line_edit_epost_1.editingFinished.connect(
+        self.parent.ui_form.line_edit_epost_1.editingFinished.connect(
             lambda: self.set_line_edit("epost_1", Email, "format_email"))
-        self.parent.ui.line_edit_mobil_tlf_1.editingFinished.connect(
+        self.parent.ui_form.line_edit_mobil_tlf_1.editingFinished.connect(
             lambda: self.set_line_edit("mobil_tlf_1", Mobile, "format_number"))
-        self.parent.ui.line_edit_privat_tlf_1.editingFinished.connect(
+        self.parent.ui_form.line_edit_privat_tlf_1.editingFinished.connect(
             lambda: self.set_line_edit("privat_tlf_1", Phone, "format_number"))
-        self.parent.ui.line_edit_jobb_tlf_1.editingFinished.connect(
+        self.parent.ui_form.line_edit_jobb_tlf_1.editingFinished.connect(
             lambda: self.set_line_edit("jobb_tlf_1", Phone, "format_number"))
-        self.parent.ui.line_edit_fax_1.editingFinished.connect(
+        self.parent.ui_form.line_edit_fax_1.editingFinished.connect(
             lambda: self.set_line_edit("fax_1", Phone, "format_number"))
 
-        self.parent.ui.line_edit_fornavn_2.editingFinished.connect(
+        self.parent.ui_form.line_edit_fornavn_2.editingFinished.connect(
             lambda: self.set_line_edit("fornavn_2", Name, "format_name"))
-        self.parent.ui.line_edit_etternavn_2.editingFinished.connect(
+        self.parent.ui_form.line_edit_etternavn_2.editingFinished.connect(
             lambda: self.set_line_edit("etternavn_2", Name, "format_name"))
-        self.parent.ui.combo_box_kjonn_2.activated.connect(
+        self.parent.ui_form.combo_box_kjonn_2.activated.connect(
             lambda: self.set_combo_box("kjonn_2"))
-        self.parent.ui.date_edit_fodselsdato_2.editingFinished.connect(
+        self.parent.ui_form.date_edit_fodselsdato_2.editingFinished.connect(
             lambda: self.set_date_edit("fodselsdato_2"))
-        self.parent.ui.line_edit_adresse_2.editingFinished.connect(
+        self.parent.ui_form.line_edit_adresse_2.editingFinished.connect(
             lambda: self.set_line_edit("adresse_2", Address, "format_address"))
 
-        self.parent.ui.line_edit_postnr_2.editingFinished.connect(
+        self.parent.ui_form.line_edit_postnr_2.editingFinished.connect(
             lambda: self.update_line_edits("postnr", self._post_code, PostenPostalCodeExtraction,
                                            "output_operation", postfix="_2"))
 
-        self.parent.ui.line_edit_postnr_2.textEdited.connect(
+        self.parent.ui_form.line_edit_postnr_2.textEdited.connect(
             lambda: self.clear_empty_line_edits("postnr", self._post_code, postfix="_2"))
 
-        self.parent.ui.line_edit_epost_2.editingFinished.connect(
+        self.parent.ui_form.line_edit_epost_2.editingFinished.connect(
             lambda: self.set_line_edit("epost_2", Email, "format_email"))
-        self.parent.ui.line_edit_mobil_tlf_2.editingFinished.connect(
+        self.parent.ui_form.line_edit_mobil_tlf_2.editingFinished.connect(
             lambda: self.set_line_edit("mobil_tlf_2", Mobile, "format_number"))
-        self.parent.ui.line_edit_privat_tlf_2.editingFinished.connect(
+        self.parent.ui_form.line_edit_privat_tlf_2.editingFinished.connect(
             lambda: self.set_line_edit("privat_tlf_2", Phone, "format_number"))
-        self.parent.ui.line_edit_jobb_tlf_2.editingFinished.connect(
+        self.parent.ui_form.line_edit_jobb_tlf_2.editingFinished.connect(
             lambda: self.set_line_edit("jobb_tlf_2", Phone, "format_number"))
-        self.parent.ui.line_edit_fax_2.editingFinished.connect(
+        self.parent.ui_form.line_edit_fax_2.editingFinished.connect(
             lambda: self.set_line_edit("fax_2", Phone, "format_number"))
 
         # budget information
-        self.parent.ui.line_edit_brutto_inntekt_total.editingFinished.connect(
+        self.parent.ui_form.line_edit_brutto_inntekt_total.editingFinished.connect(
             lambda: self.set_line_edit("brutto_inntekt_total", Money, "value"))
-        self.parent.ui.line_edit_trygde_inntekt_total.editingFinished.connect(
+        self.parent.ui_form.line_edit_trygde_inntekt_total.editingFinished.connect(
             lambda: self.set_line_edit("trygde_inntekt_total", Money, "value"))
-        self.parent.ui.line_edit_leieinntekt_total.editingFinished.connect(
+        self.parent.ui_form.line_edit_leieinntekt_total.editingFinished.connect(
             lambda: self.set_line_edit("leieinntekt_total", Money, "value"))
-        self.parent.ui.line_edit_beregnet_skatt_per_mnd_beloep.editingFinished.connect(
+        self.parent.ui_form.line_edit_beregnet_skatt_per_mnd_beloep.editingFinished.connect(
             lambda: self.set_line_edit("beregnet_skatt_per_mnd_beloep", Money, "value"))
-        self.parent.ui.line_edit_total_netto.editingFinished.connect(
+        self.parent.ui_form.line_edit_total_netto.editingFinished.connect(
             lambda: self.set_line_edit("total_netto", Money, "value"))
-        self.parent.ui.line_edit_netto_likviditet.editingFinished.connect(
+        self.parent.ui_form.line_edit_netto_likviditet.editingFinished.connect(
             lambda: self.set_line_edit("netto_likviditet", Money, "value"))
-        self.parent.ui.line_edit_student_lan_total.editingFinished.connect(
+        self.parent.ui_form.line_edit_student_lan_total.editingFinished.connect(
             lambda: self.set_line_edit("student_lan_total", Money, "value"))
-        self.parent.ui.line_edit_kreditt_gjeld_total.editingFinished.connect(
+        self.parent.ui_form.line_edit_kreditt_gjeld_total.editingFinished.connect(
             lambda: self.set_line_edit("kreditt_gjeld_total", Money, "value"))
-        self.parent.ui.line_edit_husleie_total.editingFinished.connect(
+        self.parent.ui_form.line_edit_husleie_total.editingFinished.connect(
             lambda: self.set_line_edit("husleie_total", Money, "value"))
-        self.parent.ui.line_edit_strom_total.editingFinished.connect(
+        self.parent.ui_form.line_edit_strom_total.editingFinished.connect(
             lambda: self.set_line_edit("strom_total", Money, "value"))
-        self.parent.ui.line_edit_andre_utgifter_total.editingFinished.connect(
+        self.parent.ui_form.line_edit_andre_utgifter_total.editingFinished.connect(
             lambda: self.set_line_edit("andre_utgifter_total", Money, "value"))
-        self.parent.ui.line_edit_sifo_utgifter.editingFinished.connect(
+        self.parent.ui_form.line_edit_sifo_utgifter.editingFinished.connect(
             lambda: self.set_line_edit("sifo_utgifter", Money, "value"))
-        self.parent.ui.line_edit_totale_utgifter.editingFinished.connect(
+        self.parent.ui_form.line_edit_totale_utgifter.editingFinished.connect(
             lambda: self.set_line_edit("totale_utgifter", Money, "value"))
-        self.parent.ui.line_edit_likviditetsgrad.editingFinished.connect(
+        self.parent.ui_form.line_edit_likviditetsgrad.editingFinished.connect(
             lambda: self.set_line_edit("likviditetsgrad", Money, "value"))
 
         # mortgage structure information
-        self.parent.ui.combo_box_lanetype.activated.connect(
+        self.parent.ui_form.combo_box_lanetype.activated.connect(
             lambda: self.set_combo_box("lanetype"))
-        self.parent.ui.combo_box_intervall.activated.connect(
+        self.parent.ui_form.combo_box_intervall.activated.connect(
             lambda: self.set_combo_box("intervall"))
-        self.parent.ui.combo_box_laneperiode.activated.connect(
+        self.parent.ui_form.combo_box_laneperiode.activated.connect(
             lambda: self.set_combo_box("laneperiode"))
-        self.parent.ui.date_edit_startdato.editingFinished.connect(
+        self.parent.ui_form.date_edit_startdato.editingFinished.connect(
             lambda: self.set_date_edit("startdato"))
-        self.parent.ui.line_edit_egenkapital.textEdited.connect(
+        self.parent.ui_form.line_edit_egenkapital.textEdited.connect(
             lambda: self.set_line_edit("egenkapital", Money, "value"))
 
     @pyqtSlot()
@@ -183,5 +183,5 @@ class MortgageModel(Model):
         test method for printing pdf of procedure graph
 
         """
-        postal_code = PostenPostalCodeExtraction(self.parent.ui.line_edit_postnr_1.text())
+        postal_code = PostenPostalCodeExtraction(self.parent.ui_form.line_edit_postnr_1.text())
         postal_code.print_pdf()

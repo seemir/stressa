@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Module giving access to all models in app
 
+"""
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
