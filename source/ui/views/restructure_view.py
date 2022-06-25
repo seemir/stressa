@@ -39,7 +39,8 @@ class RestructureView(QDialog):
         Assertor.assert_data_types([parent], [QWidget])
         super().__init__(parent)
         self._parent = parent
-        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/restructure_form.ui"), self)
+        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__),
+                                           "forms/restructure_form.ui"), self)
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
 

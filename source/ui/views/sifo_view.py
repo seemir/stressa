@@ -48,7 +48,8 @@ class SifoView(QDialog):
         self._meta_view = MetaView(self)
 
         self.ui_form.push_button_sifo_meta_data.clicked.connect(self.meta_view.display)
-        self.ui_form.push_button_vis_resultatet.clicked.connect(self.sifo_model.calculate_sifo_expenses)
+        self.ui_form.push_button_vis_resultatet.clicked.connect(
+            self.sifo_model.calculate_sifo_expenses)
         self.ui_form.push_button_tom_skjema_1.clicked.connect(self.clear_all)
         self.ui_form.push_button_avbryt_1.clicked.connect(self.close)
         self.ui_form.push_button_tom_skjema_2.clicked.connect(self.clear_all)
