@@ -23,9 +23,9 @@ from ..models import MortgageModel, FinnModel, HomeModel, AnalysisModel
 
 from .restructure_view import RestructureView
 from .statistics_view import StatisticsView
-from .info_view_clear import InfoViewClear
+from .info_clear_view import InfoClearView
 from .grunnboka_view import GrunnbokaView
-from .info_view_quit import InfoViewQuit
+from .info_quit_view import InfoQuitView
 from .history_view import HistoryView
 from .budget_view import BudgetView
 from .error_view import ErrorView
@@ -62,8 +62,8 @@ class HomeView(QMainWindow):
         self._grunnboka_view = GrunnbokaView(self)
 
         self._meta_view = MetaView(self)
-        self._info_view_quit = InfoViewQuit(self)
-        self._info_view_clear = InfoViewClear(self)
+        self._info_view_quit = InfoQuitView(self)
+        self._info_view_clear = InfoClearView(self)
         self._statistics_view = StatisticsView(self)
 
         self._home_model = HomeModel(self)

@@ -15,6 +15,7 @@ from .sifo_base_expenses_connector import SifoBaseExpensesConnector
 from .finn_advert_info_connector import FinnAdvertInfoConnector
 from .postal_code_info_connector import PostalCodeInfoConnector
 from .validate_postal_code import ValidatePostalCode
+from .validate_restruture import ValidateRestructure
 from .restructure_ratings import RestructureRatings
 from .add_row_to_dataframe import AddRowToDataFrame
 from .validate_finn_code import ValidateFinnCode

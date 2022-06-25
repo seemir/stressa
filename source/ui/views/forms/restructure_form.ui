@@ -1632,7 +1632,7 @@
               </widget>
              </item>
              <item row="4" column="0" colspan="2">
-              <widget class="QPushButton" name="push_button_exporter">
+              <widget class="QPushButton" name="push_button_eksporter">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -1655,7 +1655,7 @@
                 <enum>Qt::TabFocus</enum>
                </property>
                <property name="text">
-                <string>Exporter</string>
+                <string>Eksporter</string>
                </property>
                <property name="icon">
                 <iconset resource="../../images/img.qrc">
@@ -1764,7 +1764,7 @@
   <tabstop>date_edit_startdato</tabstop>
   <tabstop>line_edit_egenkapital</tabstop>
   <tabstop>line_edit_belaning</tabstop>
-  <tabstop>push_button_exporter</tabstop>
+  <tabstop>push_button_eksporter</tabstop>
   <tabstop>push_button_tom_skjema</tabstop>
   <tabstop>push_button_budget_meta_data</tabstop>
   <tabstop>push_button_avbryt</tabstop>

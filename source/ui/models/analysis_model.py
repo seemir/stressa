@@ -59,7 +59,7 @@ class AnalysisModel(Model):
         self.data.update(self.parent.mortgage_model.data)
         self.data.update(self.parent.home_model.data)
 
-        if all(element in self.data.keys() for element in Mortgage.requirements):
+        if all(element in self.data.keys() for element in Mortgage.requirements_mortgage):
             self.parent.ui_form.tab_widget_home.setCurrentIndex(2)
 
             mortgage_analysis = MortgageAnalysisProcess(self.data)

@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 from PyQt5.QtCore import QObject, pyqtSlot
 
 from source.domain import Name, Address, Email, Mobile, Phone, Money
-from source.app import PostenPostalCodeExtraction
+from source.app import PostalCodeProcess
 from source.util import Assertor
 
 from .model import Model
@@ -67,7 +67,7 @@ class MortgageModel(Model):
             lambda: self.set_line_edit("adresse_1", Address, "format_address"))
 
         self.parent.ui_form.line_edit_postnr_1.editingFinished.connect(
-            lambda: self.update_line_edits("postnr", self._post_code, PostenPostalCodeExtraction,
+            lambda: self.update_line_edits("postnr", self._post_code, PostalCodeProcess,
                                            "postal_code_info", postfix="_1"))
 
         self.parent.ui_form.line_edit_postnr_1.textEdited.connect(
@@ -96,7 +96,7 @@ class MortgageModel(Model):
             lambda: self.set_line_edit("adresse_2", Address, "format_address"))
 
         self.parent.ui_form.line_edit_postnr_2.editingFinished.connect(
-            lambda: self.update_line_edits("postnr", self._post_code, PostenPostalCodeExtraction,
+            lambda: self.update_line_edits("postnr", self._post_code, PostalCodeProcess,
                                            "output_operation", postfix="_2"))
 
         self.parent.ui_form.line_edit_postnr_2.textEdited.connect(
@@ -183,5 +183,5 @@ class MortgageModel(Model):
         test method for printing pdf of procedure graph
 
         """
-        postal_code = PostenPostalCodeExtraction(self.parent.ui_form.line_edit_postnr_1.text())
+        postal_code = PostalCodeProcess(self.parent.ui_form.line_edit_postnr_1.text())
         postal_code.print_pdf()

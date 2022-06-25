@@ -1959,7 +1959,7 @@
             <widget class="QComboBox" name="combo_box_interval_4"/>
            </item>
            <item row="10" column="3" colspan="2">
-            <widget class="QPushButton" name="push_button_exporter_1">
+            <widget class="QPushButton" name="push_button_eksporter_1">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -1970,7 +1970,7 @@
               <enum>Qt::TabFocus</enum>
              </property>
              <property name="text">
-              <string>Exporter</string>
+              <string>Eksporter</string>
              </property>
              <property name="icon">
               <iconset resource="../../images/img.qrc">
@@ -2561,7 +2561,7 @@
             </widget>
            </item>
            <item row="10" column="3" colspan="2">
-            <widget class="QPushButton" name="push_button_exporter_2">
+            <widget class="QPushButton" name="push_button_eksporter_2">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -2572,7 +2572,7 @@
               <enum>Qt::TabFocus</enum>
              </property>
              <property name="text">
-              <string>Exporter</string>
+              <string>Eksporter</string>
              </property>
              <property name="icon">
               <iconset resource="../../images/img.qrc">
@@ -2696,7 +2696,7 @@
   <tabstop>line_edit_andre_utgifter_1</tabstop>
   <tabstop>line_edit_personinntekt_1</tabstop>
   <tabstop>line_edit_sum_utgifter_1</tabstop>
-  <tabstop>push_button_exporter_1</tabstop>
+  <tabstop>push_button_eksporter_1</tabstop>
   <tabstop>push_button_tom_skjema_1</tabstop>
   <tabstop>push_button_budget_meta_data_1</tabstop>
   <tabstop>push_button_avbryt_1</tabstop>
@@ -2726,7 +2726,7 @@
   <tabstop>line_edit_andre_utgifter_2</tabstop>
   <tabstop>line_edit_personinntekt_2</tabstop>
   <tabstop>line_edit_sum_utgifter_2</tabstop>
-  <tabstop>push_button_exporter_2</tabstop>
+  <tabstop>push_button_eksporter_2</tabstop>
   <tabstop>push_button_tom_skjema_2</tabstop>
   <tabstop>push_button_budget_meta_data_2</tabstop>
   <tabstop>push_button_avbryt_2</tabstop>

@@ -14,7 +14,7 @@ from .engine import Process, InputOperation, Signal, ValidatePostalCode, PostalC
     OutputSignal, OutputOperation
 
 
-class PostenPostalCodeExtraction(Process):
+class PostalCodeProcess(Process):
     """
     Process for extracting Norwegian Postal Code Information from Postens public
     address search

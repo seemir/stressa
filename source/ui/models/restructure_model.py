@@ -10,8 +10,9 @@ __email__ = 'samir.adrik@gmail.com'
 
 from PyQt5.QtCore import QObject, pyqtSlot
 
+from source.domain import Money, Mortgage
+from source.app import RestructureProcess
 from source.util import Assertor
-from source.domain import Money
 
 from .model import Model
 
@@ -62,6 +63,17 @@ class RestructureModel(Model):
             lambda: self.set_line_edit("egenkapital", Money, "value"))
         self.parent.ui_form.line_edit_belaning.textEdited.connect(
             lambda: self.set_line_edit("belaning", Money, "value"))
+
+    def export(self):
+        """
+        method for analyze mortgage
+
+        """
+        restructure_data = {}
+        restructure_data.update(self.parent.parent.analysis_model.data)
+        restructure_data.update(self.data)
+        if all(element in restructure_data.keys() for element in Mortgage.requirements_restructure):
+            RestructureProcess(restructure_data)
 
     def clear_all(self):
         """

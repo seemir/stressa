@@ -10,9 +10,9 @@ __email__ = 'samir.adrik@gmail.com'
 
 from .restructure_view import RestructureView
 from .statistics_view import StatisticsView
-from .info_view_clear import InfoViewClear
+from .info_clear_view import InfoClearView
 from .grunnboka_view import GrunnbokaView
-from .info_view_quit import InfoViewQuit
+from .info_quit_view import InfoQuitView
 from .history_view import HistoryView
 from .budget_view import BudgetView
 from .splash_view import SplashView

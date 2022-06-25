@@ -19,10 +19,11 @@ class Mortgage(Entity):
 
     """
 
-    requirements = ['personinntekt_total_aar', 'egenkapital', 'intervall', 'laneperiode',
-                    'lanetype', 'netto_likviditet', 'startdato']
+    requirements_mortgage = ['personinntekt_total_aar', 'egenkapital', 'intervall', 'laneperiode',
+                             'lanetype', 'netto_likviditet', 'startdato']
+    requirements_restructure = requirements_mortgage + ['belaning']
 
-    def validate_mortgage_information(self, data: dict):
+    def validate_mortgage_information(self, data: dict, restructure=False):
         """
         method for validating mortgage information
 
@@ -30,15 +31,26 @@ class Mortgage(Entity):
         ----------
         data        : dict
                       mortgage information
+        restructure : bool
+                      restructure data to validate
 
         """
         Assertor.assert_data_types([data], [dict])
-        if not all(element in data.keys() for element in self.requirements):
-            raise ValueError(
-                "all element in '{}' must be supplied for mortgage".format(self.requirements))
-        return {key: val for key, val in data.items() if key in self.requirements}
+        if restructure:
+            if not all(element in data.keys() for element in self.requirements_restructure):
+                raise ValueError(
+                    "all element in '{}' must be supplied for restructure".format(
+                        self.requirements_restructure))
+            data = {key: val for key, val in data.items() if key in self.requirements_restructure}
+        else:
+            if not all(element in data.keys() for element in self.requirements_mortgage):
+                raise ValueError(
+                    "all element in '{}' must be supplied for mortgage".format(
+                        self.requirements_mortgage))
+            data = {key: val for key, val in data.items() if key in self.requirements_mortgage}
+        return data
 
-    def __init__(self, data: dict):
+    def __init__(self, data: dict, restructure=False):
         """
         Constructor / Instantiate the class
 
@@ -50,6 +62,20 @@ class Mortgage(Entity):
         """
         super().__init__()
         self._mortgage_data = self.validate_mortgage_information(data)
+        self._restructure_data = self.validate_mortgage_information(data, restructure)
+
+    @property
+    def restructure_data(self):
+        """
+        restructure_data getter
+
+        Returns
+        -------
+        out         : dict
+                      restructure data
+
+        """
+        return self._restructure_data
 
     @property
     def mortgage_data(self):
@@ -78,7 +104,7 @@ class Mortgage(Entity):
         self._mortgage_data = self.validate_mortgage_information(new_mortgage_data)
 
     @staticmethod
-    def rules():
+    def rules(restructure=False):
         """
         all active validation rules in entity
 
@@ -88,7 +114,8 @@ class Mortgage(Entity):
                       dictionary with all the active rules in the entity
 
         """
+        mortgage_data = ['personinntekt_total_aar', 'egenkapital', 'intervall', '\\nlaneperiode',
+                         'lanetype', 'netto_likviditet', 'startdato']
+        restructure_data = mortgage_data + ['belaning']
         return "mortgage contains '{}'".format(
-            ", ".join(
-                ['personinntekt_total_aar', 'egenkapital', 'intervall', '\\nlaneperiode',
-                 'lanetype', 'netto_likviditet', 'startdato']).replace("'", ""))
+            ", ".join(mortgage_data if not restructure else restructure_data).replace("'", ""))

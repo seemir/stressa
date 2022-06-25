@@ -53,6 +53,7 @@ class RestructureView(QDialog):
         self.ui_form.push_button_budget_meta_data.clicked.connect(self.meta_view.display)
         self.ui_form.push_button_avbryt.clicked.connect(self.close)
         self.ui_form.push_button_tom_skjema.clicked.connect(self.restructure_model.clear_all)
+        self.ui_form.push_button_eksporter.clicked.connect(self.restructure_model.export)
 
     @property
     def parent(self):

@@ -50,12 +50,12 @@ class BudgetView(QDialog):
 
         self._budget_model = BudgetModel(self)
 
-        self.ui_form.push_button_exporter_1.clicked.connect(self.export)
+        self.ui_form.push_button_eksporter_1.clicked.connect(self.export)
         self.ui_form.push_button_tom_skjema_1.clicked.connect(self.clear_all)
         self.ui_form.push_button_budget_meta_data_1.clicked.connect(self.meta_view.display)
         self.ui_form.push_button_avbryt_1.clicked.connect(self.close)
 
-        self.ui_form.push_button_exporter_2.clicked.connect(self.export)
+        self.ui_form.push_button_eksporter_2.clicked.connect(self.export)
         self.ui_form.push_button_tom_skjema_2.clicked.connect(self.clear_all)
         self.ui_form.push_button_budget_meta_data_2.clicked.connect(self.meta_view.display)
         self.ui_form.push_button_avbryt_2.clicked.connect(self.close)
