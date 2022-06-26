@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from source.util import Assertor, Profiling, Tracking, Debugger
 
-from .engine import Process, Signal, InputOperation, ValidateMortgage
+from .engine import Process, Signal, InputOperation, ValidateRestructure
 
 
 class RestructureProcess(Process):
@@ -68,7 +68,7 @@ class RestructureProcess(Process):
 
         """
         input_signal = self.get_signal("input_signal")
-        validate_restructure_operation = ValidateMortgage(input_signal.data["data"])
+        validate_restructure_operation = ValidateRestructure(input_signal.data["data"])
         self.add_node(validate_restructure_operation)
         self.add_transition(input_signal, validate_restructure_operation)
 

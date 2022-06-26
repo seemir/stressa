@@ -117,5 +117,7 @@ class Mortgage(Entity):
         mortgage_data = ['personinntekt_total_aar', 'egenkapital', 'intervall', '\\nlaneperiode',
                          'lanetype', 'netto_likviditet', 'startdato']
         restructure_data = mortgage_data + ['belaning']
-        return "mortgage contains '{}'".format(
+        mortgage_property = "mortgage " if not restructure else "restructure "
+        return "{} contains '{}'".format(
+            mortgage_property,
             ", ".join(mortgage_data if not restructure else restructure_data).replace("'", ""))

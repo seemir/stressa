@@ -50,4 +50,4 @@ class ValidateRestructure(Operation):
 
         """
         mortgage = Mortgage(self.mortgage_data, restructure=True)
-        return mortgage.mortgage_data
+        return mortgage.restructure_data
