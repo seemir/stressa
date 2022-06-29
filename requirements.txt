@@ -65,7 +65,7 @@ progress==1.5
 psutil==5.8.0
 publicsuffix2==2.20191221
 py==1.11.0
-pycares==4.1.2
+pycares==4.2.1
 pycparser==2.21
 pydot==1.4.1
 pyfiglet==0.8.post1
