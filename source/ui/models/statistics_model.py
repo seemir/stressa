@@ -13,7 +13,7 @@ from PyQt5.QtCore import QObject
 
 from pandas import DataFrame
 
-from source.ui.graphics import BarChart, DoubleBarChart, ChangeBarChart, RatioChart, \
+from source.ui.graphics import BarChart, RatioChart, \
     BarChartWithLine
 from source.util import Assertor
 from source.domain import Amount, Percent
@@ -421,7 +421,7 @@ class StatisticsModel(Model):
                                            getattr(self.parent.ui_form,
                                                    prefix + "hist_data_municipality"),
                                            labels, units=(" kr/m²", " salg", " kr/m²", " salg"),
-                                           precision=-3, width=1000,
+                                           precision=-3,
                                            average=self.data["sqm_price" + postfix].replace(
                                                " ", "").replace("kr/m²", ""))
                 self.ration_plot = RatioChart(list(municipality_sales.keys()),
@@ -430,39 +430,9 @@ class StatisticsModel(Model):
                                               getattr(self.parent.ui_form,
                                                       prefix + "ratio_statistics"),
                                               "Forhold ({})".format(" / ".join(labels)),
-                                              units=(" kr/m²", ""), precision=-3, width=1000)
+                                              units=(" kr/m²", ""), precision=-3)
                 self.sales_plot.connect(self.ration_plot,
                                         self.parent.ui_form.graphics_view_ratio_statistics)
-
-    def add_view_charts(self, prefix: str, postfix: str):
-        """
-        method for adding double bar chart to the statistic model
-
-        Parameters
-        ----------
-        prefix      : str
-                      name of prefix, i.e. "graphics"
-        postfix     : str
-                      index if used in naming of line_edits
-
-        """
-        dates = list(self.data["views_development" + postfix]["dates"].values())
-        total = list(self.data["views_development" + postfix]["total_views"].values())
-        organic = list(self.data["views_development" + postfix]["organic_views"].values())
-        change = list(self.data["views_development" + postfix]["change"].values())
-        accumulated = list(self.data["views_development" + postfix]["accumulated"].values())
-
-        self.view_plot = DoubleBarChart(dates, total, dates, organic, dates, accumulated,
-                                        getattr(self.parent.ui_form, prefix + "views_development"),
-                                        getattr(self.parent.ui_form, prefix + "accumulated"),
-                                        ("Klikk på annonsen (per dag)",
-                                         "Klikk på annonsen (akkumulert)"),
-                                        ("", " klikk", "", " klikk"))
-        self.change_plot = ChangeBarChart(dates, change,
-                                          getattr(self.parent.ui_form, prefix + "change"),
-                                          labels="Klikk på annonsen (endring dag-til-dag)",
-                                          units=("", " %"), x_labels=dates)
-        self.view_plot.connect(self.change_plot, getattr(self.parent.ui_form, prefix + "change"))
 
     def add_statistics_label(self, key: str, postfix: str):
         """
@@ -573,7 +543,7 @@ class StatisticsModel(Model):
                     dist_range, city_area_dist,
                     getattr(self.parent.ui_form, prefix + plot_name_1),
                     getattr(self.parent.ui_form, table_name),
-                    width=0.5, reverse=False,
+                    width=0.25, reverse=False,
                     legend='<div style="text-align: center">'
                            '<span style="font-size: 10pt">{}:</span><br>'
                            '<span style="font-size: 10pt">{}</span><br>'
@@ -584,7 +554,7 @@ class StatisticsModel(Model):
                     dist_range, city_dist,
                     getattr(self.parent.ui_form, prefix + plot_name_2),
                     getattr(self.parent.ui_form, table_name),
-                    width=0.5, reverse=False,
+                    width=0.25, reverse=False,
                     legend='<div style="text-align: center">'
                            '<span style="font-size: 10pt">{}:</span><br>'
                            '<span style="font-size: 10pt">{}</span><br>'

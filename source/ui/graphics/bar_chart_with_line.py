@@ -11,7 +11,7 @@ import warnings
 
 from numpy import percentile, insert, array
 
-from pyqtgraph import BarGraphItem, PlotDataItem, PlotWidget, TextItem, mkPen
+from pyqtgraph import PlotDataItem, PlotWidget, TextItem, mkPen
 from PyQt5.QtWidgets import QTableView
 from PyQt5.QtCore import Qt
 
@@ -60,23 +60,19 @@ class BarChartWithLine(Chart):
         self.label = TextItem()
         self.width = width
         self.reverse = reverse
+        self.legend = legend
 
         place = percentile(insert(array(self.x_val), 0, 0), 2)
         self.label.setPos(place, int(max(y_val) * 1.5))
 
-        self.label.setHtml(legend)
-        self.graphics_view.addItem(self.label, ignore_bounds=True)
+        self.label.setHtml(self.legend)
+        self.graphics_view.addItem(self.label)
 
-        self.bar_item = BarGraphItem(x=self.x_val, height=self.y_val, width=self.width,
-                                     brush="#d2e5f5")
-        self.graphics_view.addItem(self.bar_item)
         pen = mkPen(color="#d2e5f5", style=Qt.DotLine, width=2)
-        self.graphics_view.plot(x=self.x_val, y=self.y_val, pen=pen, symbol='+', symbolSize=14)
+        self.graphics_view.plot(x=self.x_val, y=self.y_val, pen=pen)
 
         self.graphics_view.plotItem.vb.setLimits(xMin=min(self.x_val) - width,
                                                  xMax=max(self.x_val) + width)
-        self.graphics_view.setMenuEnabled(False)
-        self.graphics_view.getViewBox().enableAutoRange()
 
     def table_view_mapping(self):
         """
@@ -90,24 +86,23 @@ class BarChartWithLine(Chart):
         method for accessing row in table_view
 
         """
-        pen_1 = mkPen(color="#69a8de", style=Qt.DotLine, width=2)
-        pen_2 = mkPen(color="#d2e5f5", style=Qt.DotLine, width=2)
-        bar_item = BarGraphItem(x=self.x_val, height=self.y_val, width=self.width, brush="#d2e5f5")
-        chart_item = PlotDataItem(x=self.x_val, y=self.y_val, pen=pen_1, symbol='+', symbolSize=14)
-        clear_line = PlotDataItem(x=self.x_val, y=self.y_val, pen=pen_2, symbol='+', symbolSize=14)
-
         if item.row() < len(self.x_val):
-            row = len(self.x_val) - 1 - item.row() if self.reverse else item.row()
+            self.graphics_view.clear()
 
-            clicked_item = BarGraphItem(x=[self.x_val[row]], height=self.y_val[row],
-                                        width=self.width,
-                                        brush="#69a8de")
-            self.graphics_view.addItem(bar_item)
-            self.graphics_view.addItem(clicked_item)
+            self.label.setHtml(self.legend)
+            self.graphics_view.addItem(self.label)
+
+            pen_1 = mkPen(color="#69a8de", style=Qt.DotLine, width=2)
+            chart_item = PlotDataItem(x=self.x_val, y=self.y_val, pen=pen_1)
+
+            pen = mkPen(color="#d2e5f5", style=Qt.DotLine, width=2)
+            self.graphics_view.plot(x=self.x_val, y=self.y_val, pen=pen)
+
+            row = len(self.x_val) - 1 - item.row() if self.reverse else item.row()
+            clicked_item = PlotDataItem(x=[self.x_val[row]], y=[self.y_val[row]],
+                                        pen=pen_1, symbol='+', symbolSize=14)
             self.graphics_view.addItem(chart_item)
-        else:
-            self.graphics_view.addItem(bar_item)
-            self.graphics_view.addItem(clear_line)
+            self.graphics_view.addItem(clicked_item)
 
     @staticmethod
     def clear_graphics(graphics_view: PlotWidget, table_view: QTableView):
