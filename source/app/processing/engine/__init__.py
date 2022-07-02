@@ -38,6 +38,7 @@ from .fixed_payment import FixedPayment
 from .restructure import Restructure
 from .subtraction import Subtraction
 from .accumulate import Accumulate
+from .converter import Converter
 from .operation import Operation
 from .multiplex import Multiplex
 from .sub_model import SubModel

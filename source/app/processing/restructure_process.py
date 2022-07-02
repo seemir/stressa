@@ -12,7 +12,7 @@ from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, Signal, InputOperation, ValidateRestructure, FixedStressTest, \
     SerialStressTest, SsbConnector, Extract, Multiplication, Factor, Subtraction, Division, \
-    Addition, FixedPayment, Multiplex, OutputOperation, OutputSignal
+    Addition, FixedPayment, Multiplex, OutputOperation, OutputSignal, Converter
 
 
 class RestructureProcess(Process):
@@ -47,7 +47,7 @@ class RestructureProcess(Process):
 
         self.run_parallel([self.extract_6, self.division_2, self.fixed_payment, self.division_3])
 
-        self.run_parallel([self.subtraction_2, self.subtraction_3])
+        self.run_parallel([self.subtraction_2, self.subtraction_3, self.converter])
 
         self.multiplex()
 
@@ -629,6 +629,28 @@ class RestructureProcess(Process):
 
     @Profiling
     @Debugger
+    def converter(self):
+        """
+        method for converting net liquidity to monthly values
+
+        """
+        interval = self.get_signal("interval")
+        fixed_amount = self.get_signal("fixed_amount")
+
+        converter_operation = Converter(fixed_amount.data, interval.data['intervall'], 'Månedlig')
+        self.add_node(converter_operation)
+
+        self.add_transition(interval, converter_operation, label="thread")
+        self.add_transition(fixed_amount, converter_operation, label="thread")
+
+        converter = converter_operation.run()
+
+        converter_signal = Signal(converter, "Calculated Monthly Fixed Amount")
+        self.add_signal(converter_signal, "fixed_amount_monthly")
+        self.add_transition(converter_operation, converter_signal, label="thread")
+
+    @Profiling
+    @Debugger
     def multiplex(self):
         """
         multiplex mortgage information
@@ -650,7 +672,7 @@ class RestructureProcess(Process):
         required_mortgage_share = self.get_signal("krav_belaningsgrad")
         required_total_financing_frame = self.get_signal("krav_total_ramme")
         required_equity = self.get_signal("krav_egenkapital")
-        fixed_amount = self.get_signal("fixed_amount")
+        fixed_amount = self.get_signal("fixed_amount_monthly")
 
         multiplex_operation = Multiplex([fixed_stress_rate, serial_stress_rate,
                                          required_fixed_rates, required_serial_rates, equity,

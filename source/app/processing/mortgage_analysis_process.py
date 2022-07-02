@@ -12,7 +12,7 @@ from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, Signal, InputOperation, ValidateMortgage, OutputSignal, \
     OutputOperation, Extract, Factor, Multiplication, Multiplex, Division, Subtraction, Addition, \
-    FixedStressTest, SerialStressTest, SsbConnector, FixedPayment
+    FixedStressTest, SerialStressTest, SsbConnector, FixedPayment, Converter
 
 
 class MortgageAnalysisProcess(Process):
@@ -45,7 +45,7 @@ class MortgageAnalysisProcess(Process):
         self.run_parallel([self.multiply_1, self.subtraction_1, self.ssb_connector])
         self.run_parallel([self.addition_1, self.extract_6, self.division_1, self.addition_2])
         self.run_parallel([self.division_2, self.division_3, self.fixed_payment])
-        self.run_parallel([self.subtraction_2, self.subtraction_3])
+        self.run_parallel([self.subtraction_2, self.subtraction_3, self.converter])
 
         self.multiplex()
 
@@ -626,6 +626,28 @@ class MortgageAnalysisProcess(Process):
 
     @Profiling
     @Debugger
+    def converter(self):
+        """
+        method for converting net liquidity to monthly values
+
+        """
+        interval = self.get_signal("interval")
+        fixed_amount = self.get_signal("fixed_amount")
+
+        converter_operation = Converter(fixed_amount.data, interval.data['intervall'], 'Månedlig')
+        self.add_node(converter_operation)
+
+        self.add_transition(interval, converter_operation, label="thread")
+        self.add_transition(fixed_amount, converter_operation, label="thread")
+
+        converter = converter_operation.run()
+
+        converter_signal = Signal(converter, "Calculated Monthly Fixed Amount")
+        self.add_signal(converter_signal, "fixed_amount_monthly")
+        self.add_transition(converter_operation, converter_signal, label="thread")
+
+    @Profiling
+    @Debugger
     def multiplex(self):
         """
         multiplex mortgage information
@@ -647,7 +669,7 @@ class MortgageAnalysisProcess(Process):
         required_mortgage_share = self.get_signal("krav_belaningsgrad")
         required_total_financing_frame = self.get_signal("krav_total_ramme")
         required_equity = self.get_signal("krav_egenkapital")
-        fixed_amount = self.get_signal("fixed_amount")
+        fixed_amount_monthly = self.get_signal("fixed_amount_monthly")
 
         multiplex_operation = Multiplex([fixed_stress_rate, serial_stress_rate,
                                          required_fixed_rates, required_serial_rates, equity,
@@ -655,7 +677,7 @@ class MortgageAnalysisProcess(Process):
                                          mortgage_share, total_financing_frame,
                                          required_mortgage_limit, required_equity_share,
                                          required_mortgage_share, required_total_financing_frame,
-                                         required_equity, fixed_amount],
+                                         required_equity, fixed_amount_monthly],
                                         "Multiplex Mortgage Information")
 
         self.add_node(multiplex_operation)
@@ -676,7 +698,7 @@ class MortgageAnalysisProcess(Process):
         self.add_transition(required_mortgage_share, multiplex_operation)
         self.add_transition(required_total_financing_frame, multiplex_operation)
         self.add_transition(required_equity, multiplex_operation)
-        self.add_transition(fixed_amount, multiplex_operation)
+        self.add_transition(fixed_amount_monthly, multiplex_operation)
 
         multiplex = multiplex_operation.run()
         multiplex_signal = Signal(multiplex, "Multiplexed Mortgage Information", prettify_keys=True,
