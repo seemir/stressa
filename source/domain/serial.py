@@ -69,7 +69,9 @@ class Serial(Mortgage):
         self._net_liquidity = float(
             self.mortgage_data['netto_likviditet'].replace(" kr", "").replace(" ", ""))
         self._amount = float(
-            self.mortgage_data['personinntekt_total_aar'].replace(" kr", "").replace(" ", "")) * 5
+            self.mortgage_data['personinntekt_total_aar'].replace(" kr", "").replace(" ", "")) * 5 \
+            if 'belaning' not in data.keys() else float(
+            data['belaning'].replace(" kr", "").replace(" ", ""))
 
     @property
     def interval_mapping(self):

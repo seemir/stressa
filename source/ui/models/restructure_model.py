@@ -73,7 +73,13 @@ class RestructureModel(Model):
         restructure_data.update(self.parent.parent.analysis_model.data)
         restructure_data.update(self.data)
         if all(element in restructure_data.keys() for element in Mortgage.requirements_restructure):
-            RestructureProcess(restructure_data)
+            restructure = RestructureProcess(restructure_data)
+            analysis_model = self.parent.parent.analysis_model
+
+            analysis_model.set_line_edits(line_edit_text='',
+                                          line_edits=analysis_model.analysis_keys,
+                                          data=restructure.restructure())
+            self.parent.close()
 
     def clear_all(self):
         """
