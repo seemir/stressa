@@ -81,6 +81,7 @@ class TestPosten:
             Posten.validate_postal_code(invalid_postal_code)
 
     @staticmethod
+    @pt.mark.skip
     def test_posten_response_method():
         """
         Test that response method returns HTTP code 200: OK
@@ -91,6 +92,7 @@ class TestPosten:
         assert response.status_code == 200
 
     @staticmethod
+    @pt.mark.skip
     def test_postal_code_info_method():
         """
         Test that postal_code_info method return correct content
