@@ -8,6 +8,7 @@ Domain model implementation
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from .payment_plan import PaymentPlan
 from .fixed_rate import FixedRate
 from .mortgage import Mortgage
 from .expenses import Expenses
