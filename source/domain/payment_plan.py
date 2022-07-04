@@ -147,7 +147,7 @@ class PaymentPlan(Entity):
 
     def fixed_mortgage_plan(self):
         """
-        method for creating mortgage plan
+        method for creating fixed mortgage plan
 
         """
         index_list = []
@@ -159,7 +159,9 @@ class PaymentPlan(Entity):
 
         outstanding_amount = self.amount
 
-        for i, payment in enumerate(self.fixed_payment_list()):
+        fixed_payment_list = self.fixed_payment_list()
+
+        for i, payment in enumerate(fixed_payment_list):
             index_list.append(i)
             if i == 0:
                 dates_list.append("")
@@ -172,7 +174,7 @@ class PaymentPlan(Entity):
                 interest_amount = round(
                     outstanding_amount * (self.interest_rate / self.interval / 100))
 
-                if i == len(self.fixed_payment_list()) - 1:
+                if i == len(fixed_payment_list) - 1:
                     principal_amount = round(outstanding_amount)
                     payment = round(principal_amount + interest_amount)
                 else:
@@ -186,7 +188,53 @@ class PaymentPlan(Entity):
                 principal_list.append(Money(str(principal_amount)).value())
                 outstanding_list.append(Money(str(outstanding_amount)).value())
 
-        df = pd.DataFrame.from_dict(
-            {'Termin': index_list, 'T.beløp': payment_list, 'Renter': interest_list,
-             'Avdrag': principal_list, 'Restgjeld': outstanding_list})
-        df.to_csv('fixed_mortgage_plan', sep=";", index=False)
+        return pd.DataFrame.from_dict(
+            {'Dato': self.period_list(), 'Termin': index_list, 'T.beløp': payment_list,
+             'Renter': interest_list, 'Avdrag': principal_list, 'Restgjeld': outstanding_list})
+
+    def serial_mortgage_plan(self):
+        """
+        method for creating serial mortgage plan
+
+        """
+        index_list = []
+        dates_list = []
+        payment_list = []
+        interest_list = []
+        principal_list = []
+        outstanding_list = []
+
+        outstanding_amount = self.amount
+
+        serial_payment_list = list(range(self.interval * self.period + 1))
+
+        for i in serial_payment_list:
+            index_list.append(i)
+            if i == 0:
+                dates_list.append("")
+                payment_list.append("-" + Money(str(outstanding_amount)).value())
+                interest_list.append("")
+                principal_list.append("")
+                outstanding_list.append(Money(str(outstanding_amount)).value())
+            else:
+                dates_list.append(self.period_list()[i])
+
+                interest_amount = round(
+                    outstanding_amount * (self.interest_rate / self.interval / 100))
+                if i == len(serial_payment_list) - 1:
+                    principal_amount = round(outstanding_amount)
+                else:
+                    principal_amount = round(self.amount / (self.interval * self.period))
+
+                payment_amount = round(principal_amount + interest_amount)
+
+                outstanding_amount = round(outstanding_amount - principal_amount)
+
+                payment_list.append(Money(str(payment_amount)).value())
+                interest_list.append(Money(str(interest_amount)).value())
+                principal_list.append(Money(str(principal_amount)).value())
+                outstanding_list.append(Money(str(outstanding_amount)).value())
+
+        return pd.DataFrame.from_dict(
+            {'Dato': self.period_list(), 'Termin': index_list, 'T.beløp': payment_list,
+             'Renter': interest_list, 'Avdrag': principal_list, 'Restgjeld': outstanding_list})
