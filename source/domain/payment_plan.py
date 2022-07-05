@@ -168,6 +168,7 @@ class PaymentPlan(Entity):
         df["Avdrag"] = [Money(str(-int(round(val)))).value() if i != 0 else "0 kr" for i, val in
                         enumerate(ppmt(self.interest_rate / self.interval / 100, df.index,
                                        self.period * self.interval, self.amount))]
+
         df["Avdrag.total"] = [Money(str(value)).value() for value in np.cumsum(list(
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
             enumerate(df["Avdrag"])))]
@@ -175,6 +176,25 @@ class PaymentPlan(Entity):
         df["Restgjeld"] = [Money(str(value)).value() for value in
                            -1 * (df["Avdrag.total"].str.replace(" kr", "")
                                  .str.replace(" ", "").astype(int) - self.amount)]
+
+        df.at[self.period * self.interval, "Avdrag"] = df.at[
+            self.period * self.interval - 1, "Restgjeld"]
+
+        df["Avdrag.total"] = [Money(str(value)).value() for value in np.cumsum(list(
+            int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
+            enumerate(df["Avdrag"])))]
+
+        df["Restgjeld"] = [Money(str(value)).value() for value in
+                           -1 * (df["Avdrag.total"].str.replace(" kr", "")
+                                 .str.replace(" ", "").astype(int) - self.amount)]
+
+        df["T.beløp"] = [Money(str(value)).value() for value in
+                         df["Renter"].str.replace(" kr", "").str.replace(" ", "").astype(int) + df[
+                             "Avdrag"].str.replace(" kr", "").str.replace(" ", "").astype(int)]
+
+        df["T.beløp.total"] = [Money(str(value)).value() for value in np.cumsum(list(
+            int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
+            enumerate(df["T.beløp"])))]
 
         return df.to_dict()
 
@@ -193,6 +213,18 @@ class PaymentPlan(Entity):
         df["Avdrag"] = ["0 kr"] + ([Money(
             str(int(round(self.amount / (self.interval * self.period))))).value()] * (
                                            len(self.period_list()) - 1))
+
+        df["Avdrag.total"] = [Money(str(value)).value() for value in np.cumsum(list(
+            int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
+            enumerate(df["Avdrag"])))]
+
+        df["Restgjeld"] = [Money(str(value)).value() for value in
+                           -1 * (df["Avdrag.total"].str.replace(" kr", "")
+                                 .str.replace(" ", "").astype(int) - self.amount)]
+
+        df.at[self.period * self.interval, "Avdrag"] = df.at[
+            self.period * self.interval - 1, "Restgjeld"]
+
         df["Avdrag.total"] = [Money(str(value)).value() for value in np.cumsum(list(
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
             enumerate(df["Avdrag"])))]
