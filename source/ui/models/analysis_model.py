@@ -62,15 +62,21 @@ class AnalysisModel(Model):
         if all(element in self.data.keys() for element in Mortgage.requirements_mortgage):
             self.parent.ui_form.tab_widget_home.setCurrentIndex(1)
 
-            mortgage_analysis = MortgageAnalysisProcess(self.data)
+            mortgage_analysis_data = MortgageAnalysisProcess(self.data).mortgage()
             self.set_line_edits(line_edit_text='', line_edits=self.analysis_keys,
-                                data=mortgage_analysis.mortgage())
-            if "nedbetalingsplan_annuitet" in mortgage_analysis.mortgage():
-                self.data.update({"nedbetalingsplan_annuitet": mortgage_analysis.mortgage()[
-                    "nedbetalingsplan_annuitet"]})
-            if "nedbetalingsplan_serie" in mortgage_analysis.mortgage():
-                self.data.update({"nedbetalingsplan_serie": mortgage_analysis.mortgage()[
-                    "nedbetalingsplan_serie"]})
+                                data=mortgage_analysis_data)
+
+            payment_keys = ["start_dato_annuitet", "slutt_dato_annuitet", "total_termin_annuitet",
+                            "aar_annuitet", "termin_aar_annuitet", "laan_annuitet",
+                            "rente_annuitet", "total_rente_annuitet", "total_belop_annuitet",
+                            "start_dato_serie", "nedbetalingsplan_annuitet", "slutt_dato_serie",
+                            "total_termin_serie", "aar_serie", "termin_aar_serie", "laan_serie",
+                            "rente_serie", "total_rente_serie", "total_belop_serie",
+                            "nedbetalingsplan_serie"]
+
+            for payment_key in payment_keys:
+                if payment_key in mortgage_analysis_data.keys():
+                    self.data.update({payment_key: mortgage_analysis_data[payment_key]})
 
     def clear_all(self):
         """

@@ -21,6 +21,12 @@ class PaymentModel(Model):
     Implementation of model for Payment plan
 
     """
+    payment_keys = ["start_dato_annuitet", "slutt_dato_annuitet", "total_termin_annuitet",
+                    "aar_annuitet", "termin_aar_annuitet", "laan_annuitet", "rente_annuitet",
+                    "total_rente_annuitet", "total_belop_annuitet", "start_dato_serie",
+                    "slutt_dato_serie", "total_termin_serie", "aar_serie",
+                    "termin_aar_serie", "laan_serie", "rente_serie",
+                    "total_rente_serie", "total_belop_serie"]
 
     def __init__(self, parent: QObject):
         """
@@ -52,6 +58,8 @@ class PaymentModel(Model):
                 pd.DataFrame(analysis_model.data["nedbetalingsplan_serie"]))
             self.parent.ui_form.table_view_serie.setModel(payment_data_model_serie)
 
+        self.set_line_edits("", line_edits=self.payment_keys, data=analysis_model.data)
+
     def clear_all(self):
         """
         method for clearing data in model
@@ -59,3 +67,6 @@ class PaymentModel(Model):
         """
         self.parent.ui_form.table_view_annuitet.setModel(None)
         self.parent.ui_form.table_view_annuitet.clearSpans()
+        self.parent.ui_form.table_view_serie.setModel(None)
+        self.parent.ui_form.table_view_serie.clearSpans()
+        self.clear_line_edits(self.payment_keys)

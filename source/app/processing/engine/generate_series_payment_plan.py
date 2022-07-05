@@ -58,4 +58,4 @@ class GenerateSeriesPaymentPlan(Operation):
         """
         series_plan = PaymentPlan(self.interest_rate, self.interval, self.period, self.amount,
                                   self.start_date)
-        return {"nedbetalingsplan_serie": series_plan.serial_mortgage_plan()}
+        return series_plan.serial_mortgage_plan()

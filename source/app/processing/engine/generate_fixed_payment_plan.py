@@ -58,4 +58,4 @@ class GenerateFixedPaymentPlan(Operation):
         """
         fixed_plan = PaymentPlan(self.interest_rate, self.interval, self.period, self.amount,
                                  self.start_date)
-        return {"nedbetalingsplan_annuitet": fixed_plan.fixed_mortgage_plan()}
+        return fixed_plan.fixed_mortgage_plan()

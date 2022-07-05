@@ -59,6 +59,7 @@ class PaymentPlan(Entity):
                                    [str, str, str, str, str])
         self._interest_rate = float(interest_rate.replace(" %", ""))
         self._interval = self.interval_mapping[interval]
+        self._interval_name = interval
         self._period = int(period.replace(" år", ""))
         self._amount = int(amount.replace(" kr", "").replace(" ", ""))
         self._start_date = datetime.strptime(start_date, "%d.%m.%Y").strftime('%Y-%m-%d')
@@ -105,6 +106,14 @@ class PaymentPlan(Entity):
         return self._interval
 
     @property
+    def interval_name(self):
+        """
+        interval getter
+
+        """
+        return self._interval_name
+
+    @property
     def period(self):
         """
         period getter
@@ -133,9 +142,9 @@ class PaymentPlan(Entity):
         method for producing list of periods
 
         """
-        return [""] + [str(date.date()) for date in
-                       pd.date_range(start=self.start_date, periods=self.interval * self.period,
-                                     freq=self.frequency)]
+        return [""] + [datetime.strptime(str(date.date()), '%Y-%m-%d').strftime('%d.%m.%Y') for date
+                       in pd.date_range(start=self.start_date, periods=self.interval * self.period,
+                                        freq=self.frequency)]
 
     def fixed_mortgage_plan(self):
         """
@@ -196,7 +205,21 @@ class PaymentPlan(Entity):
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
             enumerate(df["T.beløp"])))]
 
-        return df.to_dict()
+        start_date = df.at[1, "Dato"]
+        end_date = df.at[self.period * self.interval, "Dato"]
+        total_interest = df.at[self.period * self.interval, "Renter.total"]
+        total_payment = df.at[self.period * self.interval, "T.beløp.total"]
+        total_periods = str(df.at[self.period * self.interval, "Termin"])
+        termin_year = str(self.interval) + ' ({})'.format(self.interval_name)
+        years = str(self.period) + ' år'
+        interest = str(self.interest_rate) + ' %'
+        amount = df.at[self.period * self.interval, "Avdrag.total"]
+
+        return {"nedbetalingsplan_annuitet": df.to_dict(), "start_dato_annuitet": start_date,
+                "slutt_dato_annuitet": end_date, "total_rente_annuitet": total_interest,
+                "total_belop_annuitet": total_payment, "total_termin_annuitet": total_periods,
+                "aar_annuitet": years, "termin_aar_annuitet": termin_year, "laan_annuitet": amount,
+                "rente_annuitet": interest}
 
     def serial_mortgage_plan(self):
         """
@@ -247,4 +270,19 @@ class PaymentPlan(Entity):
         df["T.beløp.total"] = [Money(str(value)).value() for value in np.cumsum(list(
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
             enumerate(df["T.beløp"])))]
-        return df.to_dict()
+
+        start_date = df.at[1, "Dato"]
+        end_date = df.at[self.period * self.interval, "Dato"]
+        total_interest = df.at[self.period * self.interval, "Renter.total"]
+        total_payment = df.at[self.period * self.interval, "T.beløp.total"]
+        total_periods = str(df.at[self.period * self.interval, "Termin"])
+        termin_year = str(self.interval) + ' ({})'.format(self.interval_name)
+        years = str(self.period) + ' år'
+        interest = str(self.interest_rate) + ' %'
+        amount = df.at[self.period * self.interval, "Avdrag.total"]
+
+        return {"nedbetalingsplan_serie": df.to_dict(), "start_dato_serie": start_date,
+                "slutt_dato_serie": end_date, "total_rente_serie": total_interest,
+                "total_belop_serie": total_payment, "total_termin_serie": total_periods,
+                "aar_serie": years, "termin_aar_serie": termin_year, "laan_serie": amount,
+                "rente_serie": interest}

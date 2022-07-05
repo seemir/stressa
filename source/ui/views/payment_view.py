@@ -43,6 +43,8 @@ class PaymentView(QDialog):
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui_form.table_view_annuitet.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch)
+        self.ui_form.table_view_serie.horizontalHeader().setSectionResizeMode(
+            QHeaderView.Stretch)
 
         self.payment_model = PaymentModel(self)
 

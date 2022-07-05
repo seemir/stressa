@@ -697,7 +697,8 @@ class MortgageAnalysisProcess(Process):
         fixed_payment_plan = fixed_payment_plan_operation.run()
 
         fixed_payment_plan_signal = Signal(fixed_payment_plan,
-                                           "Generate Fixed Mortgage\n Payment Plan")
+                                           "Generate Fixed Mortgage\n Payment Plan",
+                                           prettify_keys=True, length=4)
         self.add_signal(fixed_payment_plan_signal, "fixed_payment_plan")
         self.add_transition(fixed_payment_plan_operation, fixed_payment_plan_signal, label="thread")
 
@@ -732,7 +733,8 @@ class MortgageAnalysisProcess(Process):
         series_payment_plan = series_payment_plan_operation.run()
 
         series_payment_plan_signal = Signal(series_payment_plan,
-                                            "Generate Series Mortgage\n Payment Plan")
+                                            "Generate Series Mortgage\n Payment Plan",
+                                            prettify_keys=True, length=4)
         self.add_signal(series_payment_plan_signal, "series_payment_plan")
         self.add_transition(series_payment_plan_operation, series_payment_plan_signal,
                             label="thread")
