@@ -10,10 +10,10 @@ __email__ = 'samir.adrik@gmail.com'
 from datetime import datetime
 import pandas as pd
 import numpy as np
+from numpy_financial import pmt, ipmt, ppmt
 
 from source.util import Assertor
 
-from .fixed_rate import FixedRate
 from .entity import Entity
 from .money import Money
 
@@ -137,132 +137,82 @@ class PaymentPlan(Entity):
                        pd.date_range(start=self.start_date, periods=self.interval * self.period,
                                      freq=self.frequency)]
 
-    def fixed_payment_list(self):
-        """
-        method for producing list of fixed payment
-
-        """
-        fixed_payment = FixedRate.periodical_payments(self.interest_rate, self.interval,
-                                                      self.period, self.amount)
-        return [0] + [int(fixed_payment) for _ in range(self.interval * self.period)]
-
     def fixed_mortgage_plan(self):
         """
         method for creating fixed mortgage plan
 
         """
-        index_list = []
-        dates_list = []
-        payment_list = []
-        interest_list = []
-        principal_list = []
-        outstanding_list = []
+        df = pd.DataFrame(columns=['Dato', 'Termin', 'T.beløp', 'T.beløp.total', 'Renter',
+                                   'Renter.total', 'Avdrag', 'Avdrag.total', 'Restgjeld'],
+                          dtype='float')
 
-        outstanding_amount = self.amount
+        df["Dato"] = self.period_list()
+        df["Termin"] = list(range(len(self.period_list())))
 
-        fixed_payment_list = self.fixed_payment_list()
+        df["T.beløp"] = Money(str(-int(round(pmt(self.interest_rate / self.interval / 100,
+                                                 self.period * self.interval,
+                                                 self.amount))))).value()
+        df.at[0, "T.beløp"] = "0 kr"
 
-        for i, payment in enumerate(fixed_payment_list):
-            print(i)
-            index_list.append(i)
-            if i == 0:
-                dates_list.append("")
-                payment_list.append("-" + Money(str(outstanding_amount)).value())
-                interest_list.append("0 kr")
-                principal_list.append("0 kr")
-                outstanding_list.append(Money(str(outstanding_amount)).value())
-            else:
-                dates_list.append(self.period_list()[i])
-                interest_amount = round(
-                    outstanding_amount * (self.interest_rate / self.interval / 100))
-
-                if i == len(fixed_payment_list) - 1:
-                    principal_amount = round(outstanding_amount)
-                    payment = round(principal_amount + interest_amount)
-                else:
-                    principal_amount = round(payment - interest_amount)
-                    payment = round(payment)
-
-                outstanding_amount = round(outstanding_amount - principal_amount)
-
-                payment_list.append(Money(str(payment)).value())
-                interest_list.append(Money(str(interest_amount)).value())
-                principal_list.append(Money(str(principal_amount)).value())
-                outstanding_list.append(Money(str(outstanding_amount)).value())
-
-        payment_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+        df["T.beløp.total"] = [Money(str(value)).value() for value in np.cumsum(list(
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
-            enumerate(payment_list)))]
+            enumerate(df["T.beløp"])))]
 
-        interest_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+        df["Renter"] = [Money(str(-int(round(val)))).value() if i != 0 else "0 kr" for i, val in
+                        enumerate(ipmt(self.interest_rate / self.interval / 100, df.index,
+                                       self.period * self.interval, self.amount))]
+        df["Renter.total"] = [Money(str(value)).value() for value in np.cumsum(list(
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
-            enumerate(interest_list)))]
+            enumerate(df["Renter"])))]
 
-        principal_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+        df["Avdrag"] = [Money(str(-int(round(val)))).value() if i != 0 else "0 kr" for i, val in
+                        enumerate(ppmt(self.interest_rate / self.interval / 100, df.index,
+                                       self.period * self.interval, self.amount))]
+        df["Avdrag.total"] = [Money(str(value)).value() for value in np.cumsum(list(
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
-            enumerate(principal_list)))]
+            enumerate(df["Avdrag"])))]
 
-        return {'Dato': self.period_list(), 'Termin': index_list, 'T.beløp': payment_list,
-                'T.beløp.total': payment_list_total, 'Renter': interest_list,
-                'Renter.total': interest_list_total, 'Avdrag': principal_list,
-                'Avdrag.total': principal_list_total, 'Restgjeld': outstanding_list}
+        df["Restgjeld"] = [Money(str(value)).value() for value in
+                           -1 * (df["Avdrag.total"].str.replace(" kr", "")
+                                 .str.replace(" ", "").astype(int) - self.amount)]
+
+        return df.to_dict()
 
     def serial_mortgage_plan(self):
         """
         method for creating serial mortgage plan
 
         """
-        index_list = []
-        dates_list = []
-        payment_list = []
-        interest_list = []
-        principal_list = []
-        outstanding_list = []
+        df = pd.DataFrame(columns=['Dato', 'Termin', 'T.beløp', 'T.beløp.total', 'Renter',
+                                   'Renter.total', 'Avdrag', 'Avdrag.total', 'Restgjeld'],
+                          dtype='float')
 
-        outstanding_amount = self.amount
+        df["Dato"] = self.period_list()
+        df["Termin"] = list(range(len(self.period_list())))
 
-        serial_payment_list = list(range(self.interval * self.period + 1))
-
-        for i in serial_payment_list:
-            index_list.append(i)
-            if i == 0:
-                dates_list.append("")
-                payment_list.append("-" + Money(str(outstanding_amount)).value())
-                interest_list.append("")
-                principal_list.append("")
-                outstanding_list.append(Money(str(outstanding_amount)).value())
-            else:
-                dates_list.append(self.period_list()[i])
-
-                interest_amount = round(
-                    outstanding_amount * (self.interest_rate / self.interval / 100))
-                if i == len(serial_payment_list) - 1:
-                    principal_amount = round(outstanding_amount)
-                else:
-                    principal_amount = round(self.amount / (self.interval * self.period))
-
-                payment_amount = round(principal_amount + interest_amount)
-
-                outstanding_amount = round(outstanding_amount - principal_amount)
-
-                payment_list.append(Money(str(payment_amount)).value())
-                interest_list.append(Money(str(interest_amount)).value())
-                principal_list.append(Money(str(principal_amount)).value())
-                outstanding_list.append(Money(str(outstanding_amount)).value())
-
-        payment_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+        df["Avdrag"] = ["0 kr"] + ([Money(
+            str(int(round(self.amount / (self.interval * self.period))))).value()] * (
+                                           len(self.period_list()) - 1))
+        df["Avdrag.total"] = [Money(str(value)).value() for value in np.cumsum(list(
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
-            enumerate(payment_list)))]
+            enumerate(df["Avdrag"])))]
 
-        interest_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+        df["Restgjeld"] = [Money(str(value)).value() for value in
+                           -1 * (df["Avdrag.total"].str.replace(" kr", "")
+                                 .str.replace(" ", "").astype(int) - self.amount)]
+
+        df["Renter"] = [Money(str(int(round(val)))).value() if i != 0 else "0 kr" for i, val in
+                        enumerate(df["Restgjeld"].shift(1).fillna("0 kr").str.replace(" kr", "") \
+                                  .str.replace(" ", "").astype(int) * (
+                                          self.interest_rate / self.interval / 100))]
+        df["Renter.total"] = [Money(str(value)).value() for value in np.cumsum(list(
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
-            enumerate(interest_list)))]
+            enumerate(df["Renter"])))]
 
-        principal_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+        df["T.beløp"] = [Money(str(value)).value() for value in
+                         df["Renter"].str.replace(" kr", "").str.replace(" ", "").astype(int) + df[
+                             "Avdrag"].str.replace(" kr", "").str.replace(" ", "").astype(int)]
+        df["T.beløp.total"] = [Money(str(value)).value() for value in np.cumsum(list(
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
-            enumerate(principal_list)))]
-
-        return {'Dato': self.period_list(), 'Termin': index_list, 'T.beløp': payment_list,
-                'T.beløp.total': payment_list_total, 'Renter': interest_list,
-                'Renter.total': interest_list_total, 'Avdrag': principal_list,
-                'Avdrag.total': principal_list_total, 'Restgjeld': outstanding_list}
+            enumerate(df["T.beløp"])))]
+        return df.to_dict()
