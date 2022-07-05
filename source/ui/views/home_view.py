@@ -26,6 +26,7 @@ from .statistics_view import StatisticsView
 from .info_clear_view import InfoClearView
 from .grunnboka_view import GrunnbokaView
 from .info_quit_view import InfoQuitView
+from .payment_view import PaymentView
 from .history_view import HistoryView
 from .budget_view import BudgetView
 from .error_view import ErrorView
@@ -78,6 +79,9 @@ class HomeView(QMainWindow):
         self._restructure_view = RestructureView(self)
         self._restructure_model = self.restructure_view.restructure_model
 
+        self._payment_view = PaymentView(self)
+        self._payment_model = self.payment_view.payment_model
+
         self._mortgage_model.mortgage_info()
         self._finn_model.finn_info()
         self._budget_view.budget_info()
@@ -93,9 +97,38 @@ class HomeView(QMainWindow):
         self.ui_form.action_logo.triggered.connect(self.info_tab)
 
         self.ui_form.push_button_restructure.clicked.connect(self.restructure_view.display)
+        self.ui_form.push_button_payment_plan.clicked.connect(self.payment_view.display)
 
         self.ui_form.push_button_restructure.setIcon(
             QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/restructure.png'))
+        self.ui_form.push_button_payment_plan.setIcon(
+            QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/plan.png'))
+
+    @property
+    def payment_view(self):
+        """
+        Payment view getter
+
+        Returns
+        -------
+        out     : QObject
+                  active Payment view in class
+
+        """
+        return self._payment_view
+
+    @property
+    def payment_model(self):
+        """
+        Payment model getter
+
+        Returns
+        -------
+        out     : QObject
+                  active Payment model in class
+
+        """
+        return self._payment_model
 
     def closeEvent(self, event):
         """

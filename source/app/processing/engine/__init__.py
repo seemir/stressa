@@ -12,6 +12,8 @@ from .finn_ownership_history_connector import FinnOwnershipHistoryConnector
 from .skatteetaten_tax_info_connector import SkatteetatenTaxInfoConnector
 from .finn_statistics_info_connector import FinnStatisticsInfoConnector
 from .sifo_base_expenses_connector import SifoBaseExpensesConnector
+from .generate_series_payment_plan import GenerateSeriesPaymentPlan
+from .generate_fixed_payment_plan import GenerateFixedPaymentPlan
 from .finn_advert_info_connector import FinnAdvertInfoConnector
 from .postal_code_info_connector import PostalCodeInfoConnector
 from .validate_postal_code import ValidatePostalCode

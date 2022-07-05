@@ -65,6 +65,12 @@ class AnalysisModel(Model):
             mortgage_analysis = MortgageAnalysisProcess(self.data)
             self.set_line_edits(line_edit_text='', line_edits=self.analysis_keys,
                                 data=mortgage_analysis.mortgage())
+            if "nedbetalingsplan_annuitet" in mortgage_analysis.mortgage():
+                self.data.update({"nedbetalingsplan_annuitet": mortgage_analysis.mortgage()[
+                    "nedbetalingsplan_annuitet"]})
+            if "nedbetalingsplan_serie" in mortgage_analysis.mortgage():
+                self.data.update({"nedbetalingsplan_serie": mortgage_analysis.mortgage()[
+                    "nedbetalingsplan_serie"]})
 
     def clear_all(self):
         """

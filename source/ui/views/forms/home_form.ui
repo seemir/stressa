@@ -10065,172 +10065,6 @@
                   <bool>false</bool>
                  </property>
                  <layout class="QGridLayout" name="gridLayout_16">
-                  <item row="10" column="1">
-                   <widget class="QLineEdit" name="line_edit_stresstest_annuitet">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="10" column="0">
-                   <widget class="QLabel" name="label_stresstest_annuitet">
-                    <property name="text">
-                     <string>Stresstest annuitet</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="9" column="0">
-                   <widget class="QLabel" name="label_nettolikviditet">
-                    <property name="text">
-                     <string>Nettolikviditet</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="9" column="1">
-                   <widget class="QLineEdit" name="line_edit_netto_likviditet_2">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="4" column="1">
-                   <widget class="QLineEdit" name="line_edit_egenkapital_andel">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="1">
-                   <widget class="QLineEdit" name="line_edit_arsinntekt_aar">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>230</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="2" column="0">
-                   <widget class="QLabel" name="label_arsinntekt">
-                    <property name="minimumSize">
-                     <size>
-                      <width>120</width>
-                      <height>33</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>Årsinntekt</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="0">
-                   <widget class="QLabel" name="label_trygde_egenkapital">
-                    <property name="text">
-                     <string>Egenkapital</string>
-                    </property>
-                    <property name="buddy">
-                     <cstring>line_edit_trygde_inntekt_total</cstring>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="6" column="1">
-                   <widget class="QLineEdit" name="line_edit_belaningsgrad">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>0</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="clearButtonEnabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="7" column="0">
-                   <widget class="QLabel" name="label_total_ramme">
-                    <property name="text">
-                     <string>Total ramme</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="4" column="0">
-                   <widget class="QLabel" name="label_egenkapital_andel">
-                    <property name="text">
-                     <string>Egenkapitalandel</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="3" column="1">
-                   <widget class="QLineEdit" name="line_edit_egenkapital_2">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="6" column="0">
-                   <widget class="QLabel" name="label_belaningsgrad">
-                    <property name="minimumSize">
-                     <size>
-                      <width>120</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="text">
-                     <string>Belåningsgrad</string>
-                    </property>
-                    <property name="buddy">
-                     <cstring>line_edit_brutto_inntekt_total</cstring>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="7" column="1">
-                   <widget class="QLineEdit" name="line_edit_total_ramme">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="8" column="0" colspan="2">
-                   <widget class="QLabel" name="label_whitespace">
-                    <property name="text">
-                     <string/>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="5" column="0">
-                   <widget class="QLabel" name="label_belaning">
-                    <property name="text">
-                     <string>Belåning</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="11" column="1">
-                   <widget class="QLineEdit" name="line_edit_stresstest_serie">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="5" column="1">
-                   <widget class="QLineEdit" name="line_edit_belaning">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item row="11" column="0">
-                   <widget class="QLabel" name="label_stresstest_serie">
-                    <property name="text">
-                     <string>Stresstest serie</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item row="2" column="2" rowspan="12">
                    <widget class="QGroupBox" name="group_box_boliglansforskriften">
                     <property name="title">
@@ -10373,7 +10207,186 @@
                     </layout>
                    </widget>
                   </item>
-                  <item row="13" column="1">
+                  <item row="10" column="1">
+                   <widget class="QLineEdit" name="line_edit_stresstest_annuitet">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="10" column="0">
+                   <widget class="QLabel" name="label_stresstest_annuitet">
+                    <property name="text">
+                     <string>Stresstest annuitet</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="9" column="0">
+                   <widget class="QLabel" name="label_nettolikviditet">
+                    <property name="text">
+                     <string>Nettolikviditet</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="9" column="1">
+                   <widget class="QLineEdit" name="line_edit_netto_likviditet_2">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="line_edit_arsinntekt_aar">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>230</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_trygde_egenkapital">
+                    <property name="text">
+                     <string>Egenkapital</string>
+                    </property>
+                    <property name="buddy">
+                     <cstring>line_edit_trygde_inntekt_total</cstring>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="1">
+                   <widget class="QLineEdit" name="line_edit_belaningsgrad">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="clearButtonEnabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="QLineEdit" name="line_edit_egenkapital_andel">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_arsinntekt">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>33</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Årsinntekt</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="0">
+                   <widget class="QLabel" name="label_total_ramme">
+                    <property name="text">
+                     <string>Total ramme</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QLineEdit" name="line_edit_egenkapital_2">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="0">
+                   <widget class="QLabel" name="label_belaningsgrad">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Belåningsgrad</string>
+                    </property>
+                    <property name="buddy">
+                     <cstring>line_edit_brutto_inntekt_total</cstring>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_egenkapital_andel">
+                    <property name="text">
+                     <string>Egenkapitalandel</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="1">
+                   <widget class="QLineEdit" name="line_edit_total_ramme">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QLineEdit" name="line_edit_belaning">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="0" colspan="2">
+                   <widget class="QLabel" name="label_whitespace">
+                    <property name="text">
+                     <string/>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_belaning">
+                    <property name="text">
+                     <string>Belåning</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="11" column="1">
+                   <widget class="QLineEdit" name="line_edit_stresstest_serie">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="11" column="0">
+                   <widget class="QLabel" name="label_stresstest_serie">
+                    <property name="text">
+                     <string>Stresstest serie</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="14" column="2">
+                   <widget class="QPushButton" name="push_button_payment_plan">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Detaljert nedbetalingsplan</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="14" column="1">
                    <widget class="QPushButton" name="push_button_restructure">
                     <property name="minimumSize">
                      <size>

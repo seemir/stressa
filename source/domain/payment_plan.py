@@ -9,6 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from datetime import datetime
 import pandas as pd
+import numpy as np
 
 from source.util import Assertor
 
@@ -162,12 +163,13 @@ class PaymentPlan(Entity):
         fixed_payment_list = self.fixed_payment_list()
 
         for i, payment in enumerate(fixed_payment_list):
+            print(i)
             index_list.append(i)
             if i == 0:
                 dates_list.append("")
                 payment_list.append("-" + Money(str(outstanding_amount)).value())
-                interest_list.append("")
-                principal_list.append("")
+                interest_list.append("0 kr")
+                principal_list.append("0 kr")
                 outstanding_list.append(Money(str(outstanding_amount)).value())
             else:
                 dates_list.append(self.period_list()[i])
@@ -188,9 +190,22 @@ class PaymentPlan(Entity):
                 principal_list.append(Money(str(principal_amount)).value())
                 outstanding_list.append(Money(str(outstanding_amount)).value())
 
-        return pd.DataFrame.from_dict(
-            {'Dato': self.period_list(), 'Termin': index_list, 'T.beløp': payment_list,
-             'Renter': interest_list, 'Avdrag': principal_list, 'Restgjeld': outstanding_list})
+        payment_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+            int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
+            enumerate(payment_list)))]
+
+        interest_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+            int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
+            enumerate(interest_list)))]
+
+        principal_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+            int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
+            enumerate(principal_list)))]
+
+        return {'Dato': self.period_list(), 'Termin': index_list, 'T.beløp': payment_list,
+                'T.beløp.total': payment_list_total, 'Renter': interest_list,
+                'Renter.total': interest_list_total, 'Avdrag': principal_list,
+                'Avdrag.total': principal_list_total, 'Restgjeld': outstanding_list}
 
     def serial_mortgage_plan(self):
         """
@@ -235,6 +250,19 @@ class PaymentPlan(Entity):
                 principal_list.append(Money(str(principal_amount)).value())
                 outstanding_list.append(Money(str(outstanding_amount)).value())
 
-        return pd.DataFrame.from_dict(
-            {'Dato': self.period_list(), 'Termin': index_list, 'T.beløp': payment_list,
-             'Renter': interest_list, 'Avdrag': principal_list, 'Restgjeld': outstanding_list})
+        payment_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+            int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
+            enumerate(payment_list)))]
+
+        interest_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+            int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
+            enumerate(interest_list)))]
+
+        principal_list_total = [Money(str(value)).value() for value in np.cumsum(list(
+            int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
+            enumerate(principal_list)))]
+
+        return {'Dato': self.period_list(), 'Termin': index_list, 'T.beløp': payment_list,
+                'T.beløp.total': payment_list_total, 'Renter': interest_list,
+                'Renter.total': interest_list_total, 'Avdrag': principal_list,
+                'Avdrag.total': principal_list_total, 'Restgjeld': outstanding_list}
