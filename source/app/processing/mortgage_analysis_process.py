@@ -45,6 +45,7 @@ class MortgageAnalysisProcess(Process):
 
         self.run_parallel([self.multiply_1, self.subtraction_1, self.ssb_connector,
                            self.fixed_mortgage_payment_plan, self.series_mortgage_payment_plan])
+
         self.run_parallel([self.addition_1, self.extract_7, self.division_1, self.addition_2])
         self.run_parallel([self.division_2, self.division_3, self.fixed_payment])
         self.run_parallel([self.subtraction_2, self.subtraction_3, self.converter])

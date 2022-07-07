@@ -73,12 +73,14 @@ class RestructureModel(Model):
         restructure_data.update(self.parent.parent.analysis_model.data)
         restructure_data.update(self.data)
         if all(element in restructure_data.keys() for element in Mortgage.requirements_restructure):
-            restructure = RestructureProcess(restructure_data)
+            restructure_data = RestructureProcess(restructure_data).restructure()
             analysis_model = self.parent.parent.analysis_model
 
             analysis_model.set_line_edits(line_edit_text='',
                                           line_edits=analysis_model.analysis_keys,
-                                          data=restructure.restructure())
+                                          data=restructure_data)
+
+            self.data.update(restructure_data)
             self.parent.close()
 
     def clear_all(self):
@@ -89,3 +91,4 @@ class RestructureModel(Model):
         self.clear_combo_boxes(["lanetype", "intervall", "laneperiode"])
         self.clear_date_edits(["startdato"])
         self.clear_line_edits(["egenkapital", "belaning"])
+        self.data = {}

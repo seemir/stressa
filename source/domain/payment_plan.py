@@ -158,7 +158,7 @@ class PaymentPlan(Entity):
         df["Termin"] = list(range(len(self.period_list())))
         df["Dato"] = self.period_list()
 
-        df["T.beløp"] = Money(str(-int(
+        df["T.beløp"] = Money(str(int(
             round(FixedRate.periodical_payments(self.interest_rate, self.interval, self.period,
                                                 self.amount))))).value()
 
