@@ -151,12 +151,12 @@ class PaymentPlan(Entity):
         method for creating fixed mortgage plan
 
         """
-        df = pd.DataFrame(columns=['Dato', 'Termin', 'T.beløp', 'T.beløp.total', 'Renter',
+        df = pd.DataFrame(columns=['Termin', 'Dato', 'T.beløp', 'T.beløp.total', 'Renter',
                                    'Renter.total', 'Avdrag', 'Avdrag.total', 'Restgjeld'],
                           dtype='float')
 
-        df["Dato"] = self.period_list()
         df["Termin"] = list(range(len(self.period_list())))
+        df["Dato"] = self.period_list()
 
         df["T.beløp"] = Money(str(-int(round(pmt(self.interest_rate / self.interval / 100,
                                                  self.period * self.interval,
@@ -167,20 +167,25 @@ class PaymentPlan(Entity):
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
             enumerate(df["T.beløp"])))]
 
-        df["Renter"] = [Money(str(-int(round(val)))).value() if i != 0 else "0 kr" for i, val in
-                        enumerate(ipmt(self.interest_rate / self.interval / 100, df.index,
-                                       self.period * self.interval, self.amount))]
-        df["Renter.total"] = [Money(str(value)).value() for value in np.cumsum(list(
-            int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
-            enumerate(df["Renter"])))]
+        df["Avdrag"] = [Money(str(round((float(val.replace(" kr", "").replace(" ", "")) - (
+                self.interest_rate / self.interval / 100) * self.amount) *
+                                        ((1 + self.interest_rate / self.interval / 100) ** (
+                                                i - 1))))).value() for i, val in
+                        enumerate(df["T.beløp"])]
 
-        df["Avdrag"] = [Money(str(-int(round(val)))).value() if i != 0 else "0 kr" for i, val in
-                        enumerate(ppmt(self.interest_rate / self.interval / 100, df.index,
-                                       self.period * self.interval, self.amount))]
+        df.at[0, "Avdrag"] = "0 kr"
 
         df["Avdrag.total"] = [Money(str(value)).value() for value in np.cumsum(list(
             int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
             enumerate(df["Avdrag"])))]
+
+        df["Renter"] = [Money(str(value)).value() for value in
+                        df["T.beløp"].str.replace(" kr", "").str.replace(" ", "").astype(int) - df[
+                            "Avdrag"].str.replace(" kr", "").str.replace(" ", "").astype(int)]
+
+        df["Renter.total"] = [Money(str(value)).value() for value in np.cumsum(list(
+            int(value.replace(" kr", "").replace(" ", "")) if i != 0 else 0 for i, value in
+            enumerate(df["Renter"])))]
 
         df["Restgjeld"] = [Money(str(value)).value() for value in
                            -1 * (df["Avdrag.total"].str.replace(" kr", "")
@@ -226,12 +231,12 @@ class PaymentPlan(Entity):
         method for creating serial mortgage plan
 
         """
-        df = pd.DataFrame(columns=['Dato', 'Termin', 'T.beløp', 'T.beløp.total', 'Renter',
+        df = pd.DataFrame(columns=['Termin', 'Dato', 'T.beløp', 'T.beløp.total', 'Renter',
                                    'Renter.total', 'Avdrag', 'Avdrag.total', 'Restgjeld'],
                           dtype='float')
 
-        df["Dato"] = self.period_list()
         df["Termin"] = list(range(len(self.period_list())))
+        df["Dato"] = self.period_list()
 
         df["Avdrag"] = ["0 kr"] + ([Money(
             str(int(round(self.amount / (self.interval * self.period))))).value()] * (
