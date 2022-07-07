@@ -10,10 +10,10 @@ __email__ = 'samir.adrik@gmail.com'
 from datetime import datetime
 import pandas as pd
 import numpy as np
-from numpy_financial import pmt, ipmt, ppmt
 
 from source.util import Assertor
 
+from .fixed_rate import FixedRate
 from .entity import Entity
 from .money import Money
 
@@ -158,9 +158,10 @@ class PaymentPlan(Entity):
         df["Termin"] = list(range(len(self.period_list())))
         df["Dato"] = self.period_list()
 
-        df["T.beløp"] = Money(str(-int(round(pmt(self.interest_rate / self.interval / 100,
-                                                 self.period * self.interval,
-                                                 self.amount))))).value()
+        df["T.beløp"] = Money(str(-int(
+            round(FixedRate.periodical_payments(self.interest_rate, self.interval, self.period,
+                                                self.amount))))).value()
+
         df.at[0, "T.beløp"] = "0 kr"
 
         df["T.beløp.total"] = [Money(str(value)).value() for value in np.cumsum(list(
