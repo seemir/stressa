@@ -40,7 +40,7 @@ iniconfig==1.1.1
 isort==5.10.1
 jdcal==1.4.1
 Jinja2==2.11.3
-kiwisolver==1.4.3
+kiwisolver==1.4.4
 lazy-object-proxy==1.5.2
 llvmlite==0.38.1
 loguru==0.5.1
