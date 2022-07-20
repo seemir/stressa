@@ -26,7 +26,9 @@ class PaymentModel(Model):
                     "total_rente_annuitet", "total_belop_annuitet", "start_dato_serie",
                     "slutt_dato_serie", "total_termin_serie", "aar_serie",
                     "termin_aar_serie", "laan_serie", "rente_serie",
-                    "total_rente_serie", "total_belop_serie"]
+                    "total_rente_serie", "total_belop_serie", "netto_likviditet_plan_serie",
+                    "netto_likviditet_mnd_serie", "netto_likviditet_plan_annuitet",
+                    "netto_likviditet_mnd_annuitet"]
 
     def __init__(self, parent: QObject):
         """

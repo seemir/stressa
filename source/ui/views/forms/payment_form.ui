@@ -1314,6 +1314,13 @@
           <enum>QFrame::Raised</enum>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_slutt_dato_annuitet">
+            <property name="text">
+             <string>Sluttdato</string>
+            </property>
+           </widget>
+          </item>
           <item row="0" column="1">
            <widget class="QLineEdit" name="line_edit_start_dato_annuitet">
             <property name="enabled">
@@ -1333,8 +1340,8 @@
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="line_edit_slutt_dato_annuitet">
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="line_edit_termin_aar_annuitet">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1343,13 +1350,6 @@
               <width>230</width>
               <height>16777215</height>
              </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_slutt_dato_annuitet">
-            <property name="text">
-             <string>Sluttdato</string>
             </property>
            </widget>
           </item>
@@ -1366,7 +1366,20 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="line_edit_slutt_dato_annuitet">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>230</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="1">
            <widget class="QLineEdit" name="line_edit_total_termin_annuitet">
             <property name="enabled">
              <bool>false</bool>
@@ -1379,41 +1392,7 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="label_antall_terminer_annuitet">
-            <property name="text">
-             <string>Antall termin</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_years_annuitet">
-            <property name="text">
-             <string>Antall år</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="line_edit_termin_aar_annuitet">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>230</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_termin_aar_annuitet">
-            <property name="text">
-             <string>Termin per år</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
+          <item row="4" column="1">
            <widget class="QLineEdit" name="line_edit_aar_annuitet">
             <property name="enabled">
              <bool>false</bool>
@@ -1432,7 +1411,7 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="3">
+          <item row="9" column="3">
            <widget class="QLineEdit" name="line_edit_total_belop_annuitet">
             <property name="enabled">
              <bool>false</bool>
@@ -1445,14 +1424,28 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
-           <widget class="QLabel" name="label_belaning_annuitet">
+          <item row="5" column="0">
+           <widget class="QLabel" name="label_termin_aar_annuitet">
             <property name="text">
-             <string>Total lån</string>
+             <string>Termin per år</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_antall_terminer_annuitet">
+            <property name="text">
+             <string>Antall termin</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_years_annuitet">
+            <property name="text">
+             <string>Antall år</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="1">
            <widget class="QLineEdit" name="line_edit_rente_annuitet">
             <property name="enabled">
              <bool>false</bool>
@@ -1465,21 +1458,75 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="2">
+          <item row="9" column="2">
            <widget class="QLabel" name="label_total_terminbelop_annuitet">
             <property name="text">
              <string>Total terminbeløp</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="2">
+          <item row="9" column="0">
+           <widget class="QLabel" name="label_rente_annuitet">
+            <property name="text">
+             <string>Nominell rente</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_netto_likviditet_plan_annuitet">
+            <property name="text">
+             <string>Nettolikviditet plan</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_netto_likviditet_mnd_annuitet">
+            <property name="text">
+             <string>Nettolikviditet mnd</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="line_edit_netto_likviditet_plan_annuitet">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>230</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="line_edit_netto_likviditet_mnd_annuitet">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>230</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="2">
            <widget class="QLabel" name="label_total_rente_annuitet">
             <property name="text">
              <string>Total rente</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="3">
+          <item row="7" column="2">
+           <widget class="QLabel" name="label_belaning_annuitet">
+            <property name="text">
+             <string>Total lån</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="3">
            <widget class="QLineEdit" name="line_edit_total_rente_annuitet">
             <property name="enabled">
              <bool>false</bool>
@@ -1492,7 +1539,7 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="3">
+          <item row="7" column="3">
            <widget class="QLineEdit" name="line_edit_laan_annuitet">
             <property name="enabled">
              <bool>false</bool>
@@ -1502,13 +1549,6 @@
               <width>230</width>
               <height>16777215</height>
              </size>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="label_rente_annuitet">
-            <property name="text">
-             <string>Nominell rente</string>
             </property>
            </widget>
           </item>
@@ -1990,6 +2030,13 @@
             </property>
            </widget>
           </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_slutt_dato_serie">
+            <property name="text">
+             <string>Sluttdato</string>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="line_edit_slutt_dato_serie">
             <property name="enabled">
@@ -2000,13 +2047,6 @@
               <width>230</width>
               <height>16777215</height>
              </size>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="label_slutt_dato_serie">
-            <property name="text">
-             <string>Sluttdato</string>
             </property>
            </widget>
           </item>
@@ -2023,34 +2063,7 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="label_years_serie">
-            <property name="text">
-             <string>Antall år</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="line_edit_termin_aar_serie">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>230</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="label_termin_aar_serie">
-            <property name="text">
-             <string>Termin per år</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
+          <item row="4" column="1">
            <widget class="QLineEdit" name="line_edit_aar_serie">
             <property name="enabled">
              <bool>false</bool>
@@ -2069,14 +2082,41 @@
             </property>
            </widget>
           </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_years_serie">
+            <property name="text">
+             <string>Antall år</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QLineEdit" name="line_edit_termin_aar_serie">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>230</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
           <item row="5" column="0">
+           <widget class="QLabel" name="label_termin_aar_serie">
+            <property name="text">
+             <string>Termin per år</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
            <widget class="QLabel" name="label_rente_serie">
             <property name="text">
              <string>Nominell rente</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
+          <item row="9" column="1">
            <widget class="QLineEdit" name="line_edit_rente_serie">
             <property name="enabled">
              <bool>false</bool>
@@ -2089,20 +2129,7 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="3">
-           <widget class="QLineEdit" name="line_edit_total_rente_serie">
-            <property name="enabled">
-             <bool>false</bool>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>230</width>
-              <height>16777215</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="3">
+          <item row="9" column="3">
            <widget class="QLineEdit" name="line_edit_total_belop_serie">
             <property name="enabled">
              <bool>false</bool>
@@ -2115,28 +2142,14 @@
             </property>
            </widget>
           </item>
-          <item row="4" column="2">
-           <widget class="QLabel" name="label_total_rente_serie">
-            <property name="text">
-             <string>Total rente</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="2">
-           <widget class="QLabel" name="label_total_terminbelop_serie">
-            <property name="text">
-             <string>Total terminbeløp</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
+          <item row="6" column="0">
            <widget class="QLabel" name="label_antall_terminer_serie">
             <property name="text">
              <string>Antall termin</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
+          <item row="6" column="1">
            <widget class="QLineEdit" name="line_edit_total_termin_serie">
             <property name="enabled">
              <bool>false</bool>
@@ -2149,14 +2162,81 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="2">
+          <item row="9" column="2">
+           <widget class="QLabel" name="label_total_terminbelop_serie">
+            <property name="text">
+             <string>Total terminbeløp</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_netto_likviditet_serie_plan">
+            <property name="text">
+             <string>Nettolikviditet plan</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_netto_likviditet_serie_mnd">
+            <property name="text">
+             <string>Nettolikviditet mnd</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="1">
+           <widget class="QLineEdit" name="line_edit_netto_likviditet_plan_serie">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>230</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="1">
+           <widget class="QLineEdit" name="line_edit_netto_likviditet_mnd_serie">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>230</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="2">
+           <widget class="QLabel" name="label_total_rente_serie">
+            <property name="text">
+             <string>Total rente</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="2">
            <widget class="QLabel" name="label_belaning_serie">
             <property name="text">
              <string>Total lån</string>
             </property>
            </widget>
           </item>
-          <item row="3" column="3">
+          <item row="8" column="3">
+           <widget class="QLineEdit" name="line_edit_total_rente_serie">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>230</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="3">
            <widget class="QLineEdit" name="line_edit_laan_serie">
             <property name="enabled">
              <bool>false</bool>
@@ -2200,8 +2280,10 @@
   <tabstop>line_edit_slutt_dato_annuitet</tabstop>
   <tabstop>line_edit_aar_annuitet</tabstop>
   <tabstop>line_edit_termin_aar_annuitet</tabstop>
-  <tabstop>line_edit_laan_annuitet</tabstop>
   <tabstop>line_edit_total_termin_annuitet</tabstop>
+  <tabstop>line_edit_netto_likviditet_mnd_annuitet</tabstop>
+  <tabstop>line_edit_laan_annuitet</tabstop>
+  <tabstop>line_edit_netto_likviditet_plan_annuitet</tabstop>
   <tabstop>line_edit_total_rente_annuitet</tabstop>
   <tabstop>line_edit_rente_annuitet</tabstop>
   <tabstop>line_edit_total_belop_annuitet</tabstop>
@@ -2210,8 +2292,10 @@
   <tabstop>line_edit_slutt_dato_serie</tabstop>
   <tabstop>line_edit_aar_serie</tabstop>
   <tabstop>line_edit_termin_aar_serie</tabstop>
-  <tabstop>line_edit_laan_serie</tabstop>
   <tabstop>line_edit_total_termin_serie</tabstop>
+  <tabstop>line_edit_netto_likviditet_mnd_serie</tabstop>
+  <tabstop>line_edit_laan_serie</tabstop>
+  <tabstop>line_edit_netto_likviditet_plan_serie</tabstop>
   <tabstop>line_edit_total_rente_serie</tabstop>
   <tabstop>line_edit_rente_serie</tabstop>
   <tabstop>line_edit_total_belop_serie</tabstop>

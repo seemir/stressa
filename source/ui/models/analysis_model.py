@@ -75,7 +75,9 @@ class AnalysisModel(Model):
                             "start_dato_serie", "nedbetalingsplan_annuitet", "slutt_dato_serie",
                             "total_termin_serie", "aar_serie", "termin_aar_serie", "laan_serie",
                             "rente_serie", "total_rente_serie", "total_belop_serie",
-                            "nedbetalingsplan_serie"]
+                            "nedbetalingsplan_serie", "netto_likviditet_plan_serie",
+                            "netto_likviditet_mnd_serie", "netto_likviditet_plan_annuitet",
+                            "netto_likviditet_mnd_annuitet"]
 
             for payment_key in payment_keys:
                 if payment_key in mortgage_analysis_data.keys():

@@ -42,14 +42,15 @@ class RestructureProcess(Process):
 
         self.run_parallel([self.extract_1, self.fixed_stress_test, self.extract_2, self.extract_3,
                            self.extract_4, self.extract_5, self.factor_3, self.extract_6,
-                           self.serial_stress_test, self.subtraction_1])
+                           self.extract_7, self.serial_stress_test, self.subtraction_1])
 
         self.run_parallel([self.ssb_connector, self.fixed_mortgage_payment_plan,
                            self.series_mortgage_payment_plan])
 
         self.run_parallel([self.addition_1, self.multiply_1, self.addition_2, self.division_1])
-        self.run_parallel([self.extract_6, self.division_2, self.fixed_payment, self.division_3])
-        self.run_parallel([self.subtraction_2, self.subtraction_3, self.converter])
+        self.run_parallel([self.division_2, self.fixed_payment, self.division_3])
+        self.run_parallel([self.subtraction_2, self.subtraction_3, self.converter_1,
+                           self.converter_2])
 
         self.multiplex()
 
@@ -649,7 +650,7 @@ class RestructureProcess(Process):
 
     @Profiling
     @Debugger
-    def converter(self):
+    def converter_1(self):
         """
         method for converting net liquidity to monthly values
 
@@ -668,6 +669,60 @@ class RestructureProcess(Process):
         converter_signal = Signal(converter, "Calculated Monthly Fixed Amount")
         self.add_signal(converter_signal, "fixed_amount_monthly")
         self.add_transition(converter_operation, converter_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def converter_2(self):
+        """
+        method for converting net liquidity to plan values
+
+        """
+        interval = self.get_signal("interval")
+        net_liquidity = self.get_signal("netto_likviditet")
+
+        print("du er her: " + str(interval.data))
+        print("du er her: " + str(net_liquidity.data))
+
+        net_liquidity_converter_operation = Converter(net_liquidity.data, 'Månedlig',
+                                                      interval.data['intervall'])
+        self.add_node(net_liquidity_converter_operation)
+        self.add_transition(interval, net_liquidity_converter_operation, label="thread")
+        self.add_transition(net_liquidity, net_liquidity_converter_operation, label="thread")
+
+        net_liquidity_fixed = net_liquidity_converter_operation.run()
+        net_liquidity_fixed['netto_likviditet_plan_annuitet'] = net_liquidity_fixed.pop(
+            'netto_likviditet_2')
+
+        net_liquidity_fixed_signal = Signal(net_liquidity_fixed,
+                                            "Converted Fixed Net Liquidity Plan")
+        self.add_signal(net_liquidity_fixed_signal, "net_liquidity_plan_fixed")
+        self.add_transition(net_liquidity_converter_operation, net_liquidity_fixed_signal,
+                            label="thread")
+
+        net_liquidity_fixed_mnd = {"netto_likviditet_mnd_annuitet":
+                                       net_liquidity.data['netto_likviditet_2']}
+        net_liquidity_fixed_mnd_signal = Signal(net_liquidity_fixed_mnd,
+                                                "Monthly Fixed Net Liquidity Plan")
+        self.add_signal(net_liquidity_fixed_mnd_signal, "net_liquidity_mnd_fixed")
+        self.add_transition(net_liquidity_converter_operation, net_liquidity_fixed_mnd_signal,
+                            label="thread")
+
+        net_liquidity_series = {"netto_likviditet_plan_serie":
+                                    self.get_signal('net_liquidity_plan_fixed').data[
+                                        'netto_likviditet_plan_annuitet']}
+        net_liquidity_series_signal = Signal(net_liquidity_series,
+                                             "Converted Series Net Liquidity Plan")
+        self.add_signal(net_liquidity_series_signal, "net_liquidity_plan_series")
+        self.add_transition(net_liquidity_converter_operation, net_liquidity_series_signal,
+                            label="thread")
+
+        net_liquidity_series_mnd = {"netto_likviditet_mnd_serie":
+                                        net_liquidity.data['netto_likviditet_2']}
+        net_liquidity_series_mnd_signal = Signal(net_liquidity_series_mnd,
+                                                 "Monthly Series Net Liquidity Plan")
+        self.add_signal(net_liquidity_series_mnd_signal, "net_liquidity_mnd_series")
+        self.add_transition(net_liquidity_converter_operation, net_liquidity_series_mnd_signal,
+                            label="thread")
 
     @Profiling
     @Debugger
@@ -768,6 +823,10 @@ class RestructureProcess(Process):
         fixed_amount = self.get_signal("fixed_amount_monthly")
         fixed_payment_plan = self.get_signal("fixed_payment_plan")
         series_payment_plan = self.get_signal("series_payment_plan")
+        net_liquidity_plan_fixed = self.get_signal("net_liquidity_plan_fixed")
+        net_liquidity_mnd_fixed = self.get_signal("net_liquidity_mnd_fixed")
+        net_liquidity_plan_series = self.get_signal("net_liquidity_plan_series")
+        net_liquidity_mnd_series = self.get_signal("net_liquidity_mnd_series")
 
         multiplex_operation = Multiplex([fixed_stress_rate, serial_stress_rate,
                                          required_fixed_rates, required_serial_rates, equity,
@@ -776,8 +835,10 @@ class RestructureProcess(Process):
                                          required_mortgage_limit, required_equity_share,
                                          required_mortgage_share, required_total_financing_frame,
                                          required_equity, fixed_amount, fixed_payment_plan,
-                                         series_payment_plan],
-                                        "Multiplex Mortgage Information")
+                                         series_payment_plan, net_liquidity_plan_fixed,
+                                         net_liquidity_mnd_fixed, net_liquidity_plan_series,
+                                         net_liquidity_mnd_series],
+                                        "Multiplex Restructured Mortgage Information")
 
         self.add_node(multiplex_operation)
 
@@ -800,9 +861,13 @@ class RestructureProcess(Process):
         self.add_transition(fixed_amount, multiplex_operation)
         self.add_transition(fixed_payment_plan, multiplex_operation)
         self.add_transition(series_payment_plan, multiplex_operation)
+        self.add_transition(net_liquidity_plan_fixed, multiplex_operation)
+        self.add_transition(net_liquidity_mnd_fixed, multiplex_operation)
+        self.add_transition(net_liquidity_plan_series, multiplex_operation)
+        self.add_transition(net_liquidity_mnd_series, multiplex_operation)
 
         multiplex = multiplex_operation.run()
-        multiplex_signal = Signal(multiplex, "Multiplexed Restructure Information",
+        multiplex_signal = Signal(multiplex, "Multiplexed Restructure Mortgage Information",
                                   prettify_keys=True, length=4)
         self.add_signal(multiplex_signal, "multiplex_restructure_info")
         self.add_transition(multiplex_operation, multiplex_signal)
