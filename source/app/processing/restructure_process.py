@@ -680,9 +680,6 @@ class RestructureProcess(Process):
         interval = self.get_signal("interval")
         net_liquidity = self.get_signal("netto_likviditet")
 
-        print("du er her: " + str(interval.data))
-        print("du er her: " + str(net_liquidity.data))
-
         net_liquidity_converter_operation = Converter(net_liquidity.data, 'Månedlig',
                                                       interval.data['intervall'])
         self.add_node(net_liquidity_converter_operation)
