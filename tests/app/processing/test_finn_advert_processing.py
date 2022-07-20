@@ -123,27 +123,19 @@ class TestFinnAdvertProcessing:
         Test the multiplex_info_2
 
         """
-        results = {'finn_adresse': 'Sigyns gate 3, 0260 Oslo', 'prisantydning': '70 000 000 kr',
-                   'status': 'Ikke solgt', 'omkostninger': '1 765 642 kr',
-                   'totalpris': '71 765 642 kr', 'kommunaleavg': '12 716 kr per år',
-                   'boligtype': 'Enebolig', 'eieform': 'Eier (Selveier)', 'soverom': '7',
-                   'primrrom': '656 m²', 'bruksareal': '831 m²', 'bygger': '1918',
-                   'energimerking': 'G - mørkegrønn', 'tomteareal': '1135 m² (eiet)',
-                   'bruttoareal': '947 m²', 'formuesverdi': '9 283 581 kr', 'finnkode': '144857770',
-                   'sistendret': '6. apr. 2020 02:07', 'referanse': '3180364', 'kommunenr': '301',
-                   'gardsnr': '212', 'bruksnr': '522',
-                   'historikk': {
-                       'Boligtype': {0: '-', 1: '-', 2: 'Frittliggende enebolig',
-                                     3: 'Frittliggende enebolig'},
-                       'Endring': {0: '-4.29 %', 1: '4.48 %', 2: '1596.2 %', 3: ''},
-                       'Pris': {0: '67\xa0000\xa0000 kr', 1: '70 000 000 kr',
-                                2: '67\xa0000\xa0000 kr', 3: '3\xa0950\xa0000 kr'},
-                       'Tinglyst': {0: 'Salgspris (08.02.2022)', 1: 'Prisantydning',
-                                    2: '08.02.2022', 3: '30.06.1994'}},
-                   'published': '12.04.2019 16:03', 'location': 'Uranienborg - Majorstuen',
-                   'price_range': 'større eller lik 70\xa0000\xa0000 kr',
-                   'size_range': 'større eller lik 650 m²', 'property_type': 'Enebolig',
-                   'city_area': 'Uranienborg - Majorstuen', 'municipality': 'Oslo'}
+        results = {'Boligtype': {0: '-',
+                                 1: '-',
+                                 2: 'Frittliggende enebolig',
+                                 3: 'Frittliggende enebolig'},
+                   'Endring': {0: '-4.29 %', 1: '4.48 %', 2: '1596.2 %', 3: ''},
+                   'Pris': {0: '67\xa0000\xa0000 kr',
+                            1: '70 000 000 kr',
+                            2: '67\xa0000\xa0000 kr',
+                            3: '3\xa0950\xa0000 kr'},
+                   'Tinglyst': {0: 'Salgspris (08.02.2022)',
+                                1: 'Prisantydning',
+                                2: '08.02.2022',
+                                3: '30.06.1994'}}
 
         finn_advert_processing = FinnAdvertProcessing(self.finn_code)
 
