@@ -44,7 +44,7 @@ kiwisolver==1.4.3
 lazy-object-proxy==1.5.2
 llvmlite==0.38.1
 loguru==0.5.1
-lxml==4.6.5
+lxml==4.9.1
 MarkupSafe==2.0.1
 matplotlib==3.2.1
 mccabe==0.6.1
@@ -65,7 +65,7 @@ progress==1.5
 psutil==5.8.0
 publicsuffix2==2.20191221
 py==1.11.0
-pycares==4.1.2
+pycares==4.2.0
 pycparser==2.21
 pydot==1.4.1
 pyfiglet==0.8.post1
