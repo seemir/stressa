@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1050</width>
+    <width>1100</width>
     <height>470</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>1050</width>
+    <width>1100</width>
     <height>470</height>
    </size>
   </property>
@@ -461,7 +461,7 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">
-    <widget class="QScrollArea" name="scrollArea">
+    <widget class="QScrollArea" name="scroll_area_budget">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -474,12 +474,12 @@
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
+     <widget class="QWidget" name="scroll_area_widget_contents_budget">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1032</width>
+        <width>1082</width>
         <height>452</height>
        </rect>
       </property>
@@ -902,14 +902,14 @@
        <item row="0" column="0">
         <widget class="QTabWidget" name="tab_widget_budget">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="minimumSize">
           <size>
-           <width>0</width>
+           <width>1000</width>
            <height>0</height>
           </size>
          </property>
@@ -2023,7 +2023,7 @@
            <item row="0" column="0" colspan="6">
             <widget class="QFrame" name="frame_budget_whitespace_3">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -2228,7 +2228,7 @@
            <item row="0" column="0" colspan="6">
             <widget class="QFrame" name="frame_budget_whitespace_4">
              <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
@@ -2700,7 +2700,7 @@
   <tabstop>push_button_tom_skjema_1</tabstop>
   <tabstop>push_button_budget_meta_data_1</tabstop>
   <tabstop>push_button_avbryt_1</tabstop>
-  <tabstop>scrollArea</tabstop>
+  <tabstop>scroll_area_budget</tabstop>
   <tabstop>combo_box_interval_12</tabstop>
   <tabstop>line_edit_brutto_inntekt_2</tabstop>
   <tabstop>combo_box_interval_13</tabstop>
