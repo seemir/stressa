@@ -102,6 +102,7 @@ class HistoryModel(Model):
         self.parent.ui_form.graphics_view_historikk.setMouseEnabled(x=False, y=False)
         self.parent.ui_form.graphics_view_historikk.getAxis('left').setStyle(showValues=False)
         self.parent.ui_form.graphics_view_historikk.getAxis('bottom').setStyle(showValues=False)
+        self.parent.ui_form.graphics_view_historikk.setMenuEnabled(False)
 
     @pyqtSlot()
     def clear_finn_history(self, postfix: str):

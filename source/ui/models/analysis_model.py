@@ -18,6 +18,8 @@ from source.util import Assertor
 from .table_model import TableModel
 from .model import Model
 
+from ..graphics import BarChartWithLine
+
 
 class AnalysisModel(Model):
     """
@@ -45,6 +47,8 @@ class AnalysisModel(Model):
         super().__init__(parent)
 
         self.parent.ui_form.push_button_analyse.clicked.connect(self.analyze_mortgage)
+        self.bar_plot_annuitet = None
+        self.bar_plot_serie = None
 
     @property
     def analysis_keys(self):
@@ -78,12 +82,45 @@ class AnalysisModel(Model):
                     pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"]),
                     alignment=Qt.AlignCenter)
                 self.parent.ui_form.table_view_annuitet_overview.setModel(payment_data_model_fixed)
+
+                termin = list(
+                    mortgage_analysis_data["nedbetalingsplan_annuitet_overview"]["År"].values())[
+                         ::-1]
+                payment = list(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
+                                   "Avdrag.total"].values())[::-1]
+
+                values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                          for val in payment]
+
+                self.bar_plot_annuitet = BarChartWithLine(
+                    termin, values,
+                    self.parent.ui_form.graphics_view_annuitet_overview,
+                    self.parent.ui_form.table_view_annuitet_overview)
+
+                self.bar_plot_annuitet.table_view_mapping()
+
             if "nedbetalingsplan_serie_overview" in mortgage_analysis_data.keys():
                 payment_data_model_serie = TableModel(
                     pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_serie_overview"]),
                     alignment=Qt.AlignCenter)
                 self.parent.ui_form.table_view_serie_overview.setModel(payment_data_model_serie)
 
+                termin = list(
+                    mortgage_analysis_data["nedbetalingsplan_serie_overview"]["År"].values())[
+                         ::-1]
+                payment = list(mortgage_analysis_data["nedbetalingsplan_serie_overview"][
+                                   "Avdrag.total"].values())[::-1]
+
+                values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                          for val in payment]
+
+                self.bar_plot_serie = BarChartWithLine(
+                    termin, values,
+                    self.parent.ui_form.graphics_view_serie_overview,
+                    self.parent.ui_form.table_view_serie_overview)
+
+                self.bar_plot_serie.table_view_mapping()
+
             self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
                 .setSectionResizeMode(0, QHeaderView.ResizeToContents)
             self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
@@ -113,6 +150,8 @@ class AnalysisModel(Model):
                 .setSectionResizeMode(5, QHeaderView.Stretch)
             self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
                 .setSectionResizeMode(6, QHeaderView.ResizeToContents)
+
+            self.configure_charts()
 
             payment_keys = ["start_dato_annuitet", "slutt_dato_annuitet", "total_termin_annuitet",
                             "aar_annuitet", "termin_aar_annuitet", "laan_annuitet",
@@ -127,6 +166,21 @@ class AnalysisModel(Model):
             for payment_key in payment_keys:
                 if payment_key in mortgage_analysis_data.keys():
                     self.data.update({payment_key: mortgage_analysis_data[payment_key]})
+
+    def configure_charts(self):
+        """
+        method for configuring charts
+
+        """
+        for graphics_view in ['graphics_view_annuitet_overview', 'graphics_view_serie_overview']:
+            getattr(self.parent.ui_form, graphics_view).setMouseEnabled(x=False, y=False)
+            getattr(self.parent.ui_form, graphics_view).getAxis('left').setStyle(
+                showValues=False)
+            getattr(self.parent.ui_form, graphics_view).getAxis('bottom').setStyle(
+                showValues=False)
+            getattr(self.parent.ui_form, graphics_view).getViewBox().enableAutoRange()
+            getattr(self.parent.ui_form, graphics_view).setMenuEnabled(False)
+            getattr(self.parent.ui_form, graphics_view).showGrid(x=True, y=True)
 
     def clear_all(self):
         """

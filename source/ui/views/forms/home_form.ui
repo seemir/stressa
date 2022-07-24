@@ -10883,10 +10883,24 @@
                 </widget>
                </item>
                <item row="0" column="0">
-                <widget class="QGraphicsView" name="graphics_view_annuitet_overview"/>
+                <widget class="PlotWidget" name="graphics_view_annuitet_overview">
+                 <property name="frameShape">
+                  <enum>QFrame::Box</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                 </property>
+                </widget>
                </item>
                <item row="0" column="1">
-                <widget class="QGraphicsView" name="graphics_view_serie_overview"/>
+                <widget class="PlotWidget" name="graphics_view_serie_overview">
+                 <property name="frameShape">
+                  <enum>QFrame::Box</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                 </property>
+                </widget>
                </item>
                <item row="1" column="1">
                 <widget class="QTableView" name="table_view_serie_overview">
@@ -12454,6 +12468,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlotWidget</class>
+   <extends>QGraphicsView</extends>
+   <header>pyqtgraph</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>scroll_area_central_widget</tabstop>
   <tabstop>tab_widget_lanesokere</tabstop>
