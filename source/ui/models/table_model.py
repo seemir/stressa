@@ -7,7 +7,7 @@ TableModel used for presenting table information in GUI
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from PyQt5.QtCore import QAbstractTableModel, Qt
+from PyQt5.QtCore import QAbstractTableModel, Qt, QVariant
 
 from pandas import DataFrame
 
@@ -20,7 +20,7 @@ class TableModel(QAbstractTableModel):
 
     """
 
-    def __init__(self, data: DataFrame):
+    def __init__(self, data: DataFrame, alignment=Qt.AlignLeft):
         """
         Constructor / Instantiating the class
 
@@ -33,6 +33,7 @@ class TableModel(QAbstractTableModel):
         Assertor.assert_data_types([data], [DataFrame])
         QAbstractTableModel.__init__(self)
         self._data = data
+        self.alignment = alignment
 
     def rowCount(self, parent=None):
         """
@@ -66,7 +67,8 @@ class TableModel(QAbstractTableModel):
         if index.isValid():
             if role == Qt.DisplayRole:
                 return str(self._data.iloc[index.row(), index.column()])
-        return None
+            elif role == Qt.TextAlignmentRole:
+                return QVariant(self.alignment | Qt.AlignVCenter)
 
     def headerData(self, col, orientation, role):
         """

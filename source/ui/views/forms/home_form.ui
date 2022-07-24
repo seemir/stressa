@@ -10866,9 +10866,6 @@
                <enum>QFrame::Plain</enum>
               </property>
               <layout class="QGridLayout" name="gridLayout_17">
-               <item row="2" column="0">
-                <widget class="QGraphicsView" name="graphics_view_serie_overview"/>
-               </item>
                <item row="1" column="0">
                 <widget class="QTableView" name="table_view_annuitet_overview">
                  <property name="alternatingRowColors">
@@ -10888,7 +10885,10 @@
                <item row="0" column="0">
                 <widget class="QGraphicsView" name="graphics_view_annuitet_overview"/>
                </item>
-               <item row="3" column="0">
+               <item row="0" column="1">
+                <widget class="QGraphicsView" name="graphics_view_serie_overview"/>
+               </item>
+               <item row="1" column="1">
                 <widget class="QTableView" name="table_view_serie_overview">
                  <property name="alternatingRowColors">
                   <bool>true</bool>
@@ -12622,7 +12622,9 @@
   <tabstop>push_button_restructure</tabstop>
   <tabstop>push_button_payment_plan</tabstop>
   <tabstop>graphics_view_annuitet_overview</tabstop>
+  <tabstop>graphics_view_serie_overview</tabstop>
   <tabstop>table_view_annuitet_overview</tabstop>
+  <tabstop>table_view_serie_overview</tabstop>
   <tabstop>tab_widget_home</tabstop>
  </tabstops>
  <resources>

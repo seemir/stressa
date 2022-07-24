@@ -8,7 +8,8 @@ __email__ = 'samir.adrik@gmail.com'
 
 import pandas as pd
 
-from PyQt5.QtCore import QObject
+from PyQt5.QtWidgets import QHeaderView
+from PyQt5.QtCore import QObject, Qt
 
 from source.app import MortgageAnalysisProcess
 from source.domain import Mortgage
@@ -72,14 +73,46 @@ class AnalysisModel(Model):
             self.set_line_edits(line_edit_text='', line_edits=self.analysis_keys,
                                 data=mortgage_analysis_data)
 
-            if "nedbetalingsplan_annuitet" in mortgage_analysis_data.keys():
+            if "nedbetalingsplan_annuitet_overview" in mortgage_analysis_data.keys():
                 payment_data_model_fixed = TableModel(
-                    pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_annuitet"]))
+                    pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"]),
+                    alignment=Qt.AlignCenter)
                 self.parent.ui_form.table_view_annuitet_overview.setModel(payment_data_model_fixed)
-            if "nedbetalingsplan_serie" in mortgage_analysis_data.keys():
+            if "nedbetalingsplan_serie_overview" in mortgage_analysis_data.keys():
                 payment_data_model_serie = TableModel(
-                    pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_serie"]))
+                    pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_serie_overview"]),
+                    alignment=Qt.AlignCenter)
                 self.parent.ui_form.table_view_serie_overview.setModel(payment_data_model_serie)
+
+            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+                .setSectionResizeMode(0, QHeaderView.ResizeToContents)
+            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+                .setSectionResizeMode(1, QHeaderView.Stretch)
+            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+                .setSectionResizeMode(2, QHeaderView.ResizeToContents)
+            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+                .setSectionResizeMode(3, QHeaderView.Stretch)
+            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+                .setSectionResizeMode(4, QHeaderView.ResizeToContents)
+            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+                .setSectionResizeMode(5, QHeaderView.Stretch)
+            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+                .setSectionResizeMode(6, QHeaderView.ResizeToContents)
+
+            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+                .setSectionResizeMode(0, QHeaderView.ResizeToContents)
+            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+                .setSectionResizeMode(1, QHeaderView.Stretch)
+            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+                .setSectionResizeMode(2, QHeaderView.ResizeToContents)
+            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+                .setSectionResizeMode(3, QHeaderView.Stretch)
+            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+                .setSectionResizeMode(4, QHeaderView.ResizeToContents)
+            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+                .setSectionResizeMode(5, QHeaderView.Stretch)
+            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+                .setSectionResizeMode(6, QHeaderView.ResizeToContents)
 
             payment_keys = ["start_dato_annuitet", "slutt_dato_annuitet", "total_termin_annuitet",
                             "aar_annuitet", "termin_aar_annuitet", "laan_annuitet",

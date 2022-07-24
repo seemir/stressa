@@ -14,7 +14,7 @@ import shutil
 # import ctypes
 import sys
 
-from PyQt5.QtWidgets import QMainWindow, QHeaderView
+from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtGui import QIcon
 from PyQt5.uic import loadUi
@@ -103,11 +103,6 @@ class HomeView(QMainWindow):
             QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/restructure.png'))
         self.ui_form.push_button_payment_plan.setIcon(
             QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/plan.png'))
-
-        self.ui_form.table_view_annuitet_overview.horizontalHeader().setSectionResizeMode(
-            QHeaderView.Stretch)
-        self.ui_form.table_view_serie_overview.horizontalHeader().setSectionResizeMode(
-            QHeaderView.Stretch)
 
     @property
     def payment_view(self):

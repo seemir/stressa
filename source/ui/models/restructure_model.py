@@ -8,12 +8,15 @@ Module for main restructure model for the HomeView
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from PyQt5.QtCore import QObject, pyqtSlot
+import pandas as pd
+
+from PyQt5.QtCore import QObject, pyqtSlot, Qt
 
 from source.domain import Money, Mortgage
 from source.app import RestructureProcess
 from source.util import Assertor
 
+from .table_model import TableModel
 from .model import Model
 
 
@@ -79,6 +82,19 @@ class RestructureModel(Model):
             analysis_model.set_line_edits(line_edit_text='',
                                           line_edits=analysis_model.analysis_keys,
                                           data=restructure_data)
+
+            if "nedbetalingsplan_annuitet_overview" in restructure_data.keys():
+                payment_data_model_fixed = TableModel(
+                    pd.DataFrame(restructure_data["nedbetalingsplan_annuitet_overview"]),
+                    alignment=Qt.AlignCenter)
+                self.parent.parent.ui_form.table_view_annuitet_overview.setModel(
+                    payment_data_model_fixed)
+            if "nedbetalingsplan_serie_overview" in restructure_data.keys():
+                payment_data_model_serie = TableModel(
+                    pd.DataFrame(restructure_data["nedbetalingsplan_serie_overview"]),
+                    alignment=Qt.AlignCenter)
+                self.parent.parent.ui_form.table_view_serie_overview.setModel(
+                    payment_data_model_serie)
 
             self.data.update(restructure_data)
             self.parent.close()

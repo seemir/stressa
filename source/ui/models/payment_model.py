@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import pandas as pd
 
-from PyQt5.QtCore import QObject, pyqtSlot
+from PyQt5.QtCore import QObject, pyqtSlot, Qt
 from source.util import Assertor
 
 from .table_model import TableModel
@@ -55,11 +55,13 @@ class PaymentModel(Model):
         if all(val in restructure_model.data.keys() for val in self.payment_keys):
             if "nedbetalingsplan_annuitet" in restructure_model.data.keys():
                 payment_data_model_fixed = TableModel(
-                    pd.DataFrame(restructure_model.data["nedbetalingsplan_annuitet"]))
+                    pd.DataFrame(restructure_model.data["nedbetalingsplan_annuitet"]),
+                    alignment=Qt.AlignCenter)
                 self.parent.ui_form.table_view_annuitet.setModel(payment_data_model_fixed)
             if "nedbetalingsplan_serie" in restructure_model.data.keys():
                 payment_data_model_serie = TableModel(
-                    pd.DataFrame(restructure_model.data["nedbetalingsplan_serie"]))
+                    pd.DataFrame(restructure_model.data["nedbetalingsplan_serie"]),
+                    alignment=Qt.AlignCenter)
                 self.parent.ui_form.table_view_serie.setModel(payment_data_model_serie)
 
             self.set_line_edits("", line_edits=self.payment_keys, data=restructure_model.data)
@@ -67,11 +69,13 @@ class PaymentModel(Model):
         elif all(val in analysis_model.data.keys() for val in self.payment_keys):
             if "nedbetalingsplan_annuitet" in analysis_model.data.keys():
                 payment_data_model_fixed = TableModel(
-                    pd.DataFrame(analysis_model.data["nedbetalingsplan_annuitet"]))
+                    pd.DataFrame(analysis_model.data["nedbetalingsplan_annuitet"]),
+                    alignment=Qt.AlignCenter)
                 self.parent.ui_form.table_view_annuitet.setModel(payment_data_model_fixed)
             if "nedbetalingsplan_serie" in analysis_model.data.keys():
                 payment_data_model_serie = TableModel(
-                    pd.DataFrame(analysis_model.data["nedbetalingsplan_serie"]))
+                    pd.DataFrame(analysis_model.data["nedbetalingsplan_serie"]),
+                    alignment=Qt.AlignCenter)
                 self.parent.ui_form.table_view_serie.setModel(payment_data_model_serie)
 
             self.set_line_edits("", line_edits=self.payment_keys, data=analysis_model.data)

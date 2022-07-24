@@ -225,7 +225,8 @@ class PaymentPlan(Entity):
                 "slutt_dato_annuitet": end_date, "total_rente_annuitet": total_interest,
                 "total_belop_annuitet": total_payment, "total_termin_annuitet": total_periods,
                 "aar_annuitet": years, "termin_aar_annuitet": termin_year, "laan_annuitet": amount,
-                "rente_annuitet": interest}
+                "rente_annuitet": interest,
+                'nedbetalingsplan_annuitet_overview': self.aggregate_plan(df)}
 
     def serial_mortgage_plan(self):
         """
@@ -291,4 +292,68 @@ class PaymentPlan(Entity):
                 "slutt_dato_serie": end_date, "total_rente_serie": total_interest,
                 "total_belop_serie": total_payment, "total_termin_serie": total_periods,
                 "aar_serie": years, "termin_aar_serie": termin_year, "laan_serie": amount,
-                "rente_serie": interest}
+                "rente_serie": interest,
+                'nedbetalingsplan_serie_overview': self.aggregate_plan(df)}
+
+    @staticmethod
+    def aggregate_plan(df: pd.DataFrame):
+        """
+        method for aggregating values in a pandas dataframe
+
+        """
+        agg_df = pd.DataFrame()
+
+        agg_df['Termin'] = df.loc[1:, ]['Termin']
+        agg_df['Dato'] = df.loc[1:, ]['Dato']
+
+        agg_df['T.beløp'] = df.loc[1:, ]['T.beløp'].str.replace(" kr", "") \
+            .str.replace(" ", "").astype(int)
+        agg_df['T.beløp.total'] = df.loc[1:, ]['T.beløp.total'].str.replace(" kr", "") \
+            .str.replace(" ", "").astype(int)
+        agg_df['Renter'] = df.loc[1:, ]['Renter'].str.replace(" kr", "") \
+            .str.replace(" ", "").astype(int)
+        agg_df['Renter.total'] = df.loc[1:, ]['Renter.total'].str.replace(" kr", "") \
+            .str.replace(" ", "").astype(int)
+        agg_df['Avdrag'] = df.loc[1:, ]['Avdrag'].str.replace(" kr", "") \
+            .str.replace(" ", "").astype(int)
+        agg_df['Avdrag.total'] = df.loc[1:, ]['Avdrag.total'].str.replace(" kr", "") \
+            .str.replace(" ", "").astype(int)
+        agg_df = agg_df.loc[1:, ].reset_index(drop=True)
+
+        final_df = pd.DataFrame()
+        final_df['T.beløp'] = agg_df.groupby(pd.to_datetime(agg_df['Dato'])
+                                             .dt.year)['T.beløp'].agg(['max'])
+        final_df['T.beløp.total'] = agg_df.groupby(pd.to_datetime(agg_df['Dato'])
+                                                   .dt.year)['T.beløp'].agg(['sum'])
+        final_df['T.beløp.total'] = final_df['T.beløp.total'].cumsum()
+
+        final_df['Renter'] = agg_df.groupby(pd.to_datetime(agg_df['Dato'])
+                                            .dt.year)['Renter'].agg(['max'])
+        final_df['Renter.total'] = agg_df.groupby(pd.to_datetime(agg_df['Dato'])
+                                                  .dt.year)['Renter'].agg(['sum'])
+        final_df['Renter.total'] = final_df['Renter.total'].cumsum()
+
+        final_df['Avdrag'] = agg_df.groupby(pd.to_datetime(agg_df['Dato'])
+                                            .dt.year)['Avdrag'].agg(['max'])
+        final_df['Avdrag.total'] = agg_df.groupby(pd.to_datetime(agg_df['Dato'])
+                                                  .dt.year)['Avdrag'].agg(['sum'])
+        final_df['Avdrag.total'] = final_df['Avdrag.total'].cumsum()
+
+        final_df['År'] = range(0, len(final_df))
+
+        aar = final_df.pop('År')
+        final_df.insert(0, 'År', aar)
+
+        final_df['T.beløp'] = [Money(value).value() for value in final_df['T.beløp'].astype(str)]
+        final_df['T.beløp.total'] = [Money(value).value() for value in
+                                     final_df['T.beløp.total'].astype(str)]
+        final_df['Renter'] = [Money(value).value() for value in final_df['Renter'].astype(str)]
+        final_df['Renter.total'] = [Money(value).value() for value in
+                                    final_df['Renter.total'].astype(str)]
+        final_df['Avdrag'] = [Money(value).value() for value in final_df['Avdrag'].astype(str)]
+        final_df['Avdrag.total'] = [Money(value).value() for value in
+                                    final_df['Avdrag.total'].astype(str)]
+
+        final_df = final_df.reset_index(drop=True)
+
+        return final_df.to_dict()
