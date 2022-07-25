@@ -26,8 +26,8 @@ class StackedBarChartWithLine(Chart):
 
     """
 
-    def __init__(self, x_val: list, y_val: list, graphics_view: PlotWidget, table_view: QTableView,
-                 legend: str = "", width=None, reverse=True):
+    def __init__(self, x_val: list, y_val_1: list, y_val_2: list, graphics_view: PlotWidget,
+                 table_view: QTableView, legend: str = "", reverse=True, y_max=None):
         """
         Constructor / Instantiation of class
 
@@ -35,7 +35,9 @@ class StackedBarChartWithLine(Chart):
         ----------
         x_val           : list
                           x-values
-        y_val           : list
+        y_val_1         : list
+                          y-values
+        y_val_2         : list
                           y-values
         graphics_view   : PlotWidget
                           graphics view to place chart
@@ -43,34 +45,43 @@ class StackedBarChartWithLine(Chart):
                           table view to link graphics_view
         legend          : HTML str
                           legend
-        width           : int, float
-                          width of bars
         reverse         : bool
                           reverse selection in table
+        y_max           : int
+                          y_axis max value
 
         """
-        Assertor.assert_data_types([x_val, y_val, graphics_view, table_view, legend],
-                                   [list, list, PlotWidget, QTableView, str])
+        Assertor.assert_data_types([x_val, y_val_1, y_val_2, graphics_view, table_view, legend],
+                                   [list, list, list, PlotWidget, QTableView, str])
         super().__init__()
         self.x_val = x_val
-        self.y_val = y_val
+        self.y_val_1 = y_val_1
+        self.y_val_2 = y_val_2
         self.graphics_view = graphics_view
         self.table_view = table_view
         self.label = TextItem()
-        self.width = width if width else float(
-            self.graphics_view.width() / (len(self.x_val) ** 2))
+
+        self.width = 0.8
+
         self.reverse = reverse
         self.legend = legend
 
         place = percentile(insert(array(self.x_val), 0, 0), 2)
-        self.label.setPos(place, int(max(y_val) * 1.5))
+        self.label.setPos(place, int(max(y_val_1) * 1.5))
 
         self.label.setHtml(self.legend)
         self.graphics_view.addItem(self.label)
 
-        self.bar_item = BarGraphItem(x=self.x_val, height=self.y_val, width=self.width,
-                                     brush="#d2e5f5")
-        self.graphics_view.addItem(self.bar_item)
+        self.bar_item_1 = BarGraphItem(x=self.x_val, height=self.y_val_1, width=self.width,
+                                       brush="#d2e5f5")
+        self.graphics_view.addItem(self.bar_item_1)
+
+        self.bar_item_2 = BarGraphItem(x=self.x_val, height=self.y_val_2, width=self.width,
+                                       brush="#A8B7C4")
+        self.graphics_view.addItem(self.bar_item_2)
+
+        if y_max:
+            self.graphics_view.setYRange(0, y_max, padding=0)
 
     def table_view_mapping(self):
         """
@@ -92,12 +103,19 @@ class StackedBarChartWithLine(Chart):
 
             row = len(self.x_val) - 1 - item.row() if self.reverse else item.row()
 
-            bar_item = BarGraphItem(x=self.x_val, height=self.y_val, width=self.width,
-                                    brush="#d2e5f5")
-            clicked_bar = BarGraphItem(x=[self.x_val[row]], height=[self.y_val[row]],
-                                       width=self.width, brush="8aa7c0")
-            self.graphics_view.addItem(bar_item)
-            self.graphics_view.addItem(clicked_bar)
+            bar_item_1 = BarGraphItem(x=self.x_val, height=self.y_val_1, width=self.width,
+                                      brush="#d2e5f5")
+            bar_item_2 = BarGraphItem(x=self.x_val, height=self.y_val_2, width=self.width,
+                                      brush="#A8B7C4")
+            clicked_bar_1 = BarGraphItem(x=[self.x_val[row]], height=[self.y_val_1[row]],
+                                         width=self.width, brush="#8aa7c0")
+            clicked_bar_2 = BarGraphItem(x=[self.x_val[row]], height=[self.y_val_2[row]],
+                                         width=self.width, brush="#517797")
+            self.graphics_view.addItem(bar_item_1)
+            self.graphics_view.addItem(bar_item_2)
+
+            self.graphics_view.addItem(clicked_bar_1)
+            self.graphics_view.addItem(clicked_bar_2)
 
     @staticmethod
     def clear_graphics(graphics_view: PlotWidget, table_view: QTableView):

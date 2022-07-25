@@ -47,8 +47,10 @@ class AnalysisModel(Model):
         super().__init__(parent)
 
         self.parent.ui_form.push_button_analyse.clicked.connect(self.analyze_mortgage)
-        self.bar_plot_annuitet = None
-        self.bar_plot_serie = None
+        self.bar_plot_annuitet_total = None
+        self.bar_plot_serie_total = None
+        self.bar_plot_annuitet_period = None
+        self.bar_plot_serie_period = None
 
     @property
     def analysis_keys(self):
@@ -78,6 +80,14 @@ class AnalysisModel(Model):
                                 data=mortgage_analysis_data)
 
             if "nedbetalingsplan_annuitet_overview" in mortgage_analysis_data.keys():
+                StackedBarChartWithLine.clear_graphics(
+                    self.parent.ui_form.graphics_view_annuitet_overview,
+                    self.parent.ui_form.table_view_annuitet_overview)
+
+                StackedBarChartWithLine.clear_graphics(
+                    self.parent.ui_form.graphics_view_annuitet_period,
+                    self.parent.ui_form.table_view_annuitet_overview)
+
                 payment_data_model_fixed = TableModel(
                     pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"]),
                     alignment=Qt.AlignCenter)
@@ -86,70 +96,104 @@ class AnalysisModel(Model):
                 termin = list(
                     mortgage_analysis_data["nedbetalingsplan_annuitet_overview"]["År"].values())[
                          ::-1]
-                payment = list(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
-                                   "Avdrag.total"].values())[::-1]
+                principal_total = list(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
+                                           "Avdrag.total"].values())[::-1]
+                payment_total = list(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
+                                         "T.beløp.total"].values())[::-1]
 
-                values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                          for val in payment]
+                principal_values_total = [
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    for val in principal_total]
+                payment_values_annuitet_total = [
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    for val in payment_total]
 
-                self.bar_plot_annuitet = StackedBarChartWithLine(
-                    termin, values,
+                self.bar_plot_annuitet_total = StackedBarChartWithLine(
+                    termin, payment_values_annuitet_total, principal_values_total,
                     self.parent.ui_form.graphics_view_annuitet_overview,
-                    self.parent.ui_form.table_view_annuitet_overview)
+                    self.parent.ui_form.table_view_annuitet_overview,
+                    y_max=int(max(payment_values_annuitet_total) * 1.33))
 
-                self.bar_plot_annuitet.table_view_mapping()
+                self.bar_plot_annuitet_total.table_view_mapping()
+
+                principal_period = list(
+                    mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
+                        "Avdrag"].values())[::-1]
+                payment_period = list(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
+                                          "T.beløp"].values())[::-1]
+
+                principal_values_period = [
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    for val in principal_period]
+                payment_values_annuitet_period = [
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    for val in payment_period]
+
+                self.bar_plot_annuitet_period = StackedBarChartWithLine(
+                    termin, payment_values_annuitet_period, principal_values_period,
+                    self.parent.ui_form.graphics_view_annuitet_period,
+                    self.parent.ui_form.table_view_annuitet_overview,
+                    y_max=int(max(payment_values_annuitet_period) * 1.33))
+
+                self.bar_plot_annuitet_period.table_view_mapping()
 
             if "nedbetalingsplan_serie_overview" in mortgage_analysis_data.keys():
-                payment_data_model_serie = TableModel(
+                StackedBarChartWithLine.clear_graphics(
+                    self.parent.ui_form.graphics_view_serie_overview,
+                    self.parent.ui_form.table_view_serie_overview)
+
+                StackedBarChartWithLine.clear_graphics(
+                    self.parent.ui_form.graphics_view_serie_period,
+                    self.parent.ui_form.table_view_serie_overview)
+
+                payment_data_model_fixed = TableModel(
                     pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_serie_overview"]),
                     alignment=Qt.AlignCenter)
-                self.parent.ui_form.table_view_serie_overview.setModel(payment_data_model_serie)
+                self.parent.ui_form.table_view_serie_overview.setModel(payment_data_model_fixed)
 
                 termin = list(
                     mortgage_analysis_data["nedbetalingsplan_serie_overview"]["År"].values())[
                          ::-1]
-                payment = list(mortgage_analysis_data["nedbetalingsplan_serie_overview"][
-                                   "Avdrag.total"].values())[::-1]
+                principal_total = list(mortgage_analysis_data["nedbetalingsplan_serie_overview"][
+                                           "Avdrag.total"].values())[::-1]
+                payment_total = list(mortgage_analysis_data["nedbetalingsplan_serie_overview"][
+                                         "T.beløp.total"].values())[::-1]
 
-                values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                          for val in payment]
+                principal_values_total = [
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    for val in principal_total]
+                payment_values_serie_total = [
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    for val in payment_total]
 
-                self.bar_plot_serie = StackedBarChartWithLine(
-                    termin, values,
+                self.bar_plot_serie_total = StackedBarChartWithLine(
+                    termin, payment_values_serie_total, principal_values_total,
                     self.parent.ui_form.graphics_view_serie_overview,
-                    self.parent.ui_form.table_view_serie_overview)
+                    self.parent.ui_form.table_view_serie_overview,
+                    y_max=int(max(payment_values_annuitet_total) * 1.33))
 
-                self.bar_plot_serie.table_view_mapping()
+                self.bar_plot_serie_total.table_view_mapping()
 
-            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
-                .setSectionResizeMode(0, QHeaderView.ResizeToContents)
-            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
-                .setSectionResizeMode(1, QHeaderView.Stretch)
-            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
-                .setSectionResizeMode(2, QHeaderView.ResizeToContents)
-            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
-                .setSectionResizeMode(3, QHeaderView.Stretch)
-            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
-                .setSectionResizeMode(4, QHeaderView.ResizeToContents)
-            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
-                .setSectionResizeMode(5, QHeaderView.Stretch)
-            self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
-                .setSectionResizeMode(6, QHeaderView.ResizeToContents)
+                principal_period = list(
+                    mortgage_analysis_data["nedbetalingsplan_serie_overview"][
+                        "Avdrag"].values())[::-1]
+                payment_period = list(mortgage_analysis_data["nedbetalingsplan_serie_overview"][
+                                          "T.beløp"].values())[::-1]
 
-            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
-                .setSectionResizeMode(0, QHeaderView.ResizeToContents)
-            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
-                .setSectionResizeMode(1, QHeaderView.Stretch)
-            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
-                .setSectionResizeMode(2, QHeaderView.ResizeToContents)
-            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
-                .setSectionResizeMode(3, QHeaderView.Stretch)
-            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
-                .setSectionResizeMode(4, QHeaderView.ResizeToContents)
-            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
-                .setSectionResizeMode(5, QHeaderView.Stretch)
-            self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
-                .setSectionResizeMode(6, QHeaderView.ResizeToContents)
+                principal_values_period = [
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    for val in principal_period]
+                payment_values_serie_period = [
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    for val in payment_period]
+
+                self.bar_plot_serie_period = StackedBarChartWithLine(
+                    termin, payment_values_serie_period, principal_values_period,
+                    self.parent.ui_form.graphics_view_serie_period,
+                    self.parent.ui_form.table_view_serie_overview,
+                    y_max=int(max(payment_values_annuitet_period) * 1.33))
+
+                self.bar_plot_serie_period.table_view_mapping()
 
             self.configure_charts()
 
@@ -172,13 +216,44 @@ class AnalysisModel(Model):
         method for configuring charts
 
         """
-        for graphics_view in ['graphics_view_annuitet_overview', 'graphics_view_serie_overview']:
+        self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+            .setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+            .setSectionResizeMode(1, QHeaderView.Stretch)
+        self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+            .setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+            .setSectionResizeMode(3, QHeaderView.Stretch)
+        self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+            .setSectionResizeMode(4, QHeaderView.ResizeToContents)
+        self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+            .setSectionResizeMode(5, QHeaderView.Stretch)
+        self.parent.ui_form.table_view_annuitet_overview.horizontalHeader() \
+            .setSectionResizeMode(6, QHeaderView.ResizeToContents)
+
+        self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+            .setSectionResizeMode(0, QHeaderView.ResizeToContents)
+        self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+            .setSectionResizeMode(1, QHeaderView.Stretch)
+        self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+            .setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+            .setSectionResizeMode(3, QHeaderView.Stretch)
+        self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+            .setSectionResizeMode(4, QHeaderView.ResizeToContents)
+        self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+            .setSectionResizeMode(5, QHeaderView.Stretch)
+        self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
+            .setSectionResizeMode(6, QHeaderView.ResizeToContents)
+
+        for graphics_view in ['graphics_view_annuitet_overview', 'graphics_view_serie_overview',
+                              'graphics_view_annuitet_period', 'graphics_view_serie_period']:
             getattr(self.parent.ui_form, graphics_view).setMouseEnabled(x=False, y=False)
             getattr(self.parent.ui_form, graphics_view).getAxis('left').setStyle(
                 showValues=False)
             getattr(self.parent.ui_form, graphics_view).getAxis('bottom').setStyle(
                 showValues=False)
-            getattr(self.parent.ui_form, graphics_view).getViewBox().enableAutoRange()
+            getattr(self.parent.ui_form, graphics_view).hideButtons()
             getattr(self.parent.ui_form, graphics_view).setMenuEnabled(False)
             getattr(self.parent.ui_form, graphics_view).showGrid(x=True, y=True)
 
@@ -187,5 +262,19 @@ class AnalysisModel(Model):
         method for clearing model
 
         """
+        StackedBarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_annuitet_overview,
+            self.parent.ui_form.table_view_annuitet_overview)
+        StackedBarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_serie_overview,
+            self.parent.ui_form.table_view_serie_overview)
+
+        StackedBarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_annuitet_period,
+            self.parent.ui_form.table_view_annuitet_overview)
+        StackedBarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_serie_period,
+            self.parent.ui_form.table_view_serie_overview)
+
         self.data = {}
         self.clear_line_edits(self.analysis_keys)
