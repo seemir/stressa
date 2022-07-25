@@ -136,7 +136,7 @@ class Serial(Mortgage):
         """
         stress_rates = {round(self.periodical_payments(i, self.interval, self.period,
                                                        self.amount)): round(i, 3) for i in
-                        np.arange(0.001, 30.00, 0.001)}
+                        np.arange(0.01, 50.00, 0.01)}
 
         net_liquidity = self.net_liquidity if self.interval == 12 else \
             (self.net_liquidity * 12) / self.interval

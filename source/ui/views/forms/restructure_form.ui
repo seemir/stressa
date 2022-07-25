@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>798</width>
-    <height>313</height>
+    <width>818</width>
+    <height>348</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -470,8 +470,8 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>780</width>
-       <height>295</height>
+       <width>800</width>
+       <height>330</height>
       </size>
      </property>
      <property name="frameShape">
@@ -485,8 +485,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>788</width>
-        <height>278</height>
+        <width>800</width>
+        <height>330</height>
        </rect>
       </property>
       <property name="palette">
@@ -1347,6 +1347,39 @@
              <string/>
             </property>
             <layout class="QGridLayout" name="gridLayout_12">
+             <item row="7" column="0" colspan="4">
+              <widget class="QFrame" name="frame_whitespace_1">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
+               </property>
+               <property name="frameShadow">
+                <enum>QFrame::Raised</enum>
+               </property>
+               <layout class="QGridLayout" name="gridLayout_5"/>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLabel" name="label_egenkapital">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>8</pointsize>
+                </font>
+               </property>
+               <property name="text">
+                <string>Egenkapital </string>
+               </property>
+               <property name="buddy">
+                <cstring>line_edit_egenkapital</cstring>
+               </property>
+              </widget>
+             </item>
              <item row="1" column="3">
               <widget class="QDateEdit" name="date_edit_startdato">
                <property name="sizePolicy">
@@ -1417,28 +1450,6 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_egenkapital">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Segoe UI</family>
-                 <pointsize>8</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Egenkapital </string>
-               </property>
-               <property name="buddy">
-                <cstring>line_edit_egenkapital</cstring>
-               </property>
-              </widget>
-             </item>
              <item row="1" column="0">
               <widget class="QLabel" name="label_laneperiod">
                <property name="minimumSize">
@@ -1459,17 +1470,6 @@
                <property name="buddy">
                 <cstring>combo_box_laneperiode</cstring>
                </property>
-              </widget>
-             </item>
-             <item row="6" column="0" colspan="4">
-              <widget class="QFrame" name="frame_whitespace_1">
-               <property name="frameShape">
-                <enum>QFrame::NoFrame</enum>
-               </property>
-               <property name="frameShadow">
-                <enum>QFrame::Raised</enum>
-               </property>
-               <layout class="QGridLayout" name="gridLayout_5"/>
               </widget>
              </item>
              <item row="2" column="1">
@@ -1526,28 +1526,6 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="2">
-              <widget class="QLabel" name="label_intervall">
-               <property name="minimumSize">
-                <size>
-                 <width>120</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="font">
-                <font>
-                 <family>Segoe UI</family>
-                 <pointsize>8</pointsize>
-                </font>
-               </property>
-               <property name="text">
-                <string>Intervall</string>
-               </property>
-               <property name="buddy">
-                <cstring>combo_box_intervall</cstring>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="3">
               <widget class="QComboBox" name="combo_box_intervall">
                <property name="sizePolicy">
@@ -1570,17 +1548,11 @@
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
-              <widget class="QComboBox" name="combo_box_lanetype">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
+             <item row="0" column="2">
+              <widget class="QLabel" name="label_intervall">
                <property name="minimumSize">
                 <size>
-                 <width>230</width>
+                 <width>120</width>
                  <height>0</height>
                 </size>
                </property>
@@ -1590,48 +1562,15 @@
                  <pointsize>8</pointsize>
                 </font>
                </property>
-              </widget>
-             </item>
-             <item row="4" column="2" colspan="2">
-              <widget class="QPushButton" name="push_button_tom_skjema">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::TabFocus</enum>
-               </property>
                <property name="text">
-                <string>Tøm skjema</string>
+                <string>Intervall</string>
                </property>
-               <property name="icon">
-                <iconset resource="../../images/img.qrc">
-                 <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="2">
-              <widget class="QLabel" name="label_belaning">
-               <property name="text">
-                <string>Belåning</string>
+               <property name="buddy">
+                <cstring>combo_box_intervall</cstring>
                </property>
               </widget>
              </item>
-             <item row="4" column="0" colspan="2">
+             <item row="5" column="0" colspan="2">
               <widget class="QPushButton" name="push_button_eksporter">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1666,6 +1605,40 @@
                </property>
               </widget>
              </item>
+             <item row="2" column="2">
+              <widget class="QLabel" name="label_belaning">
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>Belåning</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QComboBox" name="combo_box_lanetype">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>230</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                 <pointsize>8</pointsize>
+                </font>
+               </property>
+              </widget>
+             </item>
              <item row="2" column="3">
               <widget class="QLineEdit" name="line_edit_belaning">
                <property name="clearButtonEnabled">
@@ -1673,8 +1646,8 @@
                </property>
               </widget>
              </item>
-             <item row="5" column="0" colspan="2">
-              <widget class="QPushButton" name="push_button_budget_meta_data">
+             <item row="5" column="2" colspan="2">
+              <widget class="QPushButton" name="push_button_tom_skjema">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
@@ -1697,15 +1670,15 @@
                 <enum>Qt::TabFocus</enum>
                </property>
                <property name="text">
-                <string>Metadata</string>
+                <string>Tøm skjema</string>
                </property>
                <property name="icon">
                 <iconset resource="../../images/img.qrc">
-                 <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
+                 <normaloff>:/img/erase.svg</normaloff>:/img/erase.svg</iconset>
                </property>
               </widget>
              </item>
-             <item row="5" column="2" colspan="2">
+             <item row="6" column="2" colspan="2">
               <widget class="QPushButton" name="push_button_avbryt">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -1737,10 +1710,61 @@
                </property>
               </widget>
              </item>
-             <item row="3" column="0" colspan="4">
+             <item row="4" column="0" colspan="4">
               <widget class="QLabel" name="label_whitespace">
                <property name="text">
                 <string/>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0" colspan="2">
+              <widget class="QPushButton" name="push_button_budget_meta_data">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::TabFocus</enum>
+               </property>
+               <property name="text">
+                <string>Metadata</string>
+               </property>
+               <property name="icon">
+                <iconset resource="../../images/img.qrc">
+                 <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLabel" name="label_nominell_rente">
+               <property name="font">
+                <font>
+                 <family>Segoe UI</family>
+                </font>
+               </property>
+               <property name="text">
+                <string>Nominell rente</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLineEdit" name="line_edit_nominell_rente">
+               <property name="clearButtonEnabled">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -1764,6 +1788,7 @@
   <tabstop>date_edit_startdato</tabstop>
   <tabstop>line_edit_egenkapital</tabstop>
   <tabstop>line_edit_belaning</tabstop>
+  <tabstop>line_edit_nominell_rente</tabstop>
   <tabstop>push_button_eksporter</tabstop>
   <tabstop>push_button_tom_skjema</tabstop>
   <tabstop>push_button_budget_meta_data</tabstop>

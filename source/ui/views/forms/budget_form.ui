@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1100</width>
-    <height>470</height>
+    <width>1103</width>
+    <height>473</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>1100</width>
-    <height>470</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -468,6 +468,12 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>1085</width>
+       <height>455</height>
+      </size>
+     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -479,8 +485,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>1082</width>
-        <height>452</height>
+        <width>1085</width>
+        <height>455</height>
        </rect>
       </property>
       <property name="palette">

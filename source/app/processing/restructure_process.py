@@ -42,7 +42,8 @@ class RestructureProcess(Process):
 
         self.run_parallel([self.extract_1, self.fixed_stress_test, self.extract_2, self.extract_3,
                            self.extract_4, self.extract_5, self.factor_3, self.extract_6,
-                           self.extract_7, self.serial_stress_test, self.subtraction_1])
+                           self.extract_7, self.extract_8, self.serial_stress_test,
+                           self.subtraction_1])
 
         self.run_parallel([self.ssb_connector, self.fixed_mortgage_payment_plan,
                            self.series_mortgage_payment_plan])
@@ -106,7 +107,7 @@ class RestructureProcess(Process):
         validate_restructure = validate_restructure_operation.run()
         validate_restructure_signal = Signal(validate_restructure,
                                              "Validated Restructure Information",
-                                             prettify_keys=True, length=4)
+                                             prettify_keys=True, length=5)
         self.add_signal(validate_restructure_signal, "validated_restructure")
 
         self.add_transition(validate_restructure_operation, validate_restructure_signal)
@@ -299,6 +300,26 @@ class RestructureProcess(Process):
 
         self.add_signal(net_liquidity_extract_signal, "netto_likviditet")
         self.add_transition(net_liquidity_extract_operation, net_liquidity_extract_signal,
+                            label="thread")
+
+    @Profiling
+    @Debugger
+    def extract_8(self):
+        """
+        method for extracting nominal interest (if any)
+
+        """
+        validated_restructure = self.get_signal("validated_restructure")
+        nominal_interest_extract_operation = Extract(validated_restructure.data, "nominell_rente")
+        self.add_node(nominal_interest_extract_operation)
+        self.add_transition(validated_restructure, nominal_interest_extract_operation,
+                            label="thread")
+
+        nominal_interest = nominal_interest_extract_operation.run()
+        nominal_extract_signal = Signal(nominal_interest, "Nominal Interest Rate")
+
+        self.add_signal(nominal_extract_signal, "nominal_interest")
+        self.add_transition(nominal_interest_extract_operation, nominal_extract_signal,
                             label="thread")
 
     @Profiling
@@ -728,14 +749,19 @@ class RestructureProcess(Process):
         method for generating fixed mortgage plan
 
         """
-        interest = self.get_signal("fixed_stress_test")
+        nominal_interest = self.get_signal("nominal_interest")
+        fixed_stress_rate = self.get_signal("fixed_stress_test")
+        if nominal_interest.data:
+            interest = nominal_interest.data['nominell_rente']
+        else:
+            interest = fixed_stress_rate.data['stresstest_annuitet']
         period = self.get_signal("period")
         interval = self.get_signal("interval")
         amount = self.get_signal("belaning")
         start_date = self.get_signal("start_date")
 
         fixed_payment_plan_operation = GenerateFixedPaymentPlan(
-            interest.data['stresstest_annuitet'],
+            interest,
             period.data['laneperiode'],
             interval.data['intervall'],
             amount.data['belaning'],
@@ -743,7 +769,9 @@ class RestructureProcess(Process):
 
         self.add_node(fixed_payment_plan_operation)
 
-        self.add_transition(interest, fixed_payment_plan_operation, label="thread")
+        if nominal_interest.data:
+            self.add_transition(nominal_interest, fixed_payment_plan_operation, label="thread")
+        self.add_transition(fixed_stress_rate, fixed_payment_plan_operation, label="thread")
         self.add_transition(period, fixed_payment_plan_operation, label="thread")
         self.add_transition(interval, fixed_payment_plan_operation, label="thread")
         self.add_transition(amount, fixed_payment_plan_operation, label="thread")
@@ -764,14 +792,19 @@ class RestructureProcess(Process):
         method for generating series mortgage plan
 
         """
-        interest = self.get_signal("serial_stress_test")
+        nominal_interest = self.get_signal("nominal_interest")
+        series_stress_rate = self.get_signal("serial_stress_test")
+        if nominal_interest.data:
+            interest = nominal_interest.data['nominell_rente']
+        else:
+            interest = series_stress_rate.data['stresstest_serie']
         period = self.get_signal("period")
         interval = self.get_signal("interval")
         amount = self.get_signal("belaning")
         start_date = self.get_signal("start_date")
 
         series_payment_plan_operation = GenerateSeriesPaymentPlan(
-            interest.data['stresstest_serie'],
+            interest,
             period.data['laneperiode'],
             interval.data['intervall'],
             amount.data['belaning'],
@@ -779,7 +812,9 @@ class RestructureProcess(Process):
 
         self.add_node(series_payment_plan_operation)
 
-        self.add_transition(interest, series_payment_plan_operation, label="thread")
+        if nominal_interest.data:
+            self.add_transition(nominal_interest, series_payment_plan_operation, label="thread")
+        self.add_transition(series_stress_rate, series_payment_plan_operation, label="thread")
         self.add_transition(period, series_payment_plan_operation, label="thread")
         self.add_transition(interval, series_payment_plan_operation, label="thread")
         self.add_transition(amount, series_payment_plan_operation, label="thread")

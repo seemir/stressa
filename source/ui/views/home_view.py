@@ -104,6 +104,8 @@ class HomeView(QMainWindow):
         self.ui_form.push_button_payment_plan.setIcon(
             QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/plan.png'))
 
+        self.analysis_model.config_plots()
+
     @property
     def payment_view(self):
         """

@@ -9,6 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from .payment_plan import PaymentPlan
+from .percentage import Percentage
 from .fixed_rate import FixedRate
 from .mortgage import Mortgage
 from .expenses import Expenses

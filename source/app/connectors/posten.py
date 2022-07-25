@@ -15,8 +15,6 @@ from http.client import responses
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 import requests
 
-from bs4 import BeautifulSoup
-
 from source.util import Assertor, LOGGER, NotFoundError, NoConnectionError, TimeOutError, Tracking
 from .settings import POSTEN_URL, TIMEOUT
 from .connector import Connector
@@ -132,20 +130,13 @@ class Posten(Connector):
 
         """
         LOGGER.info("trying to retrieve 'postal_code_info' for -> '{}'".format(self.postal_code))
-        soup = BeautifulSoup(self.response().content, "lxml")
-        rows = soup.find_all("tr")
 
-        # with open('content.html', 'w', encoding='utf-8') as file:
-        #     file.write(soup.prettify())
-
-        if len(rows) == 2:
-            header = [head.text.strip().lower() for head in soup.find_all('th')]
-            values = [value.text.strip().upper() if i != 4 else
-                      value.text.strip().upper().rsplit(' ', 1)[0] for i, value in
-                      enumerate(rows[1].find_all('td'))]
-            LOGGER.success("'postal_code_info' successfully retrieved")
-            return {hdr: val for hdr, val in dict(zip(header, values)).items() if val}
-        raise NotFoundError("'{}' is an invalid postal code".format(self.postal_code))
+        response = self.response().json()['postal_codes'][0]
+        data = {'postnr': response['postal_code'],
+                'poststed': response['city'],
+                'kommune': response['primary_county'],
+                'fylke': response['primary_municipality']}
+        return data
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/postal_code"):

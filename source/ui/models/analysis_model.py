@@ -246,6 +246,13 @@ class AnalysisModel(Model):
         self.parent.ui_form.table_view_serie_overview.horizontalHeader() \
             .setSectionResizeMode(6, QHeaderView.ResizeToContents)
 
+        self.config_plots()
+
+    def config_plots(self):
+        """
+        method for configure data plots
+
+        """
         for graphics_view in ['graphics_view_annuitet_overview', 'graphics_view_serie_overview',
                               'graphics_view_annuitet_period', 'graphics_view_serie_period']:
             getattr(self.parent.ui_form, graphics_view).setMouseEnabled(x=False, y=False)

@@ -41,14 +41,18 @@ class Mortgage(Entity):
                 raise ValueError(
                     "all element in '{}' must be supplied for restructure".format(
                         self.requirements_restructure))
-            data = {key: val for key, val in data.items() if key in self.requirements_restructure}
+            final = {}
+            if "nominell_rente" in data.keys():
+                final.update({"nominell_rente": data["nominell_rente"]})
+            final.update({key: val for key, val in data.items() if key in
+                          self.requirements_restructure})
         else:
             if not all(element in data.keys() for element in self.requirements_mortgage):
                 raise ValueError(
                     "all element in '{}' must be supplied for mortgage".format(
                         self.requirements_mortgage))
-            data = {key: val for key, val in data.items() if key in self.requirements_mortgage}
-        return data
+            final = {key: val for key, val in data.items() if key in self.requirements_mortgage}
+        return final
 
     def __init__(self, data: dict, restructure=False):
         """

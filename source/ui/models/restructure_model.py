@@ -13,7 +13,7 @@ import pandas as pd
 from PyQt5.QtWidgets import QHeaderView
 from PyQt5.QtCore import QObject, pyqtSlot, Qt
 
-from source.domain import Money, Mortgage
+from source.domain import Money, Mortgage, Percentage
 from source.app import RestructureProcess
 from source.util import Assertor
 
@@ -73,6 +73,8 @@ class RestructureModel(Model):
             lambda: self.set_line_edit("egenkapital", Money, "value"))
         self.parent.ui_form.line_edit_belaning.textEdited.connect(
             lambda: self.set_line_edit("belaning", Money, "value"))
+        self.parent.ui_form.line_edit_nominell_rente.textEdited.connect(
+            lambda: self.set_line_edit("nominell_rente", Percentage, "percentage_value"))
 
     def export(self):
         """
@@ -278,5 +280,5 @@ class RestructureModel(Model):
 
         self.clear_combo_boxes(["lanetype", "intervall", "laneperiode"])
         self.clear_date_edits(["startdato"])
-        self.clear_line_edits(["egenkapital", "belaning"])
+        self.clear_line_edits(["egenkapital", "belaning", "nominell_rente"])
         self.data = {}
