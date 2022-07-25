@@ -26,7 +26,7 @@ class BarChart(Chart):
     """
 
     def __init__(self, x_1: list, y_1: list, x_2: list, y_2: list, graphics_view_1: PlotWidget,
-                 graphics_view_2: PlotWidget, labels: tuple, units=None, precision=0, width=1,
+                 graphics_view_2: PlotWidget, labels: tuple, units=None, precision=0, width=1000,
                  average=None, display=int, x_labels=None, highlight_bars=True):
         """
         Constructor / Instantiation of class

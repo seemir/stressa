@@ -26,7 +26,7 @@ class RatioChart(Chart):
     """
 
     def __init__(self, x_val: list, y_1: list, y_2: list, graphics_view: PlotWidget, labels: str,
-                 units=None, x_labels=None, precision=0, width=0.4):
+                 units=None, x_labels=None, precision=0, width=1000):
         """
         Constructor / Instantiate the class
 

@@ -18,7 +18,7 @@ from source.util import Assertor
 from .table_model import TableModel
 from .model import Model
 
-from ..graphics import BarChartWithLine
+from ..graphics import StackedBarChartWithLine
 
 
 class AnalysisModel(Model):
@@ -92,7 +92,7 @@ class AnalysisModel(Model):
                 values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
                           for val in payment]
 
-                self.bar_plot_annuitet = BarChartWithLine(
+                self.bar_plot_annuitet = StackedBarChartWithLine(
                     termin, values,
                     self.parent.ui_form.graphics_view_annuitet_overview,
                     self.parent.ui_form.table_view_annuitet_overview)
@@ -114,7 +114,7 @@ class AnalysisModel(Model):
                 values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
                           for val in payment]
 
-                self.bar_plot_serie = BarChartWithLine(
+                self.bar_plot_serie = StackedBarChartWithLine(
                     termin, values,
                     self.parent.ui_form.graphics_view_serie_overview,
                     self.parent.ui_form.table_view_serie_overview)

@@ -9,6 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import pyqtgraph as pg
 
+from .stacked_bar_chart_with_line import StackedBarChartWithLine
 from .bar_chart_with_line import BarChartWithLine
 from .double_cross_hair import DoubleCrossHair
 from .ratio_chart import RatioChart
