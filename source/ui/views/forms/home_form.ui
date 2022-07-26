@@ -10866,7 +10866,24 @@
                <enum>QFrame::Plain</enum>
               </property>
               <layout class="QGridLayout" name="gridLayout_17">
-               <item row="2" column="0">
+               <item row="0" column="0">
+                <widget class="PlotWidget" name="graphics_view_annuitet_overview">
+                 <property name="frameShape">
+                  <enum>QFrame::Box</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="0">
+                <widget class="PlotWidget" name="graphics_view_annuitet_period">
+                 <property name="frameShape">
+                  <enum>QFrame::Box</enum>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
                 <widget class="QTableView" name="table_view_annuitet_overview">
                  <property name="alternatingRowColors">
                   <bool>true</bool>
@@ -10892,17 +10909,7 @@
                  </property>
                 </widget>
                </item>
-               <item row="0" column="0">
-                <widget class="PlotWidget" name="graphics_view_annuitet_overview">
-                 <property name="frameShape">
-                  <enum>QFrame::Box</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Sunken</enum>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
+               <item row="3" column="1">
                 <widget class="QTableView" name="table_view_serie_overview">
                  <property name="alternatingRowColors">
                   <bool>true</bool>
@@ -10918,18 +10925,343 @@
                  </attribute>
                 </widget>
                </item>
-               <item row="1" column="0">
-                <widget class="PlotWidget" name="graphics_view_annuitet_period">
-                 <property name="frameShape">
-                  <enum>QFrame::Box</enum>
-                 </property>
-                </widget>
-               </item>
                <item row="1" column="1">
                 <widget class="PlotWidget" name="graphics_view_serie_period">
                  <property name="frameShape">
                   <enum>QFrame::Box</enum>
                  </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QFrame" name="frame_serie_total">
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_20">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_laan_serie">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Total lån serie</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLineEdit" name="line_edit_laan_serie">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLineEdit" name="line_edit_total_rente_serie">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="line_edit_total_belop_serie">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_total_belop_serie">
+                    <property name="text">
+                     <string>Total terminbeløp serie</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_total_rente_serie">
+                    <property name="text">
+                     <string>Total rente serie</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="QLineEdit" name="line_edit_laan_andel_serie">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="2">
+                   <widget class="QLineEdit" name="line_edit_total_rente_andel_serie">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="2">
+                   <widget class="QLineEdit" name="line_edit_total_belop_andel_serie">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0" colspan="3">
+                   <widget class="QFrame" name="frame_whitespace_5">
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+               <item row="2" column="0">
+                <widget class="QFrame" name="frame_annuitet_total">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>100</height>
+                  </size>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QGridLayout" name="gridLayout_19">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_laan_annuitet">
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="text">
+                     <string>Total lån annuitet</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QLineEdit" name="line_edit_laan_annuitet">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QLineEdit" name="line_edit_total_rente_annuitet">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_total_belop_annuitet">
+                    <property name="text">
+                     <string>Total terminbeløp annuitet</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_total_rente_annuitet">
+                    <property name="text">
+                     <string>Total rente annuitet</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QLineEdit" name="line_edit_total_belop_annuitet">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="2">
+                   <widget class="QLineEdit" name="line_edit_laan_andel_annuitet">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="2">
+                   <widget class="QLineEdit" name="line_edit_total_rente_andel_annuitet">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="2">
+                   <widget class="QLineEdit" name="line_edit_total_belop_andel_annuitet">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>120</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="0" colspan="3">
+                   <widget class="QFrame" name="frame_whitespace_4">
+                    <property name="frameShape">
+                     <enum>QFrame::StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Raised</enum>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
                </item>
               </layout>
@@ -12660,6 +12992,18 @@
   <tabstop>graphics_view_serie_overview</tabstop>
   <tabstop>graphics_view_annuitet_period</tabstop>
   <tabstop>graphics_view_serie_period</tabstop>
+  <tabstop>line_edit_laan_annuitet</tabstop>
+  <tabstop>line_edit_laan_andel_annuitet</tabstop>
+  <tabstop>line_edit_laan_serie</tabstop>
+  <tabstop>line_edit_laan_andel_serie</tabstop>
+  <tabstop>line_edit_total_rente_annuitet</tabstop>
+  <tabstop>line_edit_total_rente_andel_annuitet</tabstop>
+  <tabstop>line_edit_total_rente_serie</tabstop>
+  <tabstop>line_edit_total_rente_andel_serie</tabstop>
+  <tabstop>line_edit_total_belop_annuitet</tabstop>
+  <tabstop>line_edit_total_belop_andel_annuitet</tabstop>
+  <tabstop>line_edit_total_belop_serie</tabstop>
+  <tabstop>line_edit_total_belop_andel_serie</tabstop>
   <tabstop>table_view_annuitet_overview</tabstop>
   <tabstop>table_view_serie_overview</tabstop>
   <tabstop>tab_widget_home</tabstop>

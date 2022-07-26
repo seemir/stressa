@@ -16,6 +16,7 @@ from source.util import Assertor
 from .fixed_rate import FixedRate
 from .entity import Entity
 from .money import Money
+from .share import Share
 
 
 class PaymentPlan(Entity):
@@ -221,12 +222,19 @@ class PaymentPlan(Entity):
         interest = str(self.interest_rate) + ' %'
         amount = df.at[self.period * self.interval, "Avdrag.total"]
 
+        payment_share = Share(Money(total_payment), Money(total_payment)).value
+        interest_share = Share(Money(total_interest), Money(total_payment)).value
+        principal_share = Share(Money(amount), Money(total_payment)).value
+
         return {"nedbetalingsplan_annuitet": df.to_dict(), "start_dato_annuitet": start_date,
                 "slutt_dato_annuitet": end_date, "total_rente_annuitet": total_interest,
                 "total_belop_annuitet": total_payment, "total_termin_annuitet": total_periods,
                 "aar_annuitet": years, "termin_aar_annuitet": termin_year, "laan_annuitet": amount,
                 "rente_annuitet": interest,
-                'nedbetalingsplan_annuitet_overview': self.aggregate_plan(df)}
+                'nedbetalingsplan_annuitet_overview': self.aggregate_plan(df),
+                'total_belop_andel_annuitet': payment_share,
+                'total_rente_andel_annuitet': interest_share,
+                'laan_andel_annuitet': principal_share}
 
     def serial_mortgage_plan(self):
         """
@@ -288,12 +296,19 @@ class PaymentPlan(Entity):
         interest = str(self.interest_rate) + ' %'
         amount = df.at[self.period * self.interval, "Avdrag.total"]
 
+        payment_share = Share(Money(total_payment), Money(total_payment)).value
+        interest_share = Share(Money(total_interest), Money(total_payment)).value
+        principal_share = Share(Money(amount), Money(total_payment)).value
+
         return {"nedbetalingsplan_serie": df.to_dict(), "start_dato_serie": start_date,
                 "slutt_dato_serie": end_date, "total_rente_serie": total_interest,
                 "total_belop_serie": total_payment, "total_termin_serie": total_periods,
                 "aar_serie": years, "termin_aar_serie": termin_year, "laan_serie": amount,
                 "rente_serie": interest,
-                'nedbetalingsplan_serie_overview': self.aggregate_plan(df)}
+                'nedbetalingsplan_serie_overview': self.aggregate_plan(df),
+                'total_belop_andel_serie': payment_share,
+                'total_rente_andel_serie': interest_share,
+                'laan_andel_serie': principal_share}
 
     @staticmethod
     def aggregate_plan(df: pd.DataFrame):

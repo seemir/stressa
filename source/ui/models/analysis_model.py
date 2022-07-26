@@ -31,7 +31,12 @@ class AnalysisModel(Model):
                       'egenkapital_andel', 'netto_likviditet_2', 'total_ramme', 'krav_belaning',
                       'krav_egenkapital_andel', 'krav_belaningsgrad', 'krav_total_ramme',
                       'krav_egenkapital', 'stresstest_annuitet', 'stresstest_serie',
-                      'krav_stresstest_annuitet', 'krav_stresstest_serie', 'krav_nettolikviditet']
+                      'krav_stresstest_annuitet', 'krav_stresstest_serie', 'krav_nettolikviditet',
+                      'laan_annuitet', 'total_rente_annuitet', 'total_belop_annuitet',
+                      'laan_serie', 'total_rente_serie', 'total_belop_serie',
+                      'laan_andel_annuitet', 'total_rente_andel_annuitet',
+                      'total_belop_andel_annuitet', 'laan_andel_serie',
+                      'total_rente_andel_serie', 'total_belop_andel_serie']
 
     def __init__(self, parent: QObject):
         """

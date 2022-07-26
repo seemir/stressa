@@ -264,20 +264,6 @@ class RestructureModel(Model):
         method for clearing all line_edits and combo_boxes in model
 
         """
-        StackedBarChartWithLine.clear_graphics(
-            self.parent.parent.ui_form.graphics_view_annuitet_overview,
-            self.parent.parent.ui_form.table_view_annuitet_overview)
-        StackedBarChartWithLine.clear_graphics(
-            self.parent.parent.ui_form.graphics_view_serie_overview,
-            self.parent.parent.ui_form.table_view_serie_overview)
-
-        StackedBarChartWithLine.clear_graphics(
-            self.parent.parent.ui_form.graphics_view_annuitet_period,
-            self.parent.parent.ui_form.table_view_annuitet_overview)
-        StackedBarChartWithLine.clear_graphics(
-            self.parent.parent.ui_form.graphics_view_serie_period,
-            self.parent.parent.ui_form.table_view_serie_overview)
-
         self.clear_combo_boxes(["lanetype", "intervall", "laneperiode"])
         self.clear_date_edits(["startdato"])
         self.clear_line_edits(["egenkapital", "belaning", "nominell_rente"])
