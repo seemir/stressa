@@ -13,7 +13,7 @@ from source.util import Assertor, Profiling, Tracking, Debugger
 from .engine import Process, Signal, InputOperation, ValidateRestructure, FixedStressTest, \
     SerialStressTest, SsbConnector, Extract, Multiplication, Factor, Subtraction, Division, \
     Addition, FixedPayment, Multiplex, OutputOperation, OutputSignal, Converter, \
-    GenerateFixedPaymentPlan, GenerateSeriesPaymentPlan
+    GenerateFixedPaymentPlan, GenerateSeriesPaymentPlan, Comparison
 
 
 class RestructureProcess(Process):
@@ -46,9 +46,10 @@ class RestructureProcess(Process):
                            self.subtraction_1])
 
         self.run_parallel([self.ssb_connector, self.fixed_mortgage_payment_plan,
-                           self.series_mortgage_payment_plan])
+                           self.series_mortgage_payment_plan, self.multiply_1])
 
-        self.run_parallel([self.addition_1, self.multiply_1, self.addition_2, self.division_1])
+        self.run_parallel([self.addition_1, self.division_1, self.comparison_1, self.addition_2])
+
         self.run_parallel([self.division_2, self.fixed_payment, self.division_3])
         self.run_parallel([self.subtraction_2, self.subtraction_3, self.converter_1,
                            self.converter_2])
@@ -411,7 +412,7 @@ class RestructureProcess(Process):
         """
 
         mortgage_limit_operation = Multiplication(
-            {'krav_belaning': self.get_signal("arsinntekt_aar").data['arsinntekt_aar']},
+            {'krav_belaning_maks': self.get_signal("arsinntekt_aar").data['arsinntekt_aar']},
             self.get_signal("mortgage_limit").data, "Calculate Total Mortgage Limit")
         self.add_node(mortgage_limit_operation)
 
@@ -425,7 +426,7 @@ class RestructureProcess(Process):
         mortgage_limit_signal = Signal(mortgage_limit, "Total Mortgage Limit", prettify_keys=True,
                                        length=10)
 
-        self.add_signal(mortgage_limit_signal, "krav_belaning")
+        self.add_signal(mortgage_limit_signal, "krav_belaning_maks")
         self.add_transition(mortgage_limit_operation, mortgage_limit_signal, label="thread")
 
     @Profiling
@@ -458,6 +459,31 @@ class RestructureProcess(Process):
 
         self.add_transition(required_mortgage_share_operation, required_mortgage_share_signal,
                             label="thread")
+
+    @Profiling
+    @Debugger
+    def comparison_1(self):
+        """
+        method for comparing values
+
+        """
+        applied_mortgage = self.get_signal("belaning")
+        max_mortgage = self.get_signal("krav_belaning_maks")
+
+        comparison_operation = Comparison(applied_mortgage.data, max_mortgage.data,
+                                          "krav_belaning",
+                                          "Comparison of Lowest Possible Mortgage Requirement")
+        self.add_node(comparison_operation)
+
+        self.add_transition(applied_mortgage, comparison_operation)
+        self.add_transition(max_mortgage, comparison_operation)
+
+        comparison = comparison_operation.run()
+
+        comparison_signal = Signal(comparison, "Lowest Mortgage Requirement")
+        self.add_signal(comparison_signal, "krav_belaning")
+
+        self.add_transition(comparison_operation, comparison_signal)
 
     @Profiling
     @Debugger
@@ -847,6 +873,7 @@ class RestructureProcess(Process):
         equity_share = self.get_signal("egenkapital_andel")
         mortgage_share = self.get_signal("belaningsgrad")
         total_financing_frame = self.get_signal("total_ramme")
+        max_mortgage_limit = self.get_signal("krav_belaning_maks")
         required_mortgage_limit = self.get_signal("krav_belaning")
         required_equity_share = self.get_signal("krav_egenkapital_andel")
         required_mortgage_share = self.get_signal("krav_belaningsgrad")
@@ -863,7 +890,7 @@ class RestructureProcess(Process):
         multiplex_operation = Multiplex([fixed_stress_rate, serial_stress_rate,
                                          required_fixed_rates, required_serial_rates, equity,
                                          net_liquidity, yearly_income, mortgage_limit, equity_share,
-                                         mortgage_share, total_financing_frame,
+                                         mortgage_share, total_financing_frame, max_mortgage_limit,
                                          required_mortgage_limit, required_equity_share,
                                          required_mortgage_share, required_total_financing_frame,
                                          required_equity, fixed_amount, fixed_payment_plan,

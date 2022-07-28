@@ -88,6 +88,11 @@ class RestructureModel(Model):
             restructure_data = RestructureProcess(restructure_data).restructure()
             analysis_model = self.parent.parent.analysis_model
 
+            if restructure_data["krav_belaning"] != restructure_data["krav_belaning_maks"]:
+                restructure_data.update({"krav_belaning": restructure_data[
+                                                              "krav_belaning"] + ' ({})'.format(
+                    restructure_data["krav_belaning_maks"])})
+
             analysis_model.set_line_edits(line_edit_text='',
                                           line_edits=analysis_model.analysis_keys,
                                           data=restructure_data)

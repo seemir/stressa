@@ -134,8 +134,8 @@ class FinnAd(Finn):
                 if len(unique_visninger) == 1:
                     final_visninger.update({"forste_visning": unique_visninger[0]})
                 else:
-                    final_visninger.update({"forste_visning": unique_visninger[0],
-                                            "andre_visning": unique_visninger[1]})
+                    final_visninger.update({"forste_visning": unique_visninger[1],
+                                            "andre_visning": unique_visninger[0]})
 
             info.update(final_visninger)
 

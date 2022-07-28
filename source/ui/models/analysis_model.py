@@ -84,121 +84,10 @@ class AnalysisModel(Model):
             self.set_line_edits(line_edit_text='', line_edits=self.analysis_keys,
                                 data=mortgage_analysis_data)
 
-            if "nedbetalingsplan_annuitet_overview" in mortgage_analysis_data.keys():
-                StackedBarChartWithLine.clear_graphics(
-                    self.parent.ui_form.graphics_view_annuitet_overview,
-                    self.parent.ui_form.table_view_annuitet_overview)
-
-                StackedBarChartWithLine.clear_graphics(
-                    self.parent.ui_form.graphics_view_annuitet_period,
-                    self.parent.ui_form.table_view_annuitet_overview)
-
-                payment_data_model_fixed = TableModel(
-                    pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"]),
-                    alignment=Qt.AlignCenter)
-                self.parent.ui_form.table_view_annuitet_overview.setModel(payment_data_model_fixed)
-
-                termin = list(
-                    mortgage_analysis_data["nedbetalingsplan_annuitet_overview"]["År"].values())[
-                         ::-1]
-                principal_total = list(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
-                                           "Avdrag.total"].values())[::-1]
-                payment_total = list(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
-                                         "T.beløp.total"].values())[::-1]
-
-                principal_values_total = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                    for val in principal_total]
-                payment_values_annuitet_total = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                    for val in payment_total]
-
-                self.bar_plot_annuitet_total = StackedBarChartWithLine(
-                    termin, payment_values_annuitet_total, principal_values_total,
-                    self.parent.ui_form.graphics_view_annuitet_overview,
-                    self.parent.ui_form.table_view_annuitet_overview,
-                    y_max=int(max(payment_values_annuitet_total) * 1.33))
-
-                self.bar_plot_annuitet_total.table_view_mapping()
-
-                principal_period = list(
-                    mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
-                        "Avdrag"].values())[::-1]
-                payment_period = list(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
-                                          "T.beløp"].values())[::-1]
-
-                principal_values_period = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                    for val in principal_period]
-                payment_values_annuitet_period = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                    for val in payment_period]
-
-                self.bar_plot_annuitet_period = StackedBarChartWithLine(
-                    termin, payment_values_annuitet_period, principal_values_period,
-                    self.parent.ui_form.graphics_view_annuitet_period,
-                    self.parent.ui_form.table_view_annuitet_overview,
-                    y_max=int(max(payment_values_annuitet_period) * 1.33))
-
-                self.bar_plot_annuitet_period.table_view_mapping()
-
-            if "nedbetalingsplan_serie_overview" in mortgage_analysis_data.keys():
-                StackedBarChartWithLine.clear_graphics(
-                    self.parent.ui_form.graphics_view_serie_overview,
-                    self.parent.ui_form.table_view_serie_overview)
-
-                StackedBarChartWithLine.clear_graphics(
-                    self.parent.ui_form.graphics_view_serie_period,
-                    self.parent.ui_form.table_view_serie_overview)
-
-                payment_data_model_fixed = TableModel(
-                    pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_serie_overview"]),
-                    alignment=Qt.AlignCenter)
-                self.parent.ui_form.table_view_serie_overview.setModel(payment_data_model_fixed)
-
-                termin = list(
-                    mortgage_analysis_data["nedbetalingsplan_serie_overview"]["År"].values())[
-                         ::-1]
-                principal_total = list(mortgage_analysis_data["nedbetalingsplan_serie_overview"][
-                                           "Avdrag.total"].values())[::-1]
-                payment_total = list(mortgage_analysis_data["nedbetalingsplan_serie_overview"][
-                                         "T.beløp.total"].values())[::-1]
-
-                principal_values_total = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                    for val in principal_total]
-                payment_values_serie_total = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                    for val in payment_total]
-
-                self.bar_plot_serie_total = StackedBarChartWithLine(
-                    termin, payment_values_serie_total, principal_values_total,
-                    self.parent.ui_form.graphics_view_serie_overview,
-                    self.parent.ui_form.table_view_serie_overview,
-                    y_max=int(max(payment_values_annuitet_total) * 1.33))
-
-                self.bar_plot_serie_total.table_view_mapping()
-
-                principal_period = list(
-                    mortgage_analysis_data["nedbetalingsplan_serie_overview"][
-                        "Avdrag"].values())[::-1]
-                payment_period = list(mortgage_analysis_data["nedbetalingsplan_serie_overview"][
-                                          "T.beløp"].values())[::-1]
-
-                principal_values_period = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                    for val in principal_period]
-                payment_values_serie_period = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                    for val in payment_period]
-
-                self.bar_plot_serie_period = StackedBarChartWithLine(
-                    termin, payment_values_serie_period, principal_values_period,
-                    self.parent.ui_form.graphics_view_serie_period,
-                    self.parent.ui_form.table_view_serie_overview,
-                    y_max=int(max(payment_values_annuitet_period) * 1.33))
-
-                self.bar_plot_serie_period.table_view_mapping()
+            payment_values_annuitet_total, payment_values_annuitet_period = \
+                self.fixed_mortgage_display(mortgage_analysis_data)
+            self.series_mortgage_display(mortgage_analysis_data, payment_values_annuitet_total,
+                                         payment_values_annuitet_period)
 
             self.configure_charts()
 
@@ -215,6 +104,136 @@ class AnalysisModel(Model):
             for payment_key in payment_keys:
                 if payment_key in mortgage_analysis_data.keys():
                     self.data.update({payment_key: mortgage_analysis_data[payment_key]})
+
+    def fixed_mortgage_display(self, mortgage_analysis_data: dict):
+        """
+        method for displaying annuitet mortgage information
+
+        """
+        if "nedbetalingsplan_annuitet_overview" in mortgage_analysis_data.keys():
+            StackedBarChartWithLine.clear_graphics(
+                self.parent.ui_form.graphics_view_annuitet_overview,
+                self.parent.ui_form.table_view_annuitet_overview)
+
+            StackedBarChartWithLine.clear_graphics(
+                self.parent.ui_form.graphics_view_annuitet_period,
+                self.parent.ui_form.table_view_annuitet_overview)
+
+            payment_data_model_fixed = TableModel(
+                pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"]),
+                alignment=Qt.AlignCenter)
+            self.parent.ui_form.table_view_annuitet_overview.setModel(payment_data_model_fixed)
+
+            termin = list(
+                mortgage_analysis_data["nedbetalingsplan_annuitet_overview"]["År"].values())[
+                     ::-1]
+            principal_total = list(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
+                                       "Avdrag.total"].values())[::-1]
+            payment_total = list(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
+                                     "T.beløp.total"].values())[::-1]
+
+            principal_values_total = [
+                int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                for val in principal_total]
+            payment_values_annuitet_total = [
+                int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                for val in payment_total]
+
+            self.bar_plot_annuitet_total = StackedBarChartWithLine(
+                termin, payment_values_annuitet_total, principal_values_total,
+                self.parent.ui_form.graphics_view_annuitet_overview,
+                self.parent.ui_form.table_view_annuitet_overview,
+                y_max=int(max(payment_values_annuitet_total) * 1.33))
+
+            self.bar_plot_annuitet_total.table_view_mapping()
+
+            principal_period = list(
+                mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
+                    "Avdrag"].values())[::-1]
+            payment_period = list(mortgage_analysis_data["nedbetalingsplan_annuitet_overview"][
+                                      "T.beløp"].values())[::-1]
+
+            principal_values_period = [
+                int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                for val in principal_period]
+            payment_values_annuitet_period = [
+                int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                for val in payment_period]
+
+            self.bar_plot_annuitet_period = StackedBarChartWithLine(
+                termin, payment_values_annuitet_period, principal_values_period,
+                self.parent.ui_form.graphics_view_annuitet_period,
+                self.parent.ui_form.table_view_annuitet_overview,
+                y_max=int(max(payment_values_annuitet_period) * 1.33))
+
+            self.bar_plot_annuitet_period.table_view_mapping()
+
+            return payment_values_annuitet_total, payment_values_annuitet_period
+
+    def series_mortgage_display(self, mortgage_analysis_data: dict,
+                                payment_values_annuitet_total: list,
+                                payment_values_annuitet_period: list):
+        """
+        method for displaying series mortgage data
+
+        """
+        if "nedbetalingsplan_serie_overview" in mortgage_analysis_data.keys():
+            StackedBarChartWithLine.clear_graphics(
+                self.parent.ui_form.graphics_view_serie_overview,
+                self.parent.ui_form.table_view_serie_overview)
+
+            StackedBarChartWithLine.clear_graphics(
+                self.parent.ui_form.graphics_view_serie_period,
+                self.parent.ui_form.table_view_serie_overview)
+
+            payment_data_model_fixed = TableModel(
+                pd.DataFrame(mortgage_analysis_data["nedbetalingsplan_serie_overview"]),
+                alignment=Qt.AlignCenter)
+            self.parent.ui_form.table_view_serie_overview.setModel(payment_data_model_fixed)
+
+            termin = list(
+                mortgage_analysis_data["nedbetalingsplan_serie_overview"]["År"].values())[
+                     ::-1]
+            principal_total = list(mortgage_analysis_data["nedbetalingsplan_serie_overview"][
+                                       "Avdrag.total"].values())[::-1]
+            payment_total = list(mortgage_analysis_data["nedbetalingsplan_serie_overview"][
+                                     "T.beløp.total"].values())[::-1]
+
+            principal_values_total = [
+                int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                for val in principal_total]
+            payment_values_serie_total = [
+                int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                for val in payment_total]
+
+            self.bar_plot_serie_total = StackedBarChartWithLine(
+                termin, payment_values_serie_total, principal_values_total,
+                self.parent.ui_form.graphics_view_serie_overview,
+                self.parent.ui_form.table_view_serie_overview,
+                y_max=int(max(payment_values_annuitet_total) * 1.33))
+
+            self.bar_plot_serie_total.table_view_mapping()
+
+            principal_period = list(
+                mortgage_analysis_data["nedbetalingsplan_serie_overview"][
+                    "Avdrag"].values())[::-1]
+            payment_period = list(mortgage_analysis_data["nedbetalingsplan_serie_overview"][
+                                      "T.beløp"].values())[::-1]
+
+            principal_values_period = [
+                int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                for val in principal_period]
+            payment_values_serie_period = [
+                int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                for val in payment_period]
+
+            self.bar_plot_serie_period = StackedBarChartWithLine(
+                termin, payment_values_serie_period, principal_values_period,
+                self.parent.ui_form.graphics_view_serie_period,
+                self.parent.ui_form.table_view_serie_overview,
+                y_max=int(max(payment_values_annuitet_period) * 1.33))
+
+            self.bar_plot_serie_period.table_view_mapping()
 
     def configure_charts(self):
         """
