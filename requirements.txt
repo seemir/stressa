@@ -60,7 +60,7 @@ pandas==1.4.3
 pip-autoremove==0.9.1
 pluggy==0.13.1
 ply==3.11
-prettytable==2.4.0
+prettytable==3.4.1
 progress==1.5
 psutil==5.8.0
 publicsuffix2==2.20191221
@@ -97,7 +97,7 @@ typed-ast==1.4.3
 typing==3.7.4.1
 typing-extensions==3.10.0.0
 tzlocal==2.1
-untangle==1.1.1
+untangle==1.2.1
 urllib3==1.26.5
 wcwidth==0.2.5
 webencodings==0.5.1
