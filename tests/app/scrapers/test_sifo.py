@@ -38,7 +38,7 @@ class TestSifo:
 
         """
         family_members = [Male(age=45), Female(age=40)]
-        cls.family = Family(family_members, income=850000, cars=1, select_year=2021)
+        cls.family = Family(family_members, income=850000, fossil_cars=1, select_year=2021)
         cls.sifo = Sifo(cls.family)
 
     def test_sifo_is_instance_of_connector(self):

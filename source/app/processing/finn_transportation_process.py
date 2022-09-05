@@ -251,18 +251,27 @@ class FinnTransportationProcess(Process):
 
         """
         primary_transport = self.get_signal("primary_transportation")
-        primary_transport_rest_operation = RestructureScore(
-            primary_transport.data["primarytransport"],
-            "Restructure Primary Transportation\n Statistics", key="Primære transportmidel")
-        self.add_node(primary_transport_rest_operation)
-        self.add_transition(primary_transport, primary_transport_rest_operation, label="thread")
+        if primary_transport.data:
+            primary_transport_rest_operation = RestructureScore(
+                primary_transport.data["primarytransport"],
+                "Restructure Primary Transportation\n Statistics", key="Primære transportmidel")
+            self.add_node(primary_transport_rest_operation)
+            self.add_transition(primary_transport, primary_transport_rest_operation, label="thread")
 
-        primary_transport_rest = primary_transport_rest_operation.run()
-        primary_transport_rest_signal = Signal(primary_transport_rest,
-                                               "Restructured Primary Transportation\n Statistics")
-        self.add_signal(primary_transport_rest_signal, "primary_transportation_rest")
-        self.add_transition(primary_transport_rest_operation, primary_transport_rest_signal,
-                            label="thread")
+            primary_transport_rest = primary_transport_rest_operation.run()
+            primary_transport_rest_signal = Signal(primary_transport_rest,
+                                                   "Restructured Primary Transportation\n "
+                                                   "Statistics")
+            self.add_signal(primary_transport_rest_signal, "primary_transportation_rest")
+            self.add_transition(primary_transport_rest_operation, primary_transport_rest_signal,
+                                label="thread")
+        else:
+            primary_transport_rest = {"primarytransport": ""}
+            primary_transport_rest_signal = Signal(primary_transport_rest,
+                                                   "Restructured Primary Transportation\n "
+                                                   "Statistics")
+            self.add_signal(primary_transport_rest_signal, "primary_transportation_rest")
+            self.add_transition(primary_transport, primary_transport_rest_signal, label="thread")
 
     @Profiling
     @Debugger

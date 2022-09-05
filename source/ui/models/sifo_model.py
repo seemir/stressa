@@ -25,7 +25,7 @@ class SifoModel(Model):
 
     """
     _budsjett_aar = ["", "2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014",
-                     "2013"]
+                     "2013", "2012", "2011", "2010"]
     _kjonn = ["", "Mann", "Kvinne"]
     _alder = ["", "0-5 mnd", "6-11 mnd", "1 år", "2 år", "3 år", "4-5 år",
               "6-9 år", "10-13 år", "14-17 år", "18-19 år", "20-30 år", "31-50 år", "51-60 år",
@@ -57,6 +57,7 @@ class SifoModel(Model):
             getattr(self.parent.ui_form, "combo_box_alder_" + str(num)).addItems(
                 self._alder)
         self.parent.ui_form.combo_box_antall_biler.addItems(self._antall_biler)
+        self.parent.ui_form.combo_box_antall_elbiler.addItems(self._antall_biler)
         self._sifo_process = None
         self._extra_info = None
 
@@ -332,6 +333,15 @@ class SifoModel(Model):
             lambda: self.set_combo_box("antall_biler"))
 
     @pyqtSlot()
+    def set_electric_cars(self):
+        """
+        method for setting / formatting number of electric cars in family
+
+        """
+        self.parent.ui_form.combo_box_antall_elbiler.activated.connect(
+            lambda: self.set_combo_box("antall_elbiler"))
+
+    @pyqtSlot()
     def set_yearly_income(self):
         """
         method for setting / formatting yearly gross income
@@ -396,6 +406,7 @@ class SifoModel(Model):
         self.set_age()
         self.set_extra_info()
         self.set_cars()
+        self.set_electric_cars()
         self.set_budsjett_aar()
 
     @pyqtSlot()
@@ -419,6 +430,7 @@ class SifoModel(Model):
             self.clear_extra_info("_" + str(combo_box))
         self.parent.ui_form.line_edit_brutto_arsinntekt.clear()
         self.parent.ui_form.combo_box_antall_biler.setCurrentIndex(0)
+        self.parent.ui_form.combo_box_antall_elbiler.setCurrentIndex(0)
         self.clear_results()
         self.data = {}
         self.parent.ui_form.combo_box_kjonn_1.setFocus()

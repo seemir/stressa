@@ -65,7 +65,7 @@ class TestFamily:
 
         """
         with pt.raises(TypeError):
-            Family(invalid_arg, income=invalid_arg, cars=invalid_arg)
+            Family(invalid_arg, income=invalid_arg, fossil_cars=invalid_arg)
 
     @pt.mark.parametrize('invalid_arg', [(), {}, []])
     def test_income_and_cars_tracking_error_for_invalid_arguments(self, invalid_arg):
@@ -147,13 +147,14 @@ class TestFamily:
         """
         family = [Male(age=48), Female(age=45, pregnant='1'), Female(age=17), Male(age=13, sfo='1'),
                   Female(age=5, kinder_garden='1')]
-        properties = {'inntekt': '1489000', 'antall_biler': '2', 'select_year': '2021'}
+        properties = {'inntekt': '1489000', 'antall_biler': '2', 'antall_elbiler': '0',
+                      'select_year': '2021'}
         for i, member in enumerate(family):
             for key, value in member.__dict__.items():
                 if "_id" not in key:
                     properties.update({key[1:] + str(i): value})
 
-        fam = Family(family, income=1489000, cars=2, select_year=2021)
+        fam = Family(family, income=1489000, fossil_cars=2, select_year=2021)
 
         assert fam.sifo_properties() == properties
 

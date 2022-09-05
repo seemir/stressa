@@ -87,7 +87,8 @@ class Family(Entity):
         Assertor.assert_non_negative([cars], msg="Only non-negative 'numbers of cars'")
 
     def __init__(self, family_members: list = None, income: Union[int, float, str] = 0,
-                 cars: Union[int, str] = 0, select_year: Union[int, str] = None):
+                 fossil_cars: Union[int, str] = 0, electric_cars: Union[int, str] = 0,
+                 select_year: Union[int, str] = None):
         """
         Constructor / Instantiate the class
 
@@ -97,8 +98,10 @@ class Family(Entity):
                           list of Person (Male or Female) instances
         income          : int, float, str
                           gross yearly income
-        cars            : int, str
-                          number of cars in the family
+        fossil_cars     : int, str
+                          number of fossil cars in the family
+        electric_cars   : int, str
+                          number of electric cars in the family
         select_year     : int, str
                           budget year
 
@@ -106,12 +109,14 @@ class Family(Entity):
         super().__init__()
         self.validate_family_members(family_members)
         self.validate_income(income)
-        self.validating_cars(cars)
+        self.validating_cars(fossil_cars)
+        self.validating_cars(electric_cars)
         self.validate_select_year(select_year)
 
         self._familie_medlemmer = family_members
         self._inntekt = str(income)
-        self._antall_biler = str(cars)
+        self._antall_biler = str(fossil_cars)
+        self._antall_elbiler = str(electric_cars)
         self._select_year = str(select_year)
 
     @property
@@ -190,7 +195,7 @@ class Family(Entity):
     @property
     def antall_biler(self):
         """
-        cars setter
+        fossil cars setter
 
         Returns
         -------
@@ -203,7 +208,7 @@ class Family(Entity):
     @antall_biler.setter
     def antall_biler(self, cars: (int, str)):
         """
-        cars setter
+        fossile cars setter
 
         Parameters
         ----------
@@ -213,6 +218,33 @@ class Family(Entity):
         """
         self.validating_cars(cars)
         self._antall_biler = str(cars)
+
+    @property
+    def antall_elbiler(self):
+        """
+        electric cars setter
+
+        Returns
+        -------
+        out     : str
+                  number of cars in the family
+
+        """
+        return self._antall_elbiler
+
+    @antall_elbiler.setter
+    def antall_elbiler(self, cars: (int, str)):
+        """
+        electric cars setter
+
+        Parameters
+        ----------
+        cars    : int, str
+                  new number of cars to set in family
+
+        """
+        self.validating_cars(cars)
+        self._antall_elbiler = str(cars)
 
     @property
     def select_year(self):
@@ -247,13 +279,15 @@ class Family(Entity):
                   dictionary of all active properties
 
         """
-        properties = dict(list(self.__dict__.items())[-3:])
+        properties = dict(list(self.__dict__.items())[-4:])
 
         for i, family_member in enumerate(self.familie_medlemmer):
             for name, prop in family_member.__dict__.items():
                 if "_id" not in name:
                     properties.update({name + str(i): prop})
-        return {name[1:]: value for name, value in properties.items()}
+        prop = {name[1:]: value for name, value in properties.items()}
+
+        return prop
 
     @staticmethod
     def rules():
