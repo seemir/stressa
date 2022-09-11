@@ -9,12 +9,13 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 
 from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.QtCore import pyqtSlot
+from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.uic import loadUi
-from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
 
 from source.util import Assertor
 
+from .skatteetaten_view import SkatteetatenView
 from .meta_view import MetaView
 from ..models import TaxModel
 
@@ -37,15 +38,20 @@ class TaxView(QDialog):
         """
         Assertor.assert_data_types([parent], [QWidget])
         super().__init__(parent)
+        dir_up = os.path.dirname
         self._parent = parent
-        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/tax_form.ui"), self)
+        self.ui_form = loadUi(os.path.join(dir_up(__file__), "forms/tax_form.ui"), self)
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
 
         self._error_view = self.parent.error_view
         self._meta_view = MetaView(self)
+        self._skatteetaten_view = SkatteetatenView(self)
 
         self._tax_model = TaxModel(self)
+
+        self.ui_form.push_button_skatteetaten.setIcon(
+            QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/import_skatteetaten.png'))
 
         self.ui_form.push_button_utregning.clicked.connect(self.calculate_tax_income)
         self.ui_form.push_button_tom_skjema.clicked.connect(self.clear_all)
@@ -57,6 +63,7 @@ class TaxView(QDialog):
         self.ui_form.push_button_meta_data_2.clicked.connect(self.meta_view.display)
         self.ui_form.push_button_avbryt_2.clicked.connect(self.close)
         self.ui_form.push_button_tom_skjema_2.clicked.connect(self.clear_all)
+        self.ui_form.push_button_skatteetaten.clicked.connect(self.skatteetaten_view.show)
 
     @property
     def parent(self):
@@ -96,6 +103,19 @@ class TaxView(QDialog):
 
         """
         return self._meta_view
+
+    @property
+    def skatteetaten_view(self):
+        """
+        SkatteetatenView getter
+
+        Returns
+        -------
+        out     : SkatteetatenView
+                  View with the Skatteetaten info
+
+        """
+        return self._skatteetaten_view
 
     @property
     def tax_model(self):
