@@ -3231,7 +3231,7 @@
                </widget>
               </item>
               <item row="24" column="1">
-               <widget class="QPushButton" name="push_button_budget_meta_data_1">
+               <widget class="QPushButton" name="push_button_meta_data_1">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -3256,8 +3256,20 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="0" colspan="3">
+              <item row="0" column="0" colspan="3">
                <widget class="QFrame" name="frame_primar">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="palette">
                  <palette>
                   <active>
@@ -3684,11 +3696,7 @@
                 </property>
                 <layout class="QGridLayout" name="gridLayout_3">
                  <item row="0" column="0">
-                  <widget class="QGraphicsView" name="web_view_primar">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                  </widget>
+                  <widget class="QWebEngineView" name="web_view_primar"/>
                  </item>
                 </layout>
                </widget>
@@ -5172,8 +5180,20 @@
                 </property>
                </widget>
               </item>
-              <item row="2" column="0" colspan="3">
+              <item row="0" column="0" colspan="3">
                <widget class="QFrame" name="frame_sekundar">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="MinimumExpanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>0</height>
+                 </size>
+                </property>
                 <property name="palette">
                  <palette>
                   <active>
@@ -5600,11 +5620,7 @@
                 </property>
                 <layout class="QGridLayout" name="gridLayout_5">
                  <item row="0" column="0">
-                  <widget class="QGraphicsView" name="web_view_sekundar">
-                   <property name="frameShape">
-                    <enum>QFrame::NoFrame</enum>
-                   </property>
-                  </widget>
+                  <widget class="QWebEngineView" name="web_view_sekundar"/>
                  </item>
                 </layout>
                </widget>
@@ -5622,6 +5638,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebEngineView</class>
+   <extends>QGraphicsView</extends>
+   <header>qwebengineview.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>scroll_area_skatteetaten</tabstop>
   <tabstop>line_edit_formuesskatt_til_stat_grunnlag</tabstop>
@@ -5648,7 +5671,7 @@
   <tabstop>line_edit_skatteprosent</tabstop>
   <tabstop>push_button_eksporter_1</tabstop>
   <tabstop>push_button_tom_skjema_1</tabstop>
-  <tabstop>push_button_budget_meta_data_1</tabstop>
+  <tabstop>push_button_meta_data_1</tabstop>
   <tabstop>push_button_avbryt_1</tabstop>
   <tabstop>tab_widget_skatteetaten</tabstop>
   <tabstop>line_edit_formuesskatt_til_stat_grunnlag_2</tabstop>

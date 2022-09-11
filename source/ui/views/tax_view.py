@@ -63,7 +63,8 @@ class TaxView(QDialog):
         self.ui_form.push_button_meta_data_2.clicked.connect(self.meta_view.display)
         self.ui_form.push_button_avbryt_2.clicked.connect(self.close)
         self.ui_form.push_button_tom_skjema_2.clicked.connect(self.clear_all)
-        self.ui_form.push_button_skatteetaten.clicked.connect(self.skatteetaten_view.show)
+        self.ui_form.push_button_skatteetaten.clicked.connect(
+            self.skatteetaten_view.open_skatteetaten_page)
 
     @property
     def parent(self):
