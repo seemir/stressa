@@ -21,7 +21,7 @@ colorama==0.4.4
 console-progressbar==1.1.2
 coverage==6.2
 cycler==0.10.0
-DateTime==4.3
+DateTime==4.7
 diagrams==0.19.1
 dnspython==2.1.0
 et-xmlfile==1.0.1
