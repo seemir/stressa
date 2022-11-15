@@ -11,7 +11,9 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 from threading import Thread
 from queue import Queue
+import platform
 
+import asyncio
 from time import time
 from abc import ABC, abstractmethod
 
@@ -20,9 +22,6 @@ from pydot import Dot, Edge
 from source.util import Assertor, __version__, profiling_config, LOGGER, Debugger, Tracking
 
 from .signal import Signal
-
-import platform
-import asyncio
 
 if platform.system() == 'Windows':
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())

@@ -65,7 +65,7 @@ class TestFinnAdvertInfoConnector:
         Test the run method in FinnAdvertInfoConnector operation
 
         """
-        results = {'finn_adresse': 'Sigyns gate 3, 0260 Oslo',
+        results = {'finn_adresse': 'Sigyns gate 3, 0260, Oslo',
                    'prisantydning': '70 000 000 kr',
                    'status': 'Ikke solgt',
                    'omkostninger': '1 765 642 kr',
@@ -75,7 +75,7 @@ class TestFinnAdvertInfoConnector:
                    'eieform': 'Eier (Selveier)', 'soverom': '7',
                    'primrrom': '656 m²', 'bruksareal': '831 m²',
                    'bygger': '1918',
-                   'energimerking': 'G - mørkegrønn',
+                   'energimerking': 'G - Mørkegrønn',
                    'tomteareal': '1135 m² (eiet)',
                    'bruttoareal': '947 m²',
                    'formuesverdi': '9 283 581 kr',
