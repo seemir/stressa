@@ -28,8 +28,8 @@ class FinnModel(Model):
     _finn_keys = ["finnkode", "status", "sistendret", "referanse", "finn_adresse",
                   "prisantydning", "formuesverdi", "fellesgjeld", "felleskostmnd",
                   "omkostninger", "kommunaleavg", "totalpris", "fellesformue",
-                  "boligtype", "eieformbolig", "etasje", "bygger", "soverom", "rom",
-                  "renovertr", "primrrom", "bruttoareal", "energimerking",
+                  "boligtype", "eieform", "etasje", "bygger", "soverom", "rom",
+                  "renovertr", "primrrom", "bruksareal", "energimerking",
                   "tomteareal", "sqm_price"]
 
     def __init__(self, parent: QObject):

@@ -21,6 +21,12 @@ from source.util import Assertor, __version__, profiling_config, LOGGER, Debugge
 
 from .signal import Signal
 
+import platform
+import asyncio
+
+if platform.system() == 'Windows':
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 
 class Process(Dot, ABC):
     """

@@ -1392,7 +1392,7 @@
                </widget>
               </item>
               <item row="7" column="2">
-               <widget class="QLineEdit" name="line_edit_bruttoareal">
+               <widget class="QLineEdit" name="line_edit_bruksareal">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -1539,7 +1539,7 @@
               <item row="7" column="0">
                <widget class="QLabel" name="label_bruttoareal">
                 <property name="text">
-                 <string>Bruttoareal</string>
+                 <string>Bruksareal</string>
                 </property>
                </widget>
               </item>
@@ -5398,7 +5398,7 @@
   <tabstop>line_edit_fellesgjeld</tabstop>
   <tabstop>line_edit_totalpris</tabstop>
   <tabstop>line_edit_primrrom</tabstop>
-  <tabstop>line_edit_bruttoareal</tabstop>
+  <tabstop>line_edit_bruksareal</tabstop>
   <tabstop>line_edit_sqm_price</tabstop>
   <tabstop>line_edit_city_area_sqm_price</tabstop>
   <tabstop>line_edit_municipality_sqm_price</tabstop>

@@ -6528,7 +6528,7 @@
                     </widget>
                    </item>
                    <item row="13" column="3">
-                    <widget class="QLineEdit" name="line_edit_eieformbolig_1">
+                    <widget class="QLineEdit" name="line_edit_eieform_1">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -6556,7 +6556,7 @@
                       <string>Eieform</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_eieformbolig_1</cstring>
+                      <cstring>line_edit_eieform_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -6714,7 +6714,7 @@
                     </widget>
                    </item>
                    <item row="16" column="3">
-                    <widget class="QLineEdit" name="line_edit_bruttoareal_1">
+                    <widget class="QLineEdit" name="line_edit_bruksareal_1">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -6739,10 +6739,10 @@
                       </font>
                      </property>
                      <property name="text">
-                      <string>Bruttoareal</string>
+                      <string>Bruksareal</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_bruttoareal_1</cstring>
+                      <cstring>line_edit_bruksareal_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -7884,7 +7884,7 @@
                     </widget>
                    </item>
                    <item row="12" column="3">
-                    <widget class="QLineEdit" name="line_edit_eieformbolig_2">
+                    <widget class="QLineEdit" name="line_edit_eieform_2">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -7912,7 +7912,7 @@
                       <string>Eieform</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_eieformbolig_1</cstring>
+                      <cstring>line_edit_eieform_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -8115,7 +8115,7 @@
                     </widget>
                    </item>
                    <item row="15" column="3">
-                    <widget class="QLineEdit" name="line_edit_bruttoareal_2">
+                    <widget class="QLineEdit" name="line_edit_bruksareal_2">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -8176,10 +8176,10 @@
                       </font>
                      </property>
                      <property name="text">
-                      <string>Bruttoareal</string>
+                      <string>Bruksareal</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_bruttoareal_1</cstring>
+                      <cstring>line_edit_bruksareal_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -8320,7 +8320,7 @@
                       <string>Eieform</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_eieformbolig_1</cstring>
+                      <cstring>line_edit_eieform_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -8499,7 +8499,7 @@
                     </widget>
                    </item>
                    <item row="12" column="3">
-                    <widget class="QLineEdit" name="line_edit_eieformbolig_3">
+                    <widget class="QLineEdit" name="line_edit_eieform_3">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -8949,7 +8949,7 @@
                     </widget>
                    </item>
                    <item row="15" column="3">
-                    <widget class="QLineEdit" name="line_edit_bruttoareal_3">
+                    <widget class="QLineEdit" name="line_edit_bruksareal_3">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -8992,10 +8992,10 @@
                       </font>
                      </property>
                      <property name="text">
-                      <string>Bruttoareal</string>
+                      <string>Bruksareal</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_bruttoareal_1</cstring>
+                      <cstring>line_edit_bruksareal_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -13079,13 +13079,13 @@
   <tabstop>line_edit_sqm_price_1</tabstop>
   <tabstop>line_edit_renovertr_1</tabstop>
   <tabstop>line_edit_boligtype_1</tabstop>
-  <tabstop>line_edit_eieformbolig_1</tabstop>
+  <tabstop>line_edit_eieform_1</tabstop>
   <tabstop>line_edit_etasje_1</tabstop>
   <tabstop>line_edit_bygger_1</tabstop>
   <tabstop>line_edit_soverom_1</tabstop>
   <tabstop>line_edit_rom_1</tabstop>
   <tabstop>line_edit_primrrom_1</tabstop>
-  <tabstop>line_edit_bruttoareal_1</tabstop>
+  <tabstop>line_edit_bruksareal_1</tabstop>
   <tabstop>line_edit_energimerking_1</tabstop>
   <tabstop>line_edit_tomteareal_1</tabstop>
   <tabstop>line_edit_finnkode_2</tabstop>
@@ -13107,13 +13107,13 @@
   <tabstop>line_edit_sqm_price_2</tabstop>
   <tabstop>line_edit_renovertr_2</tabstop>
   <tabstop>line_edit_boligtype_2</tabstop>
-  <tabstop>line_edit_eieformbolig_2</tabstop>
+  <tabstop>line_edit_eieform_2</tabstop>
   <tabstop>line_edit_etasje_2</tabstop>
   <tabstop>line_edit_bygger_2</tabstop>
   <tabstop>line_edit_soverom_2</tabstop>
   <tabstop>line_edit_rom_2</tabstop>
   <tabstop>line_edit_primrrom_2</tabstop>
-  <tabstop>line_edit_bruttoareal_2</tabstop>
+  <tabstop>line_edit_bruksareal_2</tabstop>
   <tabstop>line_edit_energimerking_2</tabstop>
   <tabstop>line_edit_tomteareal_2</tabstop>
   <tabstop>line_edit_finnkode_3</tabstop>
@@ -13135,13 +13135,13 @@
   <tabstop>line_edit_sqm_price_3</tabstop>
   <tabstop>line_edit_renovertr_3</tabstop>
   <tabstop>line_edit_boligtype_3</tabstop>
-  <tabstop>line_edit_eieformbolig_3</tabstop>
+  <tabstop>line_edit_eieform_3</tabstop>
   <tabstop>line_edit_etasje_3</tabstop>
   <tabstop>line_edit_bygger_3</tabstop>
   <tabstop>line_edit_soverom_3</tabstop>
   <tabstop>line_edit_rom_3</tabstop>
   <tabstop>line_edit_primrrom_3</tabstop>
-  <tabstop>line_edit_bruttoareal_3</tabstop>
+  <tabstop>line_edit_bruksareal_3</tabstop>
   <tabstop>line_edit_energimerking_3</tabstop>
   <tabstop>line_edit_tomteareal_3</tabstop>
   <tabstop>push_button_analyse</tabstop>

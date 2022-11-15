@@ -102,13 +102,27 @@ class FinnAd(Finn):
             ad_soup = BeautifulSoup(response.content, "lxml")
             address = ad_soup.find("p", attrs={"class": "u-caption"})
 
+            if not address:
+                address = "".join(
+                    set(value.text for value in ad_soup.find_all("span", attrs={"class": "pl-4"}) if
+                        "360° Visning" not in value.text))
+            else:
+                address = address.text
+
             price = "".join(
                 price.text for price in ad_soup.find_all("span", attrs={"class": "u-t3"})
                 if " kr" in price.text).strip().replace(u"\xa0", " ")
+
+            if not price:
+                price = "".join(
+                    price.text for price in
+                    ad_soup.find_all("span", attrs={"class": "text-28 font-bold"})
+                    if " kr" in price.text).strip().replace(u"\xa0", " ")
+
             status = ad_soup.find("span",
                                   attrs={"class": "u-capitalize status status--warning u-mb0"})
 
-            info = {"finn_adresse": address.text, "prisantydning": price,
+            info = {"finn_adresse": address, "prisantydning": price,
                     "status": status.text.strip().replace(r'\n', '').capitalize()
                     if status else "Ikke solgt"}
 
@@ -156,6 +170,48 @@ class FinnAd(Finn):
                     mat_list = candidate.split()
                     matrikkel.update({mat_list[i].replace(":", "").replace("å", "a")
                                      .lower(): mat_list[i + 1] for i in range(0, len(mat_list), 2)})
+
+            if not matrikkel:
+                for key in ad_soup.find_all("div"):
+                    candidate = " ".join(key.get_text().split())
+
+                    if "Kommunenr:" in candidate and all(
+                            element not in candidate for element in
+                            ['Gårdsnr:', 'Bruksnr:', 'Borettslag-navn:', 'Borettslag-orgnummer:',
+                             'Borettslag-andelsnummer:']):
+                        matrikkel.update({'kommunenr': str(candidate.split(sep=':')[-1].strip())})
+                    if "Gårdsnr:" in candidate and all(
+                            element not in candidate for element in
+                            ['Kommunenr:', 'Bruksnr:', 'Borettslag-navn:', 'Borettslag-orgnummer:',
+                             'Borettslag-andelsnummer:']):
+                        matrikkel.update({'gardsnr': str(candidate.split(sep=':')[-1].strip())})
+                    if "Bruksnr:" in candidate and all(
+                            element not in candidate for element in
+                            ['Kommunenr:', 'Gårdsnr:', 'Borettslag-navn:', 'Borettslag-orgnummer:',
+                             'Borettslag-andelsnummer:']):
+                        matrikkel.update({'bruksnr': str(candidate.split(sep=':')[-1].strip())})
+                    if "Borettslag-navn:" in candidate and all(
+                            element not in candidate for element in
+                            ['Kommunenr:', 'Gårdsnr:', 'Bruksnr:', 'Borettslag-orgnummer:',
+                             'Borettslag-andelsnummer:']):
+                        matrikkel.update(
+                            {'borettslag-navn': str(candidate.split(sep=':')[-1].strip())})
+                    if "Borettslag-orgnummer:" in candidate and all(
+                            element not in candidate for element in
+                            ['Kommunenr:', 'Gårdsnr:', 'Bruksnr:', 'Borettslag-navn:',
+                             'Borettslag-andelsnummer:']):
+                        matrikkel.update(
+                            {'borettslag-orgnummer': str(candidate.split(sep=':')[-1].strip())})
+                    if "Borettslag-andelsnummer:" in candidate and all(
+                            element not in candidate for element in
+                            ['Kommunenr:', 'Gårdsnr:', 'Bruksnr:', 'Borettslag-navn:',
+                             'borettslag-orgnummer:']):
+                        matrikkel.update(
+                            {'borettslag-andelsnummer': str(candidate.split(sep=':')[-1].strip())})
+                    if "Seksjonsnr:" in candidate and all(element not in candidate for element in
+                                                          ['Kommunenr:', 'Gårdsnr:', 'Bruksnr:']):
+                        matrikkel.update(
+                            {'seksjonsnr': str(candidate.split(sep=':')[-1].strip())})
 
             info.update({"matrikkel": matrikkel})
 
