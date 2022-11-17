@@ -28,13 +28,10 @@ class TaxModel(Model):
                     "rentekostnader_total"]
     _tax_input = ["skatte_aar", "alder", "fagforeningskontigent", "bsu", "rentekostnader_total",
                   "verdi_primarbolig", "bankinnskudd", "gjeld"]
-    _tax_output = ["beregnet_skatt_grunnlag", "beregnet_skatt_beloep",
-                   "beregnet_skatt_foer_skattefradrag_grunnlag", "beregnet_skatt_per_mnd_beloep",
+    _tax_output = ["beregnet_skatt_beloep", "beregnet_skatt_per_mnd_beloep",
                    "beregnet_skatt_foer_skattefradrag_beloep", "fellesskatt_grunnlag",
-                   "fellesskatt_beloep", "formuesskatt_til_kommune_grunnlag",
-                   "formuesskatt_til_kommune_beloep", "formuesskatt_til_stat_grunnlag",
-                   "formuesskatt_til_stat_beloep", "fradrag_for_fagforeningskontingent",
-                   "gjeldsgrad", "inntektsskatt_til_fylkeskommune_grunnlag",
+                   "fellesskatt_beloep", "fradrag_for_fagforeningskontingent", "gjeldsgrad",
+                   "inntektsskatt_til_fylkeskommune_grunnlag",
                    "inntektsskatt_til_fylkeskommune_beloep", "inntektsskatt_til_kommune_grunnlag",
                    "inntektsskatt_til_kommune_beloep", "personinntekt_fra_loennsinntekt",
                    "samlet_gjeld", "samlede_paaloepte_renter_paa_gjeld_i_innenlandske_banker",
@@ -42,9 +39,8 @@ class TaxModel(Model):
                    "samlet_skattepliktig_overskudd_fra_utleie_av_fast_eiendom", "skatteklasse",
                    "skatteprosent", "skatteregnskapskommune", "sum_fradrag_i_alminnelig_inntekt",
                    "sum_inntekter_i_alminnelig_inntekt_foer_fordelingsfradrag", "sum_minstefradrag",
-                   "sum_skattefradrag_grunnlag", "sum_skattefradrag_beloep",
-                   "sum_trygdeavgift_grunnlag", "sum_trygdeavgift_beloep",
-                   "trinnskatt_grunnlag", "trinnskatt_beloep"]
+                   "sum_skattefradrag_beloep", "sum_trygdeavgift_grunnlag",
+                   "sum_trygdeavgift_beloep", "trinnskatt_grunnlag", "trinnskatt_beloep"]
 
     def __init__(self, parent: QObject):
         """

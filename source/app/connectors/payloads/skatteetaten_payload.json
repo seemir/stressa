@@ -9,7 +9,7 @@
         "postnummer": "2.1.1",
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Lønn og naturalytelser med mer",
-        "id": "V1vbb1zy4",
+        "id": "GXWrO63e6",
         "beloep": "loennsinntektNaturalytelseMvBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
@@ -21,7 +21,7 @@
         "postnummer": "3.1.1",
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Renter av bankinnskudd",
-        "id": "GfPN4ir-gs",
+        "id": "9t2N0ozDTY",
         "beloep": "opptjenteRenterBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
@@ -33,7 +33,7 @@
         "postnummer": "3.3.1",
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Renter av gjeld",
-        "id": "PaQ2XVcU3b",
+        "id": "DlQ7h7rklt",
         "beloep": "paaloepteRenterBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
@@ -45,7 +45,7 @@
         "postnummer": "4.3.2",
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Primærbolig",
-        "id": "8zqDrPpLMu",
+        "id": "UBniEziJdo",
         "beloep": "formuesverdiForPrimaerboligBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
@@ -57,7 +57,7 @@
         "postnummer": "4.1.1",
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Bankinnskudd",
-        "id": "czeyAY4t7j",
+        "id": "gpxbKnSbMT",
         "beloep": "innskuddBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
@@ -69,7 +69,7 @@
         "postnummer": "4.8.1",
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Gjeld til kredittinstitusjoner",
-        "id": "3qaTKD65xO",
+        "id": "cISUnPE-hL",
         "beloep": "gjeldBelop",
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
@@ -81,7 +81,7 @@
         "postnummer": "2.1.5",
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Annen arbeidsinntekt",
-        "id": "WTjOw5TZF",
+        "id": "MQSkvIFmo",
         "beloep": "annenArbeidsinntektBeloep",
         "autofokus": true,
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
@@ -94,20 +94,20 @@
         "postnummer": "2.8.2",
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Utleie av fast eiendom",
-        "id": "BZPLQkrif",
+        "id": "SH6kLOGtP",
         "beloep": "nettoinntektVedUtleieAvFastEiendomMvBeloep",
         "autofokus": true,
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
       },
       {
-        "tekniskNavn": "betaltFagforeningskontingent",
+        "tekniskNavn": "inntektsfradragForFagforeningskontingent",
         "temakategori": "arbeidTrygdPensjon",
         "temaunderkategori": "arbeidOgPensjonFradrag",
         "sorteringsNoekkel": "030211",
         "postnummer": "3.2.11",
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "Fagforeningskontingent",
-        "id": "jvPclVgJr",
+        "id": "N3ZGeJyaE",
         "beloep": "betaltFagforeningskontingentBelop",
         "autofokus": true,
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
@@ -120,7 +120,7 @@
         "postnummer": "1.5.1",
         "brukIKalkulator": "BrukesDirekte",
         "ledetekst": "BSU sparebeløp i år",
-        "id": "dq5RUyOkq",
+        "id": "ZplXU5MVV",
         "beloep": "beloepSpartIBSUIInntektsaarBelop",
         "autofokus": true,
         "type": "ske.fastsetting.skatt.skattegrunnlag.v2_0.SkattegrunnlagsobjektXml"
@@ -134,7 +134,7 @@
         "alderIInntektsaar": "alderIInntektsaarVerdi",
         "tolvdelVedArbeidsoppholdINorge": "12"
       },
-      "skattested": "0402",
+      "skattested": "0301",
       "skattestedITiltakssone": false
     }
   }
