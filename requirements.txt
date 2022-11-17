@@ -41,7 +41,7 @@ isort==5.10.1
 jdcal==1.4.1
 Jinja2==2.11.3
 kiwisolver==1.4.3
-lazy-object-proxy==1.5.2
+lazy-object-proxy==1.8.0
 llvmlite==0.38.1
 loguru==0.5.1
 lxml==4.9.1
