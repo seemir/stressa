@@ -29,7 +29,7 @@ expiringdict==1.2.0
 folium==0.12.1
 frozenlist==1.2.0
 geographiclib==1.50
-geopy==1.21.0
+geopy==2.3.0
 graphviz==0.13.2
 helpdev==0.6.10
 hid==1.0.4
