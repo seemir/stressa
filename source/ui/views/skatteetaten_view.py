@@ -17,6 +17,7 @@ from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtCore import pyqtSlot, Qt, QUrl, QObject
 from PyQt5.QtWebEngineWidgets import QWebEngineSettings
+from PyQt5.QtWebEngineCore import QWebEngineHttpRequest
 
 from source.util import Assertor
 
@@ -59,11 +60,14 @@ class SkatteetatenView(QDialog):
         self._meta_view = MetaView(self)
 
         self.web_view = self.ui_form.web_view_primar
+        self.web_view.setContextMenuPolicy(Qt.NoContextMenu)
         self.web_view.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
         self.web_view.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
         self.ui_form.push_button_meta_data_1.clicked.connect(self.meta_view.display)
+        self.ui_form.push_button_import_tax_data_1.clicked.connect(self.import_tax_data)
 
         self.tax_report_url = ''
+        self.tax_message_data = ''
 
     @property
     def meta_view(self):
@@ -92,6 +96,18 @@ class SkatteetatenView(QDialog):
         return self._skatteetaten_model
 
     @pyqtSlot()
+    def import_tax_data(self):
+        """
+        method for importing tax data to application
+
+        """
+        if self.tax_report_url:
+            prelim_tax_url = 'https://skatt.skatteetaten.no/api/skattemeldingen/2021/' \
+                             'skattemelding/hent-gjeldende'
+            self.web_view.setHtml('')
+            self.web_view.setUrl(QUrl(prelim_tax_url))
+
+    @pyqtSlot()
     def open_skatteetaten_page(self):
         """
         method for opening skatteetaten page
@@ -112,7 +128,8 @@ class SkatteetatenView(QDialog):
         """
         if self.web_view.url().toString() == "https://skatt.skatteetaten.no/web/mineskatteforhold/":
             tax_api_url = "https://skatt.skatteetaten.no/api/mineskatteforhold/sider/skatt"
-            self.web_view.setUrl(QUrl(tax_api_url))
+            tax_api_request = QWebEngineHttpRequest(QUrl.fromUserInput(tax_api_url))
+            self.web_view.load(tax_api_request)
             self.web_view.loadFinished.connect(self.tax_auth_data)
 
     def tax_auth_data(self):
@@ -129,11 +146,11 @@ class SkatteetatenView(QDialog):
         """
         if not self.tax_report_url and content:
             try:
-                tax_auth_data = json.loads(content)
+                tax_data = json.loads(content)
                 self.web_view.setHtml('')
                 document_id = ''
-                if "blokker" in tax_auth_data.keys():
-                    for blokk in tax_auth_data["blokker"]:
+                if "blokker" in tax_data.keys():
+                    for blokk in tax_data["blokker"]:
                         if "blokknavn" in blokk.keys():
                             if blokk["blokknavn"] == "historikk":
                                 if "blokker" in blokk.keys():
@@ -151,7 +168,7 @@ class SkatteetatenView(QDialog):
                 self.tax_report_url = "https://skatt.skatteetaten.no/api/mineskatteforhold/" \
                                       "dokumentregister/{}/skatteoppgjoer_personlig_v1/" \
                                       "?aar=2021".format(document_id)
-                self.web_view.setUrl(QUrl(self.tax_report_url))
+                self.web_view.load(QUrl(self.tax_report_url))
             except ValueError:
                 pass
 
