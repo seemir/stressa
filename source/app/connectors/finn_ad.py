@@ -105,9 +105,9 @@ class FinnAd(Finn):
             if not address:
                 address = "".join(
                     set(value.text for value in ad_soup.find_all("span", attrs={"class": "pl-4"}) if
-                        "360° Visning" not in value.text))
+                        "360° Visning" not in value.text)).replace("Video", "")
             else:
-                address = address.text
+                address = address.text.replace("Video", "")
 
             price = "".join(
                 price.text for price in ad_soup.find_all("span", attrs={"class": "u-t3"})

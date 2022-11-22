@@ -167,7 +167,9 @@ class GrunnbokaView(QDialog):
                         preview_file = self.download_path + '\\' + file
                         self.web_view.load(QUrl.fromUserInput(preview_file))
             else:
-                url = "https://seeiendom.kartverket.no/eiendom/0" + self.matrikkel["kommunenr"] + \
+                kommune_nr = "0" + self.matrikkel["kommunenr"] if len(
+                    self.matrikkel["kommunenr"]) == 3 else self.matrikkel["kommunenr"]
+                url = "https://seeiendom.kartverket.no/eiendom/" + kommune_nr + \
                       "/" + self.matrikkel["gardsnr"] + "/" + self.matrikkel["bruksnr"] + "/0/0"
                 self.web_view.setUrl(QUrl(url))
                 self.web_view.show()

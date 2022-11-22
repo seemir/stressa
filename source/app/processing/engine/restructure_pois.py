@@ -82,6 +82,8 @@ class RestructurePois(Restructure):
                                 if element["duration"]["walk"] else 0
                             duration_walk.append(str(int(
                                 round(walk_duration / 60))) + " min" if walk_duration != 0 else "-")
+                        else:
+                            duration_walk.append("-")
 
                         if "drive" in element["duration"].keys():
                             drive_duration = element["duration"]["drive"] \
@@ -89,6 +91,8 @@ class RestructurePois(Restructure):
                             duration_drive.append(str(int(
                                 round(drive_duration / 60))) + " min" if drive_duration != 0
                                                   else "-")
+                        else:
+                            duration_drive.append("-")
                     else:
                         duration_walk.append("-")
                         duration_drive.append("-")
