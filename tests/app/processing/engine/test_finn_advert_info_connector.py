@@ -65,7 +65,7 @@ class TestFinnAdvertInfoConnector:
         Test the run method in FinnAdvertInfoConnector operation
 
         """
-        results = {'finn_adresse': 'Sigyns gate 3, 0260, Oslo',
+        results = {'finn_adresse': 'Sigyns gate 3, 0260 Oslo',
                    'prisantydning': '70 000 000 kr',
                    'status': 'Ikke solgt',
                    'omkostninger': '1 765 642 kr',
