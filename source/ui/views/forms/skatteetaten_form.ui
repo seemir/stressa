@@ -2215,7 +2215,23 @@
              </property>
              <layout class="QGridLayout" name="gridLayout_3">
               <item row="0" column="0">
-               <widget class="QWebEngineView" name="web_view_primar"/>
+               <widget class="QWebEngineView" name="web_view_primary"/>
+              </item>
+              <item row="1" column="0">
+               <widget class="QWebEngineView" name="web_view_secondary">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>1</height>
+                 </size>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -3776,7 +3792,7 @@
   <tabstop>push_button_meta_data_1</tabstop>
   <tabstop>push_button_avbryt_1</tabstop>
   <tabstop>tab_widget_skatteetaten</tabstop>
-  <tabstop>web_view_primar</tabstop>
+  <tabstop>web_view_primary</tabstop>
  </tabstops>
  <resources>
   <include location="../../images/img.qrc"/>

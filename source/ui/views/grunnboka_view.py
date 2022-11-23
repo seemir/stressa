@@ -174,7 +174,7 @@ class GrunnbokaView(QDialog):
                 self.web_view.setUrl(QUrl(url))
                 self.web_view.show()
         else:
-            self.ui_form.web_view.close()
+            self.ui_form.web_view_primary.close()
 
         self.show()
 

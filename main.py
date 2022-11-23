@@ -17,7 +17,8 @@ from PyQt5.QtWidgets import QApplication
 from source.ui import HomeView, SplashView, ErrorView
 from source.util import LOGGER
 
-QApplication.setAttribute(Qt.AA_DisableHighDpiScaling, True)
+QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
+QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
 
 
 class Main(QApplication):

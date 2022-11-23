@@ -59,10 +59,11 @@ class SkatteetatenView(QDialog):
 
         self._meta_view = MetaView(self)
 
-        self.web_view = self.ui_form.web_view_primar
-        self.web_view.setContextMenuPolicy(Qt.NoContextMenu)
-        self.web_view.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
-        self.web_view.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
+        self.web_view_primary = self.ui_form.web_view_primary
+        self.web_view_secondary = self.ui_form.web_view_secondary
+        self.web_view_primary.setContextMenuPolicy(Qt.NoContextMenu)
+        self.web_view_primary.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
+        self.web_view_primary.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
         self.ui_form.push_button_meta_data_1.clicked.connect(self.meta_view.display)
         self.ui_form.push_button_import_tax_data_1.clicked.connect(self.import_tax_data)
 
@@ -101,11 +102,6 @@ class SkatteetatenView(QDialog):
         method for importing tax data to application
 
         """
-        if self.tax_report_url:
-            prelim_tax_url = 'https://skatt.skatteetaten.no/api/skattemeldingen/2021/' \
-                             'skattemelding/hent-gjeldende'
-            self.web_view.setHtml('')
-            self.web_view.setUrl(QUrl(prelim_tax_url))
 
     @pyqtSlot()
     def open_skatteetaten_page(self):
@@ -116,9 +112,9 @@ class SkatteetatenView(QDialog):
         tax_url = "https://www.skatteetaten.no/globalassets/system/js/index.html?" \
                   "redirectUrl=https%3A%2F%2Fskatt.skatteetaten.no%2Fweb%2Fmineskatteforhold%2F"
         self.clear_cache()
-        self.web_view.setUrl(QUrl(tax_url))
-        self.web_view.loadFinished.connect(self.load_finished)
-        self.web_view.show()
+        self.web_view_primary.setUrl(QUrl(tax_url))
+        self.web_view_primary.loadFinished.connect(self.load_finished)
+        self.web_view_primary.show()
         self.show()
 
     def load_finished(self):
@@ -126,18 +122,19 @@ class SkatteetatenView(QDialog):
         method for getting auth api credentials
 
         """
-        if self.web_view.url().toString() == "https://skatt.skatteetaten.no/web/mineskatteforhold/":
+        if self.web_view_primary.url().toString() == "https://skatt.skatteetaten.no/web/" \
+                                                     "mineskatteforhold/":
             tax_api_url = "https://skatt.skatteetaten.no/api/mineskatteforhold/sider/skatt"
             tax_api_request = QWebEngineHttpRequest(QUrl.fromUserInput(tax_api_url))
-            self.web_view.load(tax_api_request)
-            self.web_view.loadFinished.connect(self.tax_auth_data)
+            self.web_view_secondary.load(tax_api_request)
+            self.web_view_secondary.loadFinished.connect(self.tax_auth_data)
 
     def tax_auth_data(self):
         """
         method for redirecting to tax report
 
         """
-        self.web_view.page().toPlainText(self.show_tax_report)
+        self.web_view_secondary.page().toPlainText(self.show_tax_report)
 
     def show_tax_report(self, content):
         """
@@ -147,7 +144,7 @@ class SkatteetatenView(QDialog):
         if not self.tax_report_url and content:
             try:
                 tax_data = json.loads(content)
-                self.web_view.setHtml('')
+                self.web_view_primary.setHtml('')
                 document_id = ''
                 if "blokker" in tax_data.keys():
                     for blokk in tax_data["blokker"]:
@@ -168,7 +165,7 @@ class SkatteetatenView(QDialog):
                 self.tax_report_url = "https://skatt.skatteetaten.no/api/mineskatteforhold/" \
                                       "dokumentregister/{}/skatteoppgjoer_personlig_v1/" \
                                       "?aar=2021".format(document_id)
-                self.web_view.load(QUrl(self.tax_report_url))
+                self.web_view_primary.load(QUrl(self.tax_report_url))
             except ValueError:
                 pass
 
@@ -178,7 +175,7 @@ class SkatteetatenView(QDialog):
 
         """
         self.tax_report_url = ''
-        self.web_view.setHtml('')
-        self.web_view.page().profile().cookieStore().deleteAllCookies()
-        self.web_view.history().clear()
-        self.web_view.close()
+        self.web_view_primary.setHtml('')
+        self.web_view_primary.page().profile().cookieStore().deleteAllCookies()
+        self.web_view_primary.history().clear()
+        self.web_view_primary.close()

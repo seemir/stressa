@@ -74,4 +74,4 @@ class SkatteetatenModel(Model):
 
         """
         self.clear_line_edits([elem.replace("-", "_") for elem in self.skatteetaten_keys])
-        self.parent.ui_form.web_view.close()
+        self.parent.ui_form.web_view_primary.close()
