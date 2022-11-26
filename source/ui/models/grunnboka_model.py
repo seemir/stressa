@@ -76,7 +76,7 @@ class GrunnbokaModel(Model):
         full_key = "matrikkel" + postfix
         self.clear_line_edits([elem.replace("-", "_") for elem in self.grunnboka_keys])
         self.clear_finn_data(full_key)
-        self.parent.ui_form.web_view_primary.close()
+        self.parent.ui_form.web_view_grunnboka.close()
 
     def clear_finn_data(self, full_key):
         """
