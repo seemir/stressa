@@ -37,7 +37,7 @@ html5lib==1.1
 idna==3.3
 importlib-metadata==3.4.0
 iniconfig==1.1.1
-isort==5.10.1
+isort==5.11.1
 jdcal==1.4.1
 Jinja2==2.11.3
 kiwisolver==1.4.3
