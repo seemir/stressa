@@ -50,6 +50,7 @@ class SettingsView(QDialog):
         self._settings_model = SettingsModel(self)
         self.ui_form.push_button_metadata.clicked.connect(self.meta_view.display)
         self.ui_form.push_button_lagre.clicked.connect(self.settings_model.save_settings)
+        self.ui_form.push_button_avbryt.clicked.connect(self.close)
 
     @property
     def settings_model(self):

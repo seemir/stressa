@@ -13,7 +13,7 @@ from source.util import Assertor, Profiling, Tracking, Debugger
 from .engine import Process, Signal, InputOperation, ValidateMortgage, OutputSignal, \
     OutputOperation, Extract, Factor, Multiplication, Multiplex, Division, Subtraction, Addition, \
     FixedStressTest, SerialStressTest, SsbConnector, FixedPayment, Converter, \
-    GenerateFixedPaymentPlan, GenerateSeriesPaymentPlan
+    GenerateFixedPaymentPlan, GenerateSeriesPaymentPlan, ReadSettings
 
 
 class MortgageAnalysisProcess(Process):
@@ -40,8 +40,9 @@ class MortgageAnalysisProcess(Process):
         self.validate_mortgage()
 
         self.run_parallel([self.fixed_stress_test, self.extract_1, self.serial_stress_test,
-                           self.extract_2, self.extract_3, self.factor_1, self.factor_2,
-                           self.factor_3, self.extract_4, self.extract_5, self.extract_6])
+                           self.extract_2, self.extract_3, self.read_settings_1, self.factor_1,
+                           self.read_settings_2, self.extract_4, self.extract_5, self.extract_6,
+                           self.read_settings_3])
 
         self.run_parallel([self.multiply_1, self.subtraction_1, self.ssb_connector,
                            self.fixed_mortgage_payment_plan, self.series_mortgage_payment_plan])
@@ -226,23 +227,23 @@ class MortgageAnalysisProcess(Process):
 
     @Profiling
     @Debugger
-    def factor_1(self):
+    def read_settings_1(self):
         """
         method for creating a factor
 
         """
-        factor_operation = Factor("5", "Mortgage Limit")
-        self.add_node(factor_operation)
+        read_settings_operation = ReadSettings("gjeldsgrad")
+        self.add_node(read_settings_operation)
 
-        factor = factor_operation.run()
+        factor = read_settings_operation.run()
         factor_signal = Signal(factor, "Mortgage Limit")
 
         self.add_signal(factor_signal, "mortgage_limit")
-        self.add_transition(factor_operation, factor_signal, label="thread")
+        self.add_transition(read_settings_operation, factor_signal, label="thread")
 
     @Profiling
     @Debugger
-    def factor_2(self):
+    def factor_1(self):
         """
         method for creating a factor
 
@@ -395,14 +396,13 @@ class MortgageAnalysisProcess(Process):
         required_interest_rates_operation = Addition(
             {"krav_stresstest_annuitet": self.get_signal("ssb_interest_rates").data[
                 'markedsrente']},
-            self.get_signal("mortgage_limit").data,
-            "Calculate Required Stress Rate")
+            self.get_signal("stresstest_limit").data, "Calculate Required Stress Rate")
         self.add_node(required_interest_rates_operation)
 
         self.add_transition(self.get_signal("ssb_interest_rates"),
                             required_interest_rates_operation,
                             label="thread")
-        self.add_transition(self.get_signal("mortgage_limit"), required_interest_rates_operation,
+        self.add_transition(self.get_signal("stresstest_limit"), required_interest_rates_operation,
                             label="thread")
 
         required_fixed_interest_rates = required_interest_rates_operation.run(money=False,
@@ -453,22 +453,37 @@ class MortgageAnalysisProcess(Process):
 
     @Profiling
     @Debugger
-    def factor_3(self):
+    def read_settings_2(self):
         """
         method for creating a factor
 
         """
-        factor_operation = Factor("15", "Required Equity Share")
-        self.add_node(factor_operation)
+        read_settings_operation = ReadSettings("egenkapital_krav")
+        self.add_node(read_settings_operation)
 
-        factor = factor_operation.run()
+        factor = read_settings_operation.run()
         factor['krav_egenkapital_andel'] = factor.pop('factor')
-        factor.update({'krav_egenkapital_andel': '15.0 %'})
 
         factor_signal = Signal(factor, "Required Equity Share")
 
         self.add_signal(factor_signal, "krav_egenkapital_andel")
-        self.add_transition(factor_operation, factor_signal, label="thread")
+        self.add_transition(read_settings_operation, factor_signal, label="thread")
+
+    @Profiling
+    @Debugger
+    def read_settings_3(self):
+        """
+        method for creating a factor
+
+        """
+        read_settings_operation = ReadSettings("stresstest")
+        self.add_node(read_settings_operation)
+
+        factor = read_settings_operation.run()
+        factor_signal = Signal(factor, "Stresstest Limit")
+
+        self.add_signal(factor_signal, "stresstest_limit")
+        self.add_transition(read_settings_operation, factor_signal, label="thread")
 
     @Profiling
     @Debugger

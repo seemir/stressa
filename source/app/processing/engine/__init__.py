@@ -37,6 +37,7 @@ from .rate_of_change import RateOfChange
 from .output_signal import OutputSignal
 from .ssb_connector import SsbConnector
 from .fixed_payment import FixedPayment
+from .read_settings import ReadSettings
 from .restructure import Restructure
 from .subtraction import Subtraction
 from .accumulate import Accumulate

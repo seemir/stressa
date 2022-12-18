@@ -39,7 +39,6 @@ class SettingsModel(Model):
         self.parent.ui_form.combo_box_stresstest.addItems(self._stress_test_requirements)
 
         self.read_settings()
-
         self.set_combo_box("egenkapital_krav")
         self.set_combo_box("gjeldsgrad")
         self.set_combo_box("stresstest")
@@ -62,10 +61,11 @@ class SettingsModel(Model):
         method for reading current settings from file
 
         """
-        settings_dir = os.path.join(os.path.dirname(__file__), "settings")
+        up = os.path.dirname
+        settings_dir = up(up(up(__file__))) + '\\app\\processing\\engine\\tmp'
+
         if os.path.exists(settings_dir):
-            with open(os.path.dirname(os.path.realpath(__file__)) + '\\settings\\settings.json',
-                      'r') as fp:
+            with open(settings_dir + '\\settings.json', 'r') as fp:
                 try:
                     settings = json.load(fp)
                     self.parent.ui_form.combo_box_egenkapital_krav.setCurrentText(
@@ -82,11 +82,14 @@ class SettingsModel(Model):
         method for saving settings in form to file
 
         """
-        settings_dir = os.path.join(os.path.dirname(__file__), "settings")
+        up = os.path.dirname
+        settings_dir = up(up(up(__file__))) + '\\app\\processing\\engine\\tmp'
+
         if self.data:
             if not os.path.exists(settings_dir):
                 os.makedirs(settings_dir)
 
-            with open(os.path.dirname(os.path.realpath(__file__)) + '/settings/settings.json',
-                      'w') as fp:
+            with open(settings_dir + '\\settings.json', 'w') as fp:
                 json.dump(self.data, fp)
+
+        self.parent.close()
