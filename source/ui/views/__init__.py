@@ -14,6 +14,7 @@ from .statistics_view import StatisticsView
 from .info_clear_view import InfoClearView
 from .grunnboka_view import GrunnbokaView
 from .info_quit_view import InfoQuitView
+from .settings_view import SettingsView
 from .history_view import HistoryView
 from .payment_view import PaymentView
 from .budget_view import BudgetView

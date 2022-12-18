@@ -12,6 +12,7 @@ from .statistics_model import StatisticsModel
 from .grunnboka_model import GrunnbokaModel
 from .mortgage_model import MortgageModel
 from .analysis_model import AnalysisModel
+from .settings_model import SettingsModel
 from .history_model import HistoryModel
 from .payment_model import PaymentModel
 from .images_model import ImagesModel

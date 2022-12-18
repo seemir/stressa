@@ -37,10 +37,11 @@ class InfoClearView(QDialog):
         super().__init__(None)
         up = os.path.dirname
 
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/info_form_clear.ui"), self)
-        self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
-        self.ui.push_button_apply.setIcon(
+        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/info_form_clear.ui"),
+                              self)
+        self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.ui_form.push_button_apply.setIcon(
             QIcon(up(up(os.path.abspath(__file__))) + '/images/check.png'))
 
         self.setWindowModality(Qt.ApplicationModal)

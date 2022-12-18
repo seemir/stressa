@@ -36,10 +36,10 @@ class MetaView(QDialog):
         """
         Assertor.assert_data_types([parent], [QWidget])
         super().__init__(parent)
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/meta_form.ui"), self)
-        self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/meta_form.ui"), self)
+        self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self._parent = parent
 
     @property
@@ -62,7 +62,7 @@ class MetaView(QDialog):
         """
         try:
             meta_data = self.get_all_meta_data()
-            self.ui.plain_text_edit_meta_data.setPlainText(
+            self.ui_form.plain_text_edit_meta_data.setPlainText(
                 json.dumps(meta_data if meta_data else {}, ensure_ascii=False, indent=4))
             self.exec_()
         except Exception as metadata_error:
@@ -84,7 +84,8 @@ class MetaView(QDialog):
                   "_statistics_model": "statistikk_informasjon", "_tax_model": "skatteinformasjon",
                   "_home_model": "likviditets_informasjon",
                   "_grunnboka_model": "grunnboka_informasjon",
-                  "_restructure_model": "lånestruktur_informasjon"}
+                  "_restructure_model": "lånestruktur_informasjon",
+                  "_settings_model": "innstillinger_informasjon"}
         meta_data = {}
         attr = [str(key) for key in list(self.parent.__dict__.keys())]
         for model, name in models.items():

@@ -121,7 +121,7 @@ class GrunnbokaView(QDialog):
         Returns
         -------
         out     : MetaView
-                  View with the metadata for the SifoView
+                  View with the metadata for the View
 
         """
         return self._meta_view

@@ -37,10 +37,10 @@ class MapView(QDialog):
         """
         Assertor.assert_data_types([parent], [QWidget])
         super().__init__(parent)
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/map_form.ui"), self)
-        self.ui.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
-        self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/map_form.ui"), self)
+        self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
+        self.ui_form.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self._parent = parent
         self._map_model = MapModel(self)
 

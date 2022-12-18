@@ -3734,6 +3734,10 @@
                 <property name="text">
                  <string>Importer skattedata</string>
                 </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/fetch.svg</normaloff>:/img/fetch.svg</iconset>
+                </property>
                </widget>
               </item>
              </layout>

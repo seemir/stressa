@@ -26,6 +26,7 @@ from .statistics_view import StatisticsView
 from .info_clear_view import InfoClearView
 from .grunnboka_view import GrunnbokaView
 from .info_quit_view import InfoQuitView
+from .settings_view import SettingsView
 from .payment_view import PaymentView
 from .history_view import HistoryView
 from .budget_view import BudgetView
@@ -67,6 +68,8 @@ class HomeView(QMainWindow):
         self._info_view_clear = InfoClearView(self)
         self._statistics_view = StatisticsView(self)
 
+        self._settings_view = SettingsView(self)
+
         self._home_model = HomeModel(self)
         self._finn_model = FinnModel(self)
         self._mortgage_model = MortgageModel(self)
@@ -98,6 +101,9 @@ class HomeView(QMainWindow):
 
         self.ui_form.push_button_restructure.clicked.connect(self.restructure_view.display)
         self.ui_form.push_button_payment_plan.clicked.connect(self.payment_view.display)
+
+        self.ui_form.push_button_instillinger.clicked.connect(self.settings_view.show)
+        self.ui_form.action_instillinger.triggered.connect(self.settings_view.show)
 
         self.ui_form.push_button_restructure.setIcon(
             QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/restructure.png'))
@@ -152,6 +158,19 @@ class HomeView(QMainWindow):
 
         """
         return self._error_view
+
+    @property
+    def settings_view(self):
+        """
+        SettingsView getter
+
+        Returns
+        -------
+        out     : QObject
+                  active SettingsView in class
+
+        """
+        return self._settings_view
 
     @property
     def restructure_model(self):
