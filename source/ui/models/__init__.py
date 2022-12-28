@@ -6,6 +6,7 @@ Module giving access to all models in app
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+from .skatteetaten_import_model import SkatteetatenImportModel
 from .skatteetaten_model import SkatteetatenModel
 from .restructure_model import RestructureModel
 from .statistics_model import StatisticsModel

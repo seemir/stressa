@@ -14,6 +14,7 @@ from .finn_family_data_processing import FinnFamilyDataProcessing
 from .finn_people_data_processing import FinnPeopleDataProcessing
 from .mortgage_analysis_process import MortgageAnalysisProcess
 from .finn_environment_process import FinnEnvironmentProcess
+from .skattetaten_tax_parsing import SkatteetatenTaxParsing
 from .finn_leisure_processing import FinnLeisureProcessing
 from .finn_shopping_sub_model import FinnShoppingSubModel
 from .finn_advert_processing import FinnAdvertProcessing

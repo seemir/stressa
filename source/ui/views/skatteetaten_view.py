@@ -15,13 +15,13 @@ from typing import Union
 
 from PyQt5.uic import loadUi
 from PyQt5.QtWidgets import QDialog
-from PyQt5.QtCore import pyqtSlot, Qt, QUrl, QObject
+from PyQt5.QtCore import pyqtSlot, Qt, QUrl, QObject, QByteArray
 from PyQt5.QtWebEngineWidgets import QWebEngineSettings
 from PyQt5.QtWebEngineCore import QWebEngineHttpRequest
 
 from source.util import Assertor
 
-from ..models import SkatteetatenModel
+from ..models import SkatteetatenModel, SkatteetatenImportModel
 
 from .meta_view import MetaView
 
@@ -31,6 +31,20 @@ class SkatteetatenView(QDialog):
     Error dialog window
 
     """
+
+    _tax_output = ["beregnet_skatt_beloep", "beregnet_skatt_per_mnd_beloep",
+                   "beregnet_skatt_foer_skattefradrag_beloep", "fellesskatt_grunnlag",
+                   "fellesskatt_beloep", "fradrag_for_fagforeningskontingent", "gjeldsgrad",
+                   "inntektsskatt_til_fylkeskommune_grunnlag",
+                   "inntektsskatt_til_fylkeskommune_beloep", "inntektsskatt_til_kommune_grunnlag",
+                   "inntektsskatt_til_kommune_beloep", "personinntekt_fra_loennsinntekt",
+                   "samlet_gjeld", "samlede_paaloepte_renter_paa_gjeld_i_innenlandske_banker",
+                   "samlede_opptjente_renter_i_innenlandske_banker",
+                   "samlet_skattepliktig_overskudd_fra_utleie_av_fast_eiendom", "skatteklasse",
+                   "skatteprosent", "skatteregnskapskommune", "sum_fradrag_i_alminnelig_inntekt",
+                   "sum_inntekter_i_alminnelig_inntekt_foer_fordelingsfradrag", "sum_minstefradrag",
+                   "sum_skattefradrag_beloep", "sum_trygdeavgift_grunnlag",
+                   "sum_trygdeavgift_beloep", "trinnskatt_grunnlag", "trinnskatt_beloep"]
 
     def __init__(self, parent: Union[QObject, None]):
         """
@@ -67,8 +81,17 @@ class SkatteetatenView(QDialog):
         self.ui_form.push_button_meta_data_1.clicked.connect(self.meta_view.display)
         self.ui_form.push_button_import_tax_data_1.clicked.connect(self.import_tax_data)
 
-        self.tax_report_url = ''
-        self.tax_message_data = ''
+        self.tax_report_url = ""
+        self.tax_message_data = ""
+        self.tax_result_data = ""
+
+    @property
+    def tax_output(self):
+        """
+        tax_output getter
+
+        """
+        return self._tax_output
 
     @property
     def meta_view(self):
@@ -166,8 +189,64 @@ class SkatteetatenView(QDialog):
                                       "dokumentregister/{}/skatteoppgjoer_personlig_v1/" \
                                       "?aar=2021".format(document_id)
                 self.web_view_primary.load(QUrl(self.tax_report_url))
+
+                self.web_view_secondary.page().toPlainText(self.show_tax_report)
+
+                self.tax_message_data = "https://skatt.skatteetaten.no/api/skattemeldingen/2021/" \
+                                        "skattemelding/hent-gjeldende"
+                self.web_view_tertiary.load(QUrl(self.tax_message_data))
+                self.web_view_tertiary.loadFinished.connect(self.tax_data)
+
             except ValueError:
                 pass
+
+    def tax_data(self):
+        """
+        method for accessing tax data
+
+        """
+        self.web_view_tertiary.page().toPlainText(self.show_tax_data)
+
+    def show_tax_data(self, content):
+        """
+        method for showing tax data
+
+        """
+
+        if content:
+            payload = {"visningsdata": json.loads(content)["visningsdata"]}
+            tax_result_url = "https://skatt.skatteetaten.no/api/skattemeldingen/2021/" \
+                             "skattemelding/v2/beregn-og-kontroller"
+
+            tax_api_request = QWebEngineHttpRequest()
+            tax_api_request.setUrl(QUrl.fromUserInput(tax_result_url))
+            tax_api_request.setMethod(QWebEngineHttpRequest.Post)
+            tax_api_request.setHeader(QByteArray(b'Content-Type'), QByteArray(b'application/json'))
+            tax_api_request.setPostData(bytes(json.dumps(payload).replace("'", '"'), 'utf-8'))
+
+            self.web_view_quaternary.load(tax_api_request)
+            self.web_view_quaternary.loadFinished.connect(self.tax_results)
+
+    def tax_results(self):
+        """
+        method for accessing tax results
+
+        """
+        self.web_view_quaternary.page().toPlainText(self.parse_tax_results)
+
+    def parse_tax_results(self, content):
+        """
+        method for parsing tax results
+
+        """
+        if content:
+            full_results = tax_results = json.loads(content)
+
+            if "skattemeldingResultat" in full_results.keys():
+                if "beregnetSkatt" in full_results["skattemeldingResultat"].keys():
+                    tax_results = json.loads(content)["skattemeldingResultat"]["beregnetSkatt"]
+                    skatteetaten_import_model = SkatteetatenImportModel(self, tax_results)
+                    skatteetaten_import_model.import_tax_results()
 
     def clear_cache(self):
         """

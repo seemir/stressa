@@ -30,6 +30,7 @@ from .validate_tax_form import ValidateTaxForm
 from .output_operation import OutputOperation
 from .restructure_pois import RestructurePois
 from .fixed_stresstest import FixedStressTest
+from .flatten_tax_results import FlattenTaxResults
 from .validate_family import ValidateFamily
 from .input_operation import InputOperation
 from .multiplication import Multiplication
