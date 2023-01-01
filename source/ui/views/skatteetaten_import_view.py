@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 """
-A dialog window for getting tax data from Skatteetaten
+A dialog window for getting / Importing tax data from Skatteetaten
 
 """
 
@@ -21,14 +21,14 @@ from PyQt5.QtWebEngineCore import QWebEngineHttpRequest
 
 from source.util import Assertor
 
-from ..models import SkatteetatenModel, SkatteetatenImportModel
+from ..models import SkatteetatenImportModel
 
 from .meta_view import MetaView
 
 
-class SkatteetatenView(QDialog):
+class SkatteetatenImportView(QDialog):
     """
-    Error dialog window
+    Tax import model
 
     """
 
@@ -62,14 +62,13 @@ class SkatteetatenView(QDialog):
         self.parent = parent
         dir_up = os.path.dirname
 
-        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/skatteetaten_form.ui"),
-                              self)
+        self.ui_form = loadUi(
+            os.path.join(os.path.dirname(__file__), "forms/skatteetaten_import_form.ui"),
+            self)
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
 
         self.download_path = dir_up(dir_up(os.path.abspath(__file__))) + '/util/temp'
-
-        self._skatteetaten_model = SkatteetatenModel(self)
 
         self._meta_view = MetaView(self)
 
@@ -105,19 +104,6 @@ class SkatteetatenView(QDialog):
 
         """
         return self._meta_view
-
-    @property
-    def skatteetaten_model(self):
-        """
-        SkatteetatenModel getter
-
-        Returns
-        -------
-        out     : SkatteetatenModel
-                  Model containing all the logic of the SkatteetatenModel
-
-        """
-        return self._skatteetaten_model
 
     @pyqtSlot()
     def import_tax_data(self):

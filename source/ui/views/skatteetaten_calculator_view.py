@@ -11,18 +11,18 @@ import os
 from PyQt5.QtWidgets import QDialog, QWidget
 from PyQt5.QtCore import pyqtSlot, Qt
 from PyQt5.uic import loadUi
-from PyQt5.QtGui import QIcon
 
 from source.util import Assertor
 
-from .skatteetaten_view import SkatteetatenView
+from .skatteetaten_import_view import SkatteetatenImportView
 from .meta_view import MetaView
-from ..models import TaxModel
+
+from ..models import SkatteetatenCalculatorModel
 
 
-class TaxView(QDialog):
+class SkatteetatenCalculatorView(QDialog):
     """
-    Tax dialog window
+    Tax calculator dialog window
 
     """
 
@@ -40,18 +40,17 @@ class TaxView(QDialog):
         super().__init__(parent)
         dir_up = os.path.dirname
         self._parent = parent
-        self.ui_form = loadUi(os.path.join(dir_up(__file__), "forms/tax_form.ui"), self)
+        self.ui_form = loadUi(
+            os.path.join(dir_up(__file__), "forms/skatteetaten_calculator_form.ui"),
+            self)
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
 
-        self._error_view = self.parent.error_view
+        self._error_view = self.parent.parent.error_view
         self._meta_view = MetaView(self)
-        self._skatteetaten_view = SkatteetatenView(self)
+        self._skatteetaten_import_view = SkatteetatenImportView(self)
 
-        self._tax_model = TaxModel(self)
-
-        self.ui_form.push_button_skatteetaten.setIcon(
-            QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/import_skatteetaten.png'))
+        self._skatteetaten_calculator_model = SkatteetatenCalculatorModel(self)
 
         self.ui_form.push_button_utregning.clicked.connect(self.calculate_tax_income)
         self.ui_form.push_button_tom_skjema.clicked.connect(self.clear_all)
@@ -63,8 +62,6 @@ class TaxView(QDialog):
         self.ui_form.push_button_meta_data_2.clicked.connect(self.meta_view.display)
         self.ui_form.push_button_avbryt_2.clicked.connect(self.close)
         self.ui_form.push_button_tom_skjema_2.clicked.connect(self.clear_all)
-        self.ui_form.push_button_skatteetaten.clicked.connect(
-            self.skatteetaten_view.open_skatteetaten_page)
 
     @property
     def parent(self):
@@ -106,25 +103,25 @@ class TaxView(QDialog):
         return self._meta_view
 
     @property
-    def skatteetaten_view(self):
+    def skatteetaten_import_view(self):
         """
         SkatteetatenView getter
 
         Returns
         -------
-        out     : SkatteetatenView
+        out     : SkatteetatenImportView
                   View with the Skatteetaten info
 
         """
-        return self._skatteetaten_view
+        return self._skatteetaten_import_view
 
     @property
-    def tax_model(self):
+    def skatteetaten_calculator_model(self):
         """
         tax model getter
 
         """
-        return self._tax_model
+        return self._skatteetaten_calculator_model
 
     @pyqtSlot()
     def display(self):
@@ -136,8 +133,9 @@ class TaxView(QDialog):
             self.ui_form.scroll_area_skatteetaten.verticalScrollBar().minimum())
         self.ui_form.tab_widget_skattekalkulator.setCurrentIndex(0)
         self.ui_form.combo_box_skatte_aar.setFocus()
-        self.tax_model.clear_line_edits(self.tax_model.total_posts)
-        self.tax_model.tax_info()
+        self.skatteetaten_calculator_model.clear_line_edits(
+            self.skatteetaten_calculator_model.total_posts)
+        self.skatteetaten_calculator_model.tax_info()
         self.show()
 
     def back(self):
@@ -153,7 +151,7 @@ class TaxView(QDialog):
         method for calculating tax income
 
         """
-        self.tax_model.calculate_tax_income()
+        self.skatteetaten_calculator_model.calculate_tax_income()
 
     @pyqtSlot()
     def clear_all(self):
@@ -167,19 +165,21 @@ class TaxView(QDialog):
         self.ui_form.combo_box_skatte_aar.setCurrentIndex(0)
         self.ui_form.tab_widget_skattekalkulator.setCurrentIndex(0)
         self.ui_form.combo_box_skatte_aar.setFocus()
-        self.tax_model.clear_combo_boxes(["skatte_aar"])
-        self.tax_model.clear_line_edit("alder")
-        self.tax_model.clear_line_edit("fagforeningskontigent")
-        self.tax_model.clear_line_edits(self.tax_model.total_posts)
+        self.skatteetaten_calculator_model.clear_combo_boxes(["skatte_aar"])
+        self.skatteetaten_calculator_model.clear_line_edit("alder")
+        self.skatteetaten_calculator_model.clear_line_edit("fagforeningskontigent")
+        self.skatteetaten_calculator_model.clear_line_edits(
+            self.skatteetaten_calculator_model.total_posts)
 
-        self.tax_model.clear_line_edit("bsu")
-        self.tax_model.clear_line_edit("verdi_primarbolig")
-        self.tax_model.clear_line_edit("bankinnskudd")
-        self.tax_model.clear_line_edit("gjeld")
-        self.tax_model.clear_line_edit("netto_formue")
+        self.skatteetaten_calculator_model.clear_line_edit("bsu")
+        self.skatteetaten_calculator_model.clear_line_edit("verdi_primarbolig")
+        self.skatteetaten_calculator_model.clear_line_edit("bankinnskudd")
+        self.skatteetaten_calculator_model.clear_line_edit("gjeld")
+        self.skatteetaten_calculator_model.clear_line_edit("netto_formue")
 
-        self.tax_model.clear_line_edits(self.tax_model.tax_output)
-        self.parent.mortgage_model.clear_line_edit("beregnet_skatt_per_mnd_beloep")
+        self.skatteetaten_calculator_model.clear_line_edits(
+            self.skatteetaten_calculator_model.tax_output)
+        self.parent.parent.mortgage_model.clear_line_edit("beregnet_skatt_per_mnd_beloep")
 
         self.ui_form.combo_box_skatte_aar.setFocus()
 
@@ -190,8 +190,8 @@ class TaxView(QDialog):
         """
         monthly_tax_value = self.ui_form.line_edit_beregnet_skatt_per_mnd_beloep.text()
         if monthly_tax_value:
-            self.parent.mortgage_model.set_line_edit("beregnet_skatt_per_mnd_beloep",
-                                                     data=monthly_tax_value)
+            self.parent.parent.mortgage_model.set_line_edit("beregnet_skatt_per_mnd_beloep",
+                                                            data=monthly_tax_value)
         else:
-            self.parent.mortgage_model.clear_line_edit("beregnet_skatt_per_mnd_beloep")
+            self.parent.parent.mortgage_model.clear_line_edit("beregnet_skatt_per_mnd_beloep")
         self.close()

@@ -3483,23 +3483,6 @@
                 </property>
                </widget>
               </item>
-              <item row="20" column="0" colspan="2">
-               <widget class="QPushButton" name="push_button_skatteetaten">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>40</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Hent fra Skatteetaten</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/skatteetaten.png</normaloff>:/img/skatteetaten.png</iconset>
-                </property>
-               </widget>
-              </item>
               <item row="20" column="2" colspan="2">
                <widget class="QPushButton" name="push_button_avbryt_1">
                 <property name="minimumSize">
@@ -3517,7 +3500,7 @@
                 </property>
                </widget>
               </item>
-              <item row="21" column="0" colspan="4">
+              <item row="20" column="0" colspan="2">
                <widget class="QPushButton" name="push_button_meta_data_1">
                 <property name="minimumSize">
                  <size>
@@ -5594,9 +5577,8 @@
   <tabstop>line_edit_netto_formue</tabstop>
   <tabstop>push_button_utregning</tabstop>
   <tabstop>push_button_tom_skjema</tabstop>
-  <tabstop>push_button_skatteetaten</tabstop>
-  <tabstop>push_button_avbryt_1</tabstop>
   <tabstop>push_button_meta_data_1</tabstop>
+  <tabstop>push_button_avbryt_1</tabstop>
   <tabstop>line_edit_skatteregnskapskommune</tabstop>
   <tabstop>line_edit_skatteklasse</tabstop>
   <tabstop>line_edit_samlet_gjeld</tabstop>

@@ -81,7 +81,8 @@ class MetaView(QDialog):
         """
         models = {"_mortgage_model": "låneinformasjon", "_budget_model": "budsjettinformasjon",
                   "_sifo_model": "sifo_informasjon", "_finn_model": "finn_informasjon",
-                  "_statistics_model": "statistikk_informasjon", "_tax_model": "skatteinformasjon",
+                  "_statistics_model": "statistikk_informasjon",
+                  "_skatteetaten_calculator_model": "skatteinformasjon",
                   "_home_model": "likviditets_informasjon",
                   "_grunnboka_model": "grunnboka_informasjon",
                   "_restructure_model": "lånestruktur_informasjon",

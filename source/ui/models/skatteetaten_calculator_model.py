@@ -17,7 +17,7 @@ from source.domain import Money
 from .model import Model
 
 
-class TaxModel(Model):
+class SkatteetatenCalculatorModel(Model):
     """
     Model for Tax calculations and processing
 
@@ -107,7 +107,7 @@ class TaxModel(Model):
         self.parent.ui_form.line_edit_netto_formue.textEdited.connect(
             lambda: self.set_value('netto_formue'))
         self.set_line_edits("", line_edits=self.total_posts,
-                            data=self.parent.parent.budget_view.budget_model.data)
+                            data=self.parent.parent.parent.budget_view.budget_model.data)
 
     def set_value(self, line_edit):
         """
@@ -159,7 +159,7 @@ class TaxModel(Model):
             self.clear_line_edits(self.tax_output)
             self.parent.ui_form.tab_widget_skattekalkulator.setCurrentIndex(1)
 
-            budget_model = self.parent.parent.budget_view.budget_model
+            budget_model = self.parent.parent.parent.budget_view.budget_model
 
             tax_form = {key: val.replace(" ", "").replace("kr", "") for key, val in
                         self.data.items() if key in self.tax_input}

@@ -7,7 +7,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from .skatteetaten_import_model import SkatteetatenImportModel
-from .skatteetaten_model import SkatteetatenModel
+from .skatteetaten_calculator_model import SkatteetatenCalculatorModel
 from .restructure_model import RestructureModel
 from .statistics_model import StatisticsModel
 from .grunnboka_model import GrunnbokaModel
@@ -22,4 +22,3 @@ from .home_model import HomeModel
 from .finn_model import FinnModel
 from .sifo_model import SifoModel
 from .map_model import MapModel
-from .tax_model import TaxModel

@@ -42,12 +42,12 @@ class HomeModel(Model):
         """
         self.parent.mortgage_model.clear_all()
         self.parent.budget_view.clear_all()
-        self.parent.tax_view.clear_all()
         self.parent.sifo_view.clear_all()
         self.parent.finn_model.clear_all()
         self.parent.analysis_model.clear_all()
         self.parent.restructure_model.clear_all()
         self.parent.payment_model.clear_all()
+        self.parent.skatteetaten_redirect_view.skatteetaten_calculator_view.clear_all()
 
         self.parent.ui_form.line_edit_fornavn_2.setFocus()
         self.parent.ui_form.tab_widget_lanesokere.setCurrentIndex(0)

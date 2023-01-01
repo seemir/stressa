@@ -34,7 +34,7 @@ from .error_view import ErrorView
 from .sifo_view import SifoView
 from .meta_view import MetaView
 
-from .tax_view import TaxView
+from .skatteetaten_redirect_view import SkatteetatenRedirectView
 
 
 # myappid = 'Stressa.stressa.ui.version'
@@ -58,7 +58,10 @@ class HomeView(QMainWindow):
 
         self._error_view = ErrorView(self)
         self._budget_view = BudgetView(self)
-        self._tax_view = TaxView(self)
+        self._skatteetaten_redirect_view = SkatteetatenRedirectView(self)
+        self._skatteetaten_calculator_model = self.skatteetaten_redirect_view \
+            .skatteetaten_calculator_view.skatteetaten_calculator_model
+
         self._sifo_view = SifoView(self)
         self._history_view = HistoryView(self)
         self._grunnboka_view = GrunnbokaView(self)
@@ -74,7 +77,6 @@ class HomeView(QMainWindow):
         self._finn_model = FinnModel(self)
         self._mortgage_model = MortgageModel(self)
 
-        self._tax_model = self.tax_view.tax_model
         self._sifo_model = self.sifo_view.sifo_model
         self._budget_model = self.budget_view.budget_model
 
@@ -91,7 +93,7 @@ class HomeView(QMainWindow):
         self._home_model.liquidity_info()
 
         self.ui_form.push_button_budsjett.clicked.connect(self.budget_view.display)
-        self.ui_form.push_button_skatt.clicked.connect(self.tax_view.display)
+        self.ui_form.push_button_skatt.clicked.connect(self.skatteetaten_redirect_view.show)
         self.ui_form.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
 
         self.ui_form.push_button_home_meta_data.clicked.connect(self._meta_view.display)
@@ -238,17 +240,30 @@ class HomeView(QMainWindow):
         return self._budget_view
 
     @property
-    def tax_view(self):
+    def skatteetaten_redirect_view(self):
         """
-        TaxView getter
+        Skatteetaten redirect getter
 
         Returns
         -------
-        out     : TaxView
-                  Active TaxView in the HomeView
+        out     : SkatteetatenRedirectView
+                  Active SkatteetatenRedirectView in the HomeView
 
         """
-        return self._tax_view
+        return self._skatteetaten_redirect_view
+
+    @property
+    def skatteetaten_calculator_model(self):
+        """
+        Skatteetaten calculator model getter
+
+        Returns
+        -------
+        out     : SkatteetatenCalculatorModel
+                  Active SkatteetatenCalculatorModel in the HomeView
+
+        """
+        return self._skatteetaten_calculator_model
 
     @property
     def sifo_view(self):
@@ -392,19 +407,6 @@ class HomeView(QMainWindow):
 
         """
         return self._budget_model
-
-    @property
-    def tax_model(self):
-        """
-        TaxModel getter
-
-        Returns
-        -------
-        out     : TaxModel
-                  Active TaxModel in the BudgetView
-
-        """
-        return self._tax_model
 
     @pyqtSlot()
     def info_tab(self):
