@@ -19,6 +19,7 @@ from PyQt5.QtCore import Qt, QObject
 from source.util import Assertor
 
 from .skatteetaten_calculator_view import SkatteetatenCalculatorView
+from .skatteetaten_import_view import SkatteetatenImportView
 
 
 class SkatteetatenRedirectView(QDialog):
@@ -43,6 +44,7 @@ class SkatteetatenRedirectView(QDialog):
         self.parent = parent
 
         self._skatteetaten_calculator_view = SkatteetatenCalculatorView(self)
+        self._skatteetaten_import_view = SkatteetatenImportView(self)
 
         self.ui_form = loadUi(
             os.path.join(os.path.dirname(__file__), "forms/skatteetaten_redirect_form.ui"),
@@ -53,7 +55,9 @@ class SkatteetatenRedirectView(QDialog):
         self.ui_form.push_button_cancel.clicked.connect(self.close)
 
         self.ui_form.push_button_skattekalkulator.clicked.connect(
-            self.skatteetaten_calculator_view.display)
+            self.skatteetaten_calculator_display)
+        self.ui_form.push_button_hent_skatteetaten.clicked.connect(
+            self.skatteetaten_import_display)
 
     @property
     def skatteetaten_calculator_view(self):
@@ -67,3 +71,32 @@ class SkatteetatenRedirectView(QDialog):
 
         """
         return self._skatteetaten_calculator_view
+
+    @property
+    def skatteetaten_import_view(self):
+        """
+        getter for Skatteetaten import view
+
+        Returns
+        -------
+        out             : SkatteetatenImportView
+                          active SkatteImportView in class
+
+        """
+        return self._skatteetaten_import_view
+
+    def skatteetaten_calculator_display(self):
+        """
+        method for displaying Skatteetaten calculator
+
+        """
+        self.skatteetaten_calculator_view.display()
+        self.close()
+
+    def skatteetaten_import_display(self):
+        """
+        method for displaying Skatteetaten import view
+
+        """
+        self.skatteetaten_import_view.display()
+        self.close()

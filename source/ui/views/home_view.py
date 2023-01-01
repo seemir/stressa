@@ -58,9 +58,6 @@ class HomeView(QMainWindow):
 
         self._error_view = ErrorView(self)
         self._budget_view = BudgetView(self)
-        self._skatteetaten_redirect_view = SkatteetatenRedirectView(self)
-        self._skatteetaten_calculator_model = self.skatteetaten_redirect_view \
-            .skatteetaten_calculator_view.skatteetaten_calculator_model
 
         self._sifo_view = SifoView(self)
         self._history_view = HistoryView(self)
@@ -91,6 +88,12 @@ class HomeView(QMainWindow):
         self._finn_model.finn_info()
         self._budget_view.budget_info()
         self._home_model.liquidity_info()
+
+        self._skatteetaten_redirect_view = SkatteetatenRedirectView(self)
+        self._skatteetaten_calculator_model = self.skatteetaten_redirect_view \
+            .skatteetaten_calculator_view.skatteetaten_calculator_model
+        self._skatteetaten_import_model = self.skatteetaten_redirect_view \
+            .skatteetaten_import_view.skatteetaten_import_model
 
         self.ui_form.push_button_budsjett.clicked.connect(self.budget_view.display)
         self.ui_form.push_button_skatt.clicked.connect(self.skatteetaten_redirect_view.show)
@@ -264,6 +267,19 @@ class HomeView(QMainWindow):
 
         """
         return self._skatteetaten_calculator_model
+
+    @property
+    def skatteetaten_import_model(self):
+        """
+        Skatteetaten import model getter
+
+        Returns
+        -------
+        out     : SkatteetatenImportModel
+                  Active SkatteetatenImportModel in the HomeView
+
+        """
+        return self._skatteetaten_import_model
 
     @property
     def sifo_view(self):

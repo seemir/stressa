@@ -33,14 +33,13 @@ class SkatteetatenImportModel(Model):
                    "sum_skattefradrag_beloep", "sum_trygdeavgift_grunnlag",
                    "sum_trygdeavgift_beloep", "trinnskatt_grunnlag", "trinnskatt_beloep"]
 
-    def __init__(self, parent: QObject, tax_results: dict):
+    def __init__(self, parent: QObject):
         """
         Constructor / Implementation
 
         """
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QObject])
-        self.tax_results = tax_results
 
     @property
     def tax_output(self):
@@ -50,11 +49,12 @@ class SkatteetatenImportModel(Model):
         """
         return self._tax_output
 
-    def import_tax_results(self):
+    def import_tax_results(self, tax_results: dict):
         """
         method for calculate tax income
 
         """
-        skatteetaten_parsing = SkatteetatenTaxParsing(self.tax_results)
-        self.set_line_edits("", line_edits=self.tax_output,
-                            data=skatteetaten_parsing.skatteetaten_results)
+        if tax_results:
+            skatteetaten_parsing = SkatteetatenTaxParsing(tax_results)
+            self.set_line_edits("", line_edits=self.tax_output,
+                                data=skatteetaten_parsing.skatteetaten_results)

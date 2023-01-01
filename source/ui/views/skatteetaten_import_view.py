@@ -70,6 +70,8 @@ class SkatteetatenImportView(QDialog):
 
         self.download_path = dir_up(dir_up(os.path.abspath(__file__))) + '/util/temp'
 
+        self._skatteetaten_import_model = SkatteetatenImportModel(self)
+
         self._meta_view = MetaView(self)
 
         self.web_view_primary = self.ui_form.web_view_primary
@@ -78,11 +80,30 @@ class SkatteetatenImportView(QDialog):
         self.web_view_primary.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
         self.web_view_primary.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
         self.ui_form.push_button_meta_data_1.clicked.connect(self.meta_view.display)
-        self.ui_form.push_button_import_tax_data_1.clicked.connect(self.import_tax_data)
 
         self.tax_report_url = ""
         self.tax_message_data = ""
         self.tax_result_data = ""
+
+    @property
+    def skatteetaten_import_model(self):
+        """
+        skatteetaten import model getter
+
+        """
+        return self._skatteetaten_import_model
+
+    @pyqtSlot()
+    def display(self):
+        """
+        method for displaying view data
+
+        """
+        self.ui_form.scroll_area_skatteetaten.verticalScrollBar().setValue(
+            self.ui_form.scroll_area_skatteetaten.verticalScrollBar().minimum())
+        self.ui_form.tab_widget_skatteetaten.setCurrentIndex(0)
+        self.open_skatteetaten_page()
+        self.show()
 
     @property
     def tax_output(self):
@@ -104,13 +125,6 @@ class SkatteetatenImportView(QDialog):
 
         """
         return self._meta_view
-
-    @pyqtSlot()
-    def import_tax_data(self):
-        """
-        method for importing tax data to application
-
-        """
 
     @pyqtSlot()
     def open_skatteetaten_page(self):
@@ -226,13 +240,12 @@ class SkatteetatenImportView(QDialog):
 
         """
         if content:
-            full_results = tax_results = json.loads(content)
+            full_results = json.loads(content)
 
             if "skattemeldingResultat" in full_results.keys():
                 if "beregnetSkatt" in full_results["skattemeldingResultat"].keys():
                     tax_results = json.loads(content)["skattemeldingResultat"]["beregnetSkatt"]
-                    skatteetaten_import_model = SkatteetatenImportModel(self, tax_results)
-                    skatteetaten_import_model.import_tax_results()
+                    self.skatteetaten_import_model.import_tax_results(tax_results)
 
     def clear_cache(self):
         """
