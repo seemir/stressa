@@ -36,7 +36,7 @@ hid==1.0.4
 html5lib==1.1
 idna==3.3
 importlib-metadata==3.4.0
-iniconfig==1.1.1
+iniconfig==2.0.0
 isort==5.10.1
 jdcal==1.4.1
 Jinja2==2.11.3
