@@ -7,8 +7,9 @@ Implementation of connector against Finn.no housing statistics search
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from datetime import datetime
 from time import time
+from typing import Union
+from datetime import datetime
 
 import json
 from http.client import responses
@@ -102,7 +103,11 @@ class FinnStat(Finn):
             stat_data = json.loads(
                 stat_soup.find("script", attrs={"type": "application/json"}).contents[0])
 
-            info.update(self.extract_sqm_price(stat_data, info))
+            optional_sqm_price = [str(value.get_text()).replace(u"\xa0", "") for
+                                  value in stat_soup.find_all("strong",
+                                                              attrs={"style": "min-width:10px"})]
+
+            info.update(self.extract_sqm_price(stat_data, info, optional_sqm_price))
             info.update(self.extract_images(stat_data, info))
             info.update(self.extract_view_statistics(stat_data, info))
             info.update(self.extract_published_statistics(stat_data, info))
@@ -131,7 +136,8 @@ class FinnStat(Finn):
             "'housing_stat_information' successfully parsed to JSON at '{}'".format(file_dir))
 
     @Tracking
-    def extract_sqm_price(self, sql_price_statistics: dict, info: dict):
+    def extract_sqm_price(self, sql_price_statistics: dict, info: dict,
+                          optional_sqm_price: Union[None, list]):
         """
         method for extracting square meter price
 
@@ -154,6 +160,10 @@ class FinnStat(Finn):
                                     if isinstance(inf, (int, float)) and name.lower() == 'price':
                                         info.update(
                                             {'sqm_price': Amount(str(inf)).amount + " kr/m²"})
+        if 'sqm_price' not in info.keys():
+            if optional_sqm_price:
+                if len(optional_sqm_price) > 0:
+                    info.update({'sqm_price': Amount(str(optional_sqm_price[1])).amount + " kr/m²"})
         return info
 
     @Tracking
