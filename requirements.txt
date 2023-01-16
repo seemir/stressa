@@ -79,7 +79,7 @@ PyQt5-stubs==5.14.2.2
 pyqtgraph==0.11.1
 PyQtWebEngine==5.15.4
 PyQtWebEngine-Qt5==5.15.2
-pytest==6.2.3
+pytest==7.2.1
 pytest-cov==3.0.0
 python-dateutil==2.8.2
 python-dotenv==0.20.0
