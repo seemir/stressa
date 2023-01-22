@@ -10,7 +10,7 @@ beautifulsoup4==4.10.0
 branca==0.4.1
 brotlipy==0.7.0
 cchardet==2.1.7
-certifi==2021.10.8
+certifi==2022.12.07
 cffi==1.15.0
 chardet==4.0.0
 charset-normalizer==2.0.4
@@ -48,7 +48,7 @@ lxml==4.9.1
 MarkupSafe==2.0.1
 matplotlib==3.2.1
 mccabe==0.6.1
-mechanize==0.4.5
+mechanize==0.4.6
 mock==4.0.3
 more-itertools==8.7.0
 multidict==5.2.0
