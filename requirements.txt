@@ -46,7 +46,7 @@ llvmlite==0.38.1
 loguru==0.5.1
 lxml==4.9.1
 MarkupSafe==2.0.1
-matplotlib==3.2.1
+matplotlib==3.7.1
 mccabe==0.6.1
 mechanize==0.4.6
 mock==4.0.3
