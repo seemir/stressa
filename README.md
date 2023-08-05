@@ -1,4 +1,4 @@
-[![build](https://github.com/seemir/stressa/actions/workflows/python-app.yml/badge.svg)](https://github.com/seemir/stressa/actions/workflows/python-app.yml)
+[![Python application](https://github.com/seemir/stressa/actions/workflows/python-app.yml/badge.svg)](https://github.com/seemir/stressa/actions/workflows/python-app.yml)
 
 # stressa
 
