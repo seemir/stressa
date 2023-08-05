@@ -76,7 +76,7 @@ class TestFinnAdvertInfoConnector:
                    'primrrom': '656 m²', 'bruksareal': '831 m²',
                    'bygger': '1918',
                    'energimerking': 'G - Mørkegrønn',
-                   'tomteareal': '1135 m² (eiet)',
+                   'tomteareal': '1 135 m² (eiet)',
                    'bruttoareal': '947 m²',
                    'formuesverdi': '9 283 581 kr',
                    'finnkode': '144857770',

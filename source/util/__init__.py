@@ -13,6 +13,5 @@ from .version import __version__
 from .tracking import Tracking
 from .debugger import Debugger
 from .assertor import Assertor
-from .caching import cache
 from .exceptions import *
 from .profiling import *

@@ -15,12 +15,10 @@ import xml.etree.cElementTree as Et
 import requests
 from requests.exceptions import ReadTimeout, ConnectionError as ConnectError
 
-from source.util import LOGGER, cache, NoConnectionError, TimeOutError, NotFoundError, Tracking
+from source.util import LOGGER, NoConnectionError, TimeOutError, NotFoundError, Tracking
 
 from .settings import PORTALEN_URL, PORTALEN_CRED, PORTALEN_ENTRY, TIMEOUT
 from .connector import Connector
-
-cache(__file__, "cache")
 
 
 class Portalen(Connector):

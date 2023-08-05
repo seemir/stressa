@@ -27,7 +27,7 @@ install:
 
 # scripts to run for build
 script:
-  - pytest --cov=source/ tests/
+  - pytest --cov source/ tests/
   - pylint source/ tests/
 
 # generate a coverage report to send back to the user

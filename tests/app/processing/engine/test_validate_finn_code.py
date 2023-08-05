@@ -59,7 +59,7 @@ class TestValidateFinnCode:
         assert self.validate_finn_code.desc == "rules: {} \\n id: Validate Finn Code".format(
             Finn.rules())
 
-    @pt.mark.parametrize('invalid_finn_code', ["1945623", "1965426351", "395363215"])
+    @pt.mark.parametrize('invalid_finn_code', ["1965426", "1965426351", "3953632150"])
     def test_validate_finn_code_run_method(self, invalid_finn_code):
         """
         Test the run method in ValidateFinnCode operation

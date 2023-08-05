@@ -27,7 +27,7 @@ class Finn(Connector):
         static method for validating Finn.no code
 
         """
-        valid_finn_code = re.compile("^[1-2][0-9]{7,8}$").search(self.finn_code)
+        valid_finn_code = re.compile("^[1-9][0-9]{7,8}$").search(self.finn_code)
         if not valid_finn_code:
             raise NotFoundError(
                 "'{}' is an invalid Finn code".format(self.finn_code))
