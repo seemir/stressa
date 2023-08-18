@@ -15,7 +15,7 @@ cffi==1.15.0
 chardet==4.0.0
 charset-normalizer==2.0.4
 checkdmarc==4.2.4
-click==8.0.4
+click==8.1.7
 codecov==2.1.13
 colorama==0.4.4
 console-progressbar==1.1.2
