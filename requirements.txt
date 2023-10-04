@@ -97,7 +97,7 @@ typing==3.7.4.1
 typing-extensions==3.10.0.0
 tzlocal==2.1
 untangle==1.2.1
-urllib3==1.26.5
+urllib3==2.0.6
 wcwidth==0.2.5
 webencodings==0.5.1
 win32-setctime==1.0.1
