@@ -88,7 +88,7 @@ requests==2.31.0
 scipy==1.10.0
 sip==6.6.1
 six==1.15.0
-soupsieve==2.3
+soupsieve==2.5
 timeout-decorator==0.4.1
 toml==0.10.2
 tomli==1.2.2
