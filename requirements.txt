@@ -43,7 +43,7 @@ Jinja2==2.11.3
 kiwisolver==1.4.3
 lazy-object-proxy==1.5.2
 llvmlite==0.40.0
-loguru==0.5.3
+loguru==0.7.2
 lxml==4.9.1
 MarkupSafe==2.0.1
 matplotlib==3.2.1
