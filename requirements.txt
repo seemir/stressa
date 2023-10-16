@@ -27,7 +27,7 @@ dnspython==2.1.0
 et-xmlfile==1.0.1
 expiringdict==1.2.0
 folium==0.12.1
-frozenlist==1.2.0
+frozenlist==1.4.0
 geographiclib==1.50
 geopy==1.21.0
 graphviz==0.13.2
