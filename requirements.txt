@@ -6,7 +6,7 @@ async-timeout==4.0.0
 asynctest==0.13.0
 atomicwrites==1.4.0
 attrs==20.3.0
-beautifulsoup4==4.10.0
+beautifulsoup4==4.12.3
 branca==0.4.1
 brotlipy==0.7.0
 cchardet==2.1.7
