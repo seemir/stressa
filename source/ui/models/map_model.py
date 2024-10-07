@@ -180,17 +180,21 @@ class MapModel(Model):
             Marker(coords, icon=map_icon).add_to(map_builder)
 
         TileLayer('CartoDB dark_matter').add_to(map_builder)
-
         TileLayer('OpenStreetMap').add_to(map_builder)
 
-        TileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png',
+        TileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}{r}.png',
                   attr='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> '
                        'contributors, Tiles style by <a href="https://www.hotosm.org/" '
                        'target="_blank">Humanitarian OpenStreetMap Team</a> hosted by '
                        '<a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap '
                        'France</a>', name='openstreetmap_hot').add_to(map_builder)
 
-        TileLayer('Stamen Toner').add_to(map_builder)
+        TileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
+                  attr='<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" '
+                       'title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; '
+                       '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> '
+                       'contributors',
+                  name='cyclosm').add_to(map_builder)
 
         TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/'
                   'tile/{z}/{y}/{x}', attr='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, '
