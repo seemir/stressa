@@ -97,8 +97,8 @@ class FinnStat(Finn):
             info = {}
             stat_soup = BeautifulSoup(response, "lxml")
 
-            # with open('content.html', 'w', encoding='utf-8') as file:
-            #     file.write(stat_soup.prettify())
+            with open('content.html', 'w', encoding='utf-8') as file:
+                file.write(stat_soup.prettify())
 
             stat_data = json.loads(
                 stat_soup.find("script", attrs={"type": "application/json"}).contents[0])
