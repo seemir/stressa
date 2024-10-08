@@ -54,7 +54,8 @@ class HomeView(QMainWindow):
         """
         super().__init__()
         dir_up = os.path.dirname
-        self.ui_form = loadUi(os.path.join(dir_up(__file__), "forms/home_form.ui"), self)
+        self.ui_form = loadUi(
+            os.path.join(dir_up(__file__), "forms/home_form.ui"), self)
 
         self._error_view = ErrorView(self)
         self._budget_view = BudgetView(self)
@@ -95,25 +96,35 @@ class HomeView(QMainWindow):
         self._skatteetaten_import_model = self.skatteetaten_redirect_view \
             .skatteetaten_import_view.skatteetaten_import_model
 
-        self.ui_form.push_button_budsjett.clicked.connect(self.budget_view.display)
-        self.ui_form.push_button_skatt.clicked.connect(self.skatteetaten_redirect_view.show)
-        self.ui_form.push_button_sifo_utgifter.clicked.connect(self.sifo_view.display)
+        self.ui_form.push_button_budsjett.clicked.connect(
+            self.budget_view.display)
+        self.ui_form.push_button_skatt.clicked.connect(
+            self.skatteetaten_redirect_view.show)
+        self.ui_form.push_button_sifo_utgifter.clicked.connect(
+            self.sifo_view.display)
 
-        self.ui_form.push_button_home_meta_data.clicked.connect(self._meta_view.display)
+        self.ui_form.push_button_home_meta_data.clicked.connect(
+            self._meta_view.display)
         self.ui_form.push_button_tom_skjema.clicked.connect(self.clear_all)
         self.ui_form.push_button_avslutt.clicked.connect(self.avslutt)
         self.ui_form.action_logo.triggered.connect(self.info_tab)
 
-        self.ui_form.push_button_restructure.clicked.connect(self.restructure_view.display)
-        self.ui_form.push_button_payment_plan.clicked.connect(self.payment_view.display)
+        self.ui_form.push_button_restructure.clicked.connect(
+            self.restructure_view.display)
+        self.ui_form.push_button_payment_plan.clicked.connect(
+            self.payment_view.display)
 
-        self.ui_form.push_button_instillinger.clicked.connect(self.settings_view.show)
-        self.ui_form.action_instillinger.triggered.connect(self.settings_view.show)
+        self.ui_form.push_button_instillinger.clicked.connect(
+            self.settings_view.show)
+        self.ui_form.action_instillinger.triggered.connect(
+            self.settings_view.show)
 
         self.ui_form.push_button_restructure.setIcon(
-            QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/restructure.png'))
+            QIcon(dir_up(
+                dir_up(os.path.abspath(__file__))) + '/images/restructure.png'))
         self.ui_form.push_button_payment_plan.setIcon(
-            QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/plan.png'))
+            QIcon(
+                dir_up(dir_up(os.path.abspath(__file__))) + '/images/plan.png'))
 
         self.analysis_model.config_plots()
 
@@ -439,8 +450,10 @@ class HomeView(QMainWindow):
 
         """
         self.info_view_clear.show()
-        self.info_view_clear.push_button_apply.clicked.connect(self.apply_clearing)
-        self.info_view_clear.push_button_cancel.clicked.connect(self.info_view_clear.close)
+        self.info_view_clear.push_button_apply.clicked.connect(
+            self.apply_clearing)
+        self.info_view_clear.push_button_cancel.clicked.connect(
+            self.info_view_clear.close)
 
     @pyqtSlot()
     def apply_clearing(self):
@@ -458,7 +471,8 @@ class HomeView(QMainWindow):
 
         """
         self.info_view_quit.show()
-        self.info_view_quit.push_button_cancel.clicked.connect(self.info_view_quit.close)
+        self.info_view_quit.push_button_cancel.clicked.connect(
+            self.info_view_quit.close)
         self.info_view_quit.push_button_apply.clicked.connect(self.avslutt_alt)
 
     @pyqtSlot()
@@ -477,6 +491,10 @@ class HomeView(QMainWindow):
 
         """
         dir_path = self.grunnboka_view.download_path
+
+        if not os.path.exists(dir_path):
+            os.mkdir(dir_path)
+
         for filename in os.listdir(dir_path):
             filepath = os.path.join(dir_path, filename)
             try:
