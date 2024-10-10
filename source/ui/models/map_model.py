@@ -47,7 +47,7 @@ class MapModel(Model):
         small_icon = (40, 40)
         max_width = 400
         bytes_io = BytesIO()
-        map_builder = Map(location=coords, tiles="CartoDB positron", zoom_start=16)
+        map_builder = Map(location=coords, tiles='CartoDB positron', zoom_start=16)
         map_icon = CustomIcon(up(up(__file__)) + "/images/marker.png",
                               icon_size=icon_size)
 
@@ -179,57 +179,52 @@ class MapModel(Model):
         else:
             Marker(coords, icon=map_icon).add_to(map_builder)
 
-        TileLayer('CartoDB dark_matter').add_to(map_builder)
-        TileLayer('OpenStreetMap').add_to(map_builder)
+        TileLayer('CartoDB dark_matter', show=False).add_to(map_builder)
+        TileLayer('OpenStreetMap', show=False).add_to(map_builder)
 
         TileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}{r}.png',
                   attr='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> '
                        'contributors, Tiles style by <a href="https://www.hotosm.org/" '
                        'target="_blank">Humanitarian OpenStreetMap Team</a> hosted by '
                        '<a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap '
-                       'France</a>', name='openstreetmap_hot').add_to(map_builder)
+                       'France</a>', name='openstreetmap_hot', show=False).add_to(map_builder)
 
         TileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
                   attr='<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" '
                        'title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; '
                        '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> '
                        'contributors',
-                  name='cyclosm').add_to(map_builder)
+                  name='cyclosm', show=False).add_to(map_builder)
 
         TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/'
                   'tile/{z}/{y}/{x}', attr='Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, '
                                            'USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, '
                                            'UPR-EGP, and the GIS User Community',
-                  name='esri_worldimagery').add_to(map_builder)
+                  name='esri_worldimagery', show=False).add_to(map_builder)
 
         TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/'
                   'tile/{z}/{y}/{x}', attr='Tiles &copy; Esri &mdash; Source: Esri, DeLorme, '
                                            'NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, '
                                            'Esri China (Hong Kong), Esri (Thailand), TomTom, 2012',
-                  name='esri_worldstreetmap').add_to(map_builder)
+                  name='esri_worldstreetmap', show=False).add_to(map_builder)
 
         TileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/'
                   'tile/{z}/{y}/{x}', attr='Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ, '
                                            'TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, '
                                            'Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri '
                                            'China (Hong Kong), and the GIS User Community',
-                  name='esri_worldtopomap').add_to(map_builder)
+                  name='esri_worldtopomap', show=False).add_to(map_builder)
 
         TileLayer('https://tileserver.memomaps.de/tilegen/{z}/{x}/{y}.png',
                   attr='Map <a href="https://memomaps.de/">memomaps.de</a> '
                        '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, '
                        'map data &copy; <a href="https://www.openstreetmap.org/copyright">'
-                       'OpenStreetMap</a> contributors', name='openvkarte').add_to(map_builder)
-
-        TileLayer('https://{s}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
-                  attr='<a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" '
-                       'title="CyclOSM - Open Bicycle render">CyclOSM</a> | Map data: &copy; '
-                       '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> '
-                       'contributors', name='cyclosm').add_to(map_builder)
+                       'OpenStreetMap</a> contributors', name='openvkarte', show=False).add_to(
+            map_builder)
 
         TileLayer('http://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png',
                   attr='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> '
-                       'contributors &amp; USGS', name='mtbmap').add_to(map_builder)
+                       'contributors &amp; USGS', name='mtbmap', show=False).add_to(map_builder)
 
         railway_feature = FeatureGroup('jernbane_tbane', show=False)
         TileLayer('https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png',

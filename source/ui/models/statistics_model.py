@@ -513,10 +513,11 @@ class StatisticsModel(Model):
                 neighbourhood = ""
                 city = ""
 
-            if "city_area" + postfix in self.data.keys():
-                city_area = self.data["city_area" + postfix]
+            if "info" + postfix in self.data.keys():
+                if self.data["info" + postfix]["district"]:
+                    city_area = self.data["info" + postfix]["district"]
             else:
-                city_area = ""
+                city_area = "Ingen områder funnet"
 
             if sum(city_area_dist) != 0:
                 dist_df = {"Gruppe": [],
