@@ -29,9 +29,9 @@ class StatisticsModel(Model):
     Implementation of the Statistics model for which all the Finn based statistics logic is stored
 
     """
-    _statistics_keys = ["finnkode", "firstpublished", "edited", "prisantydning", "fellesgjeld",
+    _statistics_keys = ["finnkode", "firstpublished", "sistendret", "prisantydning", "fellesgjeld",
                         "totalpris", "sqm_price", "city_area_sqm_price", "municipality_sqm_price",
-                        "primrrom", "bruksareal", "views", "city_area_sqm_price",
+                        "interntbruksareal", "bruksareal", "views", "city_area_sqm_price",
                         "municipality_sqm_price", "city_area", "municipality",
                         "hist_data_city_area", "hist_data_municipality",
                         "hist_data_city_area_count", "hist_data_municipality_count",

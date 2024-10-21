@@ -1497,7 +1497,7 @@
               <item row="6" column="0">
                <widget class="QLabel" name="label_primrrom">
                 <property name="text">
-                 <string>Primærrom</string>
+                 <string>Internt bruksareal</string>
                 </property>
                </widget>
               </item>
@@ -1523,14 +1523,14 @@
                </widget>
               </item>
               <item row="2" column="2">
-               <widget class="QLineEdit" name="line_edit_edited">
+               <widget class="QLineEdit" name="line_edit_sistendret">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
                </widget>
               </item>
               <item row="6" column="2">
-               <widget class="QLineEdit" name="line_edit_primrrom">
+               <widget class="QLineEdit" name="line_edit_interntbruksareal">
                 <property name="enabled">
                  <bool>false</bool>
                 </property>
@@ -5393,11 +5393,11 @@
   <tabstop>scroll_area_statistics</tabstop>
   <tabstop>line_edit_finnkode</tabstop>
   <tabstop>line_edit_firstpublished</tabstop>
-  <tabstop>line_edit_edited</tabstop>
+  <tabstop>line_edit_sistendret</tabstop>
   <tabstop>line_edit_prisantydning</tabstop>
   <tabstop>line_edit_fellesgjeld</tabstop>
   <tabstop>line_edit_totalpris</tabstop>
-  <tabstop>line_edit_primrrom</tabstop>
+  <tabstop>line_edit_interntbruksareal</tabstop>
   <tabstop>line_edit_bruksareal</tabstop>
   <tabstop>line_edit_sqm_price</tabstop>
   <tabstop>line_edit_city_area_sqm_price</tabstop>

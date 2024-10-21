@@ -29,7 +29,7 @@ class FinnModel(Model):
                   "prisantydning", "formuesverdi", "fellesgjeld", "felleskostmnd",
                   "omkostninger", "kommunaleavg", "totalpris", "fellesformue",
                   "boligtype", "eieform", "etasje", "bygger", "soverom", "rom",
-                  "renovertr", "primrrom", "bruksareal", "energimerking",
+                  "renovertr", "interntbruksareal", "bruksareal", "energimerking",
                   "tomteareal", "sqm_price"]
 
     def __init__(self, parent: QObject):
