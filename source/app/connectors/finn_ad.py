@@ -22,8 +22,8 @@ from bs4 import BeautifulSoup
 from source.util import LOGGER, TimeOutError, NoConnectionError, NotFoundError, \
     Assertor, Tracking
 
-from source.app.connectors.settings import FINN_AD_URL, TIMEOUT
-from source.app.connectors.finn import Finn
+from .settings import FINN_AD_URL, TIMEOUT
+from .finn import Finn
 
 
 class FinnAd(Finn):
@@ -278,10 +278,33 @@ class FinnAd(Finn):
                                   .replace(r'\u003e', '>')
                                   .replace(r'\u003c', '<')
                                   .replace(r'\u0026', '&')
-                                  .replace('\n', ''))
-                print(cleaned_script)
+                                  .replace(r'\n', ''))
+                cleaned_script = json.loads(
+                    " ".join(cleaned_script.split()).replace(
+                        'window.__remixContext = ', '')[:-1])
 
-            LOGGER.success("'housing_ad_information' successfully retrieved")
+                images = None
+
+                if 'state' in cleaned_script:
+                    state = cleaned_script['state']
+                    if 'loaderData' in state:
+                        loader_data = state['loaderData']
+                        if 'routes/realestate+/_item+/homes.ad[.html]' in loader_data:
+                            routes = loader_data[
+                                'routes/realestate+/_item+/homes.ad[.html]']
+                            if 'objectData' in routes:
+                                object_data = routes['objectData']
+                                if 'ad' in object_data:
+                                    ad = object_data['ad']
+                                    if 'images' in ad:
+                                        images = ad['images']
+                                        info.update({'images': images})
+
+                if not images:
+                    LOGGER.debug(
+                        "[{}] No housing images found for add '{}'!".format(
+                            self.__class__.__name__, self.finn_code))
+
             return info
 
         except AttributeError as no_housing_ad_information_exception:
@@ -301,9 +324,3 @@ class FinnAd(Finn):
         LOGGER.success(
             "'housing_ad_information' successfully parsed to JSON at '{}'".format(
                 file_dir))
-
-
-if __name__ == '__main__':
-    finn_ad = FinnAd('371008605')
-
-    finn_ad.housing_ad_information()

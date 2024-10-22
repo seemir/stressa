@@ -17,7 +17,6 @@ from source.ui.graphics import BarChart, RatioChart, \
     BarChartWithLine
 from source.util import Assertor
 from source.domain import Amount, Percent
-from source.app import FINN_IMAGE_URL
 
 from ..util import CreateHtmlTable
 from .table_model import TableModel
@@ -29,48 +28,84 @@ class StatisticsModel(Model):
     Implementation of the Statistics model for which all the Finn based statistics logic is stored
 
     """
-    _statistics_keys = ["finnkode", "firstpublished", "sistendret", "prisantydning", "fellesgjeld",
-                        "totalpris", "sqm_price", "city_area_sqm_price", "municipality_sqm_price",
-                        "interntbruksareal", "bruksareal", "views", "city_area_sqm_price",
+    _statistics_keys = ["finnkode", "firstpublished", "sistendret",
+                        "prisantydning", "fellesgjeld",
+                        "totalpris", "sqm_price", "city_area_sqm_price",
+                        "municipality_sqm_price",
+                        "interntbruksareal", "bruksareal", "views",
+                        "city_area_sqm_price",
                         "municipality_sqm_price", "city_area", "municipality",
                         "hist_data_city_area", "hist_data_municipality",
-                        "hist_data_city_area_count", "hist_data_municipality_count",
-                        "age_distribution", "info", "civil_status", "education", "income",
-                        "higheducation", "higheducation_location", "family_composition",
-                        "age_distribution_children", "kindergardens", "kindergardens_location",
-                        "schools", "schools_location", "highschools", "highschools_location",
-                        "family_rating", "safety_rating", "noise_rating", "environment_rating",
-                        "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
-                        "housing_area", "housing_age", "housing_prices", "images", "transport",
-                        "transport_location", "rating_public_transportation", "rating_parking",
-                        "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location",
-                        "bysykler", "bysykler_location", "groceries", "groceries_location",
-                        "services", "services_location", "rating_food_selection", "sport",
-                        "rating_activity", "rating_serving", "rating_hiking", "sport_location",
+                        "hist_data_city_area_count",
+                        "hist_data_municipality_count",
+                        "age_distribution", "info", "civil_status", "education",
+                        "income",
+                        "higheducation", "higheducation_location",
+                        "family_composition",
+                        "age_distribution_children", "kindergardens",
+                        "kindergardens_location",
+                        "schools", "schools_location", "highschools",
+                        "highschools_location",
+                        "family_rating", "safety_rating", "noise_rating",
+                        "environment_rating",
+                        "gardens_rating", "roads_rating", "housing_stock",
+                        "housing_ownership",
+                        "housing_area", "housing_age", "housing_prices",
+                        "images", "transport",
+                        "transport_location", "rating_public_transportation",
+                        "rating_parking",
+                        "rating_traffic", "primarytransport", "ladepunkt",
+                        "ladepunkt_location",
+                        "bysykler", "bysykler_location", "groceries",
+                        "groceries_location",
+                        "services", "services_location",
+                        "rating_food_selection", "sport",
+                        "rating_activity", "rating_serving", "rating_hiking",
+                        "sport_location",
                         "forste_visning", "andre_visning"]
-    _ad_charts = ["hist_data_city_area", "hist_data_municipality", "ratio_statistics"]
+    _ad_charts = ["hist_data_city_area", "hist_data_municipality",
+                  "ratio_statistics"]
     _community_charts = ["age_distribution_city_area", "age_distribution_city",
                          "civil_status_city_area", "civil_status_city",
-                         "education_city_area", "education_city", "income_city_area",
-                         "income_city", "family_composition_city_area", "family_composition_city",
-                         "age_distribution_children_city_area", "age_distribution_children_city",
+                         "education_city_area", "education_city",
+                         "income_city_area",
+                         "income_city", "family_composition_city_area",
+                         "family_composition_city",
+                         "age_distribution_children_city_area",
+                         "age_distribution_children_city",
                          "housing_stock_city_area", "housing_stock_city",
-                         "housing_ownership_city_area", "housing_ownership_city",
-                         "housing_area_city_area", "housing_area_city", "housing_age_city_area",
-                         "housing_age_city", "housing_prices_city_area", "housing_prices_city"]
-    _ignore_clear_keys = ["hist_data_city_area", "hist_data_municipality", "views_development",
-                          "age_distribution", "civil_status", "education", "income",
-                          "higheducation", "higheducation_location", "info", "family_composition",
-                          "age_distribution_children", "kindergardens", "kindergardens_location",
-                          "schools", "schools_location", "highschools", "highschools_location",
-                          "family_rating", "safety_rating", "noise_rating", "environment_rating",
-                          "gardens_rating", "roads_rating", "housing_stock", "housing_ownership",
-                          "housing_area", "housing_age", "housing_prices", "images", "transport",
-                          "transport_location", "rating_public_transportation", "rating_parking",
-                          "rating_traffic", "primarytransport", "ladepunkt", "ladepunkt_location",
-                          "bysykler", "bysykler_location", "groceries", "groceries_location",
-                          "services", "services_location", "rating_food_selection", "sport",
-                          "rating_activity", "rating_serving", "rating_hiking", "sport_location"]
+                         "housing_ownership_city_area",
+                         "housing_ownership_city",
+                         "housing_area_city_area", "housing_area_city",
+                         "housing_age_city_area",
+                         "housing_age_city", "housing_prices_city_area",
+                         "housing_prices_city"]
+    _ignore_clear_keys = ["hist_data_city_area", "hist_data_municipality",
+                          "views_development",
+                          "age_distribution", "civil_status", "education",
+                          "income",
+                          "higheducation", "higheducation_location", "info",
+                          "family_composition",
+                          "age_distribution_children", "kindergardens",
+                          "kindergardens_location",
+                          "schools", "schools_location", "highschools",
+                          "highschools_location",
+                          "family_rating", "safety_rating", "noise_rating",
+                          "environment_rating",
+                          "gardens_rating", "roads_rating", "housing_stock",
+                          "housing_ownership",
+                          "housing_area", "housing_age", "housing_prices",
+                          "images", "transport",
+                          "transport_location", "rating_public_transportation",
+                          "rating_parking",
+                          "rating_traffic", "primarytransport", "ladepunkt",
+                          "ladepunkt_location",
+                          "bysykler", "bysykler_location", "groceries",
+                          "groceries_location",
+                          "services", "services_location",
+                          "rating_food_selection", "sport",
+                          "rating_activity", "rating_serving", "rating_hiking",
+                          "sport_location"]
 
     def __init__(self, parent: QObject):
         """
@@ -232,10 +267,14 @@ class StatisticsModel(Model):
                 pass
             elif key == "info":
                 self.add_map(postfix, key, university="higheducation_location",
-                             kindergarden="kindergardens_location", schools="schools_location",
-                             highschools="highschools_location", transport="transport_location",
-                             charging="ladepunkt_location", bicycle="bysykler_location",
-                             groceries="groceries_location", services="services_location",
+                             kindergarden="kindergardens_location",
+                             schools="schools_location",
+                             highschools="highschools_location",
+                             transport="transport_location",
+                             charging="ladepunkt_location",
+                             bicycle="bysykler_location",
+                             groceries="groceries_location",
+                             services="services_location",
                              sports="sport_location")
             else:
                 if key + postfix in self.data.keys():
@@ -256,13 +295,18 @@ class StatisticsModel(Model):
 
         """
         for graphics_view in self._ad_charts + self._community_charts:
-            getattr(self.parent.ui_form, prefix + graphics_view).setMouseEnabled(x=False, y=False)
-            getattr(self.parent.ui_form, prefix + graphics_view).getAxis('left').setStyle(
+            getattr(self.parent.ui_form,
+                    prefix + graphics_view).setMouseEnabled(x=False, y=False)
+            getattr(self.parent.ui_form, prefix + graphics_view).getAxis(
+                'left').setStyle(
                 showValues=False)
-            getattr(self.parent.ui_form, prefix + graphics_view).getAxis('bottom').setStyle(
+            getattr(self.parent.ui_form, prefix + graphics_view).getAxis(
+                'bottom').setStyle(
                 showValues=False)
-            getattr(self.parent.ui_form, prefix + graphics_view).getViewBox().enableAutoRange()
-            getattr(self.parent.ui_form, prefix + graphics_view).setMenuEnabled(False)
+            getattr(self.parent.ui_form,
+                    prefix + graphics_view).getViewBox().enableAutoRange()
+            getattr(self.parent.ui_form, prefix + graphics_view).setMenuEnabled(
+                False)
 
     def clear_statistics_info(self, postfix: str):
         """
@@ -289,7 +333,8 @@ class StatisticsModel(Model):
                 self.parent.label_city_area_sqm_price.setText("KMP (område)")
                 self.parent.label_sales_city_area.setText("Salg (område)")
             elif key == "municipality":
-                self.parent.label_municipality_sqm_price.setText("KMP (kommune)")
+                self.parent.label_municipality_sqm_price.setText(
+                    "KMP (kommune)")
                 self.parent.label_sales_municipality.setText("Salg (kommune)")
             elif key in self._ignore_clear_keys:
                 continue
@@ -302,72 +347,98 @@ class StatisticsModel(Model):
         method for clearing charts
 
         """
-        BarChart.clear_graphics(self.parent.ui_form.graphics_view_hist_data_city_area)
-        BarChart.clear_graphics(self.parent.ui_form.graphics_view_hist_data_municipality)
-        RatioChart.clear_graphics(self.parent.ui_form.graphics_view_ratio_statistics)
+        BarChart.clear_graphics(
+            self.parent.ui_form.graphics_view_hist_data_city_area)
+        BarChart.clear_graphics(
+            self.parent.ui_form.graphics_view_hist_data_municipality)
+        RatioChart.clear_graphics(
+            self.parent.ui_form.graphics_view_ratio_statistics)
         BarChartWithLine.clear_graphics(
             self.parent.ui_form.graphics_view_age_distribution_city_area,
             self.parent.ui_form.table_view_age_distribution)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_age_distribution_city,
-                                        self.parent.ui_form.table_view_age_distribution)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_civil_status_city_area,
-                                        self.parent.ui_form.table_view_civil_status)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_civil_status_city,
-                                        self.parent.ui_form.table_view_civil_status)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_education_city_area,
-                                        self.parent.ui_form.table_view_education)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_education_city,
-                                        self.parent.ui_form.table_view_education)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_income_city_area,
-                                        self.parent.ui_form.table_view_income)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_income_city,
-                                        self.parent.ui_form.table_view_income)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_age_distribution_city,
+            self.parent.ui_form.table_view_age_distribution)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_civil_status_city_area,
+            self.parent.ui_form.table_view_civil_status)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_civil_status_city,
+            self.parent.ui_form.table_view_civil_status)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_education_city_area,
+            self.parent.ui_form.table_view_education)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_education_city,
+            self.parent.ui_form.table_view_education)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_income_city_area,
+            self.parent.ui_form.table_view_income)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_income_city,
+            self.parent.ui_form.table_view_income)
 
         BarChartWithLine.clear_graphics(
             self.parent.ui_form.graphics_view_family_composition_city_area,
             self.parent.ui_form.table_view_family_composition)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_family_composition_city,
-                                        self.parent.ui_form.table_view_family_composition)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_family_composition_city,
+            self.parent.ui_form.table_view_family_composition)
         BarChartWithLine.clear_graphics(
             self.parent.ui_form.graphics_view_age_distribution_children_city_area,
             self.parent.ui_form.table_view_age_distribution_children)
         BarChartWithLine.clear_graphics(
             self.parent.ui_form.graphics_view_age_distribution_children_city,
             self.parent.ui_form.table_view_age_distribution_children)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_stock_city_area,
-                                        self.parent.ui_form.table_view_housing_stock)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_stock_city,
-                                        self.parent.ui_form.table_view_housing_stock)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_housing_stock_city_area,
+            self.parent.ui_form.table_view_housing_stock)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_housing_stock_city,
+            self.parent.ui_form.table_view_housing_stock)
         BarChartWithLine.clear_graphics(
             self.parent.ui_form.graphics_view_housing_ownership_city_area,
             self.parent.ui_form.table_view_housing_ownership)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_ownership_city,
-                                        self.parent.ui_form.table_view_housing_ownership)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_area_city_area,
-                                        self.parent.ui_form.table_view_housing_area)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_area_city,
-                                        self.parent.ui_form.table_view_housing_area)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_age_city_area,
-                                        self.parent.ui_form.table_view_housing_age)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_age_city,
-                                        self.parent.ui_form.table_view_housing_age)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_prices_city_area,
-                                        self.parent.ui_form.table_view_housing_prices)
-        BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_housing_prices_city,
-                                        self.parent.ui_form.table_view_housing_prices)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_housing_ownership_city,
+            self.parent.ui_form.table_view_housing_ownership)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_housing_area_city_area,
+            self.parent.ui_form.table_view_housing_area)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_housing_area_city,
+            self.parent.ui_form.table_view_housing_area)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_housing_age_city_area,
+            self.parent.ui_form.table_view_housing_age)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_housing_age_city,
+            self.parent.ui_form.table_view_housing_age)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_housing_prices_city_area,
+            self.parent.ui_form.table_view_housing_prices)
+        BarChartWithLine.clear_graphics(
+            self.parent.ui_form.graphics_view_housing_prices_city,
+            self.parent.ui_form.table_view_housing_prices)
 
         self.parent.map_view.web_view_map.close()
         self.parent.images_view.clear_images()
 
         table_views = ["table_view_higheducation", "table_view_family_rating",
-                       "table_view_kindergardens", "table_view_schools", "table_view_highschools",
+                       "table_view_kindergardens", "table_view_schools",
+                       "table_view_highschools",
                        "table_view_safety_rating", "table_view_noise_rating",
-                       "table_view_environment_rating", "table_view_gardens_rating",
-                       "table_view_roads_rating", "table_view_bysykler", "table_view_ladepunkt",
-                       "table_view_rating_parking", "table_view_primarytransport",
-                       "table_view_rating_public_transportation", "table_view_rating_traffic",
+                       "table_view_environment_rating",
+                       "table_view_gardens_rating",
+                       "table_view_roads_rating", "table_view_bysykler",
+                       "table_view_ladepunkt",
+                       "table_view_rating_parking",
+                       "table_view_primarytransport",
+                       "table_view_rating_public_transportation",
+                       "table_view_rating_traffic",
                        "table_view_sport", "table_view_transport",
-                       "table_view_rating_food_selection", "table_view_rating_activity",
+                       "table_view_rating_food_selection",
+                       "table_view_rating_activity",
                        "table_view_rating_serving", "table_view_rating_hiking",
                        "table_view_services", "table_view_groceries"]
 
@@ -395,16 +466,21 @@ class StatisticsModel(Model):
         Assertor.assert_data_types([prefix, postfix], [str, str])
         BarChart.clear_graphics(
             getattr(self.parent.ui_form, prefix + "hist_data_municipality"))
-        BarChart.clear_graphics(getattr(self.parent.ui_form, prefix + "hist_data_city_area"))
-        RatioChart.clear_graphics(self.parent.ui_form.graphics_view_ratio_statistics)
+        BarChart.clear_graphics(
+            getattr(self.parent.ui_form, prefix + "hist_data_city_area"))
+        RatioChart.clear_graphics(
+            self.parent.ui_form.graphics_view_ratio_statistics)
         if key + postfix in self.data.keys() and self.data[key + postfix]:
-            if sum(list(self.data["hist_data_city_area" + postfix].values())) != 0:
+            if sum(list(
+                    self.data["hist_data_city_area" + postfix].values())) != 0:
                 city_area_sales = self.data["hist_data_city_area" + postfix]
-                municipality_sales = self.data["hist_data_municipality" + postfix]
+                municipality_sales = self.data[
+                    "hist_data_municipality" + postfix]
 
                 if "city_area" + postfix in self.data.keys() and \
                         "municipality" + postfix in self.data.keys():
-                    labels = (self.data["city_area" + postfix], self.data["municipality" + postfix])
+                    labels = (self.data["city_area" + postfix],
+                              self.data["municipality" + postfix])
                 elif "city_area" + postfix in self.data.keys():
                     labels = (self.data["city_area" + postfix], "")
                 elif "municipality" + postfix in self.data.keys():
@@ -420,17 +496,21 @@ class StatisticsModel(Model):
                                                    prefix + "hist_data_city_area"),
                                            getattr(self.parent.ui_form,
                                                    prefix + "hist_data_municipality"),
-                                           labels, units=(" kr/m²", " salg", " kr/m²", " salg"),
+                                           labels, units=(
+                        " kr/m²", " salg", " kr/m²", " salg"),
                                            precision=-3,
-                                           average=self.data["sqm_price" + postfix].replace(
+                                           average=self.data[
+                                               "sqm_price" + postfix].replace(
                                                " ", "").replace("kr/m²", ""))
                 self.ration_plot = RatioChart(list(municipality_sales.keys()),
                                               list(city_area_sales.values()),
                                               list(municipality_sales.values()),
                                               getattr(self.parent.ui_form,
                                                       prefix + "ratio_statistics"),
-                                              "Forhold ({})".format(" / ".join(labels)),
-                                              units=(" kr/m²", ""), precision=-3)
+                                              "Forhold ({})".format(
+                                                  " / ".join(labels)),
+                                              units=(" kr/m²", ""),
+                                              precision=-3)
                 self.sales_plot.connect(self.ration_plot,
                                         self.parent.ui_form.graphics_view_ratio_statistics)
 
@@ -456,8 +536,10 @@ class StatisticsModel(Model):
             getattr(self.parent.ui_form, "line_edit_" + key).setText(
                 self.data[key + postfix])
 
-    def add_dist_chart(self, prefix: str, postfix: str, key: str, plot_name_1: str,
-                       plot_name_2: str, table_name: str, dist_name: str, dist_var_1: str,
+    def add_dist_chart(self, prefix: str, postfix: str, key: str,
+                       plot_name_1: str,
+                       plot_name_2: str, table_name: str, dist_name: str,
+                       dist_var_1: str,
                        dist_var_2: str, ignore_total: bool = True):
         """
         method for adding distribution chart to the statistics model
@@ -486,27 +568,34 @@ class StatisticsModel(Model):
                       boolean for handling total values
 
         """
-        Assertor.assert_data_types([prefix, postfix, key, plot_name_1, plot_name_2, table_name,
-                                    dist_name, dist_var_1, dist_var_2, ignore_total],
-                                   [str, str, str, str, str, str, str, str, str, bool])
+        Assertor.assert_data_types(
+            [prefix, postfix, key, plot_name_1, plot_name_2, table_name,
+             dist_name, dist_var_1, dist_var_2, ignore_total],
+            [str, str, str, str, str, str, str, str, str, bool])
         BarChart.clear_graphics(
             getattr(self.parent.ui_form, prefix + plot_name_1))
-        BarChart.clear_graphics(getattr(self.parent.ui_form, prefix + plot_name_2))
+        BarChart.clear_graphics(
+            getattr(self.parent.ui_form, prefix + plot_name_2))
         if key + postfix in self.data.keys() and self.data[key + postfix]:
             dist = self.data[key + postfix]
-            city_area_dist = dist["Nabolag"][:-2] if ignore_total else dist["Nabolag"]
+            city_area_dist = dist["Nabolag"][:-2] if ignore_total else dist[
+                "Nabolag"]
             city_dist = dist["By"][:-2] if ignore_total else dist["By"]
             dist_range = list(range(len(city_area_dist)))
             if "info" + postfix in self.data.keys():
                 if self.data["info" + postfix]["neighborhood"]:
-                    neighbourhood = self.data["info" + postfix]["neighborhood"]["name"] \
+                    neighbourhood = self.data["info" + postfix]["neighborhood"][
+                        "name"] \
                         .replace("-", " - ")
                     city = self.data["info" + postfix]["neighborhood"]["city"]
                 else:
-                    neighbourhood = self.data["info" + postfix]["census"].replace("-", " - ")
-                    if "city" in self.data["info" + postfix].keys() and self.data["info" + postfix][
-                        "city"]:
-                        city = self.data["info" + postfix]["city"].replace("-", " - ")
+                    neighbourhood = self.data["info" + postfix][
+                        "census"].replace("-", " - ")
+                    if "city" in self.data["info" + postfix].keys() and \
+                            self.data["info" + postfix][
+                                "city"]:
+                        city = self.data["info" + postfix]["city"].replace("-",
+                                                                           " - ")
                     else:
                         city = ""
             else:
@@ -528,16 +617,21 @@ class StatisticsModel(Model):
                         dist_df[keys] = values
                     else:
                         if ignore_total:
-                            dist_df[keys] = [Percent(str(val / 100)).value if i not in (
-                                len(values) - 1, len(values) - 2) else Amount(str(val)).amount
-                                             for i, val in enumerate(values)]
+                            dist_df[keys] = [
+                                Percent(str(val / 100)).value if i not in (
+                                    len(values) - 1,
+                                    len(values) - 2) else Amount(
+                                    str(val)).amount
+                                for i, val in enumerate(values)]
                         else:
-                            dist_df[keys] = [Percent(str(val / 100)).value for i, val in
+                            dist_df[keys] = [Percent(str(val / 100)).value for
+                                             i, val in
                                              enumerate(values)]
 
                 table_model = TableModel(DataFrame(dist_df))
                 getattr(self.parent.ui_form, table_name).setModel(table_model)
-                getattr(self.parent.ui_form, table_name).horizontalHeader().setSectionResizeMode(
+                getattr(self.parent.ui_form,
+                        table_name).horizontalHeader().setSectionResizeMode(
                     QHeaderView.Stretch)
 
                 setattr(self, dist_var_1, BarChartWithLine(
@@ -549,7 +643,8 @@ class StatisticsModel(Model):
                            '<span style="font-size: 10pt">{}:</span><br>'
                            '<span style="font-size: 10pt">{}</span><br>'
                            '<span style="font-size: 10pt">({})</span><br>'
-                           '</div>'.format(dist_name, neighbourhood, city_area)))
+                           '</div>'.format(dist_name, neighbourhood,
+                                           city_area)))
 
                 setattr(self, dist_var_2, BarChartWithLine(
                     dist_range, city_dist,
@@ -579,8 +674,10 @@ class StatisticsModel(Model):
 
         """
         self.add_dist_chart(prefix, postfix, key, "age_distribution_city_area",
-                            "age_distribution_city", "table_view_age_distribution",
-                            "Aldersfordeling", "age_dist_city_area_plot", "age_dist_city_plot")
+                            "age_distribution_city",
+                            "table_view_age_distribution",
+                            "Aldersfordeling", "age_dist_city_area_plot",
+                            "age_dist_city_plot")
 
     def add_civil_status_chart(self, prefix: str, postfix: str, key: str):
         """
@@ -598,7 +695,8 @@ class StatisticsModel(Model):
         """
         self.add_dist_chart(prefix, postfix, key, "civil_status_city_area",
                             "civil_status_city", "table_view_civil_status",
-                            "Sivil status fordeling", "civil_status_city_area_plot",
+                            "Sivil status fordeling",
+                            "civil_status_city_area_plot",
                             "civil_status_city_plot", ignore_total=False)
 
     def add_education_chart(self, prefix: str, postfix: str, key: str):
@@ -634,8 +732,10 @@ class StatisticsModel(Model):
                       name of label to change
 
         """
-        self.add_dist_chart(prefix, postfix, key, "income_city_area", "income_city",
-                            "table_view_income", "Inntektsfordeling", "income_city_area_plot",
+        self.add_dist_chart(prefix, postfix, key, "income_city_area",
+                            "income_city",
+                            "table_view_income", "Inntektsfordeling",
+                            "income_city_area_plot",
                             "income_city_plot", ignore_total=False)
 
     def add_pois_table(self, postfix: str, key: str, resize=False, score=False):
@@ -655,7 +755,8 @@ class StatisticsModel(Model):
         getattr(self.parent.ui_form, "table_view_" + key).setModel(None)
         if key + postfix in self.data.keys() and self.data[key + postfix]:
             pois_table_model = TableModel(DataFrame(self.data[key + postfix]))
-            getattr(self.parent.ui_form, "table_view_" + key).setModel(pois_table_model)
+            getattr(self.parent.ui_form, "table_view_" + key).setModel(
+                pois_table_model)
 
             if resize:
                 getattr(self.parent.ui_form,
@@ -671,28 +772,35 @@ class StatisticsModel(Model):
                     getattr(self.parent.ui_form,
                             "table_view_" + key).horizontalHeader().setSectionResizeMode(
                         2, QHeaderView.ResizeToContents)
-                getattr(self.parent.ui_form, "table_view_" + key).setWordWrap(False)
+                getattr(self.parent.ui_form, "table_view_" + key).setWordWrap(
+                    False)
             else:
                 getattr(self.parent.ui_form,
                         "table_view_" + key).horizontalHeader().setSectionResizeMode(
                     0, QHeaderView.Fixed)
-                getattr(self.parent.ui_form, "table_view_" + key).setColumnWidth(0, 180)
+                getattr(self.parent.ui_form,
+                        "table_view_" + key).setColumnWidth(0, 180)
                 getattr(self.parent.ui_form,
                         "table_view_" + key).horizontalHeader().setSectionResizeMode(
                     1, QHeaderView.Fixed)
-                getattr(self.parent.ui_form, "table_view_" + key).setColumnWidth(1, 65)
+                getattr(self.parent.ui_form,
+                        "table_view_" + key).setColumnWidth(1, 65)
                 if not score:
                     getattr(self.parent.ui_form,
                             "table_view_" + key).horizontalHeader().setSectionResizeMode(
                         2, QHeaderView.Fixed)
-                    getattr(self.parent.ui_form, "table_view_" + key).setColumnWidth(2, 65)
+                    getattr(self.parent.ui_form,
+                            "table_view_" + key).setColumnWidth(2, 65)
                 getattr(self.parent.ui_form,
                         "table_view_" + key).verticalHeader().setSectionResizeMode(
                     QHeaderView.ResizeToContents)
-                getattr(self.parent.ui_form, "table_view_" + key).setWordWrap(True)
+                getattr(self.parent.ui_form, "table_view_" + key).setWordWrap(
+                    True)
 
-    def add_map(self, postfix: str, keys: str, university: str, kindergarden: str, schools: str,
-                highschools: str, transport: str, charging: str, bicycle: str, groceries: str,
+    def add_map(self, postfix: str, keys: str, university: str,
+                kindergarden: str, schools: str,
+                highschools: str, transport: str, charging: str, bicycle: str,
+                groceries: str,
                 services: str, sports: str):
         """
         method for adding pois table
@@ -771,10 +879,14 @@ class StatisticsModel(Model):
 
         """
         if keys + postfix in self.data.keys() and self.data[keys + postfix]:
-            descriptions = [element['description'] if 'description' in element.keys() else "" for
+            descriptions = [element[
+                                'description'] if 'description' in element.keys() else ""
+                            for
                             element in self.data[keys + postfix]]
-            images = [FINN_IMAGE_URL + element['uri'] for element in self.data[keys + postfix]]
-            self.parent.images_view.images_model.show_images(images, descriptions)
+            images = [element['uri'].replace('default', '1600w') for element in
+                      self.data[keys + postfix]]
+            self.parent.images_view.images_model.show_images(images,
+                                                             descriptions)
 
     def add_family_composition_chart(self, prefix: str, postfix: str, key: str):
         """
@@ -790,9 +902,12 @@ class StatisticsModel(Model):
                       name of label to change
 
         """
-        self.add_dist_chart(prefix, postfix, key, "family_composition_city_area",
-                            "family_composition_city", "table_view_family_composition",
-                            "Familiefordeling", "family_composition_city_area_plot",
+        self.add_dist_chart(prefix, postfix, key,
+                            "family_composition_city_area",
+                            "family_composition_city",
+                            "table_view_family_composition",
+                            "Familiefordeling",
+                            "family_composition_city_area_plot",
                             "family_composition_city_plot", ignore_total=False)
 
     def add_age_dist_children_chart(self, prefix, postfix, key):
@@ -809,11 +924,14 @@ class StatisticsModel(Model):
                       name of label to change
 
         """
-        self.add_dist_chart(prefix, postfix, key, "age_distribution_children_city_area",
+        self.add_dist_chart(prefix, postfix, key,
+                            "age_distribution_children_city_area",
                             "age_distribution_children_city",
-                            "table_view_age_distribution_children", "Aldersfordeling barn",
+                            "table_view_age_distribution_children",
+                            "Aldersfordeling barn",
                             "age_distribution_children_city_area_plot",
-                            "age_distribution_children_city_plot", ignore_total=False)
+                            "age_distribution_children_city_plot",
+                            ignore_total=False)
 
     def add_housing_stock_chart(self, prefix, postfix, key):
         """
@@ -829,9 +947,11 @@ class StatisticsModel(Model):
                       name of label to change
 
         """
-        self.add_dist_chart(prefix, postfix, key, "housing_stock_city_area", "housing_stock_city",
+        self.add_dist_chart(prefix, postfix, key, "housing_stock_city_area",
+                            "housing_stock_city",
                             "table_view_housing_stock", "Boligmasse",
-                            "housing_stock_city_area_plot", "housing_stock_city_plot",
+                            "housing_stock_city_area_plot",
+                            "housing_stock_city_plot",
                             ignore_total=False)
 
     def add_housing_ownership_chart(self, prefix, postfix, key):
@@ -849,8 +969,10 @@ class StatisticsModel(Model):
 
         """
         self.add_dist_chart(prefix, postfix, key, "housing_ownership_city_area",
-                            "housing_ownership_city", "table_view_housing_ownership",
-                            "Bolig eierskap", "housing_ownership_city_area_plot",
+                            "housing_ownership_city",
+                            "table_view_housing_ownership",
+                            "Bolig eierskap",
+                            "housing_ownership_city_area_plot",
                             "housing_ownership_city_plot", ignore_total=False)
 
     def add_housing_area_chart(self, prefix, postfix, key):
@@ -867,9 +989,11 @@ class StatisticsModel(Model):
                       name of label to change
 
         """
-        self.add_dist_chart(prefix, postfix, key, "housing_area_city_area", "housing_area_city",
+        self.add_dist_chart(prefix, postfix, key, "housing_area_city_area",
+                            "housing_area_city",
                             "table_view_housing_area", "Boligstørrelse",
-                            "housing_area_city_area_plot", "housing_area_city_plot",
+                            "housing_area_city_area_plot",
+                            "housing_area_city_plot",
                             ignore_total=False)
 
     def add_housing_age_chart(self, prefix, postfix, key):
@@ -886,8 +1010,10 @@ class StatisticsModel(Model):
                       name of label to change
 
         """
-        self.add_dist_chart(prefix, postfix, key, "housing_age_city_area", "housing_age_city",
-                            "table_view_housing_age", "Bolig alder", "housing_age_city_area_plot",
+        self.add_dist_chart(prefix, postfix, key, "housing_age_city_area",
+                            "housing_age_city",
+                            "table_view_housing_age", "Bolig alder",
+                            "housing_age_city_area_plot",
                             "housing_age_city_plot", ignore_total=False)
 
     def add_housing_prices_chart(self, prefix, postfix, key):
@@ -904,7 +1030,9 @@ class StatisticsModel(Model):
                       name of label to change
 
         """
-        self.add_dist_chart(prefix, postfix, key, "housing_prices_city_area", "housing_prices_city",
+        self.add_dist_chart(prefix, postfix, key, "housing_prices_city_area",
+                            "housing_prices_city",
                             "table_view_housing_prices", "Bolig priser",
-                            "housing_prices_city_area_plot", "housing_prices_city_plot",
+                            "housing_prices_city_area_plot",
+                            "housing_prices_city_plot",
                             ignore_total=False)
