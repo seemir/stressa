@@ -15,7 +15,7 @@ from http.client import responses
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 import requests
 
-from source.util import Assertor, LOGGER, NotFoundError, NoConnectionError, TimeOutError, Tracking
+from source.util import Assertor, LOGGER, InvalidData, NoConnectionError, TimeOutError, Tracking
 from .settings import POSTEN_URL, TIMEOUT
 from .connector import Connector
 
@@ -34,7 +34,7 @@ class Posten(Connector):
         """
         valid_postal = re.compile("[0-9]{4}").search(self.postal_code)
         if not valid_postal:
-            raise NotFoundError(
+            raise InvalidData(
                 "'{}' is an invalid postal code".format(self.postal_code))
 
     def __init__(self, postal_code: str):

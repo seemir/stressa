@@ -9,9 +9,9 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 
-class NotFoundError(Exception):
+class InvalidData(Exception):
     """
-    Exception thrown when breach of logic in db layer
+    Exception thrown when breach of data
 
     """
 

@@ -15,7 +15,7 @@ import xml.etree.cElementTree as Et
 import requests
 from requests.exceptions import ReadTimeout, ConnectionError as ConnectError
 
-from source.util import LOGGER, NoConnectionError, TimeOutError, NotFoundError, Tracking
+from source.util import LOGGER, NoConnectionError, TimeOutError, InvalidData, Tracking
 
 from .settings import PORTALEN_URL, PORTALEN_CRED, PORTALEN_ENTRY, TIMEOUT
 from .connector import Connector
@@ -94,7 +94,7 @@ class Portalen(Connector):
 
             LOGGER.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
             return offers
-        raise NotFoundError("No 'mortgage_offers' received")
+        raise InvalidData("No 'mortgage_offers' received")
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/mortgage_offers"):

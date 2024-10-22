@@ -108,7 +108,6 @@ class FinnStat(Finn):
                                                               attrs={"style": "min-width:10px"})]
 
             info.update(self.extract_sqm_price(stat_data, info, optional_sqm_price))
-            info.update(self.extract_images(stat_data, info))
             info.update(self.extract_view_statistics(stat_data, info))
             info.update(self.extract_published_statistics(stat_data, info))
             info.update(self.extract_area_sales_statistics(stat_data, info))
@@ -237,33 +236,6 @@ class FinnStat(Finn):
                                                 (datetime.today() - pub).days)})
                                         if sub_prop.lower() == 'firstpublished':
                                             info.update({'published': date})
-        return info
-
-    @Tracking
-    def extract_images(self, detail_statistics: dict, info: dict):
-        """
-        method for extracting image node from detail statistics JSON
-
-        Parameters
-        ----------
-        detail_statistics   : dict
-                              dictionary with statistics info
-        info                : dict
-                              info dictionary with results
-
-        """
-        Assertor.assert_data_types([detail_statistics, info], [dict, dict])
-        for prop, value in detail_statistics.items():
-            if prop.lower() == 'props':
-                for pro, val in value.items():
-                    if pro.lower() == 'pageprops':
-                        for pr_name, vl_name in val.items():
-                            if pr_name.lower() == 'ad':
-                                for sub_prop, sub_val in vl_name.items():
-                                    if sub_prop.lower() == 'content':
-                                        for sub_pr, sub_vl in sub_val.items():
-                                            if sub_pr == 'images':
-                                                info.update({'images': sub_vl})
         return info
 
     @Tracking

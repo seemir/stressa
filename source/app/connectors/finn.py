@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import Assertor, LOGGER, NotFoundError, Tracking
+from source.util import Assertor, LOGGER, InvalidData, Tracking
 
 from .connector import Connector
 
@@ -29,7 +29,7 @@ class Finn(Connector):
         """
         valid_finn_code = re.compile("^[1-9][0-9]{7,8}$").search(self.finn_code)
         if not valid_finn_code:
-            raise NotFoundError(
+            raise InvalidData(
                 "'{}' is an invalid Finn code".format(self.finn_code))
 
     def __init__(self, finn_code: str):
