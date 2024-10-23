@@ -20,13 +20,14 @@ from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from bs4 import BeautifulSoup
 
+import json_repair
+
 from source.util import LOGGER, TimeOutError, NoConnectionError, InvalidData, \
     Assertor, Tracking
 
-from source.domain import Money, Amount
-
 from source.app.connectors.settings import FINN_AD_URL, TIMEOUT
 from source.app.connectors.finn import Finn
+from source.domain import Money, Amount
 
 
 class FinnAd(Finn):
@@ -135,9 +136,7 @@ class FinnAd(Finn):
                 cleaned_script = " ".join(cleaned_script.split()).replace(
                     'window.__remixContext = ', '')[:-1]
 
-                print(cleaned_script)
-
-                cleaned_script = json.loads(cleaned_script)
+                cleaned_script = dict(json_repair.loads(cleaned_script))
 
                 if 'state' in cleaned_script:
                     state = cleaned_script['state']
@@ -170,6 +169,9 @@ class FinnAd(Finn):
                 second_viewing = ''
                 tax_value = ''
                 plot_area = ''
+                usable_size = ''
+                usable_area_i = ''
+                usable_area_e = ''
 
                 matrikkel = {'kommunenr': '',
                              'gardsnr': '',
@@ -199,12 +201,17 @@ class FinnAd(Finn):
                 if 'taxValue' in ad_data['price']:
                     tax_value = Money(str(ad_data['price']['taxValue'])).value()
 
-                usable_size = Amount(
-                    str(ad_data['size']['usable'])).amount + ' m²'
-                usable_area_i = Amount(
-                    str(ad_data['size']['usableAreaI'])).amount + ' m² (BRA-i)'
-                usable_area_e = Amount(
-                    str(ad_data['size']['usableAreaE'])).amount + ' m² (BRA-e)'
+                if 'usable' in ad_data['size']:
+                    usable_size = Amount(
+                        str(ad_data['size']['usable'])).amount + ' m²'
+                if 'usableAreaI' in ad_data['size']:
+                    usable_area_i = Amount(
+                        str(ad_data['size'][
+                                'usableAreaI'])).amount + ' m² (BRA-i)'
+                if 'usableAreaE' in ad_data['size']:
+                    usable_area_e = Amount(
+                        str(ad_data['size'][
+                                'usableAreaE'])).amount + ' m² (BRA-e)'
 
                 bedrooms = Amount(str(ad_data['bedrooms'])).amount
                 property_type = ad_data['propertyType']
@@ -280,7 +287,8 @@ class FinnAd(Finn):
 
                 edited = self._convert_isodate_to_local(meta_data['edited'])
                 published = self._convert_isodate_to_local(
-                    meta_data['history'][0]['broadcasted'])
+                    meta_data['history'][0]['broadcasted'], days_delta=True,
+                    include_time=False)
 
                 if 'advertiserRef' in ad_data:
                     advertiser_ref = ad_data['advertiserRef']
@@ -297,9 +305,9 @@ class FinnAd(Finn):
                     }
                     energy_label_class = ad_data['energyLabel']['class']
                     energy_label_color = ad_data['energyLabel']['color']
-                    energy_label = '{} -{}'.format(energy_label_class,
-                                                   color_scale[
-                                                       energy_label_color])
+                    energy_label = '{} - {}'.format(energy_label_class,
+                                                    color_scale[
+                                                        energy_label_color])
 
                 images = ad_data['images']
 
@@ -347,14 +355,19 @@ class FinnAd(Finn):
                     invalid_data_exception))
 
     @staticmethod
-    def _convert_isodate_to_local(isodate: str):
+    def _convert_isodate_to_local(isodate: str, days_delta: bool = False,
+                                  include_time: bool = True):
         """
         helper method for converting iso date to Norwegin date format
 
         Parameters
         ----------
         isodate           : str
-                           isodate to be formatted
+                            isodate to be formatted
+        days_delta        : bool
+                            flag for delta days
+        include_time      : bool
+                            flag for including time
 
         Returns
         -------
@@ -363,11 +376,11 @@ class FinnAd(Finn):
 
         """
 
-        norwegian_weekdays = ["mandag", "tirsdag", "onsdag", "torsdag",
-                              "fredag", "lørdag", "søndag"]
-        norwegian_months = ["januar", "februar", "mars", "april", "mai", "juni",
-                            "juli", "august", "september", "oktober",
-                            "november", "desember"]
+        norwegian_weekdays = ["man", "tir", "ons", "tor",
+                              "fre", "lør", "søn"]
+        norwegian_months = ["jan", "feb", "mar", "apr", "mai", "jun",
+                            "jul", "aug", "sep", "okt",
+                            "nov", "des"]
         if 'T' in isodate:
             try:
                 utc_time = datetime.fromisoformat(isodate)
@@ -389,13 +402,18 @@ class FinnAd(Finn):
 
         weekday = norwegian_weekdays[date_obj.weekday()]
         month = norwegian_months[date_obj.month - 1]
-        formatted_date = f"{weekday.capitalize()}, {date_obj.day}. {month}"
+        formatted_date = f"{weekday.capitalize()}, {date_obj.day}. {month} {date_obj.year}"
 
-        if 'T' in isodate:
-            return formatted_date + ' kl.{}:{}'.format(date_obj.hour,
-                                                       date_obj.minute)
-        else:
-            return formatted_date
+        if 'T' in isodate and include_time:
+            formatted_date = formatted_date + ' kl.{:02}:{:02}'.format(
+                date_obj.hour, date_obj.minute)
+
+        if days_delta:
+            delta = datetime.today().replace(tzinfo=None) - date_obj.replace(
+                tzinfo=None)
+            formatted_date = formatted_date + ' ({} dager)'.format(delta.days)
+
+        return formatted_date
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):
@@ -410,7 +428,6 @@ class FinnAd(Finn):
             "'housing_ad_information' successfully parsed to JSON at '{}'".format(
                 file_dir))
 
-
-if __name__ == '__main__':
-    finn_ad = FinnAd('336828722')
-    finn_ad.housing_ad_information()
+# if __name__ == '__main__':
+#     finn_ad = FinnAd('336828722')
+#     finn_ad.housing_ad_information()
