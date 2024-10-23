@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import json
 
-import locale
+import pytz
 from datetime import datetime
 from time import time
 
@@ -117,6 +117,7 @@ class FinnAd(Finn):
 
             script_tag = None
             ad_data = None
+            meta_data = None
             info = {}
 
             for script in ad_soup.find_all('script'):
@@ -128,10 +129,15 @@ class FinnAd(Finn):
                                   .replace(r'\u003e', '>')
                                   .replace(r'\u003c', '<')
                                   .replace(r'\u0026', '&')
-                                  .replace(r'\n', ''))
-                cleaned_script = json.loads(
-                    " ".join(cleaned_script.split()).replace(
-                        'window.__remixContext = ', '')[:-1])
+                                  .replace(r'\n', '')
+                                  .replace(r'\R', 'R'))
+
+                cleaned_script = " ".join(cleaned_script.split()).replace(
+                    'window.__remixContext = ', '')[:-1]
+
+                print(cleaned_script)
+
+                cleaned_script = json.loads(cleaned_script)
 
                 if 'state' in cleaned_script:
                     state = cleaned_script['state']
@@ -144,6 +150,8 @@ class FinnAd(Finn):
                                 object_data = routes['objectData']
                                 if 'ad' in object_data:
                                     ad_data = object_data['ad']
+                                if 'meta' in object_data:
+                                    meta_data = object_data['meta']
 
             if ad_data:
 
@@ -151,50 +159,17 @@ class FinnAd(Finn):
                 postal_code = ad_data['location']['postalCode']
                 postal_place = ad_data['location']['postalPlace']
 
-                status = 'Solgt' if ad_data['disposed'] else 'Ikke solgt'
-                address = '{}, {} {}'.format(street_address, postal_code,
-                                             postal_place)
-                price = Money(str(ad_data['price']['suggestion'])).value()
-                total_price = Money(str(ad_data['price']['total'])).value()
-                sales_cost_sum = Money(
-                    str(ad_data['price']['salesCostSum'])).value()
-                collective_debt = Money(
-                    str(ad_data['price']['collectiveDebt'])).value()
-                collective_assets = Money(
-                    str(ad_data['price']['collectiveAssets'])).value()
-                usable_size = Amount(str(ad_data['size']['usable'])).amount
-                usable_area_i = Amount(
-                    str(ad_data['size']['usableAreaI'])).amount + ' (BRA-i)'
-                bedrooms = Amount(str(ad_data['bedrooms'])).amount
-                property_type = ad_data['propertyType']
-                ownership_type = ad_data['ownershipType']
-                if 'floor' in ad_data:
-                    floor = Amount(str(ad_data['floor'])).amount
-                else:
-                    floor = ''
-                plot_area = Amount(str(ad_data['plot']['area'])).amount
-                owned_plot = ad_data['plot']['owned']
-                construction_year = str(ad_data['constructionYear'])
-                viewings = ad_data['viewings']
-                shared_cost = Money(
-                    str(ad_data['sharedCost']['amount'])).value()
-
+                floor = ''
+                collective_debt = ''
+                collective_assets = ''
+                municipal_fees = ''
+                shared_cost = ''
+                advertiser_ref = ''
+                energy_label = ''
                 first_viewing = ''
                 second_viewing = ''
-                if len(viewings) == 1:
-                    first_viewing = '{} kl. {}-{}'.format(
-                        self._convert_isodate_to_local(viewings[0]['dateIso']),
-                        viewings[0]['from'], viewings[0]['to'])
-                if len(viewings) == 2:
-                    first_viewing = '{} kl. {}-{}'.format(
-                        self._convert_isodate_to_local(viewings[0]['dateIso']),
-                        viewings[0]['from'], viewings[0]['to'])
-
-                    if 'dateIso' in viewings[1]:
-                        second_viewing = '{} kl. {}-{}'.format(
-                            self._convert_isodate_to_local(
-                                viewings[1]['dateIso']),
-                            viewings[1]['from'], viewings[1]['to'])
+                tax_value = ''
+                plot_area = ''
 
                 matrikkel = {'kommunenr': '',
                              'gardsnr': '',
@@ -203,6 +178,71 @@ class FinnAd(Finn):
                              'borettslag-andelsnummer': '',
                              'borettslag-navn': '',
                              'borettslag-orgnummer': ''}
+
+                status = 'Solgt' if ad_data['disposed'] else 'Ikke solgt'
+                address = '{}, {} {}'.format(street_address, postal_code,
+                                             postal_place)
+                price = Money(str(ad_data['price']['suggestion'])).value()
+                total_price = Money(str(ad_data['price']['total'])).value()
+                sales_cost_sum = Money(
+                    str(ad_data['price']['salesCostSum'])).value()
+
+                if 'collectiveDebt' in ad_data['price']:
+                    collective_debt = Money(
+                        str(ad_data['price']['collectiveDebt'])).value()
+                if 'collectiveAssets' in ad_data['price']:
+                    collective_assets = Money(
+                        str(ad_data['price']['collectiveAssets'])).value()
+                if 'municipalFees' in ad_data['price']:
+                    municipal_fees = Money(
+                        str(ad_data['price']['municipalFees'])).value()
+                if 'taxValue' in ad_data['price']:
+                    tax_value = Money(str(ad_data['price']['taxValue'])).value()
+
+                usable_size = Amount(
+                    str(ad_data['size']['usable'])).amount + ' m²'
+                usable_area_i = Amount(
+                    str(ad_data['size']['usableAreaI'])).amount + ' m² (BRA-i)'
+                usable_area_e = Amount(
+                    str(ad_data['size']['usableAreaE'])).amount + ' m² (BRA-e)'
+
+                bedrooms = Amount(str(ad_data['bedrooms'])).amount
+                property_type = ad_data['propertyType']
+                ownership_type = ad_data['ownershipType']
+
+                if 'floor' in ad_data:
+                    floor = Amount(str(ad_data['floor'])).amount
+
+                if 'area' in ad_data['plot']:
+                    plot_area = Amount(str(ad_data['plot']['area'])).amount
+
+                owned_plot = ad_data['plot']['owned']
+                construction_year = str(ad_data['constructionYear'])
+                viewings = ad_data['viewings']
+
+                if 'sharedCost' in ad_data:
+                    shared_cost = Money(
+                        str(ad_data['sharedCost']['amount'])).value()
+
+                if len(viewings) == 1:
+                    if 'dateIso' in viewings[0]:
+                        first_viewing = '{} kl. {}-{}'.format(
+                            self._convert_isodate_to_local(
+                                viewings[0]['dateIso']),
+                            viewings[0]['from'], viewings[0]['to'])
+                if len(viewings) == 2:
+
+                    if 'dateIso' in viewings[0]:
+                        first_viewing = '{} kl. {}-{}'.format(
+                            self._convert_isodate_to_local(
+                                viewings[0]['dateIso']),
+                            viewings[0]['from'], viewings[0]['to'])
+
+                    if 'dateIso' in viewings[1]:
+                        second_viewing = '{} kl. {}-{}'.format(
+                            self._convert_isodate_to_local(
+                                viewings[1]['dateIso']),
+                            viewings[1]['from'], viewings[1]['to'])
 
                 cadastres = ad_data['cadastres']
 
@@ -238,6 +278,29 @@ class FinnAd(Finn):
                                           ad_data['housingCooperative'][
                                               'organisationNumber']})
 
+                edited = self._convert_isodate_to_local(meta_data['edited'])
+                published = self._convert_isodate_to_local(
+                    meta_data['history'][0]['broadcasted'])
+
+                if 'advertiserRef' in ad_data:
+                    advertiser_ref = ad_data['advertiserRef']
+                elif 'externalAdId' in ad_data:
+                    advertiser_ref = ad_data['externalAdId']
+
+                if 'energyLabel' in ad_data:
+                    color_scale = {
+                        "DARK_GREEN": "Mørkegrønn",
+                        "LIGHT_GREEN": "Lysegrønn",
+                        "YELLOW": "Gul",
+                        "ORANGE": "Oransje",
+                        "RED": "Rød"
+                    }
+                    energy_label_class = ad_data['energyLabel']['class']
+                    energy_label_color = ad_data['energyLabel']['color']
+                    energy_label = '{} -{}'.format(energy_label_class,
+                                                   color_scale[
+                                                       energy_label_color])
+
                 images = ad_data['images']
 
                 info.update({'finnkode': self.finn_code,
@@ -251,17 +314,25 @@ class FinnAd(Finn):
                              'fellesgjeld': collective_debt,
                              'fellesformue': collective_assets,
                              'bruksareal': usable_size,
+                             'eksterntbruksareal': usable_area_e,
                              'interntbruksareal': usable_area_i,
                              'soverom': bedrooms,
                              'boligtype': property_type,
                              'eieform': ownership_type,
                              'etasje': floor,
                              'tomteareal': plot_area + ' m² ({})'.format(
-                                 'eiet' if owned_plot else 'festet'),
+                                 'eiet' if owned_plot else 'festet')
+                             if plot_area else '',
                              'bygger': construction_year,
                              'forste_visning': first_viewing.capitalize(),
                              'andre_visning': second_viewing.capitalize(),
-                             'matrikkel': matrikkel})
+                             'matrikkel': matrikkel,
+                             'sistendret': edited,
+                             'firstpublished': published,
+                             'referanse': advertiser_ref,
+                             'energimerking': energy_label,
+                             'kommunaleavg': municipal_fees,
+                             'formuesverdi': tax_value})
 
                 for key, value in matrikkel.items():
                     info.update({key: value})
@@ -297,14 +368,34 @@ class FinnAd(Finn):
         norwegian_months = ["januar", "februar", "mars", "april", "mai", "juni",
                             "juli", "august", "september", "oktober",
                             "november", "desember"]
+        if 'T' in isodate:
+            try:
+                utc_time = datetime.fromisoformat(isodate)
+            except ValueError:
+                date_part, time_part = isodate.split('T')
+                time_part = time_part.split('+')[0]
+                if '.' in time_part:
+                    time_part = time_part.split('.')
+                    time_part[1] = time_part[1][:3]
+                    time_part = '.'.join(time_part)
 
-        date_obj = datetime.strptime(isodate, "%Y-%m-%d")
+                corrected_iso_string = f"{date_part}T{time_part}+02:00"  # Add back the timezone
+                utc_time = datetime.fromisoformat(corrected_iso_string)
+
+            cet_timezone = pytz.timezone("Europe/Berlin")
+            date_obj = utc_time.astimezone(cet_timezone)
+        else:
+            date_obj = datetime.strptime(isodate, "%Y-%m-%d")
 
         weekday = norwegian_weekdays[date_obj.weekday()]
         month = norwegian_months[date_obj.month - 1]
         formatted_date = f"{weekday.capitalize()}, {date_obj.day}. {month}"
 
-        return formatted_date
+        if 'T' in isodate:
+            return formatted_date + ' kl.{}:{}'.format(date_obj.hour,
+                                                       date_obj.minute)
+        else:
+            return formatted_date
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):
@@ -321,6 +412,5 @@ class FinnAd(Finn):
 
 
 if __name__ == '__main__':
-    finn_ad = FinnAd('367745970')
-
+    finn_ad = FinnAd('336828722')
     finn_ad.housing_ad_information()

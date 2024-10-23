@@ -11,7 +11,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import os
 import shutil
-# import ctypes
+import ctypes
 import sys
 
 from PyQt5.QtWidgets import QMainWindow
@@ -36,9 +36,8 @@ from .meta_view import MetaView
 
 from .skatteetaten_redirect_view import SkatteetatenRedirectView
 
-
-# myappid = 'Stressa.stressa.ui.version'
-# ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+myappid = 'Stressa.stressa.ui.version'
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
 
 class HomeView(QMainWindow):

@@ -462,7 +462,7 @@
          <x>0</x>
          <y>0</y>
          <width>1611</width>
-         <height>985</height>
+         <height>986</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_14">
@@ -6681,17 +6681,17 @@
                     </widget>
                    </item>
                    <item row="15" column="2">
-                    <widget class="QLabel" name="label_rom_1">
+                    <widget class="QLabel" name="label_eksterntbruksareal_1">
                      <property name="font">
                       <font>
                        <pointsize>8</pointsize>
                       </font>
                      </property>
                      <property name="text">
-                      <string>Rom</string>
+                      <string>Eksternt bruksareal</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_rom_1</cstring>
+                      <cstring>line_edit_eksterntbruksareal_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -7151,7 +7151,7 @@
                     </widget>
                    </item>
                    <item row="15" column="3">
-                    <widget class="QLineEdit" name="line_edit_rom_1">
+                    <widget class="QLineEdit" name="line_edit_eksterntbruksareal_1">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -7983,17 +7983,17 @@
                     </widget>
                    </item>
                    <item row="14" column="2">
-                    <widget class="QLabel" name="label_rom_2">
+                    <widget class="QLabel" name="label_eksterntbruksareal_2">
                      <property name="font">
                       <font>
                        <pointsize>8</pointsize>
                       </font>
                      </property>
                      <property name="text">
-                      <string>Rom</string>
+                      <string>Eksternt bruksareal</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_rom_1</cstring>
+                      <cstring>line_edit_eksterntbruksareal_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -8082,7 +8082,7 @@
                     </widget>
                    </item>
                    <item row="14" column="3">
-                    <widget class="QLineEdit" name="line_edit_rom_2">
+                    <widget class="QLineEdit" name="line_edit_eksterntbruksareal_2">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -8843,17 +8843,17 @@
                     </widget>
                    </item>
                    <item row="14" column="2">
-                    <widget class="QLabel" name="label_rom_3">
+                    <widget class="QLabel" name="label_eksterntbruksareal_3">
                      <property name="font">
                       <font>
                        <pointsize>8</pointsize>
                       </font>
                      </property>
                      <property name="text">
-                      <string>Rom</string>
+                      <string>Eksternt bruksareal</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_rom_1</cstring>
+                      <cstring>line_edit_eksterntbruksareal_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -8967,7 +8967,7 @@
                     </widget>
                    </item>
                    <item row="14" column="3">
-                    <widget class="QLineEdit" name="line_edit_rom_3">
+                    <widget class="QLineEdit" name="line_edit_eksterntbruksareal_3">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -12325,7 +12325,7 @@
      <x>0</x>
      <y>0</y>
      <width>1680</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_fil">
@@ -12333,7 +12333,7 @@
      <rect>
       <x>284</x>
       <y>118</y>
-      <width>145</width>
+      <width>143</width>
       <height>209</height>
      </rect>
     </property>
@@ -13083,7 +13083,7 @@
   <tabstop>line_edit_etasje_1</tabstop>
   <tabstop>line_edit_bygger_1</tabstop>
   <tabstop>line_edit_soverom_1</tabstop>
-  <tabstop>line_edit_rom_1</tabstop>
+  <tabstop>line_edit_eksterntbruksareal_1</tabstop>
   <tabstop>line_edit_interntbruksareal_1</tabstop>
   <tabstop>line_edit_bruksareal_1</tabstop>
   <tabstop>line_edit_energimerking_1</tabstop>
@@ -13111,7 +13111,7 @@
   <tabstop>line_edit_etasje_2</tabstop>
   <tabstop>line_edit_bygger_2</tabstop>
   <tabstop>line_edit_soverom_2</tabstop>
-  <tabstop>line_edit_rom_2</tabstop>
+  <tabstop>line_edit_eksterntbruksareal_2</tabstop>
   <tabstop>line_edit_interntbruksareal_2</tabstop>
   <tabstop>line_edit_bruksareal_2</tabstop>
   <tabstop>line_edit_energimerking_2</tabstop>
@@ -13139,7 +13139,7 @@
   <tabstop>line_edit_etasje_3</tabstop>
   <tabstop>line_edit_bygger_3</tabstop>
   <tabstop>line_edit_soverom_3</tabstop>
-  <tabstop>line_edit_rom_3</tabstop>
+  <tabstop>line_edit_eksterntbruksareal_3</tabstop>
   <tabstop>line_edit_interntbruksareal_3</tabstop>
   <tabstop>line_edit_bruksareal_3</tabstop>
   <tabstop>line_edit_energimerking_3</tabstop>

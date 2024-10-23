@@ -25,12 +25,13 @@ class FinnModel(Model):
     Implementation of the Finn model for which all the Finn based logic is stored
 
     """
-    _finn_keys = ["finnkode", "status", "sistendret", "referanse", "finn_adresse",
-                  "prisantydning", "formuesverdi", "fellesgjeld", "felleskostmnd",
-                  "omkostninger", "kommunaleavg", "totalpris", "fellesformue",
-                  "boligtype", "eieform", "etasje", "bygger", "soverom", "rom",
-                  "renovertr", "interntbruksareal", "bruksareal", "energimerking",
-                  "tomteareal", "sqm_price"]
+    _finn_keys = ["finnkode", "status", "sistendret", "referanse",
+                  "finn_adresse", "prisantydning", "formuesverdi",
+                  "fellesgjeld", "felleskostmnd", "omkostninger",
+                  "kommunaleavg", "totalpris", "fellesformue",
+                  "boligtype", "eieform", "etasje", "bygger", "soverom",
+                  "eksterntbruksareal", "renovertr", "interntbruksareal",
+                  "bruksareal", "energimerking", "tomteareal", "sqm_price"]
 
     def __init__(self, parent: QObject):
         """
@@ -92,19 +93,27 @@ class FinnModel(Model):
         """
         try:
             Assertor.assert_data_types([postfix], [str])
-            finn_code = getattr(self.parent.ui_form, "line_edit_finnkode" + postfix).text().strip()
+            finn_code = getattr(self.parent.ui_form,
+                                "line_edit_finnkode" + postfix).text().strip()
             if finn_code and finn_code not in self.data.values():
-                getattr(self.parent.ui_form, "progress_bar" + postfix).setValue(randint(5, 25))
-                getattr(self.parent.ui_form, "progress_bar" + postfix).setTextVisible(False)
+                getattr(self.parent.ui_form, "progress_bar" + postfix).setValue(
+                    randint(5, 25))
+                getattr(self.parent.ui_form,
+                        "progress_bar" + postfix).setTextVisible(False)
                 self.process_finn_data(finn_code, postfix)
-                getattr(self.parent.ui_form, "progress_bar" + postfix).setValue(30)
+                getattr(self.parent.ui_form, "progress_bar" + postfix).setValue(
+                    30)
             elif finn_code and finn_code in self.data.values():
                 if ("finnkode" + postfix) not in self.data.keys():
-                    getattr(self.parent.ui_form, "progress_bar" + postfix).setValue(0)
-                    getattr(self.parent.ui_form, "progress_bar" + postfix).setTextVisible(True)
-                    getattr(self.parent.ui_form, "progress_bar" + postfix).setAlignment(
+                    getattr(self.parent.ui_form,
+                            "progress_bar" + postfix).setValue(0)
+                    getattr(self.parent.ui_form,
+                            "progress_bar" + postfix).setTextVisible(True)
+                    getattr(self.parent.ui_form,
+                            "progress_bar" + postfix).setAlignment(
                         Qt.AlignCenter)
-                    getattr(self.parent.ui_form, "progress_bar" + postfix).setFormat("Duplikat!")
+                    getattr(self.parent.ui_form,
+                            "progress_bar" + postfix).setFormat("Duplikat!")
             else:
                 self.clear_finn_info(postfix)
         except Exception as finn_processing_error:
@@ -112,7 +121,8 @@ class FinnModel(Model):
             self.parent.error_view.exec_()
             self.clear_finn_info(postfix, force=True)
             getattr(self.parent.ui_form, "progress_bar" + postfix).setValue(0)
-            getattr(self.parent.ui_form, "line_edit_finnkode" + postfix).setFocus()
+            getattr(self.parent.ui_form,
+                    "line_edit_finnkode" + postfix).setFocus()
 
     def process_finn_data(self, finn_code, postfix):
         """
@@ -122,9 +132,11 @@ class FinnModel(Model):
         finn_processing = FinnAdvertProcessing(finn_code)
         finn_data = finn_processing.multiplex_info_2
         self.finn_data = {key + postfix: val for key, val in finn_data.items()}
-        self.set_line_edits("finnkode", self._finn_keys, postfix=postfix, data=finn_data)
+        self.set_line_edits("finnkode", self._finn_keys, postfix=postfix,
+                            data=finn_data)
 
-        self.parent.statistics_view.statistics_model.add_statistics_info(postfix)
+        self.parent.statistics_view.statistics_model.add_statistics_info(
+            postfix)
         self.data.update(self.parent.statistics_view.statistics_model.data)
 
         self.parent.history_view.history_model.add_finn_history(postfix)
@@ -147,15 +159,19 @@ class FinnModel(Model):
 
         """
         Assertor.assert_data_types([postfix, force], [str, bool])
-        finn_code = getattr(self.parent.ui_form, "line_edit_finnkode" + postfix).text().strip()
+        finn_code = getattr(self.parent.ui_form,
+                            "line_edit_finnkode" + postfix).text().strip()
         if not finn_code or force:
             self.clear_line_edits(["finnkode" + postfix])
             self.clear_line_edits(self._finn_keys, postfix)
-            self.parent.statistics_view.statistics_model.clear_statistics_info(postfix)
+            self.parent.statistics_view.statistics_model.clear_statistics_info(
+                postfix)
             self.parent.history_view.history_model.clear_finn_history(postfix)
-            self.parent.grunnboka_view.grunnboka_model.clear_grunnboka_data(postfix)
+            self.parent.grunnboka_view.grunnboka_model.clear_grunnboka_data(
+                postfix)
 
-            getattr(self.parent.ui_form, "progress_bar" + postfix).setTextVisible(False)
+            getattr(self.parent.ui_form,
+                    "progress_bar" + postfix).setTextVisible(False)
             getattr(self.parent.ui_form, "progress_bar" + postfix).setValue(0)
 
     @pyqtSlot()
@@ -170,9 +186,11 @@ class FinnModel(Model):
 
         """
         Assertor.assert_data_types([postfix], [str])
-        finn_code = getattr(self.parent.ui_form, "line_edit_finnkode" + postfix).text()
+        finn_code = getattr(self.parent.ui_form,
+                            "line_edit_finnkode" + postfix).text()
         if finn_code:
-            webbrowser.open(FINN_URL[:FINN_URL.rfind("/")] + "/homes/ad.html?finnkode=" + finn_code)
+            webbrowser.open(FINN_URL[:FINN_URL.rfind(
+                "/")] + "/homes/ad.html?finnkode=" + finn_code)
         else:
             webbrowser.open(FINN_URL)
 
