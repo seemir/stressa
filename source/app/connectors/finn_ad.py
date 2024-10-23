@@ -196,6 +196,39 @@ class FinnAd(Finn):
                                 viewings[1]['dateIso']),
                             viewings[1]['from'], viewings[1]['to'])
 
+                matrikkel = {'kommunenr': '',
+                             'gardsnr': '',
+                             'bruksnr': '',
+                             'borettslag-andelsnummer': '',
+                             'borettslag-navn': '',
+                             'borettslag-orgnummer': ''}
+
+                cadastres = ad_data['cadastres']
+
+                if cadastres:
+                    if 'municipalityNumber' in cadastres[0]:
+                        matrikkel.update(
+                            {'kommunenr': str(
+                                cadastres[0]['municipalityNumber'])})
+                    if 'landNumber' in cadastres[0]:
+                        matrikkel.update(
+                            {'gardsnr': str(cadastres[0]['landNumber'])})
+                    if 'titleNumber' in cadastres[0]:
+                        matrikkel.update(
+                            {'bruksnr': str(cadastres[0]['titleNumber'])})
+                    if 'partOwnershipNumber' in cadastres[0]:
+                        matrikkel.update(
+                            {'borettslag-andelsnummer': str(
+                                cadastres[0]['partOwnershipNumber'])})
+
+                if 'housingCooperative' in ad_data:
+                    matrikkel.update({'borettslag-navn':
+                                          ad_data['housingCooperative'][
+                                              'name']})
+                    matrikkel.update({'borettslag-orgnummer':
+                                          ad_data['housingCooperative'][
+                                              'organisationNumber']})
+
                 images = ad_data['images']
 
                 info.update({'finnkode': self.finn_code,
@@ -218,7 +251,8 @@ class FinnAd(Finn):
                                  'eiet' if owned_plot else 'festet'),
                              'bygger': construction_year,
                              'forste_visning': first_viewing.capitalize(),
-                             'andre_visning': second_viewing.capitalize()})
+                             'andre_visning': second_viewing.capitalize(),
+                             'matrikkel': matrikkel})
 
                 return info
             else:
@@ -272,6 +306,7 @@ class FinnAd(Finn):
         LOGGER.success(
             "'housing_ad_information' successfully parsed to JSON at '{}'".format(
                 file_dir))
+
 
 if __name__ == '__main__':
     finn_ad = FinnAd('367745970')

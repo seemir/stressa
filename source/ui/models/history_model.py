@@ -23,8 +23,9 @@ class HistoryModel(Model):
     Implementation of model for Ownership history
 
     """
-    _finn_history_keys = ["finn_adresse", "eieform", "kommunenr", "gardsnr", "bruksnr",
-                          "bruksenhetsnr", "seksjonsnr", "historikk"]
+    _finn_history_keys = ["finn_adresse", "eieform", "kommunenr", "gardsnr",
+                          "bruksnr", "bruksenhetsnr", "seksjonsnr",
+                          "historikk"]
 
     def __init__(self, parent: QObject):
         """
@@ -61,27 +62,36 @@ class HistoryModel(Model):
                 if key[:-len(postfix)] in self._finn_history_keys:
                     if key[:-len(postfix)] == "historikk":
                         history_data.update(
-                            {key: val.to_dict() if isinstance(val, DataFrame) else val})
+                            {key: val.to_dict() if isinstance(val,
+                                                              DataFrame) else val})
                     else:
                         history_data.update({key: val})
         self.data.update(history_data)
         for key in self._finn_history_keys:
             if key == "historikk":
-                BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_historikk,
-                                                self.parent.ui_form.table_view_historikk)
-                if key + postfix in self.data.keys() and self.data["historikk" + postfix]:
+                BarChartWithLine.clear_graphics(
+                    self.parent.ui_form.graphics_view_historikk,
+                    self.parent.ui_form.table_view_historikk)
+                if key + postfix in self.data.keys() and self.data[
+                    "historikk" + postfix]:
                     # table
-                    history_data_model = TableModel(DataFrame(self.data[key + postfix]))
-                    self.parent.ui_form.table_view_historikk.setModel(history_data_model)
+                    history_data_model = TableModel(
+                        DataFrame(self.data[key + postfix]))
+                    self.parent.ui_form.table_view_historikk.setModel(
+                        history_data_model)
 
                     # bar chart
                     history = self.data["historikk" + postfix]["Pris"]
 
                     self.keys = [int(key) + 0.5 for key in list(history.keys())]
-                    self.values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    self.values = [int(val.replace("kr", "").replace(" ",
+                                                                     "").replace(
+                        "\xa0", ""))
                                    for val in history.values()][::-1]
-                    finn_code = grandparent.finn_model.data["finnkode" + postfix]
-                    bolig_type = grandparent.finn_model.data["boligtype" + postfix]
+                    finn_code = grandparent.finn_model.data[
+                        "finnkode" + postfix]
+                    bolig_type = grandparent.finn_model.data[
+                        "boligtype" + postfix]
                     status = grandparent.finn_model.data["status" + postfix]
                     self.bar_plot = BarChartWithLine(
                         self.keys, self.values,
@@ -99,9 +109,12 @@ class HistoryModel(Model):
                     getattr(self.parent.ui_form, "line_edit_" + key).setText(
                         self.data[key + postfix])
 
-        self.parent.ui_form.graphics_view_historikk.setMouseEnabled(x=False, y=False)
-        self.parent.ui_form.graphics_view_historikk.getAxis('left').setStyle(showValues=False)
-        self.parent.ui_form.graphics_view_historikk.getAxis('bottom').setStyle(showValues=False)
+        self.parent.ui_form.graphics_view_historikk.setMouseEnabled(x=False,
+                                                                    y=False)
+        self.parent.ui_form.graphics_view_historikk.getAxis('left').setStyle(
+            showValues=False)
+        self.parent.ui_form.graphics_view_historikk.getAxis('bottom').setStyle(
+            showValues=False)
         self.parent.ui_form.graphics_view_historikk.setMenuEnabled(False)
 
     @pyqtSlot()
@@ -120,8 +133,9 @@ class HistoryModel(Model):
             full_key = key + postfix
             if key == "historikk":
                 self.clear_finn_data(full_key)
-                BarChartWithLine.clear_graphics(self.parent.ui_form.graphics_view_historikk,
-                                                self.parent.ui_form.table_view_historikk)
+                BarChartWithLine.clear_graphics(
+                    self.parent.ui_form.graphics_view_historikk,
+                    self.parent.ui_form.table_view_historikk)
             else:
                 self.clear_finn_data(full_key)
                 getattr(self.parent.ui_form, "line_edit_" + key).clear()

@@ -19,8 +19,9 @@ class GrunnbokaModel(Model):
     Implementation of Model for Grunnboka
 
     """
-    _grunnboka_keys = ['kommunenr', 'gardsnr', 'bruksnr', 'seksjonsnr', 'borettslag-navn',
-                       'borettslag-orgnummer', 'borettslag-andelsnummer']
+    _grunnboka_keys = ['kommunenr', 'gardsnr', 'bruksnr', 'seksjonsnr',
+                       'borettslag-navn', 'borettslag-orgnummer',
+                       'borettslag-andelsnummer']
 
     def __init__(self, parent: QObject):
         """
@@ -61,12 +62,14 @@ class GrunnbokaModel(Model):
 
             for value in self.grunnboka_keys:
                 if value in matrikkel.keys():
-                    getattr(self.parent.ui_form, "line_edit_" + value.replace("-", "_")).setText(
+                    getattr(self.parent.ui_form,
+                            "line_edit_" + value.replace("-", "_")).setText(
                         matrikkel[value])
 
         if "matrikkel" + postfix not in self.data.keys():
             for element in self.grunnboka_keys:
-                getattr(self.parent.ui_form, "line_edit_" + element.replace("-", "_")).setText("")
+                getattr(self.parent.ui_form,
+                        "line_edit_" + element.replace("-", "_")).setText("")
 
     def clear_grunnboka_data(self, postfix):
         """
@@ -74,7 +77,8 @@ class GrunnbokaModel(Model):
 
         """
         full_key = "matrikkel" + postfix
-        self.clear_line_edits([elem.replace("-", "_") for elem in self.grunnboka_keys])
+        self.clear_line_edits(
+            [elem.replace("-", "_") for elem in self.grunnboka_keys])
         self.clear_finn_data(full_key)
         self.parent.ui_form.web_view_grunnboka.close()
 
