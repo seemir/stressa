@@ -44,13 +44,16 @@ class GrunnbokaView(QDialog):
         self.parent = parent
         dir_up = os.path.dirname
 
-        self.ui_form = loadUi(os.path.join(dir_up(__file__), "forms/grunnboka_form.ui"), self)
+        self.ui_form = loadUi(
+            os.path.join(dir_up(__file__), "forms/grunnboka_form.ui"), self)
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui_form.push_button_forhandsvisning_grunnboka.setIcon(
-            QIcon(dir_up(dir_up(os.path.abspath(__file__))) + '/images/preview.png'))
+            QIcon(dir_up(
+                dir_up(os.path.abspath(__file__))) + '/images/preview.png'))
 
-        self.download_path = dir_up(dir_up(os.path.abspath(__file__))) + '/util/temp'
+        self.download_path = dir_up(
+            dir_up(os.path.abspath(__file__))) + '/util/temp'
 
         self._grunnboka_model = GrunnbokaModel(self)
         self.matrikkel = None
@@ -60,16 +63,20 @@ class GrunnbokaView(QDialog):
         self._meta_view = MetaView(self)
 
         self.web_view = self.ui_form.web_view_grunnboka
-        self.web_view.settings().setAttribute(QWebEngineSettings.PluginsEnabled, True)
-        self.web_view.settings().setAttribute(QWebEngineSettings.PdfViewerEnabled, True)
+        self.web_view.settings().setAttribute(QWebEngineSettings.PluginsEnabled,
+                                              True)
+        self.web_view.settings().setAttribute(
+            QWebEngineSettings.PdfViewerEnabled, True)
 
         self.web_view.page().profile().setDownloadPath(self.download_path)
         self.web_view.page().profile().downloadRequested.connect(
             self.on_download
         )
 
-        self.ui_form.push_button_forhandsvisning_grunnboka.clicked.connect(self.view_grunnboka)
-        self.ui_form.push_button_metadata.clicked.connect(self.meta_view.display)
+        self.ui_form.push_button_forhandsvisning_grunnboka.clicked.connect(
+            self.view_grunnboka)
+        self.ui_form.push_button_metadata.clicked.connect(
+            self.meta_view.display)
 
     def view_grunnboka(self):
         """
@@ -107,7 +114,8 @@ class GrunnbokaView(QDialog):
                         preview_file = self.download_path + '\\' + file
                         self.web_view.load(QUrl.fromUserInput(preview_file))
             else:
-                thread = Thread(target=self.on_download_requested, args=(download,))
+                thread = Thread(target=self.on_download_requested,
+                                args=(download,))
                 thread.daemon = True
                 thread.start()
         else:
@@ -168,13 +176,15 @@ class GrunnbokaView(QDialog):
                         self.web_view.load(QUrl.fromUserInput(preview_file))
             else:
                 kommune_nr = "0" + self.matrikkel["kommunenr"] if len(
-                    self.matrikkel["kommunenr"]) == 3 else self.matrikkel["kommunenr"]
+                    self.matrikkel["kommunenr"]) == 3 else self.matrikkel[
+                    "kommunenr"]
                 url = "https://seeiendom.kartverket.no/eiendom/" + kommune_nr + \
-                      "/" + self.matrikkel["gardsnr"] + "/" + self.matrikkel["bruksnr"] + "/0/0"
+                      "/" + self.matrikkel["gardsnr"] + "/" + self.matrikkel[
+                          "bruksnr"] + "/0/0"
                 self.web_view.setUrl(QUrl(url))
                 self.web_view.show()
         else:
-            self.ui_form.web_view_primary.close()
+            self.web_view.close()
 
         self.show()
 

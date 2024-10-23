@@ -199,6 +199,7 @@ class FinnAd(Finn):
                 matrikkel = {'kommunenr': '',
                              'gardsnr': '',
                              'bruksnr': '',
+                             'bruksenhetsnr': '',
                              'borettslag-andelsnummer': '',
                              'borettslag-navn': '',
                              'borettslag-orgnummer': ''}
@@ -220,6 +221,14 @@ class FinnAd(Finn):
                         matrikkel.update(
                             {'borettslag-andelsnummer': str(
                                 cadastres[0]['partOwnershipNumber'])})
+                    if 'apartmentNumber' in cadastres[0]:
+                        matrikkel.update(
+                            {'bruksenhetsnr': str(
+                                cadastres[0]['apartmentNumber'])})
+                    if 'sectionNumber' in cadastres[0]:
+                        matrikkel.update(
+                            {'seksjonsnr': str(
+                                cadastres[0]['sectionNumber'])})
 
                 if 'housingCooperative' in ad_data:
                     matrikkel.update({'borettslag-navn':
@@ -253,6 +262,9 @@ class FinnAd(Finn):
                              'forste_visning': first_viewing.capitalize(),
                              'andre_visning': second_viewing.capitalize(),
                              'matrikkel': matrikkel})
+
+                for key, value in matrikkel.items():
+                    info.update({key: value})
 
                 return info
             else:
