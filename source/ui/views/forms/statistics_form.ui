@@ -1368,29 +1368,6 @@
                 </property>
                </widget>
               </item>
-              <item row="19" column="2">
-               <widget class="QPushButton" name="push_button_meta_data">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>230</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Metadata</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
-                </property>
-               </widget>
-              </item>
               <item row="7" column="2">
                <widget class="QLineEdit" name="line_edit_bruksareal">
                 <property name="enabled">
@@ -1434,23 +1411,6 @@
                <widget class="QLineEdit" name="line_edit_municipality_sqm_price">
                 <property name="enabled">
                  <bool>false</bool>
-                </property>
-               </widget>
-              </item>
-              <item row="18" column="2">
-               <widget class="QPushButton" name="push_button_show_in_map_1">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Vis i kart</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/map.svg</normaloff>:/img/map.svg</iconset>
                 </property>
                </widget>
               </item>
@@ -1681,29 +1641,6 @@
                 </property>
                </widget>
               </item>
-              <item row="17" column="2">
-               <widget class="QPushButton" name="push_button_grunnboka">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>230</width>
-                  <height>30</height>
-                 </size>
-                </property>
-                <property name="text">
-                 <string>Grunnboka</string>
-                </property>
-                <property name="icon">
-                 <iconset resource="../../images/img.qrc">
-                  <normaloff>:/img/grunnboka.svg</normaloff>:/img/grunnboka.svg</iconset>
-                </property>
-               </widget>
-              </item>
               <item row="17" column="0">
                <widget class="QPushButton" name="push_button_eierskifte_historikk">
                 <property name="sizePolicy">
@@ -1727,7 +1664,7 @@
                 </property>
                </widget>
               </item>
-              <item row="18" column="0">
+              <item row="17" column="2">
                <widget class="QPushButton" name="push_button_images">
                 <property name="minimumSize">
                  <size>
@@ -1744,7 +1681,47 @@
                 </property>
                </widget>
               </item>
-              <item row="20" column="0" colspan="3">
+              <item row="18" column="0">
+               <widget class="QPushButton" name="push_button_show_in_map_1">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Vis i kart</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/map.svg</normaloff>:/img/map.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="18" column="2">
+               <widget class="QPushButton" name="push_button_meta_data">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>230</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Metadata</string>
+                </property>
+                <property name="icon">
+                 <iconset resource="../../images/img.qrc">
+                  <normaloff>:/img/meta.svg</normaloff>:/img/meta.svg</iconset>
+                </property>
+               </widget>
+              </item>
+              <item row="19" column="2">
                <widget class="QPushButton" name="push_button_avbryt">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -5408,11 +5385,10 @@
   <tabstop>line_edit_forste_visning</tabstop>
   <tabstop>line_edit_andre_visning</tabstop>
   <tabstop>push_button_eierskifte_historikk</tabstop>
-  <tabstop>push_button_grunnboka</tabstop>
   <tabstop>push_button_images</tabstop>
   <tabstop>push_button_show_in_map_1</tabstop>
-  <tabstop>push_button_oppdater</tabstop>
   <tabstop>push_button_meta_data</tabstop>
+  <tabstop>push_button_oppdater</tabstop>
   <tabstop>push_button_avbryt</tabstop>
   <tabstop>graphics_view_hist_data_city_area</tabstop>
   <tabstop>graphics_view_hist_data_municipality</tabstop>

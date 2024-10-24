@@ -24,18 +24,22 @@ class SifoModel(Model):
     Implementation of the Sifo Model with logic for all SIFO calculations
 
     """
-    _budsjett_aar = ["", "2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016", "2015",
-                     "2014", "2013", "2012", "2011", "2010"]
+    _budsjett_aar = ["", "2024", "2023", "2022", "2021", "2020", "2019", "2018",
+                     "2017", "2016", "2015", "2014", "2013", "2012", "2011",
+                     "2010"]
     _kjonn = ["", "Mann", "Kvinne"]
     _alder = ["", "0-5 mnd", "6-11 mnd", "1 år", "2 år", "3 år", "4-5 år",
-              "6-9 år", "10-13 år", "14-17 år", "18-19 år", "20-30 år", "31-50 år", "51-60 år",
+              "6-9 år", "10-13 år", "14-17 år", "18-19 år", "20-30 år",
+              "31-50 år", "51-60 år",
               "61-66 år", "67-73 år", "eldre enn 74 år"]
     _barnehage = ["", "Nei", "Ja"]
     _sfo = ["", "Nei", "Halvdag", "Heldag"]
     _student = ["", "Nei", "Ja"]
     _antall_biler = ["", "1", "2", "3", "4"]
-    _sifo_expenses = ['mat', 'klar', 'helse', 'fritid', 'kollektivt', 'spedbarn', 'sumindivid',
-                      'dagligvarer', 'husholdsart', 'mobler', 'medier', 'biler', 'barnehage',
+    _sifo_expenses = ['mat', 'klar', 'helse', 'fritid', 'kollektivt',
+                      'spedbarn', 'sumindivid',
+                      'dagligvarer', 'husholdsart', 'mobler', 'medier', 'biler',
+                      'barnehage',
                       'sfo', 'sumhusholdning', 'totalt']
 
     def __init__(self, parent: QObject):
@@ -52,12 +56,15 @@ class SifoModel(Model):
         super().__init__(parent=parent)
         self.parent.ui_form.combo_box_budsjett_aar.addItems(self._budsjett_aar)
         for num in range(1, 8):
-            getattr(self.parent.ui_form, "combo_box_kjonn_" + str(num)).addItems(
+            getattr(self.parent.ui_form,
+                    "combo_box_kjonn_" + str(num)).addItems(
                 self._kjonn)
-            getattr(self.parent.ui_form, "combo_box_alder_" + str(num)).addItems(
+            getattr(self.parent.ui_form,
+                    "combo_box_alder_" + str(num)).addItems(
                 self._alder)
         self.parent.ui_form.combo_box_antall_biler.addItems(self._antall_biler)
-        self.parent.ui_form.combo_box_antall_elbiler.addItems(self._antall_biler)
+        self.parent.ui_form.combo_box_antall_elbiler.addItems(
+            self._antall_biler)
         self._sifo_process = None
         self._extra_info = None
 
@@ -200,7 +207,8 @@ class SifoModel(Model):
         """
         Assertor.assert_data_types([name, common_key, postfix], [str, str, str])
         self.check_extra_info(postfix)
-        self.set_combo_box(name + postfix, common_key + postfix, self._extra_info)
+        self.set_combo_box(name + postfix, common_key + postfix,
+                           self._extra_info)
 
     @pyqtSlot()
     def check_extra_info(self, postfix: str, show_info: bool = False):
@@ -220,11 +228,13 @@ class SifoModel(Model):
         self.clear_extra_data(postfix)
 
         alder = getattr(ui_form, "combo_box_alder" + postfix).currentText()
-        kvinne = getattr(ui_form, "combo_box_kjonn" + postfix).currentText() == "Kvinne"
+        kvinne = getattr(ui_form,
+                         "combo_box_kjonn" + postfix).currentText() == "Kvinne"
 
         barnehage = (alder in ["1 år", "2 år", "3 år", "4-5 år"])
         sfo = (alder in ["6-9 år", "10-13 år"])
-        gravid = (kvinne and (alder in ["14-17 år", "18-19 år", "20-30 år", "31-50 år"]))
+        gravid = (kvinne and (
+                alder in ["14-17 år", "18-19 år", "20-30 år", "31-50 år"]))
         student = (alder == "20-30 år")
 
         if barnehage:
@@ -301,8 +311,10 @@ class SifoModel(Model):
             postfix = "_" + str(i)
             if not getattr(ui_form, "combo_box_tillegg" + postfix).isEnabled():
                 getattr(ui_form, "label_tillegg" + postfix).setText("")
-                getattr(ui_form, "combo_box_tillegg" + postfix).setCurrentIndex(0)
-                getattr(ui_form, "combo_box_tillegg" + postfix).setEnabled(False)
+                getattr(ui_form, "combo_box_tillegg" + postfix).setCurrentIndex(
+                    0)
+                getattr(ui_form, "combo_box_tillegg" + postfix).setEnabled(
+                    False)
                 getattr(ui_form, "combo_box_tillegg" + postfix).hide()
                 self.clear_extra_data(postfix)
 
@@ -349,7 +361,8 @@ class SifoModel(Model):
         """
         if "personinntekt_total_aar" in self.parent.parent.budget_view.budget_model.data:
             self.parent.ui_form.line_edit_brutto_arsinntekt.setText(
-                self.parent.parent.budget_view.budget_model.data["personinntekt_total_aar"])
+                self.parent.parent.budget_view.budget_model.data[
+                    "personinntekt_total_aar"])
 
     @pyqtSlot()
     def calculate_yearly_income(self, monthly_income: str):
@@ -366,8 +379,10 @@ class SifoModel(Model):
         final_income = None
         if monthly_income and not yearly_income:
             yearly_income_from_monthly = Money(
-                str(Decimal(monthly_income.replace(" kr", "").replace(" ", "")) * 12))
-            self.data.update({"brutto_arsinntekt": yearly_income_from_monthly.value()})
+                str(Decimal(
+                    monthly_income.replace(" kr", "").replace(" ", "")) * 12))
+            self.data.update(
+                {"brutto_arsinntekt": yearly_income_from_monthly.value()})
             final_income = yearly_income_from_monthly.value()
         else:
             final_income = yearly_income
@@ -380,13 +395,18 @@ class SifoModel(Model):
         """
         try:
             self.clear_results()
-            if "budsjett_aar" in self.data.keys() and any("person" in key and len(val) > 1 for
-                                                          key, val in self.data.items()):
+            if "budsjett_aar" in self.data.keys() and any(
+                    "person" in key and len(val) > 1 for
+                    key, val in self.data.items()):
                 self.parent.ui_form.tab_widget_sifo.setCurrentIndex(1)
                 self.sifo_process = SifoExpensesProcess(self.data)
-                self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_1",
+                self.set_line_edits(line_edit_text="",
+                                    line_edits=self._sifo_expenses,
+                                    postfix="_1",
                                     data=self.sifo_process.base_expenses)
-                self.set_line_edits(line_edit_text="", line_edits=self._sifo_expenses, postfix="_2",
+                self.set_line_edits(line_edit_text="",
+                                    line_edits=self._sifo_expenses,
+                                    postfix="_2",
                                     data=self.sifo_process.expenses_shares)
         except Exception as sifo_expenses_error:
             self.clear_results()
@@ -425,8 +445,10 @@ class SifoModel(Model):
         """
         self.parent.ui_form.combo_box_budsjett_aar.setCurrentIndex(0)
         for combo_box in range(1, 8):
-            getattr(self.parent.ui_form, "combo_box_kjonn_" + str(combo_box)).setCurrentIndex(0)
-            getattr(self.parent.ui_form, "combo_box_alder_" + str(combo_box)).setCurrentIndex(0)
+            getattr(self.parent.ui_form,
+                    "combo_box_kjonn_" + str(combo_box)).setCurrentIndex(0)
+            getattr(self.parent.ui_form,
+                    "combo_box_alder_" + str(combo_box)).setCurrentIndex(0)
             self.clear_extra_info("_" + str(combo_box))
         self.parent.ui_form.line_edit_brutto_arsinntekt.clear()
         self.parent.ui_form.combo_box_antall_biler.setCurrentIndex(0)

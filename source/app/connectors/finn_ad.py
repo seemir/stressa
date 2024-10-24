@@ -350,7 +350,6 @@ class FinnAd(Finn):
                              'bygger': construction_year,
                              'forste_visning': first_viewing.capitalize(),
                              'andre_visning': second_viewing.capitalize(),
-                             'matrikkel': matrikkel,
                              'sistendret': edited,
                              'published': published,
                              'firstpublished': first_published,

@@ -54,9 +54,6 @@ class StatisticsView(QDialog):
         self._map_view = MapView(self)
         self._images_view = ImagesView(self)
 
-        self.ui_form.push_button_grunnboka.setIcon(
-            QIcon(up_dir(up_dir(os.path.abspath(__file__))) + '/images/grunnboka.svg'))
-
         self.ui_form.push_button_meta_data.clicked.connect(self.meta_view.display)
         self.ui_form.push_button_oppdater.clicked.connect(self.update)
         self.ui_form.push_button_avbryt.clicked.connect(self.close)
@@ -69,8 +66,6 @@ class StatisticsView(QDialog):
 
         self.postfix = None
 
-        self.ui_form.push_button_grunnboka.clicked.connect(
-            lambda: self.parent.grunnboka_view.add_grunnboka_data(self.postfix))
         self.ui_form.push_button_eierskifte_historikk.clicked.connect(
             lambda: self.parent.history_view.add_finn_history(self.postfix))
 

@@ -85,7 +85,6 @@ class MetaView(QDialog):
                   "_skatteetaten_calculator_model": "utregnet_skatteinformasjon",
                   "_skatteetaten_import_model": "importert_skatteinformasjon",
                   "_home_model": "likviditets_informasjon",
-                  "_grunnboka_model": "grunnboka_informasjon",
                   "_restructure_model": "lånestruktur_informasjon",
                   "_settings_model": "innstillinger_informasjon"}
         meta_data = {}

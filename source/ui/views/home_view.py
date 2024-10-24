@@ -10,7 +10,6 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 import os
-import shutil
 import ctypes
 import sys
 
@@ -24,7 +23,6 @@ from ..models import MortgageModel, FinnModel, HomeModel, AnalysisModel
 from .restructure_view import RestructureView
 from .statistics_view import StatisticsView
 from .info_clear_view import InfoClearView
-from .grunnboka_view import GrunnbokaView
 from .info_quit_view import InfoQuitView
 from .settings_view import SettingsView
 from .payment_view import PaymentView
@@ -61,7 +59,6 @@ class HomeView(QMainWindow):
 
         self._sifo_view = SifoView(self)
         self._history_view = HistoryView(self)
-        self._grunnboka_view = GrunnbokaView(self)
 
         self._meta_view = MetaView(self)
         self._info_view_quit = InfoQuitView(self)
@@ -331,19 +328,6 @@ class HomeView(QMainWindow):
         return self._history_view
 
     @property
-    def grunnboka_view(self):
-        """
-        GrunnbokaView getter
-
-        Returns
-        -------
-        out     : GrunnbokaView
-                  View with the link to the Grunnboka
-
-        """
-        return self._grunnboka_view
-
-    @property
     def statistics_view(self):
         """
         StatisticsView getter
@@ -480,23 +464,5 @@ class HomeView(QMainWindow):
         method for quiting and deleting all data
 
         """
-        self.delete_temp_folder()
         self.info_view_quit.close()
         sys.exit()
-
-    def delete_temp_folder(self):
-        """
-        method for deleting temp folder
-
-        """
-        dir_path = self.grunnboka_view.download_path
-
-        if not os.path.exists(dir_path):
-            os.mkdir(dir_path)
-
-        for filename in os.listdir(dir_path):
-            filepath = os.path.join(dir_path, filename)
-            try:
-                shutil.rmtree(filepath)
-            except OSError:
-                os.remove(filepath)

@@ -150,6 +150,7 @@ class FinnOwnership(Finn):
                 property_type = []
                 property_id = []
                 amount = []
+                property_id_name = 'Boligidentifikasjon'
 
                 for ownership_element in history_data:
                     if 'data' in ownership_element:
@@ -167,16 +168,18 @@ class FinnOwnership(Finn):
                             if name == 'sectionNumber' and element[
                                 'value'] != 0:
                                 property_id.append(str(element['value']))
+                                property_id_name = 'Seksjonsnummer'
                             elif name == 'shareNumber' and element[
                                 'value'] != 0:
                                 property_id.append(str(element['value']))
+                                property_id_name = 'Andelsnummer'
                             if name == 'amount':
                                 amount.append(
                                     Money(str(element['value'])).value())
 
                 ownership_data = {'Tinglyst': registration_date,
                                   'Boligtype': property_type,
-                                  'Boligidentifikasjon': property_id,
+                                  property_id_name: property_id,
                                   'Pris': amount}
                 info.update({'historikk': ownership_data})
 
