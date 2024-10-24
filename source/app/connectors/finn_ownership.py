@@ -180,8 +180,7 @@ class FinnOwnership(Finn):
                 LOGGER.success(
                     "'housing_ownership_information' successfully retrieved")
                 return info
-            else:
-                raise ValueError('No ownership history found')
+            return info
 
         except Exception as invalid_data_exception:
             raise InvalidData(
