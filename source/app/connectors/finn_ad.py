@@ -24,10 +24,10 @@ import json_repair
 
 from source.util import LOGGER, TimeOutError, NoConnectionError, InvalidData, \
     Assertor, Tracking
-
-from source.app.connectors.settings import FINN_AD_URL, TIMEOUT
-from source.app.connectors.finn import Finn
 from source.domain import Money, Amount
+
+from .settings import FINN_AD_URL, TIMEOUT
+from .finn import Finn
 
 
 class FinnAd(Finn):
@@ -116,10 +116,10 @@ class FinnAd(Finn):
             # with open('content.html', 'w', encoding='utf-8') as file:
             #     file.write(ad_soup.prettify())
 
-            script_tag = None
+            info = {}
             ad_data = None
             meta_data = None
-            info = {}
+            script_tag = None
 
             for script in ad_soup.find_all('script'):
                 if 'window.__remixContext' in script.text:
@@ -172,7 +172,8 @@ class FinnAd(Finn):
                 usable_size = ''
                 usable_area_i = ''
                 usable_area_e = ''
-                change_of_ownership_insurance = ''
+                total_price = ''
+                sales_cost_sum = ''
 
                 matrikkel = {'kommunenr': '',
                              'gardsnr': '',
@@ -186,10 +187,12 @@ class FinnAd(Finn):
                 address = '{}, {} {}'.format(street_address, postal_code,
                                              postal_place)
                 price = Money(str(ad_data['price']['suggestion'])).value()
-                total_price = Money(str(ad_data['price']['total'])).value()
-                sales_cost_sum = Money(
-                    str(ad_data['price']['salesCostSum'])).value()
 
+                if 'total' in ad_data['price']:
+                    total_price = Money(str(ad_data['price']['total'])).value()
+                if 'salesCostSum' in ad_data['price']:
+                    sales_cost_sum = Money(
+                        str(ad_data['price']['salesCostSum'])).value()
                 if 'collectiveDebt' in ad_data['price']:
                     collective_debt = Money(
                         str(ad_data['price']['collectiveDebt'])).value()
@@ -356,6 +359,9 @@ class FinnAd(Finn):
                 for key, value in matrikkel.items():
                     info.update({key: value})
 
+                LOGGER.success(
+                    "'housing_ad_information' successfully retrieved")
+
                 return info
             else:
                 raise ValueError('No ad info found')
@@ -438,7 +444,3 @@ class FinnAd(Finn):
         LOGGER.success(
             "'housing_ad_information' successfully parsed to JSON at '{}'".format(
                 file_dir))
-
-# if __name__ == '__main__':
-#     finn_ad = FinnAd('336828722')
-#     finn_ad.housing_ad_information()

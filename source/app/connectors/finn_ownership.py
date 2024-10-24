@@ -7,18 +7,25 @@ Implementation of connector against Finn.no housing ownership history search
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import json
 from time import time
 from http.client import responses
+
+import pandas as pd
 import requests
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
+import json_repair
 from bs4 import BeautifulSoup
 from pandas import DataFrame
 
-from source.util import LOGGER, TimeOutError, NoConnectionError, Tracking
+from source.util import LOGGER, TimeOutError, NoConnectionError, Tracking, \
+    InvalidData
 
-from .settings import FINN_OWNER_URL, TIMEOUT
-from .finn import Finn
+from source.domain import Money
+
+from source.app.connectors.settings import FINN_OWNER_URL, TIMEOUT
+from source.app.connectors.finn import Finn
 
 
 class FinnOwnership(Finn):
@@ -53,13 +60,20 @@ class FinnOwnership(Finn):
         try:
             try:
                 start = time()
-                owner_response = requests.get(FINN_OWNER_URL + "{}".format(self.finn_code),
-                                              timeout=TIMEOUT)
+                owner_response = requests.get(
+                    FINN_OWNER_URL + "{}".format(self.finn_code),
+                    timeout=TIMEOUT)
                 owner_status_code = owner_response.status_code
                 elapsed = self.elapsed_time(start)
-                LOGGER.info(
-                    "HTTP status code -> OWNERSHIP HISTORY: [{}: {}] -> elapsed: {}".format(
-                        owner_status_code, responses[owner_status_code], elapsed))
+                status_msg = "HTTP status code -> OWNERSHIP HISTORY: [{}: {}] -> elapsed: {}".format(
+                    owner_status_code, responses[owner_status_code],
+                    elapsed)
+
+                if owner_status_code >= 500:
+                    LOGGER.error(status_msg)
+                    raise ConnectError(status_msg)
+
+                LOGGER.info(status_msg)
                 return owner_response
             except ConnectTimeout as finn_owner_timeout_error:
                 raise TimeOutError(
@@ -83,42 +97,96 @@ class FinnOwnership(Finn):
 
 
         """
-        LOGGER.info(
-            "trying to retrieve 'housing_ownership_information' for -> '{}'".format(self.finn_code))
-
-        history_headers = None
-        history_results = []
-        keys = []
-        values = []
         try:
-            owner_soup = BeautifulSoup(self.ownership_response().content, "lxml")
-            for geo_val in owner_soup.find_all("dl", attrs={"class": "definition-list u-mb32"}):
-                for i, val in enumerate(geo_val.text.split("\n")):
-                    if i % 2 != 0 and val:
-                        keys.append(val.strip().lower().replace("å", "a"))
-                    elif val:
-                        values.append(val.strip())
+            LOGGER.info(
+                "trying to retrieve 'housing_ownership_information' for -> '{}'".format(
+                    self.finn_code))
 
-            for table_row in owner_soup.find(
-                    "table", attrs={"class": "data-table u-mb32"}).find_all("tr"):
-                if not history_headers:
-                    history_headers = [head.text for head in table_row.find_all("th")]
-                row = [tab_row.text.strip().replace(",-", " kr") for tab_row in
-                       table_row.find_all("td") if tab_row.text.strip()]
-                if row:
-                    history_results.append(row)
+            response = self.ownership_response()
 
-            info = dict(zip(keys, values))
-            historic_df = DataFrame(history_results, columns=history_headers)
-            info.update(
-                {"historikk": historic_df.assign(Pris=historic_df.iloc[:, -1].str.replace(
-                    ",", " kr").str.replace("\u2212", "")).to_dict()})
+            if not response:
+                raise InvalidData(
+                    "[{}] Not found! '{}' may be an invalid Finn code".format(
+                        self.__class__.__name__, self.finn_code))
 
-            LOGGER.success("'housing_ownership_information' successfully retrieved")
-            return info
-        except AttributeError as no_ownership_history_exception:
-            LOGGER.debug("[{}] No ownership history found!, exited with '{}'".format(
-                self.__class__.__name__, no_ownership_history_exception))
+            owner_soup = BeautifulSoup(response.content,
+                                       "lxml")
+
+            # with open('content.html', 'w', encoding='utf-8') as file:
+            #     file.write(owner_soup.prettify())
+
+            info = {}
+            script_tag = None
+            history_data = None
+
+            for script in owner_soup.find_all('script'):
+                if 'window.__remixContext' in script.text:
+                    script_tag = script.text
+
+            if script_tag:
+                cleaned_script = (script_tag
+                                  .replace(r'\u003e', '>')
+                                  .replace(r'\u003c', '<')
+                                  .replace(r'\u0026', '&')
+                                  .replace(r'\n', '')
+                                  .replace(r'\R', 'R'))
+
+                cleaned_script = " ".join(cleaned_script.split()).replace(
+                    'window.__remixContext = ', '')[:-1]
+
+                cleaned_script = dict(json_repair.loads(cleaned_script))
+
+                if 'state' in cleaned_script:
+                    state = cleaned_script['state']
+                    if 'loaderData' in state:
+                        loader_data = state['loaderData']
+                        if 'routes/realestate+/_common+/ownershiphistory[.html]' in loader_data:
+                            routes = loader_data[
+                                'routes/realestate+/_common+/ownershiphistory[.html]']
+                            if 'historyData' in routes:
+                                history_data = routes['historyData']
+
+            if history_data:
+                registration_date = []
+                property_type = []
+                property_id = []
+                amount = []
+
+                for ownership_element in history_data:
+                    if 'data' in ownership_element:
+                        ownership_data_element = ownership_element['data']
+                        for element in ownership_data_element:
+                            name = element['name']
+                            if name == 'registrationDate':
+                                registration_date.append(element['value'][0:10])
+                            if name == 'propertyType':
+                                property_type.append(element['value'])
+                            if name == 'sectionNumber' and element[
+                                'value'] != 0:
+                                property_id.append(str(element['value']))
+                            elif name == 'shareNumber' and element[
+                                'value'] != 0:
+                                property_id.append(str(element['value']))
+                            if name == 'amount':
+                                amount.append(
+                                    Money(str(element['value'])).value())
+
+                ownership_data = {'Tinglyst': registration_date,
+                                  'Boligtype': property_type,
+                                  'Boligidentifikasjon': property_id,
+                                  'Pris': amount}
+                info.update({'historikk': ownership_data})
+
+                LOGGER.success(
+                    "'housing_ownership_information' successfully retrieved")
+                return info
+            else:
+                raise ValueError('No ownership history found')
+
+        except Exception as invalid_data_exception:
+            raise InvalidData(
+                "Something went wrong, exited with '{}'".format(
+                    invalid_data_exception))
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):
@@ -130,4 +198,9 @@ class FinnOwnership(Finn):
                        file_prefix="HousingOwnershipInfo_")
 
         LOGGER.success(
-            "'housing_ownership_information' successfully parsed to JSON at '{}'".format(file_dir))
+            "'housing_ownership_information' successfully parsed to JSON at '{}'".format(
+                file_dir))
+
+# if __name__ == '__main__':
+#     finn_ad = FinnOwnership('371008605')
+#     print(finn_ad.housing_ownership_information())
