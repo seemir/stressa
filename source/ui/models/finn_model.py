@@ -30,8 +30,9 @@ class FinnModel(Model):
                   "fellesgjeld", "felleskostmnd", "omkostninger",
                   "kommunaleavg", "totalpris", "fellesformue",
                   "boligtype", "eieform", "etasje", "bygger", "soverom",
-                  "eksterntbruksareal", "renovertr", "interntbruksareal",
-                  "bruksareal", "energimerking", "tomteareal", "sqm_price"]
+                  "eksterntbruksareal", "boligselgerforsikring",
+                  "interntbruksareal", "bruksareal", "energimerking",
+                  "tomteareal", "sqm_price"]
 
     def __init__(self, parent: QObject):
         """

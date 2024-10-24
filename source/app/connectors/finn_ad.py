@@ -172,6 +172,7 @@ class FinnAd(Finn):
                 usable_size = ''
                 usable_area_i = ''
                 usable_area_e = ''
+                change_of_ownership_insurance = ''
 
                 matrikkel = {'kommunenr': '',
                              'gardsnr': '',
@@ -308,6 +309,15 @@ class FinnAd(Finn):
                     energy_label = '{} - {}'.format(energy_label_class,
                                                     color_scale[
                                                         energy_label_color])
+                if 'changeOfOwnershipInsurance' in ad_data:
+                    change_of_ownership_insurance = ad_data[
+                        'changeOfOwnershipInsurance']
+                    if change_of_ownership_insurance:
+                        change_of_ownership_insurance = 'Ja'
+                    else:
+                        change_of_ownership_insurance = 'Nei'
+                else:
+                    change_of_ownership_insurance = 'Nei'
 
                 images = ad_data['images']
 
@@ -340,7 +350,8 @@ class FinnAd(Finn):
                              'referanse': advertiser_ref,
                              'energimerking': energy_label,
                              'kommunaleavg': municipal_fees,
-                             'formuesverdi': tax_value})
+                             'formuesverdi': tax_value,
+                             'boligselgerforsikring': change_of_ownership_insurance})
 
                 for key, value in matrikkel.items():
                     info.update({key: value})

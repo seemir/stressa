@@ -7238,7 +7238,7 @@
                     </widget>
                    </item>
                    <item row="12" column="3">
-                    <widget class="QLineEdit" name="line_edit_renovertr_1">
+                    <widget class="QLineEdit" name="line_edit_boligselgerforsikring_1">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -7255,12 +7255,12 @@
                     </widget>
                    </item>
                    <item row="12" column="2">
-                    <widget class="QLabel" name="label_renovertr">
+                    <widget class="QLabel" name="label_boligselgerforsikring_1">
                      <property name="text">
-                      <string>Renovert år</string>
+                      <string>Boligselgerforsikring</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_renovertr_1</cstring>
+                      <cstring>line_edit_boligselgerforsikring_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -7835,12 +7835,12 @@
                     </widget>
                    </item>
                    <item row="11" column="2">
-                    <widget class="QLabel" name="label_renovertr_2">
+                    <widget class="QLabel" name="label_boligselgerforsikring_2">
                      <property name="text">
-                      <string>Renovert år</string>
+                      <string>Boligselgerforsikring</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_renovertr_1</cstring>
+                      <cstring>line_edit_boligselgerforsikring_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -7867,7 +7867,7 @@
                     </widget>
                    </item>
                    <item row="11" column="3">
-                    <widget class="QLineEdit" name="line_edit_renovertr_2">
+                    <widget class="QLineEdit" name="line_edit_boligselgerforsikring_2">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -8818,7 +8818,7 @@
                     </widget>
                    </item>
                    <item row="11" column="3">
-                    <widget class="QLineEdit" name="line_edit_renovertr_3">
+                    <widget class="QLineEdit" name="line_edit_boligselgerforsikring_3">
                      <property name="enabled">
                       <bool>false</bool>
                      </property>
@@ -8873,12 +8873,12 @@
                     </widget>
                    </item>
                    <item row="11" column="2">
-                    <widget class="QLabel" name="label_renovertr_3">
+                    <widget class="QLabel" name="label_boligselgerforsikring_3">
                      <property name="text">
-                      <string>Renovert år</string>
+                      <string>Boligselgerforsikring</string>
                      </property>
                      <property name="buddy">
-                      <cstring>line_edit_renovertr_1</cstring>
+                      <cstring>line_edit_boligselgerforsikring_1</cstring>
                      </property>
                     </widget>
                    </item>
@@ -13077,7 +13077,7 @@
   <tabstop>line_edit_totalpris_1</tabstop>
   <tabstop>line_edit_fellesformue_1</tabstop>
   <tabstop>line_edit_sqm_price_1</tabstop>
-  <tabstop>line_edit_renovertr_1</tabstop>
+  <tabstop>line_edit_boligselgerforsikring_1</tabstop>
   <tabstop>line_edit_boligtype_1</tabstop>
   <tabstop>line_edit_eieform_1</tabstop>
   <tabstop>line_edit_etasje_1</tabstop>
@@ -13105,7 +13105,7 @@
   <tabstop>line_edit_totalpris_2</tabstop>
   <tabstop>line_edit_fellesformue_2</tabstop>
   <tabstop>line_edit_sqm_price_2</tabstop>
-  <tabstop>line_edit_renovertr_2</tabstop>
+  <tabstop>line_edit_boligselgerforsikring_2</tabstop>
   <tabstop>line_edit_boligtype_2</tabstop>
   <tabstop>line_edit_eieform_2</tabstop>
   <tabstop>line_edit_etasje_2</tabstop>
@@ -13133,7 +13133,7 @@
   <tabstop>line_edit_totalpris_3</tabstop>
   <tabstop>line_edit_fellesformue_3</tabstop>
   <tabstop>line_edit_sqm_price_3</tabstop>
-  <tabstop>line_edit_renovertr_3</tabstop>
+  <tabstop>line_edit_boligselgerforsikring_3</tabstop>
   <tabstop>line_edit_boligtype_3</tabstop>
   <tabstop>line_edit_eieform_3</tabstop>
   <tabstop>line_edit_etasje_3</tabstop>
