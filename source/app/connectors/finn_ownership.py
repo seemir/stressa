@@ -10,14 +10,13 @@ __email__ = 'samir.adrik@gmail.com'
 import json
 from time import time
 from http.client import responses
+from datetime import datetime
 
-import pandas as pd
 import requests
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 import json_repair
 from bs4 import BeautifulSoup
-from pandas import DataFrame
 
 from source.util import LOGGER, TimeOutError, NoConnectionError, Tracking, \
     InvalidData
@@ -158,7 +157,11 @@ class FinnOwnership(Finn):
                         for element in ownership_data_element:
                             name = element['name']
                             if name == 'registrationDate':
-                                registration_date.append(element['value'][0:10])
+                                date_str = element['value'][0:10]
+                                date_obj = datetime.strptime(date_str,
+                                                             "%Y-%m-%d")
+                                new_date_str = date_obj.strftime("%d.%m.%Y")
+                                registration_date.append(new_date_str)
                             if name == 'propertyType':
                                 property_type.append(element['value'])
                             if name == 'sectionNumber' and element[

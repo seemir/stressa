@@ -291,6 +291,9 @@ class FinnAd(Finn):
 
                 edited = self._convert_isodate_to_local(meta_data['edited'])
                 published = self._convert_isodate_to_local(
+                    meta_data['history'][0]['broadcasted'],
+                    norwegian_format=True)
+                first_published = self._convert_isodate_to_local(
                     meta_data['history'][0]['broadcasted'], days_delta=True,
                     include_time=False)
 
@@ -349,7 +352,8 @@ class FinnAd(Finn):
                              'andre_visning': second_viewing.capitalize(),
                              'matrikkel': matrikkel,
                              'sistendret': edited,
-                             'firstpublished': published,
+                             'published': published,
+                             'firstpublished': first_published,
                              'referanse': advertiser_ref,
                              'energimerking': energy_label,
                              'kommunaleavg': municipal_fees,
@@ -373,7 +377,8 @@ class FinnAd(Finn):
 
     @staticmethod
     def _convert_isodate_to_local(isodate: str, days_delta: bool = False,
-                                  include_time: bool = True):
+                                  include_time: bool = True,
+                                  norwegian_format: bool = False):
         """
         helper method for converting iso date to Norwegin date format
 
@@ -385,6 +390,8 @@ class FinnAd(Finn):
                             flag for delta days
         include_time      : bool
                             flag for including time
+        norwegian_format  : bool
+                            flag if one wants norwegian dateformat
 
         Returns
         -------
@@ -416,6 +423,9 @@ class FinnAd(Finn):
             date_obj = utc_time.astimezone(cet_timezone)
         else:
             date_obj = datetime.strptime(isodate, "%Y-%m-%d")
+
+        if norwegian_format:
+            return date_obj.strftime("%d.%m.%Y %H:%M")
 
         weekday = norwegian_weekdays[date_obj.weekday()]
         month = norwegian_months[date_obj.month - 1]
