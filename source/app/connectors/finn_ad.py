@@ -126,14 +126,7 @@ class FinnAd(Finn):
                     script_tag = script.text
 
             if script_tag:
-                cleaned_script = (script_tag
-                                  .replace(r'\u003e', '>')
-                                  .replace(r'\u003c', '<')
-                                  .replace(r'\u0026', '&')
-                                  .replace(r'\n', '')
-                                  .replace(r'\R', 'R'))
-
-                cleaned_script = " ".join(cleaned_script.split()).replace(
+                cleaned_script = " ".join(script_tag.split()).replace(
                     'window.__remixContext = ', '')[:-1]
 
                 cleaned_script = dict(json_repair.loads(cleaned_script))

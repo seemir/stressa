@@ -7,6 +7,7 @@ Implementation of connector against Finn.no housing statistics search
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
+import base64
 from time import time
 from typing import Union
 from datetime import datetime
@@ -21,12 +22,13 @@ from aiohttp.client_exceptions import ClientConnectionError
 
 from bs4 import BeautifulSoup
 import numpy as np
+import json_repair
 
 from source.util import LOGGER, TimeOutError, NoConnectionError, Assertor, Tracking
-from source.domain import Amount
+from source.domain import Amount, Money
 
-from .settings import FINN_STAT_URL, TIMEOUT
-from .finn import Finn
+from source.app.connectors.settings import FINN_STAT_URL, TIMEOUT
+from source.app.connectors.finn import Finn
 
 
 class FinnStat(Finn):
@@ -100,25 +102,87 @@ class FinnStat(Finn):
             # with open('content.html', 'w', encoding='utf-8') as file:
             #     file.write(stat_soup.prettify())
 
-            stat_data = json.loads(
-                stat_soup.find("script", attrs={"type": "application/json"}).contents[0])
+            info = {}
+            price_statistics = None
+            script_tag = None
 
-            optional_sqm_price = [str(value.get_text()).replace(u"\xa0", "") for
-                                  value in stat_soup.find_all("strong",
-                                                              attrs={"style": "min-width:10px"})]
+            sqm_price = ''
+            clicks = ''
 
-            info.update(self.extract_sqm_price(stat_data, info, optional_sqm_price))
-            info.update(self.extract_view_statistics(stat_data, info))
-            info.update(self.extract_published_statistics(stat_data, info))
-            info.update(self.extract_area_sales_statistics(stat_data, info))
-            info.update(self.calculate_sqm_price_areas(info))
+            for script in stat_soup.find_all('script'):
+                if 'window.__remixContext' in script.text:
+                    script_tag = script.text
 
-            # with open('stat_data.json', 'w', encoding='utf-8') as file:
-            #     json.dump(info, file, ensure_ascii=False, indent=4)
+            if script_tag:
+                cleaned_script = (script_tag
+                                  .replace(r'\u003e', '>')
+                                  .replace(r'\u003c', '<')
+                                  .replace(r'\u0026', '&')
+                                  .replace(r'\n', '')
+                                  .replace(r'\R', 'R'))
 
-            LOGGER.success("'housing_stat_information' successfully retrieved")
+                cleaned_script = " ".join(cleaned_script.split()).replace(
+                    'window.__remixContext = ', '')[:-1]
 
-            return info
+                cleaned_script = dict(json_repair.loads(cleaned_script))
+
+                if 'state' in cleaned_script:
+                    state = cleaned_script['state']
+                    if 'loaderData' in state:
+                        loader_data = state['loaderData']
+                        if 'routes/prisstatistikk.$adId' in loader_data:
+                            routes = loader_data['routes/prisstatistikk.$adId']
+                            if 'priceStatistic' in routes:
+                                price_statistic = routes['priceStatistic']
+                                if 'content' in price_statistic:
+                                    price_statistics = price_statistic['content']
+
+            if price_statistics:
+
+                price_statistics_soup = BeautifulSoup(price_statistics, 'lxml')
+
+                base64_price_json = price_statistics_soup.find(
+                    'div', attrs={'data-props': True})['data-props']
+
+                decoded_price_json = base64.b64decode(base64_price_json)
+                decoded_price_json_string = json_repair.loads(
+                    decoded_price_json.decode('utf-8'))
+
+                if 'response' in decoded_price_json_string:
+
+                    response = dict(decoded_price_json_string['response'])
+
+                    if response['status'] == 200:
+
+                        price_statistics_data = response['data']
+
+                        if 'sqmPrice' in price_statistics_data:
+                            sqm_price = Money(str(price_statistics_data['sqmPrice'])).value()
+
+                        if 'clicks' in price_statistics_data:
+                            clicks = Amount(str(price_statistics_data['clicks'])).amount
+
+                info.update({'sqm_price': sqm_price,
+                             'views': clicks})
+
+                LOGGER.success("'housing_stat_information' successfully retrieved")
+
+                return info
+            else:
+                raise ValueError('No ad statistics found')
+
+            # stat_data = json.loads(
+            #     stat_soup.find("script", attrs={"type": "application/json"}).contents[0])
+            #
+            # optional_sqm_price = [str(value.get_text()).replace(u"\xa0", "") for
+            #                       value in stat_soup.find_all("strong",
+            #                                                   attrs={"style": "min-width:10px"})]
+            #
+            # info.update(self.extract_sqm_price(stat_data, info, optional_sqm_price))
+            # info.update(self.extract_view_statistics(stat_data, info))
+            # info.update(self.extract_published_statistics(stat_data, info))
+            # info.update(self.extract_area_sales_statistics(stat_data, info))
+            # info.update(self.calculate_sqm_price_areas(info))
         except Exception as no_ownership_history_exception:
             LOGGER.debug("[{}] No housing statistics found!, exited with '{}'".format(
                 self.__class__.__name__, no_ownership_history_exception))
