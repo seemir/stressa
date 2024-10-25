@@ -9,8 +9,6 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from .skatteetaten_calculator_view import SkatteetatenCalculatorView
-from .skatteetaten_redirect_view import SkatteetatenRedirectView
-from .skatteetaten_import_view import SkatteetatenImportView
 from .restructure_view import RestructureView
 from .statistics_view import StatisticsView
 from .info_clear_view import InfoClearView

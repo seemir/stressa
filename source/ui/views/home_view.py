@@ -32,7 +32,7 @@ from .error_view import ErrorView
 from .sifo_view import SifoView
 from .meta_view import MetaView
 
-from .skatteetaten_redirect_view import SkatteetatenRedirectView
+from .skatteetaten_calculator_view import SkatteetatenCalculatorView
 
 myappid = 'Stressa.stressa.ui.version'
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
@@ -86,16 +86,12 @@ class HomeView(QMainWindow):
         self._budget_view.budget_info()
         self._home_model.liquidity_info()
 
-        self._skatteetaten_redirect_view = SkatteetatenRedirectView(self)
-        self._skatteetaten_calculator_model = self.skatteetaten_redirect_view \
-            .skatteetaten_calculator_view.skatteetaten_calculator_model
-        self._skatteetaten_import_model = self.skatteetaten_redirect_view \
-            .skatteetaten_import_view.skatteetaten_import_model
+        self._skatteetaten_calculator_view = SkatteetatenCalculatorView(self)
 
         self.ui_form.push_button_budsjett.clicked.connect(
             self.budget_view.display)
         self.ui_form.push_button_skatt.clicked.connect(
-            self.skatteetaten_redirect_view.show)
+            self.skatteetaten_calculator_view.display)
         self.ui_form.push_button_sifo_utgifter.clicked.connect(
             self.sifo_view.display)
 
@@ -250,43 +246,17 @@ class HomeView(QMainWindow):
         return self._budget_view
 
     @property
-    def skatteetaten_redirect_view(self):
+    def skatteetaten_calculator_view(self):
         """
-        Skatteetaten redirect getter
+        Skatteetaten calculator view redirect getter
 
         Returns
         -------
-        out     : SkatteetatenRedirectView
+        out     : SkatteetatenCalculatorView
                   Active SkatteetatenRedirectView in the HomeView
 
         """
-        return self._skatteetaten_redirect_view
-
-    @property
-    def skatteetaten_calculator_model(self):
-        """
-        Skatteetaten calculator model getter
-
-        Returns
-        -------
-        out     : SkatteetatenCalculatorModel
-                  Active SkatteetatenCalculatorModel in the HomeView
-
-        """
-        return self._skatteetaten_calculator_model
-
-    @property
-    def skatteetaten_import_model(self):
-        """
-        Skatteetaten import model getter
-
-        Returns
-        -------
-        out     : SkatteetatenImportModel
-                  Active SkatteetatenImportModel in the HomeView
-
-        """
-        return self._skatteetaten_import_model
+        return self._skatteetaten_calculator_view
 
     @property
     def sifo_view(self):
