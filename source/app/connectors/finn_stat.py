@@ -108,20 +108,16 @@ class FinnStat(Finn):
 
             sqm_price = ''
             clicks = ''
+            entity_variable = ''
+            municipality_sqm_price = ''
 
             for script in stat_soup.find_all('script'):
                 if 'window.__remixContext' in script.text:
                     script_tag = script.text
 
             if script_tag:
-                cleaned_script = (script_tag
-                                  .replace(r'\u003e', '>')
-                                  .replace(r'\u003c', '<')
-                                  .replace(r'\u0026', '&')
-                                  .replace(r'\n', '')
-                                  .replace(r'\R', 'R'))
 
-                cleaned_script = " ".join(cleaned_script.split()).replace(
+                cleaned_script = " ".join(script_tag.split()).replace(
                     'window.__remixContext = ', '')[:-1]
 
                 cleaned_script = dict(json_repair.loads(cleaned_script))
@@ -162,6 +158,45 @@ class FinnStat(Finn):
                         if 'clicks' in price_statistics_data:
                             clicks = Amount(str(price_statistics_data['clicks'])).amount
 
+                        if 'realEstateSalesData' in price_statistics_data:
+                            real_estate_sales_data = price_statistics_data['realEstateSalesData']
+
+                            if len(real_estate_sales_data) == 2 and real_estate_sales_data:
+
+                                for i, entity in enumerate(real_estate_sales_data):
+
+                                    entity_area_data = real_estate_sales_data[i]
+
+                                    if i == 0:
+                                        entity_variable = entity_variable
+                                        entity_name = 'city_area_sqm_price'
+                                        area_details = {
+                                            'city_area': entity_area_data['locationDetails']}
+                                    elif i == 1:
+                                        entity_variable = municipality_sqm_price
+                                        entity_name = 'municipality_sqm_price'
+                                        area_details = {
+                                            'municipality': entity_area_data['locationDetails']}
+                                    else:
+                                        break
+
+                                    if 'histData' in entity_area_data:
+
+                                        entity_area_history_data = {}
+                                        entity_area_hist_data = entity_area_data['histData']
+
+                                        for price_info in entity_area_hist_data:
+                                            entity_sqm_price = price_info['sqmPrice']
+                                            entity_number_of_sales = price_info['numberOfSales']
+                                            entity_area_history_data.update(
+                                                {entity_sqm_price: entity_number_of_sales})
+
+                                        entity_variable = self.calculate_average(
+                                            entity_area_history_data)
+
+                                    info.update(area_details)
+                                    info.update({entity_name: Money(entity_variable).value()})
+
                 info.update({'sqm_price': sqm_price,
                              'views': clicks})
 
@@ -197,110 +232,6 @@ class FinnStat(Finn):
         self.save_json(self.housing_stat_information(), file_dir, file_prefix="HousingStatInfo_")
         LOGGER.success(
             "'housing_stat_information' successfully parsed to JSON at '{}'".format(file_dir))
-
-    @Tracking
-    def extract_sqm_price(self, sql_price_statistics: dict, info: dict,
-                          optional_sqm_price: Union[None, list]):
-        """
-        method for extracting square meter price
-
-        Parameters
-        ----------
-        sql_price_statistics : dict
-                               dictionary with square meter price
-        info                 : dict
-                               dictionary to store results
-
-        """
-        Assertor.assert_data_types([sql_price_statistics, info], [dict, dict])
-        for prop, value in sql_price_statistics.items():
-            if prop.lower() == 'props':
-                for pro, val in value.items():
-                    if pro.lower() == 'pageprops':
-                        for pr_name, vl_name in val.items():
-                            if pr_name.lower() == 'areasales':
-                                for name, inf in vl_name.items():
-                                    if isinstance(inf, (int, float)) and name.lower() == 'price':
-                                        info.update(
-                                            {'sqm_price': Amount(str(inf)).amount + " kr/m²"})
-        if 'sqm_price' not in info.keys():
-            if optional_sqm_price:
-                if len(optional_sqm_price) > 0:
-                    info.update({'sqm_price': Amount(str(optional_sqm_price[1])).amount + " kr/m²"})
-        return info
-
-    @Tracking
-    def extract_view_statistics(self, total_view_statistics: dict, info: dict):
-        """
-        method for extracting the total view statistics
-
-        Parameters
-        ----------
-        total_view_statistics   : dict
-                                  dictionary with view statistics
-        info                    : dict
-                                  dictionary to store results
-
-        Returns
-        -------
-        out                     : dict
-                                  dictionary with results
-
-        """
-        Assertor.assert_data_types([total_view_statistics, info], [dict, dict])
-        for prop, value in total_view_statistics.items():
-            if prop.lower() == 'props':
-                for pro, val in value.items():
-                    if pro.lower() == 'pageprops':
-                        for pr_name, vl_name in val.items():
-                            if isinstance(vl_name,
-                                          (int, float)) and pr_name.lower() == 'totalclicks':
-                                info.update({"views": Amount(str(vl_name)).amount})
-        return info
-
-    @Tracking
-    def extract_published_statistics(self, detail_view_statistics: dict, info: dict):
-        """
-        method for extracting the detail view statistics
-
-        Parameters
-        ----------
-        detail_view_statistics  : dict
-                                  dictionary with detailed view statistics
-        info                    : dict
-                                  dictionary to store results
-
-        Returns
-        -------
-        out                     : dict
-                                  dictionary with results
-
-        """
-        Assertor.assert_data_types([detail_view_statistics, info], [dict, dict])
-        for prop, value in detail_view_statistics.items():
-            if prop.lower() == 'props':
-                for pro, val in value.items():
-                    if pro.lower() == 'pageprops':
-                        for pr_name, vl_name in val.items():
-                            if pr_name.lower() == 'ad':
-                                for sub_prop, sub_val in vl_name.items():
-                                    if sub_prop.lower() in ('firstpublished', 'edited'):
-                                        pub = datetime.fromisoformat(sub_val)
-                                        try:
-                                            date = datetime.strptime(str(pub),
-                                                                     "%Y-%m-%d %H:%M:%S").strftime(
-                                                "%d.%m.%Y %H:%M")
-                                        except ValueError:
-                                            date = datetime.strptime(str(pub),
-                                                                     "%Y-%m-%d %H:%M:%S.%f") \
-                                                .strftime("%d.%m.%Y %H:%M")
-                                        info.update(
-                                            {sub_prop.lower(): str(
-                                                date).lower() + " ({} dager siden)".format(
-                                                (datetime.today() - pub).days)})
-                                        if sub_prop.lower() == 'firstpublished':
-                                            info.update({'published': date})
-        return info
 
     @Tracking
     def extract_area_sales_statistics(self, areal_sales_statistics: dict, info: dict):
@@ -431,3 +362,8 @@ class FinnStat(Finn):
             sums += num
         average = Amount(str(round(sum(products) / sums))).amount if sums != 0 else "0"
         return average
+
+# if __name__ == '__main__':
+#     finn_stat = FinnStat('357198989')
+#
+#     print(finn_stat.housing_stat_information())
