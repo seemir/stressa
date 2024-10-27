@@ -22,13 +22,12 @@ class TestTaxForm:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.tax_form = TaxForm(age=34, income=560000, tax_year=2022)
+        self.tax_form = TaxForm(age=34, income=560000, tax_year=2022)
 
     @classmethod
     def teardown(cls):

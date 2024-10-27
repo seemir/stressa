@@ -9,7 +9,7 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 
-class InvalidData(Exception):
+class InvalidDataError(Exception):
     """
     Exception thrown when breach of data
 

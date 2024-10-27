@@ -28,13 +28,12 @@ class TestFinnOwnership:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
-        Executed before all tests
+        setup that is run before every tests
 
         """
-        cls.finn_ownership = FinnOwnership("144857770")
+        self.finn_ownership = FinnOwnership("144857770")
 
     def test_finn_ownership_is_instance_of_connectorr(self):
         """

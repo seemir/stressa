@@ -20,13 +20,12 @@ class TestEmail:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.email = Email("ola.nordmann@gmail.com")
+        self.email = Email("ola.nordmann@gmail.com")
 
     def test_email_is_instance_of_value_and_address(self):
         """

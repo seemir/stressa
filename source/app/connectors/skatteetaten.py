@@ -124,7 +124,8 @@ class Skatteetaten(Connector):
         method for generating payload str
 
         """
-        with open(os.path.dirname(__file__) + '\\payloads\\skatteetaten_payload.json') as json_file:
+        with open(os.path.dirname(__file__) + '\\payloads\\skatteetaten_payload.json',
+                  encoding='utf-8') as json_file:
             json_data = json.load(json_file)
         return json.dumps(json_data) \
             .replace("alderIInntektsaarVerdi", self.age) \

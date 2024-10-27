@@ -20,13 +20,12 @@ class TestAddress:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.address = Address("Slottsplassen 1, 0010 Oslo")
+        self.address = Address("Slottsplassen 1, 0010 Oslo")
 
     def test_address_is_instance_of_value_and_address(self):
         """

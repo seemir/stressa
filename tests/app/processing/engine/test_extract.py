@@ -19,13 +19,12 @@ class TestExtract:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.data = {"klar": "500 kr", "sko": "500 kr", "mat": "500 kr", "totalt": "1500"}
+        self.data = {"klar": "500 kr", "sko": "500 kr", "mat": "500 kr", "totalt": "1500"}
 
     def test_extract_is_instance_of_operation(self):
         """

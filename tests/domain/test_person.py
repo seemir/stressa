@@ -21,13 +21,12 @@ class TestPerson:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         runs before all tests
 
         """
-        cls.person = Person()
+        self.person = Person()
 
     def test_person_is_instance_of_entity_and_abc(self):
         """

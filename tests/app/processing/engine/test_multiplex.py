@@ -19,16 +19,15 @@ class TestMultiplex:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.signals = [{"klar": "500 kr", "sko": "500 kr", "mat": "500 kr"},
-                       {"mobler": "360 kr", "bil": "2 420 kr", "sfo": "2 081 kr"}]
-        cls.desc = "Monthly Expenses"
-        cls.multiplex = Multiplex(cls.signals, cls.desc)
+        self.signals = [{"klar": "500 kr", "sko": "500 kr", "mat": "500 kr"},
+                        {"mobler": "360 kr", "bil": "2 420 kr", "sfo": "2 081 kr"}]
+        self.desc = "Monthly Expenses"
+        self.multiplex = Multiplex(self.signals, self.desc)
 
     def test_multiplex_is_instance_of_operation(self):
         """

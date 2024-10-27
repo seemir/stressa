@@ -20,13 +20,12 @@ class TestPhone:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.phone = Phone("91515915")
+        self.phone = Phone("91515915")
 
     @classmethod
     def teardown(cls):

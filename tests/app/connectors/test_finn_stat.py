@@ -31,13 +31,12 @@ class TestFinnStat:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
-        Executed before all tests
+        setup that is run before every tests
 
         """
-        cls.finn_stat = FinnStat("144857770")
+        self.finn_stat = FinnStat("144857770")
 
     def test_finn_stat_is_instance_of_connector(self):
         """

@@ -31,15 +31,14 @@ class TestSifo:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
-        Executed before every test
+        setup that is run before every tests
 
         """
-        family_members = [Male(age=45), Female(age=40)]
-        cls.family = Family(family_members, income=850000, fossil_cars=1, select_year=2021)
-        cls.sifo = Sifo(cls.family)
+        self.family_members = [Male(age=45), Female(age=40)]
+        self.family = Family(self.family_members, income=850000, fossil_cars=1, select_year=2021)
+        self.sifo = Sifo(self.family)
 
     def test_sifo_is_instance_of_connector(self):
         """
@@ -124,7 +123,7 @@ class TestSifo:
                            'sfo': '0', 'spedbarn': '0', 'sumhusholdning': '5888',
                            'sumindivid': '14800', 'totalt': '20688'}
         sifo_expenses = self.sifo.sifo_base_expenses()
-        print(sifo_expenses)
+
         assert sifo_expenses == correct_content
         assert "_id" not in sifo_expenses.keys()
 

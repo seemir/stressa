@@ -20,13 +20,12 @@ class TestMobile:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.mobile = Mobile("98989898")
+        self.mobile = Mobile("98989898")
 
     def test_mobile_instance_of_mobile_phone_and_value(self):
         """

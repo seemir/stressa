@@ -19,14 +19,13 @@ class TestFinnAdvertInfoConnector:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.finn_code = "144857770"
-        cls.connector_finn_advert_info = FinnAdvertInfoConnector(cls.finn_code)
+        self.finn_code = "144857770"
+        self.connector_finn_advert_info = FinnAdvertInfoConnector(self.finn_code)
 
     def test_connector_finn_advert_info_is_instance_of_operation(self):
         """
@@ -70,7 +69,7 @@ class TestFinnAdvertInfoConnector:
                    'status': 'Ikke solgt',
                    'omkostninger': '1 765 642 kr',
                    'totalpris': '71 765 642 kr',
-                   'kommunaleavg': '12 716 kr per år',
+                   'kommunaleavg': '12 716 kr',
                    'boligtype': 'Enebolig',
                    'eieform': 'Eier (Selveier)', 'soverom': '7',
                    'primrrom': '656 m²', 'bruksareal': '831 m²',

@@ -20,18 +20,17 @@ class TestValidateFamily:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.data = {"person_1": {"alder_1": "20-30 år", "kjonn_1": "Mann"},
-                    "person_2": {"alder_2": "20-30 år", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
-                    "person_3": {"alder_3": "6-9 år", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
-                    "person_4": {"alder_4": "3 år", "barnehage_4": "Ja", "kjonn_4": "Mann"},
-                    "antall_biler": "1", "brutto_arsinntekt": "1 260 000 kr",
-                    "budsjett_aar": "2021"}
+        self.data = {"person_1": {"alder_1": "20-30 år", "kjonn_1": "Mann"},
+                     "person_2": {"alder_2": "20-30 år", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
+                     "person_3": {"alder_3": "6-9 år", "kjonn_3": "Kvinne", "sfo_3": "Heldag"},
+                     "person_4": {"alder_4": "3 år", "barnehage_4": "Ja", "kjonn_4": "Mann"},
+                     "antall_biler": "1", "brutto_arsinntekt": "1 260 000 kr",
+                     "budsjett_aar": "2021"}
 
     def test_validate_family_is_instance_of_operation(self):
         """

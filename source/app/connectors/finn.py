@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 
-from source.util import Assertor, LOGGER, InvalidData, Tracking
+from source.util import Assertor, LOGGER, InvalidDataError, Tracking
 
 from .connector import Connector
 
@@ -29,8 +29,8 @@ class Finn(Connector):
         """
         valid_finn_code = re.compile("^[1-9][0-9]{7,8}$").search(self.finn_code)
         if not valid_finn_code:
-            raise InvalidData(
-                "'{}' is an invalid Finn code".format(self.finn_code))
+            raise InvalidDataError(
+                f"'{self.finn_code}' is an invalid Finn code")
 
     def __init__(self, finn_code: str):
         """
@@ -49,7 +49,7 @@ class Finn(Connector):
             self.validate_finn_code()
             self._browser = None
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
+                f"created '{self.__class__.__name__}', with id: [{self.id_}]")
         except Exception as finn_exception:
             LOGGER.exception(finn_exception)
             raise finn_exception

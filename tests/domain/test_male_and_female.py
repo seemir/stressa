@@ -20,38 +20,41 @@ class TestMaleAndFemale:
 
     """
 
-    @staticmethod
-    def test_male_and_female_are_instances_and_subclasses_of_person_entity():
+    def setup_method(self):
+        """
+        Executed before all tests
+
+        """
+        self.persons = [Male(), Female()]
+
+    def test_male_and_female_are_instances_and_subclasses_of_person_entity(self):
         """
         Test that all Male and Female instances are subclass and instance of
         Person and Entity classes
 
         """
-        for person in [Male(), Female()]:
+        for person in self.persons:
             for parents in [Person, Entity]:
                 assert isinstance(person, parents)
                 assert issubclass(person.__class__, parents)
 
-    @staticmethod
-    def test_male_and_female_have_correct_gender():
+    def test_male_and_female_have_correct_gender(self):
         """
         Test that Male and Female objects have correct gender classification
 
         """
-        persons = {'m': Male(), 'k': Female()}
+        persons = dict(zip(['m', 'k'], self.persons))
         for gender, person in persons.items():
             assert person.kjonn == gender
 
-    @staticmethod
     @pt.mark.parametrize('invalid_age', [(), [], {}])
-    def test_type_checking_person_input_arguments(invalid_age):
+    def test_type_checking_person_input_arguments(self, invalid_age):
         """
         Test that TypeError is raised if invalid arg for age, kinder_garden or sfo is passed
         to person (Male or Female) object.
 
         """
-        persons = [Male(), Female()]
-        for person in persons:
+        for person in self.persons:
             with pt.raises(TypeError):
                 person.alder = invalid_age
             with pt.raises(TypeError):
@@ -59,18 +62,16 @@ class TestMaleAndFemale:
             with pt.raises(TypeError):
                 person.sfo = invalid_age
 
-    @staticmethod
     @pt.mark.parametrize('age', [0.41, 0.91, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75])
-    def test_person_attending_kinder_garden_or_sfo(age):
+    def test_person_attending_kinder_garden_or_sfo(self, age):
         """
         Test that only person of age between 1-5 can attend kinder_garden and person between
         6-13 can attend sfo. ValueError thrown if not the case.
 
         """
-        persons = [Male(), Female()]
         kinder_garden = age in range(1, 6)
         sfo = age in range(6, 14)
-        for person in persons:
+        for person in self.persons:
             if kinder_garden:
                 person.alder = age
                 person.barnehage = '1'
@@ -87,14 +88,13 @@ class TestMaleAndFemale:
                 with pt.raises(ValueError):
                     person.__class__(age, sfo='1')
 
-    @staticmethod
     @pt.mark.parametrize('age', [0.41, 0.91, 1, 2, 3, 5, 9, 13, 17, 19, 50, 60, 66, 75])
-    def test_female_pregnancy(age):
+    def test_female_pregnancy(self, age):
         """
         Test that females can be pregnant only at ages between 19-50 years
 
         """
-        female = Female()
+        female = self.persons[1]
         pregnancy = age in range(17, 51)
         if pregnancy:
             female.alder = age
@@ -105,11 +105,10 @@ class TestMaleAndFemale:
             with pt.raises(ValueError):
                 female.__class__(age, pregnant='1')
 
-    @staticmethod
-    def test_male_and_female_id_are_uuid4():
+    def test_male_and_female_id_are_uuid4(self):
         """
         Test that Male and Female entity class ids are uuid4 compatible
 
         """
-        for person in [Male(), Female()]:
+        for person in self.persons:
             assert UUID(str(person.id_))

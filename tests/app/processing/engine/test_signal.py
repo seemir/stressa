@@ -22,16 +22,15 @@ class TestSignal:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.data = {"klar": "500 kr", "sko": "500 kr", "mat": "500 kr"}
-        cls.desc = "Expenses"
-        cls.style = "dotted"
-        cls.signal = Signal(cls.data, cls.desc)
+        self.data = {"klar": "500 kr", "sko": "500 kr", "mat": "500 kr"}
+        self.desc = "Expenses"
+        self.style = "dotted"
+        self.signal = Signal(self.data, self.desc)
 
     def test_signal_is_instance_of_node_and_abc(self):
         """

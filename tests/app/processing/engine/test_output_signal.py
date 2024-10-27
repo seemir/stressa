@@ -19,15 +19,14 @@ class TestOutsignal:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.data = {"totalt": "12 500 kr"}
-        cls.desc = "Total Expenses"
-        cls.output = OutputSignal(cls.data, cls.desc)
+        self.data = {"totalt": "12 500 kr"}
+        self.desc = "Total Expenses"
+        self.output = OutputSignal(self.data, self.desc)
 
     def test_output_signal_is_instance_of_signal(self):
         """

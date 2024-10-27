@@ -19,14 +19,13 @@ class TestInputOperation:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.desc = "Share of Total Expenses"
-        cls.input = InputOperation(cls.desc)
+        self.desc = "Share of Total Expenses"
+        self.input = InputOperation(self.desc)
 
     def test_input_is_instance_of_operation(self):
         """

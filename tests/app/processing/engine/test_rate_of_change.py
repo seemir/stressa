@@ -19,19 +19,18 @@ class TestRateOfChange:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.dataframe = {'Tinglyst': {0: 'Prisantydning', 1: '23.01.2019', 2: '23.10.2017'},
-                         'Boligtype': {0: '-', 1: 'Blokkleilighet', 2: 'Blokkleilighet'},
-                         'Seksjonsnummer': {0: '-', 1: '4', 2: '4'},
-                         'Pris': {0: '3 325 000 kr', 1: '3\xa0490\xa0000 kr',
-                                  2: '2\xa0570\xa0000 kr'}}
-        cls.desc = "Ownership History with List Price"
-        cls.rate_of_change = RateOfChange(cls.dataframe, cls.desc)
+        self.dataframe = {'Tinglyst': {0: 'Prisantydning', 1: '23.01.2019', 2: '23.10.2017'},
+                          'Boligtype': {0: '-', 1: 'Blokkleilighet', 2: 'Blokkleilighet'},
+                          'Seksjonsnummer': {0: '-', 1: '4', 2: '4'},
+                          'Pris': {0: '3 325 000 kr', 1: '3\xa0490\xa0000 kr',
+                                   2: '2\xa0570\xa0000 kr'}}
+        self.desc = "Ownership History with List Price"
+        self.rate_of_change = RateOfChange(self.dataframe, self.desc)
 
     def test_rate_of_change_is_instance_of_operation(self):
         """

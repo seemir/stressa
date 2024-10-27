@@ -21,21 +21,20 @@ class TestAddRowToDataFrame:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.row = {'prisantydning': '3 325 000 kr'}
-        cls.dataframe = {"historikk": DataFrame({'Tinglyst': {0: '23.01.2019', 1: '23.10.2017'},
-                                                 'Boligtype': {0: 'Blokkleilighet',
-                                                               1: 'Blokkleilighet'},
-                                                 'Seksjonsnummer': {0: '4', 1: '4'},
-                                                 'Pris': {0: '3\xa0490\xa0000 kr',
-                                                          1: '2\xa0570\xa0000 kr'}})}
-        cls.desc = "Add List Price to Ownership History"
-        cls.add_row_to_dataframe = AddRowToDataFrame(cls.row, cls.dataframe, cls.desc)
+        self.row = {'prisantydning': '3 325 000 kr'}
+        self.dataframe = {"historikk": DataFrame({'Tinglyst': {0: '23.01.2019', 1: '23.10.2017'},
+                                                  'Boligtype': {0: 'Blokkleilighet',
+                                                                1: 'Blokkleilighet'},
+                                                  'Seksjonsnummer': {0: '4', 1: '4'},
+                                                  'Pris': {0: '3\xa0490\xa0000 kr',
+                                                           1: '2\xa0570\xa0000 kr'}})}
+        self.desc = "Add List Price to Ownership History"
+        self.add_row_to_dataframe = AddRowToDataFrame(self.row, self.dataframe, self.desc)
 
     def test_add_row_to_dataframe_is_instance_of_operation(self):
         """

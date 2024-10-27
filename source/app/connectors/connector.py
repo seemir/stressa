@@ -52,7 +52,8 @@ class Connector(ABC):
             _json = json.dumps(file_dict, indent=2, separators=(',', ': '),
                                ensure_ascii=False)
             local_time = datetime.datetime.now().isoformat().replace(":", "-").replace(".", "-")
-            file = open(os.path.join(file_dir, file_prefix + local_time + ".json"), "w")
+            file = open(os.path.join(file_dir, file_prefix + local_time + ".json"), "w",
+                        encoding='itf-8')
             file.write(_json)
             file.close()
         except Exception as json_exception:
@@ -73,7 +74,7 @@ class Connector(ABC):
         Abstract class, so class cannot be instantiated
 
         """
-        LOGGER.info("trying to create '{}'".format(self.__class__.__name__))
+        LOGGER.info(f"trying to create '{self.__class__.__name__}'")
         super().__init__()
         self._browser = Browser()
         self._browser.set_handle_robots(False)

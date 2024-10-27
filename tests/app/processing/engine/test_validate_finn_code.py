@@ -19,14 +19,13 @@ class TestValidateFinnCode:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.finn_code = "144857770"
-        cls.validate_finn_code = ValidateFinnCode(cls.finn_code)
+        self.finn_code = "144857770"
+        self.validate_finn_code = ValidateFinnCode(self.finn_code)
 
     def test_validate_finn_code_is_instance_of_operation(self):
         """

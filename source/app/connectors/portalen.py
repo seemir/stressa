@@ -10,12 +10,12 @@ __email__ = 'samir.adrik@gmail.com'
 
 import re
 from http.client import responses
-import xml.etree.cElementTree as Et
+import xml.etree.ElementTree as Et
 
 import requests
 from requests.exceptions import ReadTimeout, ConnectionError as ConnectError
 
-from source.util import LOGGER, NoConnectionError, TimeOutError, InvalidData, Tracking
+from source.util import LOGGER, NoConnectionError, TimeOutError, InvalidDataError, Tracking
 
 from .settings import PORTALEN_URL, PORTALEN_CRED, PORTALEN_ENTRY, TIMEOUT
 from .connector import Connector
@@ -50,7 +50,7 @@ class Portalen(Connector):
         """
         try:
             try:
-                response = requests.post(PORTALEN_URL, auth=PORTALEN_CRED, timeout=TIMEOUT)
+                response = requests.get(PORTALEN_URL, auth=PORTALEN_CRED, timeout=TIMEOUT)
                 status_code = response.status_code
                 LOGGER.info(
                     "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
@@ -94,7 +94,7 @@ class Portalen(Connector):
 
             LOGGER.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
             return offers
-        raise InvalidData("No 'mortgage_offers' received")
+        raise InvalidDataError("No 'mortgage_offers' received")
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/mortgage_offers"):

@@ -22,13 +22,12 @@ class TestFinn:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
-        Executed before all tests
+        setup that is run before every tests
 
         """
-        cls.finn = Finn("144857770")
+        self.finn = Finn("144857770")
 
     def test_finn_is_instance_of_connectorr(self):
         """

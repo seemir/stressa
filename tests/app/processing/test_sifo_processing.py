@@ -21,15 +21,14 @@ class TestCalculateSifoExpenses:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.data = {"person_1": {"alder_1": "20-30 år", "kjonn_1": "Mann"},
-                    "person_2": {"alder_2": "20-30 år", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
-                    "budsjett_aar": "2021"}
+        self.data = {"person_1": {"alder_1": "20-30 år", "kjonn_1": "Mann"},
+                     "person_2": {"alder_2": "20-30 år", "gravid_2": "Ja", "kjonn_2": "Kvinne"},
+                     "budsjett_aar": "2021"}
 
     def test_calculate_sifo_expenses_is_instance_of_process(self):
         """

@@ -21,13 +21,12 @@ class TestPercent:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.percent = Percent(Decimal(0.10))
+        self.percent = Percent(Decimal(0.10))
 
     def test_percent_is_instance_of_value(self):
         """

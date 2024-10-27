@@ -19,14 +19,13 @@ class TestFinnStatisticsInfoConnector:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.finn_code = "144857770"
-        cls.connector_finn_statistics_info = FinnStatisticsInfoConnector(cls.finn_code)
+        self.finn_code = "144857770"
+        self.connector_finn_statistics_info = FinnStatisticsInfoConnector(self.finn_code)
 
     def test_connector_finn_statistics_info_is_instance_of_operation(self):
         """

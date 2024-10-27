@@ -29,14 +29,13 @@ class TestSsb:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.payload = SsbPayload(tid=["2019M08"])
-        cls.ssb = Ssb(cls.payload)
+        self.payload = SsbPayload(tid=["2019M08"])
+        self.ssb = Ssb(self.payload)
 
     def test_ssb_is_instance_of_connector(self):
         """

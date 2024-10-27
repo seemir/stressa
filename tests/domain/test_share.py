@@ -21,13 +21,12 @@ class TestShare:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.share = Share(Decimal(1))
+        self.share = Share(Decimal(1))
 
     def test_share_is_instance_of_value(self):
         """

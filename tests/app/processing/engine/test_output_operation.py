@@ -19,14 +19,13 @@ class TestOutputOperation:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.desc = "Share of Total Expenses"
-        cls.output = OutputOperation(cls.desc)
+        self.desc = "Share of Total Expenses"
+        self.output = OutputOperation(self.desc)
 
     def test_output_is_instance_of_operation(self):
         """

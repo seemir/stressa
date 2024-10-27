@@ -19,18 +19,17 @@ class TestExpenses:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.data = {'mat': '5290', 'klar': '1590', 'helse': '1320', 'fritid': '2480',
-                    'kollektivt': '1500', 'spedbarn': '0', 'stordriftsfordel': '1',
-                    'sumindivid': '12180', 'dagligvarer': '340', 'husholdsart': '400',
-                    'mobler': '400', 'medier': '2240', 'biler': '2420', 'barnehage': '0',
-                    'sfo': '0', 'sumhusholdning': '5800', 'totalt': '17980'}
-        cls.expenses = Expenses(cls.data)
+        self.data = {'mat': '5290', 'klar': '1590', 'helse': '1320', 'fritid': '2480',
+                     'kollektivt': '1500', 'spedbarn': '0', 'stordriftsfordel': '1',
+                     'sumindivid': '12180', 'dagligvarer': '340', 'husholdsart': '400',
+                     'mobler': '400', 'medier': '2240', 'biler': '2420', 'barnehage': '0',
+                     'sfo': '0', 'sumhusholdning': '5800', 'totalt': '17980'}
+        self.expenses = Expenses(self.data)
 
     def test_expenses_is_instance_if_entity(self):
         """

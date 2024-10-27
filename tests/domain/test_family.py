@@ -22,14 +22,13 @@ class TestFamily:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.family_members = [Male(age=39), Female(age=40)]
-        cls.family = Family(cls.family_members, select_year=2021)
+        self.family_members = [Male(age=39), Female(age=40)]
+        self.family = Family(self.family_members, select_year=2021)
 
     @classmethod
     def teardown(cls):

@@ -7,12 +7,11 @@ Implementation of connector against Finn.no housing ad search
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import pytz
-from datetime import datetime
 from time import time
-
+from datetime import datetime
 from http.client import responses
 
+import pytz
 import requests
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
@@ -20,7 +19,7 @@ from bs4 import BeautifulSoup
 
 import json_repair
 
-from source.util import LOGGER, TimeOutError, NoConnectionError, InvalidData, \
+from source.util import LOGGER, TimeOutError, NoConnectionError, InvalidDataError, \
     Assertor, Tracking
 from source.domain import Money, Amount
 
@@ -62,31 +61,22 @@ class FinnAd(Finn):
             try:
                 start = time()
                 ad_response = requests.get(
-                    FINN_AD_URL + "{}".format(self.finn_code),
+                    FINN_AD_URL + f"{self.finn_code}",
                     timeout=TIMEOUT)
                 ad_status_code = ad_response.status_code
-                if ad_status_code == 404:
-                    ad_response = requests.get(
-                        FINN_AD_URL.replace('homes',
-                                            'newbuildings') + "{}".format(
-                            self.finn_code),
-                        timeout=TIMEOUT)
-                    ad_status_code = ad_response.status_code
                 elapsed = self.elapsed_time(start)
                 LOGGER.info(
-                    "HTTP status code -> ADVERT: [{}: {}] -> elapsed: {}".format(
-                        ad_status_code, responses[ad_status_code], elapsed))
+                    f"HTTP status code -> ADVERT: [{ad_status_code}: {responses[ad_status_code]} "
+                    f"-> elapsed: {elapsed}")
                 return ad_response
             except ConnectTimeout as finn_ad_timeout_error:
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system "
-                    "administrator, exited with '{}'".format(
-                        finn_ad_timeout_error))
+                    f"Timeout occurred - please try again later or contact system administrator, "
+                    f"exited with '{finn_ad_timeout_error}'")
         except ConnectError as finn_ad_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator, exited with '{}'".format(
-                    finn_ad_response_error))
+                f"Failed HTTP request - please insure that internet access is provided to the "
+                f"client or contact system administrator, exited with '{finn_ad_response_error}'")
 
     @Tracking
     def housing_ad_information(self):
@@ -101,13 +91,12 @@ class FinnAd(Finn):
         """
         try:
             LOGGER.info(
-                "trying to retrieve 'housing_ad_information' for -> '{}'".format(
-                    self.finn_code))
+                f"trying to retrieve 'housing_ad_information' for -> '{self.finn_code}'")
             response = self.ad_response()
             if not response:
-                raise InvalidData(
-                    "[{}] Not found! '{}' may be an invalid Finn code".format(
-                        self.__class__.__name__, self.finn_code))
+                raise InvalidDataError(
+                    f"[{self.__class__.__name__}] Not found! '{self.finn_code}' "
+                    f"may be an invalid Finn code")
 
             ad_soup = BeautifulSoup(response.content, "lxml")
 
@@ -172,8 +161,7 @@ class FinnAd(Finn):
                              'borettslag-orgnummer': ''}
 
                 status = 'Solgt' if ad_data['disposed'] else 'Ikke solgt'
-                address = '{}, {} {}'.format(street_address, postal_code,
-                                             postal_place)
+                address = f'{street_address}, {postal_code} {postal_place}'
                 price = Money(str(ad_data['price']['suggestion'])).value()
 
                 if 'total' in ad_data['price']:
@@ -225,23 +213,20 @@ class FinnAd(Finn):
 
                 if len(viewings) == 1:
                     if 'dateIso' in viewings[0]:
-                        first_viewing = '{} kl. {}-{}'.format(
-                            self._convert_isodate_to_local(
-                                viewings[0]['dateIso']),
-                            viewings[0]['from'], viewings[0]['to'])
+                        first_viewing = \
+                            f"{self._convert_isodate_to_local(viewings[0]['dateIso'])} " \
+                            f"kl. {viewings[0]['from']}-{viewings[0]['to']}"
                 if len(viewings) == 2:
 
                     if 'dateIso' in viewings[0]:
-                        first_viewing = '{} kl. {}-{}'.format(
-                            self._convert_isodate_to_local(
-                                viewings[0]['dateIso']),
-                            viewings[0]['from'], viewings[0]['to'])
+                        first_viewing = \
+                            f"{self._convert_isodate_to_local(viewings[0]['dateIso'])} " \
+                            f"kl. {viewings[0]['from']}-{viewings[0]['to']}"
 
                     if 'dateIso' in viewings[1]:
-                        second_viewing = '{} kl. {}-{}'.format(
-                            self._convert_isodate_to_local(
-                                viewings[1]['dateIso']),
-                            viewings[1]['from'], viewings[1]['to'])
+                        second_viewing = \
+                            f"{self._convert_isodate_to_local(viewings[1]['dateIso'])} " \
+                            f"kl. {viewings[1]['from']}-{viewings[1]['to']}"
 
                 cadastres = ad_data['cadastres']
 
@@ -300,9 +285,7 @@ class FinnAd(Finn):
                     }
                     energy_label_class = ad_data['energyLabel']['class']
                     energy_label_color = ad_data['energyLabel']['color']
-                    energy_label = '{} - {}'.format(energy_label_class,
-                                                    color_scale[
-                                                        energy_label_color])
+                    energy_label = f"{energy_label_class} - {color_scale[energy_label_color]}"
                 if 'changeOfOwnershipInsurance' in ad_data:
                     change_of_ownership_insurance = ad_data[
                         'changeOfOwnershipInsurance']
@@ -332,8 +315,7 @@ class FinnAd(Finn):
                              'boligtype': property_type,
                              'eieform': ownership_type,
                              'etasje': floor,
-                             'tomteareal': plot_area + ' m² ({})'.format(
-                                 'eiet' if owned_plot else 'festet')
+                             'tomteareal': plot_area + f" m² ({'eiet' if owned_plot else 'festet'})"
                              if plot_area else '',
                              'bygger': construction_year,
                              'forste_visning': first_viewing.capitalize(),
@@ -354,13 +336,11 @@ class FinnAd(Finn):
                     "'housing_ad_information' successfully retrieved")
 
                 return info
-            else:
-                raise ValueError('No ad info found')
+            raise ValueError('No ad info found')
 
         except Exception as invalid_data_exception:
-            raise InvalidData(
-                "Something went wrong, exited with '{}'".format(
-                    invalid_data_exception))
+            raise InvalidDataError(
+                f"Something went wrong, exited with '{invalid_data_exception}'")
 
     @staticmethod
     def _convert_isodate_to_local(isodate: str, days_delta: bool = False,
@@ -419,13 +399,12 @@ class FinnAd(Finn):
         formatted_date = f"{weekday.capitalize()}, {date_obj.day}. {month} {date_obj.year}"
 
         if 'T' in isodate and include_time:
-            formatted_date = formatted_date + ' kl.{:02}:{:02}'.format(
-                date_obj.hour, date_obj.minute)
+            formatted_date = formatted_date + f" kl.{date_obj.hour:02}:{date_obj.minute:02}"
 
         if days_delta:
             delta = datetime.today().replace(tzinfo=None) - date_obj.replace(
                 tzinfo=None)
-            formatted_date = formatted_date + ' ({} dager)'.format(delta.days)
+            formatted_date = formatted_date + f" ({delta.days} dager)"
 
         return formatted_date
 
@@ -439,5 +418,4 @@ class FinnAd(Finn):
         self.save_json(self.housing_ad_information(), file_dir,
                        file_prefix="HousingAdInfo_")
         LOGGER.success(
-            "'housing_ad_information' successfully parsed to JSON at '{}'".format(
-                file_dir))
+            f"'housing_ad_information' successfully parsed to JSON at '{file_dir}'")

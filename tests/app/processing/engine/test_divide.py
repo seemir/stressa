@@ -19,16 +19,15 @@ class TestDivision:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.numerator = {"klar": "500 kr", "sko": "500 kr", "mat": "500 kr"}
-        cls.denominator = {"total": "1 500 kr"}
-        cls.desc = "Share of Total Expenses"
-        cls.division = Division(cls.numerator, cls.denominator, cls.desc)
+        self.numerator = {"klar": "500 kr", "sko": "500 kr", "mat": "500 kr"}
+        self.denominator = {"total": "1 500 kr"}
+        self.desc = "Share of Total Expenses"
+        self.division = Division(self.numerator, self.denominator, self.desc)
 
     def test_division_is_instance_of_operation(self):
         """

@@ -28,13 +28,12 @@ class TestPortalen:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
-        Runs before every test
+        setup that is run before every tests
 
         """
-        cls.portalen = Portalen()
+        self.portalen = Portalen()
 
     def test_portalen_is_instance_of_connector(self):
         """
@@ -52,7 +51,6 @@ class TestPortalen:
         """
         assert UUID(str(self.portalen.id_))
 
-    @pt.mark.skip
     def test_portalen_response_method(self):
         """
         Test that response method returns HTTP code 200: OK
@@ -62,7 +60,6 @@ class TestPortalen:
         assert response.status_code == 200
         assert isinstance(response, Response)
 
-    @pt.mark.skip
     def test_portalen_mortgage_offers_method(self):
         """
         Test the mortgage_offers in the Portalen connector by confirming that the
@@ -72,7 +69,7 @@ class TestPortalen:
         assert self.portalen.mortgage_offers().keys().__len__() >= 700
 
     @staticmethod
-    @mock.patch("requests.post", mock.MagicMock(side_effect=ConnectError))
+    @mock.patch("requests.get", mock.MagicMock(side_effect=ConnectError))
     def test_response_throws_tracking_error_for_connection_error():
         """
         Test that response method throws TrackingError if requests.post throws ConnectionError
@@ -83,7 +80,7 @@ class TestPortalen:
             portalen.portalen_response()
 
     @staticmethod
-    @mock.patch("requests.post", mock.MagicMock(side_effect=ReadTimeout))
+    @mock.patch("requests.get", mock.MagicMock(side_effect=ReadTimeout))
     def test_response_throws_tracking_error_for_for_read_timeout():
         """
         Test that response method throws TrackingError if requests.post throws ReadTimeout

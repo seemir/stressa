@@ -18,12 +18,12 @@ import json_repair
 from bs4 import BeautifulSoup
 
 from source.util import LOGGER, TimeOutError, NoConnectionError, Tracking, \
-    InvalidData
+    InvalidDataError
 
 from source.domain import Money
 
-from source.app.connectors.settings import FINN_OWNER_URL, TIMEOUT
-from source.app.connectors.finn import Finn
+from .settings import FINN_OWNER_URL, TIMEOUT
+from .finn import Finn
 
 
 class FinnOwnership(Finn):
@@ -63,9 +63,9 @@ class FinnOwnership(Finn):
                     timeout=TIMEOUT)
                 owner_status_code = owner_response.status_code
                 elapsed = self.elapsed_time(start)
-                status_msg = "HTTP status code -> OWNERSHIP HISTORY: [{}: {}] -> elapsed: {}".format(
-                    owner_status_code, responses[owner_status_code],
-                    elapsed)
+                status_msg = "HTTP status code -> OWNERSHIP HISTORY: [{}: {}] -> " \
+                             "elapsed: {}".format(owner_status_code, responses[owner_status_code],
+                                                  elapsed)
 
                 if owner_status_code >= 500:
                     LOGGER.error(status_msg)
@@ -103,9 +103,10 @@ class FinnOwnership(Finn):
             response = self.ownership_response()
 
             if not response:
-                raise InvalidData(
+                LOGGER.error(
                     "[{}] Not found! '{}' may be an invalid Finn code".format(
                         self.__class__.__name__, self.finn_code))
+                return {}
 
             owner_soup = BeautifulSoup(response.content, "lxml")
 
@@ -167,7 +168,8 @@ class FinnOwnership(Finn):
 
                 ownership_data = {'Tinglyst': registration_date,
                                   'Boligtype': property_type,
-                                  property_id_name: property_id,
+                                  property_id_name: property_id if property_id else [''] * len(
+                                      registration_date),
                                   'Pris': amount}
                 info.update({'historikk': ownership_data})
 
@@ -177,7 +179,7 @@ class FinnOwnership(Finn):
             return info
 
         except Exception as invalid_data_exception:
-            raise InvalidData(
+            raise InvalidDataError(
                 "Something went wrong, exited with '{}'".format(
                     invalid_data_exception))
 
@@ -193,7 +195,3 @@ class FinnOwnership(Finn):
         LOGGER.success(
             "'housing_ownership_information' successfully parsed to JSON at '{}'".format(
                 file_dir))
-
-# if __name__ == '__main__':
-#     finn_ad = FinnOwnership('371008605')
-#     print(finn_ad.housing_ownership_information())

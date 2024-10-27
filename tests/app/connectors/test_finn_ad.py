@@ -28,13 +28,12 @@ class TestFinnAd:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
-        Executed before all tests
+        setup that is run before every tests
 
         """
-        cls.finn_ad = FinnAd("144857770")
+        self.finn_ad = FinnAd("144857770")
 
     def test_finn_ad_is_instance_of_connector(self):
         """

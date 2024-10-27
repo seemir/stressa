@@ -101,7 +101,7 @@ class FinnStat(Finn):
 
             sqm_price = ''
             clicks = ''
-            dimension_sqm_price = ''
+            city_area_sqm_price = ''
             municipality_sqm_price = ''
 
             for script in stat_soup.find_all('script'):
@@ -160,10 +160,10 @@ class FinnStat(Finn):
 
                                     dimension_count = 0
                                     dimension_history_data = {}
-                                    dimension_data = real_estate_sales_data[i]
+                                    dimension_data = entity
 
                                     if i == 0:
-                                        dimension_sqm_price = dimension_sqm_price
+                                        dimension_sqm_price = city_area_sqm_price
                                         dimension_sqm_price_name = 'city_area_sqm_price'
                                         dimension_area_details = {
                                             'city_area': dimension_data['locationDetails']}
@@ -206,14 +206,13 @@ class FinnStat(Finn):
                              'views': clicks})
 
                 historical_data_names = ["hist_data_city_area", "hist_data_municipality"]
-                if all(name in info.keys() for name in historical_data_names):
+                if all(name in info for name in historical_data_names):
                     self.harmonize_data_sets(info)
 
                 LOGGER.success("'housing_stat_information' successfully retrieved")
 
                 return info
-            else:
-                raise ValueError('No ad statistics found')
+            raise ValueError('No ad statistics found')
 
         except Exception as no_ownership_history_exception:
             LOGGER.debug("[{}] No housing statistics found!, exited with '{}'".format(

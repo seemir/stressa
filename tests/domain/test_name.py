@@ -19,13 +19,12 @@ class TestName:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.name = Name("Ola")
+        self.name = Name("Ola")
 
     def test_name_is_instance_of_value_and_address(self):
         """

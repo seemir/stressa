@@ -17,7 +17,7 @@ FINN_OWNER_URL = "https://finn.no/realestate/ownershiphistory.html?finnkode="
 FINN_STAT_URL = "https://www.finn.no/prisstatistikk/"
 FINN_COMMUNITY_URL = "https://profil.nabolag.no/"
 
-PORTALEN_URL = "https://finansportalen.no/feed/v3/bank/boliglan.atom"
+PORTALEN_URL = "https://www.finansportalen.no/services/feed/v3/bank/boliglan.atom"
 PORTALEN_CRED = tuple(os.environ.get(cred) for cred in ["PORTALEN_USERNAME", "PORTALEN_PASSWORD"])
 PORTALEN_ENTRY = "{http://www.w3.org/2005/Atom}entry"
 

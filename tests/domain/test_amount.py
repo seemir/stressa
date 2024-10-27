@@ -22,13 +22,12 @@ class TestAmount:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.amount = Amount("90210")
+        self.amount = Amount("90210")
 
     def test_amount_is_instance_of_value_and_amount(self):
         """

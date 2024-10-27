@@ -19,14 +19,13 @@ class TestFinnOwnershipHistoryConnector:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.finn_code = "144857770"
-        cls.connector_finn_ownership_history = FinnOwnershipHistoryConnector(cls.finn_code)
+        self.finn_code = "144857770"
+        self.connector_finn_ownership_history = FinnOwnershipHistoryConnector(self.finn_code)
 
     def test_connector_finn_ownership_history_is_instance_of_operation(self):
         """
@@ -67,7 +66,12 @@ class TestFinnOwnershipHistoryConnector:
 
         """
         ownership_history = self.connector_finn_ownership_history.run()
-        assert ownership_history["historikk"] == {
-            'Boligtype': {0: 'Frittliggende enebolig', 1: 'Frittliggende enebolig'},
-            'Pris': {0: '67\xa0000\xa0000 kr', 1: '3\xa0950\xa0000 kr'},
-            'Tinglyst': {0: '08.02.2022', 1: '30.06.1994'}}
+        assert ownership_history["historikk"] == {'Boligidentifikasjon': ['', '', '', ''],
+                                                  'Boligtype': ['Frittliggende enebolig',
+                                                                'Annet',
+                                                                'Frittliggende enebolig',
+                                                                'Frittliggende enebolig'],
+                                                  'Pris': ['67 000 000 kr', '35 500 000 kr',
+                                                           '25 250 000 kr', '3 950 000 kr'],
+                                                  'Tinglyst': ['08.02.2022', '23.03.2017',
+                                                               '13.10.2014', '30.06.1994']}

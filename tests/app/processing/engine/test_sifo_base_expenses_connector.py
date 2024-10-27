@@ -21,13 +21,12 @@ class TestSifoBaseExpensesConnector:
 
     """
 
-    @classmethod
-    def setup(cls):
+    def setup_method(self):
         """
         Executed before all tests
 
         """
-        cls.family = Family([Male(30), Female(29)], income=850000, fossil_cars=1, select_year=2021)
+        self.family = Family([Male(30), Female(29)], income=850000, fossil_cars=1, select_year=2021)
 
     def test_connector_sifo_base_expenses_is_instance_of_operation(self):
         """

@@ -27,16 +27,21 @@ class TestPosten:
 
     """
 
-    @staticmethod
-    def test_posten_is_instance_of_connector():
+    def setup_method(self):
+        """
+        setup that is run before every tests
+
+        """
+        self.posten = Posten("0010")
+
+    def test_posten_is_instance_of_connector(self):
         """
         Test that Posten connector is instance and subclass of connector
 
         """
-        posten = Posten("0010")
-        assert isinstance(posten, Posten)
-        assert isinstance(posten, Connector)
-        assert issubclass(posten.__class__, Connector)
+        assert isinstance(self.posten, Posten)
+        assert isinstance(self.posten, Connector)
+        assert issubclass(self.posten.__class__, Connector)
 
     @staticmethod
     @pt.mark.parametrize("invalid_postal_code_type", [90210, 90210.0, True, [], (), {}])
@@ -48,25 +53,21 @@ class TestPosten:
         with pt.raises(TypeError):
             Posten(invalid_postal_code_type)
 
-    @staticmethod
-    def test_posten_has_uuid4_compatible_id():
+    def test_posten_has_uuid4_compatible_id(self):
         """
         Test Posten connector has uuid4 compatible ids
 
         """
-        posten = Posten("0010")
-        assert UUID(str(posten.id_))
+        assert UUID(str(self.posten.id_))
 
-    @staticmethod
     @pt.mark.parametrize("postal_code", ["0010", "0018", "0021", "0026", "0027"])
-    def test_postal_code_gets_set(postal_code):
+    def test_postal_code_gets_set(self, postal_code):
         """
         Test that postal code gets set in Posten connector object
 
         """
-        posten = Posten("0010")
-        posten.postal_code = postal_code
-        assert posten.postal_code == postal_code
+        self.posten.postal_code = postal_code
+        assert self.posten.postal_code == postal_code
 
     @staticmethod
     @pt.mark.parametrize("invalid_postal_code", ["0", "00", "000", "+0", "0+", "-1"])
@@ -80,73 +81,61 @@ class TestPosten:
         with pt.raises(TrackingError):
             Posten.validate_postal_code(invalid_postal_code)
 
-    @staticmethod
-    def test_posten_response_method():
+    def test_posten_response_method(self):
         """
         Test that response method returns HTTP code 200: OK
 
         """
-        posten = Posten("0010")
-        response = posten.response()
+        response = self.posten.response()
         assert response.status_code == 200
 
-    @staticmethod
-    def test_postal_code_info_method():
+    def test_postal_code_info_method(self):
         """
         Test that postal_code_info method return correct content
 
         """
-        posten = Posten("0010")
         correct_content = {'postnr': '0010', 'poststed': 'OSLO',
                            'kommune': 'OSLO', 'fylke': 'OSLO'}
-        assert posten.postal_code_info() == correct_content
+        assert self.posten.postal_code_info() == correct_content
 
-    @staticmethod
     @mock.patch("requests.get", mock.MagicMock(side_effect=ConnectTimeout))
-    def test_response_throws_tracking_error_for_read_timeout():
+    def test_response_throws_tracking_error_for_read_timeout(self):
         """
         Test that response method throws TrackingError if ConnectTimeout
 
         """
-        posten = Posten("0010")
         with pt.raises(TrackingError):
-            posten.response()
+            self.posten.response()
 
-    @staticmethod
     @mock.patch("requests.get", mock.MagicMock(side_effect=ConnectError))
-    def test_response_throws_tracking_error_for_no_connection_error():
+    def test_response_throws_tracking_error_for_no_connection_error(self):
         """
         Test that response method throws TrackingError if ConnectError
 
         """
-        posten = Posten("0010")
         with pt.raises(TrackingError):
-            posten.response()
+            self.posten.response()
 
-    @staticmethod
     @mock.patch("source.app.connectors.posten.Posten.response", mock.MagicMock(return_value=""))
-    def test_postal_code_info_throws_not_found_error():
+    def test_postal_code_info_throws_not_found_error(self):
         """
         Patch that mocks Posten.response() method to return '' and accordingly
         throws TrackingError if NotFoundError when calling postal_code_info() method
 
         """
-        posten = Posten("0010")
         with pt.raises(TrackingError):
-            posten.postal_code_info()
+            self.posten.postal_code_info()
 
-    @staticmethod
     @mock.patch("source.app.connectors.posten.Posten.postal_code_info",
                 mock.MagicMock(return_value=""))
-    def test_to_json():
+    def test_to_json(self):
         """
         Test that staticmethod to_json() produces json file with correct content
 
         """
-        posten = Posten("0010")
         current_dir = os.path.dirname(__file__)
         file_dir = os.path.join(current_dir, "report", "json")
-        posten.to_json(file_dir=file_dir)
+        self.posten.to_json(file_dir=file_dir)
         with open(os.path.join(file_dir, os.listdir(file_dir)[-1])) as json_file:
             data = json.load(json_file)
             assert data == ""
