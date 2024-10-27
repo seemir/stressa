@@ -282,6 +282,13 @@ class StatisticsModel(Model):
                 else:
                     if key not in ["municipality", "city_area"]:
                         getattr(self.parent.ui_form, "line_edit_" + key).clear()
+                    else:
+                        self.parent.label_city_area_sqm_price.setText("KMP (område)")
+                        self.parent.label_sales_city_area.setText("Salg (område)")
+                        self.parent.label_municipality_sqm_price.setText(
+                            "KMP (kommune)")
+                        self.parent.label_sales_municipality.setText("Salg (kommune)")
+
         self.configure_charts(prefix)
 
     def configure_charts(self, prefix):

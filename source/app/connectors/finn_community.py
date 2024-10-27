@@ -92,9 +92,6 @@ class FinnCommunity(Finn):
         try:
             community_stat_soup = BeautifulSoup(response.content, "lxml")
 
-            # with open('content.html', 'w', encoding='utf-8') as file:
-            #     file.write(community_stat_soup.prettify())
-
             nabolag_soup = json.loads(
                 community_stat_soup.find("script", attrs={"id": "__NEXT_DATA__"}).contents[0])
 
@@ -103,9 +100,6 @@ class FinnCommunity(Finn):
                 raise AttributeError("empty community data")
 
             info.update({"nabolag": nabolag})
-
-            # with open('community_data.json', 'w', encoding='utf-8') as file:
-            #     json.dump(info, file, ensure_ascii=False, indent=4)
 
             LOGGER.success("'community_stat_information' successfully retrieved")
             return info

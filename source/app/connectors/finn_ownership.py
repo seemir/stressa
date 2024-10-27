@@ -7,7 +7,6 @@ Implementation of connector against Finn.no housing ownership history search
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import json
 from time import time
 from http.client import responses
 from datetime import datetime
@@ -108,11 +107,7 @@ class FinnOwnership(Finn):
                     "[{}] Not found! '{}' may be an invalid Finn code".format(
                         self.__class__.__name__, self.finn_code))
 
-            owner_soup = BeautifulSoup(response.content,
-                                       "lxml")
-
-            # with open('content.html', 'w', encoding='utf-8') as file:
-            #     file.write(owner_soup.prettify())
+            owner_soup = BeautifulSoup(response.content, "lxml")
 
             info = {}
             script_tag = None

@@ -7,8 +7,6 @@ Implementation of connector against Finn.no housing ad search
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import json
-
 import pytz
 from datetime import datetime
 from time import time
@@ -112,9 +110,6 @@ class FinnAd(Finn):
                         self.__class__.__name__, self.finn_code))
 
             ad_soup = BeautifulSoup(response.content, "lxml")
-
-            # with open('content.html', 'w', encoding='utf-8') as file:
-            #     file.write(ad_soup.prettify())
 
             info = {}
             ad_data = None

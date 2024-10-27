@@ -47,7 +47,6 @@ class HomeModel(Model):
         self.parent.analysis_model.clear_all()
         self.parent.restructure_model.clear_all()
         self.parent.payment_model.clear_all()
-        self.parent.skatteetaten_redirect_view.skatteetaten_calculator_view.clear_all()
 
         self.parent.ui_form.line_edit_fornavn_2.setFocus()
         self.parent.ui_form.tab_widget_lanesokere.setCurrentIndex(0)

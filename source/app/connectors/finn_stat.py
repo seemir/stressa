@@ -9,10 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 import base64
 from time import time
-from typing import Union
-from datetime import datetime
 
-import json
 from http.client import responses
 
 import asyncio
@@ -25,10 +22,10 @@ import numpy as np
 import json_repair
 
 from source.util import LOGGER, TimeOutError, NoConnectionError, Assertor, Tracking
-from source.domain import Amount, Money
+from source.domain import Amount
 
-from source.app.connectors.settings import FINN_STAT_URL, TIMEOUT
-from source.app.connectors.finn import Finn
+from .settings import FINN_STAT_URL, TIMEOUT
+from .finn import Finn
 
 
 class FinnStat(Finn):
@@ -96,11 +93,7 @@ class FinnStat(Finn):
             "trying to retrieve 'housing_stat_information' for -> '{}'".format(self.finn_code))
         response = asyncio.run(self.stat_response())
         try:
-            info = {}
             stat_soup = BeautifulSoup(response, "lxml")
-
-            # with open('content.html', 'w', encoding='utf-8') as file:
-            #     file.write(stat_soup.prettify())
 
             info = {}
             price_statistics = None
@@ -108,7 +101,7 @@ class FinnStat(Finn):
 
             sqm_price = ''
             clicks = ''
-            entity_variable = ''
+            dimension_sqm_price = ''
             municipality_sqm_price = ''
 
             for script in stat_soup.find_all('script'):
@@ -153,7 +146,7 @@ class FinnStat(Finn):
                         price_statistics_data = response['data']
 
                         if 'sqmPrice' in price_statistics_data:
-                            sqm_price = Money(str(price_statistics_data['sqmPrice'])).value()
+                            sqm_price = Amount(str(price_statistics_data['sqmPrice'])).amount
 
                         if 'clicks' in price_statistics_data:
                             clicks = Amount(str(price_statistics_data['clicks'])).amount
@@ -165,40 +158,56 @@ class FinnStat(Finn):
 
                                 for i, entity in enumerate(real_estate_sales_data):
 
-                                    entity_area_data = real_estate_sales_data[i]
+                                    dimension_count = 0
+                                    dimension_history_data = {}
+                                    dimension_data = real_estate_sales_data[i]
 
                                     if i == 0:
-                                        entity_variable = entity_variable
-                                        entity_name = 'city_area_sqm_price'
-                                        area_details = {
-                                            'city_area': entity_area_data['locationDetails']}
+                                        dimension_sqm_price = dimension_sqm_price
+                                        dimension_sqm_price_name = 'city_area_sqm_price'
+                                        dimension_area_details = {
+                                            'city_area': dimension_data['locationDetails']}
+                                        dimension_count_name = 'hist_data_city_area_count'
+                                        dimension_area_hist_data_name = 'hist_data_city_area'
                                     elif i == 1:
-                                        entity_variable = municipality_sqm_price
-                                        entity_name = 'municipality_sqm_price'
-                                        area_details = {
-                                            'municipality': entity_area_data['locationDetails']}
+                                        dimension_sqm_price = municipality_sqm_price
+                                        dimension_sqm_price_name = 'municipality_sqm_price'
+                                        dimension_area_details = {
+                                            'municipality': dimension_data['locationDetails']}
+                                        dimension_count_name = 'hist_data_municipality_count'
+                                        dimension_area_hist_data_name = 'hist_data_municipality'
                                     else:
                                         break
 
-                                    if 'histData' in entity_area_data:
+                                    if 'histData' in dimension_data:
 
-                                        entity_area_history_data = {}
-                                        entity_area_hist_data = entity_area_data['histData']
+                                        entity_area_hist_data = dimension_data['histData']
 
                                         for price_info in entity_area_hist_data:
                                             entity_sqm_price = price_info['sqmPrice']
                                             entity_number_of_sales = price_info['numberOfSales']
-                                            entity_area_history_data.update(
+                                            entity_sales_count = price_info['numberOfSales']
+                                            dimension_history_data.update(
                                                 {entity_sqm_price: entity_number_of_sales})
+                                            dimension_count += entity_sales_count
 
-                                        entity_variable = self.calculate_average(
-                                            entity_area_history_data)
+                                        dimension_sqm_price = self.calculate_average(
+                                            dimension_history_data)
 
-                                    info.update(area_details)
-                                    info.update({entity_name: Money(entity_variable).value()})
+                                    info.update(dimension_area_details)
+                                    info.update(
+                                        {dimension_sqm_price_name: dimension_sqm_price + " kr/m²"})
+                                    info.update(
+                                        {dimension_count_name: Amount(str(dimension_count)).amount})
+                                    info.update(
+                                        {dimension_area_hist_data_name: dimension_history_data})
 
-                info.update({'sqm_price': sqm_price,
+                info.update({'sqm_price': sqm_price + " kr/m²",
                              'views': clicks})
+
+                historical_data_names = ["hist_data_city_area", "hist_data_municipality"]
+                if all(name in info.keys() for name in historical_data_names):
+                    self.harmonize_data_sets(info)
 
                 LOGGER.success("'housing_stat_information' successfully retrieved")
 
@@ -206,18 +215,6 @@ class FinnStat(Finn):
             else:
                 raise ValueError('No ad statistics found')
 
-            # stat_data = json.loads(
-            #     stat_soup.find("script", attrs={"type": "application/json"}).contents[0])
-            #
-            # optional_sqm_price = [str(value.get_text()).replace(u"\xa0", "") for
-            #                       value in stat_soup.find_all("strong",
-            #                                                   attrs={"style": "min-width:10px"})]
-            #
-            # info.update(self.extract_sqm_price(stat_data, info, optional_sqm_price))
-            # info.update(self.extract_view_statistics(stat_data, info))
-            # info.update(self.extract_published_statistics(stat_data, info))
-            # info.update(self.extract_area_sales_statistics(stat_data, info))
-            # info.update(self.calculate_sqm_price_areas(info))
         except Exception as no_ownership_history_exception:
             LOGGER.debug("[{}] No housing statistics found!, exited with '{}'".format(
                 self.__class__.__name__, no_ownership_history_exception))
@@ -232,58 +229,6 @@ class FinnStat(Finn):
         self.save_json(self.housing_stat_information(), file_dir, file_prefix="HousingStatInfo_")
         LOGGER.success(
             "'housing_stat_information' successfully parsed to JSON at '{}'".format(file_dir))
-
-    @Tracking
-    def extract_area_sales_statistics(self, areal_sales_statistics: dict, info: dict):
-        """
-        method for extracting the detail view statistics
-
-        Parameters
-        ----------
-        areal_sales_statistics  : dict
-                                  dictionary with area sales statistics
-        info                    : dict
-                                  dictionary to store results
-
-        Returns
-        -------
-        out                     : dict
-                                  dictionary with results
-
-        """
-        Assertor.assert_data_types([areal_sales_statistics, info], [dict, dict])
-        historical_data_names = ["hist_data_city_area", "hist_data_municipality"]
-        location_name = ["city_area", "municipality"]
-        for prop, value in areal_sales_statistics.items():
-            if prop.lower() == 'props':
-                for pro, val in value.items():
-                    if pro.lower() == 'pageprops':
-                        for pr_name, vl_name in val.items():
-                            if pr_name.lower() == 'locationhistory':
-                                for i, data in enumerate(vl_name):
-                                    if len(areal_sales_statistics) == 3:
-                                        if i == 0:
-                                            continue
-                                        i -= 1
-                                    for prop_val, value_name in data.items():
-                                        if prop_val.lower() == "locationdetails":
-                                            if value_name:
-                                                if "name" in value_name[0]:
-                                                    info.update(
-                                                        {location_name[i]: value_name[0]["name"]})
-                                        elif prop_val.lower() == "histdata":
-                                            historical_values = {}
-                                            for ke_val, va_name in value_name.items():
-                                                historical_values.update(
-                                                    {int(ke_val): int(va_name)})
-                                            info.update(
-                                                {historical_data_names[i]: historical_values})
-                                            info.update(
-                                                {historical_data_names[i] + "_count": Amount(
-                                                    str(sum(historical_values.values()))).amount})
-        if all(name in info.keys() for name in historical_data_names):
-            self.harmonize_data_sets(info)
-        return info
 
     @Tracking
     def calculate_sqm_price_areas(self, info: dict):
@@ -362,8 +307,3 @@ class FinnStat(Finn):
             sums += num
         average = Amount(str(round(sum(products) / sums))).amount if sums != 0 else "0"
         return average
-
-# if __name__ == '__main__':
-#     finn_stat = FinnStat('357198989')
-#
-#     print(finn_stat.housing_stat_information())
