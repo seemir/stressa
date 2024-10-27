@@ -25,4 +25,4 @@ class TestValue:
 
         """
         with pt.raises(TypeError):
-            Value()
+            Value() # pylint: disable=abstract-class-instantiated

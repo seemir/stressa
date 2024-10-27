@@ -35,4 +35,4 @@ class TestEntity:
 
         """
         with pt.raises(TypeError):
-            Entity()
+            Entity() # pylint: disable=abstract-class-instantiated

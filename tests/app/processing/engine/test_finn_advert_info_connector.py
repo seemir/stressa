@@ -55,9 +55,9 @@ class TestFinnAdvertInfoConnector:
         assert self.connector_finn_advert_info.name == self.connector_finn_advert_info.__class__. \
             __name__
         assert self.connector_finn_advert_info.finn_code == self.finn_code
-        assert self.connector_finn_advert_info.desc == "from: '{}\\<[finn_code]\\>' " \
-                                                       "\\n id: FINN Advert Info " \
-                                                       "Connector".format(FINN_AD_URL)
+        assert self.connector_finn_advert_info.desc == f"from: '{FINN_AD_URL}\\<[finn_code]\\>' " \
+                                                       f"\\n id: FINN Advert Info " \
+                                                       f"Connector"
 
     def test_connector_finn_advert_info_run_method(self):
         """

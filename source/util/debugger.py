@@ -27,8 +27,7 @@ class Debugger(Tracking):
             return function
         except Exception as debugger_exception:
             if self.func.__name__ == "__init__":
-                msg = "[{}] -> '{}'".format(self.type.__name__, debugger_exception)
+                msg = f"[{self.type.__name__}] -> '{debugger_exception}'"
             else:
-                msg = "[{}.{}] -> '{}'".format(self.type.__name__,
-                                               self.func.__name__, debugger_exception)
+                msg = f"[{self.type.__name__}.{self.func.__name__}] -> '{debugger_exception}'"
             LOGGER.debug(msg)

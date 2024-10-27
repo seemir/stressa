@@ -55,6 +55,7 @@ class TestFinnStatisticsInfoConnector:
         name = self.connector_finn_statistics_info.__class__.__name__
         assert self.connector_finn_statistics_info.name == name
         assert self.connector_finn_statistics_info.finn_code == self.finn_code
-        assert self.connector_finn_statistics_info.desc == "from: '{}\\<[finn_code]\\>' " \
-                                                           "\\n id: FINN Statistics " \
-                                                           "Info Connector".format(FINN_STAT_URL)
+        assert self.connector_finn_statistics_info.desc == f"from: " \
+                                                           f"'{FINN_STAT_URL}\\<[finn_code]\\>' " \
+                                                           f"\\n id: FINN Statistics " \
+                                                           f"Info Connector"

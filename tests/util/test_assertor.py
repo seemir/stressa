@@ -26,7 +26,7 @@ class TestAssertor:
 
         """
         with pt.raises(TypeError):
-            Assertor()
+            Assertor()  # pylint: disable=abstract-class-instantiated
 
     @staticmethod
     @pt.mark.parametrize('correct_data_types', [str, float, bool, tuple, list, dict, (list, dict)])

@@ -30,7 +30,7 @@ class TestConnector:
 
         """
         with pt.raises(TypeError):
-            Connector()
+            Connector()  # pylint: disable=abstract-class-instantiated
 
     @staticmethod
     @pt.mark.parametrize("file_content", [{"foo": "bar"}])
@@ -41,7 +41,8 @@ class TestConnector:
         """
         current_dir = os.path.dirname(__file__)
         file_dir = os.path.join(current_dir, "report", "json")
-        Connector.save_json(file_content, file_dir=file_dir)
+        Connector.save_json(file_content,
+                            file_dir=file_dir)
         with open(os.path.join(file_dir, os.listdir(file_dir)[-1]), encoding='utf-8') as json_file:
             data = json.load(json_file)
             assert data == file_content
@@ -56,4 +57,6 @@ class TestConnector:
 
         """
         with pt.raises(OSError):
-            Connector.save_json(file_object, file_dir=invalid_file_dir)
+            Connector.save_json(
+                file_object,
+                file_dir=invalid_file_dir)

@@ -38,7 +38,7 @@ class TestProcess:
 
         """
         with pt.raises(TypeError):
-            Process("test_process")
+            Process("test_process") # pylint: disable=abstract-class-instantiated
 
     @staticmethod
     def test_process_class_variables():

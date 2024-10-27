@@ -47,9 +47,8 @@ class Tracking:
             return function
         except Exception as tracking_exception:
             if self.func.__name__ == "__init__":
-                msg = "[{}] -> {}".format(self.type.__name__, tracking_exception)
+                msg = f"[{self.type.__name__}] -> {tracking_exception}"
             else:
-                msg = "[{}.{}] -> {}".format(self.type.__name__,
-                                             self.func.__name__, tracking_exception)
+                msg = f"[{self.type.__name__}.{self.func.__name__}] -> {tracking_exception}"
             LOGGER.exception(msg)
             raise TrackingError(msg)

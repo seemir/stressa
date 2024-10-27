@@ -42,7 +42,7 @@ def logging(file_path=None, file_name="app.log"):
         log.add(log_file, rotation="00:00")
         return log
     except Exception as log_exception:
-        raise OSError("an error occurred with: {}".format(log_exception))
+        raise OSError(f"an error occurred with: {log_exception}")
 
 
 LOGGER = logging()

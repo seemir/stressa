@@ -55,8 +55,7 @@ class TestValidateFinnCode:
         name = self.validate_finn_code.__class__.__name__
         assert self.validate_finn_code.name == name
         assert self.validate_finn_code.finn_code == self.finn_code
-        assert self.validate_finn_code.desc == "rules: {} \\n id: Validate Finn Code".format(
-            Finn.rules())
+        assert self.validate_finn_code.desc == f"rules: {Finn.rules()} \\n id: Validate Finn Code"
 
     @pt.mark.parametrize('invalid_finn_code', ["1965426", "1965426351", "3953632150"])
     def test_validate_finn_code_run_method(self, invalid_finn_code):

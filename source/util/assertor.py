@@ -36,12 +36,11 @@ class Assertor(ABC):
             if not isinstance(arg, dtype):
                 try:
                     raise TypeError(
-                        "expected type '{}', got '{}' instead".format(dtype.__name__,
-                                                                      arg.__class__.__name__))
+                        f"expected type '{dtype.__name__}', got '{arg.__class__.__name__}' instead")
                 except AttributeError:
+                    dtypes = ", ".join(dt.__name__ for dt in dtype)
                     raise TypeError(
-                        "expected type 'Union[{}]', got '{}' instead".format(
-                            ", ".join(dt.__name__ for dt in dtype), arg.__class__.__name__))
+                        f"expected type 'Union[{dtypes}]', got '{arg.__class__.__name__}' instead")
 
     @staticmethod
     def assert_arguments(obj_list: list, possible_list: list):
@@ -61,8 +60,7 @@ class Assertor(ABC):
             possible = possible_list[i]
             for name, value in possible.items():
                 if obj and obj not in value:
-                    raise ValueError(
-                        "only possible values for '{}' are {}".format(name, value))
+                    raise ValueError(f"only possible values for '{name}' are {value}")
 
     @staticmethod
     def assert_non_negative(numbers, msg=""):

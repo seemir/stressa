@@ -55,10 +55,10 @@ class TestFinnOwnershipHistoryConnector:
         name = self.connector_finn_ownership_history.__class__.__name__
         assert self.connector_finn_ownership_history.name == name
         assert self.connector_finn_ownership_history.finn_code == self.finn_code
-        assert self.connector_finn_ownership_history.desc == "from: '{}\\<[finn_code]\\>' " \
-                                                             "\\n id: FINN Ownership " \
-                                                             "History Connector".format(
-            FINN_OWNER_URL)
+        assert self.connector_finn_ownership_history.desc == f"from: '{FINN_OWNER_URL}" \
+                                                             f"\\<[finn_code]\\>' " \
+                                                             f"\\n id: FINN Ownership " \
+                                                             f"History Connector"
 
     def test_connector_finn_ownership_history_run_method(self):
         """

@@ -38,7 +38,7 @@ class SplashView(QDialog):
         Assertor.assert_data_types([app], [QApplication])
         super().__init__()
         self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/splash_form.ui"), self)
-        self.ui.setWindowTitle("Stressa - v.{}".format(__version__))
+        self.ui.setWindowTitle(f"Stressa - v.{__version__}")
         self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self.app = app
 

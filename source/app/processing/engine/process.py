@@ -227,6 +227,8 @@ class Process(Dot, ABC):
         if not os.path.exists(procedure_dir):
             os.makedirs(procedure_dir)
         if output_format == 'pdf':
-            self.write_pdf(os.path.join(procedure_dir, f"{file_name[1:]}.pdf"))
+            self.write_pdf(  # pylint: disable=no-member
+                os.path.join(procedure_dir, f"{file_name[1:]}.pdf"))
         elif output_format == 'png':
-            self.write_png(os.path.join(procedure_dir, f"{file_name[1:]}.png"))
+            self.write_png(  # pylint: disable=no-member
+                os.path.join(procedure_dir, f"{file_name[1:]}.png"))

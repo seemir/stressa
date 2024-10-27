@@ -65,7 +65,7 @@ class Dao:
                   all active db names
 
         """
-        return self._client.list_database_names()
+        return self._client.list_database_names()  # pylint: disable=no-member
 
     def get_all_collections(self, db_name: str):
         """
