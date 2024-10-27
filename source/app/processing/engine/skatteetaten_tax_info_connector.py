@@ -86,8 +86,8 @@ class SkatteetatenTaxInfoConnector(Operation):
         """
         Assertor.assert_data_types([tax_form], [TaxForm])
         super().__init__(name=self.__class__.__name__,
-                         desc="from: '{}\\{}' \n id: Skatteetaten Tax Info Connector".format(
-                             SKATTEETATEN_URL, tax_form.tax_year))
+                         desc=f"from: '{SKATTEETATEN_URL}\\{tax_form.tax_year}' \n "
+                              f"id: Skatteetaten Tax Info Connector")
         self.tax_form = tax_form
 
     @Tracking
@@ -116,6 +116,6 @@ class SkatteetatenTaxInfoConnector(Operation):
 
         final_tax_info = {}
         for key, value in dict(sorted(tax_info.tax_information().items())).items():
-            if key in self._tax_value_mapping.keys():
+            if key in self._tax_value_mapping:
                 final_tax_info.update({self._tax_value_mapping[key]: value})
         return final_tax_info

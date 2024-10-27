@@ -54,8 +54,8 @@ class FinnStat(Finn):
 
         Returns
         -------
-        our     : requests.models.Response
-                  response with housing statistics information
+        requests.models.Response
+            response with housing statistics information
 
         """
         try:
@@ -63,21 +63,23 @@ class FinnStat(Finn):
                 start = time()
                 async with ClientSession(timeout=ClientTimeout(TIMEOUT)) as session:
                     async with session.get(
-                            FINN_STAT_URL + "{}".format(self.finn_code)) as stat_response:
+                            f"{FINN_STAT_URL}{self.finn_code}") as stat_response:
                         stat_status_code = stat_response.status
                         elapsed = self.elapsed_time(start)
                         LOGGER.info(
-                            "HTTP status code -> STATISTICS: [{}: {}] -> elapsed: {}".format(
-                                stat_status_code, responses[stat_status_code], elapsed))
+                            f"HTTP status code -> STATISTICS: [{stat_status_code}: "
+                            f"{responses[stat_status_code]}] -> elapsed: {elapsed}"
+                        )
                         return await stat_response.content.read()
             except TError:
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system administrator")
+                    "Timeout occurred - please try again later or contact system administrator"
+                )
         except ClientConnectionError as finn_stat_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator, exited with '{}'".format(
-                    finn_stat_response_error))
+                f"Failed HTTP request - please ensure that internet access is provided to the "
+                f"client or contact system administrator, exited with '{finn_stat_response_error}'"
+            )
 
     @Tracking
     def housing_stat_information(self):
@@ -86,11 +88,12 @@ class FinnStat(Finn):
 
         Returns
         -------
-        out     : dict
+        dict
 
         """
         LOGGER.info(
-            "trying to retrieve 'housing_stat_information' for -> '{}'".format(self.finn_code))
+            f"trying to retrieve 'housing_stat_information' for -> '{self.finn_code}'"
+        )
         response = asyncio.run(self.stat_response())
         try:
             stat_soup = BeautifulSoup(response, "lxml")
@@ -196,13 +199,13 @@ class FinnStat(Finn):
 
                                     info.update(dimension_area_details)
                                     info.update(
-                                        {dimension_sqm_price_name: dimension_sqm_price + " kr/m²"})
+                                        {dimension_sqm_price_name: f"{dimension_sqm_price} kr/m²"})
                                     info.update(
                                         {dimension_count_name: Amount(str(dimension_count)).amount})
                                     info.update(
                                         {dimension_area_hist_data_name: dimension_history_data})
 
-                info.update({'sqm_price': sqm_price + " kr/m²",
+                info.update({'sqm_price': f"{sqm_price} kr/m²",
                              'views': clicks})
 
                 historical_data_names = ["hist_data_city_area", "hist_data_municipality"]
@@ -215,8 +218,9 @@ class FinnStat(Finn):
             raise ValueError('No ad statistics found')
 
         except Exception as no_ownership_history_exception:
-            LOGGER.debug("[{}] No housing statistics found!, exited with '{}'".format(
-                self.__class__.__name__, no_ownership_history_exception))
+            LOGGER.debug(
+                f"[{self.__class__.__name__}] No housing statistics found!, exited with "
+                f"'{no_ownership_history_exception}'")
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):
@@ -227,7 +231,8 @@ class FinnStat(Finn):
         Assertor.assert_data_types([file_dir], [str])
         self.save_json(self.housing_stat_information(), file_dir, file_prefix="HousingStatInfo_")
         LOGGER.success(
-            "'housing_stat_information' successfully parsed to JSON at '{}'".format(file_dir))
+            f"'housing_stat_information' successfully parsed to JSON at '{file_dir}'"
+        )
 
     @Tracking
     def calculate_sqm_price_areas(self, info: dict):
@@ -243,11 +248,15 @@ class FinnStat(Finn):
         Assertor.assert_data_types([info], [dict])
         if all(name in info.keys() for name in ["hist_data_city_area",
                                                 "hist_data_municipality"]):
+            hist_data_city_area = info['hist_data_city_area']
+            hist_data_municipality = info['hist_data_municipality']
+
             info.update(
-                {"city_area_sqm_price": self.calculate_average(
-                    info["hist_data_city_area"]) + " kr/m²"})
-            info.update({"municipality_sqm_price": self.calculate_average(
-                info["hist_data_municipality"]) + " kr/m²"})
+                {"city_area_sqm_price": f"{self.calculate_average(hist_data_city_area)} "
+                                        f"kr/m²"})
+            info.update(
+                {"municipality_sqm_price": f"{self.calculate_average(hist_data_municipality)} "
+                                           f"kr/m²"})
             return info
 
     @Tracking

@@ -34,8 +34,8 @@ class FinnCommunityStatisticsConnector(Operation):
         self.name = self.__class__.__name__
         Assertor.assert_data_types([finn_code], [str])
         super().__init__(name=self.name,
-                         desc="from: '{}\\<[finn_code]\\>' \\n id: FINN Community"
-                              "Statistics Connector".format(FINN_COMMUNITY_URL))
+                         desc=f"from: '{FINN_COMMUNITY_URL}\\<[finn_code]\\>' \\n id: "
+                              f"FINN Community Statistics Connector")
         self.finn_code = finn_code
 
     @Tracking

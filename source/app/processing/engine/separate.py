@@ -33,7 +33,7 @@ class Separate(Operation):
         """
         self.name = self.__class__.__name__
         Assertor.assert_data_types([data, desc], [list, str])
-        super().__init__(name=self.name, desc="id: {}".format(desc))
+        super().__init__(name=self.name, desc=f"id: {desc}")
         self.data = data
 
     @Tracking

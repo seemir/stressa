@@ -64,7 +64,7 @@ class Restructure(Operation):
         """
         self.name = self.__class__.__name__
         Assertor.assert_data_types([data, desc], [dict, str])
-        super().__init__(name=self.name, desc="id: {}".format(desc))
+        super().__init__(name=self.name, desc=f"id: {desc}")
         self.data = data
 
     @Tracking
@@ -88,7 +88,7 @@ class Restructure(Operation):
                             else:
                                 group.append(
                                     self._categories[val].capitalize()
-                                    if val in self._categories.keys() else val.capitalize())
+                                    if val in self._categories else val.capitalize())
                         elif key in ("percent", "total"):
                             for prop, elem in val.items():
                                 if prop == "neighborhood":

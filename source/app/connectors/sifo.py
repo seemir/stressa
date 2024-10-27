@@ -9,7 +9,6 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from time import time
-
 from http.client import responses
 from urllib.error import URLError
 import requests
@@ -41,7 +40,7 @@ class Sifo(Connector):
             Assertor.assert_data_types([family], [Family])
             self._family = family
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
+                f"created '{self.__class__.__name__}', with id: [{self.id_}]")
         except Exception as sifo_exception:
             LOGGER.exception(sifo_exception)
             raise sifo_exception
@@ -84,25 +83,24 @@ class Sifo(Connector):
             parsed_sifo_url = SIFO_URL
 
             for key, item in self.family.sifo_properties().items():
-                parsed_sifo_url = parsed_sifo_url + key + '=' + item + '&'
+                parsed_sifo_url = f"{parsed_sifo_url}{key}={item}&"
 
             response = requests.post(url=parsed_sifo_url, timeout=TIMEOUT)
             status_code = response.status_code
 
             elapsed = self.elapsed_time(start)
             LOGGER.info(
-                "HTTP status code -> SIFO: [{}: {}] -> elapsed: {}".format(
-                    status_code, responses[status_code], elapsed))
+                f"HTTP status code -> SIFO: [{status_code}: {responses[status_code]}] "
+                f"-> elapsed: {elapsed}")
             return response
         except URLError as sifo_response_error:
             if str(sifo_response_error) == "<urlopen error timed out>":
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system "
-                    "administrator, exited with '{}'".format(sifo_response_error))
+                    f"Timeout occurred - please try again later or contact system "
+                    f"administrator, exited with '{sifo_response_error}'")
             raise NoConnectionError(
-                "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator, exited with '{}'".format(
-                    sifo_response_error))
+                f"Failed HTTP request - please ensure that internet access is provided to the "
+                f"client or contact system administrator, exited with '{sifo_response_error}'")
 
     @Tracking
     def sifo_base_expenses(self, include_id: bool = False):
@@ -115,7 +113,7 @@ class Sifo(Connector):
                       dictionary with SIFO expenses
 
         """
-        LOGGER.info("trying to retrieve '{}'".format(self.sifo_base_expenses.__name__))
+        LOGGER.info(f"trying to retrieve '{self.sifo_base_expenses.__name__}'")
 
         response_json = self.response().json()["utgifter"]
 
@@ -130,11 +128,7 @@ class Sifo(Connector):
         if include_id:
             sifo_expenses.update({'_id': self.family.id_})
 
-        # import json
-        # with open('sifo_data.json', 'w', encoding='utf-8') as file:
-        #     json.dump(sifo_expenses, file, ensure_ascii=False, indent=4)
-
-        LOGGER.success("'{}' successfully retrieved".format(self.sifo_base_expenses.__name__))
+        LOGGER.success(f"'{self.sifo_base_expenses.__name__}' successfully retrieved")
         return sifo_expenses
 
     @Tracking
@@ -149,4 +143,4 @@ class Sifo(Connector):
 
         """
         self.save_json(self.sifo_base_expenses(), file_dir=file_dir, file_prefix="SifoExpenses_")
-        LOGGER.success("'sifo_expenses' successfully parsed to JSON at '{}'".format(file_dir))
+        LOGGER.success(f"'sifo_expenses' successfully parsed to JSON at '{file_dir}'")

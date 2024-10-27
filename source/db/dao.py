@@ -32,13 +32,12 @@ class Dao:
 
         """
         try:
-            LOGGER.info("trying to create '{}'".format(self.__class__.__name__))
+            LOGGER.info(f"trying to create '{self.__class__.__name__}'")
             self._id_str = str(uuid4())
             self._client = {"foo": "bar"}
             self._db = None
             self._collection = None
-            LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_str))
+            LOGGER.success(f"created '{self.__class__.__name__}', with id: [{self.id_str}]")
         except Exception as dao_exception:
             LOGGER.exception(dao_exception)
             raise dao_exception
@@ -97,14 +96,14 @@ class Dao:
         """
         try:
             LOGGER.info(
-                "trying to '{}' document(s) in collection: '{}' in db: '{}'".format(
-                    self.create.__name__, col_name, db_name))
+                f"trying to '{self.create.__name__}' document(s) in collection: '{col_name}' "
+                f"in db: '{db_name}'")
             Assertor.assert_data_types([db_name, col_name, document], [str, str, (dict, list)])
 
             if not isinstance(document, (dict, list)):
-                raise TypeError("expected type '{}', got '{}' "
-                                "instead".format((dict.__name__, list.__name__),
-                                                 type(document).__name__))
+                raise TypeError(
+                    f"expected type '{(dict.__name__, list.__name__)}', "
+                    f"got '{type(document).__name__}' instead")
 
             count = len(document) if isinstance(document, list) else len([document])
 
@@ -115,8 +114,8 @@ class Dao:
                 self._collection = self._db[col_name.lower()]
 
             self._collection.insert(document)
-            LOGGER.success("'{}' successfully completed - '{}' document(s)".format(
-                self.create.__name__, count))
+            LOGGER.success(
+                f"'{self.create.__name__}' successfully completed - '{count}' document(s)")
         except Exception as exp:
             LOGGER.exception(exp)
             raise exp
@@ -140,16 +139,16 @@ class Dao:
         """
         try:
             LOGGER.info(
-                "trying to '{}' all documents in collection: '{}' from db: '{}'".format(
-                    self.read.__name__, col_name, db_name))
+                f"trying to '{self.read.__name__}' all documents in collection: '{col_name}' "
+                f"from db: '{db_name}'")
             Assertor.assert_data_types([db_name, col_name], [str, str])
 
             documents = []
             for document in getattr(self._client[db_name.lower()], col_name.lower()).find():
                 documents.append(document)
 
-            LOGGER.success("'{}' successfully completed - '{}' document(s) found".format(
-                self.read.__name__, len(documents)))
+            LOGGER.success(f"'{self.read.__name__}' successfully completed - '{len(documents)}' "
+                           f"document(s) found")
             return documents
         except Exception as exp:
             LOGGER.exception(exp)
@@ -172,14 +171,14 @@ class Dao:
 
         """
         try:
-            LOGGER.info("trying to '{}' document '{}' with value '{}'".format(
-                self.update.__name__, query, new_value))
+            LOGGER.info(f"trying to '{self.update.__name__}' document '{query}' with value "
+                        f"'{new_value}'")
             Assertor.assert_data_types([db_name, col_name], [str, str])
 
             collection = getattr(self._client, db_name.lower())[col_name.lower()]
             collection.update_many(query, new_value)
 
-            LOGGER.success("'{}' successfully completed".format(self.update.__name__))
+            LOGGER.success(f"'{self.update.__name__}' successfully completed")
         except Exception as exp:
             LOGGER.exception(exp)
             raise exp
@@ -197,16 +196,16 @@ class Dao:
 
         """
         try:
-            LOGGER.info("trying to '{}' all documents from collection: '{}' in db: '{}'".format(
-                self.delete.__name__, col_name, db_name))
+            LOGGER.info(f"trying to '{self.delete.__name__}' all documents from collection: "
+                        f"'{col_name}' in db: '{db_name}'")
             Assertor.assert_data_types([db_name, col_name], [str, str])
 
             collection = getattr(self._client, db_name)[col_name]
             count = collection.count()
             collection.drop()
 
-            LOGGER.success("'{}' successfully completed - '{}' document(s) deleted".format(
-                self.delete.__name__, count))
+            LOGGER.success(f"'{self.delete.__name__}' successfully completed - '{count}' "
+                           f"document(s) deleted")
         except Exception as exp:
             LOGGER.exception(exp)
             raise exp

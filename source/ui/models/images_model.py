@@ -8,7 +8,6 @@ __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
 from PyQt5.QtCore import QObject
-from PyQt5.QtCore import QUrl
 
 from .model import Model
 

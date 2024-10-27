@@ -32,8 +32,7 @@ class ValidateFinnCode(Operation):
         """
         self.name = self.__class__.__name__
         Assertor.assert_data_types([finn_code], [str])
-        super().__init__(name=self.name, desc="rules: {} \\n id: Validate Finn Code".format(
-            Finn.rules()))
+        super().__init__(name=self.name, desc=f"rules: {Finn.rules()} \\n id: Validate Finn Code")
         self.finn_code = finn_code
 
     @Tracking

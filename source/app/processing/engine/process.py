@@ -42,7 +42,7 @@ class Process(Dot, ABC):
         method for starting logging and profiling of process
 
         """
-        LOGGER.info("starting '{}'".format(cls.__name__))
+        LOGGER.info(f"starting '{cls.__name__}'")
         cls.start = time()
         cls.profiling = profiling_config()
 
@@ -56,18 +56,18 @@ class Process(Dot, ABC):
         elapsed = round((time() - cls.start) * 1000, digits)
         speedup = round(cls.elapsed - elapsed, digits)
         cls.profiling.add_row(["-----------", "", "", ""])
-        cls.profiling.add_row(["total", "", "", str(elapsed) + "ms"])
+        cls.profiling.add_row(["total", "", "", f"{elapsed}ms"])
         cls.profiling.add_row(["", "", "", ""])
-        cls.profiling.add_row(["speedup", "", "", str(speedup) + "ms"])
+        cls.profiling.add_row(["speedup", "", "", f"{speedup}ms"])
         cls.profiling.add_row(
-            ["(total without speedup)", "", "", str(round(cls.elapsed, digits)) + "ms"])
-        LOGGER.success("ending '{}'".format(cls.__name__))
-        LOGGER.info("reporting profiling results -> \n\n profiling: '{}' \n\n".format(
-            cls.__name__) + str(cls.profiling) + "\n")
+            ["(total without speedup)", "", "", f"{round(cls.elapsed, digits)}ms"])
+        LOGGER.success(f"ending '{cls.__name__}'")
+        LOGGER.info(f"reporting profiling results -> \n\n profiling: '{cls.__name__}' \n\n" +
+                    f"{str(cls.profiling)}\n")
 
     def run_parallel(self, methods):
         """
-        method for running multiple independent methods in parallel using multi threading
+        method for running multiple independent methods in parallel using multi-threading
 
         Parameters
         ----------
@@ -106,7 +106,7 @@ class Process(Dot, ABC):
         """
         Assertor.assert_data_types([name], [str])
         super().__init__(name, graph_type="digraph", labelloc="t", labeljust="left",
-                         label="{} - Stressa v.{}".format(name, __version__))
+                         label=f"{name} - Stressa v.{__version__}")
         self._signal = {}
         self._exception_queue = Queue()
 
@@ -190,10 +190,7 @@ class Process(Dot, ABC):
 
         """
         Assertor.assert_data_types([key], [str])
-        if key in self.signal.keys():
-            signal = self.signal[key]
-        else:
-            signal = None
+        signal = self.signal.get(key, None)
         return signal
 
     @Tracking
@@ -223,17 +220,13 @@ class Process(Dot, ABC):
         method for printing a pdf with the procedure graph
 
         """
-        file_name = ""
-        for char in self.__class__.__name__:
-            if char.isupper():
-                file_name = file_name + "-" + char.lower()
-            else:
-                file_name = file_name + char
+        file_name = "".join(
+            f"-{char.lower()}" if char.isupper() else char for char in self.__class__.__name__)
         upper_dir = os.path.dirname
         procedure_dir = os.path.join(upper_dir(upper_dir(__file__)), "procedure")
         if not os.path.exists(procedure_dir):
             os.makedirs(procedure_dir)
         if output_format == 'pdf':
-            self.write_pdf(procedure_dir + "/" + file_name[1:] + ".pdf")
+            self.write_pdf(os.path.join(procedure_dir, f"{file_name[1:]}.pdf"))
         elif output_format == 'png':
-            self.write_png(procedure_dir + "/" + file_name[1:] + ".png")
+            self.write_png(os.path.join(procedure_dir, f"{file_name[1:]}.png"))

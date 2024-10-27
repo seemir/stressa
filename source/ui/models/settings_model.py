@@ -65,7 +65,7 @@ class SettingsModel(Model):
         settings_dir = up(up(up(__file__))) + '\\app\\processing\\engine\\tmp'
 
         if os.path.exists(settings_dir):
-            with open(settings_dir + '\\settings.json', 'r') as fp:
+            with open(settings_dir + '\\settings.json', 'r', encoding='utf-8') as fp:
                 try:
                     settings = json.load(fp)
                     self.parent.ui_form.combo_box_egenkapital_krav.setCurrentText(
@@ -89,7 +89,7 @@ class SettingsModel(Model):
             if not os.path.exists(settings_dir):
                 os.makedirs(settings_dir)
 
-            with open(settings_dir + '\\settings.json', 'w') as fp:
+            with open(settings_dir + '\\settings.json', 'w', encoding='utf-8') as fp:
                 json.dump(self.data, fp)
 
         self.parent.close()

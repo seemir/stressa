@@ -37,8 +37,8 @@ class SubModel(Operation):
         Assertor.assert_data_types([name, desc], [str, str])
         self.desc = desc
         Operation.__init__(self, name=self.name, desc=self.desc,
-                           label="\\<{}\\> \n Process: {} \\n id: {}".format(
-                               self.__class__.__name__, self.name, self.desc))
+                           label=f"\\<{self.__class__.__name__}\\> \n Process: "
+                                 f"{self.name} \\n id: {self.desc}")
 
     @abstractmethod
     def run(self):

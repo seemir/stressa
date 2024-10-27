@@ -33,8 +33,8 @@ class FinnAdvertInfoConnector(Operation):
         """
         Assertor.assert_data_types([finn_code], [str])
         super().__init__(name=self.__class__.__name__,
-                         desc="from: '{}\\<[finn_code]\\>' \\n id: "
-                              "FINN Advert Info Connector".format(FINN_AD_URL))
+                         desc=f"from: '{FINN_AD_URL}\\<[finn_code]\\>' \\n id: "
+                              "FINN Advert Info Connector")
         self.finn_code = finn_code
 
     @Tracking

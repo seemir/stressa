@@ -38,7 +38,7 @@ class Operation(Node, ABC):
         self.name = name
         Assertor.assert_data_types([name, desc], [str, str])
         self.desc = desc
-        self.label = "\\<{}\\> \\n {}".format(self.name, self.desc) if not label else label
+        self.label = f"\\<{self.name}\\> \\n {self.desc}" if not label else label
         super().__init__(name=str(uuid4()), style="filled", fillcolor="gray", shape="record",
                          label=self.label)
 

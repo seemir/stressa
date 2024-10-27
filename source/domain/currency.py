@@ -32,7 +32,7 @@ class Currency(Value):
         """
         if currency not in ["kr"]:
             raise InvalidCurrencyError(
-                "'{}' is an unsupported currency".format(currency))
+                f"'{currency}' is an unsupported currency")
 
     def __init__(self, currency: str = "kr"):
         """

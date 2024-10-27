@@ -34,8 +34,7 @@ class ValidateMortgage(Operation):
         self.name = self.__class__.__name__
         Assertor.assert_data_types([mortgage_data], [dict])
         super().__init__(name=self.name,
-                         desc="rules: {} \\n id: Validate Mortgage Information".format(
-                             Mortgage.rules()))
+                         desc=f"rules: {Mortgage.rules()} \\n id: Validate Mortgage Information")
         self.mortgage_data = mortgage_data
 
     @Tracking

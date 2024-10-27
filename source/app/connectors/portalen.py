@@ -34,8 +34,7 @@ class Portalen(Connector):
         """
         super().__init__()
         self._browser = None
-        LOGGER.success(
-            "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
+        LOGGER.success(f"created '{self.__class__.__name__}', with id: [{self.id_}]")
 
     @Tracking
     def portalen_response(self):
@@ -44,26 +43,25 @@ class Portalen(Connector):
 
         Returns
         -------
-        our     : requests.models.Response
-                  response with mortgage information
+        requests.models.Response
+            response with mortgage information
 
         """
         try:
-            try:
-                response = requests.get(PORTALEN_URL, auth=PORTALEN_CRED, timeout=TIMEOUT)
-                status_code = response.status_code
-                LOGGER.info(
-                    "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
-                return response
-            except ReadTimeout as portalen_timeout_error:
-                raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system administrator, "
-                    "exited with '{}'".format(portalen_timeout_error))
+            response = requests.get(PORTALEN_URL, auth=PORTALEN_CRED, timeout=TIMEOUT)
+            status_code = response.status_code
+            LOGGER.info(f"HTTP status code -> [{status_code}: {responses[status_code]}]")
+            return response
+        except ReadTimeout as portalen_timeout_error:
+            raise TimeOutError(
+                f"Timeout occurred - please try again later or contact system administrator, "
+                f"exited with '{portalen_timeout_error}'"
+            )
         except ConnectError as portalen_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator, exited with '{}'".format(
-                    portalen_response_error))
+                f"Failed HTTP request - please ensure that internet access is provided to the "
+                f"client or contact system administrator, exited with '{portalen_response_error}'"
+            )
 
     @Tracking
     def mortgage_offers(self):
@@ -72,16 +70,15 @@ class Portalen(Connector):
 
         Returns
         -------
-        out     : dict
-                  content from boliglån grunndata Xxml feed
+        dict
+            content from boliglån grunndata xml feed
 
         """
-        LOGGER.info("trying to retrieve '{}'".format(self.mortgage_offers.__name__))
+        LOGGER.info(f"trying to retrieve '{self.mortgage_offers.__name__}'")
 
         response = self.portalen_response()
         if response:
-            tree = Et.fromstring(response.content.decode("windows-1252")).findall(
-                PORTALEN_ENTRY)
+            tree = Et.fromstring(response.content.decode("windows-1252")).findall(PORTALEN_ENTRY)
 
             offers = {}
             count = 0
@@ -90,17 +87,18 @@ class Portalen(Connector):
                 count += 1
                 offers.update(
                     {count: {re.sub("{[^>]+}", "", entry.tag): entry.text.strip() for entry in
-                             entries if entry.text}})
+                             entries if entry.text}}
+                )
 
-            LOGGER.success("'{}' successfully retrieved".format(self.mortgage_offers.__name__))
+            LOGGER.success(f"'{self.mortgage_offers.__name__}' successfully retrieved")
             return offers
         raise InvalidDataError("No 'mortgage_offers' received")
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/mortgage_offers"):
         """
-        save mortgage offers information to JSON file
+        Save mortgage offers information to JSON file
 
         """
         self.save_json(self.mortgage_offers(), file_dir, file_prefix="MortgageOffers_")
-        LOGGER.success("'mortgage_offers' successfully parsed to JSON at '{}'".format(file_dir))
+        LOGGER.success(f"'mortgage_offers' successfully parsed to JSON at '{file_dir}'")

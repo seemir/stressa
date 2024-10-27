@@ -32,8 +32,7 @@ class SsbConnector(Operation):
         """
         self.name = self.__class__.__name__
         super().__init__(name=self.name,
-                         desc="from: '{}' \\n id: Market Interest Rate Connector".format(
-                             SSB_URL))
+                         desc=f"from: '{SSB_URL}' \\n id: Market Interest Rate Connector")
         self.cache_dir = os.path.dirname(__file__) + "\\tmp\\"
 
     @Tracking
@@ -49,7 +48,7 @@ class SsbConnector(Operation):
         """
 
         if os.path.exists(self.cache_dir):
-            with open(self.cache_dir + 'ssb_cache.json', 'r') as read_json_file:
+            with open(self.cache_dir + 'ssb_cache.json', 'r', encoding='utf-8') as read_json_file:
                 cached_request = json.load(read_json_file)
                 read_json_file.close()
 
@@ -69,7 +68,7 @@ class SsbConnector(Operation):
             cached_results = {"tid": time_of_curr_request}
             cached_results.update(market_rate)
 
-            with open(self.cache_dir + 'ssb_cache.json', 'w') as write_json_file:
+            with open(self.cache_dir + 'ssb_cache.json', 'w', encoding='utf-8') as write_json_file:
                 json.dump(cached_results, write_json_file)
                 write_json_file.close()
         else:

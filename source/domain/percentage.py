@@ -31,10 +31,9 @@ class Percentage(Value):
         try:
             Decimal(value)
         except Exception as percentage_error:
-            raise ValueError("'{}' is an invalid percentage, exited with "
-                             "'{}'".format(value, percentage_error))
-        else:
-            return value + " %"
+            raise ValueError(f"'{value}' is an invalid percentage, exited with "
+                             f"'{percentage_error}'")
+        return value + " %"
 
     def __init__(self, percentage: str):
         """

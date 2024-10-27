@@ -133,7 +133,7 @@ class BudgetView(QDialog):
         self.parent.mortgage_model.set_line_edits("", self.budget_model.total_posts,
                                                   data=self.budget_model.data)
         for budget_post in self.budget_model.total_posts:
-            if budget_post not in self.budget_model.data.keys():
+            if budget_post not in self.budget_model.data:
                 self.parent.mortgage_model.clear_line_edit(budget_post)
         self.ui_form.combo_box_interval_1.setFocus()
         self.close()

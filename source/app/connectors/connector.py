@@ -53,7 +53,7 @@ class Connector(ABC):
                                ensure_ascii=False)
             local_time = datetime.datetime.now().isoformat().replace(":", "-").replace(".", "-")
             file = open(os.path.join(file_dir, file_prefix + local_time + ".json"), "w",
-                        encoding='itf-8')
+                        encoding='utf-8')
             file.write(_json)
             file.close()
         except Exception as json_exception:

@@ -31,7 +31,7 @@ class OutputOperation(Operation):
 
         """
         Assertor.assert_data_types([desc], [str])
-        super().__init__(name=self.__class__.__name__, desc="id: {}".format(desc))
+        super().__init__(name=self.__class__.__name__, desc=f"id: {desc}")
 
     @Tracking
     def run(self):

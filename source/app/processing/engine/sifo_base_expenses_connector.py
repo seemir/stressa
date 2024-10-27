@@ -36,7 +36,7 @@ class SifoBaseExpensesConnector(Operation):
         self.name = self.__class__.__name__
         Assertor.assert_data_types([data], [Family])
         super().__init__(name=self.name,
-                         desc="from: '{}' \\n id: SIFO Base Expenses Connector".format(SIFO_URL))
+                         desc=f"from: '{SIFO_URL}' \\n id: SIFO Base Expenses Connector")
         self.data = data
 
     @Tracking

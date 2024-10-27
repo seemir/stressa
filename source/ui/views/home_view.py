@@ -34,8 +34,8 @@ from .meta_view import MetaView
 
 from .skatteetaten_calculator_view import SkatteetatenCalculatorView
 
-myappid = 'Stressa.stressa.ui.version'
-ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+MY_APP_ID = 'Stressa.stressa.ui.version'
+ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(MY_APP_ID)
 
 
 class HomeView(QMainWindow):
@@ -146,7 +146,7 @@ class HomeView(QMainWindow):
         """
         return self._payment_model
 
-    def closeEvent(self, event):
+    def closeEvent(self, event):  # pylint: disable=invalid-name
         """
         handler of closeEvents
 

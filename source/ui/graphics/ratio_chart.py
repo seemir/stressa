@@ -139,9 +139,9 @@ class RatioChart(Chart):
             percent = Percent(str(y_val / 100).replace("[", "").replace("]", ""))
 
             if min(self.x_val) <= x_val <= max(self.x_val):
-                self.label.setHtml('<div style="text-align: center">'
-                                   '<span style="font-size: 10pt">{}</span><br>'
-                                   '<span style="font-size: 10pt">{} {}</span><br>'
-                                   '<span style="font-size: 10pt">({})</span>'
-                                   '</div>'.format(self.labels, Amount(str(x_val)).amount,
-                                                   self.units[0], percent.value))
+                self.label.setHtml(f'<div style="text-align: center">'
+                                   f'<span style="font-size: 10pt">{self.labels}</span><br>'
+                                   f'<span style="font-size: 10pt">{Amount(str(x_val)).amount} '
+                                   f'{self.units[0]}</span><br>'
+                                   f'<span style="font-size: 10pt">({percent.value})</span>'
+                                   f'</div>')

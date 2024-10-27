@@ -43,7 +43,7 @@ class AddRowToDataFrame(Operation):
         Assertor.assert_data_types([row, dataframe, desc],
                                    [(dict, type(None)), (dict, type(None)),
                                     str])
-        super().__init__(name=self.name, desc="id: {}".format(desc))
+        super().__init__(name=self.name, desc=f"id: {desc}")
         self.row = row if row else None
         self.dataframe = dataframe if dataframe else None
 
@@ -58,8 +58,7 @@ class AddRowToDataFrame(Operation):
             if len(self.row) > 1:
                 data_frame = DataFrame.from_dict(self.dataframe)
                 first_row = list(self.row.keys())
-                first_row[0] = "Salgspris ({})".format(
-                    list(self.row.values())[0])
+                first_row[0] = f"Salgspris ({list(self.row.values())[0]})"
                 first_row[1], first_row[2] = "-", "-"
                 first_row[-1] = list(self.row.values())[-1]
                 sales_price = DataFrame([first_row],

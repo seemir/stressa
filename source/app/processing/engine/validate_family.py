@@ -40,8 +40,7 @@ class ValidateFamily(Operation):
         self.name = self.__class__.__name__
         Assertor.assert_data_types([data], [dict])
         super().__init__(name=self.name,
-                         desc="rules: {} \\n id: Validate Family Information".format(
-                             Family.rules()))
+                         desc=f"rules: {Family.rules()} \\n id: Validate Family Information")
         self.data = data
 
     @Tracking

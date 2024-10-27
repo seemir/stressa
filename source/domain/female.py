@@ -48,7 +48,7 @@ class Female(Person):
 
             if self.sifo_age(age) not in ('17', '19', '30', '50') and pregnant == '1':
                 raise ValueError(
-                    "[{}] pregnancy at this age is not possible".format(self.__class__.__name__))
+                    f"[{self.__class__.__name__}] pregnancy at this age is not possible")
 
             self._gravid = pregnant
         except Exception as female_exception:

@@ -59,13 +59,12 @@ class FinnOwnership(Finn):
             try:
                 start = time()
                 owner_response = requests.get(
-                    FINN_OWNER_URL + "{}".format(self.finn_code),
+                    f"{FINN_OWNER_URL}{self.finn_code}",
                     timeout=TIMEOUT)
                 owner_status_code = owner_response.status_code
                 elapsed = self.elapsed_time(start)
-                status_msg = "HTTP status code -> OWNERSHIP HISTORY: [{}: {}] -> " \
-                             "elapsed: {}".format(owner_status_code, responses[owner_status_code],
-                                                  elapsed)
+                status_msg = f"HTTP status code -> OWNERSHIP HISTORY: [{owner_status_code}: " \
+                             f"{responses[owner_status_code]}] -> elapsed: {elapsed}"
 
                 if owner_status_code >= 500:
                     LOGGER.error(status_msg)
@@ -75,14 +74,13 @@ class FinnOwnership(Finn):
                 return owner_response
             except ConnectTimeout as finn_owner_timeout_error:
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or "
-                    "contact system administrator, exited with '{}'".format(
-                        finn_owner_timeout_error))
+                    f"Timeout occurred - please try again later or "
+                    f"contact system administrator, exited with '{finn_owner_timeout_error}'")
         except ConnectError as finn_owner_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator, exited with '{}'".format(
-                    finn_owner_response_error))
+                f"Failed HTTP request - please ensure that internet access is provided to the "
+                f"client or contact system administrator, exited with "
+                f"'{finn_owner_response_error}'")
 
     @Tracking
     def housing_ownership_information(self):
@@ -93,19 +91,17 @@ class FinnOwnership(Finn):
         -------
         out     : dict
 
-
         """
         try:
             LOGGER.info(
-                "trying to retrieve 'housing_ownership_information' for -> '{}'".format(
-                    self.finn_code))
+                f"trying to retrieve 'housing_ownership_information' for -> '{self.finn_code}'")
 
             response = self.ownership_response()
 
             if not response:
                 LOGGER.error(
-                    "[{}] Not found! '{}' may be an invalid Finn code".format(
-                        self.__class__.__name__, self.finn_code))
+                    f"[{self.__class__.__name__}] Not found! '{self.finn_code}' "
+                    f"may be an invalid Finn code")
                 return {}
 
             owner_soup = BeautifulSoup(response.content, "lxml")
@@ -180,8 +176,7 @@ class FinnOwnership(Finn):
 
         except Exception as invalid_data_exception:
             raise InvalidDataError(
-                "Something went wrong, exited with '{}'".format(
-                    invalid_data_exception))
+                f"Something went wrong, exited with '{invalid_data_exception}'")
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):
@@ -193,5 +188,4 @@ class FinnOwnership(Finn):
                        file_prefix="HousingOwnershipInfo_")
 
         LOGGER.success(
-            "'housing_ownership_information' successfully parsed to JSON at '{}'".format(
-                file_dir))
+            f"'housing_ownership_information' successfully parsed to JSON at '{file_dir}'")

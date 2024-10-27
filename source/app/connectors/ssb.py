@@ -42,7 +42,7 @@ class Ssb(Connector):
             self._payload = SsbPayload() if not payload else payload
             self._browser = None
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
+                f"created '{self.__class__.__name__}', with id: [{self.id_}]")
         except Exception as ssb_exception:
             LOGGER.exception(ssb_exception)
             raise ssb_exception
@@ -90,17 +90,16 @@ class Ssb(Connector):
                 response = requests.post(url=SSB_URL, json=self.payload.payload(), timeout=TIMEOUT)
                 status_code = response.status_code
                 LOGGER.info(
-                    "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
+                    f"HTTP status code -> [{status_code}: {responses[status_code]}]")
                 return response
             except ConnectTimeout as ssb_timeout_error:
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system administrator, "
-                    "exited with '{}'".format(ssb_timeout_error))
+                    f"Timeout occurred - please try again later or contact system administrator, "
+                    f"exited with '{ssb_timeout_error}'")
         except ConnectError as ssb_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator, exited with '{}'".format(
-                    ssb_response_error))
+                f"Failed HTTP request - please ensure that internet access is provided to the "
+                f"client or contact system administrator, exited with '{ssb_response_error}'")
 
     @Tracking
     def ssb_interest_rates(self):
@@ -135,4 +134,4 @@ class Ssb(Connector):
         """
         self.save_json(self.ssb_interest_rates(), file_dir=file_dir,
                        file_prefix="SsbInterestRates_")
-        LOGGER.success("'ssb_interest_rates' successfully parsed to JSON at '{}'".format(file_dir))
+        LOGGER.success(f"'ssb_interest_rates' successfully parsed to JSON at '{file_dir}'")

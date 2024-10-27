@@ -39,8 +39,8 @@ class Mortgage(Entity):
         if restructure:
             if not all(element in data.keys() for element in self.requirements_restructure):
                 raise ValueError(
-                    "all element in '{}' must be supplied for restructure".format(
-                        self.requirements_restructure))
+                    f"all element in '{self.requirements_restructure}' must be supplied "
+                    f"for restructure")
             final = {}
             if "nominell_rente" in data.keys():
                 final.update({"nominell_rente": data["nominell_rente"]})
@@ -49,8 +49,7 @@ class Mortgage(Entity):
         else:
             if not all(element in data.keys() for element in self.requirements_mortgage):
                 raise ValueError(
-                    "all element in '{}' must be supplied for mortgage".format(
-                        self.requirements_mortgage))
+                    f"all element in '{self.requirements_mortgage}' must be supplied for mortgage")
             final = {key: val for key, val in data.items() if key in self.requirements_mortgage}
         return final
 
@@ -122,6 +121,7 @@ class Mortgage(Entity):
                          'lanetype', 'netto_likviditet', 'startdato']
         restructure_data = mortgage_data + ['belaning']
         mortgage_property = "mortgage " if not restructure else "restructure "
-        return "{} contains '{}'".format(
-            mortgage_property,
-            ", ".join(mortgage_data if not restructure else restructure_data).replace("'", ""))
+        mortgage_rules = ", ".join(mortgage_data if not restructure else restructure_data).replace(
+            "'", "")
+
+        return f"{mortgage_property} contains '{mortgage_rules}'"

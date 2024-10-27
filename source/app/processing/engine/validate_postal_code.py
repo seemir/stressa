@@ -34,7 +34,7 @@ class ValidatePostalCode(Operation):
         self.name = self.__class__.__name__
         Assertor.assert_data_types([postal_code], [str])
         super().__init__(name=self.name,
-                         desc="rules: {} \\n id: Validate Postal Code".format(Posten.rules()))
+                         desc=f"rules: {Posten.rules()} \\n id: Validate Postal Code")
         self.zip_code = postal_code
 
     @Tracking

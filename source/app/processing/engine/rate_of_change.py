@@ -35,7 +35,7 @@ class RateOfChange(Operation):
         """
         self.name = self.__class__.__name__
         Assertor.assert_data_types([dataframe, desc], [dict, str])
-        super().__init__(name=self.name, desc="id: {}".format(desc))
+        super().__init__(name=self.name, desc=f"id: {desc}")
         self.dataframe = dataframe
 
     @Debugger
@@ -45,7 +45,7 @@ class RateOfChange(Operation):
 
         """
         change = DataFrame_(self.dataframe).iloc[:, -1].astype(str).str.replace(
-            u"\xa0", "").str.replace(" kr", "").str.replace(" ", "")
+            "\xa0", "").str.replace(" kr", "").str.replace(" ", "")
         final_change = DataFrame_.from_dict(self.dataframe).assign(
             Endring=(change.astype(float).pct_change(-1).mul(100).round(2).astype(
                 str) + " %").replace("nan %", "").replace("inf %", "0.0 %"))

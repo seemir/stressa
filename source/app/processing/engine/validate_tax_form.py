@@ -36,8 +36,7 @@ class ValidateTaxForm(Operation):
         self.name = self.__class__.__name__
         Assertor.assert_data_types([tax_data], [dict])
         super().__init__(name=self.name,
-                         desc="rules: {} \\n id: Validate Tax Form Information".format(
-                             TaxForm.rules()))
+                         desc=f"rules: {TaxForm.rules()} \\n id: Validate Tax Form Information")
         self.tax_data = tax_data
 
     @Tracking

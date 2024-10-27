@@ -34,8 +34,8 @@ class FinnOwnershipHistoryConnector(Operation):
         self.name = self.__class__.__name__
         Assertor.assert_data_types([finn_code], [str])
         super().__init__(name=self.__class__.__name__,
-                         desc="from: '{}\\<[finn_code]\\>' \\n id: FINN Ownership "
-                              "History Connector".format(FINN_OWNER_URL))
+                         desc=f"from: '{FINN_OWNER_URL}\\<[finn_code]\\>' \\n id: FINN Ownership "
+                              "History Connector")
         self.finn_code = finn_code
 
     @Tracking

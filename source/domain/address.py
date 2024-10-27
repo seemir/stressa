@@ -34,7 +34,7 @@ class Address(Value):
         """
         valid_address = re.compile("[a-z0-9]$").search(address.lower())
         if not valid_address:
-            raise InvalidAddressError("'{}' is an invalid address".format(address))
+            raise InvalidAddressError(f"'{address}' is an invalid address")
 
     def __init__(self, address: str):
         """

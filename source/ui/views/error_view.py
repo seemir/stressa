@@ -129,7 +129,7 @@ class ErrorView(QDialog):
         file_name = "ui.log"
         error_log = logger.add(os.path.join(file_dir, file_name))
         logger.exception(exp)
-        with open(os.path.join(file_dir, file_name)) as log_file:
+        with open(os.path.join(file_dir, file_name), encoding='utf-8') as log_file:
             for lines in log_file.readlines():
                 log_str.append(lines)
             logger.remove(error_log)

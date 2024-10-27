@@ -33,7 +33,7 @@ class Factor(Operation):
         """
         self.name = self.__class__.__name__
         Assertor.assert_data_types([value, desc], [str, str])
-        super().__init__(name=self.name, desc="id: {} \n factor: {}".format(desc, value))
+        super().__init__(name=self.name, desc=f"id: {desc} \n factor: {value}")
         self.value = value
 
     @Tracking

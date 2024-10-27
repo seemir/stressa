@@ -39,12 +39,12 @@ class SsbPayload:
 
         """
         Assertor.assert_data_types([num], [int])
-        return [(dt.today() - timedelta(days=num)).strftime("%Y{}%m".format('M'))]
+        return [(dt.today() - timedelta(days=num)).strftime("%YM%m")]
 
     @staticmethod
     def updated_table_date():
         """
-        get SSB compatible str that insures that the newest data from table
+        get SSB compatible str that ensures that the newest data from table
         nr. 10748 is retrieved
 
         Returns
@@ -69,7 +69,7 @@ class SsbPayload:
         try:
             if dates:
                 for date in dates:
-                    dt.strptime(date, "%Y{}%m".format('M'))
+                    dt.strptime(date, "%YM%m")
         except ValueError as date_error:
             raise date_error
 
@@ -91,7 +91,7 @@ class SsbPayload:
 
         """
         try:
-            LOGGER.info("trying to create '{}'".format(self.__class__.__name__))
+            LOGGER.info(f"trying to create '{self.__class__.__name__}'")
             Assertor.assert_data_types([utlanstype, sektor, rentebinding, tid],
                                        [(type(None), list) for _ in range(4)])
             Assertor.assert_arguments([utlanstype, sektor, rentebinding],
@@ -107,7 +107,7 @@ class SsbPayload:
             self._rentebinding = ["08", "12", "10", "11",
                                   "06"] if not rentebinding else rentebinding
             self._tid = self.updated_table_date() if not tid else tid
-            LOGGER.success("created {}".format(self.__class__.__name__))
+            LOGGER.success(f"created {self.__class__.__name__}")
         except Exception as ssb_payload_exception:
             LOGGER.exception(ssb_payload_exception)
             raise ssb_payload_exception
@@ -129,7 +129,6 @@ class SsbPayload:
         ----------
         utlans_type : list
                       type of loan, default ["70"]
-
 
         """
         Assertor.assert_data_types([utlans_type], [list])
@@ -211,7 +210,8 @@ class SsbPayload:
                   payload against SSB table nr. 10748
 
         """
-        with open(os.path.dirname(__file__) + '/payloads/ssb_payload.json') as json_file:
+        with open(os.path.join(os.path.dirname(__file__), 'payloads/ssb_payload.json'),
+                  encoding='utf-8') as json_file:
             json_data = json.load(json_file)
 
         return json.loads(

@@ -40,7 +40,7 @@ class Person(Entity):
         try:
             age = float(age)
         except Exception as exp:
-            raise TypeError("invalid numeric str, got '{}'".format(exp))
+            raise TypeError(f"invalid numeric str, got '{exp}'")
 
         Assertor.assert_non_negative([age])
         sifo_yrs = [0.41, 0.91, 1, 2, 3, 5, 9, 13, 17, 19, 30, 50, 60, 66, 74, 999]

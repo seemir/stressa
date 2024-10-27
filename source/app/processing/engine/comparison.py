@@ -37,7 +37,7 @@ class Comparison(Operation):
         """
         self.name = self.__class__.__name__
         Assertor.assert_data_types([signal_1, signal_2, desc], [dict, dict, str])
-        super().__init__(name=self.name, desc="id: {}".format(desc))
+        super().__init__(name=self.name, desc=f"id: {desc}")
         self.signal_1 = signal_1
         self.signal_2 = signal_2
         self.key = key

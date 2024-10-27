@@ -217,7 +217,7 @@ class PaymentPlan(Entity):
         total_interest = df.at[self.period * self.interval, "Renter.total"]
         total_payment = df.at[self.period * self.interval, "T.beløp.total"]
         total_periods = str(df.at[self.period * self.interval, "Termin"])
-        termin_year = str(self.interval) + ' ({})'.format(self.interval_name)
+        termin_year = str(self.interval) + f" ({self.interval_name})"
         years = str(self.period) + ' år'
         interest = str(self.interest_rate) + ' %'
         amount = df.at[self.period * self.interval, "Avdrag.total"]
@@ -291,7 +291,7 @@ class PaymentPlan(Entity):
         total_interest = df.at[self.period * self.interval, "Renter.total"]
         total_payment = df.at[self.period * self.interval, "T.beløp.total"]
         total_periods = str(df.at[self.period * self.interval, "Termin"])
-        termin_year = str(self.interval) + ' ({})'.format(self.interval_name)
+        termin_year = str(self.interval) + f" ({self.interval_name})"
         years = str(self.period) + ' år'
         interest = str(self.interest_rate) + ' %'
         amount = df.at[self.period * self.interval, "Avdrag.total"]

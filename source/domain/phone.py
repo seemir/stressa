@@ -103,7 +103,7 @@ class Phone(Value):
         valid_number = re.compile("^\\+?[0-9]{8,20}$").search(number)
         if not valid_number:
             raise InvalidPhoneNumberError(
-                "'{}' is an invalid phone number".format(number))
+                f"'{number}' is an invalid phone number")
 
     @Tracking
     def format_number(self):

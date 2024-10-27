@@ -41,8 +41,7 @@ class Converter(Operation):
         self.name = self.__class__.__name__
         Assertor.assert_data_types([amount, convert_from, convert_to], [dict, str, str])
         super().__init__(name=self.name,
-                         desc="id: Convert amount \n from '{}' to '{}'".format(convert_from,
-                                                                               convert_to))
+                         desc=f"id: Convert amount \n from '{convert_from}' to '{convert_to}'")
         self.amount = amount
         self.convert_from = self.interval_mapping[convert_from]
         self.convert_to = self.interval_mapping[convert_to]

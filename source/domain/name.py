@@ -34,7 +34,7 @@ class Name(Value):
         """
         valid_name = re.compile("^[a-zA-Z ]+$").search(name)
         if not valid_name:
-            raise InvalidNameError("'{}' is an invalid name".format(name))
+            raise InvalidNameError(f"'{name}' is an invalid name")
 
     def __init__(self, name: str):
         """

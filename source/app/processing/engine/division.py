@@ -38,7 +38,7 @@ class Division(Operation):
         """
         self.name = self.__class__.__name__
         Assertor.assert_data_types([numerator, denominator, desc], [dict, dict, str])
-        super().__init__(name=self.name, desc="id: {}".format(desc))
+        super().__init__(name=self.name, desc=f"id: {desc}")
         self.numerator = numerator
         self.denominator = denominator
 

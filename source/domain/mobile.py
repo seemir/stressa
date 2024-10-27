@@ -81,4 +81,4 @@ class Mobile(Phone):
         valid_mobile_number = re.compile(r"^([49])").search(number)
         if not valid_mobile_number:
             raise InvalidMobilePhoneNumberError(
-                "'{}' is an invalid mobile phone number".format(number))
+                f"'{number}' is an invalid mobile phone number")

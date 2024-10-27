@@ -57,23 +57,23 @@ class FinnCommunity(Finn):
             try:
                 start = time()
                 community_stat_response = requests.get(
-                    FINN_COMMUNITY_URL + "{}".format(self.finn_code),
+                    f"{FINN_COMMUNITY_URL}{self.finn_code}",
                     timeout=TIMEOUT)
                 stat_status_code = community_stat_response.status_code
                 elapsed = self.elapsed_time(start)
                 LOGGER.info(
-                    "HTTP status code -> COMMUNITY: [{}: {}] -> elapsed: {}".format(
-                        stat_status_code, responses[stat_status_code], elapsed))
+                    f"HTTP status code -> COMMUNITY: [{stat_status_code}: "
+                    f"{responses[stat_status_code]}] -> elapsed: {elapsed}")
                 return community_stat_response
             except ConnectTimeout as finn_community_stat_timeout_error:
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system "
-                    "administrator, exited with '{}'".format(finn_community_stat_timeout_error))
+                    f"Timeout occurred - please try again later or contact system "
+                    f"administrator, exited with '{finn_community_stat_timeout_error}'")
         except ConnectError as finn_community_stat_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator, exited with '{}'".format(
-                    finn_community_stat_response_error))
+                f"Failed HTTP request - please ensure that internet access is provided to the "
+                f"client or contact system administrator, exited with "
+                f"'{finn_community_stat_response_error}'")
 
     @Tracking
     def community_stat_information(self):
@@ -86,7 +86,7 @@ class FinnCommunity(Finn):
 
         """
         LOGGER.info(
-            "trying to retrieve 'community_stat_information' for -> '{}'".format(self.finn_code))
+            f"trying to retrieve 'community_stat_information' for -> '{self.finn_code}'")
         response = self.community_stat_response()
         info = {}
         try:
@@ -105,8 +105,9 @@ class FinnCommunity(Finn):
             return info
 
         except AttributeError as no_community_statistics_exception:
-            LOGGER.debug("[{}] No community statistics found!, exited with '{}'".format(
-                self.__class__.__name__, no_community_statistics_exception))
+            LOGGER.debug(
+                f"[{self.__class__.__name__}] No community statistics found!, exited with "
+                f"'{no_community_statistics_exception}'")
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):
@@ -118,4 +119,4 @@ class FinnCommunity(Finn):
         self.save_json(self.community_stat_information(), file_dir,
                        file_prefix="CommunityStatInfo_")
         LOGGER.success(
-            "'community_stat_information' successfully parsed to JSON at '{}'".format(file_dir))
+            f"'community_stat_information' successfully parsed to JSON at '{file_dir}'")

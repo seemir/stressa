@@ -230,7 +230,7 @@ class BudgetModel(Model):
         trygd_income_1 = self.calculate_monthly_values(
             "trygde_inntekt_1", parent.line_edit_trygde_inntekt_1.text(),
             self._interval[parent.combo_box_interval_2.currentText()])
-        if "skattefrie_inntekt_1" in self.data.keys():
+        if "skattefrie_inntekt_1" in self.data:
             leie_income_1 = self.calculate_monthly_values(
                 "leieinntekt_1", "0 kr",
                 self._interval[parent.combo_box_interval_3.currentText()])
@@ -258,7 +258,7 @@ class BudgetModel(Model):
         trygd_income_2 = self.calculate_monthly_values(
             "trygde_inntekt_2", parent.line_edit_trygde_inntekt_2.text(),
             self._interval[parent.combo_box_interval_13.currentText()])
-        if "skattefrie_inntekt_2" in self.data.keys():
+        if "skattefrie_inntekt_2" in self.data:
             leie_income_2 = self.calculate_monthly_values(
                 "leieinntekt_2", "0 kr",
                 self._interval[parent.combo_box_interval_14.currentText()])
@@ -369,7 +369,7 @@ class BudgetModel(Model):
         trygd_income_1 = self.calculate_yearly_values(
             "trygde_inntekt_aar_1", parent.line_edit_trygde_inntekt_1.text(),
             self._interval[parent.combo_box_interval_2.currentText()])
-        if "skattefrie_inntekt_aar_1" in self.data.keys():
+        if "skattefrie_inntekt_aar_1" in self.data:
             leie_income_1 = self.calculate_yearly_values(
                 "leieinntekt_aar_1", "0 kr",
                 self._interval[parent.combo_box_interval_3.currentText()])
@@ -396,7 +396,7 @@ class BudgetModel(Model):
         trygd_income_2 = self.calculate_yearly_values(
             "trygde_inntekt_aar_2", parent.line_edit_trygde_inntekt_2.text(),
             self._interval[parent.combo_box_interval_13.currentText()])
-        if "skattefrie_inntekt_aar_2" in self.data.keys():
+        if "skattefrie_inntekt_aar_2" in self.data:
             leie_income_2 = self.calculate_yearly_values(
                 "leieinntekt_aar_2", "0 kr",
                 self._interval[parent.combo_box_interval_14.currentText()])
@@ -501,7 +501,7 @@ class BudgetModel(Model):
                 {radio_button: True})
             self.monthly_value()
             self.yearly_value()
-        elif radio_button in self.data.keys():
+        elif radio_button in self.data:
             del self.data[radio_button]
             self.monthly_value()
             self.yearly_value()
@@ -516,7 +516,7 @@ class BudgetModel(Model):
             val_1 = int((str(val_1) if val_1 else "0").replace(" ", "").replace("kr", ""))
             val_2 = int((str(val_2) if val_2 else "0").replace(" ", "").replace("kr", ""))
             self.data.update({total_name: Money(str(Decimal(val_1) + Decimal(val_2))).value()})
-        elif total_name in self.data.keys():
+        elif total_name in self.data:
             del self.data[total_name]
 
     def clear_total_data(self):

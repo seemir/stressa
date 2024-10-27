@@ -82,7 +82,7 @@ class TestFinnAdvertInfoConnector:
                    'sistendret': '6. apr. 2020 02:07',
                    'referanse': '3180364'}
         for key, val in self.connector_finn_advert_info.run().items():
-            if key in results.keys():
+            if key in results:
                 if key == "sistendret":
                     continue
                 assert val == results[key]

@@ -117,29 +117,29 @@ class RestructureView(QDialog):
         mortgage_model = self.parent.mortgage_model.data
         analysis_model = self.parent.analysis_model.data
 
-        if "lanetype" in mortgage_model.keys() and "lanetype" not in \
-                self.restructure_model.data.keys():
+        if "lanetype" in mortgage_model and "lanetype" not in \
+                self.restructure_model.data:
             self.ui_form.combo_box_lanetype.setCurrentText(mortgage_model["lanetype"])
             self.restructure_model.set_combo_box("lanetype")
-        if "intervall" in mortgage_model.keys() and "intervall" not in \
-                self.restructure_model.data.keys():
+        if "intervall" in mortgage_model and "intervall" not in \
+                self.restructure_model.data:
             self.ui_form.combo_box_intervall.setCurrentText(mortgage_model["intervall"])
             self.restructure_model.set_combo_box("intervall")
-        if "laneperiode" in mortgage_model.keys() and "laneperiode" not in \
-                self.restructure_model.data.keys():
+        if "laneperiode" in mortgage_model and "laneperiode" not in \
+                self.restructure_model.data:
             self.ui_form.combo_box_laneperiode.setCurrentText(mortgage_model["laneperiode"])
             self.restructure_model.set_combo_box("laneperiode")
-        if "startdato" in mortgage_model.keys() and "startdato" not in \
-                self.restructure_model.data.keys():
+        if "startdato" in mortgage_model and "startdato" not in \
+                self.restructure_model.data:
             startdate = QDate.fromString(mortgage_model["startdato"], "dd.MM.yyyy")
             self.ui_form.date_edit_startdato.setDate(startdate)
             self.restructure_model.set_date_edit("startdato")
-        if "egenkapital" in mortgage_model.keys() and "egenkapital" not in \
-                self.restructure_model.data.keys():
+        if "egenkapital" in mortgage_model and "egenkapital" not in \
+                self.restructure_model.data:
             self.ui_form.line_edit_egenkapital.setText(mortgage_model["egenkapital"])
             self.restructure_model.set_line_edit("egenkapital", Money, "value")
-        if "belaning" in analysis_model.keys() and "belaning" not in \
-                self.restructure_model.data.keys():
+        if "belaning" in analysis_model and "belaning" not in \
+                self.restructure_model.data:
             self.ui_form.line_edit_belaning.setText(analysis_model["belaning"])
             self.restructure_model.set_line_edit("belaning", Money, "value")
 

@@ -235,7 +235,7 @@ class SifoModel(Model):
         sfo = (alder in ["6-9 år", "10-13 år"])
         gravid = (kvinne and (
                 alder in ["14-17 år", "18-19 år", "20-30 år", "31-50 år"]))
-        student = (alder == "20-30 år")
+        student = alder == "20-30 år"
 
         if barnehage:
             self._extra_info = "barnehage" + postfix
@@ -395,9 +395,8 @@ class SifoModel(Model):
         """
         try:
             self.clear_results()
-            if "budsjett_aar" in self.data.keys() and any(
-                    "person" in key and len(val) > 1 for
-                    key, val in self.data.items()):
+            if "budsjett_aar" in self.data and any(
+                    "person" in key and len(val) > 1 for key, val in self.data.items()):
                 self.parent.ui_form.tab_widget_sifo.setCurrentIndex(1)
                 self.sifo_process = SifoExpensesProcess(self.data)
                 self.set_line_edits(line_edit_text="",

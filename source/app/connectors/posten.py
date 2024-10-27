@@ -36,7 +36,8 @@ class Posten(Connector):
         valid_postal = re.compile("[0-9]{4}").search(self.postal_code)
         if not valid_postal:
             raise InvalidDataError(
-                "'{}' is an invalid postal code".format(self.postal_code))
+                f"'{self.postal_code}' is an invalid postal code"
+            )
 
     def __init__(self, postal_code: str):
         """
@@ -54,7 +55,8 @@ class Posten(Connector):
             self._postal_code = postal_code
             self.validate_postal_code()
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
+                f"created '{self.__class__.__name__}', with id: [{self.id_}]"
+            )
         except Exception as posten_exception:
             LOGGER.exception(posten_exception)
             raise posten_exception
@@ -101,23 +103,25 @@ class Posten(Connector):
         try:
             try:
                 start = time()
-                posten_response = requests.get(POSTEN_URL + "{}".format(self.postal_code),
+                posten_response = requests.get(POSTEN_URL + f"{self.postal_code}",
                                                timeout=TIMEOUT)
                 posten_status_code = posten_response.status_code
                 elapsed = self.elapsed_time(start)
                 LOGGER.info(
-                    "HTTP status code -> POSTEN: [{}: {}] -> elapsed: {}".format(
-                        posten_status_code, responses[posten_status_code], elapsed))
+                    f"HTTP status code -> POSTEN: [{posten_status_code}: "
+                    f"{responses[posten_status_code]}] -> elapsed: {elapsed}"
+                )
                 return posten_response
             except ConnectTimeout as posten_timeout_error:
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system "
-                    "administrator, exited with '{}'".format(posten_timeout_error))
+                    f"Timeout occurred - please try again later or contact system "
+                    f"administrator, exited with '{posten_timeout_error}'"
+                )
         except ConnectError as posten_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator, exited with '{}'".format(
-                    posten_response_error))
+                f"Failed HTTP request - please ensure that internet access is provided to the "
+                f"client or contact system administrator, exited with '{posten_response_error}'"
+            )
 
     @Tracking
     def postal_code_info(self):
@@ -130,13 +134,15 @@ class Posten(Connector):
                       dictionary with postal code information
 
         """
-        LOGGER.info("trying to retrieve 'postal_code_info' for -> '{}'".format(self.postal_code))
+        LOGGER.info(f"trying to retrieve 'postal_code_info' for -> '{self.postal_code}'")
 
         response = self.response().json()['postal_codes'][0]
-        data = {'postnr': response['postal_code'],
-                'poststed': response['city'],
-                'kommune': response['primary_county'],
-                'fylke': response['primary_municipality']}
+        data = {
+            'postnr': response['postal_code'],
+            'poststed': response['city'],
+            'kommune': response['primary_county'],
+            'fylke': response['primary_municipality']
+        }
         return data
 
     @Tracking
@@ -151,7 +157,7 @@ class Posten(Connector):
 
         """
         self.save_json(self.postal_code_info(), file_dir=file_dir, file_prefix="PostalCode_")
-        LOGGER.success("'postal_code_info' successfully parsed to JSON at '{}'".format(file_dir))
+        LOGGER.success(f"'postal_code_info' successfully parsed to JSON at '{file_dir}'")
 
     @staticmethod
     def rules():

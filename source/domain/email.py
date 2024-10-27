@@ -35,7 +35,7 @@ class Email(Value):
         valid_email = re.compile(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+"
                                  r"\.[a-zA-Z0-9-.]+$)").search(email)
         if not valid_email:
-            raise InvalidEmailError("'{}' is an invalid email".format(email))
+            raise InvalidEmailError(f"'{email}' is an invalid email")
 
     def __init__(self, email: str):
         """

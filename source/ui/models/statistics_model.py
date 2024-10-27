@@ -514,8 +514,7 @@ class StatisticsModel(Model):
                                               list(municipality_sales.values()),
                                               getattr(self.parent.ui_form,
                                                       prefix + "ratio_statistics"),
-                                              "Forhold ({})".format(
-                                                  " / ".join(labels)),
+                                              f"Forhold ({' / '.join(labels)})",
                                               units=(" kr/m²", ""),
                                               precision=-3)
                 self.sales_plot.connect(self.ration_plot,
@@ -536,9 +535,9 @@ class StatisticsModel(Model):
         Assertor.assert_data_types([key, postfix], [str, str])
         if key in ["city_area", "municipality"]:
             getattr(self.parent.ui_form, "label_" + key + "_sqm_price").setText(
-                "KMP ({})".format(self.data[key + postfix]))
+                f"KMP ({self.data[key + postfix]})")
             getattr(self.parent.ui_form, "label_sales_" + key).setText(
-                "Salg ({})".format(self.data[key + postfix]))
+                f"Salg ({self.data[key + postfix]})")
         else:
             getattr(self.parent.ui_form, "line_edit_" + key).setText(
                 self.data[key + postfix])
@@ -609,11 +608,11 @@ class StatisticsModel(Model):
                 neighbourhood = ""
                 city = ""
 
+            city_area = "Ingen områder funnet"
+
             if "info" + postfix in self.data.keys():
                 if self.data["info" + postfix]["district"]:
                     city_area = self.data["info" + postfix]["district"]
-            else:
-                city_area = "Ingen områder funnet"
 
             if sum(city_area_dist) != 0:
                 dist_df = {"Gruppe": [],
@@ -646,22 +645,21 @@ class StatisticsModel(Model):
                     getattr(self.parent.ui_form, prefix + plot_name_1),
                     getattr(self.parent.ui_form, table_name),
                     width=0.25, reverse=False,
-                    legend='<div style="text-align: center">'
-                           '<span style="font-size: 10pt">{}:</span><br>'
-                           '<span style="font-size: 10pt">{}</span><br>'
-                           '<span style="font-size: 10pt">({})</span><br>'
-                           '</div>'.format(dist_name, neighbourhood,
-                                           city_area)))
+                    legend=f'<div style="text-align: center">'
+                           f'<span style="font-size: 10pt">{dist_name}:</span><br>'
+                           f'<span style="font-size: 10pt">{neighbourhood}</span><br>'
+                           f'<span style="font-size: 10pt">({city_area})</span><br>'
+                           f'</div>'))
 
                 setattr(self, dist_var_2, BarChartWithLine(
                     dist_range, city_dist,
                     getattr(self.parent.ui_form, prefix + plot_name_2),
                     getattr(self.parent.ui_form, table_name),
                     width=0.25, reverse=False,
-                    legend='<div style="text-align: center">'
-                           '<span style="font-size: 10pt">{}:</span><br>'
-                           '<span style="font-size: 10pt">{}</span><br>'
-                           '</div>'.format(dist_name, city)))
+                    legend=f'<div style="text-align: center">'
+                           f'<span style="font-size: 10pt">{dist_name}:</span><br>'
+                           f'<span style="font-size: 10pt">{city}</span><br>'
+                           f'</div>'))
 
                 getattr(self, dist_var_1).table_view_mapping()
                 getattr(self, dist_var_2).table_view_mapping()

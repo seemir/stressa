@@ -136,7 +136,7 @@ class TestPosten:
         current_dir = os.path.dirname(__file__)
         file_dir = os.path.join(current_dir, "report", "json")
         self.posten.to_json(file_dir=file_dir)
-        with open(os.path.join(file_dir, os.listdir(file_dir)[-1])) as json_file:
+        with open(os.path.join(file_dir, os.listdir(file_dir)[-1]), encoding='utf-8') as json_file:
             data = json.load(json_file)
             assert data == ""
         shutil.rmtree(os.path.join(current_dir, "report"), ignore_errors=True)

@@ -11,7 +11,6 @@ import os
 from random import randint
 
 from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.QtGui import QIcon
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt
 

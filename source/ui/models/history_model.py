@@ -87,7 +87,7 @@ class HistoryModel(Model):
                     self.values = [int(val.replace("kr", "").replace(" ",
                                                                      "").replace(
                         "\xa0", ""))
-                                   for val in history.values()][::-1]
+                                      for val in history.values()][::-1]
                     finn_code = grandparent.finn_model.data[
                         "finnkode" + postfix]
                     bolig_type = grandparent.finn_model.data[
@@ -97,11 +97,11 @@ class HistoryModel(Model):
                         self.keys, self.values,
                         self.parent.ui_form.graphics_view_historikk,
                         self.parent.ui_form.table_view_historikk,
-                        legend='<div style="text-align: center">'
-                               '<span style="font-size: 10pt">FINN kode:{}</span><br>'
-                               '<span style="font-size: 10pt">Boligtype: {}</span><br>'
-                               '<span style="font-size: 10pt">(Status: {})</span>'
-                               '</div>'.format(finn_code, bolig_type, status))
+                        legend=f'<div style="text-align: center">'
+                               f'<span style="font-size: 10pt">FINN kode:{finn_code}</span><br>'
+                               f'<span style="font-size: 10pt">Boligtype: {bolig_type}</span><br>'
+                               f'<span style="font-size: 10pt">(Status: {status})</span>'
+                               f'</div>')
                     self.bar_plot.table_view_mapping()
             else:
                 getattr(self.parent.ui_form, "line_edit_" + key).clear()

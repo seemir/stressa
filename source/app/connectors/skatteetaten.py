@@ -31,11 +31,13 @@ class Skatteetaten(Connector):
 
     """
 
-    tax_version_mapping = {'2022': ('skatteberegningsgrunnlagV7', 'skattepliktV9'),
-                           '2021': ('skatteberegningsgrunnlagV6', 'skattepliktV8'),
-                           '2020': ('skattegrunnlagV6', 'skattepliktV7'),
-                           '2019': ('skattegrunnlagV5', 'skattepliktV6'),
-                           '2018': ('skattegrunnlagV5', 'skattepliktV5')}
+    tax_version_mapping = {
+        '2022': ('skatteberegningsgrunnlagV7', 'skattepliktV9'),
+        '2021': ('skatteberegningsgrunnlagV6', 'skattepliktV8'),
+        '2020': ('skattegrunnlagV6', 'skattepliktV7'),
+        '2019': ('skattegrunnlagV5', 'skattepliktV6'),
+        '2018': ('skattegrunnlagV5', 'skattepliktV5')
+    }
 
     def __init__(self, age: Union[str, int],
                  income: Union[str, int, float],
@@ -98,22 +100,21 @@ class Skatteetaten(Connector):
 
             self.age = str(age)
             self.income = str(income)
-            self.tax_year = str(date.today().year) if not \
-                tax_year else str(tax_year)
+            self.tax_year = str(date.today().year) if not tax_year else str(tax_year)
             self.interest_income = str(0) if not interest_income else str(interest_income)
             self.interest_cost = str(0) if not interest_cost else str(interest_cost)
-            self.value_of_real_estate = str(0) if not value_of_real_estate \
-                else str(value_of_real_estate)
+            self.value_of_real_estate = str(0) if not value_of_real_estate else str(
+                value_of_real_estate)
             self.bank_deposit = str(0) if not bank_deposit else str(bank_deposit)
             self.debt = str(0) if not debt else str(debt)
             self.union_fee = str(0) if not union_fee else str(union_fee)
             self.bsu = str(0) if not bsu else str(bsu)
             self.other_income = str(0) if not other_income else str(other_income)
             self.rental_income = str(0) if not rental_income else str(rental_income)
-            self.url = SKATTEETATEN_URL + self.tax_year
+            self.url = f"{SKATTEETATEN_URL}{self.tax_year}"
 
             LOGGER.success(
-                "created '{}', with id: [{}]".format(self.__class__.__name__, self.id_))
+                f"created '{self.__class__.__name__}', with id: [{self.id_}]")
         except Exception as skatteetaten_exception:
             LOGGER.exception(skatteetaten_exception)
             raise skatteetaten_exception
@@ -159,17 +160,16 @@ class Skatteetaten(Connector):
                 response = requests.post(url=self.url, data=self.payload(), timeout=TIMEOUT)
                 status_code = response.status_code
                 LOGGER.info(
-                    "HTTP status code -> [{}: {}]".format(status_code, responses[status_code]))
+                    f"HTTP status code -> [{status_code}: {responses[status_code]}]")
                 return response
             except ConnectTimeout as ssb_timeout_error:
                 raise TimeOutError(
-                    "Timeout occurred - please try again later or contact system administrator, "
-                    "exited with '{}'".format(ssb_timeout_error))
+                    f"Timeout occurred - please try again later or contact system administrator, "
+                    f"exited with '{ssb_timeout_error}'")
         except ConnectError as ssb_response_error:
             raise NoConnectionError(
-                "Failed HTTP request - please insure that internet access is provided to the "
-                "client or contact system administrator, exited with '{}'".format(
-                    ssb_response_error))
+                f"Failed HTTP request - please ensure that internet access is provided to the "
+                f"client or contact system administrator, exited with '{ssb_response_error}'")
 
     @Tracking
     def tax_information(self):

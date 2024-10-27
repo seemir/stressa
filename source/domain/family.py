@@ -69,8 +69,7 @@ class Family(Entity):
 
         """
         if not select_year:
-            raise ValueError("Expected a 'budsjett aar', got '{}' "
-                             "".format(select_year.__class__.__name__))
+            raise ValueError(f"Expected a 'budsjett aar', got '{select_year.__class__.__name__}'")
 
     @staticmethod
     def validating_cars(cars: Union[int, str]):

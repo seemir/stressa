@@ -34,7 +34,7 @@ class Multiplex(Operation):
         """
         self.name = self.__class__.__name__
         Assertor.assert_data_types([signals, desc], [list, str])
-        super().__init__(name=self.name, desc="id: {}".format(desc))
+        super().__init__(name=self.name, desc=f"id: {desc}")
         self.signals = signals
 
     @Tracking

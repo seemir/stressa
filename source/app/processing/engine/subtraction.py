@@ -38,7 +38,7 @@ class Subtraction(Operation):
         """
         self.name = self.__class__.__name__
         Assertor.assert_data_types([factor_1, factor_2, desc], [dict, dict, str])
-        super().__init__(name=self.name, desc="id: {}".format(desc))
+        super().__init__(name=self.name, desc=f"id: {desc}")
         self.factor_1 = factor_1
         self.factor_2 = factor_2
 

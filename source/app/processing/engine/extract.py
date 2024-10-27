@@ -34,8 +34,7 @@ class Extract(Operation):
         """
         Assertor.assert_data_types([data, key], [dict, str])
         self.name = self.__class__.__name__
-        super().__init__(name=self.name,
-                         desc="id: Extract \\<key '{}'\\>".format(key))
+        super().__init__(name=self.name, desc=f"id: Extract \\<key '{key}'\\>")
         self.data = data
         self.key = key
 

@@ -35,7 +35,7 @@ class Amount(Value):
         """
         valid_amount = re.compile(r"[0-9]").search(amount.lower())
         if not valid_amount:
-            raise InvalidAmountError("'{}' is an invalid amount".format(amount))
+            raise InvalidAmountError(f"'{amount}' is an invalid amount")
 
     @Tracking
     def format_amount(self, amount: str):
@@ -54,10 +54,10 @@ class Amount(Value):
         """
         try:
             amount = Decimal(amount)
-            return '{:,}'.format(amount).replace(',', ' ')
+            return f'{amount:,}'.replace(',', ' ')
         except InvalidOperation as format_error:
             raise InvalidAmountError(
-                "'{}' is an invalid amount, exited with '{}'".format(amount, format_error))
+                f"'{amount}' is an invalid amount, exited with '{format_error}'")
 
     def __init__(self, amount: str):
         """

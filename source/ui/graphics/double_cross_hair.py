@@ -164,13 +164,13 @@ class DoubleCrossHair(QObject):
             y_label_2 = Amount(str(y_val_2)).amount + self.units[3]
 
             if limits:
-                self.label_1.setHtml('<div style="text-align: center">'
-                                     '<span style="font-size: 10pt">{}</span><br>'
-                                     '<span style="font-size: 10pt">{}</span><br>'
-                                     '<span style="font-size: 10pt">({})</span>'
-                                     '</div>'.format(self.labels[0], x_label_1, y_label_1))
-                self.label_2.setHtml('<div style="text-align: center">'
-                                     '<span style="font-size: 10pt">{}</span><br>'
-                                     '<span style="font-size: 10pt">{}</span><br>'
-                                     '<span style="font-size: 10pt">({})</span>'
-                                     '</div>'.format(self.labels[1], x_label_2, y_label_2))
+                self.label_1.setHtml(f'<div style="text-align: center">'
+                                     f'<span style="font-size: 10pt">{self.labels[0]}</span><br>'
+                                     f'<span style="font-size: 10pt">{x_label_1}</span><br>'
+                                     f'<span style="font-size: 10pt">({y_label_1})</span>'
+                                     f'</div>')
+                self.label_2.setHtml(f'<div style="text-align: center">'
+                                     f'<span style="font-size: 10pt">{self.labels[1]}</span><br>'
+                                     f'<span style="font-size: 10pt">{x_label_2}</span><br>'
+                                     f'<span style="font-size: 10pt">({y_label_2})</span>'
+                                     f'</div>')

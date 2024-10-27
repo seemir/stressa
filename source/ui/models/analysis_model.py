@@ -74,7 +74,7 @@ class AnalysisModel(Model):
         self.data.update(self.parent.mortgage_model.data)
         self.data.update(self.parent.home_model.data)
 
-        if all(element in self.data.keys() for element in Mortgage.requirements_mortgage):
+        if all(element in self.data for element in Mortgage.requirements_mortgage):
             self.parent.restructure_model.clear_all()
             self.parent.payment_model.clear_all()
 

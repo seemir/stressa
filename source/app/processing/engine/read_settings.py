@@ -39,7 +39,7 @@ class ReadSettings(Operation):
         Assertor.assert_arguments([setting],
                                   [{"settings": ("egenkapital_krav", "gjeldsgrad", "stresstest")}])
         super().__init__(name=self.name,
-                         desc="setting : {}".format(setting))
+                         desc=f"setting : {setting}")
         self.setting = setting
 
     @Tracking
@@ -56,8 +56,12 @@ class ReadSettings(Operation):
         up = os.path.dirname
         settings_dir = up(__file__) + '\\tmp'
 
+        dept = ''
+        equity = ''
+        stress = ''
+
         if os.path.exists(settings_dir):
-            with open(settings_dir + '\\settings.json', 'r') as fp:
+            with open(settings_dir + '\\settings.json', 'r', encoding='utf-8') as fp:
                 try:
                     settings = json.load(fp)
                     equity = settings['egenkapital_krav']

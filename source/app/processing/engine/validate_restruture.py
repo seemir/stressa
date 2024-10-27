@@ -34,8 +34,8 @@ class ValidateRestructure(Operation):
         self.name = self.__class__.__name__
         Assertor.assert_data_types([restructure_data], [dict])
         super().__init__(name=self.name,
-                         desc="rules: {} \\n id: Validate Restructure Information".format(
-                             Mortgage.rules(restructure=True)))
+                         desc=f"rules: {Mortgage.rules(restructure=True)} "
+                              f"\\n id: Validate Restructure Information")
         self.mortgage_data = restructure_data
 
     @Tracking

@@ -40,8 +40,7 @@ class CheckNewestDate(Operation):
         """
         Assertor.assert_data_types([date_1, date_2], [(dict, type(None)), (dict, type(None))])
         self.name = self.__class__.__name__
-        super().__init__(name=self.name,
-                         desc="id: {}".format(desc))
+        super().__init__(name=self.name,desc=f"id: {desc}")
         self.date_1 = list(date_1.values())[0] if date_1 else None
         self.date_2 = list(date_2.values())[0] if date_2 else None
 

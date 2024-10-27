@@ -84,14 +84,15 @@ class RestructureModel(Model):
         restructure_data = {}
         restructure_data.update(self.parent.parent.analysis_model.data)
         restructure_data.update(self.data)
-        if all(element in restructure_data.keys() for element in Mortgage.requirements_restructure):
+        if all(element in restructure_data for element in Mortgage.requirements_restructure):
             restructure_data = RestructureProcess(restructure_data).restructure()
             analysis_model = self.parent.parent.analysis_model
 
             if restructure_data["krav_belaning"] != restructure_data["krav_belaning_maks"]:
-                restructure_data.update({"krav_belaning": restructure_data[
-                                                              "krav_belaning"] + ' ({})'.format(
-                    restructure_data["krav_belaning_maks"])})
+                restructure_data.update({
+                    "krav_belaning":
+                        restructure_data["krav_belaning"]
+                        + f' ({restructure_data["krav_belaning_maks"]})'})
 
             analysis_model.set_line_edits(line_edit_text='',
                                           line_edits=analysis_model.analysis_keys,

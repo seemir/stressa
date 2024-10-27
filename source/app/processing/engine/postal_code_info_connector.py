@@ -35,8 +35,7 @@ class PostalCodeInfoConnector(Operation):
         Assertor.assert_data_types([postal_code], [str])
         self.name = self.__class__.__name__
         super().__init__(name=self.name,
-                         desc="from: '{}' \\n id: Postal Code Info Connector".format(
-                             POSTEN_URL))
+                         desc=f"from: '{POSTEN_URL}' \\n id: Postal Code Info Connector")
         self.postal_code = postal_code
 
     @Tracking

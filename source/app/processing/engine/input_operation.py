@@ -32,7 +32,7 @@ class InputOperation(Operation):
         """
         self.name = self.__class__.__name__
         Assertor.assert_data_types([desc], [str])
-        super().__init__(name=self.name, desc="id: {}".format(desc))
+        super().__init__(name=self.name, desc=f"id: {desc}")
 
     @Tracking
     def run(self):

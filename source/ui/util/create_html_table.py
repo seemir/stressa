@@ -44,11 +44,11 @@ class CreateHtmlTable:
                         if key != "mapBounds":
                             if key == "city":
                                 info.append("<tr><td>" + "Område: " + element + "</td></tr>")
-                            elif key in self.trans.keys():
+                            elif key in self.trans:
                                 info.append(
                                     "<tr><td>" + self.trans[key] + ": " + element + "</td></tr>")
                 else:
-                    if keys in self.trans.keys():
+                    if keys in self.trans:
                         element = "<tr><td>" + self.trans[keys] + ": " + \
                                   str(values).replace("/", " / ") + "</td></tr>"
                     else:

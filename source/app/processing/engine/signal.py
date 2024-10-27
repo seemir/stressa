@@ -65,8 +65,8 @@ class Signal(Node, ABC):
         self.desc = desc
         self.data = data
         super().__init__(name=str(uuid4()), shape="record", style=style,
-                         label="keys\\<{}\\> \\n {} \\<type '{}'\\>".format(
-                             self.keys, self.desc, data.__class__.__name__), **attrs)
+                         label=f"keys\\<{self.keys}\\> \\n {self.desc} \\<type "
+                               f"'{data.__class__.__name__}'\\>", **attrs)
 
     @Tracking
     def prettify_dict_keys(self, dict_keys, length=15):
