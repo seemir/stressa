@@ -7,9 +7,10 @@ Module of the Statistics model which handles all the statistics from the Finn Ad
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from PyQt5.QtWebEngineWidgets import QWebEngineSettings
-from PyQt5.QtWidgets import QHeaderView
-from PyQt5.QtCore import QObject
+from PyQt5.QtWebEngineWidgets import \
+    QWebEngineSettings  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QHeaderView  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import QObject  # pylint: disable=no-name-in-module
 
 from pandas import DataFrame
 
@@ -23,7 +24,7 @@ from .table_model import TableModel
 from .model import Model
 
 
-class StatisticsModel(Model):
+class StatisticsModel(Model):  # pylint: disable=too-many-instance-attributes
     """
     Implementation of the Statistics model for which all the Finn based statistics logic is stored
 
@@ -283,11 +284,14 @@ class StatisticsModel(Model):
                     if key not in ["municipality", "city_area"]:
                         getattr(self.parent.ui_form, "line_edit_" + key).clear()
                     else:
-                        self.parent.label_city_area_sqm_price.setText("KMP (område)")
-                        self.parent.label_sales_city_area.setText("Salg (område)")
+                        self.parent.label_city_area_sqm_price.setText(
+                            "KMP (område)")
+                        self.parent.label_sales_city_area.setText(
+                            "Salg (område)")
                         self.parent.label_municipality_sqm_price.setText(
                             "KMP (kommune)")
-                        self.parent.label_sales_municipality.setText("Salg (kommune)")
+                        self.parent.label_sales_municipality.setText(
+                            "Salg (kommune)")
 
         self.configure_charts(prefix)
 

@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from pandas import DataFrame
 
-from PyQt5.QtCore import QObject, pyqtSlot
+from PyQt5.QtCore import QObject, pyqtSlot  # pylint: disable=no-name-in-module
 from source.util import Assertor
 
 from .table_model import TableModel

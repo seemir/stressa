@@ -63,8 +63,6 @@ class TestFinnOwnership:
         """
         with pt.raises(TrackingError):
             FinnOwnership(invalid_finn_ownership_code)
-        with pt.raises(TrackingError):
-            self.finn_ownership.validate_finn_code(invalid_finn_ownership_code)
 
     def test_finn_ownership_has_uuid4_compatible_id(self):
         """

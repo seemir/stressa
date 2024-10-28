@@ -12,8 +12,8 @@ import warnings
 from numpy import percentile, insert, array
 
 from pyqtgraph import PlotDataItem, PlotWidget, TextItem, mkPen
-from PyQt5.QtWidgets import QTableView
-from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QTableView  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 from .chart import Chart
@@ -21,13 +21,14 @@ from .chart import Chart
 warnings.filterwarnings('ignore')
 
 
-class BarChartWithLine(Chart):
+class BarChartWithLine(Chart):  # pylint: disable=too-many-instance-attributes
     """
     Implementation of the Bar chart with line graphics
 
     """
 
-    def __init__(self, x_val: list, y_val: list, graphics_view: PlotWidget, table_view: QTableView,
+    def __init__(self, x_val: list, y_val: list, graphics_view: PlotWidget,
+                 table_view: QTableView,
                  legend: str = "", width=0.5, reverse=True):
         """
         Constructor / Instantiation of class
@@ -50,8 +51,9 @@ class BarChartWithLine(Chart):
                           reverse selection in table
 
         """
-        Assertor.assert_data_types([x_val, y_val, graphics_view, table_view, legend, width],
-                                   [list, list, PlotWidget, QTableView, str, (int, float)])
+        Assertor.assert_data_types(
+            [x_val, y_val, graphics_view, table_view, legend, width],
+            [list, list, PlotWidget, QTableView, str, (int, float)])
         super().__init__()
         self.x_val = x_val
         self.y_val = y_val
@@ -98,26 +100,36 @@ class BarChartWithLine(Chart):
             pen = mkPen(color="#d2e5f5", style=Qt.DotLine, width=2)
             self.graphics_view.plot(x=self.x_val, y=self.y_val, pen=pen)
 
-            row = len(self.x_val) - 1 - item.row() if self.reverse else item.row()
-            clicked_item = PlotDataItem(x=[self.x_val[row]], y=[self.y_val[row]],
+            row = len(
+                self.x_val) - 1 - item.row() if self.reverse else item.row()
+            clicked_item = PlotDataItem(x=[self.x_val[row]],
+                                        y=[self.y_val[row]],
                                         pen=pen_1, symbol='+', symbolSize=14)
             self.graphics_view.addItem(chart_item)
             self.graphics_view.addItem(clicked_item)
 
     @staticmethod
-    def clear_graphics(graphics_view: PlotWidget, table_view: QTableView):
+    def clear_graphics(*args, **kwargs):
         """
-        static method for clearing content in all graphics
+        Static method for clearing content in all graphics.
+
+        This method now accepts additional arguments if needed.
 
         Parameters
         ----------
-        graphics_view   : PlotWidget
-                          graphics view to place chart
-        table_view      : QTableView
-                          table view to link graphics_view
-
+        *args           : Additional arguments
+        **kwargs        : Additional keyword arguments
         """
-        Assertor.assert_data_types([graphics_view, table_view], [PlotWidget, QTableView])
+        graphics_view = args[0] if len(args) > 0 else kwargs.get(
+            'graphics_view')
+        table_view = args[1] if len(args) > 1 else kwargs.get('table_view')
+
+        if graphics_view is None or table_view is None:
+            raise ValueError(
+                "Both graphics_view and table_view must be provided.")
+
+        Assertor.assert_data_types([graphics_view, table_view],
+                                   [PlotWidget, QTableView])
         table_view.setModel(None)
         table_view.clearSpans()
         graphics_view.clear()

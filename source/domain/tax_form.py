@@ -17,17 +17,18 @@ from source.util import Assertor, Debugger
 from source.domain.entity import Entity
 
 
-class TaxForm(Entity):
+class TaxForm(Entity):  # pylint: disable=too-many-instance-attributes
     """
     Tax form entity class
 
     """
 
-    tax_version_mapping = {'2022': ('skatteberegningsgrunnlagV7', 'skattepliktV9'),
-                           '2021': ('skatteberegningsgrunnlagV6', 'skattepliktV8'),
-                           '2020': ('skattegrunnlagV6', 'skattepliktV7'),
-                           '2019': ('skattegrunnlagV5', 'skattepliktV6'),
-                           '2018': ('skattegrunnlagV5', 'skattepliktV5')}
+    tax_version_mapping = {
+        '2022': ('skatteberegningsgrunnlagV7', 'skattepliktV9'),
+        '2021': ('skatteberegningsgrunnlagV6', 'skattepliktV8'),
+        '2020': ('skattegrunnlagV6', 'skattepliktV7'),
+        '2019': ('skattegrunnlagV5', 'skattepliktV6'),
+        '2018': ('skattegrunnlagV5', 'skattepliktV5')}
 
     @staticmethod
     def validate_tax_year(tax_year: Union[int, float, str]):
@@ -43,7 +44,8 @@ class TaxForm(Entity):
         """
         Assertor.assert_data_types([tax_year], [(int, float, str)])
         Assertor.assert_arguments([str(tax_year)],
-                                  [{'year': tuple(TaxForm.tax_version_mapping.keys())}])
+                                  [{'year': tuple(
+                                      TaxForm.tax_version_mapping.keys())}])
 
     @staticmethod
     def validate_age(age: Union[int, float, str]):
@@ -72,7 +74,8 @@ class TaxForm(Entity):
         """
         for value in values:
             Assertor.assert_data_types([value], [(int, float, str)])
-            Assertor.assert_non_negative(value, "Tax form values cannot be negative")
+            Assertor.assert_non_negative(value,
+                                         "Tax form values cannot be negative")
 
     def __init__(self, age: Union[str, int],
                  income: Union[str, int, float],
@@ -124,7 +127,8 @@ class TaxForm(Entity):
 
             self.validate_age(age)
             self.validate_tax_form_values(
-                [income, interest_income, interest_cost, value_of_real_estate, bank_deposit, debt,
+                [income, interest_income, interest_cost, value_of_real_estate,
+                 bank_deposit, debt,
                  union_fee, bsu, other_income, rental_income])
             self.validate_tax_year(tax_year)
 
@@ -132,16 +136,21 @@ class TaxForm(Entity):
             self._income = str(income)
             self._tax_year = str(date.today().year) if not \
                 tax_year else str(tax_year)
-            self._interest_income = str(0) if not interest_income else str(interest_income)
-            self._interest_cost = str(0) if not interest_cost else str(interest_cost)
+            self._interest_income = str(0) if not interest_income else str(
+                interest_income)
+            self._interest_cost = str(0) if not interest_cost else str(
+                interest_cost)
             self._value_of_real_estate = str(0) if not value_of_real_estate \
                 else str(value_of_real_estate)
-            self._bank_deposit = str(0) if not bank_deposit else str(bank_deposit)
+            self._bank_deposit = str(0) if not bank_deposit else str(
+                bank_deposit)
             self._debt = str(0) if not debt else str(debt)
             self._union_fee = str(0) if not union_fee else str(union_fee)
             self._bsu = str(0) if not bsu else str(bsu)
-            self._other_income = str(0) if not other_income else str(other_income)
-            self._rental_income = str(0) if not rental_income else str(rental_income)
+            self._other_income = str(0) if not other_income else str(
+                other_income)
+            self._rental_income = str(0) if not rental_income else str(
+                rental_income)
 
         except Exception as tax_form_exception:
             raise tax_form_exception
@@ -295,7 +304,8 @@ class TaxForm(Entity):
         return self._value_of_real_estate
 
     @value_of_real_estate.setter
-    def value_of_real_estate(self, new_value_of_real_estate: Union[str, int, float]):
+    def value_of_real_estate(self,
+                             new_value_of_real_estate: Union[str, int, float]):
         """
         value_of_real_estate setter
 
@@ -478,7 +488,8 @@ class TaxForm(Entity):
         """
         properties = dict(list(self.__dict__.items()))
         del properties['_id']
-        properties.update({'tax_year_config': self.tax_version_mapping[self.tax_year]})
+        properties.update(
+            {'tax_year_config': self.tax_version_mapping[self.tax_year]})
         return properties
 
     @staticmethod
@@ -493,8 +504,11 @@ class TaxForm(Entity):
 
         """
         return ", ".join(
-            ['non_negative_age', 'non_negative_income', 'non_negative_interest_income',
-             '\\nnon_negative_interest_cost', 'non_negative_value_of_real_estate',
-             'non_negative_bank_deposit', '\\nnon_negative_debt', 'non_negative_bsu',
+            ['non_negative_age', 'non_negative_income',
+             'non_negative_interest_income',
+             '\\nnon_negative_interest_cost',
+             'non_negative_value_of_real_estate',
+             'non_negative_bank_deposit', '\\nnon_negative_debt',
+             'non_negative_bsu',
              'non_negative_union_fee', 'non_negative_other_income',
              'tax_year_criteria']).replace("'", "")

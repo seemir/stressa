@@ -9,9 +9,11 @@ __email__ = 'samir.adrik@gmail.com'
 
 import numpy as np
 
-from pyqtgraph import BarGraphItem, PlotWidget, mkPen, InfiniteLine, SignalProxy, LinearRegionItem
-from PyQt5.QtGui import QBrush, QColor
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
+from PyQt5.QtGui import QBrush, QColor  # pylint: disable=no-name-in-module
+from pyqtgraph import (BarGraphItem, PlotWidget, mkPen, InfiniteLine,
+                       SignalProxy,
+                       LinearRegionItem)  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 
@@ -19,14 +21,16 @@ from .double_cross_hair import DoubleCrossHair
 from .chart import Chart
 
 
-class BarChart(Chart):
+class BarChart(Chart):  # pylint: disable=too-many-instance-attributes
     """
     Implementation of BarChart graphics
 
     """
 
-    def __init__(self, x_1: list, y_1: list, x_2: list, y_2: list, graphics_view_1: PlotWidget,
-                 graphics_view_2: PlotWidget, labels: tuple, units=None, precision=0, width=1000,
+    def __init__(self, x_1: list, y_1: list, x_2: list, y_2: list,
+                 graphics_view_1: PlotWidget,
+                 graphics_view_2: PlotWidget, labels: tuple, units=None,
+                 precision=0, width=1000,
                  average=None, display=int, x_labels=None, highlight_bars=True):
         """
         Constructor / Instantiation of class
@@ -64,8 +68,10 @@ class BarChart(Chart):
 
         """
         Assertor.assert_data_types(
-            [x_1, y_1, x_2, y_2, graphics_view_1, graphics_view_2, labels, precision, average],
-            [list, list, list, list, PlotWidget, PlotWidget, tuple, (int, float),
+            [x_1, y_1, x_2, y_2, graphics_view_1, graphics_view_2, labels,
+             precision, average],
+            [list, list, list, list, PlotWidget, PlotWidget, tuple,
+             (int, float),
              (type(None), str)])
         super().__init__()
         self.y_1, self.x_1 = self.create_bins(x_1, y_1, bins=x_1)
@@ -92,10 +98,14 @@ class BarChart(Chart):
         if average:
             self.draw_average_line()
 
-        self.cross_hair = DoubleCrossHair(self.x_1, self.y_1, self.x_2, self.y_2,
-                                          self.graphics_view_1, self.graphics_view_2, labels,
-                                          self.units, precision, width, display=display,
-                                          x_labels=x_labels, highlight_bars=highlight_bars)
+        self.cross_hair = DoubleCrossHair(self.x_1, self.y_1, self.x_2,
+                                          self.y_2,
+                                          self.graphics_view_1,
+                                          self.graphics_view_2, labels,
+                                          self.units, precision, width,
+                                          display=display,
+                                          x_labels=x_labels,
+                                          highlight_bars=highlight_bars)
         self.add_cross_hair_to_chart()
 
         self.graphics_view_1.plotItem.vb.setLimits(xMin=min(self.x_1) - width,
@@ -138,7 +148,8 @@ class BarChart(Chart):
 
         if sum(self.y_1) != 0:
             average_1 = np.average(self.x_1, weights=self.y_1)
-            linear_region_1 = LinearRegionItem([average_1, self.average], movable=False,
+            linear_region_1 = LinearRegionItem([average_1, self.average],
+                                               movable=False,
                                                brush=brush)
             self.graphics_view_1.addItem(linear_region_1)
             average_line_1.setPos(average_1)
@@ -146,7 +157,8 @@ class BarChart(Chart):
 
         if sum(self.y_2) != 0:
             average_2 = np.average(self.x_2, weights=self.y_2)
-            linear_region_2 = LinearRegionItem([average_2, self.average], movable=False,
+            linear_region_2 = LinearRegionItem([average_2, self.average],
+                                               movable=False,
                                                brush=brush)
             self.graphics_view_2.addItem(linear_region_2)
             average_line_2.setPos(average_2)
@@ -162,16 +174,19 @@ class BarChart(Chart):
         method for adding cross hair to the charts
 
         """
-        proxy_mouse_moved_1 = SignalProxy(self.graphics_view_1.scene().sigMouseMoved, rateLimit=60,
-                                          slot=self.mouse_moved)
-        proxy_mouse_moved_2 = SignalProxy(self.graphics_view_2.scene().sigMouseMoved, rateLimit=60,
-                                          slot=self.mouse_moved)
+        proxy_mouse_moved_1 = SignalProxy(
+            self.graphics_view_1.scene().sigMouseMoved, rateLimit=60,
+            slot=self.mouse_moved)
+        proxy_mouse_moved_2 = SignalProxy(
+            self.graphics_view_2.scene().sigMouseMoved, rateLimit=60,
+            slot=self.mouse_moved)
         self.graphics_view_1.proxy = proxy_mouse_moved_1
         self.graphics_view_2.proxy = proxy_mouse_moved_2
 
         if self.graphics_view_3:
-            proxy_mouse_moved_3 = SignalProxy(self.graphics_view_3.scene().sigMouseMoved,
-                                              rateLimit=60, slot=self.mouse_moved)
+            proxy_mouse_moved_3 = SignalProxy(
+                self.graphics_view_3.scene().sigMouseMoved,
+                rateLimit=60, slot=self.mouse_moved)
             self.graphics_view_3.proxy = proxy_mouse_moved_3
 
     def mouse_moved(self, evt):

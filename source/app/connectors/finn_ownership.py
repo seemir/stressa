@@ -164,7 +164,8 @@ class FinnOwnership(Finn):
 
                 ownership_data = {'Tinglyst': registration_date,
                                   'Boligtype': property_type,
-                                  property_id_name: property_id if property_id else [''] * len(
+                                  property_id_name: property_id if
+                                  property_id else ['-'] * len(
                                       registration_date),
                                   'Pris': amount}
                 info.update({'historikk': ownership_data})

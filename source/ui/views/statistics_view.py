@@ -10,9 +10,10 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 from random import randint
 
-from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.uic import loadUi
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
+from PyQt5.uic import loadUi  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QDialog, \
+    QWidget  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 
@@ -43,7 +44,8 @@ class StatisticsView(QDialog):
         super().__init__(parent=parent)
         up_dir = os.path.dirname
 
-        self.ui_form = loadUi(os.path.join(up_dir(__file__), "forms/statistics_form.ui"), self)
+        self.ui_form = loadUi(
+            os.path.join(up_dir(__file__), "forms/statistics_form.ui"), self)
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
@@ -53,15 +55,22 @@ class StatisticsView(QDialog):
         self._map_view = MapView(self)
         self._images_view = ImagesView(self)
 
-        self.ui_form.push_button_meta_data.clicked.connect(self.meta_view.display)
+        self.ui_form.push_button_meta_data.clicked.connect(
+            self.meta_view.display)
         self.ui_form.push_button_oppdater.clicked.connect(self.update)
         self.ui_form.push_button_avbryt.clicked.connect(self.close)
-        self.ui_form.push_button_show_in_map_1.clicked.connect(self.map_view.show)
-        self.ui_form.push_button_show_in_map_2.clicked.connect(self.map_view.show)
-        self.ui_form.push_button_show_in_map_3.clicked.connect(self.map_view.show)
-        self.ui_form.push_button_show_in_map_4.clicked.connect(self.map_view.show)
-        self.ui_form.push_button_show_in_map_5.clicked.connect(self.map_view.show)
-        self.ui_form.push_button_show_in_map_6.clicked.connect(self.map_view.show)
+        self.ui_form.push_button_show_in_map_1.clicked.connect(
+            self.map_view.show)
+        self.ui_form.push_button_show_in_map_2.clicked.connect(
+            self.map_view.show)
+        self.ui_form.push_button_show_in_map_3.clicked.connect(
+            self.map_view.show)
+        self.ui_form.push_button_show_in_map_4.clicked.connect(
+            self.map_view.show)
+        self.ui_form.push_button_show_in_map_5.clicked.connect(
+            self.map_view.show)
+        self.ui_form.push_button_show_in_map_6.clicked.connect(
+            self.map_view.show)
 
         self.postfix = None
 
@@ -152,9 +161,11 @@ class StatisticsView(QDialog):
 
         """
         finn_code = getattr(self.ui_form, "line_edit_finnkode").text()
-        finn_code_1 = getattr(self.parent.ui_form, "line_edit_finnkode_1").text().strip()
+        finn_code_1 = getattr(self.parent.ui_form,
+                              "line_edit_finnkode_1").text().strip()
         if finn_code_1 and finn_code:
-            getattr(self.ui_form, "progress_bar_statistics").setValue(randint(5, 25))
+            getattr(self.ui_form, "progress_bar_statistics").setValue(
+                randint(5, 25))
             self.parent.finn_model.process_finn_data(finn_code_1, "_1")
             getattr(self.ui_form, "progress_bar_statistics").setValue(30)
 
@@ -164,9 +175,12 @@ class StatisticsView(QDialog):
 
         """
         finn_code = getattr(self.ui_form, "line_edit_finnkode").text()
-        finn_code_1 = getattr(self.parent.ui_form, "line_edit_finnkode_1").text().strip()
-        finn_code_2 = getattr(self.parent.ui_form, "line_edit_finnkode_2").text().strip()
-        finn_code_3 = getattr(self.parent.ui_form, "line_edit_finnkode_3").text().strip()
+        finn_code_1 = getattr(self.parent.ui_form,
+                              "line_edit_finnkode_1").text().strip()
+        finn_code_2 = getattr(self.parent.ui_form,
+                              "line_edit_finnkode_2").text().strip()
+        finn_code_3 = getattr(self.parent.ui_form,
+                              "line_edit_finnkode_3").text().strip()
         if finn_code_1 and finn_code:
             getattr(self.ui_form, "progress_bar_statistics").setValue(30)
         elif finn_code_2 and finn_code:

@@ -9,7 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from decimal import Decimal
 
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 from source.domain import Money
@@ -24,23 +24,34 @@ class BudgetModel(Model):
     """
 
     _interval = {"": "", "Årlig": "1", "Halvårlig": "2", "Kvartalsvis": "4",
-                 "Annenhver måned": "6", "Månedlig": "12", "Semi-månedlig": "24",
+                 "Annenhver måned": "6", "Månedlig": "12",
+                 "Semi-månedlig": "24",
                  "Annenhver uke": "26", "Ukentlig": "52"}
 
-    _primary_posts = ["brutto_inntekt_1", "trygde_inntekt_1", "leieinntekt_1", "renteinntekter_1",
-                      "andre_inntekter_1", "personinntekt_1", "student_lan_1", "kreditt_gjeld_1",
-                      "husleie_1", "strom_1", "rentekostnader_1", "andre_utgifter_1",
+    _primary_posts = ["brutto_inntekt_1", "trygde_inntekt_1", "leieinntekt_1",
+                      "renteinntekter_1",
+                      "andre_inntekter_1", "personinntekt_1", "student_lan_1",
+                      "kreditt_gjeld_1",
+                      "husleie_1", "strom_1", "rentekostnader_1",
+                      "andre_utgifter_1",
                       "sum_utgifter_1"]
 
-    _secondary_posts = ["brutto_inntekt_2", "trygde_inntekt_2", "leieinntekt_2", "renteinntekter_2",
-                        "andre_inntekter_2", "personinntekt_2", "student_lan_2", "kreditt_gjeld_2",
-                        "husleie_2", "strom_2", "rentekostnader_2", "andre_utgifter_2",
+    _secondary_posts = ["brutto_inntekt_2", "trygde_inntekt_2", "leieinntekt_2",
+                        "renteinntekter_2",
+                        "andre_inntekter_2", "personinntekt_2", "student_lan_2",
+                        "kreditt_gjeld_2",
+                        "husleie_2", "strom_2", "rentekostnader_2",
+                        "andre_utgifter_2",
                         "sum_utgifter_2"]
 
-    _total_posts = ["brutto_inntekt_total", "trygde_inntekt_total", "leieinntekt_total",
-                    "renteinntekter_total", "andre_inntekter_total", "personinntekt_total",
-                    "student_lan_total", "kreditt_gjeld_total", "husleie_total", "strom_total",
-                    "rentekostnader_total", "andre_utgifter_total", "sum_utgifter_total"]
+    _total_posts = ["brutto_inntekt_total", "trygde_inntekt_total",
+                    "leieinntekt_total",
+                    "renteinntekter_total", "andre_inntekter_total",
+                    "personinntekt_total",
+                    "student_lan_total", "kreditt_gjeld_total", "husleie_total",
+                    "strom_total",
+                    "rentekostnader_total", "andre_utgifter_total",
+                    "sum_utgifter_total"]
 
     def __init__(self, parent: QObject):
         """
@@ -55,7 +66,8 @@ class BudgetModel(Model):
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QObject])
         for num in range(1, 23):
-            getattr(self.parent.ui_form, "combo_box_interval_" + str(num)).addItems(
+            getattr(self.parent.ui_form,
+                    "combo_box_interval_" + str(num)).addItems(
                 self.interval.keys())
 
     @property
@@ -198,11 +210,13 @@ class BudgetModel(Model):
         method for setting value in model
 
         """
-        if getattr(self.parent.ui_form, "line_edit_" + line_edit + postfix).text():
+        if getattr(self.parent.ui_form,
+                   "line_edit_" + line_edit + postfix).text():
             self.set_line_edit(line_edit + postfix, Money, "value")
         else:
             self.clear_line_edit(line_edit + postfix)
-            getattr(self.parent.ui_form, "combo_box_interval" + combofix).setCurrentIndex(0)
+            getattr(self.parent.ui_form,
+                    "combo_box_interval" + combofix).setCurrentIndex(0)
         self.monthly_value()
         self.yearly_value()
 
@@ -211,7 +225,8 @@ class BudgetModel(Model):
         method for setting value in combo_box
 
         """
-        if getattr(self.parent.ui_form, "combo_box_interval" + combofix).currentText():
+        if getattr(self.parent.ui_form,
+                   "combo_box_interval" + combofix).currentText():
             pass
         else:
             self.clear_line_edit(line_edit + postfix)
@@ -247,8 +262,10 @@ class BudgetModel(Model):
             self._interval[parent.combo_box_interval_5.currentText()])
 
         sum_income_1 = sum(
-            [brutto_income_1, trygd_income_1, leie_income_1, interest_income_1, other_income_1])
-        person_income_1 = Money(str(sum_income_1)).value() if sum_income_1 != 0 else ""
+            [brutto_income_1, trygd_income_1, leie_income_1, interest_income_1,
+             other_income_1])
+        person_income_1 = Money(
+            str(sum_income_1)).value() if sum_income_1 != 0 else ""
         parent.line_edit_personinntekt_1.setText(person_income_1)
         self.set_line_edit("personinntekt_1", data=person_income_1)
 
@@ -275,8 +292,10 @@ class BudgetModel(Model):
             self._interval[parent.combo_box_interval_16.currentText()])
 
         sum_income_2 = sum(
-            [brutto_income_2, trygd_income_2, leie_income_2, interest_income_2, other_income_2])
-        person_income_2 = Money(str(sum_income_2)).value() if sum_income_2 != 0 else ""
+            [brutto_income_2, trygd_income_2, leie_income_2, interest_income_2,
+             other_income_2])
+        person_income_2 = Money(
+            str(sum_income_2)).value() if sum_income_2 != 0 else ""
         parent.line_edit_personinntekt_2.setText(person_income_2)
         self.set_line_edit("personinntekt_2", data=person_income_2)
 
@@ -300,8 +319,10 @@ class BudgetModel(Model):
             self._interval[parent.combo_box_interval_11.currentText()])
 
         sum_expenses_1 = sum(
-            [student_loan_1, credit_debt_1, housing_rent_1, power_1, interest_cost_1, other_1])
-        person_expenses_1 = Money(str(sum_expenses_1)).value() if sum_expenses_1 != 0 else ""
+            [student_loan_1, credit_debt_1, housing_rent_1, power_1,
+             interest_cost_1, other_1])
+        person_expenses_1 = Money(
+            str(sum_expenses_1)).value() if sum_expenses_1 != 0 else ""
         parent.line_edit_sum_utgifter_1.setText(person_expenses_1)
         self.set_line_edit("sum_utgifter_1", data=person_expenses_1)
 
@@ -325,36 +346,49 @@ class BudgetModel(Model):
             self._interval[parent.combo_box_interval_22.currentText()])
 
         sum_expenses_2 = sum(
-            [student_loan_2, credit_debt_2, housing_rent_2, power_2, interest_cost_2, other_2])
-        person_expenses_2 = Money(str(sum_expenses_2)).value() if sum_expenses_2 != 0 else ""
+            [student_loan_2, credit_debt_2, housing_rent_2, power_2,
+             interest_cost_2, other_2])
+        person_expenses_2 = Money(
+            str(sum_expenses_2)).value() if sum_expenses_2 != 0 else ""
         parent.line_edit_sum_utgifter_2.setText(person_expenses_2)
         self.set_line_edit("sum_utgifter_2", data=person_expenses_2)
 
-        self.set_total_value(brutto_income_1, brutto_income_2, "brutto_inntekt_1",
+        self.set_total_value(brutto_income_1, brutto_income_2,
+                             "brutto_inntekt_1",
                              "brutto_inntekt_2", "brutto_inntekt_total")
         self.set_total_value(trygd_income_1, trygd_income_2, "trygde_inntekt_1",
                              "trygde_inntekt_2", "trygde_inntekt_total")
         self.set_total_value(leie_income_1, leie_income_2, "leieinntekt_1",
                              "leieinntekt_2", "leieinntekt_total")
-        self.set_total_value(interest_income_1, interest_income_2, "renteinntekter_1",
+        self.set_total_value(interest_income_1, interest_income_2,
+                             "renteinntekter_1",
                              "renteinntekter_2", "renteinntekter_total")
-        self.set_total_value(other_income_1, other_income_2, "andre_inntekter_1",
+        self.set_total_value(other_income_1, other_income_2,
+                             "andre_inntekter_1",
                              "andre_inntekter_2", "andre_inntekter_total")
-        self.set_total_value(person_income_1, person_income_2, "personinntekt_1",
+        self.set_total_value(person_income_1, person_income_2,
+                             "personinntekt_1",
                              "personinntekt_2", "personinntekt_total")
 
-        self.set_total_value(student_loan_1, student_loan_2, "student_lan_1", "student_lan_2",
+        self.set_total_value(student_loan_1, student_loan_2, "student_lan_1",
+                             "student_lan_2",
                              "student_lan_total")
-        self.set_total_value(credit_debt_1, credit_debt_2, "kreditt_gjeld_1", "kreditt_gjeld_2",
+        self.set_total_value(credit_debt_1, credit_debt_2, "kreditt_gjeld_1",
+                             "kreditt_gjeld_2",
                              "kreditt_gjeld_total")
-        self.set_total_value(housing_rent_1, housing_rent_2, "husleie_1", "husleie_2",
+        self.set_total_value(housing_rent_1, housing_rent_2, "husleie_1",
+                             "husleie_2",
                              "husleie_total")
-        self.set_total_value(power_1, power_2, "strom_1", "strom_2", "strom_total")
-        self.set_total_value(interest_cost_1, interest_cost_2, "rentekostnader_1",
+        self.set_total_value(power_1, power_2, "strom_1", "strom_2",
+                             "strom_total")
+        self.set_total_value(interest_cost_1, interest_cost_2,
+                             "rentekostnader_1",
                              "rentekostnader_2", "rentekostnader_total")
-        self.set_total_value(other_1, other_2, "andre_utgifter_1", "andre_utgifter_2",
+        self.set_total_value(other_1, other_2, "andre_utgifter_1",
+                             "andre_utgifter_2",
                              "andre_utgifter_total")
-        self.set_total_value(sum_expenses_1, sum_expenses_2, "sum_utgifter_1", "sum_utgifter_2",
+        self.set_total_value(sum_expenses_1, sum_expenses_2, "sum_utgifter_1",
+                             "sum_utgifter_2",
                              "sum_utgifter_total")
 
     def yearly_value(self):
@@ -386,8 +420,10 @@ class BudgetModel(Model):
             self._interval[parent.combo_box_interval_5.currentText()])
 
         sum_income_1 = sum(
-            [brutto_income_1, trygd_income_1, leie_income_1, interest_income_1, other_income_1])
-        person_income_1 = Money(str(sum_income_1)).value() if sum_income_1 != 0 else ""
+            [brutto_income_1, trygd_income_1, leie_income_1, interest_income_1,
+             other_income_1])
+        person_income_1 = Money(
+            str(sum_income_1)).value() if sum_income_1 != 0 else ""
         self.data.update({"personinntekt_aar_1": person_income_1})
 
         brutto_income_2 = self.calculate_yearly_values(
@@ -413,8 +449,10 @@ class BudgetModel(Model):
             self._interval[parent.combo_box_interval_16.currentText()])
 
         sum_income_2 = sum(
-            [brutto_income_2, trygd_income_2, leie_income_2, interest_income_2, other_income_2])
-        person_income_2 = Money(str(sum_income_2)).value() if sum_income_2 != 0 else ""
+            [brutto_income_2, trygd_income_2, leie_income_2, interest_income_2,
+             other_income_2])
+        person_income_2 = Money(
+            str(sum_income_2)).value() if sum_income_2 != 0 else ""
         self.data.update({"personinntekt_aar_2": person_income_2})
 
         student_loan_1 = self.calculate_yearly_values(
@@ -437,8 +475,10 @@ class BudgetModel(Model):
             self._interval[parent.combo_box_interval_11.currentText()])
 
         sum_expenses_1 = sum(
-            [student_loan_1, credit_debt_1, housing_rent_1, power_1, interest_cost_1, other_1])
-        person_expenses_1 = Money(str(sum_expenses_1)).value() if sum_expenses_1 != 0 else ""
+            [student_loan_1, credit_debt_1, housing_rent_1, power_1,
+             interest_cost_1, other_1])
+        person_expenses_1 = Money(
+            str(sum_expenses_1)).value() if sum_expenses_1 != 0 else ""
         self.data.update({"sum_utgifter_1": person_expenses_1})
 
         student_loan_2 = self.calculate_yearly_values(
@@ -461,34 +501,48 @@ class BudgetModel(Model):
             self._interval[parent.combo_box_interval_22.currentText()])
 
         sum_expenses_2 = sum(
-            [student_loan_2, credit_debt_2, housing_rent_2, power_2, interest_cost_2, other_2])
-        person_expenses_2 = Money(str(sum_expenses_2)).value() if sum_expenses_2 != 0 else ""
+            [student_loan_2, credit_debt_2, housing_rent_2, power_2,
+             interest_cost_2, other_2])
+        person_expenses_2 = Money(
+            str(sum_expenses_2)).value() if sum_expenses_2 != 0 else ""
         self.data.update({"sum_utgifter_aar_2": person_expenses_2})
 
-        self.set_total_value(brutto_income_1, brutto_income_2, "brutto_inntekt_1",
+        self.set_total_value(brutto_income_1, brutto_income_2,
+                             "brutto_inntekt_1",
                              "brutto_inntekt_2", "brutto_inntekt_total_aar")
         self.set_total_value(trygd_income_1, trygd_income_2, "trygde_inntekt_1",
                              "trygde_inntekt_2", "trygde_inntekt_total_aar")
-        self.set_total_value(leie_income_1, leie_income_2, "leieinntekt_1", "leieinntekt_2",
+        self.set_total_value(leie_income_1, leie_income_2, "leieinntekt_1",
+                             "leieinntekt_2",
                              "leieinntekt_total_aar")
-        self.set_total_value(interest_income_1, interest_income_2, "renteinntekter_1",
+        self.set_total_value(interest_income_1, interest_income_2,
+                             "renteinntekter_1",
                              "renteinntekter_2", "renteinntekter_total_aar")
-        self.set_total_value(other_income_1, other_income_2, "andre_inntekter_1",
+        self.set_total_value(other_income_1, other_income_2,
+                             "andre_inntekter_1",
                              "andre_inntekter_2", "andre_inntekter_total_aar")
-        self.set_total_value(person_income_1, person_income_2, "personinntekt_1", "personinntekt_2",
+        self.set_total_value(person_income_1, person_income_2,
+                             "personinntekt_1", "personinntekt_2",
                              "personinntekt_total_aar")
-        self.set_total_value(student_loan_1, student_loan_2, "student_lan_1", "student_lan_2",
+        self.set_total_value(student_loan_1, student_loan_2, "student_lan_1",
+                             "student_lan_2",
                              "student_lan_total_aar")
-        self.set_total_value(credit_debt_1, credit_debt_2, "kreditt_gjeld_1", "kreditt_gjeld_2",
+        self.set_total_value(credit_debt_1, credit_debt_2, "kreditt_gjeld_1",
+                             "kreditt_gjeld_2",
                              "kreditt_gjeld_total_aar")
-        self.set_total_value(housing_rent_1, housing_rent_2, "husleie_1", "husleie_2",
+        self.set_total_value(housing_rent_1, housing_rent_2, "husleie_1",
+                             "husleie_2",
                              "husleie_total_aar")
-        self.set_total_value(power_1, power_2, "strom_1", "strom_2", "strom_total_aar")
-        self.set_total_value(interest_cost_1, interest_cost_2, "rentekostnader_1",
+        self.set_total_value(power_1, power_2, "strom_1", "strom_2",
+                             "strom_total_aar")
+        self.set_total_value(interest_cost_1, interest_cost_2,
+                             "rentekostnader_1",
                              "rentekostnader_2", "rentekostnader_total_aar")
-        self.set_total_value(other_1, other_2, "andre_utgifter_1", "andre_utgifter_2",
+        self.set_total_value(other_1, other_2, "andre_utgifter_1",
+                             "andre_utgifter_2",
                              "andre_utgifter_total_aar")
-        self.set_total_value(sum_expenses_1, sum_expenses_2, "sum_utgifter_1", "sum_utgifter_2",
+        self.set_total_value(sum_expenses_1, sum_expenses_2, "sum_utgifter_1",
+                             "sum_utgifter_2",
                              "sum_utgifter_total_aar")
 
     def set_radio_button(self, radio_button):
@@ -496,7 +550,8 @@ class BudgetModel(Model):
         method for setting value in radio button
 
         """
-        if getattr(self.parent.ui_form, "radio_button_" + radio_button).isChecked():
+        if getattr(self.parent.ui_form,
+                   "radio_button_" + radio_button).isChecked():
             self.data.update(
                 {radio_button: True})
             self.monthly_value()
@@ -506,16 +561,22 @@ class BudgetModel(Model):
             self.monthly_value()
             self.yearly_value()
 
-    def set_total_value(self, val_1, val_2, line_edit_1, line_edit_2, total_name):
+    def set_total_value(self, val_1, val_2, line_edit_1, line_edit_2,
+                        total_name):
         """
         method for setting total value
 
         """
         if getattr(self.parent.ui_form, "line_edit_" + line_edit_1).text() or \
                 getattr(self.parent.ui_form, "line_edit_" + line_edit_2).text():
-            val_1 = int((str(val_1) if val_1 else "0").replace(" ", "").replace("kr", ""))
-            val_2 = int((str(val_2) if val_2 else "0").replace(" ", "").replace("kr", ""))
-            self.data.update({total_name: Money(str(Decimal(val_1) + Decimal(val_2))).value()})
+            val_1 = int(
+                (str(val_1) if val_1 else "0").replace(" ", "").replace("kr",
+                                                                        ""))
+            val_2 = int(
+                (str(val_2) if val_2 else "0").replace(" ", "").replace("kr",
+                                                                        ""))
+            self.data.update({total_name: Money(
+                str(Decimal(val_1) + Decimal(val_2))).value()})
         elif total_name in self.data:
             del self.data[total_name]
 
@@ -533,13 +594,15 @@ class BudgetModel(Model):
         """
         Assertor.assert_data_types([value, factor], [str, str])
         if value and factor:
-            quantity = Decimal(value.replace(" ", "").replace("kr", "")) * Decimal(
+            quantity = Decimal(
+                value.replace(" ", "").replace("kr", "")) * Decimal(
                 factor.replace(" ", "").replace("kr", ""))
             divisor = Decimal("12")
             monthly_values = round(Decimal(quantity / divisor))
             self.data.update({line_edit: Money(str(monthly_values)).value()})
         elif value:
-            monthly_values = round(Decimal(value.replace(" ", "").replace("kr", "")))
+            monthly_values = round(
+                Decimal(value.replace(" ", "").replace("kr", "")))
         else:
             monthly_values = round(Decimal("0"))
         return monthly_values
@@ -551,12 +614,14 @@ class BudgetModel(Model):
         """
         Assertor.assert_data_types([value, factor], [str, str])
         if value and factor:
-            quantity = Decimal(value.replace(" ", "").replace("kr", "")) * Decimal(
+            quantity = Decimal(
+                value.replace(" ", "").replace("kr", "")) * Decimal(
                 factor.replace(" ", "").replace("kr", ""))
             yearly_values = round(Decimal(quantity))
             self.data.update({line_edit: Money(str(yearly_values)).value()})
         elif value:
-            yearly_values = round(Decimal(value.replace(" ", "").replace("kr", "")))
+            yearly_values = round(
+                Decimal(value.replace(" ", "").replace("kr", "")))
         else:
             yearly_values = round(Decimal("0"))
         return yearly_values

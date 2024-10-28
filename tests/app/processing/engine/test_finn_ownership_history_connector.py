@@ -25,7 +25,8 @@ class TestFinnOwnershipHistoryConnector:
 
         """
         self.finn_code = "144857770"
-        self.connector_finn_ownership_history = FinnOwnershipHistoryConnector(self.finn_code)
+        self.connector_finn_ownership_history = FinnOwnershipHistoryConnector(
+            self.finn_code)
 
     def test_connector_finn_ownership_history_is_instance_of_operation(self):
         """
@@ -34,10 +35,12 @@ class TestFinnOwnershipHistoryConnector:
         """
         for parent in [FinnOwnershipHistoryConnector, Operation]:
             assert isinstance(self.connector_finn_ownership_history, parent)
-            assert issubclass(self.connector_finn_ownership_history.__class__, parent)
+            assert issubclass(self.connector_finn_ownership_history.__class__,
+                              parent)
 
     @staticmethod
-    @pt.mark.parametrize('invalid_finn_code', [True, 90210, 90210.0, ('test', 'test'), {}])
+    @pt.mark.parametrize('invalid_finn_code',
+                         [True, 90210, 90210.0, ('test', 'test'), {}])
     def test_invalid_args_raises_tracking_error(invalid_finn_code):
         """
         Test that FinnOwnershipHistoryConnector object raises TrackingError if finn_code
@@ -66,12 +69,13 @@ class TestFinnOwnershipHistoryConnector:
 
         """
         ownership_history = self.connector_finn_ownership_history.run()
-        assert ownership_history["historikk"] == {'Boligidentifikasjon': ['', '', '', ''],
-                                                  'Boligtype': ['Frittliggende enebolig',
-                                                                'Annet',
-                                                                'Frittliggende enebolig',
-                                                                'Frittliggende enebolig'],
-                                                  'Pris': ['67 000 000 kr', '35 500 000 kr',
-                                                           '25 250 000 kr', '3 950 000 kr'],
-                                                  'Tinglyst': ['08.02.2022', '23.03.2017',
-                                                               '13.10.2014', '30.06.1994']}
+        assert ownership_history["historikk"] == {
+            'Boligidentifikasjon': ['-', '-', '-', '-'],
+            'Boligtype': ['Frittliggende enebolig',
+                          'Annet',
+                          'Frittliggende enebolig',
+                          'Frittliggende enebolig'],
+            'Pris': ['67 000 000 kr', '35 500 000 kr',
+                     '25 250 000 kr', '3 950 000 kr'],
+            'Tinglyst': ['08.02.2022', '23.03.2017',
+                         '13.10.2014', '30.06.1994']}

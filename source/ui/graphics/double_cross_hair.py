@@ -10,21 +10,23 @@ __email__ = 'samir.adrik@gmail.com'
 from numpy import percentile, ndarray, array, where, insert
 
 from pyqtgraph import TextItem, InfiniteLine, mkPen, PlotWidget, BarGraphItem
-from PyQt5.QtCore import Qt, QObject
+from PyQt5.QtCore import Qt, QObject  # pylint: disable=no-name-in-module
 
 from source.domain import Amount
 from source.util import Assertor
 
 
-class DoubleCrossHair(QObject):
+class DoubleCrossHair(QObject):  # pylint: disable=too-many-instance-attributes
     """
     Double cross hair implementation
 
     """
 
     def __init__(self, x_1: ndarray, y_1: ndarray, x_2: ndarray, y_2: ndarray,
-                 plot_widget_1: PlotWidget, plot_widget_2: PlotWidget, labels: tuple, units=None,
-                 precision=0, width=1, x_labels=None, display=int, highlight_bars=True):
+                 plot_widget_1: PlotWidget, plot_widget_2: PlotWidget,
+                 labels: tuple, units=None,
+                 precision=0, width=1, x_labels=None, display=int,
+                 highlight_bars=True):
         """
         Constructor / Instantiation of class
 
@@ -58,7 +60,8 @@ class DoubleCrossHair(QObject):
         """
         super().__init__(parent=None)
         Assertor.assert_data_types(
-            [x_1, y_1, x_2, y_2, plot_widget_1, plot_widget_2, labels, precision, width],
+            [x_1, y_1, x_2, y_2, plot_widget_1, plot_widget_2, labels,
+             precision, width],
             [ndarray, ndarray, ndarray, ndarray, PlotWidget,
              PlotWidget, tuple, int, (int, float)])
         self.x_1, self.y_1 = x_1, y_1
@@ -135,9 +138,11 @@ class DoubleCrossHair(QObject):
         """
         self.plot_widget_1.removeItem(self.bar_item_1)
         self.plot_widget_2.removeItem(self.bar_item_2)
-        self.bar_item_1 = BarGraphItem(x=[x_val_1], height=y_val_1, width=self.width,
+        self.bar_item_1 = BarGraphItem(x=[x_val_1], height=y_val_1,
+                                       width=self.width,
                                        brush="#69a8de")
-        self.bar_item_2 = BarGraphItem(x=[x_val_2], height=y_val_2, width=self.width,
+        self.bar_item_2 = BarGraphItem(x=[x_val_2], height=y_val_2,
+                                       width=self.width,
                                        brush="#69a8de")
         self.plot_widget_1.addItem(self.bar_item_1)
         self.plot_widget_2.addItem(self.bar_item_2)
@@ -150,7 +155,8 @@ class DoubleCrossHair(QObject):
         pos = evt[0]
         if self.plot_widget_1.sceneBoundingRect().contains(pos) or \
                 self.plot_widget_2.sceneBoundingRect().contains(pos):
-            x_val_1, y_val_1, x_val_2, y_val_2, limits = self.move_vertical_lines(pos)
+            x_val_1, y_val_1, x_val_2, y_val_2, limits = self.move_vertical_lines(
+                pos)
 
             x_label_idx = where(array(self.x_1) == x_val_1)[0]
             x_label_1 = self.x_time[x_label_idx.item()] + self.units[0] if \

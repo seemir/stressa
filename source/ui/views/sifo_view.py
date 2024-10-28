@@ -9,9 +9,10 @@ __email__ = 'samir.adrik@gmail.com'
 
 import os
 
-from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.QtCore import Qt
-from PyQt5.uic import loadUi
+from PyQt5.uic import loadUi  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QDialog, \
+    QWidget  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 from ..models import SifoModel
@@ -37,7 +38,8 @@ class SifoView(QDialog):
         """
         Assertor.assert_data_types([parent], [QWidget])
         super().__init__(parent=parent)
-        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/sifo_form.ui"), self)
+        self.ui_form = loadUi(
+            os.path.join(os.path.dirname(__file__), "forms/sifo_form.ui"), self)
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
@@ -47,7 +49,8 @@ class SifoView(QDialog):
         self._error_view = self.parent.error_view
         self._meta_view = MetaView(self)
 
-        self.ui_form.push_button_sifo_meta_data.clicked.connect(self.meta_view.display)
+        self.ui_form.push_button_sifo_meta_data.clicked.connect(
+            self.meta_view.display)
         self.ui_form.push_button_vis_resultatet.clicked.connect(
             self.sifo_model.calculate_sifo_expenses)
         self.ui_form.push_button_tom_skjema_1.clicked.connect(self.clear_all)
@@ -127,7 +130,8 @@ class SifoView(QDialog):
         """
         sifo_expenses = self.ui_form.line_edit_totalt_1.text()
         if sifo_expenses:
-            self.parent.mortgage_model.set_line_edit("sifo_utgifter", data=sifo_expenses)
+            self.parent.mortgage_model.set_line_edit("sifo_utgifter",
+                                                     data=sifo_expenses)
         else:
             self.parent.mortgage_model.clear_line_edit("sifo_utgifter")
         self.close()

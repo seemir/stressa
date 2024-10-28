@@ -8,9 +8,11 @@ __email__ = 'samir.adrik@gmail.com'
 
 import os
 
-from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.QtCore import pyqtSlot, Qt, QDate
-from PyQt5.uic import loadUi
+from PyQt5.uic import loadUi  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QDialog, \
+    QWidget  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import pyqtSlot, Qt, \
+    QDate  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 from source.domain import Money
@@ -50,10 +52,13 @@ class RestructureView(QDialog):
         self._restructure_model = RestructureModel(self)
         self.restructure_model.restructure_info()
 
-        self.ui_form.push_button_budget_meta_data.clicked.connect(self.meta_view.display)
+        self.ui_form.push_button_budget_meta_data.clicked.connect(
+            self.meta_view.display)
         self.ui_form.push_button_avbryt.clicked.connect(self.close)
-        self.ui_form.push_button_tom_skjema.clicked.connect(self.restructure_model.clear_all)
-        self.ui_form.push_button_eksporter.clicked.connect(self.restructure_model.export)
+        self.ui_form.push_button_tom_skjema.clicked.connect(
+            self.restructure_model.clear_all)
+        self.ui_form.push_button_eksporter.clicked.connect(
+            self.restructure_model.export)
 
     @property
     def parent(self):
@@ -119,24 +124,29 @@ class RestructureView(QDialog):
 
         if "lanetype" in mortgage_model and "lanetype" not in \
                 self.restructure_model.data:
-            self.ui_form.combo_box_lanetype.setCurrentText(mortgage_model["lanetype"])
+            self.ui_form.combo_box_lanetype.setCurrentText(
+                mortgage_model["lanetype"])
             self.restructure_model.set_combo_box("lanetype")
         if "intervall" in mortgage_model and "intervall" not in \
                 self.restructure_model.data:
-            self.ui_form.combo_box_intervall.setCurrentText(mortgage_model["intervall"])
+            self.ui_form.combo_box_intervall.setCurrentText(
+                mortgage_model["intervall"])
             self.restructure_model.set_combo_box("intervall")
         if "laneperiode" in mortgage_model and "laneperiode" not in \
                 self.restructure_model.data:
-            self.ui_form.combo_box_laneperiode.setCurrentText(mortgage_model["laneperiode"])
+            self.ui_form.combo_box_laneperiode.setCurrentText(
+                mortgage_model["laneperiode"])
             self.restructure_model.set_combo_box("laneperiode")
         if "startdato" in mortgage_model and "startdato" not in \
                 self.restructure_model.data:
-            startdate = QDate.fromString(mortgage_model["startdato"], "dd.MM.yyyy")
+            startdate = QDate.fromString(mortgage_model["startdato"],
+                                         "dd.MM.yyyy")
             self.ui_form.date_edit_startdato.setDate(startdate)
             self.restructure_model.set_date_edit("startdato")
         if "egenkapital" in mortgage_model and "egenkapital" not in \
                 self.restructure_model.data:
-            self.ui_form.line_edit_egenkapital.setText(mortgage_model["egenkapital"])
+            self.ui_form.line_edit_egenkapital.setText(
+                mortgage_model["egenkapital"])
             self.restructure_model.set_line_edit("egenkapital", Money, "value")
         if "belaning" in analysis_model and "belaning" not in \
                 self.restructure_model.data:

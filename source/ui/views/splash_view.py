@@ -12,9 +12,10 @@ import os
 import sys
 import time
 
-from PyQt5.QtWidgets import QDialog, QApplication
-from PyQt5.uic import loadUi
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
+from PyQt5.uic import loadUi  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QDialog, \
+    QApplication  # pylint: disable=no-name-in-module
 
 from source.util import __version__, Assertor
 
@@ -37,7 +38,9 @@ class SplashView(QDialog):
         """
         Assertor.assert_data_types([app], [QApplication])
         super().__init__()
-        self.ui = loadUi(os.path.join(os.path.dirname(__file__), "forms/splash_form.ui"), self)
+        self.ui = loadUi(
+            os.path.join(os.path.dirname(__file__), "forms/splash_form.ui"),
+            self)
         self.ui.setWindowTitle(f"Stressa - v.{__version__}")
         self.ui.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
         self.app = app

@@ -17,7 +17,8 @@ import requests
 
 from bs4 import BeautifulSoup
 
-from source.util import LOGGER, TimeOutError, NoConnectionError, Assertor, Tracking
+from source.util import LOGGER, TimeOutError, NoConnectionError, Assertor, \
+    Tracking
 
 from .settings import FINN_COMMUNITY_URL, TIMEOUT
 from .finn import Finn
@@ -93,7 +94,8 @@ class FinnCommunity(Finn):
             community_stat_soup = BeautifulSoup(response.content, "lxml")
 
             nabolag_soup = json.loads(
-                community_stat_soup.find("script", attrs={"id": "__NEXT_DATA__"}).contents[0])
+                community_stat_soup.find("script", attrs={
+                    "id": "__NEXT_DATA__"}).contents[0])
 
             nabolag = nabolag_soup["props"]["initialState"]["nabolag"]["data"]
             if not nabolag:
@@ -101,13 +103,15 @@ class FinnCommunity(Finn):
 
             info.update({"nabolag": nabolag})
 
-            LOGGER.success("'community_stat_information' successfully retrieved")
+            LOGGER.success(
+                "'community_stat_information' successfully retrieved")
             return info
 
         except AttributeError as no_community_statistics_exception:
             LOGGER.debug(
-                f"[{self.__class__.__name__}] No community statistics found!, exited with "
-                f"'{no_community_statistics_exception}'")
+                f"[{self.__class__.__name__}] No community statistics found!, "
+                f"exited with '{no_community_statistics_exception}'")
+            return info
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):

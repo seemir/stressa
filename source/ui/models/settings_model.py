@@ -10,7 +10,7 @@ import os
 
 import json
 
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 
@@ -34,9 +34,12 @@ class SettingsModel(Model):
         """
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QObject])
-        self.parent.ui_form.combo_box_egenkapital_krav.addItems(self._equity_requirements)
-        self.parent.ui_form.combo_box_gjeldsgrad.addItems(self._max_debt_requirements)
-        self.parent.ui_form.combo_box_stresstest.addItems(self._stress_test_requirements)
+        self.parent.ui_form.combo_box_egenkapital_krav.addItems(
+            self._equity_requirements)
+        self.parent.ui_form.combo_box_gjeldsgrad.addItems(
+            self._max_debt_requirements)
+        self.parent.ui_form.combo_box_stresstest.addItems(
+            self._stress_test_requirements)
 
         self.read_settings()
         self.set_combo_box("egenkapital_krav")
@@ -65,7 +68,8 @@ class SettingsModel(Model):
         settings_dir = up(up(up(__file__))) + '\\app\\processing\\engine\\tmp'
 
         if os.path.exists(settings_dir):
-            with open(settings_dir + '\\settings.json', 'r', encoding='utf-8') as fp:
+            with open(settings_dir + '\\settings.json', 'r',
+                      encoding='utf-8') as fp:
                 try:
                     settings = json.load(fp)
                     self.parent.ui_form.combo_box_egenkapital_krav.setCurrentText(
@@ -89,7 +93,8 @@ class SettingsModel(Model):
             if not os.path.exists(settings_dir):
                 os.makedirs(settings_dir)
 
-            with open(settings_dir + '\\settings.json', 'w', encoding='utf-8') as fp:
+            with open(settings_dir + '\\settings.json', 'w',
+                      encoding='utf-8') as fp:
                 json.dump(self.data, fp)
 
         self.parent.close()

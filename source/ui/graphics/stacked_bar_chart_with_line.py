@@ -12,7 +12,7 @@ import warnings
 from numpy import percentile, insert, array
 
 from pyqtgraph import PlotWidget, TextItem, BarGraphItem
-from PyQt5.QtWidgets import QTableView
+from PyQt5.QtWidgets import QTableView  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 from .chart import Chart
@@ -20,14 +20,17 @@ from .chart import Chart
 warnings.filterwarnings('ignore')
 
 
-class StackedBarChartWithLine(Chart):
+class StackedBarChartWithLine(  # pylint: disable=too-many-instance-attributes
+    Chart):
     """
     Implementation of the Bar chart with line graphics
 
     """
 
-    def __init__(self, x_val: list, y_val_1: list, y_val_2: list, graphics_view: PlotWidget,
-                 table_view: QTableView, legend: str = "", reverse=True, y_max=None):
+    def __init__(self, x_val: list, y_val_1: list, y_val_2: list,
+                 graphics_view: PlotWidget,
+                 table_view: QTableView, legend: str = "", reverse=True,
+                 y_max=None):
         """
         Constructor / Instantiation of class
 
@@ -51,8 +54,9 @@ class StackedBarChartWithLine(Chart):
                           y_axis max value
 
         """
-        Assertor.assert_data_types([x_val, y_val_1, y_val_2, graphics_view, table_view, legend],
-                                   [list, list, list, PlotWidget, QTableView, str])
+        Assertor.assert_data_types(
+            [x_val, y_val_1, y_val_2, graphics_view, table_view, legend],
+            [list, list, list, PlotWidget, QTableView, str])
         super().__init__()
         self.x_val = x_val
         self.y_val_1 = y_val_1
@@ -72,11 +76,13 @@ class StackedBarChartWithLine(Chart):
         self.label.setHtml(self.legend)
         self.graphics_view.addItem(self.label)
 
-        self.bar_item_1 = BarGraphItem(x=self.x_val, height=self.y_val_1, width=self.width,
+        self.bar_item_1 = BarGraphItem(x=self.x_val, height=self.y_val_1,
+                                       width=self.width,
                                        brush="#d2e5f5")
         self.graphics_view.addItem(self.bar_item_1)
 
-        self.bar_item_2 = BarGraphItem(x=self.x_val, height=self.y_val_2, width=self.width,
+        self.bar_item_2 = BarGraphItem(x=self.x_val, height=self.y_val_2,
+                                       width=self.width,
                                        brush="#A8B7C4")
         self.graphics_view.addItem(self.bar_item_2)
 
@@ -101,15 +107,20 @@ class StackedBarChartWithLine(Chart):
             self.label.setHtml(self.legend)
             self.graphics_view.addItem(self.label)
 
-            row = len(self.x_val) - 1 - item.row() if self.reverse else item.row()
+            row = len(
+                self.x_val) - 1 - item.row() if self.reverse else item.row()
 
-            bar_item_1 = BarGraphItem(x=self.x_val, height=self.y_val_1, width=self.width,
+            bar_item_1 = BarGraphItem(x=self.x_val, height=self.y_val_1,
+                                      width=self.width,
                                       brush="#d2e5f5")
-            bar_item_2 = BarGraphItem(x=self.x_val, height=self.y_val_2, width=self.width,
+            bar_item_2 = BarGraphItem(x=self.x_val, height=self.y_val_2,
+                                      width=self.width,
                                       brush="#A8B7C4")
-            clicked_bar_1 = BarGraphItem(x=[self.x_val[row]], height=[self.y_val_1[row]],
+            clicked_bar_1 = BarGraphItem(x=[self.x_val[row]],
+                                         height=[self.y_val_1[row]],
                                          width=self.width, brush="#8aa7c0")
-            clicked_bar_2 = BarGraphItem(x=[self.x_val[row]], height=[self.y_val_2[row]],
+            clicked_bar_2 = BarGraphItem(x=[self.x_val[row]],
+                                         height=[self.y_val_2[row]],
                                          width=self.width, brush="#517797")
             self.graphics_view.addItem(bar_item_1)
             self.graphics_view.addItem(bar_item_2)
@@ -118,19 +129,29 @@ class StackedBarChartWithLine(Chart):
             self.graphics_view.addItem(clicked_bar_2)
 
     @staticmethod
-    def clear_graphics(graphics_view: PlotWidget, table_view: QTableView):
+    def clear_graphics(*args, **kwargs):
         """
-        static method for clearing content in all graphics
+        Static method for clearing content in all graphics.
+
+        This method now accepts additional arguments if needed.
 
         Parameters
         ----------
-        graphics_view   : PlotWidget
-                          graphics view to place chart
-        table_view      : QTableView
-                          table view to link graphics_view
+        *args           : Additional positional arguments
+        **kwargs        : Additional keyword arguments
 
         """
-        Assertor.assert_data_types([graphics_view, table_view], [PlotWidget, QTableView])
+        graphics_view = args[0] if len(args) > 0 else kwargs.get(
+            'graphics_view')
+        table_view = args[1] if len(args) > 1 else kwargs.get('table_view')
+
+        if graphics_view is None or table_view is None:
+            raise ValueError(
+                "Both graphics_view and table_view must be provided.")
+
+        Assertor.assert_data_types([graphics_view, table_view],
+                                   [PlotWidget, QTableView])
+
         table_view.setModel(None)
         table_view.clearSpans()
         graphics_view.clear()

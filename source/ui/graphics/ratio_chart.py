@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 from numpy import percentile, array, insert, where
 
 from pyqtgraph import PlotWidget, BarGraphItem, TextItem, InfiniteLine, mkPen
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
 
 from source.domain import Amount, Percent
 from source.util import Assertor
@@ -18,14 +18,15 @@ from source.util import Assertor
 from .chart import Chart
 
 
-class RatioChart(Chart):
+class RatioChart(Chart):  # pylint: disable=too-many-instance-attributes
     """
     Implementation of the RatioChart graphics used for visualizing the ratio between sqm-prices
     in area vs municipality.
 
     """
 
-    def __init__(self, x_val: list, y_1: list, y_2: list, graphics_view: PlotWidget, labels: str,
+    def __init__(self, x_val: list, y_1: list, y_2: list,
+                 graphics_view: PlotWidget, labels: str,
                  units=None, x_labels=None, precision=0, width=1000):
         """
         Constructor / Instantiate the class
@@ -53,8 +54,10 @@ class RatioChart(Chart):
 
         """
         Assertor.assert_data_types(
-            [x_val, y_1, y_2, graphics_view, labels, units, x_labels, precision, width],
-            [list, list, list, PlotWidget, str, (type(None), tuple), (type(None), list),
+            [x_val, y_1, y_2, graphics_view, labels, units, x_labels, precision,
+             width],
+            [list, list, list, PlotWidget, str, (type(None), tuple),
+             (type(None), list),
              (float, int), (float, int)])
         super().__init__()
         self.y_1, self.x_val = self.create_bins(x_val, y_1, bins=x_val)
@@ -74,7 +77,8 @@ class RatioChart(Chart):
 
         self.width = width
         self.label = TextItem()
-        self.bar_item_1 = BarGraphItem(x=self.x_val, height=self.ratio, width=self.width,
+        self.bar_item_1 = BarGraphItem(x=self.x_val, height=self.ratio,
+                                       width=self.width,
                                        brush="#a8ccec")
         self.graphics_view.addItem(self.bar_item_1)
         self.configure_cross_hair()
@@ -123,7 +127,8 @@ class RatioChart(Chart):
 
         """
         self.graphics_view.removeItem(self.bar_item_2)
-        self.bar_item_2 = BarGraphItem(x=[x_val], height=y_val, width=self.width,
+        self.bar_item_2 = BarGraphItem(x=[x_val], height=y_val,
+                                       width=self.width,
                                        brush="#69a8de")
         self.graphics_view.addItem(self.bar_item_2)
 
@@ -136,7 +141,8 @@ class RatioChart(Chart):
         if self.graphics_view.sceneBoundingRect().contains(pos):
             x_val, y_val = self.move_vertical_lines(pos)
 
-            percent = Percent(str(y_val / 100).replace("[", "").replace("]", ""))
+            percent = Percent(
+                str(y_val / 100).replace("[", "").replace("]", ""))
 
             if min(self.x_val) <= x_val <= max(self.x_val):
                 self.label.setHtml(f'<div style="text-align: center">'

@@ -10,9 +10,9 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 from typing import Union
 
-from PyQt5.QtWidgets import QDialog
-from PyQt5.QtCore import Qt, QObject
-from PyQt5.uic import loadUi
+from PyQt5.uic import loadUi  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import Qt, QObject  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 
@@ -39,8 +39,9 @@ class SettingsView(QDialog):
         """
         Assertor.assert_data_types([parent], [(QObject, type(None))])
         super().__init__(None)
-        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/settings_form.ui"),
-                              self)
+        self.ui_form = loadUi(
+            os.path.join(os.path.dirname(__file__), "forms/settings_form.ui"),
+            self)
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.setWindowModality(Qt.ApplicationModal)
@@ -48,8 +49,10 @@ class SettingsView(QDialog):
         self._meta_view = MetaView(self)
 
         self._settings_model = SettingsModel(self)
-        self.ui_form.push_button_metadata.clicked.connect(self.meta_view.display)
-        self.ui_form.push_button_lagre.clicked.connect(self.settings_model.save_settings)
+        self.ui_form.push_button_metadata.clicked.connect(
+            self.meta_view.display)
+        self.ui_form.push_button_lagre.clicked.connect(
+            self.settings_model.save_settings)
         self.ui_form.push_button_avbryt.clicked.connect(self.close)
 
     @property

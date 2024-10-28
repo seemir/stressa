@@ -12,7 +12,7 @@ from itertools import chain
 
 import numpy as np
 from pyqtgraph import PlotWidget
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 

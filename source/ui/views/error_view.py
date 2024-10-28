@@ -17,10 +17,11 @@ import json
 from typing import Union
 import time
 
-from PyQt5.QtWidgets import QDialog
-from PyQt5.QtCore import pyqtSlot, Qt, QObject
-from PyQt5.uic import loadUi
 from loguru import logger
+from PyQt5.uic import loadUi  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QDialog  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import pyqtSlot, Qt, \
+    QObject  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 
@@ -43,7 +44,9 @@ class ErrorView(QDialog):
         """
         Assertor.assert_data_types([parent], [(QObject, type(None))])
         super().__init__(None)
-        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/error_form.ui"), self)
+        self.ui_form = loadUi(
+            os.path.join(os.path.dirname(__file__), "forms/error_form.ui"),
+            self)
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.log_dir = os.path.join(os.path.dirname(__file__), "logs")
@@ -129,7 +132,8 @@ class ErrorView(QDialog):
         file_name = "ui.log"
         error_log = logger.add(os.path.join(file_dir, file_name))
         logger.exception(exp)
-        with open(os.path.join(file_dir, file_name), encoding='utf-8') as log_file:
+        with open(os.path.join(file_dir, file_name),
+                  encoding='utf-8') as log_file:
             for lines in log_file.readlines():
                 log_str.append(lines)
             logger.remove(error_log)

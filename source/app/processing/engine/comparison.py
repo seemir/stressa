@@ -36,7 +36,8 @@ class Comparison(Operation):
 
         """
         self.name = self.__class__.__name__
-        Assertor.assert_data_types([signal_1, signal_2, desc], [dict, dict, str])
+        Assertor.assert_data_types([signal_1, signal_2, desc],
+                                   [dict, dict, str])
         super().__init__(name=self.name, desc=f"id: {desc}")
         self.signal_1 = signal_1
         self.signal_2 = signal_2
@@ -53,12 +54,16 @@ class Comparison(Operation):
                       dictionary with shares
 
         """
-
+        results = {}
         if len(self.signal_1) == 1 and len(self.signal_2) == 1:
-            val_1 = float(list(self.signal_1.values())[0].replace(" kr", "").replace(" ", ""))
-            val_2 = float(list(self.signal_2.values())[0].replace(" kr", "").replace(" ", ""))
+            val_1 = float(
+                list(self.signal_1.values())[0].replace(" kr", "")
+                .replace(" ", ""))
+            val_2 = float(
+                list(self.signal_2.values())[0].replace(" kr", "")
+                .replace(" ", ""))
             if val_1 < val_2:
                 results = {self.key: list(self.signal_1.values())[0]}
             else:
                 results = {self.key: list(self.signal_2.values())[0]}
-            return results
+        return results

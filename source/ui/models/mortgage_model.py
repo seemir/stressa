@@ -8,7 +8,7 @@ Module for main mortgage model for the HomeView
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from PyQt5.QtCore import QObject, pyqtSlot
+from PyQt5.QtCore import QObject, pyqtSlot  # pylint: disable=no-name-in-module
 
 from source.domain import Name, Address, Email, Mobile, Phone, Money
 from source.app import PostalCodeProcess
@@ -27,7 +27,8 @@ class MortgageModel(Model):
     _post_code = ["postnr", "poststed", "kommune", "fylke"]
     _lanetype = ["", "Sammenligning", "Annuitetslån", "Serielån"]
     _laneperiode = [""] + [str(yr) + " år" for yr in range(1, 31)]
-    _intervall = ["", "Årlig", "Halvårlig", "Kvartalsvis", "Annenhver måned", "Månedlig",
+    _intervall = ["", "Årlig", "Halvårlig", "Kvartalsvis", "Annenhver måned",
+                  "Månedlig",
                   "Semi-månedlig", "Annenhver uke", "Ukentlig"]
 
     def __init__(self, parent: QObject):
@@ -67,11 +68,13 @@ class MortgageModel(Model):
             lambda: self.set_line_edit("adresse_1", Address, "format_address"))
 
         self.parent.ui_form.line_edit_postnr_1.editingFinished.connect(
-            lambda: self.update_line_edits("postnr", self._post_code, PostalCodeProcess,
+            lambda: self.update_line_edits("postnr", self._post_code,
+                                           PostalCodeProcess,
                                            "postal_code_info", postfix="_1"))
 
         self.parent.ui_form.line_edit_postnr_1.textEdited.connect(
-            lambda: self.clear_empty_line_edits("postnr", self._post_code, postfix="_1"))
+            lambda: self.clear_empty_line_edits("postnr", self._post_code,
+                                                postfix="_1"))
 
         self.parent.ui_form.line_edit_epost_1.editingFinished.connect(
             lambda: self.set_line_edit("epost_1", Email, "format_email"))
@@ -96,11 +99,13 @@ class MortgageModel(Model):
             lambda: self.set_line_edit("adresse_2", Address, "format_address"))
 
         self.parent.ui_form.line_edit_postnr_2.editingFinished.connect(
-            lambda: self.update_line_edits("postnr", self._post_code, PostalCodeProcess,
+            lambda: self.update_line_edits("postnr", self._post_code,
+                                           PostalCodeProcess,
                                            "output_operation", postfix="_2"))
 
         self.parent.ui_form.line_edit_postnr_2.textEdited.connect(
-            lambda: self.clear_empty_line_edits("postnr", self._post_code, postfix="_2"))
+            lambda: self.clear_empty_line_edits("postnr", self._post_code,
+                                                postfix="_2"))
 
         self.parent.ui_form.line_edit_epost_2.editingFinished.connect(
             lambda: self.set_line_edit("epost_2", Email, "format_email"))
@@ -121,7 +126,8 @@ class MortgageModel(Model):
         self.parent.ui_form.line_edit_leieinntekt_total.editingFinished.connect(
             lambda: self.set_line_edit("leieinntekt_total", Money, "value"))
         self.parent.ui_form.line_edit_beregnet_skatt_per_mnd_beloep.editingFinished.connect(
-            lambda: self.set_line_edit("beregnet_skatt_per_mnd_beloep", Money, "value"))
+            lambda: self.set_line_edit("beregnet_skatt_per_mnd_beloep", Money,
+                                       "value"))
         self.parent.ui_form.line_edit_total_netto.editingFinished.connect(
             lambda: self.set_line_edit("total_netto", Money, "value"))
         self.parent.ui_form.line_edit_netto_likviditet.editingFinished.connect(
@@ -162,19 +168,24 @@ class MortgageModel(Model):
 
         """
         self.clear_line_edits(["fornavn", "etternavn", "adresse", "postnr",
-                               "poststed", "kommune", "fylke", "epost", "mobil_tlf",
+                               "poststed", "kommune", "fylke", "epost",
+                               "mobil_tlf",
                                "privat_tlf", "jobb_tlf", "fax"], postfix="_1")
         self.clear_line_edits(["fornavn", "etternavn", "adresse", "postnr",
-                               "poststed", "kommune", "fylke", "epost", "mobil_tlf",
+                               "poststed", "kommune", "fylke", "epost",
+                               "mobil_tlf",
                                "privat_tlf", "jobb_tlf", "fax"], postfix="_2")
-        self.clear_line_edits(["brutto_inntekt", "trygde_inntekt", "leieinntekt",
-                               "personinntekt", "student_lan", "kreditt_gjeld",
-                               "husleie", "strom", "andre_utgifter", "sum_utgifter"],
-                              postfix="_total")
-        self.clear_line_edits(["beregnet_skatt_per_mnd_beloep", "sifo_utgifter", "total_netto",
-                               "totale_utgifter", "netto_likviditet", "likviditetsgrad",
-                               "egenkapital"])
-        self.clear_combo_boxes(["kjonn_1", "kjonn_2", "lanetype", "intervall", "laneperiode"])
+        self.clear_line_edits(
+            ["brutto_inntekt", "trygde_inntekt", "leieinntekt",
+             "personinntekt", "student_lan", "kreditt_gjeld",
+             "husleie", "strom", "andre_utgifter", "sum_utgifter"],
+            postfix="_total")
+        self.clear_line_edits(
+            ["beregnet_skatt_per_mnd_beloep", "sifo_utgifter", "total_netto",
+             "totale_utgifter", "netto_likviditet", "likviditetsgrad",
+             "egenkapital"])
+        self.clear_combo_boxes(
+            ["kjonn_1", "kjonn_2", "lanetype", "intervall", "laneperiode"])
         self.clear_date_edits(["fodselsdato_1", "fodselsdato_2", "startdato"])
         self.parent.budget_view.clear_all()
 
@@ -183,5 +194,6 @@ class MortgageModel(Model):
         test method for printing pdf of procedure graph
 
         """
-        postal_code = PostalCodeProcess(self.parent.ui_form.line_edit_postnr_1.text())
+        postal_code = PostalCodeProcess(
+            self.parent.ui_form.line_edit_postnr_1.text())
         postal_code.print_pdf()

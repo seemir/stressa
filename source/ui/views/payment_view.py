@@ -9,9 +9,10 @@ __email__ = 'samir.adrik@gmail.com'
 
 import os
 
-from PyQt5.QtWidgets import QDialog, QWidget, QHeaderView
-from PyQt5.QtCore import Qt
-from PyQt5.uic import loadUi
+from PyQt5.uic import loadUi  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QDialog, QWidget, \
+    QHeaderView  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 
@@ -37,8 +38,9 @@ class PaymentView(QDialog):
         super().__init__(parent)
         Assertor.assert_data_types([parent], [QWidget])
         self.parent = parent
-        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/payment_form.ui"),
-                              self)
+        self.ui_form = loadUi(
+            os.path.join(os.path.dirname(__file__), "forms/payment_form.ui"),
+            self)
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui_form.table_view_annuitet.horizontalHeader().setSectionResizeMode(

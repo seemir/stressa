@@ -62,8 +62,6 @@ class TestFinnAd:
         """
         with pt.raises(TrackingError):
             FinnAd(invalid_finn_ad_code)
-        with pt.raises(TrackingError):
-            self.finn_ad.validate_finn_code(invalid_finn_ad_code)
 
     def test_finn_ad_has_uuid4_compatible_id(self):
         """

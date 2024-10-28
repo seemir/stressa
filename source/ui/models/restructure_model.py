@@ -10,8 +10,9 @@ __email__ = 'samir.adrik@gmail.com'
 
 import pandas as pd
 
-from PyQt5.QtWidgets import QHeaderView
-from PyQt5.QtCore import QObject, pyqtSlot, Qt
+from PyQt5.QtWidgets import QHeaderView  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import QObject, pyqtSlot, \
+    Qt  # pylint: disable=no-name-in-module
 
 from source.domain import Money, Mortgage, Percentage
 from source.app import RestructureProcess
@@ -31,7 +32,8 @@ class RestructureModel(Model):
     """
     _lanetype = ["", "Sammenligning", "Annuitetslån", "Serielån"]
     _laneperiode = [""] + [str(yr) + " år" for yr in range(1, 31)]
-    _intervall = ["", "Årlig", "Halvårlig", "Kvartalsvis", "Annenhver måned", "Månedlig",
+    _intervall = ["", "Årlig", "Halvårlig", "Kvartalsvis", "Annenhver måned",
+                  "Månedlig",
                   "Semi-månedlig", "Annenhver uke", "Ukentlig"]
 
     def __init__(self, parent: QObject):
@@ -74,7 +76,8 @@ class RestructureModel(Model):
         self.parent.ui_form.line_edit_belaning.textEdited.connect(
             lambda: self.set_line_edit("belaning", Money, "value"))
         self.parent.ui_form.line_edit_nominell_rente.textEdited.connect(
-            lambda: self.set_line_edit("nominell_rente", Percentage, "percentage_value"))
+            lambda: self.set_line_edit("nominell_rente", Percentage,
+                                       "percentage_value"))
 
     def export(self):
         """
@@ -84,11 +87,14 @@ class RestructureModel(Model):
         restructure_data = {}
         restructure_data.update(self.parent.parent.analysis_model.data)
         restructure_data.update(self.data)
-        if all(element in restructure_data for element in Mortgage.requirements_restructure):
-            restructure_data = RestructureProcess(restructure_data).restructure()
+        if all(element in restructure_data for element in
+               Mortgage.requirements_restructure):
+            restructure_data = RestructureProcess(
+                restructure_data).restructure()
             analysis_model = self.parent.parent.analysis_model
 
-            if restructure_data["krav_belaning"] != restructure_data["krav_belaning_maks"]:
+            if restructure_data["krav_belaning"] != restructure_data[
+                "krav_belaning_maks"]:
                 restructure_data.update({
                     "krav_belaning":
                         restructure_data["krav_belaning"]
@@ -108,23 +114,30 @@ class RestructureModel(Model):
                     self.parent.parent.ui_form.table_view_annuitet_overview)
 
                 payment_data_model_fixed = TableModel(
-                    pd.DataFrame(restructure_data["nedbetalingsplan_annuitet_overview"]),
+                    pd.DataFrame(
+                        restructure_data["nedbetalingsplan_annuitet_overview"]),
                     alignment=Qt.AlignCenter)
                 self.parent.parent.ui_form.table_view_annuitet_overview.setModel(
                     payment_data_model_fixed)
 
                 termin = list(
-                    restructure_data["nedbetalingsplan_annuitet_overview"]["År"].values())[
+                    restructure_data["nedbetalingsplan_annuitet_overview"][
+                        "År"].values())[
                          ::-1]
-                principal = list(restructure_data["nedbetalingsplan_annuitet_overview"][
-                                     "Avdrag.total"].values())[::-1]
-                payment = list(restructure_data["nedbetalingsplan_annuitet_overview"][
-                                   "T.beløp.total"].values())[::-1]
+                principal = list(
+                    restructure_data["nedbetalingsplan_annuitet_overview"][
+                        "Avdrag.total"].values())[::-1]
+                payment = list(
+                    restructure_data["nedbetalingsplan_annuitet_overview"][
+                        "T.beløp.total"].values())[::-1]
 
-                principal_values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                                    for val in principal]
+                principal_values = [
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0",
+                                                                       ""))
+                    for val in principal]
                 payment_values_annuitet = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0",
+                                                                       ""))
                     for val in payment]
 
                 self.bar_plot_annuitet_total = StackedBarChartWithLine(
@@ -138,18 +151,22 @@ class RestructureModel(Model):
                 principal_period = list(
                     restructure_data["nedbetalingsplan_annuitet_overview"][
                         "Avdrag"].values())[::-1]
-                payment_period = list(restructure_data["nedbetalingsplan_annuitet_overview"][
-                                          "T.beløp"].values())[::-1]
+                payment_period = list(
+                    restructure_data["nedbetalingsplan_annuitet_overview"][
+                        "T.beløp"].values())[::-1]
 
                 principal_values_period = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0",
+                                                                       ""))
                     for val in principal_period]
                 payment_values_annuitet_period = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0",
+                                                                       ""))
                     for val in payment_period]
 
                 self.bar_plot_annuitet_period = StackedBarChartWithLine(
-                    termin, payment_values_annuitet_period, principal_values_period,
+                    termin, payment_values_annuitet_period,
+                    principal_values_period,
                     self.parent.parent.ui_form.graphics_view_annuitet_period,
                     self.parent.parent.ui_form.table_view_annuitet_overview,
                     y_max=int(max(payment_values_annuitet_period) * 1.33))
@@ -166,23 +183,30 @@ class RestructureModel(Model):
                     self.parent.parent.ui_form.table_view_serie_overview)
 
                 payment_data_model_serie = TableModel(
-                    pd.DataFrame(restructure_data["nedbetalingsplan_serie_overview"]),
+                    pd.DataFrame(
+                        restructure_data["nedbetalingsplan_serie_overview"]),
                     alignment=Qt.AlignCenter)
                 self.parent.parent.ui_form.table_view_serie_overview.setModel(
                     payment_data_model_serie)
 
                 termin = list(
-                    restructure_data["nedbetalingsplan_serie_overview"]["År"].values())[
+                    restructure_data["nedbetalingsplan_serie_overview"][
+                        "År"].values())[
                          ::-1]
-                principal = list(restructure_data["nedbetalingsplan_serie_overview"][
-                                     "Avdrag.total"].values())[::-1]
-                payment = list(restructure_data["nedbetalingsplan_serie_overview"][
-                                   "T.beløp.total"].values())[::-1]
+                principal = list(
+                    restructure_data["nedbetalingsplan_serie_overview"][
+                        "Avdrag.total"].values())[::-1]
+                payment = list(
+                    restructure_data["nedbetalingsplan_serie_overview"][
+                        "T.beløp.total"].values())[::-1]
 
-                principal_values = [int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
-                                    for val in principal]
+                principal_values = [
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0",
+                                                                       ""))
+                    for val in principal]
                 payment_values_serie = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0",
+                                                                       ""))
                     for val in payment]
 
                 self.bar_plot_serie_total = StackedBarChartWithLine(
@@ -196,18 +220,22 @@ class RestructureModel(Model):
                 principal_period = list(
                     restructure_data["nedbetalingsplan_serie_overview"][
                         "Avdrag"].values())[::-1]
-                payment_period = list(restructure_data["nedbetalingsplan_serie_overview"][
-                                          "T.beløp"].values())[::-1]
+                payment_period = list(
+                    restructure_data["nedbetalingsplan_serie_overview"][
+                        "T.beløp"].values())[::-1]
 
                 principal_values_period = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0",
+                                                                       ""))
                     for val in principal_period]
                 payment_values_serie_period = [
-                    int(val.replace("kr", "").replace(" ", "").replace("\xa0", ""))
+                    int(val.replace("kr", "").replace(" ", "").replace("\xa0",
+                                                                       ""))
                     for val in payment_period]
 
                 self.bar_plot_serie_period = StackedBarChartWithLine(
-                    termin, payment_values_serie_period, principal_values_period,
+                    termin, payment_values_serie_period,
+                    principal_values_period,
                     self.parent.parent.ui_form.graphics_view_serie_period,
                     self.parent.parent.ui_form.table_view_serie_overview,
                     y_max=int(max(payment_values_annuitet_period) * 1.33))
@@ -254,16 +282,23 @@ class RestructureModel(Model):
         self.parent.parent.ui_form.table_view_serie_overview.horizontalHeader() \
             .setSectionResizeMode(6, QHeaderView.ResizeToContents)
 
-        for graphics_view in ['graphics_view_annuitet_overview', 'graphics_view_serie_overview',
-                              'graphics_view_annuitet_period', 'graphics_view_serie_period']:
-            getattr(self.parent.parent.ui_form, graphics_view).setMouseEnabled(x=False, y=False)
-            getattr(self.parent.parent.ui_form, graphics_view).getAxis('left').setStyle(
+        for graphics_view in ['graphics_view_annuitet_overview',
+                              'graphics_view_serie_overview',
+                              'graphics_view_annuitet_period',
+                              'graphics_view_serie_period']:
+            getattr(self.parent.parent.ui_form, graphics_view).setMouseEnabled(
+                x=False, y=False)
+            getattr(self.parent.parent.ui_form, graphics_view).getAxis(
+                'left').setStyle(
                 showValues=False)
-            getattr(self.parent.parent.ui_form, graphics_view).getAxis('bottom').setStyle(
+            getattr(self.parent.parent.ui_form, graphics_view).getAxis(
+                'bottom').setStyle(
                 showValues=False)
             getattr(self.parent.parent.ui_form, graphics_view).hideButtons()
-            getattr(self.parent.parent.ui_form, graphics_view).setMenuEnabled(False)
-            getattr(self.parent.parent.ui_form, graphics_view).showGrid(x=True, y=True)
+            getattr(self.parent.parent.ui_form, graphics_view).setMenuEnabled(
+                False)
+            getattr(self.parent.parent.ui_form, graphics_view).showGrid(x=True,
+                                                                        y=True)
 
     def clear_all(self):
         """

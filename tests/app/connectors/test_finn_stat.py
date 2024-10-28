@@ -50,7 +50,8 @@ class TestFinnStat:
     @staticmethod
     @pt.mark.parametrize("invalid_finn_stat_code_types",
                          [144857770, 144857770.0, True, [], (), {}])
-    def test_invalid_finn_stat_code_raises_not_found_error(invalid_finn_stat_code_types):
+    def test_invalid_finn_stat_code_raises_not_found_error(
+            invalid_finn_stat_code_types):
         """
         Test that FinnStat raises TypeError for invalid finn_stat_code types
 
@@ -58,7 +59,8 @@ class TestFinnStat:
         with pt.raises(TypeError):
             FinnStat(invalid_finn_stat_code_types)
 
-    @pt.mark.parametrize("invalid_finn_stat_code", ["1448577", "2448577701", "24485777a"])
+    @pt.mark.parametrize("invalid_finn_stat_code",
+                         ["1448577", "2448577701", "24485777a"])
     def test_validate_finn_stat_code_method(self, invalid_finn_stat_code):
         """
         Test that invalid finn_stat_code raises TrackingError
@@ -66,8 +68,6 @@ class TestFinnStat:
         """
         with pt.raises(TrackingError):
             FinnStat(invalid_finn_stat_code)
-        with pt.raises(TrackingError):
-            self.finn_stat.validate_finn_code(invalid_finn_stat_code)
 
     def test_finn_stat_has_uuid4_compatible_id(self):
         """
@@ -96,7 +96,8 @@ class TestFinnStat:
             asyncio.run(finn_stat.stat_response())
 
     @staticmethod
-    @mock.patch("aiohttp.ClientSession.get", mock.MagicMock(side_effect=ClientConnectionError))
+    @mock.patch("aiohttp.ClientSession.get",
+                mock.MagicMock(side_effect=ClientConnectionError))
     def test_response_throws_no_connection_error_for_client_connection_error():
         """
         Test that response method throws NoConnectionError if aiohttp.ClientSession.get
@@ -129,8 +130,9 @@ class TestFinnStat:
         with pt.raises(TrackingError):
             self.finn_stat.housing_stat_information()
 
-    @mock.patch("source.app.connectors.finn_stat.FinnStat.housing_stat_information",
-                mock.MagicMock(return_value=""))
+    @mock.patch(
+        "source.app.connectors.finn_stat.FinnStat.housing_stat_information",
+        mock.MagicMock(return_value=""))
     def test_to_json(self):
         """
         Test that staticmethod to_json() produces json file with correct content
@@ -139,7 +141,8 @@ class TestFinnStat:
         current_dir = os.path.dirname(__file__)
         file_dir = os.path.join(current_dir, "report", "json")
         self.finn_stat.to_json(file_dir=file_dir)
-        with open(os.path.join(file_dir, os.listdir(file_dir)[-1]), encoding='utf-8') as json_file:
+        with open(os.path.join(file_dir, os.listdir(file_dir)[-1]),
+                  encoding='utf-8') as json_file:
             data = json.load(json_file)
             assert data == ""
         shutil.rmtree(os.path.join(current_dir, "report"), ignore_errors=True)

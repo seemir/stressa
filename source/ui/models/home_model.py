@@ -7,7 +7,7 @@ Module with the logic of the Home model
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject  # pylint: disable=no-name-in-module
 
 from source.domain import Money, Share
 from source.util import Assertor
@@ -139,9 +139,11 @@ class HomeModel(Model):
         if gross_value.value() == "0 kr":
             self.clear_line_edit("likviditetsgrad")
         else:
-            liquidity_share = Share(numerator=net_value, denominator=gross_value)
+            liquidity_share = Share(numerator=net_value,
+                                    denominator=gross_value)
 
             if liquidity_share.value != "0 %":
-                self.set_line_edit("likviditetsgrad", data=liquidity_share.value)
+                self.set_line_edit("likviditetsgrad",
+                                   data=liquidity_share.value)
             else:
                 self.clear_line_edit("likviditetsgrad")

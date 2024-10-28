@@ -7,7 +7,7 @@ Module containing logic for handling Images from housing advert
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject  # pylint: disable=no-name-in-module
 
 from .model import Model
 

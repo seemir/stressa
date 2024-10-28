@@ -28,7 +28,8 @@ class Connector(ABC):
     """
 
     @staticmethod
-    def save_json(file_dict: dict, file_dir: str = "report/json", file_prefix: str = "Info"):
+    def save_json(file_dict: dict, file_dir: str = "report/json",
+                  file_prefix: str = "Info"):
         """
         save information in object to JSON file
 
@@ -43,19 +44,26 @@ class Connector(ABC):
 
         """
         try:
-            Assertor.assert_data_types([file_dir, file_prefix], [str, str])
+            Assertor.assert_data_types([file_dir, file_prefix],
+                                       [str, str])
             try:
                 if not os.path.exists(file_dir):
                     os.makedirs(file_dir)
             except Exception as exception:
-                raise OSError("creation of dir " + file_dir + " failed with: " + str(exception))
+                raise OSError(
+                    "creation of dir " + file_dir + " failed with: " + str(
+                        exception))
             _json = json.dumps(file_dict, indent=2, separators=(',', ': '),
                                ensure_ascii=False)
-            local_time = datetime.datetime.now().isoformat().replace(":", "-").replace(".", "-")
-            file = open(os.path.join(file_dir, file_prefix + local_time + ".json"), "w",
-                        encoding='utf-8')
-            file.write(_json)
-            file.close()
+            local_time = (
+                datetime.datetime.now().isoformat()
+                .replace(":", "-")
+                .replace(".", "-"))
+            with open(
+                    os.path.join(file_dir, file_prefix + local_time + ".json"),
+                    "w", encoding='utf-8') as file:
+                file.write(_json)
+                file.close()
         except Exception as json_exception:
             LOGGER.exception(json)
             raise json_exception

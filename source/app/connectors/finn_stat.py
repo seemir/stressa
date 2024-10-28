@@ -21,7 +21,8 @@ from bs4 import BeautifulSoup
 import numpy as np
 import json_repair
 
-from source.util import LOGGER, TimeOutError, NoConnectionError, Assertor, Tracking
+from source.util import LOGGER, TimeOutError, NoConnectionError, Assertor, \
+    Tracking
 from source.domain import Amount
 
 from .settings import FINN_STAT_URL, TIMEOUT
@@ -61,7 +62,8 @@ class FinnStat(Finn):
         try:
             try:
                 start = time()
-                async with ClientSession(timeout=ClientTimeout(TIMEOUT)) as session:
+                async with ClientSession(
+                        timeout=ClientTimeout(TIMEOUT)) as session:
                     async with session.get(
                             f"{FINN_STAT_URL}{self.finn_code}") as stat_response:
                         stat_status_code = stat_response.status
@@ -95,10 +97,11 @@ class FinnStat(Finn):
             f"trying to retrieve 'housing_stat_information' for -> '{self.finn_code}'"
         )
         response = asyncio.run(self.stat_response())
+        info = {}
+
         try:
             stat_soup = BeautifulSoup(response, "lxml")
 
-            info = {}
             price_statistics = None
             script_tag = None
 
@@ -127,7 +130,8 @@ class FinnStat(Finn):
                             if 'priceStatistic' in routes:
                                 price_statistic = routes['priceStatistic']
                                 if 'content' in price_statistic:
-                                    price_statistics = price_statistic['content']
+                                    price_statistics = price_statistic[
+                                        'content']
 
             if price_statistics:
 
@@ -149,17 +153,21 @@ class FinnStat(Finn):
                         price_statistics_data = response['data']
 
                         if 'sqmPrice' in price_statistics_data:
-                            sqm_price = Amount(str(price_statistics_data['sqmPrice'])).amount
+                            sqm_price = Amount(
+                                str(price_statistics_data['sqmPrice'])).amount
 
                         if 'clicks' in price_statistics_data:
-                            clicks = Amount(str(price_statistics_data['clicks'])).amount
+                            clicks = Amount(
+                                str(price_statistics_data['clicks'])).amount
 
                         if 'realEstateSalesData' in price_statistics_data:
-                            real_estate_sales_data = price_statistics_data['realEstateSalesData']
+                            real_estate_sales_data = price_statistics_data[
+                                'realEstateSalesData']
 
                             if len(real_estate_sales_data) == 2 and real_estate_sales_data:
 
-                                for i, entity in enumerate(real_estate_sales_data):
+                                for i, entity in enumerate(
+                                        real_estate_sales_data):
 
                                     dimension_count = 0
                                     dimension_history_data = {}
@@ -169,14 +177,16 @@ class FinnStat(Finn):
                                         dimension_sqm_price = city_area_sqm_price
                                         dimension_sqm_price_name = 'city_area_sqm_price'
                                         dimension_area_details = {
-                                            'city_area': dimension_data['locationDetails']}
+                                            'city_area': dimension_data[
+                                                'locationDetails']}
                                         dimension_count_name = 'hist_data_city_area_count'
                                         dimension_area_hist_data_name = 'hist_data_city_area'
                                     elif i == 1:
                                         dimension_sqm_price = municipality_sqm_price
                                         dimension_sqm_price_name = 'municipality_sqm_price'
                                         dimension_area_details = {
-                                            'municipality': dimension_data['locationDetails']}
+                                            'municipality': dimension_data[
+                                                'locationDetails']}
                                         dimension_count_name = 'hist_data_municipality_count'
                                         dimension_area_hist_data_name = 'hist_data_municipality'
                                     else:
@@ -184,14 +194,19 @@ class FinnStat(Finn):
 
                                     if 'histData' in dimension_data:
 
-                                        entity_area_hist_data = dimension_data['histData']
+                                        entity_area_hist_data = dimension_data[
+                                            'histData']
 
                                         for price_info in entity_area_hist_data:
-                                            entity_sqm_price = price_info['sqmPrice']
-                                            entity_number_of_sales = price_info['numberOfSales']
-                                            entity_sales_count = price_info['numberOfSales']
+                                            entity_sqm_price = price_info[
+                                                'sqmPrice']
+                                            entity_number_of_sales = price_info[
+                                                'numberOfSales']
+                                            entity_sales_count = price_info[
+                                                'numberOfSales']
                                             dimension_history_data.update(
-                                                {entity_sqm_price: entity_number_of_sales})
+                                                {
+                                                    entity_sqm_price: entity_number_of_sales})
                                             dimension_count += entity_sales_count
 
                                         dimension_sqm_price = self.calculate_average(
@@ -199,28 +214,36 @@ class FinnStat(Finn):
 
                                     info.update(dimension_area_details)
                                     info.update(
-                                        {dimension_sqm_price_name: f"{dimension_sqm_price} kr/m²"})
+                                        {
+                                            dimension_sqm_price_name:
+                                                f"{dimension_sqm_price} kr/m²"})
                                     info.update(
-                                        {dimension_count_name: Amount(str(dimension_count)).amount})
+                                        {dimension_count_name: Amount(
+                                            str(dimension_count)).amount})
                                     info.update(
-                                        {dimension_area_hist_data_name: dimension_history_data})
+                                        {
+                                            dimension_area_hist_data_name:
+                                                dimension_history_data})
 
                 info.update({'sqm_price': f"{sqm_price} kr/m²",
                              'views': clicks})
 
-                historical_data_names = ["hist_data_city_area", "hist_data_municipality"]
+                historical_data_names = ["hist_data_city_area",
+                                         "hist_data_municipality"]
                 if all(name in info for name in historical_data_names):
                     self.harmonize_data_sets(info)
 
-                LOGGER.success("'housing_stat_information' successfully retrieved")
+                LOGGER.success(
+                    "'housing_stat_information' successfully retrieved")
 
                 return info
             raise ValueError('No ad statistics found')
 
         except Exception as no_ownership_history_exception:
             LOGGER.debug(
-                f"[{self.__class__.__name__}] No housing statistics found!, exited with "
-                f"'{no_ownership_history_exception}'")
+                f"[{self.__class__.__name__}] No housing statistics found!, "
+                f"exited with '{no_ownership_history_exception}'")
+            return info
 
     @Tracking
     def to_json(self, file_dir: str = "report/json/finn_information"):
@@ -229,9 +252,11 @@ class FinnStat(Finn):
 
         """
         Assertor.assert_data_types([file_dir], [str])
-        self.save_json(self.housing_stat_information(), file_dir, file_prefix="HousingStatInfo_")
+        self.save_json(self.housing_stat_information(), file_dir,
+                       file_prefix="HousingStatInfo_")
         LOGGER.success(
-            f"'housing_stat_information' successfully parsed to JSON at '{file_dir}'"
+            f"'housing_stat_information' successfully parsed to JSON at "
+            f"'{file_dir}'"
         )
 
     @Tracking
@@ -252,12 +277,20 @@ class FinnStat(Finn):
             hist_data_municipality = info['hist_data_municipality']
 
             info.update(
-                {"city_area_sqm_price": f"{self.calculate_average(hist_data_city_area)} "
-                                        f"kr/m²"})
+                {
+                    "city_area_sqm_price":
+                        f"{self.calculate_average(hist_data_city_area)} "
+                        f"kr/m²"
+                }
+            )
             info.update(
-                {"municipality_sqm_price": f"{self.calculate_average(hist_data_municipality)} "
-                                           f"kr/m²"})
-            return info
+                {
+                    "municipality_sqm_price":
+                        f"{self.calculate_average(hist_data_municipality)} "
+                        f"kr/m²"
+                }
+            )
+        return info
 
     @Tracking
     def harmonize_data_sets(self, info):
@@ -313,5 +346,6 @@ class FinnStat(Finn):
         for price, num in elements.items():
             products.append(int(price) * num)
             sums += num
-        average = Amount(str(round(sum(products) / sums))).amount if sums != 0 else "0"
+        average = Amount(
+            str(round(sum(products) / sums))).amount if sums != 0 else "0"
         return average

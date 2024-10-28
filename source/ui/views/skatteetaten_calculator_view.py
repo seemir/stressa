@@ -8,9 +8,10 @@ __email__ = 'samir.adrik@gmail.com'
 
 import os
 
-from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.QtCore import pyqtSlot, Qt
-from PyQt5.uic import loadUi
+from PyQt5.uic import loadUi  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import pyqtSlot, Qt  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QDialog, \
+    QWidget  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 

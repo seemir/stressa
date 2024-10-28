@@ -13,10 +13,10 @@ import os
 import ctypes
 import sys
 
-from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtCore import pyqtSlot
-from PyQt5.QtGui import QIcon
-from PyQt5.uic import loadUi
+from PyQt5.uic import loadUi  # pylint: disable=no-name-in-module
+from PyQt5.QtGui import QIcon  # pylint: disable=no-name-in-module
+from PyQt5.QtCore import pyqtSlot  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QMainWindow  # pylint: disable=no-name-in-module
 
 from ..models import MortgageModel, FinnModel, HomeModel, AnalysisModel
 
@@ -38,7 +38,7 @@ MY_APP_ID = 'Stressa.stressa.ui.version'
 ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(MY_APP_ID)
 
 
-class HomeView(QMainWindow):
+class HomeView(QMainWindow):  # pylint: disable=too-many-instance-attributes
     """
     The HomeView which is the only QMainWindow in the application
 

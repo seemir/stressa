@@ -11,7 +11,8 @@ __email__ = 'samir.adrik@gmail.com'
 from random import randint
 import webbrowser
 
-from PyQt5.QtCore import QObject, pyqtSlot, Qt
+from PyQt5.QtCore import QObject, pyqtSlot, \
+    Qt  # pylint: disable=no-name-in-module
 
 from source.app import FinnAdvertProcessing
 from source.util import Assertor

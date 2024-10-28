@@ -8,7 +8,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from decimal import Decimal
 
-from PyQt5.QtCore import QObject
+from PyQt5.QtCore import QObject  # pylint: disable=no-name-in-module
 
 from source.app import SkatteetatenTaxProcessing
 from source.util import Assertor

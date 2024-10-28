@@ -10,7 +10,7 @@ __email__ = 'samir.adrik@gmail.com'
 
 from decimal import Decimal
 
-from PyQt5.QtCore import pyqtSlot, QObject
+from PyQt5.QtCore import pyqtSlot, QObject  # pylint: disable=no-name-in-module
 
 from source.app import SifoExpensesProcess
 from source.util import Assertor
@@ -396,7 +396,8 @@ class SifoModel(Model):
         try:
             self.clear_results()
             if "budsjett_aar" in self.data and any(
-                    "person" in key and len(val) > 1 for key, val in self.data.items()):
+                    "person" in key and len(val) > 1 for key, val in
+                    self.data.items()):
                 self.parent.ui_form.tab_widget_sifo.setCurrentIndex(1)
                 self.sifo_process = SifoExpensesProcess(self.data)
                 self.set_line_edits(line_edit_text="",

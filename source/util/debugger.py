@@ -22,6 +22,7 @@ class Debugger(Tracking):
         private call method
 
         """
+        function = None
         try:
             function = self.func(*args, **kwargs)
             return function
@@ -29,5 +30,7 @@ class Debugger(Tracking):
             if self.func.__name__ == "__init__":
                 msg = f"[{self.type.__name__}] -> '{debugger_exception}'"
             else:
-                msg = f"[{self.type.__name__}.{self.func.__name__}] -> '{debugger_exception}'"
+                msg = (f"[{self.type.__name__}.{self.func.__name__}] "
+                       f"-> '{debugger_exception}'")
             LOGGER.debug(msg)
+            return function

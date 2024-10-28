@@ -11,9 +11,10 @@ __email__ = 'samir.adrik@gmail.com'
 import os
 import json
 
-from PyQt5.QtWidgets import QDialog, QWidget
-from PyQt5.uic import loadUi
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
+from PyQt5.uic import loadUi  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QDialog, \
+    QWidget  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 
@@ -36,7 +37,8 @@ class MetaView(QDialog):
         """
         Assertor.assert_data_types([parent], [QWidget])
         super().__init__(parent)
-        self.ui_form = loadUi(os.path.join(os.path.dirname(__file__), "forms/meta_form.ui"), self)
+        self.ui_form = loadUi(
+            os.path.join(os.path.dirname(__file__), "forms/meta_form.ui"), self)
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
@@ -63,7 +65,8 @@ class MetaView(QDialog):
         try:
             meta_data = self.get_all_meta_data()
             self.ui_form.plain_text_edit_meta_data.setPlainText(
-                json.dumps(meta_data if meta_data else {}, ensure_ascii=False, indent=4))
+                json.dumps(meta_data if meta_data else {}, ensure_ascii=False,
+                           indent=4))
             self.exec_()
         except Exception as metadata_error:
             self.parent.error.show_error(metadata_error)
@@ -79,8 +82,10 @@ class MetaView(QDialog):
                   dictionary with all metadata
 
         """
-        models = {"_mortgage_model": "låneinformasjon", "_budget_model": "budsjettinformasjon",
-                  "_sifo_model": "sifo_informasjon", "_finn_model": "finn_informasjon",
+        models = {"_mortgage_model": "låneinformasjon",
+                  "_budget_model": "budsjettinformasjon",
+                  "_sifo_model": "sifo_informasjon",
+                  "_finn_model": "finn_informasjon",
                   "_statistics_model": "statistikk_informasjon",
                   "_skatteetaten_calculator_model": "utregnet_skatteinformasjon",
                   "_skatteetaten_import_model": "importert_skatteinformasjon",
