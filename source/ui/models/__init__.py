@@ -9,6 +9,7 @@ __email__ = 'samir.adrik@gmail.com'
 from .skatteetaten_calculator_model import SkatteetatenCalculatorModel
 from .restructure_model import RestructureModel
 from .statistics_model import StatisticsModel
+from .ad_history_model import AdHistoryModel
 from .mortgage_model import MortgageModel
 from .analysis_model import AnalysisModel
 from .settings_model import SettingsModel

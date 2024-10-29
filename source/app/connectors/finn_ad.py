@@ -151,6 +151,7 @@ class FinnAd(Finn):
                 usable_area_e = ''
                 total_price = ''
                 sales_cost_sum = ''
+                ad_history = {}
 
                 matrikkel = {'kommunenr': '',
                              'gardsnr': '',
@@ -270,6 +271,20 @@ class FinnAd(Finn):
                     meta_data['history'][0]['broadcasted'], days_delta=True,
                     include_time=False)
 
+                if 'history' in meta_data:
+                    ad_history = meta_data['history']
+                    mode = []
+                    version = []
+                    broadcasted = []
+
+                    for history in ad_history:
+                        mode.append(history['mode'])
+                        version.append(history['version'])
+                        broadcasted.append(
+                            self._convert_isodate_to_local(history['broadcasted'], days_delta=True))
+
+                    ad_history = {'Versjon': version, 'Modus': mode, 'Oppdatert': broadcasted}
+
                 if 'advertiserRef' in ad_data:
                     advertiser_ref = ad_data['advertiserRef']
                 elif 'externalAdId' in ad_data:
@@ -327,7 +342,8 @@ class FinnAd(Finn):
                              'energimerking': energy_label,
                              'kommunaleavg': municipal_fees,
                              'formuesverdi': tax_value,
-                             'boligselgerforsikring': change_of_ownership_insurance})
+                             'boligselgerforsikring': change_of_ownership_insurance,
+                             'annonse_historikk': ad_history})
 
                 for key, value in matrikkel.items():
                     info.update({key: value})

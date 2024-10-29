@@ -22,6 +22,7 @@ from ..models import MortgageModel, FinnModel, HomeModel, AnalysisModel
 
 from .restructure_view import RestructureView
 from .statistics_view import StatisticsView
+from .ad_history_view import AdHistoryView
 from .info_clear_view import InfoClearView
 from .info_quit_view import InfoQuitView
 from .settings_view import SettingsView
@@ -59,6 +60,7 @@ class HomeView(QMainWindow):  # pylint: disable=too-many-instance-attributes
 
         self._sifo_view = SifoView(self)
         self._history_view = HistoryView(self)
+        self._ad_history_view = AdHistoryView(self)
 
         self._meta_view = MetaView(self)
         self._info_view_quit = InfoQuitView(self)
@@ -296,6 +298,19 @@ class HomeView(QMainWindow):  # pylint: disable=too-many-instance-attributes
 
         """
         return self._history_view
+
+    @property
+    def ad_history_view(self):
+        """
+        AdHistoryView getter
+
+        Returns
+        -------
+        out     : QObject
+                  active AdHistoryView class
+
+        """
+        return self._ad_history_view
 
     @property
     def statistics_view(self):

@@ -12,11 +12,12 @@ from random import randint
 
 from PyQt5.QtCore import Qt  # pylint: disable=no-name-in-module
 from PyQt5.uic import loadUi  # pylint: disable=no-name-in-module
-from PyQt5.QtWidgets import QDialog, \
-    QWidget  # pylint: disable=no-name-in-module
+from PyQt5.QtGui import QIcon  # pylint: disable=no-name-in-module
+from PyQt5.QtWidgets import QDialog, QWidget  # pylint: disable=no-name-in-module
 
 from source.util import Assertor
 
+from .ad_history_view import AdHistoryView
 from .images_view import ImagesView
 from .meta_view import MetaView
 from .map_view import MapView
@@ -46,6 +47,10 @@ class StatisticsView(QDialog):
 
         self.ui_form = loadUi(
             os.path.join(up_dir(__file__), "forms/statistics_form.ui"), self)
+
+        self.ui_form.push_button_annonse_historikk.setIcon(
+            QIcon(os.path.join(up_dir(up_dir(__file__)), "images/ad_history.png")))
+
         self.ui_form.setWindowFlag(Qt.WindowMinimizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowMaximizeButtonHint, True)
         self.ui_form.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
@@ -54,11 +59,13 @@ class StatisticsView(QDialog):
         self._meta_view = MetaView(self)
         self._map_view = MapView(self)
         self._images_view = ImagesView(self)
+        self._ad_history_view = AdHistoryView(self)
 
         self.ui_form.push_button_meta_data.clicked.connect(
             self.meta_view.display)
         self.ui_form.push_button_oppdater.clicked.connect(self.update)
         self.ui_form.push_button_avbryt.clicked.connect(self.close)
+
         self.ui_form.push_button_show_in_map_1.clicked.connect(
             self.map_view.show)
         self.ui_form.push_button_show_in_map_2.clicked.connect(
@@ -76,8 +83,9 @@ class StatisticsView(QDialog):
 
         self.ui_form.push_button_eierskifte_historikk.clicked.connect(
             lambda: self.parent.history_view.add_finn_history(self.postfix))
-
         self.ui_form.push_button_images.clicked.connect(self.images_view.show)
+        self.ui_form.push_button_annonse_historikk.clicked.connect(
+            lambda: self.parent.ad_history_view.add_ad_history(self.postfix))
 
     @property
     def parent(self):
@@ -104,6 +112,19 @@ class StatisticsView(QDialog):
 
         """
         return self._statistics_model
+
+    @property
+    def ad_history_view(self):
+        """
+        AdHistoryView getter
+
+        Returns
+        -------
+        out     : AdHistoryView
+                  active AdHistoryView
+
+        """
+        return self._ad_history_view
 
     @property
     def meta_view(self):

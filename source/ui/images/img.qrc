@@ -1,5 +1,6 @@
 <RCC>
   <qresource prefix="img">
+    <file>ad_history.png</file>
     <file>info.png</file>
     <file>check.png</file>
     <file>preview.png</file>
