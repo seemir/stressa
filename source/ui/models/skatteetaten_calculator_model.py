@@ -22,7 +22,7 @@ class SkatteetatenCalculatorModel(Model):
     Model for Tax calculations and processing
 
     """
-    _tax_year = ["", "2022", "2021", "2020", "2019", "2018"]
+    _tax_year = ["", "2023", "2022", "2021", "2020", "2019", "2018"]
     _total_posts = ["brutto_inntekt_total", "trygde_inntekt_total",
                     "leieinntekt_total",
                     "renteinntekter_total", "andre_inntekter_total",

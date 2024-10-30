@@ -24,6 +24,7 @@ class TaxForm(Entity):  # pylint: disable=too-many-instance-attributes
     """
 
     tax_version_mapping = {
+        '2023': ('skatteberegningsgrunnlag', 'skatteplikt'),
         '2022': ('skatteberegningsgrunnlagV7', 'skattepliktV9'),
         '2021': ('skatteberegningsgrunnlagV6', 'skattepliktV8'),
         '2020': ('skattegrunnlagV6', 'skattepliktV7'),

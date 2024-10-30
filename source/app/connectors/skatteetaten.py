@@ -16,6 +16,7 @@ from datetime import date
 
 import json
 import requests
+import json_repair
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, \
@@ -33,6 +34,7 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
     """
 
     tax_version_mapping = {
+        '2023': ('skatteberegningsgrunnlag', 'skatteplikt'),
         '2022': ('skatteberegningsgrunnlagV7', 'skattepliktV9'),
         '2021': ('skatteberegningsgrunnlagV6', 'skattepliktV8'),
         '2020': ('skattegrunnlagV6', 'skattepliktV7'),
@@ -89,8 +91,7 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
             Assertor.assert_data_types(
                 [age, income, tax_year, interest_income, interest_cost,
                  value_of_real_estate, bank_deposit, debt, union_fee, bsu,
-                 other_income,
-                 rental_income],
+                 other_income, rental_income],
                 [(str, int), (str, int, float), (int, str),
                  (int, str, float), (int, str, float),
                  (int, str, float), (int, str, float),
@@ -100,7 +101,7 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
             Assertor.assert_arguments([str(tax_year)],
                                       [{'year': (
                                           '2018', '2019', '2020', '2021',
-                                          '2022')}])
+                                          '2022', '2023')}])
 
             self.age = str(age)
             self.income = str(income)
@@ -140,7 +141,7 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
                 __file__) + '\\payloads\\skatteetaten_payload.json',
                   encoding='utf-8') as json_file:
             json_data = json.load(json_file)
-        return json.dumps(json_data) \
+        tax_payload = json.dumps(json_data) \
             .replace("alderIInntektsaarVerdi", self.age) \
             .replace("loennsinntektNaturalytelseMvBelop", self.income) \
             .replace("skatteberegningsgrunnlagVersjon",
@@ -158,6 +159,36 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
             .replace("annenArbeidsinntektBeloep", self.other_income) \
             .replace("nettoinntektVedUtleieAvFastEiendomMvBeloep",
                      self.rental_income)
+
+        if self.tax_year == "2023":
+
+            tax_payload = json.loads(tax_payload)
+            tax_base_object = []
+
+            for tax_element in tax_payload['skatteberegningsgrunnlag']['skattegrunnlagsobjekt']:
+                tax_element_dict = {}
+
+                technical_name = tax_element['tekniskNavn']
+                amount = tax_element['beloep']
+
+                if technical_name == 'formuesverdiForPrimaerbolig':
+                    tax_element_dict.update({'tekniskNavn': technical_name, 'beloep': int(amount),
+                                             "verdiFoerVerdsettingsrabattForFastEiendom": 0})
+                elif technical_name == 'inntektsfradragForFagforeningskontingent':
+                    tax_element_dict.update({'tekniskNavn': technical_name, 'beloep': int(amount)})
+                else:
+                    tax_element_dict.update({'tekniskNavn': technical_name, 'beloep': amount})
+
+                tax_base_object.append(tax_element_dict)
+
+            tax_payload['skatteberegningsgrunnlag'].update(
+                {'skattegrunnlagsobjekt': tax_base_object})
+
+            tax_payload = json.dumps(tax_payload)
+            tax_payload = tax_payload.replace('skattegrunnlagsobjekt',
+                                              'skatteberegningsgrunnlagsobjekt')
+
+        return tax_payload
 
     @Tracking
     def response(self):
@@ -205,7 +236,7 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
             if keys == "hovedperson":
                 for key, value in values.items():
                     if any(key == "beregnetSkatt" + version for version in
-                           ['V2', 'V3', 'V4']):
+                           ['V2', 'V3', 'V4', '']):
                         for tag, val in value.items():
                             if tag == "skatteklasse":
                                 tax_info.update({tag: val})
@@ -224,11 +255,16 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
                             elif tag in ["beregnetSkattFoerSkattefradrag",
                                          "sumSkattefradrag",
                                          "beregnetSkatt"]:
-                                tax_info.update(
-                                    {tag: {"grunnlag": Money(
-                                        str(val["grunnlag"])).value(),
-                                           "beloep": Money(
-                                               str(val["beloep"])).value()}})
+                                if isinstance(val, dict):
+                                    tax_info.update(
+                                        {tag: {"grunnlag": Money(
+                                            str(val["grunnlag"])).value(),
+                                               "beloep": Money(
+                                                   str(val["beloep"])).value()}})
+                                else:
+                                    tax_info.update({tag: {"grunnlag": '',
+                                                           "beloep": Money(
+                                                               str(val)).value()}})
                             elif tag == "skattOgAvgift":
                                 for sub_tag, sub_val in val.items():
                                     if sub_tag in ["formuesskattTilStat",
@@ -254,11 +290,25 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
                                             str(element["beloep"])).value()})
                     elif any(key == "summertSkattegrunnlagForVisning" + version
                              for version in
-                             ['V4', 'V5', 'V6', 'V7']):
+                             ['V4', 'V5', 'V6', 'V7', '']):
                         for tag, val in value.items():
-                            if tag == "skattegrunnlagsobjekt":
+                            if tag in ["skattegrunnlagsobjekt", "skatteberegningsgrunnlagsobjekt"]:
                                 for element in val:
-                                    tax_info.update(
-                                        {element["tekniskNavn"]: Money(
-                                            str(element["beloep"])).value()})
+                                    if element[
+                                        'tekniskNavn'] == 'nettoinntektVedUtleieAvFastEiendomMv':
+                                        tax_info.update(
+                                            {
+                                                "samletSkattepliktigOverskuddFraUtleieAvFastEiendom": Money(
+                                                    str(element["beloep"])).value()})
+                                    elif element[
+                                        'tekniskNavn'] == 'samletLoennsinntektMedTrygdeavgiftspliktOgMedTrekkplikt':
+                                        tax_info.update(
+                                            {
+                                                "personinntektFraLoennsinntekt": Money(
+                                                    str(element["beloep"])).value()})
+                                    else:
+                                        tax_info.update(
+                                            {element["tekniskNavn"]: Money(
+                                                str(element["beloep"])).value()})
+        print(json.dumps(tax_info))
         return tax_info
