@@ -16,7 +16,6 @@ from datetime import date
 
 import json
 import requests
-import json_repair
 from requests.exceptions import ConnectTimeout, ConnectionError as ConnectError
 
 from source.util import Assertor, LOGGER, NoConnectionError, TimeOutError, \
@@ -165,6 +164,9 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
             tax_payload = json.loads(tax_payload)
             tax_base_object = []
 
+            value_of_home = 0
+            bsu_value = 0
+
             for tax_element in tax_payload['skatteberegningsgrunnlag']['skattegrunnlagsobjekt']:
                 tax_element_dict = {}
 
@@ -172,14 +174,33 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
                 amount = tax_element['beloep']
 
                 if technical_name == 'formuesverdiForPrimaerbolig':
+                    value_of_home = amount
                     tax_element_dict.update({'tekniskNavn': technical_name, 'beloep': int(amount),
-                                             "verdiFoerVerdsettingsrabattForFastEiendom": 0})
+                                             "verdiFoerVerdsettingsrabattForFastEiendom": int(int(
+                                                 amount) / 0.25)})
                 elif technical_name == 'inntektsfradragForFagforeningskontingent':
                     tax_element_dict.update({'tekniskNavn': technical_name, 'beloep': int(amount)})
+                elif technical_name == 'beloepSpartIBSUIInntektsaar':
+                    bsu_value = amount
+                    tax_element_dict.update({'tekniskNavn': technical_name, 'beloep': amount})
                 else:
                     tax_element_dict.update({'tekniskNavn': technical_name, 'beloep': amount})
 
                 tax_base_object.append(tax_element_dict)
+
+            if value_of_home == 0 and bsu_value == 0:
+                for element in tax_base_object:
+                    if element['tekniskNavn'] in ['formuesverdiForPrimaerbolig',
+                                                  'beloepSpartIBSUIInntektsaar']:
+                        tax_base_object.remove(element)
+            elif (value_of_home != 0 and bsu_value != 0) or (value_of_home != 0 and bsu_value == 0):
+                for element in tax_base_object:
+                    if element['tekniskNavn'] == 'beloepSpartIBSUIInntektsaar':
+                        tax_base_object.remove(element)
+            elif value_of_home == 0 and bsu_value != 0:
+                for element in tax_base_object:
+                    if element['tekniskNavn'] == 'formuesverdiForPrimaerbolig':
+                        tax_base_object.remove(element)
 
             tax_payload['skatteberegningsgrunnlag'].update(
                 {'skattegrunnlagsobjekt': tax_base_object})
@@ -187,7 +208,6 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
             tax_payload = json.dumps(tax_payload)
             tax_payload = tax_payload.replace('skattegrunnlagsobjekt',
                                               'skatteberegningsgrunnlagsobjekt')
-
         return tax_payload
 
     @Tracking
@@ -229,86 +249,92 @@ class Skatteetaten(Connector):  # pylint: disable=too-many-instance-attributes
                   tax information given information passed through class
 
         """
-        tax_dict = self.response().json()
-        tax_info = {}
 
-        for keys, values in tax_dict.items():
-            if keys == "hovedperson":
-                for key, value in values.items():
-                    if any(key == "beregnetSkatt" + version for version in
-                           ['V2', 'V3', 'V4', '']):
-                        for tag, val in value.items():
-                            if tag == "skatteklasse":
-                                tax_info.update({tag: val})
-                            elif tag == "skatteregnskapskommune":
-                                tax_info.update({tag: val})
-                            elif tag == "informasjonTilSkattelister":
-                                tax_info.update(
-                                    {"nettoinntekt": Money(
-                                        str(val["nettoinntekt"])).value()})
-                                tax_info.update(
-                                    {"nettoformue": Money(
-                                        str(val["nettoformue"])).value()})
-                                tax_info.update(
-                                    {"beregnetSkatt": Money(
-                                        str(val["beregnetSkatt"])).value()})
-                            elif tag in ["beregnetSkattFoerSkattefradrag",
-                                         "sumSkattefradrag",
-                                         "beregnetSkatt"]:
-                                if isinstance(val, dict):
+        try:
+            tax_dict = self.response().json()
+            tax_info = {}
+
+            for keys, values in tax_dict.items():
+                if keys == "hovedperson":
+                    for key, value in values.items():
+                        if any(key == "beregnetSkatt" + version for version in
+                               ['V2', 'V3', 'V4', '']):
+                            for tag, val in value.items():
+                                if tag == "skatteklasse":
+                                    tax_info.update({tag: val})
+                                elif tag == "skatteregnskapskommune":
+                                    tax_info.update({tag: val})
+                                elif tag == "informasjonTilSkattelister":
                                     tax_info.update(
-                                        {tag: {"grunnlag": Money(
-                                            str(val["grunnlag"])).value(),
-                                               "beloep": Money(
-                                                   str(val["beloep"])).value()}})
-                                else:
-                                    tax_info.update({tag: {"grunnlag": '',
-                                                           "beloep": Money(
-                                                               str(val)).value()}})
-                            elif tag == "skattOgAvgift":
-                                for sub_tag, sub_val in val.items():
-                                    if sub_tag in ["formuesskattTilStat",
-                                                   "inntektsskattTilKommune",
-                                                   "inntektsskattTilFylkeskommune",
-                                                   "inntektsskattTilKommuneOgFylkeskommune",
-                                                   "formuesskattTilKommune",
-                                                   "fellesskatt", "trinnskatt",
-                                                   "trygdeavgiftAvLoennsinntekt",
-                                                   "sumTrygdeavgift"]:
-                                        tax_info.update(
-                                            {sub_tag: {
-                                                "grunnlag": Money(str(sub_val[
-                                                                          "grunnlag"])).value(),
-                                                "beloep": Money(str(sub_val[
-                                                                        "beloep"])).value()}})
-                    elif key == "beregningsgrunnlagV4":
-                        for tag, val in value.items():
-                            if tag == "beregningsgrunnlagsobjekt":
-                                for element in val:
+                                        {"nettoinntekt": Money(
+                                            str(val["nettoinntekt"])).value()})
                                     tax_info.update(
-                                        {element["tekniskNavn"]: Money(
-                                            str(element["beloep"])).value()})
-                    elif any(key == "summertSkattegrunnlagForVisning" + version
-                             for version in
-                             ['V4', 'V5', 'V6', 'V7', '']):
-                        for tag, val in value.items():
-                            if tag in ["skattegrunnlagsobjekt", "skatteberegningsgrunnlagsobjekt"]:
-                                for element in val:
-                                    if element[
-                                        'tekniskNavn'] == 'nettoinntektVedUtleieAvFastEiendomMv':
+                                        {"nettoformue": Money(
+                                            str(val["nettoformue"])).value()})
+                                    tax_info.update(
+                                        {"beregnetSkatt": Money(
+                                            str(val["beregnetSkatt"])).value()})
+                                elif tag in ["beregnetSkattFoerSkattefradrag",
+                                             "sumSkattefradrag",
+                                             "beregnetSkatt"]:
+                                    if isinstance(val, dict):
                                         tax_info.update(
-                                            {
-                                                "samletSkattepliktigOverskuddFraUtleieAvFastEiendom": Money(
-                                                    str(element["beloep"])).value()})
-                                    elif element[
-                                        'tekniskNavn'] == 'samletLoennsinntektMedTrygdeavgiftspliktOgMedTrekkplikt':
-                                        tax_info.update(
-                                            {
-                                                "personinntektFraLoennsinntekt": Money(
-                                                    str(element["beloep"])).value()})
+                                            {tag: {"grunnlag": Money(
+                                                str(val["grunnlag"])).value(),
+                                                   "beloep": Money(
+                                                       str(val["beloep"])).value()}})
                                     else:
+                                        tax_info.update({tag: {"grunnlag": '',
+                                                               "beloep": Money(
+                                                                   str(val)).value()}})
+                                elif tag == "skattOgAvgift":
+                                    for sub_tag, sub_val in val.items():
+                                        if sub_tag in ["formuesskattTilStat",
+                                                       "inntektsskattTilKommune",
+                                                       "inntektsskattTilFylkeskommune",
+                                                       "inntektsskattTilKommuneOgFylkeskommune",
+                                                       "formuesskattTilKommune",
+                                                       "fellesskatt", "trinnskatt",
+                                                       "trygdeavgiftAvLoennsinntekt",
+                                                       "sumTrygdeavgift"]:
+                                            tax_info.update(
+                                                {sub_tag: {
+                                                    "grunnlag": Money(str(sub_val[
+                                                                              "grunnlag"])).value(),
+                                                    "beloep": Money(str(sub_val[
+                                                                            "beloep"])).value()}})
+                        elif key == "beregningsgrunnlagV4":
+                            for tag, val in value.items():
+                                if tag == "beregningsgrunnlagsobjekt":
+                                    for element in val:
                                         tax_info.update(
                                             {element["tekniskNavn"]: Money(
                                                 str(element["beloep"])).value()})
-        print(json.dumps(tax_info))
-        return tax_info
+                        elif any(key == "summertSkattegrunnlagForVisning" + version
+                                 for version in
+                                 ['V4', 'V5', 'V6', 'V7', '']):
+                            for tag, val in value.items():
+                                if tag in ["skattegrunnlagsobjekt",
+                                           "skatteberegningsgrunnlagsobjekt"]:
+                                    for element in val:
+                                        if element[
+                                            'tekniskNavn'] == 'nettoinntektVedUtleieAvFastEiendomMv':
+                                            tax_info.update(
+                                                {
+                                                    "samletSkattepliktigOverskuddFraUtleieAvFastEiendom": Money(
+                                                        str(element["beloep"])).value()})
+                                        elif element[
+                                            'tekniskNavn'] == 'samletLoennsinntektMedTrygdeavgiftspliktOgMedTrekkplikt':
+                                            tax_info.update(
+                                                {
+                                                    "personinntektFraLoennsinntekt": Money(
+                                                        str(element["beloep"])).value()})
+                                        else:
+                                            tax_info.update(
+                                                {element["tekniskNavn"]: Money(
+                                                    str(element["beloep"])).value()})
+            return tax_info
+        except Exception as skatteetaten_exception:
+            error_msg = f"skatteetaten error, exited with '{str(skatteetaten_exception)}'"
+            LOGGER.exception(error_msg)
+            raise skatteetaten_exception

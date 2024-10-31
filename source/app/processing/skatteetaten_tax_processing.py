@@ -61,7 +61,7 @@ class SkatteetatenTaxProcessing(Process):
         return self._skatteetaten_tax_info
 
     @Profiling
-    @Debugger
+    @Tracking
     def input_operation(self, data: dict):
         """
         method for retrieving information from Tax form and saving it to Tax processing object
@@ -82,7 +82,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(input_operation, input_signal)
 
     @Profiling
-    @Debugger
+    @Tracking
     def validate_tax_form(self):
         """
         method for validating tax_form information
@@ -101,7 +101,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(validate_tax_form_operation, tax_form_signal)
 
     @Profiling
-    @Debugger
+    @Tracking
     def skatteetaten_tax_info_connector(self):
         """
         method for retrieve Skatteetaten tax info
@@ -122,7 +122,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(skatteetaten_tax_info_connector_operation, skatteetaten_tax_info_signal)
 
     @Profiling
-    @Debugger
+    @Tracking
     def extract_1(self):
         """
         method for extracting total calculated taxes
@@ -140,7 +140,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(total_tax_extract_operation, total_tax_extract_signal, label="thread")
 
     @Profiling
-    @Debugger
+    @Tracking
     def extract_2(self):
         """
         method for extracting income basis
@@ -160,7 +160,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(income_extract_operation, income_extract_signal, label="thread")
 
     @Profiling
-    @Debugger
+    @Tracking
     def extract_3(self):
         """
         method for extracting total debt
@@ -178,7 +178,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(debt_extract_operation, debt_extract_signal, label="thread")
 
     @Profiling
-    @Debugger
+    @Tracking
     def factor(self):
         """
         method for creating a factor
@@ -194,7 +194,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(factor_operation, factor_signal)
 
     @Profiling
-    @Debugger
+    @Tracking
     def divide_1(self):
         """
         method for calculating tax percentage
@@ -220,7 +220,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(tax_percentage, tax_share_of_monthly_income_signal, label="thread")
 
     @Profiling
-    @Debugger
+    @Tracking
     def divide_2(self):
         """
         method for calculating debt percentage
@@ -244,7 +244,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(debt_level_operation, debt_level_signal, label="thread")
 
     @Profiling
-    @Debugger
+    @Tracking
     def divide_3(self):
         """
         method for calculating monthly tax payment
@@ -270,7 +270,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(monthly_tax_operation, monthly_tax_signal, label="thread")
 
     @Profiling
-    @Debugger
+    @Tracking
     def multiplex(self):
         """
         method for multiplexing tax share with tax info
@@ -298,7 +298,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(multiplex_operation, multiplex_signal)
 
     @Profiling
-    @Debugger
+    @Tracking
     def flatten(self):
         """
         method for flattening multiplexed data
@@ -319,7 +319,7 @@ class SkatteetatenTaxProcessing(Process):
         self.add_transition(flatten_operation, flatten_signal)
 
     @Profiling
-    @Debugger
+    @Tracking
     def output_operation(self):
         """
         final method call in process

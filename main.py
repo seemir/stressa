@@ -11,14 +11,11 @@ __email__ = 'samir.adrik@gmail.com'
 import sys
 import traceback
 
-from PyQt5.QtCore import QFile, QTextStream, Qt
+from PyQt5.QtCore import QFile, QTextStream
 from PyQt5.QtWidgets import QApplication
 
 from source.ui import HomeView, SplashView, ErrorView
 from source.util import LOGGER
-
-QApplication.setAttribute(Qt.AA_EnableHighDpiScaling, True)
-QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps, True)
 
 
 class Main(QApplication):
