@@ -19,7 +19,8 @@ from bs4 import BeautifulSoup
 
 import json_repair
 
-from source.util import LOGGER, TimeOutError, NoConnectionError, InvalidDataError, \
+from source.util import LOGGER, TimeOutError, NoConnectionError, \
+    InvalidDataError, \
     Assertor, Tracking
 from source.domain import Money, Amount
 
@@ -217,7 +218,7 @@ class FinnAd(Finn):
                         first_viewing = \
                             f"{self._convert_isodate_to_local(viewings[0]['dateIso'])} " \
                             f"kl. {viewings[0]['from']}-{viewings[0]['to']}"
-                if len(viewings) == 2:
+                if len(viewings) >= 2:
 
                     if 'dateIso' in viewings[0]:
                         first_viewing = \
@@ -281,9 +282,11 @@ class FinnAd(Finn):
                         mode.append(history['mode'])
                         version.append(history['version'])
                         broadcasted.append(
-                            self._convert_isodate_to_local(history['broadcasted'], days_delta=True))
+                            self._convert_isodate_to_local(
+                                history['broadcasted'], days_delta=True))
 
-                    ad_history = {'Versjon': version, 'Modus': mode, 'Oppdatert': broadcasted}
+                    ad_history = {'Versjon': version, 'Modus': mode,
+                                  'Oppdatert': broadcasted}
 
                 if 'advertiserRef' in ad_data:
                     advertiser_ref = ad_data['advertiserRef']
