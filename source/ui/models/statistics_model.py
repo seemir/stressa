@@ -615,8 +615,10 @@ class StatisticsModel(Model):  # pylint: disable=too-many-instance-attributes
             city_area = "Ingen områder funnet"
 
             if "info" + postfix in self.data.keys():
-                if self.data["info" + postfix]["district"]:
-                    city_area = self.data["info" + postfix]["district"]
+                if "neighborhood" in self.data["info" + postfix]:
+                    if self.data["info" + postfix]["neighborhood"]:
+                        if "city" in self.data["info" + postfix]["neighborhood"]:
+                            city_area = self.data["info" + postfix]["neighborhood"]["city"]
 
             if sum(city_area_dist) != 0:
                 dist_df = {"Gruppe": [],
