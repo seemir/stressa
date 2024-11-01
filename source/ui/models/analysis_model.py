@@ -42,7 +42,8 @@ class AnalysisModel(Model):
                       'laan_serie', 'total_rente_serie', 'total_belop_serie',
                       'laan_andel_annuitet', 'total_rente_andel_annuitet',
                       'total_belop_andel_annuitet', 'laan_andel_serie',
-                      'total_rente_andel_serie', 'total_belop_andel_serie']
+                      'total_rente_andel_serie', 'total_belop_andel_serie',
+                      'snitt_total_termin_belop_annitet']
 
     def __init__(self, parent: QObject):
         """

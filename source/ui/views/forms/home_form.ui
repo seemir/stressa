@@ -1821,7 +1821,7 @@
                   <item row="12" column="2">
                    <widget class="QLabel" name="label_likviditetsgrad">
                     <property name="text">
-                     <string>Likviditetsgrad</string>
+                     <string>Betjeningsgrad </string>
                     </property>
                     <property name="buddy">
                      <cstring>line_edit_likviditetsgrad</cstring>
@@ -1858,7 +1858,7 @@
                   <item row="11" column="0">
                    <widget class="QLabel" name="label_total_netto">
                     <property name="text">
-                     <string>Total netto</string>
+                     <string>Disponibel inntekt</string>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1891,14 +1891,14 @@
                   <item row="8" column="2">
                    <widget class="QLabel" name="label_sum_utgifter">
                     <property name="text">
-                     <string>Sum utgifter</string>
+                     <string>Variable utgifter</string>
                     </property>
                    </widget>
                   </item>
                   <item row="12" column="0">
                    <widget class="QLabel" name="label_netto_likviditet">
                     <property name="text">
-                     <string>Netto likviditet</string>
+                     <string>Betjeningsevne</string>
                     </property>
                     <property name="buddy">
                      <cstring>line_edit_netto_likviditet</cstring>
@@ -1908,7 +1908,7 @@
                   <item row="11" column="2">
                    <widget class="QLabel" name="label_totale_utgifter">
                     <property name="text">
-                     <string>Totale utgifter</string>
+                     <string>Levekostnader</string>
                     </property>
                     <property name="buddy">
                      <cstring>line_edit_totale_utgifter</cstring>
@@ -10236,7 +10236,7 @@
                   <item row="9" column="0">
                    <widget class="QLabel" name="label_nettolikviditet">
                     <property name="text">
-                     <string>Nettolikviditet</string>
+                     <string>Betjeningsevne</string>
                     </property>
                    </widget>
                   </item>
@@ -10548,7 +10548,7 @@
                    </widget>
                   </item>
                   <item row="0" column="1">
-                   <widget class="QLineEdit" name="line_edit_kostnader_annuitet">
+                   <widget class="QLineEdit" name="line_edit_snitt_total_termin_belop_annitet">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -12981,7 +12981,7 @@
      <normaloff>:/img/help.svg</normaloff>:/img/help.svg</iconset>
    </property>
    <property name="text">
-    <string>Hjelp</string>
+    <string>Om Stressa</string>
    </property>
   </action>
   <action name="action_instillinger">
@@ -13166,7 +13166,7 @@
   <tabstop>line_edit_krav_stresstest_annuitet</tabstop>
   <tabstop>line_edit_stresstest_serie</tabstop>
   <tabstop>line_edit_krav_stresstest_serie</tabstop>
-  <tabstop>line_edit_kostnader_annuitet</tabstop>
+  <tabstop>line_edit_snitt_total_termin_belop_annitet</tabstop>
   <tabstop>line_edit_kostnader_andel_annuitet</tabstop>
   <tabstop>line_edit_nettolikviditet_annuitet</tabstop>
   <tabstop>line_edit_nettolikviditet_andel_annuitet</tabstop>

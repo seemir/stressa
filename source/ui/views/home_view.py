@@ -18,6 +18,8 @@ from PyQt5.QtGui import QIcon  # pylint: disable=no-name-in-module
 from PyQt5.QtCore import pyqtSlot  # pylint: disable=no-name-in-module
 from PyQt5.QtWidgets import QMainWindow  # pylint: disable=no-name-in-module
 
+from source.util import __version__
+
 from ..models import MortgageModel, FinnModel, HomeModel, AnalysisModel
 
 from .restructure_view import RestructureView
@@ -54,6 +56,8 @@ class HomeView(QMainWindow):  # pylint: disable=too-many-instance-attributes
         dir_up = os.path.dirname
         self.ui_form = loadUi(
             os.path.join(dir_up(__file__), "forms/home_form.ui"), self)
+
+        self.setWindowTitle(f"Stressa v.{__version__}")
 
         self._error_view = ErrorView(self)
         self._budget_view = BudgetView(self)
