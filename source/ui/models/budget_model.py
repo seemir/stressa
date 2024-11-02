@@ -34,7 +34,7 @@ class BudgetModel(Model):
                       "kreditt_gjeld_1",
                       "husleie_1", "strom_1", "rentekostnader_1",
                       "andre_utgifter_1",
-                      "sum_utgifter_1"]
+                      "variable_utgifter_1"]
 
     _secondary_posts = ["brutto_inntekt_2", "trygde_inntekt_2", "leieinntekt_2",
                         "renteinntekter_2",
@@ -42,7 +42,7 @@ class BudgetModel(Model):
                         "kreditt_gjeld_2",
                         "husleie_2", "strom_2", "rentekostnader_2",
                         "andre_utgifter_2",
-                        "sum_utgifter_2"]
+                        "variable_utgifter_2"]
 
     _total_posts = ["brutto_inntekt_total", "trygde_inntekt_total",
                     "leieinntekt_total",
@@ -51,7 +51,7 @@ class BudgetModel(Model):
                     "student_lan_total", "kreditt_gjeld_total", "husleie_total",
                     "strom_total",
                     "rentekostnader_total", "andre_utgifter_total",
-                    "sum_utgifter_total"]
+                    "variable_utgifter_total"]
 
     def __init__(self, parent: QObject):
         """
@@ -323,8 +323,8 @@ class BudgetModel(Model):
              interest_cost_1, other_1])
         person_expenses_1 = Money(
             str(sum_expenses_1)).value() if sum_expenses_1 != 0 else ""
-        parent.line_edit_sum_utgifter_1.setText(person_expenses_1)
-        self.set_line_edit("sum_utgifter_1", data=person_expenses_1)
+        parent.line_edit_variable_utgifter_1.setText(person_expenses_1)
+        self.set_line_edit("variable_utgifter_1", data=person_expenses_1)
 
         student_loan_2 = self.calculate_monthly_values(
             "student_lan_2", parent.line_edit_student_lan_2.text(),
@@ -350,8 +350,8 @@ class BudgetModel(Model):
              interest_cost_2, other_2])
         person_expenses_2 = Money(
             str(sum_expenses_2)).value() if sum_expenses_2 != 0 else ""
-        parent.line_edit_sum_utgifter_2.setText(person_expenses_2)
-        self.set_line_edit("sum_utgifter_2", data=person_expenses_2)
+        parent.line_edit_variable_utgifter_2.setText(person_expenses_2)
+        self.set_line_edit("variable_utgifter_2", data=person_expenses_2)
 
         self.set_total_value(brutto_income_1, brutto_income_2,
                              "brutto_inntekt_1",
@@ -387,9 +387,9 @@ class BudgetModel(Model):
         self.set_total_value(other_1, other_2, "andre_utgifter_1",
                              "andre_utgifter_2",
                              "andre_utgifter_total")
-        self.set_total_value(sum_expenses_1, sum_expenses_2, "sum_utgifter_1",
-                             "sum_utgifter_2",
-                             "sum_utgifter_total")
+        self.set_total_value(sum_expenses_1, sum_expenses_2, "variable_utgifter_1",
+                             "variable_utgifter_2",
+                             "variable_utgifter_total")
 
     def yearly_value(self):
         """
@@ -479,7 +479,7 @@ class BudgetModel(Model):
              interest_cost_1, other_1])
         person_expenses_1 = Money(
             str(sum_expenses_1)).value() if sum_expenses_1 != 0 else ""
-        self.data.update({"sum_utgifter_1": person_expenses_1})
+        self.data.update({"variable_utgifter_1": person_expenses_1})
 
         student_loan_2 = self.calculate_yearly_values(
             "student_lan_aar_2", parent.line_edit_student_lan_2.text(),
@@ -505,7 +505,7 @@ class BudgetModel(Model):
              interest_cost_2, other_2])
         person_expenses_2 = Money(
             str(sum_expenses_2)).value() if sum_expenses_2 != 0 else ""
-        self.data.update({"sum_utgifter_aar_2": person_expenses_2})
+        self.data.update({"variable_utgifter_aar_2": person_expenses_2})
 
         self.set_total_value(brutto_income_1, brutto_income_2,
                              "brutto_inntekt_1",
@@ -541,9 +541,9 @@ class BudgetModel(Model):
         self.set_total_value(other_1, other_2, "andre_utgifter_1",
                              "andre_utgifter_2",
                              "andre_utgifter_total_aar")
-        self.set_total_value(sum_expenses_1, sum_expenses_2, "sum_utgifter_1",
-                             "sum_utgifter_2",
-                             "sum_utgifter_total_aar")
+        self.set_total_value(sum_expenses_1, sum_expenses_2, "variable_utgifter_1",
+                             "variable_utgifter_2",
+                             "varibale_utgifter_total_aar")
 
     def set_radio_button(self, radio_button):
         """

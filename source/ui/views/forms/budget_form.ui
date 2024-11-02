@@ -1828,7 +1828,7 @@
            <item row="7" column="3">
             <widget class="QLabel" name="label_total_person_utgifter_1">
              <property name="text">
-              <string>Sum utgifter*</string>
+              <string>Variable utgifter*</string>
              </property>
             </widget>
            </item>
@@ -2076,7 +2076,7 @@
             </widget>
            </item>
            <item row="7" column="5">
-            <widget class="QLineEdit" name="line_edit_sum_utgifter_1">
+            <widget class="QLineEdit" name="line_edit_variable_utgifter_1">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -2343,7 +2343,7 @@
             <widget class="QComboBox" name="combo_box_interval_15"/>
            </item>
            <item row="7" column="5">
-            <widget class="QLineEdit" name="line_edit_sum_utgifter_2">
+            <widget class="QLineEdit" name="line_edit_variable_utgifter_2">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -2562,7 +2562,7 @@
            <item row="7" column="3">
             <widget class="QLabel" name="label_total_person_utgifter_2">
              <property name="text">
-              <string>Sum utgifter*</string>
+              <string>Variable utgifter*</string>
              </property>
             </widget>
            </item>
@@ -2701,7 +2701,7 @@
   <tabstop>combo_box_interval_11</tabstop>
   <tabstop>line_edit_andre_utgifter_1</tabstop>
   <tabstop>line_edit_personinntekt_1</tabstop>
-  <tabstop>line_edit_sum_utgifter_1</tabstop>
+  <tabstop>line_edit_variable_utgifter_1</tabstop>
   <tabstop>push_button_eksporter_1</tabstop>
   <tabstop>push_button_tom_skjema_1</tabstop>
   <tabstop>push_button_budget_meta_data_1</tabstop>
@@ -2731,7 +2731,7 @@
   <tabstop>combo_box_interval_22</tabstop>
   <tabstop>line_edit_andre_utgifter_2</tabstop>
   <tabstop>line_edit_personinntekt_2</tabstop>
-  <tabstop>line_edit_sum_utgifter_2</tabstop>
+  <tabstop>line_edit_variable_utgifter_2</tabstop>
   <tabstop>push_button_eksporter_2</tabstop>
   <tabstop>push_button_tom_skjema_2</tabstop>
   <tabstop>push_button_budget_meta_data_2</tabstop>

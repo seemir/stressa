@@ -62,7 +62,7 @@ class HomeModel(Model):
         self.parent.ui_form.line_edit_beregnet_skatt_per_mnd_beloep.textChanged.connect(
             self.calculate_net_income)
 
-        self.parent.ui_form.line_edit_sum_utgifter_total.textChanged.connect(
+        self.parent.ui_form.line_edit_variable_utgifter_total.textChanged.connect(
             self.calculate_total_costs)
         self.parent.ui_form.line_edit_sifo_utgifter.textChanged.connect(
             self.calculate_total_costs)
@@ -98,7 +98,7 @@ class HomeModel(Model):
         method for calculating total cost
 
         """
-        cost_value = self.parent.ui_form.line_edit_sum_utgifter_total.text()
+        cost_value = self.parent.ui_form.line_edit_variable_utgifter_total.text()
         sifo_value = self.parent.ui_form.line_edit_sifo_utgifter.text()
 
         sum_cost = Money(cost_value if cost_value else "0")

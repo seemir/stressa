@@ -178,7 +178,7 @@ class MortgageModel(Model):
         self.clear_line_edits(
             ["brutto_inntekt", "trygde_inntekt", "leieinntekt",
              "personinntekt", "student_lan", "kreditt_gjeld",
-             "husleie", "strom", "andre_utgifter", "sum_utgifter"],
+             "husleie", "strom", "andre_utgifter", "variable_utgifter"],
             postfix="_total")
         self.clear_line_edits(
             ["beregnet_skatt_per_mnd_beloep", "sifo_utgifter", "total_netto",

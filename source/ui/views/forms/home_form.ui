@@ -462,7 +462,7 @@
          <x>0</x>
          <y>0</y>
          <width>1611</width>
-         <height>986</height>
+         <height>985</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_14">
@@ -1849,7 +1849,7 @@
                    </widget>
                   </item>
                   <item row="8" column="3">
-                   <widget class="QLineEdit" name="line_edit_sum_utgifter_total">
+                   <widget class="QLineEdit" name="line_edit_variable_utgifter_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -12325,7 +12325,7 @@
      <x>0</x>
      <y>0</y>
      <width>1680</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_fil">
@@ -12333,8 +12333,8 @@
      <rect>
       <x>284</x>
       <y>118</y>
-      <width>143</width>
-      <height>209</height>
+      <width>140</width>
+      <height>203</height>
      </rect>
     </property>
     <property name="title">
@@ -13048,7 +13048,7 @@
   <tabstop>line_edit_strom_total</tabstop>
   <tabstop>line_edit_rentekostnader_total</tabstop>
   <tabstop>line_edit_andre_utgifter_total</tabstop>
-  <tabstop>line_edit_sum_utgifter_total</tabstop>
+  <tabstop>line_edit_variable_utgifter_total</tabstop>
   <tabstop>push_button_sifo_utgifter</tabstop>
   <tabstop>line_edit_sifo_utgifter</tabstop>
   <tabstop>line_edit_totale_utgifter</tabstop>
