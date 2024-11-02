@@ -74,7 +74,7 @@ class HomeModel(Model):
 
         self.parent.ui_form.line_edit_personinntekt_total.textChanged.connect(
             self.calculate_liquidity_share)
-        self.parent.ui_form.line_edit_netto_likviditet.textChanged.connect(
+        self.parent.ui_form.line_edit_betjeningsevne.textChanged.connect(
             self.calculate_liquidity_share)
 
     def calculate_net_income(self):
@@ -122,9 +122,9 @@ class HomeModel(Model):
         net_liquidity = total_net - total_cost
 
         if net_liquidity != "0 kr":
-            self.set_line_edit("netto_likviditet", data=net_liquidity)
+            self.set_line_edit("betjeningsevne", data=net_liquidity)
         else:
-            self.clear_line_edit("netto_likviditet")
+            self.clear_line_edit("betjeningsevne")
 
     def calculate_liquidity_share(self):
         """
@@ -132,7 +132,7 @@ class HomeModel(Model):
 
         """
         gross_income = self.parent.ui_form.line_edit_personinntekt_total.text()
-        net_liquidity = self.parent.ui_form.line_edit_netto_likviditet.text()
+        net_liquidity = self.parent.ui_form.line_edit_betjeningsevne.text()
 
         gross_value = Money(gross_income if gross_income else "0")
         net_value = Money(net_liquidity if net_liquidity else "0")

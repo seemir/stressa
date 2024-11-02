@@ -130,8 +130,8 @@ class MortgageModel(Model):
                                        "value"))
         self.parent.ui_form.line_edit_disponibel_inntekt.editingFinished.connect(
             lambda: self.set_line_edit("disponibel_inntekt", Money, "value"))
-        self.parent.ui_form.line_edit_netto_likviditet.editingFinished.connect(
-            lambda: self.set_line_edit("netto_likviditet", Money, "value"))
+        self.parent.ui_form.line_edit_betjeningsevne.editingFinished.connect(
+            lambda: self.set_line_edit("betjeningsevne", Money, "value"))
         self.parent.ui_form.line_edit_student_lan_total.editingFinished.connect(
             lambda: self.set_line_edit("student_lan_total", Money, "value"))
         self.parent.ui_form.line_edit_kreditt_gjeld_total.editingFinished.connect(
@@ -182,7 +182,7 @@ class MortgageModel(Model):
             postfix="_total")
         self.clear_line_edits(
             ["beregnet_skatt_per_mnd_beloep", "sifo_utgifter", "disponibel_inntekt",
-             "levekostnader", "netto_likviditet", "betjeningsgrad",
+             "levekostnader", "betjeningsevne", "betjeningsgrad",
              "egenkapital"])
         self.clear_combo_boxes(
             ["kjonn_1", "kjonn_2", "lanetype", "intervall", "laneperiode"])

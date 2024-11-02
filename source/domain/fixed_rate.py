@@ -80,7 +80,7 @@ class FixedRate(Mortgage):
         self._start_date = self.mortgage_data['startdato']
         self._equity = float(self.mortgage_data['egenkapital'].replace(" kr", "").replace(" ", ""))
         self._net_liquidity = float(
-            self.mortgage_data['netto_likviditet'].replace(" kr", "").replace(" ", ""))
+            self.mortgage_data['betjeningsevne'].replace(" kr", "").replace(" ", ""))
         self._amount = float(
             self.mortgage_data['personinntekt_total_aar'].replace(" kr", "").replace(" ", "")) * 5 \
             if 'belaning' not in data.keys() else data['belaning']

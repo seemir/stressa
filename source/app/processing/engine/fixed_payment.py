@@ -56,4 +56,4 @@ class FixedPayment(Operation):
         """
         fixed_amount = FixedRate.periodical_payments(self.interest_rate, self.interval, self.period,
                                                      self.amount)
-        return {"krav_nettolikviditet": Money(str(fixed_amount)).value()}
+        return {"krav_betjeningsevne": Money(str(fixed_amount)).value()}
