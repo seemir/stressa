@@ -128,8 +128,8 @@ class MortgageModel(Model):
         self.parent.ui_form.line_edit_beregnet_skatt_per_mnd_beloep.editingFinished.connect(
             lambda: self.set_line_edit("beregnet_skatt_per_mnd_beloep", Money,
                                        "value"))
-        self.parent.ui_form.line_edit_total_netto.editingFinished.connect(
-            lambda: self.set_line_edit("total_netto", Money, "value"))
+        self.parent.ui_form.line_edit_disponibel_inntekt.editingFinished.connect(
+            lambda: self.set_line_edit("disponibel_inntekt", Money, "value"))
         self.parent.ui_form.line_edit_netto_likviditet.editingFinished.connect(
             lambda: self.set_line_edit("netto_likviditet", Money, "value"))
         self.parent.ui_form.line_edit_student_lan_total.editingFinished.connect(
@@ -181,7 +181,7 @@ class MortgageModel(Model):
              "husleie", "strom", "andre_utgifter", "variable_utgifter"],
             postfix="_total")
         self.clear_line_edits(
-            ["beregnet_skatt_per_mnd_beloep", "sifo_utgifter", "total_netto",
+            ["beregnet_skatt_per_mnd_beloep", "sifo_utgifter", "disponibel_inntekt",
              "totale_utgifter", "netto_likviditet", "likviditetsgrad",
              "egenkapital"])
         self.clear_combo_boxes(

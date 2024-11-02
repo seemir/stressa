@@ -1856,7 +1856,7 @@
                    </widget>
                   </item>
                   <item row="11" column="0">
-                   <widget class="QLabel" name="label_total_netto">
+                   <widget class="QLabel" name="label_disponibel_inntekt">
                     <property name="text">
                      <string>Disponibel inntekt</string>
                     </property>
@@ -1864,7 +1864,7 @@
                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_total_netto</cstring>
+                     <cstring>line_edit_disponibel_inntekt</cstring>
                     </property>
                    </widget>
                   </item>
@@ -1926,7 +1926,7 @@
                    </widget>
                   </item>
                   <item row="11" column="1">
-                   <widget class="QLineEdit" name="line_edit_total_netto">
+                   <widget class="QLineEdit" name="line_edit_disponibel_inntekt">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -12333,8 +12333,8 @@
      <rect>
       <x>284</x>
       <y>118</y>
-      <width>140</width>
-      <height>203</height>
+      <width>145</width>
+      <height>209</height>
      </rect>
     </property>
     <property name="title">
@@ -13041,7 +13041,7 @@
   <tabstop>line_edit_personinntekt_total</tabstop>
   <tabstop>push_button_skatt</tabstop>
   <tabstop>line_edit_beregnet_skatt_per_mnd_beloep</tabstop>
-  <tabstop>line_edit_total_netto</tabstop>
+  <tabstop>line_edit_disponibel_inntekt</tabstop>
   <tabstop>line_edit_student_lan_total</tabstop>
   <tabstop>line_edit_kreditt_gjeld_total</tabstop>
   <tabstop>line_edit_husleie_total</tabstop>

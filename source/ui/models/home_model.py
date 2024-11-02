@@ -67,7 +67,7 @@ class HomeModel(Model):
         self.parent.ui_form.line_edit_sifo_utgifter.textChanged.connect(
             self.calculate_total_costs)
 
-        self.parent.ui_form.line_edit_total_netto.textChanged.connect(
+        self.parent.ui_form.line_edit_disponibel_inntekt.textChanged.connect(
             self.calculate_net_liquidity)
         self.parent.ui_form.line_edit_totale_utgifter.textChanged.connect(
             self.calculate_net_liquidity)
@@ -89,9 +89,9 @@ class HomeModel(Model):
         tax_cost = Money(tax_value if tax_value else "0")
         total_net = gross_income - tax_cost
         if total_net != "0 kr":
-            self.set_line_edit("total_netto", data=total_net)
+            self.set_line_edit("disponibel_inntekt", data=total_net)
         else:
-            self.clear_line_edit("total_netto")
+            self.clear_line_edit("disponibel_inntekt")
 
     def calculate_total_costs(self):
         """
@@ -114,7 +114,7 @@ class HomeModel(Model):
         method for calculating net liquidity
 
         """
-        total_net_value = self.parent.ui_form.line_edit_total_netto.text()
+        total_net_value = self.parent.ui_form.line_edit_disponibel_inntekt.text()
         total_cost_value = self.parent.ui_form.line_edit_totale_utgifter.text()
 
         total_net = Money(total_net_value if total_net_value else "0")
