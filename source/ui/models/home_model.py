@@ -69,7 +69,7 @@ class HomeModel(Model):
 
         self.parent.ui_form.line_edit_disponibel_inntekt.textChanged.connect(
             self.calculate_net_liquidity)
-        self.parent.ui_form.line_edit_totale_utgifter.textChanged.connect(
+        self.parent.ui_form.line_edit_levekostnader.textChanged.connect(
             self.calculate_net_liquidity)
 
         self.parent.ui_form.line_edit_personinntekt_total.textChanged.connect(
@@ -105,9 +105,9 @@ class HomeModel(Model):
         sifo_cost = Money(sifo_value if sifo_value else "0")
         total_cost = sum_cost + sifo_cost
         if total_cost != "0 kr":
-            self.set_line_edit("totale_utgifter", data=total_cost)
+            self.set_line_edit("levekostnader", data=total_cost)
         else:
-            self.clear_line_edit("totale_utgifter")
+            self.clear_line_edit("levekostnader")
 
     def calculate_net_liquidity(self):
         """
@@ -115,7 +115,7 @@ class HomeModel(Model):
 
         """
         total_net_value = self.parent.ui_form.line_edit_disponibel_inntekt.text()
-        total_cost_value = self.parent.ui_form.line_edit_totale_utgifter.text()
+        total_cost_value = self.parent.ui_form.line_edit_levekostnader.text()
 
         total_net = Money(total_net_value if total_net_value else "0")
         total_cost = Money(total_cost_value if total_cost_value else "0")

@@ -1906,12 +1906,12 @@
                    </widget>
                   </item>
                   <item row="11" column="2">
-                   <widget class="QLabel" name="label_totale_utgifter">
+                   <widget class="QLabel" name="label_levekostnader">
                     <property name="text">
                      <string>Levekostnader</string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_totale_utgifter</cstring>
+                     <cstring>line_edit_levekostnader</cstring>
                     </property>
                    </widget>
                   </item>
@@ -2088,7 +2088,7 @@
                    </widget>
                   </item>
                   <item row="11" column="3">
-                   <widget class="QLineEdit" name="line_edit_totale_utgifter">
+                   <widget class="QLineEdit" name="line_edit_levekostnader">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -13051,7 +13051,7 @@
   <tabstop>line_edit_variable_utgifter_total</tabstop>
   <tabstop>push_button_sifo_utgifter</tabstop>
   <tabstop>line_edit_sifo_utgifter</tabstop>
-  <tabstop>line_edit_totale_utgifter</tabstop>
+  <tabstop>line_edit_levekostnader</tabstop>
   <tabstop>line_edit_netto_likviditet</tabstop>
   <tabstop>line_edit_likviditetsgrad</tabstop>
   <tabstop>combo_box_lanetype</tabstop>
