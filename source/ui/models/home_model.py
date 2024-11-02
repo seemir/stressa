@@ -137,13 +137,13 @@ class HomeModel(Model):
         gross_value = Money(gross_income if gross_income else "0")
         net_value = Money(net_liquidity if net_liquidity else "0")
         if gross_value.value() == "0 kr":
-            self.clear_line_edit("likviditetsgrad")
+            self.clear_line_edit("betjeningsgrad")
         else:
             liquidity_share = Share(numerator=net_value,
                                     denominator=gross_value)
 
             if liquidity_share.value != "0 %":
-                self.set_line_edit("likviditetsgrad",
+                self.set_line_edit("betjeningsgrad",
                                    data=liquidity_share.value)
             else:
-                self.clear_line_edit("likviditetsgrad")
+                self.clear_line_edit("betjeningsgrad")

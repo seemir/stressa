@@ -1824,7 +1824,7 @@
                      <string>Betjeningsgrad </string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_likviditetsgrad</cstring>
+                     <cstring>line_edit_betjeningsgrad</cstring>
                     </property>
                    </widget>
                   </item>
@@ -2098,7 +2098,7 @@
                    </widget>
                   </item>
                   <item row="12" column="3">
-                   <widget class="QLineEdit" name="line_edit_likviditetsgrad">
+                   <widget class="QLineEdit" name="line_edit_betjeningsgrad">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -13053,7 +13053,7 @@
   <tabstop>line_edit_sifo_utgifter</tabstop>
   <tabstop>line_edit_levekostnader</tabstop>
   <tabstop>line_edit_netto_likviditet</tabstop>
-  <tabstop>line_edit_likviditetsgrad</tabstop>
+  <tabstop>line_edit_betjeningsgrad</tabstop>
   <tabstop>combo_box_lanetype</tabstop>
   <tabstop>combo_box_intervall</tabstop>
   <tabstop>combo_box_laneperiode</tabstop>
