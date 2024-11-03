@@ -7,7 +7,6 @@ Module containing logic for table with Ad History
 __author__ = 'Samir Adrik'
 __email__ = 'samir.adrik@gmail.com'
 
-import PyQt5.QtWebEngineWidgets
 from pandas import DataFrame
 
 from PyQt5.QtCore import Qt, QObject, pyqtSlot  # pylint: disable=no-name-in-module

@@ -23,9 +23,8 @@ class HistoryModel(Model):
     Implementation of model for Ownership history
 
     """
-    _finn_history_keys = ["finn_adresse", "eieform", "kommunenr", "gardsnr",
-                          "bruksnr", "bruksenhetsnr", "seksjonsnr",
-                          "historikk"]
+    _finn_history_keys = ["finn_adresse", "eieform", "kommunenr", "gardsnr", "bruksnr",
+                          "bruksenhetsnr", "seksjonsnr", "historikk"]
 
     def __init__(self, parent: QObject):
         """

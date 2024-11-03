@@ -45,28 +45,24 @@ class RestructureProcess(Process):
             [self.validate_restructure, self.read_settings_1, self.factor_1])
 
         self.run_parallel(
-            [self.extract_1, self.fixed_stress_test, self.extract_2,
-             self.extract_3,
-             self.extract_4, self.extract_5, self.read_settings_2,
-             self.extract_6,
-             self.extract_7, self.extract_8, self.serial_stress_test,
-             self.subtraction_1, self.read_settings_3])
+            [self.extract_1, self.fixed_stress_test, self.extract_2, self.extract_3, self.extract_4,
+             self.extract_5, self.read_settings_2, self.extract_6, self.extract_7, self.extract_8,
+             self.serial_stress_test, self.subtraction_1, self.read_settings_3])
 
         self.run_parallel([self.ssb_connector, self.fixed_mortgage_payment_plan,
                            self.series_mortgage_payment_plan, self.multiply_1])
 
-        self.run_parallel([self.addition_1, self.division_1, self.comparison_1,
-                           self.addition_2])
+        self.run_parallel([self.addition_1, self.division_1, self.comparison_1, self.addition_2])
 
         self.run_parallel(
             [self.division_2, self.fixed_payment, self.division_3])
         self.run_parallel(
-            [self.subtraction_2, self.subtraction_3, self.converter_1,
-             self.converter_2])
+            [self.subtraction_2, self.subtraction_3, self.converter_1, self.converter_2])
 
         self.run_parallel([self.extract_9, self.extract_10])
 
         self.division_4()
+        self.converter_3()
 
         self.multiplex()
 
@@ -1093,6 +1089,37 @@ class RestructureProcess(Process):
 
     @Profiling
     @Debugger
+    def converter_3(self):
+        """
+        method for converting average payment per period into monthly
+
+        """
+        interval = self.get_signal("interval")
+        average_total_amount_fixed = self.get_signal("average_total_amount_fixed")
+
+        average_total_amount_fixed_converted_operation = Converter(average_total_amount_fixed.data,
+                                                                   interval.data['intervall'],
+                                                                   'Månedlig')
+        self.add_node(average_total_amount_fixed_converted_operation)
+        self.add_transition(interval, average_total_amount_fixed_converted_operation,
+                            label="thread")
+        self.add_transition(average_total_amount_fixed,
+                            average_total_amount_fixed_converted_operation,
+                            label="thread")
+
+        average_total_amount_fixed_converted = average_total_amount_fixed_converted_operation.run()
+
+        average_total_amount_fixed_converted_signal = Signal(average_total_amount_fixed_converted,
+                                                             "Converted Average\n Total Payment in "
+                                                             "Fixed\n Payment Plan")
+        self.add_signal(average_total_amount_fixed_converted_signal,
+                        "average_total_amount_fixed_converted")
+        self.add_transition(average_total_amount_fixed_converted_operation,
+                            average_total_amount_fixed_converted_signal,
+                            label="thread")
+
+    @Profiling
+    @Debugger
     def multiplex(self):
         """
         multiplex mortgage information
@@ -1122,8 +1149,8 @@ class RestructureProcess(Process):
         repayment_ability_mnd_fixed = self.get_signal("repayment_ability_mnd_fixed")
         repayment_ability_plan_series = self.get_signal("repayment_ability_plan_series")
         repayment_ability_mnd_series = self.get_signal("repayment_ability_mnd_series")
-        average_total_amount_fixed = self.get_signal(
-            "average_total_amount_fixed")
+        average_total_amount_fixed_converted = self.get_signal(
+            "average_total_amount_fixed_converted")
 
         multiplex_operation = Multiplex([fixed_stress_rate, serial_stress_rate,
                                          required_fixed_rates,
@@ -1143,7 +1170,7 @@ class RestructureProcess(Process):
                                          repayment_ability_mnd_fixed,
                                          repayment_ability_plan_series,
                                          repayment_ability_mnd_series,
-                                         average_total_amount_fixed],
+                                         average_total_amount_fixed_converted],
                                         "Multiplex Restructured Mortgage Information")
 
         self.add_node(multiplex_operation)
@@ -1171,7 +1198,7 @@ class RestructureProcess(Process):
         self.add_transition(repayment_ability_mnd_fixed, multiplex_operation)
         self.add_transition(repayment_ability_plan_series, multiplex_operation)
         self.add_transition(repayment_ability_mnd_series, multiplex_operation)
-        self.add_transition(average_total_amount_fixed, multiplex_operation)
+        self.add_transition(average_total_amount_fixed_converted, multiplex_operation)
 
         multiplex = multiplex_operation.run()
         multiplex_signal = Signal(multiplex,

@@ -24,22 +24,18 @@ class SifoModel(Model):
     Implementation of the Sifo Model with logic for all SIFO calculations
 
     """
-    _budsjett_aar = ["", "2024", "2023", "2022", "2021", "2020", "2019", "2018",
-                     "2017", "2016", "2015", "2014", "2013", "2012", "2011",
-                     "2010"]
+    _budsjett_aar = ["", "2024", "2023", "2022", "2021", "2020", "2019", "2018", "2017", "2016",
+                     "2015", "2014", "2013", "2012", "2011", "2010"]
     _kjonn = ["", "Mann", "Kvinne"]
-    _alder = ["", "0-5 mnd", "6-11 mnd", "1 år", "2 år", "3 år", "4-5 år",
-              "6-9 år", "10-13 år", "14-17 år", "18-19 år", "20-30 år",
-              "31-50 år", "51-60 år",
-              "61-66 år", "67-73 år", "eldre enn 74 år"]
+    _alder = ["", "0-5 mnd", "6-11 mnd", "1 år", "2 år", "3 år", "4-5 år", "6-9 år", "10-13 år",
+              "14-17 år", "18-19 år", "20-30 år", "31-50 år", "51-60 år", "61-66 år", "67-73 år",
+              "eldre enn 74 år"]
     _barnehage = ["", "Nei", "Ja"]
     _sfo = ["", "Nei", "Halvdag", "Heldag"]
     _student = ["", "Nei", "Ja"]
     _antall_biler = ["", "1", "2", "3", "4"]
-    _sifo_expenses = ['mat', 'klar', 'helse', 'fritid', 'kollektivt',
-                      'spedbarn', 'sumindivid',
-                      'dagligvarer', 'husholdsart', 'mobler', 'medier', 'biler',
-                      'barnehage',
+    _sifo_expenses = ['mat', 'klar', 'helse', 'fritid', 'kollektivt', 'spedbarn', 'sumindivid',
+                      'dagligvarer', 'husholdsart', 'mobler', 'medier', 'biler', 'barnehage',
                       'sfo', 'sumhusholdning', 'totalt']
 
     def __init__(self, parent: QObject):

@@ -11,11 +11,9 @@ __email__ = 'samir.adrik@gmail.com'
 from source.util import Assertor, Profiling, Tracking, Debugger
 
 from .engine import Process, Signal, InputOperation, ValidateMortgage, \
-    OutputSignal, \
-    OutputOperation, Extract, Factor, Multiplication, Multiplex, Division, \
-    Subtraction, Addition, \
-    FixedStressTest, SerialStressTest, SsbConnector, FixedPayment, Converter, \
-    GenerateFixedPaymentPlan, GenerateSeriesPaymentPlan, ReadSettings
+    OutputSignal, OutputOperation, Extract, Factor, Multiplication, Multiplex, Division, \
+    Subtraction, Addition, FixedStressTest, SerialStressTest, SsbConnector, FixedPayment, \
+    Converter, GenerateFixedPaymentPlan, GenerateSeriesPaymentPlan, ReadSettings
 
 
 class MortgageAnalysisProcess(Process):
@@ -43,28 +41,25 @@ class MortgageAnalysisProcess(Process):
 
         self.run_parallel(
             [self.fixed_stress_test, self.extract_1, self.serial_stress_test,
-             self.extract_2, self.extract_3, self.read_settings_1,
-             self.factor_1,
-             self.read_settings_2, self.extract_4, self.extract_5,
-             self.extract_6,
+             self.extract_2, self.extract_3, self.read_settings_1, self.factor_1,
+             self.read_settings_2, self.extract_4, self.extract_5, self.extract_6,
              self.read_settings_3])
 
         self.run_parallel(
             [self.multiply_1, self.subtraction_1, self.ssb_connector,
-             self.fixed_mortgage_payment_plan,
-             self.series_mortgage_payment_plan])
+             self.fixed_mortgage_payment_plan, self.series_mortgage_payment_plan])
 
         self.run_parallel(
             [self.addition_1, self.extract_7, self.division_1, self.addition_2])
         self.run_parallel(
             [self.division_2, self.division_3, self.fixed_payment])
         self.run_parallel(
-            [self.subtraction_2, self.subtraction_3, self.converter_1,
-             self.converter_2])
+            [self.subtraction_2, self.subtraction_3, self.converter_1, self.converter_2])
 
         self.run_parallel([self.extract_8, self.extract_9])
 
         self.division_4()
+        self.converter_3()
 
         self.multiplex()
 
@@ -793,19 +788,15 @@ class MortgageAnalysisProcess(Process):
         interval = self.get_signal("interval")
         repayment_ability = self.get_signal("betjeningsevne")
 
-        repayment_ability_converter_operation = Converter(repayment_ability.data,
-                                                          'Månedlig',
-                                                          interval.data[
-                                                              'intervall'])
+        repayment_ability_converter_operation = Converter(repayment_ability.data, 'Månedlig',
+                                                          interval.data['intervall'])
         self.add_node(repayment_ability_converter_operation)
-        self.add_transition(interval, repayment_ability_converter_operation,
-                            label="thread")
+        self.add_transition(interval, repayment_ability_converter_operation, label="thread")
         self.add_transition(repayment_ability, repayment_ability_converter_operation,
                             label="thread")
 
         repayment_ability_fixed = repayment_ability_converter_operation.run()
-        repayment_ability_fixed[
-            'betjeningsevne_plan_annuitet'] = repayment_ability_fixed.pop(
+        repayment_ability_fixed['betjeningsevne_plan_annuitet'] = repayment_ability_fixed.pop(
             'betjeningsevne_2')
 
         repayment_ability_fixed_signal = Signal(repayment_ability_fixed,
@@ -1027,6 +1018,37 @@ class MortgageAnalysisProcess(Process):
 
     @Profiling
     @Debugger
+    def converter_3(self):
+        """
+        method for converting average payment per period into monthly
+
+        """
+        interval = self.get_signal("interval")
+        average_total_amount_fixed = self.get_signal("average_total_amount_fixed")
+
+        average_total_amount_fixed_converted_operation = Converter(average_total_amount_fixed.data,
+                                                                   interval.data['intervall'],
+                                                                   'Månedlig')
+        self.add_node(average_total_amount_fixed_converted_operation)
+        self.add_transition(interval, average_total_amount_fixed_converted_operation,
+                            label="thread")
+        self.add_transition(average_total_amount_fixed,
+                            average_total_amount_fixed_converted_operation,
+                            label="thread")
+
+        average_total_amount_fixed_converted = average_total_amount_fixed_converted_operation.run()
+
+        average_total_amount_fixed_converted_signal = Signal(average_total_amount_fixed_converted,
+                                                             "Converted Average\n Total Payment in "
+                                                             "Fixed\n Payment Plan")
+        self.add_signal(average_total_amount_fixed_converted_signal,
+                        "average_total_amount_fixed_converted")
+        self.add_transition(average_total_amount_fixed_converted_operation,
+                            average_total_amount_fixed_converted_signal,
+                            label="thread")
+
+    @Profiling
+    @Debugger
     def multiplex(self):
         """
         multiplex mortgage information
@@ -1055,8 +1077,8 @@ class MortgageAnalysisProcess(Process):
         repayment_ability_mnd_fixed = self.get_signal("repayment_ability_mnd_fixed")
         repayment_ability_plan_series = self.get_signal("repayment_ability_plan_series")
         repayment_ability_mnd_series = self.get_signal("repayment_ability_mnd_series")
-        average_total_amount_fixed = self.get_signal(
-            "average_total_amount_fixed")
+        average_total_amount_fixed_converted = self.get_signal(
+            "average_total_amount_fixed_converted")
 
         multiplex_operation = Multiplex([fixed_stress_rate, serial_stress_rate,
                                          required_fixed_rates,
@@ -1075,7 +1097,7 @@ class MortgageAnalysisProcess(Process):
                                          repayment_ability_mnd_fixed,
                                          repayment_ability_plan_series,
                                          repayment_ability_mnd_series,
-                                         average_total_amount_fixed],
+                                         average_total_amount_fixed_converted],
                                         "Multiplex Mortgage Information")
 
         self.add_node(multiplex_operation)
@@ -1103,7 +1125,7 @@ class MortgageAnalysisProcess(Process):
         self.add_transition(repayment_ability_mnd_fixed, multiplex_operation)
         self.add_transition(repayment_ability_plan_series, multiplex_operation)
         self.add_transition(repayment_ability_mnd_series, multiplex_operation)
-        self.add_transition(average_total_amount_fixed, multiplex_operation)
+        self.add_transition(average_total_amount_fixed_converted, multiplex_operation)
 
         multiplex = multiplex_operation.run()
         multiplex_signal = Signal(multiplex, "Multiplexed Mortgage Information",

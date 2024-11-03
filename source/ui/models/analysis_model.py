@@ -27,16 +27,15 @@ class AnalysisModel(Model):
 
     """
 
-    _analysis_keys = ['arsinntekt_aar', 'belaning', 'belaningsgrad',
-                      'egenkapital_2', 'egenkapital_andel', 'betjeningsevne_2', 'total_ramme',
-                      'krav_belaning', 'krav_egenkapital_andel', 'krav_belaningsgrad',
-                      'krav_total_ramme', 'krav_egenkapital', 'stresstest_annuitet',
-                      'stresstest_serie', 'krav_stresstest_annuitet', 'krav_stresstest_serie',
-                      'krav_betjeningsevne', 'laan_annuitet', 'total_rente_annuitet',
-                      'total_belop_annuitet', 'laan_serie', 'total_rente_serie',
-                      'total_belop_serie', 'laan_andel_annuitet', 'total_rente_andel_annuitet',
-                      'total_belop_andel_annuitet', 'laan_andel_serie',
-                      'total_rente_andel_serie', 'total_belop_andel_serie',
+    _analysis_keys = ['arsinntekt_aar', 'belaning', 'belaningsgrad', 'egenkapital_2',
+                      'egenkapital_andel', 'betjeningsevne_2', 'total_ramme', 'krav_belaning',
+                      'krav_egenkapital_andel', 'krav_belaningsgrad', 'krav_total_ramme',
+                      'krav_egenkapital', 'stresstest_annuitet', 'stresstest_serie',
+                      'krav_stresstest_annuitet', 'krav_stresstest_serie', 'krav_betjeningsevne',
+                      'laan_annuitet', 'total_rente_annuitet', 'total_belop_annuitet', 'laan_serie',
+                      'total_rente_serie', 'total_belop_serie', 'laan_andel_annuitet',
+                      'total_rente_andel_annuitet', 'total_belop_andel_annuitet',
+                      'laan_andel_serie', 'total_rente_andel_serie', 'total_belop_andel_serie',
                       'snitt_total_termin_belop_annitet']
 
     def __init__(self, parent: QObject):
