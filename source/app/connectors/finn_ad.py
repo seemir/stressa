@@ -20,8 +20,7 @@ from bs4 import BeautifulSoup
 import json_repair
 
 from source.util import LOGGER, TimeOutError, NoConnectionError, \
-    InvalidDataError, \
-    Assertor, Tracking
+    InvalidDataError, Assertor, Tracking
 from source.domain import Money, Amount
 
 from .settings import FINN_AD_URL, TIMEOUT
