@@ -22,19 +22,13 @@ class PaymentModel(Model):
     Implementation of model for Payment plan
 
     """
-    payment_keys = ["start_dato_annuitet", "slutt_dato_annuitet",
-                    "total_termin_annuitet",
-                    "aar_annuitet", "termin_aar_annuitet", "laan_annuitet",
-                    "rente_annuitet",
-                    "total_rente_annuitet", "total_belop_annuitet",
-                    "start_dato_serie",
-                    "slutt_dato_serie", "total_termin_serie", "aar_serie",
-                    "termin_aar_serie", "laan_serie", "rente_serie",
-                    "total_rente_serie", "total_belop_serie",
-                    "netto_likviditet_plan_serie",
-                    "netto_likviditet_mnd_serie",
-                    "netto_likviditet_plan_annuitet",
-                    "netto_likviditet_mnd_annuitet"]
+    payment_keys = ["start_dato_annuitet", "slutt_dato_annuitet", "total_termin_annuitet",
+                    "aar_annuitet", "termin_aar_annuitet", "laan_annuitet", "rente_annuitet",
+                    "total_rente_annuitet", "total_belop_annuitet", "start_dato_serie",
+                    "slutt_dato_serie", "total_termin_serie", "aar_serie", "termin_aar_serie",
+                    "laan_serie", "rente_serie", "total_rente_serie", "total_belop_serie",
+                    "betjeningsevne_plan_serie", "betjeningsevne_mnd_serie",
+                    "betjeningsevne_plan_annuitet", "betjeningsevne_mnd_annuitet"]
 
     def __init__(self, parent: QObject):
         """

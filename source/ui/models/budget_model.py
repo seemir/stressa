@@ -23,34 +23,23 @@ class BudgetModel(Model):
 
     """
 
-    _interval = {"": "", "Årlig": "1", "Halvårlig": "2", "Kvartalsvis": "4",
-                 "Annenhver måned": "6", "Månedlig": "12",
-                 "Semi-månedlig": "24",
-                 "Annenhver uke": "26", "Ukentlig": "52"}
+    _interval = {"": "", "Årlig": "1", "Halvårlig": "2", "Kvartalsvis": "4", "Annenhver måned": "6",
+                 "Månedlig": "12", "Semi-månedlig": "24", "Annenhver uke": "26", "Ukentlig": "52"}
 
-    _primary_posts = ["brutto_inntekt_1", "trygde_inntekt_1", "leieinntekt_1",
-                      "renteinntekter_1",
-                      "andre_inntekter_1", "personinntekt_1", "student_lan_1",
-                      "kreditt_gjeld_1",
-                      "husleie_1", "strom_1", "rentekostnader_1",
-                      "andre_utgifter_1",
+    _primary_posts = ["brutto_inntekt_1", "trygde_inntekt_1", "leieinntekt_1", "renteinntekter_1",
+                      "andre_inntekter_1", "personinntekt_1", "student_lan_1", "kreditt_gjeld_1",
+                      "husleie_1", "strom_1", "rentekostnader_1", "andre_utgifter_1",
                       "variable_utgifter_1"]
 
-    _secondary_posts = ["brutto_inntekt_2", "trygde_inntekt_2", "leieinntekt_2",
-                        "renteinntekter_2",
-                        "andre_inntekter_2", "personinntekt_2", "student_lan_2",
-                        "kreditt_gjeld_2",
-                        "husleie_2", "strom_2", "rentekostnader_2",
-                        "andre_utgifter_2",
+    _secondary_posts = ["brutto_inntekt_2", "trygde_inntekt_2", "leieinntekt_2", "renteinntekter_2",
+                        "andre_inntekter_2", "personinntekt_2", "student_lan_2", "kreditt_gjeld_2",
+                        "husleie_2", "strom_2", "rentekostnader_2", "andre_utgifter_2",
                         "variable_utgifter_2"]
 
-    _total_posts = ["brutto_inntekt_total", "trygde_inntekt_total",
-                    "leieinntekt_total",
-                    "renteinntekter_total", "andre_inntekter_total",
-                    "personinntekt_total",
+    _total_posts = ["brutto_inntekt_total", "trygde_inntekt_total", "leieinntekt_total",
+                    "renteinntekter_total", "andre_inntekter_total", "personinntekt_total",
                     "student_lan_total", "kreditt_gjeld_total", "husleie_total",
-                    "strom_total",
-                    "rentekostnader_total", "andre_utgifter_total",
+                    "strom_total", "rentekostnader_total", "andre_utgifter_total",
                     "variable_utgifter_total"]
 
     def __init__(self, parent: QObject):

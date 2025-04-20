@@ -53,6 +53,7 @@ class Amount(Value):
 
         """
         try:
+            amount = amount.replace('k', '')
             amount = Decimal(amount)
             return f'{amount:,}'.replace(',', ' ')
         except InvalidOperation as format_error:

@@ -26,14 +26,11 @@ class FinnModel(Model):
     Implementation of the Finn model for which all the Finn based logic is stored
 
     """
-    _finn_keys = ["finnkode", "status", "sistendret", "referanse",
-                  "finn_adresse", "prisantydning", "formuesverdi",
-                  "fellesgjeld", "felleskostmnd", "omkostninger",
-                  "kommunaleavg", "totalpris", "fellesformue",
-                  "boligtype", "eieform", "etasje", "bygger", "soverom",
-                  "eksterntbruksareal", "boligselgerforsikring",
-                  "interntbruksareal", "bruksareal", "energimerking",
-                  "tomteareal", "sqm_price"]
+    _finn_keys = ["finnkode", "status", "sistendret", "referanse", "finn_adresse", "prisantydning",
+                  "formuesverdi", "fellesgjeld", "felleskostmnd", "omkostninger", "kommunaleavg",
+                  "totalpris", "fellesformue", "boligtype", "eieform", "etasje", "bygger",
+                  "soverom", "eksterntbruksareal", "boligselgerforsikring", "interntbruksareal",
+                  "bruksareal", "energimerking", "tomteareal", "sqm_price"]
 
     def __init__(self, parent: QObject):
         """

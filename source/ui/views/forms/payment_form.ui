@@ -1473,21 +1473,21 @@
            </widget>
           </item>
           <item row="8" column="0">
-           <widget class="QLabel" name="label_netto_likviditet_plan_annuitet">
+           <widget class="QLabel" name="label_betjeningsevne_plan_annuitet">
             <property name="text">
-             <string>Nettolikviditet plan</string>
+             <string>Betjeningsevne plan</string>
             </property>
            </widget>
           </item>
           <item row="7" column="0">
-           <widget class="QLabel" name="label_netto_likviditet_mnd_annuitet">
+           <widget class="QLabel" name="label_betjeningsevne_mnd_annuitet">
             <property name="text">
-             <string>Nettolikviditet mnd</string>
+             <string>Betjeningsevne mnd</string>
             </property>
            </widget>
           </item>
           <item row="8" column="1">
-           <widget class="QLineEdit" name="line_edit_netto_likviditet_plan_annuitet">
+           <widget class="QLineEdit" name="line_edit_betjeningsevne_plan_annuitet">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -1500,7 +1500,7 @@
            </widget>
           </item>
           <item row="7" column="1">
-           <widget class="QLineEdit" name="line_edit_netto_likviditet_mnd_annuitet">
+           <widget class="QLineEdit" name="line_edit_betjeningsevne_mnd_annuitet">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2170,21 +2170,21 @@
            </widget>
           </item>
           <item row="8" column="0">
-           <widget class="QLabel" name="label_netto_likviditet_serie_plan">
+           <widget class="QLabel" name="label_betjeningsevne_serie_plan">
             <property name="text">
-             <string>Nettolikviditet plan</string>
+             <string>Betjeningsevne plan</string>
             </property>
            </widget>
           </item>
           <item row="7" column="0">
-           <widget class="QLabel" name="label_netto_likviditet_serie_mnd">
+           <widget class="QLabel" name="label_betjeningsevne_serie_mnd">
             <property name="text">
-             <string>Nettolikviditet mnd</string>
+             <string>Betjeningsevne mnd</string>
             </property>
            </widget>
           </item>
           <item row="8" column="1">
-           <widget class="QLineEdit" name="line_edit_netto_likviditet_plan_serie">
+           <widget class="QLineEdit" name="line_edit_betjeningsevne_plan_serie">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2197,7 +2197,7 @@
            </widget>
           </item>
           <item row="7" column="1">
-           <widget class="QLineEdit" name="line_edit_netto_likviditet_mnd_serie">
+           <widget class="QLineEdit" name="line_edit_betjeningsevne_mnd_serie">
             <property name="enabled">
              <bool>false</bool>
             </property>
@@ -2281,9 +2281,9 @@
   <tabstop>line_edit_aar_annuitet</tabstop>
   <tabstop>line_edit_termin_aar_annuitet</tabstop>
   <tabstop>line_edit_total_termin_annuitet</tabstop>
-  <tabstop>line_edit_netto_likviditet_mnd_annuitet</tabstop>
+  <tabstop>line_edit_betjeningsevne_mnd_annuitet</tabstop>
   <tabstop>line_edit_laan_annuitet</tabstop>
-  <tabstop>line_edit_netto_likviditet_plan_annuitet</tabstop>
+  <tabstop>line_edit_betjeningsevne_plan_annuitet</tabstop>
   <tabstop>line_edit_total_rente_annuitet</tabstop>
   <tabstop>line_edit_rente_annuitet</tabstop>
   <tabstop>line_edit_total_belop_annuitet</tabstop>
@@ -2293,9 +2293,9 @@
   <tabstop>line_edit_aar_serie</tabstop>
   <tabstop>line_edit_termin_aar_serie</tabstop>
   <tabstop>line_edit_total_termin_serie</tabstop>
-  <tabstop>line_edit_netto_likviditet_mnd_serie</tabstop>
+  <tabstop>line_edit_betjeningsevne_mnd_serie</tabstop>
   <tabstop>line_edit_laan_serie</tabstop>
-  <tabstop>line_edit_netto_likviditet_plan_serie</tabstop>
+  <tabstop>line_edit_betjeningsevne_plan_serie</tabstop>
   <tabstop>line_edit_total_rente_serie</tabstop>
   <tabstop>line_edit_rente_serie</tabstop>
   <tabstop>line_edit_total_belop_serie</tabstop>

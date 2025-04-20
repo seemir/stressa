@@ -20,7 +20,7 @@ class Mortgage(Entity):
     """
 
     requirements_mortgage = ['personinntekt_total_aar', 'egenkapital', 'intervall', 'laneperiode',
-                             'lanetype', 'netto_likviditet', 'startdato']
+                             'lanetype', 'betjeningsevne', 'startdato']
     requirements_restructure = requirements_mortgage + ['belaning']
 
     def validate_mortgage_information(self, data: dict, restructure=False):
@@ -118,7 +118,7 @@ class Mortgage(Entity):
 
         """
         mortgage_data = ['personinntekt_total_aar', 'egenkapital', 'intervall', '\\nlaneperiode',
-                         'lanetype', 'netto_likviditet', 'startdato']
+                         'lanetype', 'betjeningsevne', 'startdato']
         restructure_data = mortgage_data + ['belaning']
         mortgage_property = "mortgage " if not restructure else "restructure "
         mortgage_rules = ", ".join(mortgage_data if not restructure else restructure_data).replace(
