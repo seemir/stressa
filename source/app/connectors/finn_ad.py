@@ -132,10 +132,9 @@ class FinnAd(Finn):
 
             if ad_data:
 
-                street_address = ad_data['location']['streetAddress']
-                postal_code = ad_data['location']['postalCode']
-                postal_place = ad_data['location']['postalPlace']
-
+                street_address = ''
+                postal_code = ''
+                postal_place = ''
                 floor = ''
                 collective_debt = ''
                 collective_assets = ''
@@ -161,6 +160,13 @@ class FinnAd(Finn):
                              'borettslag-andelsnummer': '',
                              'borettslag-navn': '',
                              'borettslag-orgnummer': ''}
+
+                if 'streetAddress' in ad_data['location']:
+                    street_address = ad_data['location']['streetAddress']
+                if 'postalCode' in ad_data['location']:
+                    postal_code = ad_data['location']['postalCode']
+                if 'postalPlace' in ad_data['location']:
+                    postal_place = ad_data['location']['postalPlace']
 
                 status = 'Solgt' if ad_data['disposed'] else 'Ikke solgt'
                 address = f'{street_address}, {postal_code} {postal_place}'
