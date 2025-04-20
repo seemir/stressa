@@ -462,7 +462,7 @@
          <x>0</x>
          <y>0</y>
          <width>1611</width>
-         <height>986</height>
+         <height>985</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_14">
@@ -1824,7 +1824,7 @@
                      <string>Betjeningsgrad </string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_likviditetsgrad</cstring>
+                     <cstring>line_edit_betjeningsgrad</cstring>
                     </property>
                    </widget>
                   </item>
@@ -1849,14 +1849,14 @@
                    </widget>
                   </item>
                   <item row="8" column="3">
-                   <widget class="QLineEdit" name="line_edit_sum_utgifter_total">
+                   <widget class="QLineEdit" name="line_edit_variable_utgifter_total">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
                    </widget>
                   </item>
                   <item row="11" column="0">
-                   <widget class="QLabel" name="label_total_netto">
+                   <widget class="QLabel" name="label_disponibel_inntekt">
                     <property name="text">
                      <string>Disponibel inntekt</string>
                     </property>
@@ -1864,7 +1864,7 @@
                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_total_netto</cstring>
+                     <cstring>line_edit_disponibel_inntekt</cstring>
                     </property>
                    </widget>
                   </item>
@@ -1906,12 +1906,12 @@
                    </widget>
                   </item>
                   <item row="11" column="2">
-                   <widget class="QLabel" name="label_totale_utgifter">
+                   <widget class="QLabel" name="label_levekostnader">
                     <property name="text">
                      <string>Levekostnader</string>
                     </property>
                     <property name="buddy">
-                     <cstring>line_edit_totale_utgifter</cstring>
+                     <cstring>line_edit_levekostnader</cstring>
                     </property>
                    </widget>
                   </item>
@@ -1926,7 +1926,7 @@
                    </widget>
                   </item>
                   <item row="11" column="1">
-                   <widget class="QLineEdit" name="line_edit_total_netto">
+                   <widget class="QLineEdit" name="line_edit_disponibel_inntekt">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2088,7 +2088,7 @@
                    </widget>
                   </item>
                   <item row="11" column="3">
-                   <widget class="QLineEdit" name="line_edit_totale_utgifter">
+                   <widget class="QLineEdit" name="line_edit_levekostnader">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -2098,7 +2098,7 @@
                    </widget>
                   </item>
                   <item row="12" column="3">
-                   <widget class="QLineEdit" name="line_edit_likviditetsgrad">
+                   <widget class="QLineEdit" name="line_edit_betjeningsgrad">
                     <property name="enabled">
                      <bool>false</bool>
                     </property>
@@ -12325,7 +12325,7 @@
      <x>0</x>
      <y>0</y>
      <width>1680</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_fil">
@@ -12333,7 +12333,7 @@
      <rect>
       <x>284</x>
       <y>118</y>
-      <width>143</width>
+      <width>145</width>
       <height>209</height>
      </rect>
     </property>
@@ -13041,19 +13041,19 @@
   <tabstop>line_edit_personinntekt_total</tabstop>
   <tabstop>push_button_skatt</tabstop>
   <tabstop>line_edit_beregnet_skatt_per_mnd_beloep</tabstop>
-  <tabstop>line_edit_total_netto</tabstop>
+  <tabstop>line_edit_disponibel_inntekt</tabstop>
   <tabstop>line_edit_student_lan_total</tabstop>
   <tabstop>line_edit_kreditt_gjeld_total</tabstop>
   <tabstop>line_edit_husleie_total</tabstop>
   <tabstop>line_edit_strom_total</tabstop>
   <tabstop>line_edit_rentekostnader_total</tabstop>
   <tabstop>line_edit_andre_utgifter_total</tabstop>
-  <tabstop>line_edit_sum_utgifter_total</tabstop>
+  <tabstop>line_edit_variable_utgifter_total</tabstop>
   <tabstop>push_button_sifo_utgifter</tabstop>
   <tabstop>line_edit_sifo_utgifter</tabstop>
-  <tabstop>line_edit_totale_utgifter</tabstop>
+  <tabstop>line_edit_levekostnader</tabstop>
   <tabstop>line_edit_netto_likviditet</tabstop>
-  <tabstop>line_edit_likviditetsgrad</tabstop>
+  <tabstop>line_edit_betjeningsgrad</tabstop>
   <tabstop>combo_box_lanetype</tabstop>
   <tabstop>combo_box_intervall</tabstop>
   <tabstop>combo_box_laneperiode</tabstop>

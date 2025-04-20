@@ -62,14 +62,14 @@ class HomeModel(Model):
         self.parent.ui_form.line_edit_beregnet_skatt_per_mnd_beloep.textChanged.connect(
             self.calculate_net_income)
 
-        self.parent.ui_form.line_edit_sum_utgifter_total.textChanged.connect(
+        self.parent.ui_form.line_edit_variable_utgifter_total.textChanged.connect(
             self.calculate_total_costs)
         self.parent.ui_form.line_edit_sifo_utgifter.textChanged.connect(
             self.calculate_total_costs)
 
-        self.parent.ui_form.line_edit_total_netto.textChanged.connect(
+        self.parent.ui_form.line_edit_disponibel_inntekt.textChanged.connect(
             self.calculate_net_liquidity)
-        self.parent.ui_form.line_edit_totale_utgifter.textChanged.connect(
+        self.parent.ui_form.line_edit_levekostnader.textChanged.connect(
             self.calculate_net_liquidity)
 
         self.parent.ui_form.line_edit_personinntekt_total.textChanged.connect(
@@ -89,33 +89,33 @@ class HomeModel(Model):
         tax_cost = Money(tax_value if tax_value else "0")
         total_net = gross_income - tax_cost
         if total_net != "0 kr":
-            self.set_line_edit("total_netto", data=total_net)
+            self.set_line_edit("disponibel_inntekt", data=total_net)
         else:
-            self.clear_line_edit("total_netto")
+            self.clear_line_edit("disponibel_inntekt")
 
     def calculate_total_costs(self):
         """
         method for calculating total cost
 
         """
-        cost_value = self.parent.ui_form.line_edit_sum_utgifter_total.text()
+        cost_value = self.parent.ui_form.line_edit_variable_utgifter_total.text()
         sifo_value = self.parent.ui_form.line_edit_sifo_utgifter.text()
 
         sum_cost = Money(cost_value if cost_value else "0")
         sifo_cost = Money(sifo_value if sifo_value else "0")
         total_cost = sum_cost + sifo_cost
         if total_cost != "0 kr":
-            self.set_line_edit("totale_utgifter", data=total_cost)
+            self.set_line_edit("levekostnader", data=total_cost)
         else:
-            self.clear_line_edit("totale_utgifter")
+            self.clear_line_edit("levekostnader")
 
     def calculate_net_liquidity(self):
         """
         method for calculating net liquidity
 
         """
-        total_net_value = self.parent.ui_form.line_edit_total_netto.text()
-        total_cost_value = self.parent.ui_form.line_edit_totale_utgifter.text()
+        total_net_value = self.parent.ui_form.line_edit_disponibel_inntekt.text()
+        total_cost_value = self.parent.ui_form.line_edit_levekostnader.text()
 
         total_net = Money(total_net_value if total_net_value else "0")
         total_cost = Money(total_cost_value if total_cost_value else "0")
@@ -137,13 +137,13 @@ class HomeModel(Model):
         gross_value = Money(gross_income if gross_income else "0")
         net_value = Money(net_liquidity if net_liquidity else "0")
         if gross_value.value() == "0 kr":
-            self.clear_line_edit("likviditetsgrad")
+            self.clear_line_edit("betjeningsgrad")
         else:
             liquidity_share = Share(numerator=net_value,
                                     denominator=gross_value)
 
             if liquidity_share.value != "0 %":
-                self.set_line_edit("likviditetsgrad",
+                self.set_line_edit("betjeningsgrad",
                                    data=liquidity_share.value)
             else:
-                self.clear_line_edit("likviditetsgrad")
+                self.clear_line_edit("betjeningsgrad")

@@ -128,8 +128,8 @@ class MortgageModel(Model):
         self.parent.ui_form.line_edit_beregnet_skatt_per_mnd_beloep.editingFinished.connect(
             lambda: self.set_line_edit("beregnet_skatt_per_mnd_beloep", Money,
                                        "value"))
-        self.parent.ui_form.line_edit_total_netto.editingFinished.connect(
-            lambda: self.set_line_edit("total_netto", Money, "value"))
+        self.parent.ui_form.line_edit_disponibel_inntekt.editingFinished.connect(
+            lambda: self.set_line_edit("disponibel_inntekt", Money, "value"))
         self.parent.ui_form.line_edit_netto_likviditet.editingFinished.connect(
             lambda: self.set_line_edit("netto_likviditet", Money, "value"))
         self.parent.ui_form.line_edit_student_lan_total.editingFinished.connect(
@@ -144,10 +144,10 @@ class MortgageModel(Model):
             lambda: self.set_line_edit("andre_utgifter_total", Money, "value"))
         self.parent.ui_form.line_edit_sifo_utgifter.editingFinished.connect(
             lambda: self.set_line_edit("sifo_utgifter", Money, "value"))
-        self.parent.ui_form.line_edit_totale_utgifter.editingFinished.connect(
-            lambda: self.set_line_edit("totale_utgifter", Money, "value"))
-        self.parent.ui_form.line_edit_likviditetsgrad.editingFinished.connect(
-            lambda: self.set_line_edit("likviditetsgrad", Money, "value"))
+        self.parent.ui_form.line_edit_levekostnader.editingFinished.connect(
+            lambda: self.set_line_edit("levekostnader", Money, "value"))
+        self.parent.ui_form.line_edit_betjeningsgrad.editingFinished.connect(
+            lambda: self.set_line_edit("betjeningsgrad", Money, "value"))
 
         # mortgage structure information
         self.parent.ui_form.combo_box_lanetype.activated.connect(
@@ -178,11 +178,11 @@ class MortgageModel(Model):
         self.clear_line_edits(
             ["brutto_inntekt", "trygde_inntekt", "leieinntekt",
              "personinntekt", "student_lan", "kreditt_gjeld",
-             "husleie", "strom", "andre_utgifter", "sum_utgifter"],
+             "husleie", "strom", "andre_utgifter", "variable_utgifter"],
             postfix="_total")
         self.clear_line_edits(
-            ["beregnet_skatt_per_mnd_beloep", "sifo_utgifter", "total_netto",
-             "totale_utgifter", "netto_likviditet", "likviditetsgrad",
+            ["beregnet_skatt_per_mnd_beloep", "sifo_utgifter", "disponibel_inntekt",
+             "levekostnader", "netto_likviditet", "betjeningsgrad",
              "egenkapital"])
         self.clear_combo_boxes(
             ["kjonn_1", "kjonn_2", "lanetype", "intervall", "laneperiode"])
