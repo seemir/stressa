@@ -112,7 +112,9 @@ class RatioChart(Chart):  # pylint: disable=too-many-instance-attributes
         x_val = int(round(mouse_point.x(), self.precision))
         x_idx = where(self.x_val == x_val)
 
-        y_val = self.ratio[x_idx] if self.ratio[x_idx] else 0
+        radio_val = self.ratio[x_idx]
+        y_val = self.ratio[x_idx] if hasattr(radio_val, 'size') and radio_val.size > 0 else 0
+
         self.vertical_line.setPos(x_val)
         limits = min(self.x_val) <= x_val <= max(self.x_val)
 

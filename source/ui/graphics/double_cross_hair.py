@@ -118,8 +118,11 @@ class DoubleCrossHair(QObject):  # pylint: disable=too-many-instance-attributes
         x_val_2 = int(round(mouse_point_2.x(), self.precision))
         x_idx_1 = where(self.x_1 == x_val_1)
         x_idx_2 = where(self.x_2 == x_val_2)
-        y_val_1 = self.display(self.y_1[x_idx_1]) if self.y_1[x_idx_1] else 0
-        y_val_2 = self.display(self.y_2[x_idx_2]) if self.y_2[x_idx_2] else 0
+        val_1 = self.y_1[x_idx_1]
+        y_val_1 = self.display(val_1) if hasattr(val_1, 'size') and val_1.size > 0 else 0
+
+        val_2 = self.y_2[x_idx_2]
+        y_val_2 = self.display(val_2) if hasattr(val_2, 'size') and val_2.size > 0 else 0
 
         self.vertical_line_1.setPos(x_val_1)
         self.vertical_line_2.setPos(x_val_1)
