@@ -12,7 +12,7 @@ bs4==0.0.2
 CacheControl==0.14.2
 certifi==2024.8.30
 charset-normalizer==3.3.2
-click==8.1.7
+click==8.1.8
 colorama==0.4.6
 coverage==7.6.4
 cyclonedx-python-lib==9.1.0
