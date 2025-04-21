@@ -56,7 +56,7 @@ pip-requirements-parser==32.0.1
 pip_audit==2.9.0
 platformdirs==4.3.6
 pluggy==1.5.0
-prettytable==3.11.0
+prettytable==3.16.0
 psutil==5.9.8
 psycopg2-binary==2.9.9
 py-serializable==2.0.0
