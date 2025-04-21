@@ -61,6 +61,8 @@ class MortgageAnalysisProcess(Process):
         self.division_4()
         self.converter_3()
 
+        self.subtraction_4()
+
         self.multiplex()
 
         self._mortgage = self.output_operation()
@@ -1049,6 +1051,35 @@ class MortgageAnalysisProcess(Process):
 
     @Profiling
     @Debugger
+    def subtraction_4(self):
+        """
+        subtract operation to calculate net liquidity based on fixed rate plan
+
+        """
+        repayment_ability_mnd_fixed = self.get_signal("repayment_ability_mnd_fixed")
+        average_total_amount_fixed_converted = self.get_signal("average_total_amount_fixed_converted")
+
+        average_net_liquidity_mnd_fixed_operation = Subtraction(
+            {"nettolikviditet_annuitet": repayment_ability_mnd_fixed.data[
+                'betjeningsevne_mnd_annuitet']},
+            average_total_amount_fixed_converted.data,
+            "Calculate Average Monthly Net Liquidity "
+            "for Fixed Plan")
+        self.add_node(average_net_liquidity_mnd_fixed_operation)
+        self.add_transition(repayment_ability_mnd_fixed, average_net_liquidity_mnd_fixed_operation)
+        self.add_transition(average_total_amount_fixed_converted, average_net_liquidity_mnd_fixed_operation)
+
+        average_net_liquidity_mnd_fixed = average_net_liquidity_mnd_fixed_operation.run(money=True, rnd=0)
+
+        average_net_liquidity_mnd_fixed_signal = Signal(average_net_liquidity_mnd_fixed,
+                                                        "Calculated Average Monthly Net Liquidity for "
+                                                        "Fixed Plan")
+
+        self.add_signal(average_net_liquidity_mnd_fixed_signal, "nettolikviditet_annuitet")
+        self.add_transition(average_net_liquidity_mnd_fixed_operation, average_net_liquidity_mnd_fixed_signal)
+
+    @Profiling
+    @Debugger
     def multiplex(self):
         """
         multiplex mortgage information
@@ -1079,6 +1110,7 @@ class MortgageAnalysisProcess(Process):
         repayment_ability_mnd_series = self.get_signal("repayment_ability_mnd_series")
         average_total_amount_fixed_converted = self.get_signal(
             "average_total_amount_fixed_converted")
+        average_net_liquidity_mnd_fixed = self.get_signal("nettolikviditet_annuitet")
 
         multiplex_operation = Multiplex([fixed_stress_rate, serial_stress_rate,
                                          required_fixed_rates,
@@ -1097,7 +1129,8 @@ class MortgageAnalysisProcess(Process):
                                          repayment_ability_mnd_fixed,
                                          repayment_ability_plan_series,
                                          repayment_ability_mnd_series,
-                                         average_total_amount_fixed_converted],
+                                         average_total_amount_fixed_converted,
+                                         average_net_liquidity_mnd_fixed],
                                         "Multiplex Mortgage Information")
 
         self.add_node(multiplex_operation)
@@ -1126,6 +1159,7 @@ class MortgageAnalysisProcess(Process):
         self.add_transition(repayment_ability_plan_series, multiplex_operation)
         self.add_transition(repayment_ability_mnd_series, multiplex_operation)
         self.add_transition(average_total_amount_fixed_converted, multiplex_operation)
+        self.add_transition(average_net_liquidity_mnd_fixed, multiplex_operation)
 
         multiplex = multiplex_operation.run()
         multiplex_signal = Signal(multiplex, "Multiplexed Mortgage Information",

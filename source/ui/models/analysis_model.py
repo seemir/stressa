@@ -36,7 +36,7 @@ class AnalysisModel(Model):
                       'total_rente_serie', 'total_belop_serie', 'laan_andel_annuitet',
                       'total_rente_andel_annuitet', 'total_belop_andel_annuitet',
                       'laan_andel_serie', 'total_rente_andel_serie', 'total_belop_andel_serie',
-                      'snitt_total_termin_belop_annitet']
+                      'snitt_total_termin_belop_annitet', 'nettolikviditet_annuitet']
 
     def __init__(self, parent: QObject):
         """
@@ -84,6 +84,7 @@ class AnalysisModel(Model):
 
             mortgage_analysis_data = MortgageAnalysisProcess(
                 self.data).mortgage()
+
             self.set_line_edits(line_edit_text='',
                                 line_edits=self.analysis_keys,
                                 data=mortgage_analysis_data)
