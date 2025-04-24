@@ -14,7 +14,7 @@ certifi==2024.8.30
 charset-normalizer==3.3.2
 click==8.1.7
 colorama==0.4.6
-coverage==7.6.4
+coverage==7.8.0
 cyclonedx-python-lib==9.1.0
 defusedxml==0.7.1
 denodo-sqlalchemy==20230818
