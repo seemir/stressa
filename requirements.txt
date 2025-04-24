@@ -61,7 +61,7 @@ psutil==5.9.8
 psycopg2-binary==2.9.9
 py-serializable==2.0.0
 pyarrow==19.0.1
-pycryptodome==3.19.1
+pycryptodome==3.22.0
 pydot==3.0.2
 Pygments==2.19.1
 pylint==3.3.1
