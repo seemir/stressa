@@ -21,7 +21,7 @@ denodo-sqlalchemy==20230818
 dill==0.3.9
 exceptiongroup==1.2.2
 filelock==3.18.0
-folium==0.17.0
+folium==0.19.5
 frozenlist==1.4.1
 graphviz==0.20.1
 greenlet==3.1.1
