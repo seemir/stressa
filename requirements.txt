@@ -73,7 +73,7 @@ PyQt6==6.7.1
 PyQt6-Qt6==6.7.3
 PyQt6-WebEngine-Qt6==6.7.3
 PyQt6-WebEngineSubwheel-Qt6==6.7.3
-PyQt6_sip==13.8.0
+PyQt6_sip==13.10.0
 pyqtgraph==0.13.7
 PyQtWebEngine==5.15.7
 PyQtWebEngine-Qt5==5.15.2
