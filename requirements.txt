@@ -20,7 +20,7 @@ defusedxml==0.7.1
 denodo-sqlalchemy==20230818
 dill==0.3.9
 exceptiongroup==1.2.2
-filelock==3.18.0
+filelock==3.20.1
 folium==0.17.0
 frozenlist==1.4.1
 graphviz==0.20.1
